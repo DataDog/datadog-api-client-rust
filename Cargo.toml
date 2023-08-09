@@ -4,7 +4,7 @@ version = "1.0.0"
 authors = ["support@datadoghq.com"]
 description = "Collection of all Datadog Public endpoints."
 # Override this license by providing a License Object in the OpenAPI.
-license = "Unlicense"
+license = "Apache-2.0"
 edition = "2018"
 
 [dependencies]
