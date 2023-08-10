@@ -52,6 +52,7 @@ def cli(specs, output):
     env.globals["enumerate"] = enumerate
     env.globals["get_name"] = openapi.get_name
     env.globals["get_type_for_attribute"] = openapi.get_type_for_attribute
+    env.globals["get_type_for_response"] = openapi.get_type_for_response
     env.globals["get_type_for_parameter"] = openapi.get_type_for_parameter
     env.globals["get_type"] = openapi.type_to_go
     env.globals["get_default"] = openapi.get_default
@@ -95,12 +96,12 @@ def cli(specs, output):
         resources_dir = output / env.globals["package_name"]
         resources_dir.mkdir(parents=True, exist_ok=True)
 
-        for name, model in models.items():
-            filename = "model_" + formatter.model_filename(name) + ".rs"
-            model_path = resources_dir / filename
-            model_path.parent.mkdir(parents=True, exist_ok=True)
-            with model_path.open("w") as fp:
-                fp.write(model_j2.render(name=name, model=model, models=models))
+        # for name, model in models.items():
+        #     filename = "model_" + formatter.model_filename(name) + ".rs"
+        #     model_path = resources_dir / filename
+        #     model_path.parent.mkdir(parents=True, exist_ok=True)
+        #     with model_path.open("w") as fp:
+        #         fp.write(model_j2.render(name=name, model=model, models=models))
 
         all_operations = []
 

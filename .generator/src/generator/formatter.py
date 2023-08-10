@@ -95,7 +95,7 @@ def escape_reserved_keyword(word):
     :return: The escaped word if it was a reserved keyword, the word unchanged otherwise
     """
     if word in KEYWORDS:
-        return f"{word}Var"
+        return f"{word}_"
     return word
 
 
@@ -104,7 +104,7 @@ def attribute_name(attribute):
 
 
 def variable_name(attribute):
-    return escape_reserved_keyword(untitle_case(camel_case(attribute)))
+    return escape_reserved_keyword(snake_case(attribute))
 
 
 def format_value(value, quotes='"', schema=None):
@@ -137,24 +137,24 @@ def simple_type(schema, render_nullable=False, render_new=False):
 
     if type_name == "integer":
         return {
-            "int32": "int32" if not nullable else f"{nullable_prefix}Int32",
-            "int64": "int64" if not nullable else f"{nullable_prefix}Int64",
-            None: "int32" if not nullable else f"{nullable_prefix}Int32",
+            "int32": "i32" if not nullable else f"{nullable_prefix}Int32",
+            "int64": "i64" if not nullable else f"{nullable_prefix}Int64",
+            None: "i32" if not nullable else f"{nullable_prefix}Int32",
         }[type_format]
 
     if type_name == "number":
         return {
-            "double": "float64" if not nullable else f"{nullable_prefix}Float64",
-            None: "float" if not nullable else f"{nullable_prefix}Float",
+            "double": "f64" if not nullable else f"{nullable_prefix}Float64",
+            None: "f64" if not nullable else f"{nullable_prefix}Float",
         }[type_format]
 
     if type_name == "string":
         return {
-            "date": "time.Time" if not nullable else f"{nullable_prefix}Time",
-            "date-time": "time.Time" if not nullable else f"{nullable_prefix}Time",
-            "email": "string" if not nullable else f"{nullable_prefix}String",
+            "date": "String" if not nullable else f"{nullable_prefix}Time",
+            "date-time": "String" if not nullable else f"{nullable_prefix}Time",
+            "email": "String" if not nullable else f"{nullable_prefix}String",
             "binary": "*os.File",
-            None: "string" if not nullable else f"{nullable_prefix}String",
+            None: "String" if not nullable else f"{nullable_prefix}String",
         }[type_format]
     if type_name == "boolean":
         return "bool" if not nullable else f"{nullable_prefix}Bool"
