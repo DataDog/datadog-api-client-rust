@@ -63,7 +63,7 @@ def cli(specs, output):
 
     api_j2 = env.get_template("api.j2")
     model_j2 = env.get_template("model.j2")
-    doc_j2 = env.get_template("doc.j2")
+    # doc_j2 = env.get_template("doc.j2")
 
     extra_files = {
         "configuration.rs": env.get_template("configuration.j2"),

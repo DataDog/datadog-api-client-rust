@@ -45,14 +45,6 @@ impl <T> From<reqwest::Error> for Error<T> {
     }
 }
 
-{{#supportMiddleware}}
-impl<T> From<reqwest_middleware::Error> for Error<T> {
-    fn from(e: reqwest_middleware::Error) -> Self {
-        Error::ReqwestMiddleware(e)
-    }
-}
-
-{{/supportMiddleware}}
 impl <T> From<serde_json::Error> for Error<T> {
     fn from(e: serde_json::Error) -> Self {
         Error::Serde(e)
@@ -91,17 +83,14 @@ pub fn parse_deep_object(prefix: &str, value: &serde_json::Value) -> Vec<(String
                 _ => params.push((format!("{}[{}]", prefix, key), value.to_string())),
             }
         }
-
         return params;
     }
-
     unimplemented!("Only objects are supported with style=deepObject")
 }
 
-{{#apiInfo}}
-{{#apis}}
-pub mod {{{classFilename}}};
-{{/apis}}
-{{/apiInfo}}
+{%- for name, operations in all_operations|sort %}
+{%- set classname = name + " api" %}
+pub mod {{ classname | snake_case}};
+{%- endfor %}
 
 pub mod configuration;

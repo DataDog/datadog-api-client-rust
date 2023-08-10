@@ -1,0 +1,24 @@
+{% include "partial_header.j2" %}
+
+use reqwest;
+
+use crate::apis::ResponseContent;
+use super::{Error, configuration};
+
+{%- for path, method, operation in operations|sort(attribute="2.operationId", case_sensitive=True) %}
+{%- set httpMethod = method.upper() %}
+{%- set returnType = operation|return_type %}
+{%- set formParameter = operation|form_parameter %}
+
+{%- for name, parameter in operation|parameters if not parameter.required and parameter.in != "path" %}
+{%- if loop.first %}
+// {{ operation.operationId }}Params is a struct for passing parameters to the method [`{{operation.operationId}}`]
+#[derive(Clone, Debug)]
+pub struct {{operation.operationId}}Params {
+{%- endif %}
+    pub {{name}}: {{ get_type_for_parameter(parameter) }}{% if loop.last %},{% endif %}
+{%- if loop.last %}
+}
+{% endif %}
+{%- endfor %}
+{%- endfor %}

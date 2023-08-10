@@ -44,17 +44,17 @@ pub struct GetRumApplicationParams {
 #[derive(Clone, Debug, Default)]
 pub struct ListRumEventsParams {
     /// Search query following RUM syntax.
-    pub filter_left_square_bracket_query_right_square_bracket: Option<String>,
+    pub filter_query: Option<String>,
     /// Minimum timestamp for requested events.
-    pub filter_left_square_bracket_from_right_square_bracket: Option<String>,
+    pub filter_from: Option<String>,
     /// Maximum timestamp for requested events.
-    pub filter_left_square_bracket_to_right_square_bracket: Option<String>,
+    pub filter_to: Option<String>,
     /// Order of events in results.
     pub sort: Option<RumSort>,
     /// List following results with a cursor provided in the previous query.
-    pub page_left_square_bracket_cursor_right_square_bracket: Option<String>,
+    pub page_cursor: Option<String>,
     /// Maximum number of events in the response.
-    pub page_left_square_bracket_limit_right_square_bracket: Option<i32>,
+    pub page_limit: Option<i32>,
 }
 
 /// struct for passing parameters to the method [`search_rum_events`]
@@ -381,39 +381,34 @@ pub async fn list_rum_events(
     let configuration = configuration;
 
     // unbox the parameters
-    let filter_left_square_bracket_query_right_square_bracket =
-        params.filter_left_square_bracket_query_right_square_bracket;
-    let filter_left_square_bracket_from_right_square_bracket =
-        params.filter_left_square_bracket_from_right_square_bracket;
-    let filter_left_square_bracket_to_right_square_bracket =
-        params.filter_left_square_bracket_to_right_square_bracket;
+    let filter_query = params.filter_query;
+    let filter_from = params.filter_from;
+    let filter_to = params.filter_to;
     let sort = params.sort;
-    let page_left_square_bracket_cursor_right_square_bracket =
-        params.page_left_square_bracket_cursor_right_square_bracket;
-    let page_left_square_bracket_limit_right_square_bracket =
-        params.page_left_square_bracket_limit_right_square_bracket;
+    let page_cursor = params.page_cursor;
+    let page_limit = params.page_limit;
 
     let client = &configuration.client;
 
     let uri_str = format!("{}/api/v2/rum/events", configuration.base_path);
     let mut request = client.request(reqwest::Method::GET, uri_str.as_str());
 
-    if let Some(ref str) = filter_left_square_bracket_query_right_square_bracket {
+    if let Some(ref str) = filter_query {
         request = request.query(&[("filter[query]", &str.to_string())]);
     }
-    if let Some(ref str) = filter_left_square_bracket_from_right_square_bracket {
+    if let Some(ref str) = filter_from {
         request = request.query(&[("filter[from]", &str.to_string())]);
     }
-    if let Some(ref str) = filter_left_square_bracket_to_right_square_bracket {
+    if let Some(ref str) = filter_to {
         request = request.query(&[("filter[to]", &str.to_string())]);
     }
     if let Some(ref str) = sort {
         request = request.query(&[("sort", &str.to_string())]);
     }
-    if let Some(ref str) = page_left_square_bracket_cursor_right_square_bracket {
+    if let Some(ref str) = page_cursor {
         request = request.query(&[("page[cursor]", &str.to_string())]);
     }
-    if let Some(ref str) = page_left_square_bracket_limit_right_square_bracket {
+    if let Some(ref str) = page_limit {
         request = request.query(&[("page[limit]", &str.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
