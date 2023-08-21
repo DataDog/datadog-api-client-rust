@@ -1,0 +1,24 @@
+// Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
+// This product includes software developed at Datadog (https://www.datadoghq.com/).
+// Copyright 2019-Present Datadog, Inc.
+
+/// 
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum FunnelRequestType {
+    #[serde(rename = "funnel")]
+	FUNNEL,
+}
+
+impl ToString for FunnelRequestType {
+    fn to_string(&self) -> String {
+        match self {
+            Self::FUNNEL => String::from("funnel"),
+        }
+    }
+}
+
+impl Default for FunnelRequestType {
+    fn default() -> FunnelRequestType {
+        Self::FUNNEL
+    }
+}

@@ -1,0 +1,24 @@
+// Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
+// This product includes software developed at Datadog (https://www.datadoghq.com/).
+// Copyright 2019-Present Datadog, Inc.
+
+/// 
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum NotebookMarkdownCellDefinitionType {
+    #[serde(rename = "markdown")]
+	MARKDOWN,
+}
+
+impl ToString for NotebookMarkdownCellDefinitionType {
+    fn to_string(&self) -> String {
+        match self {
+            Self::MARKDOWN => String::from("markdown"),
+        }
+    }
+}
+
+impl Default for NotebookMarkdownCellDefinitionType {
+    fn default() -> NotebookMarkdownCellDefinitionType {
+        Self::MARKDOWN
+    }
+}

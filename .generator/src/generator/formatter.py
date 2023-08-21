@@ -9,63 +9,57 @@ from .utils import snake_case, camel_case, untitle_case, schema_name
 PRIMITIVE_TYPES = ["string", "number", "boolean", "integer"]
 
 KEYWORDS = {
+    "as",
     "break",
-    "case",
-    "chan",
     "const",
     "continue",
-    "default",
-    "defer",
+    "crate",
     "else",
-    "fallthrough",
+    "enum",
+    "extern",
+    "false",
+    "fn",
     "for",
-    "func",
-    "go",
-    "goto",
     "if",
-    "import",
-    "interface",
-    "map",
-    "package",
-    "range",
+    "impl",
+    "in",
+    "let",
+    "loop",
+    "match",
+    "mod",
+    "move",
+    "mut",
+    "pub",
+    "ref",
     "return",
-    "select",
+    "self",
+    "Self",
+    "static",
     "struct",
-    "switch",
+    "super",
+    "trait",
+    "true",
     "type",
-    "var",
-}
-
-SUFFIXES = {
-    # Test
-    "test",
-    # $GOOS
-    "aix",
-    "android",
-    "darwin",
-    "dragonfly",
-    "freebsd",
-    "illumos",
-    "js",
-    "linux",
-    "netbsd",
-    "openbsd",
-    "plan9",
-    "solaris",
-    "windows",
-    # $GOARCH
-    "386",
-    "amd64",
-    "arm",
-    "arm64",
-    "mips",
-    "mips64",
-    "mips64le",
-    "mipsle",
-    "ppc64",
-    "ppc64le",
-    "s390x",
-    "wasm",
+    "unsafe",
+    "use",
+    "where",
+    "while",
+    "async",
+    "await",
+    "dyn",
+    "abstract",
+    "become",
+    "box",
+    "do",
+    "final",
+    "macro",
+    "override",
+    "priv",
+    "typeof",
+    "unsized",
+    "virtual",
+    "yield",
+    "try",
 }
 
 
@@ -81,11 +75,7 @@ def block_comment(comment, prefix="#", first_line=True):
 
 
 def model_filename(name):
-    filename = snake_case(name)
-    last = filename.split("_")[-1]
-    if last in SUFFIXES:
-        filename += "_"
-    return filename
+    return snake_case(name)
 
 
 def escape_reserved_keyword(word):
@@ -133,31 +123,29 @@ def simple_type(schema, render_nullable=False, render_new=False):
     type_format = schema.get("format")
     nullable = render_nullable and schema.get("nullable", False)
 
-    nullable_prefix = "datadog.NewNullable" if render_new else "datadog.Nullable"
-
     if type_name == "integer":
         return {
-            "int32": "i32" if not nullable else f"{nullable_prefix}Int32",
-            "int64": "i64" if not nullable else f"{nullable_prefix}Int64",
-            None: "i32" if not nullable else f"{nullable_prefix}Int32",
+            "int32": "i32" if not nullable else f"Option<Int32>",
+            "int64": "i64" if not nullable else f"Option<Int64>",
+            None: "i32" if not nullable else f"Option<Int32>",
         }[type_format]
 
     if type_name == "number":
         return {
-            "double": "f64" if not nullable else f"{nullable_prefix}Float64",
-            None: "f64" if not nullable else f"{nullable_prefix}Float",
+            "double": "f64" if not nullable else f"Option<Float64>",
+            None: "f64" if not nullable else f"Option<Float>",
         }[type_format]
 
     if type_name == "string":
         return {
-            "date": "String" if not nullable else f"{nullable_prefix}Time",
-            "date-time": "String" if not nullable else f"{nullable_prefix}Time",
-            "email": "String" if not nullable else f"{nullable_prefix}String",
+            "date": "String" if not nullable else f"Option<Time>",
+            "date-time": "String" if not nullable else f"Option<Time>",
+            "email": "String" if not nullable else f"Option<String>",
             "binary": "*os.File",
-            None: "String" if not nullable else f"{nullable_prefix}String",
+            None: "String" if not nullable else f"Option<String>",
         }[type_format]
     if type_name == "boolean":
-        return "bool" if not nullable else f"{nullable_prefix}Bool"
+        return "bool" if not nullable else f"Option<Bool>"
 
     return None
 

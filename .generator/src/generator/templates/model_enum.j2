@@ -1,0 +1,24 @@
+/// {{description}}
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum {{name}} {
+{%- for index, value in enumerate(model.enum) %}
+    #[serde(rename = "{{value}}")]
+	{{ model["x-enum-varnames"][index] or value.upper() }},
+{%- endfor %}
+}
+
+impl ToString for {{name}} {
+    fn to_string(&self) -> String {
+        match self {
+{%- for index, value in enumerate(model.enum) %}
+            Self::{{model["x-enum-varnames"][index] or value.upper()}} => String::from("{{value}}"),
+{%- endfor %}
+        }
+    }
+}
+
+impl Default for {{name}} {
+    fn default() -> {{name}} {
+        Self::{{ model["x-enum-varnames"].0 }}
+    }
+}

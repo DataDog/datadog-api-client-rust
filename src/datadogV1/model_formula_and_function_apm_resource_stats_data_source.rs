@@ -1,0 +1,24 @@
+// Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
+// This product includes software developed at Datadog (https://www.datadoghq.com/).
+// Copyright 2019-Present Datadog, Inc.
+
+/// 
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum FormulaAndFunctionApmResourceStatsDataSource {
+    #[serde(rename = "apm_resource_stats")]
+	APM_RESOURCE_STATS,
+}
+
+impl ToString for FormulaAndFunctionApmResourceStatsDataSource {
+    fn to_string(&self) -> String {
+        match self {
+            Self::APM_RESOURCE_STATS => String::from("apm_resource_stats"),
+        }
+    }
+}
+
+impl Default for FormulaAndFunctionApmResourceStatsDataSource {
+    fn default() -> FormulaAndFunctionApmResourceStatsDataSource {
+        Self::APM_RESOURCE_STATS
+    }
+}

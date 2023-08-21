@@ -1,0 +1,24 @@
+// Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
+// This product includes software developed at Datadog (https://www.datadoghq.com/).
+// Copyright 2019-Present Datadog, Inc.
+
+/// 
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum SyntheticsBasicAuthOauthROPType {
+    #[serde(rename = "oauth-rop")]
+	OAUTH_ROP,
+}
+
+impl ToString for SyntheticsBasicAuthOauthROPType {
+    fn to_string(&self) -> String {
+        match self {
+            Self::OAUTH_ROP => String::from("oauth-rop"),
+        }
+    }
+}
+
+impl Default for SyntheticsBasicAuthOauthROPType {
+    fn default() -> SyntheticsBasicAuthOauthROPType {
+        Self::OAUTH_ROP
+    }
+}

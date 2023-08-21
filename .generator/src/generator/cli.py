@@ -64,13 +64,14 @@ def cli(specs, output):
 
     api_j2 = env.get_template("api.j2")
     model_j2 = env.get_template("model.j2")
+    mod_j2 = env.get_template("mod.j2")
     # doc_j2 = env.get_template("doc.j2")
 
-    extra_files = {
+    common_files = {
         "configuration.rs": env.get_template("configuration.j2"),
-        "mod.rs": env.get_template("mod.j2"),
-        "lib.rs": env.get_template("lib.j2"),
+        "mod.rs": env.get_template("common_mod.j2"),
     }
+    librs = env.get_template("lib.j2")
 
     # test_scenarios_files = {
     #     "api_mappings.rs": env.get_template("scenarios_api_mappings.j2"),
@@ -96,12 +97,12 @@ def cli(specs, output):
         resources_dir = output / env.globals["package_name"]
         resources_dir.mkdir(parents=True, exist_ok=True)
 
-        # for name, model in models.items():
-        #     filename = "model_" + formatter.model_filename(name) + ".rs"
-        #     model_path = resources_dir / filename
-        #     model_path.parent.mkdir(parents=True, exist_ok=True)
-        #     with model_path.open("w") as fp:
-        #         fp.write(model_j2.render(name=name, model=model, models=models))
+        for name, model in models.items():
+            filename = "model_" + formatter.model_filename(name) + ".rs"
+            model_path = resources_dir / filename
+            model_path.parent.mkdir(parents=True, exist_ok=True)
+            with model_path.open("w") as fp:
+                fp.write(model_j2.render(name=name, model=model, models=models))
 
         all_operations = []
 
@@ -113,17 +114,23 @@ def cli(specs, output):
                 fp.write(api_j2.render(name=name, operations=operations))
             all_operations.append((name, operations))
 
+        mod_path = resources_dir / "mod.rs"
+        with mod_path.open("w") as fp:
+            fp.write(mod_j2.render(apis=apis, models=models))
+
         # doc_path = resources_dir / "doc.rs"
         # with doc_path.open("w") as fp:
         #     fp.write(doc_j2.render(all_operations=all_operations))
 
-    common_package_output = pathlib.Path(f"../api/{COMMON_PACKAGE_NAME}")
+    common_package_output = pathlib.Path(f"../src/{COMMON_PACKAGE_NAME}")
     common_package_output.mkdir(parents=True, exist_ok=True)
-    for name, template in extra_files.items():
+    for name, template in common_files.items():
         filename = common_package_output / name
         with filename.open("w") as fp:
             fp.write(template.render(apis=all_apis, all_specs=all_specs))
-    
+    lib_name = output / "lib.rs"
+    with lib_name.open("w") as fp:
+        fp.write(librs.render())
     # scenarios_test_output = pathlib.Path("../tests/scenarios/")
     # for name, template in test_scenarios_files.items():
     #     filename = scenarios_test_output / name

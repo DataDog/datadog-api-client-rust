@@ -1,0 +1,24 @@
+// Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
+// This product includes software developed at Datadog (https://www.datadoghq.com/).
+// Copyright 2019-Present Datadog, Inc.
+
+/// 
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum SAMLAssertionAttributesType {
+    #[serde(rename = "saml_assertion_attributes")]
+	SAML_ASSERTION_ATTRIBUTES,
+}
+
+impl ToString for SAMLAssertionAttributesType {
+    fn to_string(&self) -> String {
+        match self {
+            Self::SAML_ASSERTION_ATTRIBUTES => String::from("saml_assertion_attributes"),
+        }
+    }
+}
+
+impl Default for SAMLAssertionAttributesType {
+    fn default() -> SAMLAssertionAttributesType {
+        Self::SAML_ASSERTION_ATTRIBUTES
+    }
+}

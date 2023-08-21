@@ -1,0 +1,24 @@
+// Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
+// This product includes software developed at Datadog (https://www.datadoghq.com/).
+// Copyright 2019-Present Datadog, Inc.
+
+/// 
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum SensitiveDataScannerConfigurationType {
+    #[serde(rename = "sensitive_data_scanner_configuration")]
+	SENSITIVE_DATA_SCANNER_CONFIGURATIONS,
+}
+
+impl ToString for SensitiveDataScannerConfigurationType {
+    fn to_string(&self) -> String {
+        match self {
+            Self::SENSITIVE_DATA_SCANNER_CONFIGURATIONS => String::from("sensitive_data_scanner_configuration"),
+        }
+    }
+}
+
+impl Default for SensitiveDataScannerConfigurationType {
+    fn default() -> SensitiveDataScannerConfigurationType {
+        Self::SENSITIVE_DATA_SCANNER_CONFIGURATIONS
+    }
+}
