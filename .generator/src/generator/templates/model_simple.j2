@@ -5,7 +5,7 @@ pub struct {{ name }} {
 {%- set dataType = get_type(schema, alternative_name=name + propertyName, render_nullable=True) %}
 {%- set required = true if schema.required else false %}
 {%- set isNullable = schema.get("nullable", False)%}
-    /// {{ schema.description }}
+    /* {{ schema.description }} */
     #[serde(rename = "{{ attr }}"{% if not required %}{% if isNullable %}, default, with = "::serde_with::rust::double_option"{% endif %}{% endif %}{% if not required %}, skip_serializing_if = "Option::is_none"{% endif %}{% if not required %}{% if isNullable %}, deserialize_with = "Option::deserialize"{% endif %}{% endif %})]
     pub {{propertyName}}: {{dataType}},
 {%- endfor %}

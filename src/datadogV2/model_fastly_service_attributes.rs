@@ -4,8 +4,7 @@
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FastlyServiceAttributes {
-    /// A list of tags for the Fastly service.
+    /* A list of tags for the Fastly service. */
     #[serde(rename = "tags", skip_serializing_if = "Option::is_none")]
     pub tags: Vec<String>,
 }
-

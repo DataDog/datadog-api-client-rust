@@ -4,14 +4,13 @@
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FastlyAccountResponseData {
-    /// Attributes object of a Fastly account.
+    /* Attributes object of a Fastly account. */
     #[serde(rename = "attributes")]
     pub attributes: FastlyAccounResponseAttributes,
-    /// The ID of the Fastly account, a hash of the account name.
+    /* The ID of the Fastly account, a hash of the account name. */
     #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
     pub id: String,
-    /// The JSON:API type for this API. Should always be `fastly-accounts`.
+    /* The JSON:API type for this API. Should always be `fastly-accounts`. */
     #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
     pub type_: FastlyAccountType,
 }
-

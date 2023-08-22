@@ -141,7 +141,7 @@ def simple_type(schema, render_nullable=False, render_new=False):
             "date": "String" if not nullable else f"Option<Time>",
             "date-time": "String" if not nullable else f"Option<Time>",
             "email": "String" if not nullable else f"Option<String>",
-            "binary": "*os.File",
+            "binary": "Vec<u8>",
             None: "String" if not nullable else f"Option<String>",
         }[type_format]
     if type_name == "boolean":
@@ -639,7 +639,7 @@ def format_data_with_schema_dict(
             else:
                 parameters = saved_parameters
         else:
-            return f"map[string]{nested_schema_name}{{\n{parameters}}}"
+            return f"None"#f"map[string]{nested_schema_name}{{\n{parameters}}}"
 
     if "oneOf" in schema:
         return _format_oneof(schema, data, name, name_prefix, replace_values, required, nullable, **kwargs)

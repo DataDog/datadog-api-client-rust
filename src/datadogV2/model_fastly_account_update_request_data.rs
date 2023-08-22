@@ -4,11 +4,10 @@
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FastlyAccountUpdateRequestData {
-    /// Attributes object for updating a Fastly account.
+    /* Attributes object for updating a Fastly account. */
     #[serde(rename = "attributes", skip_serializing_if = "Option::is_none")]
     pub attributes: FastlyAccountUpdateRequestAttributes,
-    /// The JSON:API type for this API. Should always be `fastly-accounts`.
+    /* The JSON:API type for this API. Should always be `fastly-accounts`. */
     #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
     pub type_: FastlyAccountType,
 }
-

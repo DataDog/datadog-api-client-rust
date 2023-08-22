@@ -4,8 +4,7 @@
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FastlyAccountUpdateRequest {
-    /// Data object for updating a Fastly account.
+    /* Data object for updating a Fastly account. */
     #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
     pub data: FastlyAccountUpdateRequestData,
 }
-

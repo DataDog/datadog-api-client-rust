@@ -74,11 +74,13 @@ def type_to_go(schema, alternative_name=None, render_nullable=False, render_new=
         if schema.get("nullable") and formatter.is_primitive(schema["items"]):
             name = formatter.simple_type(schema["items"], render_nullable=render_nullable, render_new=render_new)
             if render_nullable:
-                return f"datadog.{prefix}List[{name}]"
+                # return f"datadog.{prefix}List[{name}]"
+                return "None"
         return "Vec<{}>".format(name)
     elif type_ == "object":
         if "additionalProperties" in schema:
-            return "map[string]{}".format(type_to_go(schema["additionalProperties"]))
+            # return "map[string]{}".format(type_to_go(schema["additionalProperties"]))
+            return "None"
         return (
             prefix + alternative_name
             if alternative_name

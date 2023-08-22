@@ -4,14 +4,13 @@
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FastlyServiceData {
-    /// Attributes object for Fastly service requests.
+    /* Attributes object for Fastly service requests. */
     #[serde(rename = "attributes", skip_serializing_if = "Option::is_none")]
     pub attributes: FastlyServiceAttributes,
-    /// The ID of the Fastly service.
+    /* The ID of the Fastly service. */
     #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
     pub id: String,
-    /// The JSON:API type for this API. Should always be `fastly-services`.
+    /* The JSON:API type for this API. Should always be `fastly-services`. */
     #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
     pub type_: FastlyServiceType,
 }
-

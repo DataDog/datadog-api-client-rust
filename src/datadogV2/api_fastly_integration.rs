@@ -4,8 +4,8 @@
 
 use reqwest;
 
+use super::{configuration, Error};
 use crate::apis::ResponseContent;
-use super::{Error, configuration};
 
 // CreateFastlyAccountParams is a struct for passing parameters to the method [`CreateFastlyAccount`]
 #[derive(Clone, Debug)]
@@ -77,9 +77,6 @@ pub struct UpdateFastlyServiceParams {
     pub service_id: String,
     pub body: FastlyServiceRequest,
 }
-
-
-
 
 /// CreateFastlyAccountError is a struct for typed errors of method [`CreateFastlyAccount`]
 #[derive(Debug, Clone, Serialize, Deserialize)]

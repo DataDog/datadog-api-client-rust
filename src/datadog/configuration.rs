@@ -23,11 +23,14 @@ impl Default for Configuration {
     fn default() -> Self {
         let sdk_version = match var("CARGO_PKG_VERSION") {
             Ok(v) => v,
-            Err(_) => "0.0.0".to_owned()
+            Err(_) => "0.0.0".to_owned(),
         };
         Configuration {
             base_path: "https://api.datadoghq.com".to_owned(),
-            user_agent: Some(format!("datadog-api-client-rust/{} (rust {}; os {}; arch {})", sdk_version, "", OS, ARCH)),
+            user_agent: Some(format!(
+                "datadog-api-client-rust/{} (rust {}; os {}; arch {})",
+                sdk_version, "", OS, ARCH
+            )),
             client: reqwest::Client::new(),
             api_key: None,
             app_key: None,

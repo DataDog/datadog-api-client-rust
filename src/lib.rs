@@ -12,5 +12,5 @@ extern crate url;
 extern crate reqwest;
 
 pub mod datadog;
-pub mod datadogV1;
+// pub mod datadogV1;
 pub mod datadogV2;

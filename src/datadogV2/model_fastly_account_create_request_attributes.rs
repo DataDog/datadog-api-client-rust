@@ -4,14 +4,13 @@
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FastlyAccountCreateRequestAttributes {
-    /// The API key for the Fastly account.
+    /* The API key for the Fastly account. */
     #[serde(rename = "api_key", skip_serializing_if = "Option::is_none")]
     pub api_key: String,
-    /// The name of the Fastly account.
+    /* The name of the Fastly account. */
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: String,
-    /// A list of services belonging to the parent account.
+    /* A list of services belonging to the parent account. */
     #[serde(rename = "services", skip_serializing_if = "Option::is_none")]
     pub services: Vec<FastlyService>,
 }
-

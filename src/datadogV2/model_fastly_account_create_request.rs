@@ -4,8 +4,7 @@
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FastlyAccountCreateRequest {
-    /// Data object for creating a Fastly account.
+    /* Data object for creating a Fastly account. */
     #[serde(rename = "data")]
     pub data: FastlyAccountCreateRequestData,
 }
-
