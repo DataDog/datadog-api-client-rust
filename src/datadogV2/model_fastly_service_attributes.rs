@@ -6,5 +6,12 @@
 pub struct FastlyServiceAttributes {
     /* A list of tags for the Fastly service. */
     #[serde(rename = "tags", skip_serializing_if = "Option::is_none")]
-    pub tags: Vec<String>,
+    pub tags: Option<Vec<String>>,
+}
+
+impl FastlyServiceAttributes {
+    /* Attributes object for Fastly service requests. */
+    pub fn new() -> FastlyServiceAttributes {
+        FastlyServiceAttributes { tags: None }
+    }
 }

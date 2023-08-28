@@ -19,15 +19,15 @@ def load(filename):
         return JsonRef.replace_refs(yaml.load(fp, Loader=CSafeLoader))
 
 
-def get_name(schema):
+def get_name(schema, version=None):
     name = None
     if hasattr(schema, "__reference__"):
         name = schema.__reference__["$ref"].split("/")[-1]
 
-    return name
+    return f"crate::datadog{version.upper()}::{name}" if version else name
 
 
-def type_to_go(schema, alternative_name=None, render_nullable=False, render_new=False):
+def type_to_go(schema, alternative_name=None, render_nullable=False, render_box=False, version=None):
     """Return Go type name for the type."""
     if render_nullable and schema.get("nullable", False):
         prefix = "Nullable"
@@ -39,18 +39,18 @@ def type_to_go(schema, alternative_name=None, render_nullable=False, render_new=
         return "interface{}"
 
     if "enum" not in schema:
-        name = formatter.simple_type(schema, render_nullable=render_nullable, render_new=render_new)
+        name = formatter.simple_type(schema, render_nullable=render_nullable)
         if name is not None:
             return name
 
-    name = get_name(schema)
+    name = get_name(schema, version)
     if name:
         if "enum" in schema:
-            if render_new and schema.get("nullable", False):
+            if render_box and schema.get("nullable", False):
                 return f"New{prefix}{name}"
             return prefix + name
         if not (schema.get("additionalProperties") and not schema.get("properties")) and schema.get("type", "object") == "object":
-            return prefix + name
+            return f"Box<{prefix}{name}>" if render_box else prefix + name
 
     type_ = schema.get("type")
     if type_ is None:
@@ -67,12 +67,12 @@ def type_to_go(schema, alternative_name=None, render_nullable=False, render_new=
             return prefix + name
         if name or alternative_name:
             alternative_name = (name or alternative_name) + "Item"
-        name = type_to_go(schema["items"], alternative_name=alternative_name)
+        name = type_to_go(schema["items"], alternative_name=alternative_name, version=version)
         # handle nullable arrays
         if formatter.simple_type(schema["items"]) and schema["items"].get("nullable"):
             name = "*" + name
         if schema.get("nullable") and formatter.is_primitive(schema["items"]):
-            name = formatter.simple_type(schema["items"], render_nullable=render_nullable, render_new=render_new)
+            name = formatter.simple_type(schema["items"], render_nullable=render_nullable)
             if render_nullable:
                 # return f"datadog.{prefix}List[{name}]"
                 return "None"
@@ -81,12 +81,7 @@ def type_to_go(schema, alternative_name=None, render_nullable=False, render_new=
         if "additionalProperties" in schema:
             # return "map[string]{}".format(type_to_go(schema["additionalProperties"]))
             return "None"
-        return (
-            prefix + alternative_name
-            if alternative_name
-            and ("properties" in schema or "oneOf" in schema or "anyOf" in schema or "allOf" in schema)
-            else "interface{}"
-        )
+        return f"Box<{prefix}{alternative_name}>"
 
     raise ValueError(f"Unknown type {type_}")
 
@@ -98,29 +93,29 @@ def get_type_for_attribute(schema, attribute, current_name=None):
     return type_to_go(child_schema, alternative_name=alternative_name)
 
 
-def get_type_for_parameter(parameter):
+def get_type_for_parameter(parameter, version=None):
     """Return Go type name for the parameter."""
     if "content" in parameter:
         assert "in" not in parameter
         for content in parameter["content"].values():
-            return type_to_go(content["schema"])
-    return type_to_go(parameter.get("schema"))
+            return type_to_go(content["schema"], version=version)
+    return type_to_go(parameter.get("schema"), version=version)
 
 
-def get_type_for_response(response):
+def get_type_for_response(response, version):
     """Return Go type name for the response."""
     if "content" in response:
         for content in response["content"].values():
             if "schema" in content:
-                return type_to_go(content["schema"])
+                return type_to_go(content["schema"], version=version)
 
 
-def responses_by_types(operation):
+def responses_by_types(operation, version):
     result = {}
     for response_code, response in operation["responses"].items():
         if int(response_code) < 300:
             continue
-        response_type = get_type_for_response(response)
+        response_type = get_type_for_response(response, version)
         if response_type in result:
             result[response_type][1].append(response_code)
         else:

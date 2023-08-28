@@ -2,23 +2,43 @@
 pub struct {{ name }} {
 {%- for attr, schema in model.get("properties", {}).items() %}
 {%- set propertyName = attr|variable_name %}
-{%- set dataType = get_type(schema, alternative_name=name + propertyName, render_nullable=True) %}
-{%- set required = true if schema.required else false %}
+{%- set dataType = get_type(schema, alternative_name=name + propertyName, render_nullable=True, render_box=True, version=version) %}
+{%- set required = attr in model.required %}
 {%- set isNullable = schema.get("nullable", False)%}
     /* {{ schema.description }} */
+{%- if schema.deprecated %}
+	// Deprecated
+{%- endif %}
     #[serde(rename = "{{ attr }}"{% if not required %}{% if isNullable %}, default, with = "::serde_with::rust::double_option"{% endif %}{% endif %}{% if not required %}, skip_serializing_if = "Option::is_none"{% endif %}{% if not required %}{% if isNullable %}, deserialize_with = "Option::deserialize"{% endif %}{% endif %})]
+    {%- if attr in model.get("required", []) %}
     pub {{propertyName}}: {{dataType}},
+    {%- else %}
+    pub {{propertyName}}: Option<{{dataType}}>,
+    {%- endif %}
 {%- endfor %}
 }
-{#
+
 impl {{ name }} {
-    /// {{ model.description }}
-    pub fn new({{#requiredVars}}{{{name}}}: {% if isNullable %}Option<{% endif %}{{#isEnum}}{{#isArray}}Vec<{{/isArray}}{{{enumName}}}{{#isArray}}>{{/isArray}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}}{% if isNullable %}>{% endif %}{{^-last}}, {{/-last}}{{/requiredVars}}) -> {{ name }} {
-        {{{classname}}} {
-            {{#vars}}
-            {{{name}}}{% if required %}{{#isArray}}: None{{/isArray}}{{#isMap}}: None{{/isMap}}{{#isContainer}}{% if isNullable %}: None{% endif %}{{/isContainer}}{{^isContainer}}: None{{/isContainer}}{% endif %}{% if required %}{{#isModel}}: {{^isNullable}}Box::new({{{name}}}){% endif %}{% if isNullable %}if let Some(x) = {{{name}}} {Some(Box::new(x))} else {None}{% endif %}{{/isModel}}{% endif %},
-            {{/vars}}
+    /* {{ model.description }} */
+    pub fn new({% for attr, schema in model.get("properties", {}).items() if attr in model.required %}{%- set propertyName = attr|variable_name %}{%- set dataType = get_type(schema, alternative_name=name + propertyName, render_nullable=True, version=version) %}{%- set isNullable = schema.get("nullable", False)%}{{propertyName}}: {{ dataType }}{%- if not loop.last %}, {% endif %}{% endfor %}) -> {{ name }} {
+        {{ name }} {
+            {%- for attr, schema in model.get("properties", {}).items() %}
+            {%- set propertyName = attr|variable_name %}
+            {%- set dataType = get_type(schema, alternative_name=name + propertyName, render_nullable=True, render_box=True, version=version) %}
+            {%- set required = attr in model.required %}
+            {%- set isNullable = schema.get("nullable", False)%}
+            {%- if attr in model.get("required", []) %}
+            {%- if "Box" in dataType %}
+            {{ attr|variable_name }}: Box::new({{ attr|variable_name }}),
+            {%- else %}
+            {{ attr|variable_name }}: {{ attr|variable_name }},
+            {%- endif %}
+            {%- elif schema.default is defined %}
+            {{ attr|variable_name }}: Some({{ schema.default|format_value(schema=schema, version=version) }}),
+            {%- else %}
+            {{ attr|variable_name }}: None,
+            {%- endif %}
+            {%- endfor %}
         }
     }
 }
-#}

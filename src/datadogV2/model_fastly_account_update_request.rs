@@ -5,6 +5,17 @@
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FastlyAccountUpdateRequest {
     /* Data object for updating a Fastly account. */
-    #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
-    pub data: FastlyAccountUpdateRequestData,
+    #[serde(rename = "data")]
+    pub data: Box<crate::datadogV2::FastlyAccountUpdateRequestData>,
+}
+
+impl FastlyAccountUpdateRequest {
+    /* Payload schema when updating a Fastly account. */
+    pub fn new(
+        data: crate::datadogV2::FastlyAccountUpdateRequestData,
+    ) -> FastlyAccountUpdateRequest {
+        FastlyAccountUpdateRequest {
+            data: Box::new(data),
+        }
+    }
 }

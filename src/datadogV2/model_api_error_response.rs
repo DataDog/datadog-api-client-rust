@@ -5,6 +5,13 @@
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct APIErrorResponse {
     /* A list of errors. */
-    #[serde(rename = "errors", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "errors")]
     pub errors: Vec<String>,
+}
+
+impl APIErrorResponse {
+    /* API error response. */
+    pub fn new(errors: Vec<String>) -> APIErrorResponse {
+        APIErrorResponse { errors: errors }
+    }
 }

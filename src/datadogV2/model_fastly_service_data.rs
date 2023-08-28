@@ -6,11 +6,22 @@
 pub struct FastlyServiceData {
     /* Attributes object for Fastly service requests. */
     #[serde(rename = "attributes", skip_serializing_if = "Option::is_none")]
-    pub attributes: FastlyServiceAttributes,
+    pub attributes: Option<Box<crate::datadogV2::FastlyServiceAttributes>>,
     /* The ID of the Fastly service. */
-    #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "id")]
     pub id: String,
     /* The JSON:API type for this API. Should always be `fastly-services`. */
-    #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
-    pub type_: FastlyServiceType,
+    #[serde(rename = "type")]
+    pub type_: crate::datadogV2::FastlyServiceType,
+}
+
+impl FastlyServiceData {
+    /* Data object for Fastly service requests. */
+    pub fn new(id: String, type_: crate::datadogV2::FastlyServiceType) -> FastlyServiceData {
+        FastlyServiceData {
+            attributes: None,
+            id: id,
+            type_: type_,
+        }
+    }
 }

@@ -2,8 +2,8 @@
 
 use reqwest;
 
-use crate::apis::ResponseContent;
-use super::{Error, configuration};
+use crate::datadog::*;
+
 {% for path, method, operation in operations|sort(attribute="2.operationId", case_sensitive=True) %}
 {%- set httpMethod = method.upper() %}
 {%- set returnType = operation|return_type %}
@@ -18,7 +18,7 @@ pub struct {{operation.operationId}}Params {
     {%- if parameter.description is defined %}
     /* {{parameter.description}} */
     {%- endif %}
-    pub {{name|variable_name}}: {{ get_type_for_parameter(parameter) }},
+    pub {{name|variable_name}}: {{ get_type_for_parameter(parameter, version) }},
 {%- if loop.last %}
 }
 {% endif %}
@@ -34,7 +34,7 @@ pub struct {{operation.operationId}}Params {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum {{operation.operationId}}Error {
-	{%- for responseType, (response, responseCodes) in operation|responses_by_types %}
+	{%- for responseType, (response, responseCodes) in responses_by_types(operation, version) %}
     {%- for responseCode in responseCodes %}
     Status{{responseCode|int}}({{responseType}}),
     {%- endfor %}

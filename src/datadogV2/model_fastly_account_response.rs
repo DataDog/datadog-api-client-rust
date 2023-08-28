@@ -5,6 +5,13 @@
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FastlyAccountResponse {
     /* Data object of a Fastly account. */
-    #[serde(rename = "data")]
-    pub data: FastlyAccountResponseData,
+    #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
+    pub data: Option<Box<crate::datadogV2::FastlyAccountResponseData>>,
+}
+
+impl FastlyAccountResponse {
+    /* The expected response schema when getting a Fastly account. */
+    pub fn new() -> FastlyAccountResponse {
+        FastlyAccountResponse { data: None }
+    }
 }

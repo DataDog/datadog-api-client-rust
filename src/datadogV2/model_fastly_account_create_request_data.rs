@@ -6,8 +6,21 @@
 pub struct FastlyAccountCreateRequestData {
     /* Attributes object for creating a Fastly account. */
     #[serde(rename = "attributes")]
-    pub attributes: FastlyAccountCreateRequestAttributes,
+    pub attributes: Box<crate::datadogV2::FastlyAccountCreateRequestAttributes>,
     /* The JSON:API type for this API. Should always be `fastly-accounts`. */
-    #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
-    pub type_: FastlyAccountType,
+    #[serde(rename = "type")]
+    pub type_: crate::datadogV2::FastlyAccountType,
+}
+
+impl FastlyAccountCreateRequestData {
+    /* Data object for creating a Fastly account. */
+    pub fn new(
+        attributes: crate::datadogV2::FastlyAccountCreateRequestAttributes,
+        type_: crate::datadogV2::FastlyAccountType,
+    ) -> FastlyAccountCreateRequestData {
+        FastlyAccountCreateRequestData {
+            attributes: Box::new(attributes),
+            type_: type_,
+        }
+    }
 }

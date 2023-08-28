@@ -6,5 +6,14 @@
 pub struct FastlyServiceRequest {
     /* Data object for Fastly service requests. */
     #[serde(rename = "data")]
-    pub data: FastlyServiceData,
+    pub data: Box<crate::datadogV2::FastlyServiceData>,
+}
+
+impl FastlyServiceRequest {
+    /* Payload schema for Fastly service requests. */
+    pub fn new(data: crate::datadogV2::FastlyServiceData) -> FastlyServiceRequest {
+        FastlyServiceRequest {
+            data: Box::new(data),
+        }
+    }
 }

@@ -4,13 +4,12 @@
 
 use reqwest;
 
-use super::{configuration, Error};
-use crate::apis::ResponseContent;
+use crate::datadog::*;
 
 // CreateFastlyAccountParams is a struct for passing parameters to the method [`CreateFastlyAccount`]
 #[derive(Clone, Debug)]
 pub struct CreateFastlyAccountParams {
-    pub body: FastlyAccountCreateRequest,
+    pub body: crate::datadogV2::FastlyAccountCreateRequest,
 }
 
 // CreateFastlyServiceParams is a struct for passing parameters to the method [`CreateFastlyService`]
@@ -18,7 +17,7 @@ pub struct CreateFastlyAccountParams {
 pub struct CreateFastlyServiceParams {
     /* Fastly Account id. */
     pub account_id: String,
-    pub body: FastlyServiceRequest,
+    pub body: crate::datadogV2::FastlyServiceRequest,
 }
 
 // DeleteFastlyAccountParams is a struct for passing parameters to the method [`DeleteFastlyAccount`]
@@ -65,7 +64,7 @@ pub struct ListFastlyServicesParams {
 pub struct UpdateFastlyAccountParams {
     /* Fastly Account id. */
     pub account_id: String,
-    pub body: FastlyAccountUpdateRequest,
+    pub body: crate::datadogV2::FastlyAccountUpdateRequest,
 }
 
 // UpdateFastlyServiceParams is a struct for passing parameters to the method [`UpdateFastlyService`]
@@ -75,17 +74,17 @@ pub struct UpdateFastlyServiceParams {
     pub account_id: String,
     /* Fastly Service ID. */
     pub service_id: String,
-    pub body: FastlyServiceRequest,
+    pub body: crate::datadogV2::FastlyServiceRequest,
 }
 
 /// CreateFastlyAccountError is a struct for typed errors of method [`CreateFastlyAccount`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateFastlyAccountError {
-    Status400(APIErrorResponse),
-    Status403(APIErrorResponse),
-    Status404(APIErrorResponse),
-    Status429(APIErrorResponse),
+    Status400(crate::datadogV2::APIErrorResponse),
+    Status403(crate::datadogV2::APIErrorResponse),
+    Status404(crate::datadogV2::APIErrorResponse),
+    Status429(crate::datadogV2::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -93,10 +92,10 @@ pub enum CreateFastlyAccountError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateFastlyServiceError {
-    Status400(APIErrorResponse),
-    Status403(APIErrorResponse),
-    Status404(APIErrorResponse),
-    Status429(APIErrorResponse),
+    Status400(crate::datadogV2::APIErrorResponse),
+    Status403(crate::datadogV2::APIErrorResponse),
+    Status404(crate::datadogV2::APIErrorResponse),
+    Status429(crate::datadogV2::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -104,10 +103,10 @@ pub enum CreateFastlyServiceError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteFastlyAccountError {
-    Status400(APIErrorResponse),
-    Status403(APIErrorResponse),
-    Status404(APIErrorResponse),
-    Status429(APIErrorResponse),
+    Status400(crate::datadogV2::APIErrorResponse),
+    Status403(crate::datadogV2::APIErrorResponse),
+    Status404(crate::datadogV2::APIErrorResponse),
+    Status429(crate::datadogV2::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -115,10 +114,10 @@ pub enum DeleteFastlyAccountError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteFastlyServiceError {
-    Status400(APIErrorResponse),
-    Status403(APIErrorResponse),
-    Status404(APIErrorResponse),
-    Status429(APIErrorResponse),
+    Status400(crate::datadogV2::APIErrorResponse),
+    Status403(crate::datadogV2::APIErrorResponse),
+    Status404(crate::datadogV2::APIErrorResponse),
+    Status429(crate::datadogV2::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -126,10 +125,10 @@ pub enum DeleteFastlyServiceError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetFastlyAccountError {
-    Status400(APIErrorResponse),
-    Status403(APIErrorResponse),
-    Status404(APIErrorResponse),
-    Status429(APIErrorResponse),
+    Status400(crate::datadogV2::APIErrorResponse),
+    Status403(crate::datadogV2::APIErrorResponse),
+    Status404(crate::datadogV2::APIErrorResponse),
+    Status429(crate::datadogV2::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -137,10 +136,10 @@ pub enum GetFastlyAccountError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetFastlyServiceError {
-    Status400(APIErrorResponse),
-    Status403(APIErrorResponse),
-    Status404(APIErrorResponse),
-    Status429(APIErrorResponse),
+    Status400(crate::datadogV2::APIErrorResponse),
+    Status403(crate::datadogV2::APIErrorResponse),
+    Status404(crate::datadogV2::APIErrorResponse),
+    Status429(crate::datadogV2::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -148,10 +147,10 @@ pub enum GetFastlyServiceError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListFastlyAccountsError {
-    Status400(APIErrorResponse),
-    Status403(APIErrorResponse),
-    Status404(APIErrorResponse),
-    Status429(APIErrorResponse),
+    Status400(crate::datadogV2::APIErrorResponse),
+    Status403(crate::datadogV2::APIErrorResponse),
+    Status404(crate::datadogV2::APIErrorResponse),
+    Status429(crate::datadogV2::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -159,10 +158,10 @@ pub enum ListFastlyAccountsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListFastlyServicesError {
-    Status400(APIErrorResponse),
-    Status403(APIErrorResponse),
-    Status404(APIErrorResponse),
-    Status429(APIErrorResponse),
+    Status400(crate::datadogV2::APIErrorResponse),
+    Status403(crate::datadogV2::APIErrorResponse),
+    Status404(crate::datadogV2::APIErrorResponse),
+    Status429(crate::datadogV2::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -170,10 +169,10 @@ pub enum ListFastlyServicesError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateFastlyAccountError {
-    Status400(APIErrorResponse),
-    Status403(APIErrorResponse),
-    Status404(APIErrorResponse),
-    Status429(APIErrorResponse),
+    Status400(crate::datadogV2::APIErrorResponse),
+    Status403(crate::datadogV2::APIErrorResponse),
+    Status404(crate::datadogV2::APIErrorResponse),
+    Status429(crate::datadogV2::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -181,9 +180,9 @@ pub enum UpdateFastlyAccountError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateFastlyServiceError {
-    Status400(APIErrorResponse),
-    Status403(APIErrorResponse),
-    Status404(APIErrorResponse),
-    Status429(APIErrorResponse),
+    Status400(crate::datadogV2::APIErrorResponse),
+    Status403(crate::datadogV2::APIErrorResponse),
+    Status404(crate::datadogV2::APIErrorResponse),
+    Status429(crate::datadogV2::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }

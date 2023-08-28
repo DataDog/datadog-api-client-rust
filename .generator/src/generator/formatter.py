@@ -97,12 +97,12 @@ def variable_name(attribute):
     return escape_reserved_keyword(snake_case(attribute))
 
 
-def format_value(value, quotes='"', schema=None):
+def format_value(value, quotes='"', schema=None, version=None):
     if schema and "enum" in schema:
         index = schema["enum"].index(value)
         enum_varnames = schema["x-enum-varnames"][index]
         name = schema_name(schema)
-        return f"{name.upper()}_{enum_varnames}"
+        return f"crate::datadog{version.upper()}::{name}::{enum_varnames}"
 
     if isinstance(value, str):
         return f"{quotes}{value}{quotes}"
