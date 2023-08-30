@@ -4,13 +4,13 @@
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FastlyAccountUpdateRequest {
-    /* Data object for updating a Fastly account. */
+    /// Data object for updating a Fastly account.
     #[serde(rename = "data")]
     pub data: Box<crate::datadogV2::FastlyAccountUpdateRequestData>,
 }
 
 impl FastlyAccountUpdateRequest {
-    /* Payload schema when updating a Fastly account. */
+    /// Payload schema when updating a Fastly account.
     pub fn new(
         data: crate::datadogV2::FastlyAccountUpdateRequestData,
     ) -> FastlyAccountUpdateRequest {

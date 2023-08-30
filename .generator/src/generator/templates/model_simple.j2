@@ -5,9 +5,9 @@ pub struct {{ name }} {
 {%- set dataType = get_type(schema, alternative_name=name + propertyName, render_nullable=True, render_box=True, version=version) %}
 {%- set required = attr in model.required %}
 {%- set isNullable = schema.get("nullable", False)%}
-    /* {{ schema.description }} */
+    {{ schema.description | block_comment }}
 {%- if schema.deprecated %}
-	// Deprecated
+	#[deprecated]
 {%- endif %}
     #[serde(rename = "{{ attr }}"{% if not required %}{% if isNullable %}, default, with = "::serde_with::rust::double_option"{% endif %}{% endif %}{% if not required %}, skip_serializing_if = "Option::is_none"{% endif %}{% if not required %}{% if isNullable %}, deserialize_with = "Option::deserialize"{% endif %}{% endif %})]
     {%- if attr in model.get("required", []) %}
@@ -19,7 +19,7 @@ pub struct {{ name }} {
 }
 
 impl {{ name }} {
-    /* {{ model.description }} */
+    {{ model.description | block_comment }}
     pub fn new({% for attr, schema in model.get("properties", {}).items() if attr in model.required %}{%- set propertyName = attr|variable_name %}{%- set dataType = get_type(schema, alternative_name=name + propertyName, render_nullable=True, version=version) %}{%- set isNullable = schema.get("nullable", False)%}{{propertyName}}: {{ dataType }}{%- if not loop.last %}, {% endif %}{% endfor %}) -> {{ name }} {
         {{ name }} {
             {%- for attr, schema in model.get("properties", {}).items() %}

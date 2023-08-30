@@ -9,8 +9,8 @@ pub struct Configuration {
     pub base_path: String,
     pub user_agent: Option<String>,
     pub client: reqwest::Client,
-    pub api_key: Option<String>,
-    pub app_key: Option<String>,
+    pub api_key_auth: Option<String>,
+    pub app_key_auth: Option<String>,
 }
 
 impl Configuration {
@@ -32,8 +32,8 @@ impl Default for Configuration {
                 sdk_version, "", OS, ARCH
             )),
             client: reqwest::Client::new(),
-            api_key: None,
-            app_key: None,
+            api_key_auth: None,
+            app_key_auth: None,
         }
     }
 }

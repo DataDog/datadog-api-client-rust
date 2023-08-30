@@ -6,73 +6,73 @@ use reqwest;
 
 use crate::datadog::*;
 
-// CreateFastlyAccountParams is a struct for passing parameters to the method [`CreateFastlyAccount`]
+/// CreateFastlyAccountParams is a struct for passing parameters to the method [`CreateFastlyAccount`]
 #[derive(Clone, Debug)]
 pub struct CreateFastlyAccountParams {
     pub body: crate::datadogV2::FastlyAccountCreateRequest,
 }
 
-// CreateFastlyServiceParams is a struct for passing parameters to the method [`CreateFastlyService`]
+/// CreateFastlyServiceParams is a struct for passing parameters to the method [`CreateFastlyService`]
 #[derive(Clone, Debug)]
 pub struct CreateFastlyServiceParams {
-    /* Fastly Account id. */
+    /// Fastly Account id.
     pub account_id: String,
     pub body: crate::datadogV2::FastlyServiceRequest,
 }
 
-// DeleteFastlyAccountParams is a struct for passing parameters to the method [`DeleteFastlyAccount`]
+/// DeleteFastlyAccountParams is a struct for passing parameters to the method [`DeleteFastlyAccount`]
 #[derive(Clone, Debug)]
 pub struct DeleteFastlyAccountParams {
-    /* Fastly Account id. */
+    /// Fastly Account id.
     pub account_id: String,
 }
 
-// DeleteFastlyServiceParams is a struct for passing parameters to the method [`DeleteFastlyService`]
+/// DeleteFastlyServiceParams is a struct for passing parameters to the method [`DeleteFastlyService`]
 #[derive(Clone, Debug)]
 pub struct DeleteFastlyServiceParams {
-    /* Fastly Account id. */
+    /// Fastly Account id.
     pub account_id: String,
-    /* Fastly Service ID. */
+    /// Fastly Service ID.
     pub service_id: String,
 }
 
-// GetFastlyAccountParams is a struct for passing parameters to the method [`GetFastlyAccount`]
+/// GetFastlyAccountParams is a struct for passing parameters to the method [`GetFastlyAccount`]
 #[derive(Clone, Debug)]
 pub struct GetFastlyAccountParams {
-    /* Fastly Account id. */
+    /// Fastly Account id.
     pub account_id: String,
 }
 
-// GetFastlyServiceParams is a struct for passing parameters to the method [`GetFastlyService`]
+/// GetFastlyServiceParams is a struct for passing parameters to the method [`GetFastlyService`]
 #[derive(Clone, Debug)]
 pub struct GetFastlyServiceParams {
-    /* Fastly Account id. */
+    /// Fastly Account id.
     pub account_id: String,
-    /* Fastly Service ID. */
+    /// Fastly Service ID.
     pub service_id: String,
 }
 
-// ListFastlyServicesParams is a struct for passing parameters to the method [`ListFastlyServices`]
+/// ListFastlyServicesParams is a struct for passing parameters to the method [`ListFastlyServices`]
 #[derive(Clone, Debug)]
 pub struct ListFastlyServicesParams {
-    /* Fastly Account id. */
+    /// Fastly Account id.
     pub account_id: String,
 }
 
-// UpdateFastlyAccountParams is a struct for passing parameters to the method [`UpdateFastlyAccount`]
+/// UpdateFastlyAccountParams is a struct for passing parameters to the method [`UpdateFastlyAccount`]
 #[derive(Clone, Debug)]
 pub struct UpdateFastlyAccountParams {
-    /* Fastly Account id. */
+    /// Fastly Account id.
     pub account_id: String,
     pub body: crate::datadogV2::FastlyAccountUpdateRequest,
 }
 
-// UpdateFastlyServiceParams is a struct for passing parameters to the method [`UpdateFastlyService`]
+/// UpdateFastlyServiceParams is a struct for passing parameters to the method [`UpdateFastlyService`]
 #[derive(Clone, Debug)]
 pub struct UpdateFastlyServiceParams {
-    /* Fastly Account id. */
+    /// Fastly Account id.
     pub account_id: String,
-    /* Fastly Service ID. */
+    /// Fastly Service ID.
     pub service_id: String,
     pub body: crate::datadogV2::FastlyServiceRequest,
 }
@@ -185,4 +185,362 @@ pub enum UpdateFastlyServiceError {
     Status404(crate::datadogV2::APIErrorResponse),
     Status429(crate::datadogV2::APIErrorResponse),
     UnknownValue(serde_json::Value),
+}
+
+/// Create a Fastly account.
+
+pub async fn CreateFastlyAccount(
+    configuration: &configuration::Configuration,
+    params: CreateFastlyAccountParams,
+) -> Result<crate::datadogV2::FastlyAccountResponse, Error<CreateFastlyAccountError>> {
+    let local_configuration = configuration;
+
+    // unbox the parameters
+    let body = params.body;
+
+    let local_client = &local_configuration.client;
+
+    let local_uri_str = format!(
+        "{}/api/v2/integrations/fastly/accounts",
+        local_configuration.base_path
+    );
+    let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+    if let Some(ref local_user_agent) = local_configuration.user_agent {
+        local_req_builder =
+            local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+    }
+
+    if let Some(ref local_apikey) = local_configuration.api_key_auth {
+        local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+    };
+    if let Some(ref local_apikey) = local_configuration.app_key_auth {
+        local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+    };
+
+    // serde_json::from_str(&local_content).map_err(Error::from)
+    serde_json::from_str("{}").map_err(Error::from)
+}
+/// Create a Fastly service for an account.
+
+pub async fn CreateFastlyService(
+    configuration: &configuration::Configuration,
+    params: CreateFastlyServiceParams,
+) -> Result<crate::datadogV2::FastlyServiceResponse, Error<CreateFastlyServiceError>> {
+    let local_configuration = configuration;
+
+    // unbox the parameters
+    let account_id = params.account_id;
+    let body = params.body;
+
+    let local_client = &local_configuration.client;
+
+    let local_uri_str = format!(
+        "{}/api/v2/integrations/fastly/accounts/{account_id}/services",
+        local_configuration.base_path,
+        account_id = urlencode(account_id)
+    );
+    let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+    if let Some(ref local_user_agent) = local_configuration.user_agent {
+        local_req_builder =
+            local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+    }
+
+    if let Some(ref local_apikey) = local_configuration.api_key_auth {
+        local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+    };
+    if let Some(ref local_apikey) = local_configuration.app_key_auth {
+        local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+    };
+
+    // serde_json::from_str(&local_content).map_err(Error::from)
+    serde_json::from_str("{}").map_err(Error::from)
+}
+/// Delete a Fastly account.
+
+pub async fn DeleteFastlyAccount(
+    configuration: &configuration::Configuration,
+    params: DeleteFastlyAccountParams,
+) -> Result<(), Error<DeleteFastlyAccountError>> {
+    let local_configuration = configuration;
+
+    // unbox the parameters
+    let account_id = params.account_id;
+
+    let local_client = &local_configuration.client;
+
+    let local_uri_str = format!(
+        "{}/api/v2/integrations/fastly/accounts/{account_id}",
+        local_configuration.base_path,
+        account_id = urlencode(account_id)
+    );
+    let mut local_req_builder =
+        local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+    if let Some(ref local_user_agent) = local_configuration.user_agent {
+        local_req_builder =
+            local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+    }
+
+    if let Some(ref local_apikey) = local_configuration.api_key_auth {
+        local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+    };
+    if let Some(ref local_apikey) = local_configuration.app_key_auth {
+        local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+    };
+
+    Ok(())
+}
+/// Delete a Fastly service for an account.
+
+pub async fn DeleteFastlyService(
+    configuration: &configuration::Configuration,
+    params: DeleteFastlyServiceParams,
+) -> Result<(), Error<DeleteFastlyServiceError>> {
+    let local_configuration = configuration;
+
+    // unbox the parameters
+    let account_id = params.account_id;
+    let service_id = params.service_id;
+
+    let local_client = &local_configuration.client;
+
+    let local_uri_str = format!(
+        "{}/api/v2/integrations/fastly/accounts/{account_id}/services/{service_id}",
+        local_configuration.base_path,
+        account_id = urlencode(account_id),
+        service_id = urlencode(service_id)
+    );
+    let mut local_req_builder =
+        local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+    if let Some(ref local_user_agent) = local_configuration.user_agent {
+        local_req_builder =
+            local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+    }
+
+    if let Some(ref local_apikey) = local_configuration.api_key_auth {
+        local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+    };
+    if let Some(ref local_apikey) = local_configuration.app_key_auth {
+        local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+    };
+
+    Ok(())
+}
+/// Get a Fastly account.
+
+pub async fn GetFastlyAccount(
+    configuration: &configuration::Configuration,
+    params: GetFastlyAccountParams,
+) -> Result<crate::datadogV2::FastlyAccountResponse, Error<GetFastlyAccountError>> {
+    let local_configuration = configuration;
+
+    // unbox the parameters
+    let account_id = params.account_id;
+
+    let local_client = &local_configuration.client;
+
+    let local_uri_str = format!(
+        "{}/api/v2/integrations/fastly/accounts/{account_id}",
+        local_configuration.base_path,
+        account_id = urlencode(account_id)
+    );
+    let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+    if let Some(ref local_user_agent) = local_configuration.user_agent {
+        local_req_builder =
+            local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+    }
+
+    if let Some(ref local_apikey) = local_configuration.api_key_auth {
+        local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+    };
+    if let Some(ref local_apikey) = local_configuration.app_key_auth {
+        local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+    };
+
+    // serde_json::from_str(&local_content).map_err(Error::from)
+    serde_json::from_str("{}").map_err(Error::from)
+}
+/// Get a Fastly service for an account.
+
+pub async fn GetFastlyService(
+    configuration: &configuration::Configuration,
+    params: GetFastlyServiceParams,
+) -> Result<crate::datadogV2::FastlyServiceResponse, Error<GetFastlyServiceError>> {
+    let local_configuration = configuration;
+
+    // unbox the parameters
+    let account_id = params.account_id;
+    let service_id = params.service_id;
+
+    let local_client = &local_configuration.client;
+
+    let local_uri_str = format!(
+        "{}/api/v2/integrations/fastly/accounts/{account_id}/services/{service_id}",
+        local_configuration.base_path,
+        account_id = urlencode(account_id),
+        service_id = urlencode(service_id)
+    );
+    let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+    if let Some(ref local_user_agent) = local_configuration.user_agent {
+        local_req_builder =
+            local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+    }
+
+    if let Some(ref local_apikey) = local_configuration.api_key_auth {
+        local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+    };
+    if let Some(ref local_apikey) = local_configuration.app_key_auth {
+        local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+    };
+
+    // serde_json::from_str(&local_content).map_err(Error::from)
+    serde_json::from_str("{}").map_err(Error::from)
+}
+/// List Fastly accounts.
+
+pub async fn ListFastlyAccounts(
+    configuration: &configuration::Configuration,
+) -> Result<crate::datadogV2::FastlyAccountsResponse, Error<ListFastlyAccountsError>> {
+    let local_configuration = configuration;
+
+    // unbox the parameters
+
+    let local_client = &local_configuration.client;
+
+    let local_uri_str = format!(
+        "{}/api/v2/integrations/fastly/accounts",
+        local_configuration.base_path
+    );
+    let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+    if let Some(ref local_user_agent) = local_configuration.user_agent {
+        local_req_builder =
+            local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+    }
+
+    if let Some(ref local_apikey) = local_configuration.api_key_auth {
+        local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+    };
+    if let Some(ref local_apikey) = local_configuration.app_key_auth {
+        local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+    };
+
+    // serde_json::from_str(&local_content).map_err(Error::from)
+    serde_json::from_str("{}").map_err(Error::from)
+}
+/// List Fastly services for an account.
+
+pub async fn ListFastlyServices(
+    configuration: &configuration::Configuration,
+    params: ListFastlyServicesParams,
+) -> Result<crate::datadogV2::FastlyServicesResponse, Error<ListFastlyServicesError>> {
+    let local_configuration = configuration;
+
+    // unbox the parameters
+    let account_id = params.account_id;
+
+    let local_client = &local_configuration.client;
+
+    let local_uri_str = format!(
+        "{}/api/v2/integrations/fastly/accounts/{account_id}/services",
+        local_configuration.base_path,
+        account_id = urlencode(account_id)
+    );
+    let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+    if let Some(ref local_user_agent) = local_configuration.user_agent {
+        local_req_builder =
+            local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+    }
+
+    if let Some(ref local_apikey) = local_configuration.api_key_auth {
+        local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+    };
+    if let Some(ref local_apikey) = local_configuration.app_key_auth {
+        local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+    };
+
+    // serde_json::from_str(&local_content).map_err(Error::from)
+    serde_json::from_str("{}").map_err(Error::from)
+}
+/// Update a Fastly account.
+
+pub async fn UpdateFastlyAccount(
+    configuration: &configuration::Configuration,
+    params: UpdateFastlyAccountParams,
+) -> Result<crate::datadogV2::FastlyAccountResponse, Error<UpdateFastlyAccountError>> {
+    let local_configuration = configuration;
+
+    // unbox the parameters
+    let account_id = params.account_id;
+    let body = params.body;
+
+    let local_client = &local_configuration.client;
+
+    let local_uri_str = format!(
+        "{}/api/v2/integrations/fastly/accounts/{account_id}",
+        local_configuration.base_path,
+        account_id = urlencode(account_id)
+    );
+    let mut local_req_builder =
+        local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+    if let Some(ref local_user_agent) = local_configuration.user_agent {
+        local_req_builder =
+            local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+    }
+
+    if let Some(ref local_apikey) = local_configuration.api_key_auth {
+        local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+    };
+    if let Some(ref local_apikey) = local_configuration.app_key_auth {
+        local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+    };
+
+    // serde_json::from_str(&local_content).map_err(Error::from)
+    serde_json::from_str("{}").map_err(Error::from)
+}
+/// Update a Fastly service for an account.
+
+pub async fn UpdateFastlyService(
+    configuration: &configuration::Configuration,
+    params: UpdateFastlyServiceParams,
+) -> Result<crate::datadogV2::FastlyServiceResponse, Error<UpdateFastlyServiceError>> {
+    let local_configuration = configuration;
+
+    // unbox the parameters
+    let account_id = params.account_id;
+    let service_id = params.service_id;
+    let body = params.body;
+
+    let local_client = &local_configuration.client;
+
+    let local_uri_str = format!(
+        "{}/api/v2/integrations/fastly/accounts/{account_id}/services/{service_id}",
+        local_configuration.base_path,
+        account_id = urlencode(account_id),
+        service_id = urlencode(service_id)
+    );
+    let mut local_req_builder =
+        local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+    if let Some(ref local_user_agent) = local_configuration.user_agent {
+        local_req_builder =
+            local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+    }
+
+    if let Some(ref local_apikey) = local_configuration.api_key_auth {
+        local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+    };
+    if let Some(ref local_apikey) = local_configuration.app_key_auth {
+        local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+    };
+
+    // serde_json::from_str(&local_content).map_err(Error::from)
+    serde_json::from_str("{}").map_err(Error::from)
 }

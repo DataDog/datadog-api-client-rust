@@ -4,13 +4,13 @@
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FastlyServiceResponse {
-    /* Data object for Fastly service requests. */
+    /// Data object for Fastly service requests.
     #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
     pub data: Option<Box<crate::datadogV2::FastlyServiceData>>,
 }
 
 impl FastlyServiceResponse {
-    /* The expected response schema when getting a Fastly service. */
+    /// The expected response schema when getting a Fastly service.
     pub fn new() -> FastlyServiceResponse {
         FastlyServiceResponse { data: None }
     }

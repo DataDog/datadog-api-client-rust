@@ -1,4 +1,6 @@
-/// {{description}}
+{%- if description is defined %}
+{{ description | block_comment }}
+{%- endif %}
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum {{name}} {
 {%- for index, value in enumerate(model.enum) %}

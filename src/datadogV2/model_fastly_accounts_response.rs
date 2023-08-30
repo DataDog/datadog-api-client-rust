@@ -4,13 +4,13 @@
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FastlyAccountsResponse {
-    /* The JSON:API data schema. */
+    /// The JSON:API data schema.
     #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
     pub data: Option<Vec<crate::datadogV2::FastlyAccountResponseData>>,
 }
 
 impl FastlyAccountsResponse {
-    /* The expected response schema when getting Fastly accounts. */
+    /// The expected response schema when getting Fastly accounts.
     pub fn new() -> FastlyAccountsResponse {
         FastlyAccountsResponse { data: None }
     }

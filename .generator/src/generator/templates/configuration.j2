@@ -7,8 +7,18 @@ pub struct Configuration {
     pub base_path: String,
     pub user_agent: Option<String>,
     pub client: reqwest::Client,
-    pub api_key: Option<String>,
-    pub app_key: Option<String>,
+    {%- set authMethods = openapi.security %}
+	{%- if authMethods %}
+	{%- for authMethod in authMethods %}
+	{%- for name in authMethod %}
+	{%- set schema = openapi.components.securitySchemes[name] %}
+	{%- if schema.type == "apiKey" and schema.in != "cookie" %}
+    pub {{name|variable_name}}: Option<String>,
+	{%- endif %}
+	{%- endfor %}
+	{%- endfor %}
+	{%- endif %}
+
 }
 
 impl Configuration {
@@ -27,8 +37,17 @@ impl Default for Configuration {
             base_path: "https://api.datadoghq.com".to_owned(),
             user_agent: Some(format!("datadog-api-client-rust/{} (rust {}; os {}; arch {})", sdk_version, "", OS, ARCH)),
             client: reqwest::Client::new(),
-            api_key: None,
-            app_key: None,
+            {%- set authMethods = openapi.security %}
+            {%- if authMethods %}
+            {%- for authMethod in authMethods %}
+            {%- for name in authMethod %}
+            {%- set schema = openapi.components.securitySchemes[name] %}
+            {%- if schema.type == "apiKey" and schema.in != "cookie" %}
+            {{name|variable_name}}: None,
+            {%- endif %}
+            {%- endfor %}
+            {%- endfor %}
+            {%- endif %}
         }
     }
 }

@@ -2,6 +2,7 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 #![allow(non_camel_case_types)]
+#![allow(non_snake_case)]
 #[macro_use]
 extern crate serde_derive;
 

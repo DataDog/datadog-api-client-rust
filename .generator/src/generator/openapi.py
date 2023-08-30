@@ -297,11 +297,11 @@ def parameter_schema(parameter):
     raise ValueError(f"Unknown schema for parameter {parameter}")
 
 
-def return_type(operation):
+def return_type(operation, version):
     for response in operation.get("responses", {}).values():
         for content in response.get("content", {}).values():
             if "schema" in content:
-                return type_to_go(content["schema"])
+                return type_to_go(content["schema"], version=version)
         return
 
 
