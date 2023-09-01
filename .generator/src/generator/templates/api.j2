@@ -1,13 +1,14 @@
 {% include "partial_header.j2" %}
 
+use log::{debug};
 use reqwest;
-
 use crate::datadog::*;
 
 {% for path, method, operation in operations|sort(attribute="2.operationId", case_sensitive=True) %}
 {%- set httpMethod = method.upper() %}
 {%- set returnType = operation|return_type(version) %}
 {%- set formParameter = operation|form_parameter %}
+{%- set optionalBody = False if "required" in operation.requestBody and operation.requestBody.required else True %}
 
 {%- for name, parameter in operation|parameters %}
 {%- if loop.first %}
@@ -18,7 +19,11 @@ pub struct {{operation.operationId}}Params {
     {%- if parameter.description is defined %}
     {{parameter.description | block_comment}}
     {%- endif %}
+	{%- if optionalBody and name == operation.get("x-codegen-request-body-name", "body") %}
+    pub {{name|variable_name}}: Option<{{ get_type_for_parameter(parameter, version) }}>,
+    {%- else %}
     pub {{name|variable_name}}: {{ get_type_for_parameter(parameter, version) }},
+    {%- endif %}
 {%- if loop.last %}
 }
 {% endif %}
@@ -41,15 +46,14 @@ pub enum {{operation.operationId}}Error {
     {%- endfor %}
     UnknownValue(serde_json::Value),
 }
-{%- endfor %}
+{% endfor %}
 
 {% for path, method, operation in operations|sort(attribute="2.operationId", case_sensitive=True) %}
 {%- set httpMethod = method.upper() %}
 {%- set returnType = operation|return_type(version) %}
-{%- if operation.description is defined %}
+{% if operation.description is defined %}
 {{ operation.description | block_comment }}
 {%- endif %}
-
 pub async fn {{operation.operationId}}(configuration: &configuration::Configuration{% for name, parameter in operation|parameters %}{% if loop.first %}, params: {{operation.operationId}}Params{% endif %}{% endfor %}) -> Result<{% if returnType %}{{returnType}}{% else %}(){% endif %}, Error<{{operation.operationId}}Error>> {
     let local_configuration = configuration;
 
@@ -250,14 +254,21 @@ pub async fn {{operation.operationId}}(configuration: &configuration::Configurat
     local_req_builder = local_req_builder.form(&local_form_params);
     {{/hasFormParams}}
     {{/isMultipart}}
-    {{#hasBodyParam}}
-    {{#bodyParams}}
-    local_req_builder = local_req_builder.json(&{{{paramName}}});
-    {{/bodyParams}}
-    {{/hasBodyParam}}
+#}
+    {%- if operation.requestBody is defined and not formParameter %}
+    {%- set isBodyOptional = False if "required" in operation.requestBody and operation.requestBody.required else True %}
+	// body params
+	{%- if isBodyOptional %}
+	if {{operation.get("x-codegen-request-body-name", "body")|variable_name}}.is_some() {
+        local_req_builder = local_req_builder.json(&{{operation.get("x-codegen-request-body-name", "body")|variable_name}}.unwrap());
+	}
+	{%- else %}
+    local_req_builder = local_req_builder.json(&{{operation.get("x-codegen-request-body-name", "body")|variable_name}});
+	{%- endif %}
+	{%- endif %}
 
     let local_req = local_req_builder.build()?;
-    let {{^supportAsync}}mut local_resp = local_client.execute(local_req).await?;
+    let local_resp = local_client.execute(local_req).await?;
 
     let local_status = local_resp.status();
     let local_content = local_resp.text().await?;
@@ -269,16 +280,9 @@ pub async fn {{operation.operationId}}(configuration: &configuration::Configurat
         Ok(())
         {% endif %}
     } else {
-        let local_entity: Option<{{{operationIdCamelCase}}}Error> = serde_json::from_str(&local_content).ok();
+        let local_entity: Option<{{operation.operationId}}Error> = serde_json::from_str(&local_content).ok();
         let local_error = ResponseContent { status: local_status, content: local_content, entity: local_entity };
         Err(Error::ResponseError(local_error))
     }
-#}
-    {%- if returnType %}
-    // serde_json::from_str(&local_content).map_err(Error::from)
-    serde_json::from_str("{}").map_err(Error::from)
-    {% else %}
-    Ok(())
-    {% endif %}
 }
 {%- endfor %}

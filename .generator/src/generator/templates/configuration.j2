@@ -1,6 +1,6 @@
 {% include "partial_header.j2" %}
-use std::env::consts::{ARCH, OS};
-use std::env::var;
+use rustc_version::{version, Version};
+use std::env;
 
 #[derive(Debug, Clone)]
 pub struct Configuration {
@@ -29,13 +29,15 @@ impl Configuration {
 
 impl Default for Configuration {
     fn default() -> Self {
-        let sdk_version = match var("CARGO_PKG_VERSION") {
-            Ok(v) => v,
-            Err(_) => "0.0.0".to_owned()
-        };
         Configuration {
             base_path: "https://api.datadoghq.com".to_owned(),
-            user_agent: Some(format!("datadog-api-client-rust/{} (rust {}; os {}; arch {})", sdk_version, "", OS, ARCH)),
+            user_agent: Some(format!(
+                "datadog-api-client-rust/{} (rust {}; os {}; arch {})",
+                env::var("CARGO_PKG_VERSION").unwrap_or("?".to_owned()),
+                version().unwrap_or(Version::new(0, 0, 0)),
+                env::consts::OS,
+                env::consts::ARCH,
+            )),
             client: reqwest::Client::new(),
             {%- set authMethods = openapi.security %}
             {%- if authMethods %}
@@ -43,7 +45,7 @@ impl Default for Configuration {
             {%- for name in authMethod %}
             {%- set schema = openapi.components.securitySchemes[name] %}
             {%- if schema.type == "apiKey" and schema.in != "cookie" %}
-            {{name|variable_name}}: None,
+            {{name|variable_name}}: env::var("{{ schema.get("x-env-name") }}").ok(),
             {%- endif %}
             {%- endfor %}
             {%- endfor %}

@@ -2,9 +2,9 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use reqwest;
-
 use crate::datadog::*;
+use log::debug;
+use reqwest;
 
 /// CreateFastlyAccountParams is a struct for passing parameters to the method [`CreateFastlyAccount`]
 #[derive(Clone, Debug)]
@@ -188,7 +188,6 @@ pub enum UpdateFastlyServiceError {
 }
 
 /// Create a Fastly account.
-
 pub async fn CreateFastlyAccount(
     configuration: &configuration::Configuration,
     params: CreateFastlyAccountParams,
@@ -218,11 +217,30 @@ pub async fn CreateFastlyAccount(
         local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
     };
 
-    // serde_json::from_str(&local_content).map_err(Error::from)
-    serde_json::from_str("{}").map_err(Error::from)
-}
-/// Create a Fastly service for an account.
+    // body params
+    local_req_builder = local_req_builder.json(&body);
 
+    let local_req = local_req_builder.build()?;
+    let local_resp = local_client.execute(local_req).await?;
+
+    let local_status = local_resp.status();
+    let local_content = local_resp.text().await?;
+
+    if !local_status.is_client_error() && !local_status.is_server_error() {
+        serde_json::from_str(&local_content).map_err(Error::from)
+    } else {
+        let local_entity: Option<CreateFastlyAccountError> =
+            serde_json::from_str(&local_content).ok();
+        let local_error = ResponseContent {
+            status: local_status,
+            content: local_content,
+            entity: local_entity,
+        };
+        Err(Error::ResponseError(local_error))
+    }
+}
+
+/// Create a Fastly service for an account.
 pub async fn CreateFastlyService(
     configuration: &configuration::Configuration,
     params: CreateFastlyServiceParams,
@@ -254,11 +272,30 @@ pub async fn CreateFastlyService(
         local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
     };
 
-    // serde_json::from_str(&local_content).map_err(Error::from)
-    serde_json::from_str("{}").map_err(Error::from)
-}
-/// Delete a Fastly account.
+    // body params
+    local_req_builder = local_req_builder.json(&body);
 
+    let local_req = local_req_builder.build()?;
+    let local_resp = local_client.execute(local_req).await?;
+
+    let local_status = local_resp.status();
+    let local_content = local_resp.text().await?;
+
+    if !local_status.is_client_error() && !local_status.is_server_error() {
+        serde_json::from_str(&local_content).map_err(Error::from)
+    } else {
+        let local_entity: Option<CreateFastlyServiceError> =
+            serde_json::from_str(&local_content).ok();
+        let local_error = ResponseContent {
+            status: local_status,
+            content: local_content,
+            entity: local_entity,
+        };
+        Err(Error::ResponseError(local_error))
+    }
+}
+
+/// Delete a Fastly account.
 pub async fn DeleteFastlyAccount(
     configuration: &configuration::Configuration,
     params: DeleteFastlyAccountParams,
@@ -290,10 +327,27 @@ pub async fn DeleteFastlyAccount(
         local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
     };
 
-    Ok(())
-}
-/// Delete a Fastly service for an account.
+    let local_req = local_req_builder.build()?;
+    let local_resp = local_client.execute(local_req).await?;
 
+    let local_status = local_resp.status();
+    let local_content = local_resp.text().await?;
+
+    if !local_status.is_client_error() && !local_status.is_server_error() {
+        Ok(())
+    } else {
+        let local_entity: Option<DeleteFastlyAccountError> =
+            serde_json::from_str(&local_content).ok();
+        let local_error = ResponseContent {
+            status: local_status,
+            content: local_content,
+            entity: local_entity,
+        };
+        Err(Error::ResponseError(local_error))
+    }
+}
+
+/// Delete a Fastly service for an account.
 pub async fn DeleteFastlyService(
     configuration: &configuration::Configuration,
     params: DeleteFastlyServiceParams,
@@ -327,10 +381,27 @@ pub async fn DeleteFastlyService(
         local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
     };
 
-    Ok(())
-}
-/// Get a Fastly account.
+    let local_req = local_req_builder.build()?;
+    let local_resp = local_client.execute(local_req).await?;
 
+    let local_status = local_resp.status();
+    let local_content = local_resp.text().await?;
+
+    if !local_status.is_client_error() && !local_status.is_server_error() {
+        Ok(())
+    } else {
+        let local_entity: Option<DeleteFastlyServiceError> =
+            serde_json::from_str(&local_content).ok();
+        let local_error = ResponseContent {
+            status: local_status,
+            content: local_content,
+            entity: local_entity,
+        };
+        Err(Error::ResponseError(local_error))
+    }
+}
+
+/// Get a Fastly account.
 pub async fn GetFastlyAccount(
     configuration: &configuration::Configuration,
     params: GetFastlyAccountParams,
@@ -361,11 +432,26 @@ pub async fn GetFastlyAccount(
         local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
     };
 
-    // serde_json::from_str(&local_content).map_err(Error::from)
-    serde_json::from_str("{}").map_err(Error::from)
-}
-/// Get a Fastly service for an account.
+    let local_req = local_req_builder.build()?;
+    let local_resp = local_client.execute(local_req).await?;
 
+    let local_status = local_resp.status();
+    let local_content = local_resp.text().await?;
+
+    if !local_status.is_client_error() && !local_status.is_server_error() {
+        serde_json::from_str(&local_content).map_err(Error::from)
+    } else {
+        let local_entity: Option<GetFastlyAccountError> = serde_json::from_str(&local_content).ok();
+        let local_error = ResponseContent {
+            status: local_status,
+            content: local_content,
+            entity: local_entity,
+        };
+        Err(Error::ResponseError(local_error))
+    }
+}
+
+/// Get a Fastly service for an account.
 pub async fn GetFastlyService(
     configuration: &configuration::Configuration,
     params: GetFastlyServiceParams,
@@ -398,11 +484,26 @@ pub async fn GetFastlyService(
         local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
     };
 
-    // serde_json::from_str(&local_content).map_err(Error::from)
-    serde_json::from_str("{}").map_err(Error::from)
-}
-/// List Fastly accounts.
+    let local_req = local_req_builder.build()?;
+    let local_resp = local_client.execute(local_req).await?;
 
+    let local_status = local_resp.status();
+    let local_content = local_resp.text().await?;
+
+    if !local_status.is_client_error() && !local_status.is_server_error() {
+        serde_json::from_str(&local_content).map_err(Error::from)
+    } else {
+        let local_entity: Option<GetFastlyServiceError> = serde_json::from_str(&local_content).ok();
+        let local_error = ResponseContent {
+            status: local_status,
+            content: local_content,
+            entity: local_entity,
+        };
+        Err(Error::ResponseError(local_error))
+    }
+}
+
+/// List Fastly accounts.
 pub async fn ListFastlyAccounts(
     configuration: &configuration::Configuration,
 ) -> Result<crate::datadogV2::FastlyAccountsResponse, Error<ListFastlyAccountsError>> {
@@ -430,11 +531,27 @@ pub async fn ListFastlyAccounts(
         local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
     };
 
-    // serde_json::from_str(&local_content).map_err(Error::from)
-    serde_json::from_str("{}").map_err(Error::from)
-}
-/// List Fastly services for an account.
+    let local_req = local_req_builder.build()?;
+    let local_resp = local_client.execute(local_req).await?;
 
+    let local_status = local_resp.status();
+    let local_content = local_resp.text().await?;
+
+    if !local_status.is_client_error() && !local_status.is_server_error() {
+        serde_json::from_str(&local_content).map_err(Error::from)
+    } else {
+        let local_entity: Option<ListFastlyAccountsError> =
+            serde_json::from_str(&local_content).ok();
+        let local_error = ResponseContent {
+            status: local_status,
+            content: local_content,
+            entity: local_entity,
+        };
+        Err(Error::ResponseError(local_error))
+    }
+}
+
+/// List Fastly services for an account.
 pub async fn ListFastlyServices(
     configuration: &configuration::Configuration,
     params: ListFastlyServicesParams,
@@ -465,11 +582,27 @@ pub async fn ListFastlyServices(
         local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
     };
 
-    // serde_json::from_str(&local_content).map_err(Error::from)
-    serde_json::from_str("{}").map_err(Error::from)
-}
-/// Update a Fastly account.
+    let local_req = local_req_builder.build()?;
+    let local_resp = local_client.execute(local_req).await?;
 
+    let local_status = local_resp.status();
+    let local_content = local_resp.text().await?;
+
+    if !local_status.is_client_error() && !local_status.is_server_error() {
+        serde_json::from_str(&local_content).map_err(Error::from)
+    } else {
+        let local_entity: Option<ListFastlyServicesError> =
+            serde_json::from_str(&local_content).ok();
+        let local_error = ResponseContent {
+            status: local_status,
+            content: local_content,
+            entity: local_entity,
+        };
+        Err(Error::ResponseError(local_error))
+    }
+}
+
+/// Update a Fastly account.
 pub async fn UpdateFastlyAccount(
     configuration: &configuration::Configuration,
     params: UpdateFastlyAccountParams,
@@ -502,11 +635,30 @@ pub async fn UpdateFastlyAccount(
         local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
     };
 
-    // serde_json::from_str(&local_content).map_err(Error::from)
-    serde_json::from_str("{}").map_err(Error::from)
-}
-/// Update a Fastly service for an account.
+    // body params
+    local_req_builder = local_req_builder.json(&body);
 
+    let local_req = local_req_builder.build()?;
+    let local_resp = local_client.execute(local_req).await?;
+
+    let local_status = local_resp.status();
+    let local_content = local_resp.text().await?;
+
+    if !local_status.is_client_error() && !local_status.is_server_error() {
+        serde_json::from_str(&local_content).map_err(Error::from)
+    } else {
+        let local_entity: Option<UpdateFastlyAccountError> =
+            serde_json::from_str(&local_content).ok();
+        let local_error = ResponseContent {
+            status: local_status,
+            content: local_content,
+            entity: local_entity,
+        };
+        Err(Error::ResponseError(local_error))
+    }
+}
+
+/// Update a Fastly service for an account.
 pub async fn UpdateFastlyService(
     configuration: &configuration::Configuration,
     params: UpdateFastlyServiceParams,
@@ -541,6 +693,25 @@ pub async fn UpdateFastlyService(
         local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
     };
 
-    // serde_json::from_str(&local_content).map_err(Error::from)
-    serde_json::from_str("{}").map_err(Error::from)
+    // body params
+    local_req_builder = local_req_builder.json(&body);
+
+    let local_req = local_req_builder.build()?;
+    let local_resp = local_client.execute(local_req).await?;
+
+    let local_status = local_resp.status();
+    let local_content = local_resp.text().await?;
+
+    if !local_status.is_client_error() && !local_status.is_server_error() {
+        serde_json::from_str(&local_content).map_err(Error::from)
+    } else {
+        let local_entity: Option<UpdateFastlyServiceError> =
+            serde_json::from_str(&local_content).ok();
+        let local_error = ResponseContent {
+            status: local_status,
+            content: local_content,
+            entity: local_entity,
+        };
+        Err(Error::ResponseError(local_error))
+    }
 }
