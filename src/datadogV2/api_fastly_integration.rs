@@ -3,17 +3,16 @@
 // Copyright 2019-Present Datadog, Inc.
 
 use crate::datadog::*;
-use log::debug;
 use reqwest;
 
 /// CreateFastlyAccountParams is a struct for passing parameters to the method [`CreateFastlyAccount`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct CreateFastlyAccountParams {
     pub body: crate::datadogV2::FastlyAccountCreateRequest,
 }
 
 /// CreateFastlyServiceParams is a struct for passing parameters to the method [`CreateFastlyService`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct CreateFastlyServiceParams {
     /// Fastly Account id.
     pub account_id: String,
@@ -21,14 +20,14 @@ pub struct CreateFastlyServiceParams {
 }
 
 /// DeleteFastlyAccountParams is a struct for passing parameters to the method [`DeleteFastlyAccount`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct DeleteFastlyAccountParams {
     /// Fastly Account id.
     pub account_id: String,
 }
 
 /// DeleteFastlyServiceParams is a struct for passing parameters to the method [`DeleteFastlyService`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct DeleteFastlyServiceParams {
     /// Fastly Account id.
     pub account_id: String,
@@ -37,14 +36,14 @@ pub struct DeleteFastlyServiceParams {
 }
 
 /// GetFastlyAccountParams is a struct for passing parameters to the method [`GetFastlyAccount`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct GetFastlyAccountParams {
     /// Fastly Account id.
     pub account_id: String,
 }
 
 /// GetFastlyServiceParams is a struct for passing parameters to the method [`GetFastlyService`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct GetFastlyServiceParams {
     /// Fastly Account id.
     pub account_id: String,
@@ -53,14 +52,14 @@ pub struct GetFastlyServiceParams {
 }
 
 /// ListFastlyServicesParams is a struct for passing parameters to the method [`ListFastlyServices`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct ListFastlyServicesParams {
     /// Fastly Account id.
     pub account_id: String,
 }
 
 /// UpdateFastlyAccountParams is a struct for passing parameters to the method [`UpdateFastlyAccount`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct UpdateFastlyAccountParams {
     /// Fastly Account id.
     pub account_id: String,
@@ -68,7 +67,7 @@ pub struct UpdateFastlyAccountParams {
 }
 
 /// UpdateFastlyServiceParams is a struct for passing parameters to the method [`UpdateFastlyService`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct UpdateFastlyServiceParams {
     /// Fastly Account id.
     pub account_id: String,

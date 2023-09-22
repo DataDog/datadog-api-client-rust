@@ -1,6 +1,5 @@
 {% include "partial_header.j2" %}
 
-use log::{debug};
 use reqwest;
 use crate::datadog::*;
 
@@ -13,7 +12,7 @@ use crate::datadog::*;
 {%- for name, parameter in operation|parameters %}
 {%- if loop.first %}
 /// {{ operation.operationId }}Params is a struct for passing parameters to the method [`{{operation.operationId}}`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct {{operation.operationId}}Params {
 {%- endif %}
     {%- if parameter.description is defined %}

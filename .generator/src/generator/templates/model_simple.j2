@@ -1,4 +1,4 @@
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct {{ name }} {
 {%- for attr, schema in model.get("properties", {}).items() %}
 {%- set propertyName = attr|variable_name %}
