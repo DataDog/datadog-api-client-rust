@@ -190,7 +190,8 @@ pub enum UpdateFastlyServiceError {
 pub async fn CreateFastlyAccount(
     configuration: &configuration::Configuration,
     params: CreateFastlyAccountParams,
-) -> Result<crate::datadogV2::FastlyAccountResponse, Error<CreateFastlyAccountError>> {
+) -> Result<ResponseContent<crate::datadogV2::FastlyAccountResponse>, Error<CreateFastlyAccountError>>
+{
     let local_configuration = configuration;
 
     // unbox the parameters
@@ -226,7 +227,11 @@ pub async fn CreateFastlyAccount(
     let local_content = local_resp.text().await?;
 
     if !local_status.is_client_error() && !local_status.is_server_error() {
-        serde_json::from_str(&local_content).map_err(Error::from)
+        Ok(ResponseContent {
+            status: local_status,
+            content: local_content.clone(),
+            entity: serde_json::from_str(&local_content).ok(),
+        })
     } else {
         let local_entity: Option<CreateFastlyAccountError> =
             serde_json::from_str(&local_content).ok();
@@ -243,7 +248,8 @@ pub async fn CreateFastlyAccount(
 pub async fn CreateFastlyService(
     configuration: &configuration::Configuration,
     params: CreateFastlyServiceParams,
-) -> Result<crate::datadogV2::FastlyServiceResponse, Error<CreateFastlyServiceError>> {
+) -> Result<ResponseContent<crate::datadogV2::FastlyServiceResponse>, Error<CreateFastlyServiceError>>
+{
     let local_configuration = configuration;
 
     // unbox the parameters
@@ -281,7 +287,11 @@ pub async fn CreateFastlyService(
     let local_content = local_resp.text().await?;
 
     if !local_status.is_client_error() && !local_status.is_server_error() {
-        serde_json::from_str(&local_content).map_err(Error::from)
+        Ok(ResponseContent {
+            status: local_status,
+            content: local_content.clone(),
+            entity: serde_json::from_str(&local_content).ok(),
+        })
     } else {
         let local_entity: Option<CreateFastlyServiceError> =
             serde_json::from_str(&local_content).ok();
@@ -298,7 +308,7 @@ pub async fn CreateFastlyService(
 pub async fn DeleteFastlyAccount(
     configuration: &configuration::Configuration,
     params: DeleteFastlyAccountParams,
-) -> Result<(), Error<DeleteFastlyAccountError>> {
+) -> Result<ResponseContent<()>, Error<DeleteFastlyAccountError>> {
     let local_configuration = configuration;
 
     // unbox the parameters
@@ -333,7 +343,11 @@ pub async fn DeleteFastlyAccount(
     let local_content = local_resp.text().await?;
 
     if !local_status.is_client_error() && !local_status.is_server_error() {
-        Ok(())
+        Ok(ResponseContent {
+            status: local_status,
+            content: local_content.clone(),
+            entity: None,
+        })
     } else {
         let local_entity: Option<DeleteFastlyAccountError> =
             serde_json::from_str(&local_content).ok();
@@ -350,7 +364,7 @@ pub async fn DeleteFastlyAccount(
 pub async fn DeleteFastlyService(
     configuration: &configuration::Configuration,
     params: DeleteFastlyServiceParams,
-) -> Result<(), Error<DeleteFastlyServiceError>> {
+) -> Result<ResponseContent<()>, Error<DeleteFastlyServiceError>> {
     let local_configuration = configuration;
 
     // unbox the parameters
@@ -387,7 +401,11 @@ pub async fn DeleteFastlyService(
     let local_content = local_resp.text().await?;
 
     if !local_status.is_client_error() && !local_status.is_server_error() {
-        Ok(())
+        Ok(ResponseContent {
+            status: local_status,
+            content: local_content.clone(),
+            entity: None,
+        })
     } else {
         let local_entity: Option<DeleteFastlyServiceError> =
             serde_json::from_str(&local_content).ok();
@@ -404,7 +422,8 @@ pub async fn DeleteFastlyService(
 pub async fn GetFastlyAccount(
     configuration: &configuration::Configuration,
     params: GetFastlyAccountParams,
-) -> Result<crate::datadogV2::FastlyAccountResponse, Error<GetFastlyAccountError>> {
+) -> Result<ResponseContent<crate::datadogV2::FastlyAccountResponse>, Error<GetFastlyAccountError>>
+{
     let local_configuration = configuration;
 
     // unbox the parameters
@@ -438,7 +457,11 @@ pub async fn GetFastlyAccount(
     let local_content = local_resp.text().await?;
 
     if !local_status.is_client_error() && !local_status.is_server_error() {
-        serde_json::from_str(&local_content).map_err(Error::from)
+        Ok(ResponseContent {
+            status: local_status,
+            content: local_content.clone(),
+            entity: serde_json::from_str(&local_content).ok(),
+        })
     } else {
         let local_entity: Option<GetFastlyAccountError> = serde_json::from_str(&local_content).ok();
         let local_error = ResponseContent {
@@ -454,7 +477,8 @@ pub async fn GetFastlyAccount(
 pub async fn GetFastlyService(
     configuration: &configuration::Configuration,
     params: GetFastlyServiceParams,
-) -> Result<crate::datadogV2::FastlyServiceResponse, Error<GetFastlyServiceError>> {
+) -> Result<ResponseContent<crate::datadogV2::FastlyServiceResponse>, Error<GetFastlyServiceError>>
+{
     let local_configuration = configuration;
 
     // unbox the parameters
@@ -490,7 +514,11 @@ pub async fn GetFastlyService(
     let local_content = local_resp.text().await?;
 
     if !local_status.is_client_error() && !local_status.is_server_error() {
-        serde_json::from_str(&local_content).map_err(Error::from)
+        Ok(ResponseContent {
+            status: local_status,
+            content: local_content.clone(),
+            entity: serde_json::from_str(&local_content).ok(),
+        })
     } else {
         let local_entity: Option<GetFastlyServiceError> = serde_json::from_str(&local_content).ok();
         let local_error = ResponseContent {
@@ -505,7 +533,8 @@ pub async fn GetFastlyService(
 /// List Fastly accounts.
 pub async fn ListFastlyAccounts(
     configuration: &configuration::Configuration,
-) -> Result<crate::datadogV2::FastlyAccountsResponse, Error<ListFastlyAccountsError>> {
+) -> Result<ResponseContent<crate::datadogV2::FastlyAccountsResponse>, Error<ListFastlyAccountsError>>
+{
     let local_configuration = configuration;
 
     // unbox the parameters
@@ -537,7 +566,11 @@ pub async fn ListFastlyAccounts(
     let local_content = local_resp.text().await?;
 
     if !local_status.is_client_error() && !local_status.is_server_error() {
-        serde_json::from_str(&local_content).map_err(Error::from)
+        Ok(ResponseContent {
+            status: local_status,
+            content: local_content.clone(),
+            entity: serde_json::from_str(&local_content).ok(),
+        })
     } else {
         let local_entity: Option<ListFastlyAccountsError> =
             serde_json::from_str(&local_content).ok();
@@ -554,7 +587,8 @@ pub async fn ListFastlyAccounts(
 pub async fn ListFastlyServices(
     configuration: &configuration::Configuration,
     params: ListFastlyServicesParams,
-) -> Result<crate::datadogV2::FastlyServicesResponse, Error<ListFastlyServicesError>> {
+) -> Result<ResponseContent<crate::datadogV2::FastlyServicesResponse>, Error<ListFastlyServicesError>>
+{
     let local_configuration = configuration;
 
     // unbox the parameters
@@ -588,7 +622,11 @@ pub async fn ListFastlyServices(
     let local_content = local_resp.text().await?;
 
     if !local_status.is_client_error() && !local_status.is_server_error() {
-        serde_json::from_str(&local_content).map_err(Error::from)
+        Ok(ResponseContent {
+            status: local_status,
+            content: local_content.clone(),
+            entity: serde_json::from_str(&local_content).ok(),
+        })
     } else {
         let local_entity: Option<ListFastlyServicesError> =
             serde_json::from_str(&local_content).ok();
@@ -605,7 +643,8 @@ pub async fn ListFastlyServices(
 pub async fn UpdateFastlyAccount(
     configuration: &configuration::Configuration,
     params: UpdateFastlyAccountParams,
-) -> Result<crate::datadogV2::FastlyAccountResponse, Error<UpdateFastlyAccountError>> {
+) -> Result<ResponseContent<crate::datadogV2::FastlyAccountResponse>, Error<UpdateFastlyAccountError>>
+{
     let local_configuration = configuration;
 
     // unbox the parameters
@@ -644,7 +683,11 @@ pub async fn UpdateFastlyAccount(
     let local_content = local_resp.text().await?;
 
     if !local_status.is_client_error() && !local_status.is_server_error() {
-        serde_json::from_str(&local_content).map_err(Error::from)
+        Ok(ResponseContent {
+            status: local_status,
+            content: local_content.clone(),
+            entity: serde_json::from_str(&local_content).ok(),
+        })
     } else {
         let local_entity: Option<UpdateFastlyAccountError> =
             serde_json::from_str(&local_content).ok();
@@ -661,7 +704,8 @@ pub async fn UpdateFastlyAccount(
 pub async fn UpdateFastlyService(
     configuration: &configuration::Configuration,
     params: UpdateFastlyServiceParams,
-) -> Result<crate::datadogV2::FastlyServiceResponse, Error<UpdateFastlyServiceError>> {
+) -> Result<ResponseContent<crate::datadogV2::FastlyServiceResponse>, Error<UpdateFastlyServiceError>>
+{
     let local_configuration = configuration;
 
     // unbox the parameters
@@ -702,7 +746,11 @@ pub async fn UpdateFastlyService(
     let local_content = local_resp.text().await?;
 
     if !local_status.is_client_error() && !local_status.is_server_error() {
-        serde_json::from_str(&local_content).map_err(Error::from)
+        Ok(ResponseContent {
+            status: local_status,
+            content: local_content.clone(),
+            entity: serde_json::from_str(&local_content).ok(),
+        })
     } else {
         let local_entity: Option<UpdateFastlyServiceError> =
             serde_json::from_str(&local_content).ok();

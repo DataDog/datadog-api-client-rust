@@ -53,7 +53,7 @@ pub enum {{operation.operationId}}Error {
 {% if operation.description is defined %}
 {{ operation.description | block_comment }}
 {%- endif %}
-pub async fn {{operation.operationId}}(configuration: &configuration::Configuration{% for name, parameter in operation|parameters %}{% if loop.first %}, params: {{operation.operationId}}Params{% endif %}{% endfor %}) -> Result<{% if returnType %}{{returnType}}{% else %}(){% endif %}, Error<{{operation.operationId}}Error>> {
+pub async fn {{operation.operationId}}(configuration: &configuration::Configuration{% for name, parameter in operation|parameters %}{% if loop.first %}, params: {{operation.operationId}}Params{% endif %}{% endfor %}) -> Result<ResponseContent<{% if returnType %}{{returnType}}{% else %}(){% endif %}>, Error<{{operation.operationId}}Error>> {
     let local_configuration = configuration;
 
     // unbox the parameters
@@ -273,11 +273,15 @@ pub async fn {{operation.operationId}}(configuration: &configuration::Configurat
     let local_content = local_resp.text().await?;
 
     if !local_status.is_client_error() && !local_status.is_server_error() {
-        {% if returnType %}
-        serde_json::from_str(&local_content).map_err(Error::from)
-        {% else %}
-        Ok(())
-        {% endif %}
+        Ok(ResponseContent {
+            status: local_status,
+            content: local_content.clone(),
+        {%- if returnType %}
+            entity: serde_json::from_str(&local_content).ok(),
+        {%- else %}
+            entity: None,
+        {%- endif %}
+        })
     } else {
         let local_entity: Option<{{operation.operationId}}Error> = serde_json::from_str(&local_content).ok();
         let local_error = ResponseContent { status: local_status, content: local_content, entity: local_entity };
