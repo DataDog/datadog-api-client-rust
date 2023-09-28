@@ -1,35 +1,48 @@
 use crate::scenarios::function_mappings::*;
 use cucumber::{
-    event::ScenarioFinished, gherkin::Feature, gherkin::Rule, gherkin::Scenario, given, then, when,
-    World,
+    event::ScenarioFinished,
+    gherkin::{Feature, Rule, Scenario},
+    given, then, when, World,
 };
 use datadog_api_client::datadog::configuration::Configuration;
 use handlebars::Handlebars;
 use regex::Regex;
-use serde_json::json;
+use serde_json::{json, Value};
 use sha256::digest;
-use std::{collections::HashMap, fs::{File, read_to_string}, io::BufReader, time::SystemTime};
+use std::{
+    collections::HashMap,
+    fs::{read_to_string, File},
+    io::BufReader,
+    time::SystemTime,
+};
 
+pub type TestCall = fn(&mut DatadogWorld, &HashMap<String, Value>);
 
 #[derive(Debug, Default)]
 pub struct Response {
-    pub object: serde_json::Value,
+    pub object: Value,
     pub code: u16,
-    pub err: Option<serde_json::Value>,
+    pub err: Option<Value>,
+}
+
+#[derive(Debug, Clone)]
+struct UndoOperation {
+    operation_id: String,
+    parameters: HashMap<String, Value>,
 }
 
 #[derive(Debug, Default, World)]
 pub struct DatadogWorld {
-    pub config: Configuration,
     pub api_version: i32,
-    pub fixtures: serde_json::Value,
-    pub operation_id: String,
-    pub body: serde_json::Value,
-    pub response: Response,
-    pub parameters: HashMap<String, String>,
+    pub config: Configuration,
+    pub fixtures: Value,
     pub function_mappings: HashMap<String, TestCall>,
-    pub given_map: serde_json::Value,
-    pub undo_map: serde_json::Value,
+    pub operation_id: String,
+    pub parameters: HashMap<String, Value>,
+    pub response: Response,
+    given_map: Value,
+    undo_map: Value,
+    undo_operations: Vec<UndoOperation>,
 }
 
 pub async fn before_scenario(
@@ -38,7 +51,6 @@ pub async fn before_scenario(
     scenario: &Scenario,
     world: &mut DatadogWorld,
 ) {
-    GetTestCalls(world);
     let api_version_re = Regex::new(r"tests/scenarios/features/v(\d+)/").unwrap();
     // TODO: refactor this lol
     world.api_version = api_version_re
@@ -49,6 +61,8 @@ pub async fn before_scenario(
         .as_str()
         .parse()
         .unwrap();
+
+    collect_function_calls(world);
     let given_file = File::open(format!(
         "tests/scenarios/features/v{}/given.json",
         world.api_version
@@ -61,6 +75,7 @@ pub async fn before_scenario(
     ))
     .unwrap();
     world.undo_map = serde_json::from_reader(BufReader::new(undo_file)).unwrap();
+
     let mut config = Configuration::new();
     config.api_key_auth = Some("00000000000000000000000000000000".to_string());
     config.app_key_auth = Some("0000000000000000000000000000000000000000".to_string());
@@ -102,79 +117,99 @@ pub async fn after_scenario(
     _rule: Option<&Rule>,
     _scenario: &Scenario,
     _ev: &ScenarioFinished,
-    _world: Option<&mut DatadogWorld>,
+    world: Option<&mut DatadogWorld>,
 ) {
+    if let Some(world) = world {
+        for undo in world.undo_operations.clone().iter().rev() {
+            world.function_mappings.get(&undo.operation_id).unwrap()(world, &undo.parameters);
+        }
+    }
 }
 
 #[given(expr = "a valid \"apiKeyAuth\" key in the system")]
-fn a_valid_apikey_auth(world: &mut DatadogWorld) {
+fn valid_apikey_auth(world: &mut DatadogWorld) {
     world.config.api_key_auth = std::env::var("DD_TEST_CLIENT_API_KEY").ok();
 }
 
 #[given(expr = "a valid \"appKeyAuth\" key in the system")]
-fn a_valid_appkey_auth(world: &mut DatadogWorld) {
+fn valid_appkey_auth(world: &mut DatadogWorld) {
     world.config.app_key_auth = std::env::var("DD_TEST_CLIENT_APP_KEY").ok();
 }
 
 #[given(expr = "an instance of {string} API")]
-fn an_instance_of_api(_world: &mut DatadogWorld, _api: String) {}
+fn instance_of_api(_world: &mut DatadogWorld, _api: String) {
+    // rust client doesn't have concept of an api instance at the moment.
+}
 
 #[given(expr = "new {string} request")]
-fn a_new_request(world: &mut DatadogWorld, operation_id: String) {
+fn new_request(world: &mut DatadogWorld, operation_id: String) {
     world.operation_id = operation_id
 }
 
 #[given(regex = r"^body with value (.*)$")]
 fn body_with_value(world: &mut DatadogWorld, body: String) {
-    let rendered = template(body, world.fixtures.clone());
+    let rendered = template(body, &world.fixtures);
     let body_struct = serde_json::from_str(rendered.as_str()).unwrap();
-    world.body = body_struct;
+    world.parameters.insert("body".to_string(), body_struct);
 }
 
 #[given(regex = r"^body from file (.*)$")]
 fn body_from_file(world: &mut DatadogWorld, path: String) {
     let body = read_to_string(format!(
         "tests/scenarios/features/v{}/{}",
-        world.api_version,
-        path,
-    )).unwrap();
-    let rendered = template(body, world.fixtures.clone());
+        world.api_version, path,
+    ))
+    .unwrap();
+    let rendered = template(body, &world.fixtures);
     let body_struct = serde_json::from_str(rendered.as_str()).unwrap();
-    world.body = body_struct;
+    world.parameters.insert("body".to_string(), body_struct);
 }
 
 #[given(expr = "request contains {string} parameter from {string}")]
 fn request_parameter_from_path(world: &mut DatadogWorld, param: String, path: String) {
     let lookup = lookup(path, world.response.object.clone()).unwrap();
-    world.parameters.insert(param, lookup.to_string());
+    world.parameters.insert(param, Value::from(lookup));
 }
 
 #[given(expr = "request contains {string} parameter with value {}")]
 fn request_parameter_with_value(world: &mut DatadogWorld, param: String, value: String) {
-    let rendered = template(value, world.fixtures.clone());
-    world.parameters.insert(param, rendered);
+    let rendered = template(value, &world.fixtures);
+    world.parameters.insert(param, Value::from(rendered));
+}
+
+#[given(expr = "request contains {string} parameter with value {}")]
+fn given_valid_(world: &mut DatadogWorld, param: String, value: String) {
+    let rendered = template(value, &world.fixtures);
+    world.parameters.insert(param, Value::from(rendered));
 }
 
 #[when(regex = r"^the request is sent$")]
-fn when_request_sent(world: &mut DatadogWorld) {
-    world.function_mappings.get(&world.operation_id).unwrap()(world);
+fn request_sent(world: &mut DatadogWorld) {
+    world.function_mappings.get(&world.operation_id).unwrap()(world, &world.parameters.clone());
+    match build_undo(world, &world.operation_id.clone()) {
+        Ok(Some(undo)) => {
+            world.undo_operations.push(undo);
+        }
+        Ok(None) => {}
+        Err(err) => panic!("{err}"),
+    }
 }
 
 #[then(expr = "the response status is {int} {}")]
-fn responseStatusIs(world: &mut DatadogWorld, status_code: u16, _status_message: String) {
+fn response_status_is(world: &mut DatadogWorld, status_code: u16, _status_message: String) {
     assert!(world.response.code == status_code)
 }
 
 #[then(expr = "the response {string} is equal to {}")]
-fn responseEqualTo(world: &mut DatadogWorld, path: String, value: String) {
+fn response_equal_to(world: &mut DatadogWorld, path: String, value: String) {
     let lookup = lookup(path, world.response.object.clone()).unwrap();
-    let rendered_value = template(value, world.fixtures.clone());
-    let expected: serde_json::Value = serde_json::from_str(rendered_value.as_str()).unwrap();
+    let rendered_value = template(value, &world.fixtures);
+    let expected: Value = serde_json::from_str(rendered_value.as_str()).unwrap();
     assert_eq!(lookup, expected);
 }
 
 #[then(expr = "the response {string} has length {int}")]
-fn responseHasLength(world: &mut DatadogWorld, path: String, expected_len: usize) {
+fn response_has_length(world: &mut DatadogWorld, path: String, expected_len: usize) {
     let len = lookup(path, world.response.object.clone())
         .unwrap()
         .as_array()
@@ -183,7 +218,7 @@ fn responseHasLength(world: &mut DatadogWorld, path: String, expected_len: usize
     assert_eq!(len, expected_len);
 }
 
-fn lookup(path: String, object: serde_json::Value) -> Option<serde_json::Value> {
+fn lookup(path: String, object: Value) -> Option<Value> {
     let index_re = Regex::new(r"\[(\d+)\]+").unwrap();
     let mut json_pointer = format!("/{}", path).replace(".", "/");
     for (_, [idx]) in index_re
@@ -198,9 +233,55 @@ fn lookup(path: String, object: serde_json::Value) -> Option<serde_json::Value> 
     return object.pointer(&json_pointer).cloned();
 }
 
-fn template(string: String, fixtures: serde_json::Value) -> String {
-    let handlebars = Handlebars::new();
-    handlebars
+fn template(string: String, fixtures: &Value) -> String {
+    Handlebars::new()
         .render_template(string.as_str(), &fixtures)
         .unwrap()
+}
+
+fn build_undo(
+    world: &mut DatadogWorld,
+    operation_id: &String,
+) -> Result<Option<UndoOperation>, Value> {
+    let undo = world
+        .undo_map
+        .get(operation_id)
+        .unwrap()
+        .get("undo")
+        .unwrap();
+    match undo.get("type").unwrap().as_str() {
+        Some("unsafe") => {
+            let mut undo_operation = UndoOperation {
+                operation_id: undo
+                    .get("operationId")
+                    .unwrap()
+                    .as_str()
+                    .unwrap()
+                    .to_string(),
+                parameters: HashMap::new(),
+            };
+            let params = undo.get("parameters").unwrap().as_array().unwrap();
+            for param in params {
+                let param_name = param.get("name").unwrap().as_str().unwrap().to_string();
+                if let Some(source) = param.get("source") {
+                    if let Some(value) = lookup(
+                        source.as_str().unwrap().to_string(),
+                        world.response.object.clone(),
+                    ) {
+                        undo_operation.parameters.insert(param_name.clone(), value);
+                    }
+                };
+                if let Some(template_value) = param.get("template") {
+                    if let Some(rendered) = template_value.as_str() {
+                        undo_operation.parameters.insert(
+                            param_name.clone(),
+                            template(rendered.to_string(), &world.fixtures).into(),
+                        );
+                    };
+                };
+            }
+            Ok(Some(undo_operation))
+        }
+        _ => Ok(None),
+    }
 }
