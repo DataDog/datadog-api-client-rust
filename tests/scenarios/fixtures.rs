@@ -141,6 +141,64 @@ fn instance_of_api(_world: &mut DatadogWorld, _api: String) {
     // rust client doesn't have concept of an api instance at the moment.
 }
 
+#[given(expr = "there is a valid {string} in the system")]
+fn given_resource_in_system(world: &mut DatadogWorld, given_key: String) {
+    let given = world
+        .given_map
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|value| value.get("key").unwrap().as_str().unwrap() == given_key)
+        .unwrap()
+        .clone();
+    let mut given_parameters: HashMap<String, Value> = HashMap::new();
+    if let Some(params) = given.get("parameters") {
+        for param in params.as_array().unwrap() {
+            let param_name = param.get("name").unwrap().as_str().unwrap().to_string();
+            if let Some(source) = param.get("source") {
+                if let Some(value) = lookup(&source.as_str().unwrap().to_string(), &world.fixtures)
+                {
+                    given_parameters.insert(param_name.clone(), value);
+                }
+            };
+            if let Some(template_value) = param.get("value") {
+                let mut rendered = template(template_value.to_string(), &world.fixtures);
+                rendered = serde_json::from_str(rendered.as_str()).unwrap();
+                given_parameters.insert(
+                    param_name.clone(),
+                    serde_json::from_str(rendered.as_str()).unwrap(),
+                );
+            };
+        }
+    }
+    let operation_id = given
+        .get("operationId")
+        .unwrap()
+        .as_str()
+        .unwrap()
+        .to_string();
+    world.function_mappings.get(&operation_id).unwrap()(world, &given_parameters);
+    match build_undo(world, &operation_id) {
+        Ok(Some(undo)) => {
+            world.undo_operations.push(undo);
+        }
+        Ok(None) => {}
+        Err(err) => panic!("{err}"),
+    }
+    if let Some(source) = given.get("source") {
+        let source_path = source.as_str().unwrap().to_string();
+        if let Some(fixture) = lookup(&source_path, &world.response.object) {
+            if let Value::Object(ref mut map) = world.fixtures {
+                map.insert(given_key, fixture);
+            }
+        }
+    } else {
+        if let Value::Object(ref mut map) = world.fixtures {
+            map.insert(given_key, world.response.object.clone());
+        }
+    }
+}
+
 #[given(expr = "new {string} request")]
 fn new_request(world: &mut DatadogWorld, operation_id: String) {
     world.operation_id = operation_id
@@ -167,18 +225,12 @@ fn body_from_file(world: &mut DatadogWorld, path: String) {
 
 #[given(expr = "request contains {string} parameter from {string}")]
 fn request_parameter_from_path(world: &mut DatadogWorld, param: String, path: String) {
-    let lookup = lookup(path, world.response.object.clone()).unwrap();
+    let lookup = lookup(&path, &world.fixtures).unwrap();
     world.parameters.insert(param, Value::from(lookup));
 }
 
 #[given(expr = "request contains {string} parameter with value {}")]
 fn request_parameter_with_value(world: &mut DatadogWorld, param: String, value: String) {
-    let rendered = template(value, &world.fixtures);
-    world.parameters.insert(param, Value::from(rendered));
-}
-
-#[given(expr = "request contains {string} parameter with value {}")]
-fn given_valid_(world: &mut DatadogWorld, param: String, value: String) {
     let rendered = template(value, &world.fixtures);
     world.parameters.insert(param, Value::from(rendered));
 }
@@ -202,7 +254,7 @@ fn response_status_is(world: &mut DatadogWorld, status_code: u16, _status_messag
 
 #[then(expr = "the response {string} is equal to {}")]
 fn response_equal_to(world: &mut DatadogWorld, path: String, value: String) {
-    let lookup = lookup(path, world.response.object.clone()).unwrap();
+    let lookup = lookup(&path, &world.response.object).unwrap();
     let rendered_value = template(value, &world.fixtures);
     let expected: Value = serde_json::from_str(rendered_value.as_str()).unwrap();
     assert_eq!(lookup, expected);
@@ -210,7 +262,7 @@ fn response_equal_to(world: &mut DatadogWorld, path: String, value: String) {
 
 #[then(expr = "the response {string} has length {int}")]
 fn response_has_length(world: &mut DatadogWorld, path: String, expected_len: usize) {
-    let len = lookup(path, world.response.object.clone())
+    let len = lookup(&path, &world.response.object)
         .unwrap()
         .as_array()
         .unwrap()
@@ -218,7 +270,7 @@ fn response_has_length(world: &mut DatadogWorld, path: String, expected_len: usi
     assert_eq!(len, expected_len);
 }
 
-fn lookup(path: String, object: Value) -> Option<Value> {
+fn lookup(path: &String, object: &Value) -> Option<Value> {
     let index_re = Regex::new(r"\[(\d+)\]+").unwrap();
     let mut json_pointer = format!("/{}", path).replace(".", "/");
     for (_, [idx]) in index_re
@@ -265,8 +317,8 @@ fn build_undo(
                 let param_name = param.get("name").unwrap().as_str().unwrap().to_string();
                 if let Some(source) = param.get("source") {
                     if let Some(value) = lookup(
-                        source.as_str().unwrap().to_string(),
-                        world.response.object.clone(),
+                        &source.as_str().unwrap().to_string(),
+                        &world.response.object,
                     ) {
                         undo_operation.parameters.insert(param_name.clone(), value);
                     }

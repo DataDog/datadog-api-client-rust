@@ -73,9 +73,7 @@ def cli(specs, output):
     }
     librs = env.get_template("lib.j2")
 
-    # test_scenarios_files = {
-    #     "api_mappings.rs": env.get_template("scenarios_api_mappings.j2"),
-    # }
+    test_fixtures = env.get_template("function_mappings.j2")
 
     output.mkdir(parents=True, exist_ok=True)
 
@@ -128,11 +126,12 @@ def cli(specs, output):
         filename = common_package_output / name
         with filename.open("w") as fp:
             fp.write(template.render(apis=all_apis, all_specs=all_specs))
+
     lib_name = output / "lib.rs"
     with lib_name.open("w") as fp:
         fp.write(librs.render())
-    # scenarios_test_output = pathlib.Path("../tests/scenarios/")
-    # for name, template in test_scenarios_files.items():
-    #     filename = scenarios_test_output / name
-    #     with filename.open("w") as fp:
-    #         fp.write(template.render(apis=all_apis, all_specs=all_specs))
+
+    test_fixture_output = pathlib.Path("../tests/scenarios/")
+    filename = test_fixture_output / "function_mappings.rs"
+    with filename.open("w") as fp:
+        fp.write(test_fixtures.render(all_apis=all_apis, all_specs=all_specs))
