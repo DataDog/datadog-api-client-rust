@@ -6,13 +6,13 @@
 pub struct FastlyAccountCreateRequest {
     /// Data object for creating a Fastly account.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::FastlyAccountCreateRequestData>,
+    pub data: Box<crate::datadogV2::model::FastlyAccountCreateRequestData>,
 }
 
 impl FastlyAccountCreateRequest {
     /// Payload schema when adding a Fastly account.
     pub fn new(
-        data: crate::datadogV2::FastlyAccountCreateRequestData,
+        data: crate::datadogV2::model::FastlyAccountCreateRequestData,
     ) -> FastlyAccountCreateRequest {
         FastlyAccountCreateRequest {
             data: Box::new(data),

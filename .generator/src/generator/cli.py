@@ -7,7 +7,7 @@ from . import openapi
 from . import formatter
 from . import utils
 
-MODULE = "github.com/DataDog/datadog-api-client-go/v2"
+MODULE = "datadog-api-client-rust"
 COMMON_PACKAGE_NAME = "datadog"
 
 
@@ -24,7 +24,7 @@ COMMON_PACKAGE_NAME = "datadog"
 )
 def cli(specs, output):
     """
-    Generate a Go code snippet from OpenAPI specification.
+    Generate a Rust code snippet from OpenAPI specification.
     """
     env = Environment(loader=FileSystemLoader(str(pathlib.Path(__file__).parent / "templates")))
 
@@ -54,7 +54,7 @@ def cli(specs, output):
     env.globals["get_type_for_attribute"] = openapi.get_type_for_attribute
     env.globals["get_type_for_response"] = openapi.get_type_for_response
     env.globals["get_type_for_parameter"] = openapi.get_type_for_parameter
-    env.globals["get_type"] = openapi.type_to_go
+    env.globals["get_type"] = openapi.type_to_rust
     env.globals["get_default"] = openapi.get_default
     env.globals["get_container"] = openapi.get_container
     env.globals["get_container_type"] = openapi.get_container_type
@@ -65,6 +65,8 @@ def cli(specs, output):
     api_j2 = env.get_template("api.j2")
     model_j2 = env.get_template("model.j2")
     mod_j2 = env.get_template("mod.j2")
+    mod_api_j2 = env.get_template("mod_api.j2")
+    mod_model_j2 = env.get_template("mod_model.j2")
     # doc_j2 = env.get_template("doc.j2")
 
     common_files = {
@@ -97,24 +99,33 @@ def cli(specs, output):
 
         for name, model in models.items():
             filename = "model_" + formatter.model_filename(name) + ".rs"
-            model_path = resources_dir / filename
+            model_path = resources_dir / "model" / filename
             model_path.parent.mkdir(parents=True, exist_ok=True)
             with model_path.open("w") as fp:
                 fp.write(model_j2.render(name=name, model=model, models=models))
+
+        mod_path = resources_dir / "model" / "mod.rs"
+        with mod_path.open("w") as fp:
+            fp.write(mod_model_j2.render(apis=apis, models=models))
 
         all_operations = []
 
         for name, operations in apis.items():
             filename = "api_" + formatter.snake_case(name) + ".rs"
-            api_path = resources_dir / filename
+            api_path = resources_dir / "api" / filename
             api_path.parent.mkdir(parents=True, exist_ok=True)
             with api_path.open("w") as fp:
                 fp.write(api_j2.render(name=name, operations=operations))
             all_operations.append((name, operations))
 
+        mod_path = resources_dir / "api" / "mod.rs"
+        with mod_path.open("w") as fp:
+            fp.write(mod_api_j2.render(apis=apis, models=models))
+
         mod_path = resources_dir / "mod.rs"
         with mod_path.open("w") as fp:
             fp.write(mod_j2.render(apis=apis, models=models))
+
 
         # doc_path = resources_dir / "doc.rs"
         # with doc_path.open("w") as fp:

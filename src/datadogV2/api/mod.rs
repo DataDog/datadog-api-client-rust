@@ -2,5 +2,4 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-pub mod api;
-pub mod model;
+pub mod api_fastly_integration;

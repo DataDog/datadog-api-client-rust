@@ -3,17 +3,15 @@
 // Copyright 2019-Present Datadog, Inc.
 
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
-pub struct FastlyServiceRequest {
+pub struct FastlyServiceResponse {
     /// Data object for Fastly service requests.
-    #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::FastlyServiceData>,
+    #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
+    pub data: Option<Box<crate::datadogV2::model::FastlyServiceData>>,
 }
 
-impl FastlyServiceRequest {
-    /// Payload schema for Fastly service requests.
-    pub fn new(data: crate::datadogV2::FastlyServiceData) -> FastlyServiceRequest {
-        FastlyServiceRequest {
-            data: Box::new(data),
-        }
+impl FastlyServiceResponse {
+    /// The expected response schema when getting a Fastly service.
+    pub fn new() -> FastlyServiceResponse {
+        FastlyServiceResponse { data: None }
     }
 }

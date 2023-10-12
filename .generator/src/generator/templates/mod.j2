@@ -1,12 +1,4 @@
 {% include "partial_header.j2" %}
 
-{% for name, operations in apis.items() %}
-{%- set classname = "api_"+name%}
-pub mod {{classname | snake_case}};
-{%- endfor %}
-
-{% for name, model in models.items() %}
-{%- set classname = "model_"+name%}
-pub mod {{classname | snake_case}};
-pub use self::{{classname | snake_case}}::{{name}};
-{%- endfor %}
+pub mod api;
+pub mod model;

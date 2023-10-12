@@ -3,15 +3,15 @@
 // Copyright 2019-Present Datadog, Inc.
 
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
-pub struct FastlyAccountResponse {
-    /// Data object of a Fastly account.
+pub struct FastlyAccountsResponse {
+    /// The JSON:API data schema.
     #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
-    pub data: Option<Box<crate::datadogV2::FastlyAccountResponseData>>,
+    pub data: Option<Vec<crate::datadogV2::model::FastlyAccountResponseData>>,
 }
 
-impl FastlyAccountResponse {
-    /// The expected response schema when getting a Fastly account.
-    pub fn new() -> FastlyAccountResponse {
-        FastlyAccountResponse { data: None }
+impl FastlyAccountsResponse {
+    /// The expected response schema when getting Fastly accounts.
+    pub fn new() -> FastlyAccountsResponse {
+        FastlyAccountsResponse { data: None }
     }
 }

@@ -3,23 +3,19 @@
 // Copyright 2019-Present Datadog, Inc.
 
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
-pub struct FastlyAccountCreateRequestAttributes {
-    /// The API key for the Fastly account.
-    #[serde(rename = "api_key")]
-    pub api_key: String,
+pub struct FastlyAccounResponseAttributes {
     /// The name of the Fastly account.
     #[serde(rename = "name")]
     pub name: String,
     /// A list of services belonging to the parent account.
     #[serde(rename = "services", skip_serializing_if = "Option::is_none")]
-    pub services: Option<Vec<crate::datadogV2::FastlyService>>,
+    pub services: Option<Vec<crate::datadogV2::model::FastlyService>>,
 }
 
-impl FastlyAccountCreateRequestAttributes {
-    /// Attributes object for creating a Fastly account.
-    pub fn new(api_key: String, name: String) -> FastlyAccountCreateRequestAttributes {
-        FastlyAccountCreateRequestAttributes {
-            api_key: api_key,
+impl FastlyAccounResponseAttributes {
+    /// Attributes object of a Fastly account.
+    pub fn new(name: String) -> FastlyAccounResponseAttributes {
+        FastlyAccounResponseAttributes {
             name: name,
             services: None,
         }

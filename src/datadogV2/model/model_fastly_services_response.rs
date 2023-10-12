@@ -6,7 +6,7 @@
 pub struct FastlyServicesResponse {
     /// The JSON:API data schema.
     #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
-    pub data: Option<Vec<crate::datadogV2::FastlyServiceResponse>>,
+    pub data: Option<Vec<crate::datadogV2::model::FastlyServiceResponse>>,
 }
 
 impl FastlyServicesResponse {

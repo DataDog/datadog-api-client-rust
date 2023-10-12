@@ -102,7 +102,7 @@ def format_value(value, quotes='"', schema=None, version=None):
         index = schema["enum"].index(value)
         enum_varnames = schema["x-enum-varnames"][index]
         name = schema_name(schema)
-        return f"crate::datadog{version.upper()}::{name}::{enum_varnames}"
+        return f"crate::datadog{version.upper()}::model::{name}::{enum_varnames}"
 
     if isinstance(value, str):
         return f"{quotes}{value}{quotes}"
@@ -113,7 +113,7 @@ def format_value(value, quotes='"', schema=None, version=None):
     return value
 
 
-def simple_type(schema, render_nullable=False, render_new=False):
+def simple_type(schema, render_nullable=False, render_option=True, render_new=False):
     """Return the simple type of a schema.
 
     :param schema: The schema to extract the type from
@@ -122,32 +122,41 @@ def simple_type(schema, render_nullable=False, render_new=False):
     type_name = schema.get("type")
     type_format = schema.get("format")
     nullable = render_nullable and schema.get("nullable", False)
-
+    
+    inner_type = None
     if type_name == "integer":
-        return {
-            "int32": "i32" if not nullable else f"Option<Int32>",
-            "int64": "i64" if not nullable else f"Option<Int64>",
-            None: "i32" if not nullable else f"Option<Int32>",
+        inner_type = {
+            "int32": "i32",
+            "int64": "i64",
+            None: "i32",
         }[type_format]
 
     if type_name == "number":
-        return {
-            "double": "f64" if not nullable else f"Option<Float64>",
-            None: "f64" if not nullable else f"Option<Float>",
+        inner_type = {
+            "double": "f64",
+            None: "f64",
         }[type_format]
 
     if type_name == "string":
-        return {
-            "date": "String" if not nullable else f"Option<Time>",
-            "date-time": "String" if not nullable else f"Option<Time>",
-            "email": "String" if not nullable else f"Option<String>",
+        inner_type = {
+            "date": "String",
+            "date-time": "String",
+            "email": "String",
             "binary": "Vec<u8>",
-            None: "String" if not nullable else f"Option<String>",
+            None: "String",
         }[type_format]
     if type_name == "boolean":
-        return "bool" if not nullable else f"Option<Bool>"
+        inner_type = "bool"
+    
+    if inner_type == None:
+        return None
 
-    return None
+    simple_type = inner_type
+    if nullable:
+        simple_type = f"Option<{simple_type}>"
+    if render_option:
+        simple_type = f"Option<{simple_type}>"
+    return simple_type
 
 
 def is_reference(schema, attribute):
@@ -183,7 +192,7 @@ def attribute_path(attribute):
 
 
 def go_name(name):
-    """Convert key to Go name.
+    """Convert key to Rust name.
 
     Example:
 
@@ -386,7 +395,7 @@ def format_data_with_schema(
     if replace_values and data in replace_values:
         parameters = replace_values[data]
 
-        # Make sure that variables used in given statements are camelCase for Go linter
+        # Make sure that variables used in given statements are camelCase for Rust linter
         if parameters in variables:
             parameters = go_name(parameters)
 

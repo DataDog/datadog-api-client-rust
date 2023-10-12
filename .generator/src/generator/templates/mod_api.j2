@@ -1,0 +1,6 @@
+{% include "partial_header.j2" %}
+
+{% for name, operations in apis.items() %}
+{%- set classname = "api_"+name%}
+pub mod {{classname | snake_case}};
+{%- endfor %}

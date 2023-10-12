@@ -53,7 +53,7 @@ pub enum {{operation.operationId}}Error {
 {% if operation.description is defined %}
 {{ operation.description | block_comment }}
 {%- endif %}
-pub async fn {{operation.operationId}}(configuration: &configuration::Configuration{% for name, parameter in operation|parameters %}{% if loop.first %}, params: {{operation.operationId}}Params{% endif %}{% endfor %}) -> Result<ResponseContent<{% if returnType %}{{returnType}}{% else %}(){% endif %}>, Error<{{operation.operationId}}Error>> {
+pub async fn {{operation.operationId | snake_case}}(configuration: &configuration::Configuration{% for name, parameter in operation|parameters %}{% if loop.first %}, params: {{operation.operationId}}Params{% endif %}{% endfor %}) -> Result<ResponseContent<{% if returnType %}{{returnType}}{% else %}(){% endif %}>, Error<{{operation.operationId}}Error>> {
     let local_configuration = configuration;
 
     // unbox the parameters

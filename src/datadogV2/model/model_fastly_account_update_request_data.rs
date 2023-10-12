@@ -6,10 +6,10 @@
 pub struct FastlyAccountUpdateRequestData {
     /// Attributes object for updating a Fastly account.
     #[serde(rename = "attributes", skip_serializing_if = "Option::is_none")]
-    pub attributes: Option<Box<crate::datadogV2::FastlyAccountUpdateRequestAttributes>>,
+    pub attributes: Option<Box<crate::datadogV2::model::FastlyAccountUpdateRequestAttributes>>,
     /// The JSON:API type for this API. Should always be `fastly-accounts`.
     #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
-    pub type_: Option<crate::datadogV2::FastlyAccountType>,
+    pub type_: Option<crate::datadogV2::model::FastlyAccountType>,
 }
 
 impl FastlyAccountUpdateRequestData {
@@ -17,7 +17,7 @@ impl FastlyAccountUpdateRequestData {
     pub fn new() -> FastlyAccountUpdateRequestData {
         FastlyAccountUpdateRequestData {
             attributes: None,
-            type_: Some(crate::datadogV2::FastlyAccountType::FASTLY_ACCOUNTS),
+            type_: Some(crate::datadogV2::model::FastlyAccountType::FASTLY_ACCOUNTS),
         }
     }
 }

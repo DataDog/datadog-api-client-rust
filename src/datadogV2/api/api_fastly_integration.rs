@@ -8,7 +8,7 @@ use reqwest;
 /// CreateFastlyAccountParams is a struct for passing parameters to the method [`CreateFastlyAccount`]
 #[derive(Clone, Debug, Default)]
 pub struct CreateFastlyAccountParams {
-    pub body: crate::datadogV2::FastlyAccountCreateRequest,
+    pub body: crate::datadogV2::model::FastlyAccountCreateRequest,
 }
 
 /// CreateFastlyServiceParams is a struct for passing parameters to the method [`CreateFastlyService`]
@@ -16,7 +16,7 @@ pub struct CreateFastlyAccountParams {
 pub struct CreateFastlyServiceParams {
     /// Fastly Account id.
     pub account_id: String,
-    pub body: crate::datadogV2::FastlyServiceRequest,
+    pub body: crate::datadogV2::model::FastlyServiceRequest,
 }
 
 /// DeleteFastlyAccountParams is a struct for passing parameters to the method [`DeleteFastlyAccount`]
@@ -63,7 +63,7 @@ pub struct ListFastlyServicesParams {
 pub struct UpdateFastlyAccountParams {
     /// Fastly Account id.
     pub account_id: String,
-    pub body: crate::datadogV2::FastlyAccountUpdateRequest,
+    pub body: crate::datadogV2::model::FastlyAccountUpdateRequest,
 }
 
 /// UpdateFastlyServiceParams is a struct for passing parameters to the method [`UpdateFastlyService`]
@@ -73,17 +73,17 @@ pub struct UpdateFastlyServiceParams {
     pub account_id: String,
     /// Fastly Service ID.
     pub service_id: String,
-    pub body: crate::datadogV2::FastlyServiceRequest,
+    pub body: crate::datadogV2::model::FastlyServiceRequest,
 }
 
 /// CreateFastlyAccountError is a struct for typed errors of method [`CreateFastlyAccount`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateFastlyAccountError {
-    Status400(crate::datadogV2::APIErrorResponse),
-    Status403(crate::datadogV2::APIErrorResponse),
-    Status404(crate::datadogV2::APIErrorResponse),
-    Status429(crate::datadogV2::APIErrorResponse),
+    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
     UnknownValue(serde_json::Value),
 }
 
@@ -91,10 +91,10 @@ pub enum CreateFastlyAccountError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateFastlyServiceError {
-    Status400(crate::datadogV2::APIErrorResponse),
-    Status403(crate::datadogV2::APIErrorResponse),
-    Status404(crate::datadogV2::APIErrorResponse),
-    Status429(crate::datadogV2::APIErrorResponse),
+    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
     UnknownValue(serde_json::Value),
 }
 
@@ -102,10 +102,10 @@ pub enum CreateFastlyServiceError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteFastlyAccountError {
-    Status400(crate::datadogV2::APIErrorResponse),
-    Status403(crate::datadogV2::APIErrorResponse),
-    Status404(crate::datadogV2::APIErrorResponse),
-    Status429(crate::datadogV2::APIErrorResponse),
+    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
     UnknownValue(serde_json::Value),
 }
 
@@ -113,10 +113,10 @@ pub enum DeleteFastlyAccountError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteFastlyServiceError {
-    Status400(crate::datadogV2::APIErrorResponse),
-    Status403(crate::datadogV2::APIErrorResponse),
-    Status404(crate::datadogV2::APIErrorResponse),
-    Status429(crate::datadogV2::APIErrorResponse),
+    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
     UnknownValue(serde_json::Value),
 }
 
@@ -124,10 +124,10 @@ pub enum DeleteFastlyServiceError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetFastlyAccountError {
-    Status400(crate::datadogV2::APIErrorResponse),
-    Status403(crate::datadogV2::APIErrorResponse),
-    Status404(crate::datadogV2::APIErrorResponse),
-    Status429(crate::datadogV2::APIErrorResponse),
+    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
     UnknownValue(serde_json::Value),
 }
 
@@ -135,10 +135,10 @@ pub enum GetFastlyAccountError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetFastlyServiceError {
-    Status400(crate::datadogV2::APIErrorResponse),
-    Status403(crate::datadogV2::APIErrorResponse),
-    Status404(crate::datadogV2::APIErrorResponse),
-    Status429(crate::datadogV2::APIErrorResponse),
+    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
     UnknownValue(serde_json::Value),
 }
 
@@ -146,10 +146,10 @@ pub enum GetFastlyServiceError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListFastlyAccountsError {
-    Status400(crate::datadogV2::APIErrorResponse),
-    Status403(crate::datadogV2::APIErrorResponse),
-    Status404(crate::datadogV2::APIErrorResponse),
-    Status429(crate::datadogV2::APIErrorResponse),
+    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
     UnknownValue(serde_json::Value),
 }
 
@@ -157,10 +157,10 @@ pub enum ListFastlyAccountsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListFastlyServicesError {
-    Status400(crate::datadogV2::APIErrorResponse),
-    Status403(crate::datadogV2::APIErrorResponse),
-    Status404(crate::datadogV2::APIErrorResponse),
-    Status429(crate::datadogV2::APIErrorResponse),
+    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
     UnknownValue(serde_json::Value),
 }
 
@@ -168,10 +168,10 @@ pub enum ListFastlyServicesError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateFastlyAccountError {
-    Status400(crate::datadogV2::APIErrorResponse),
-    Status403(crate::datadogV2::APIErrorResponse),
-    Status404(crate::datadogV2::APIErrorResponse),
-    Status429(crate::datadogV2::APIErrorResponse),
+    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
     UnknownValue(serde_json::Value),
 }
 
@@ -179,19 +179,21 @@ pub enum UpdateFastlyAccountError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateFastlyServiceError {
-    Status400(crate::datadogV2::APIErrorResponse),
-    Status403(crate::datadogV2::APIErrorResponse),
-    Status404(crate::datadogV2::APIErrorResponse),
-    Status429(crate::datadogV2::APIErrorResponse),
+    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
     UnknownValue(serde_json::Value),
 }
 
 /// Create a Fastly account.
-pub async fn CreateFastlyAccount(
+pub async fn create_fastly_account(
     configuration: &configuration::Configuration,
     params: CreateFastlyAccountParams,
-) -> Result<ResponseContent<crate::datadogV2::FastlyAccountResponse>, Error<CreateFastlyAccountError>>
-{
+) -> Result<
+    ResponseContent<Option<crate::datadogV2::model::FastlyAccountResponse>>,
+    Error<CreateFastlyAccountError>,
+> {
     let local_configuration = configuration;
 
     // unbox the parameters
@@ -245,11 +247,13 @@ pub async fn CreateFastlyAccount(
 }
 
 /// Create a Fastly service for an account.
-pub async fn CreateFastlyService(
+pub async fn create_fastly_service(
     configuration: &configuration::Configuration,
     params: CreateFastlyServiceParams,
-) -> Result<ResponseContent<crate::datadogV2::FastlyServiceResponse>, Error<CreateFastlyServiceError>>
-{
+) -> Result<
+    ResponseContent<Option<crate::datadogV2::model::FastlyServiceResponse>>,
+    Error<CreateFastlyServiceError>,
+> {
     let local_configuration = configuration;
 
     // unbox the parameters
@@ -305,7 +309,7 @@ pub async fn CreateFastlyService(
 }
 
 /// Delete a Fastly account.
-pub async fn DeleteFastlyAccount(
+pub async fn delete_fastly_account(
     configuration: &configuration::Configuration,
     params: DeleteFastlyAccountParams,
 ) -> Result<ResponseContent<()>, Error<DeleteFastlyAccountError>> {
@@ -361,7 +365,7 @@ pub async fn DeleteFastlyAccount(
 }
 
 /// Delete a Fastly service for an account.
-pub async fn DeleteFastlyService(
+pub async fn delete_fastly_service(
     configuration: &configuration::Configuration,
     params: DeleteFastlyServiceParams,
 ) -> Result<ResponseContent<()>, Error<DeleteFastlyServiceError>> {
@@ -419,11 +423,13 @@ pub async fn DeleteFastlyService(
 }
 
 /// Get a Fastly account.
-pub async fn GetFastlyAccount(
+pub async fn get_fastly_account(
     configuration: &configuration::Configuration,
     params: GetFastlyAccountParams,
-) -> Result<ResponseContent<crate::datadogV2::FastlyAccountResponse>, Error<GetFastlyAccountError>>
-{
+) -> Result<
+    ResponseContent<Option<crate::datadogV2::model::FastlyAccountResponse>>,
+    Error<GetFastlyAccountError>,
+> {
     let local_configuration = configuration;
 
     // unbox the parameters
@@ -474,11 +480,13 @@ pub async fn GetFastlyAccount(
 }
 
 /// Get a Fastly service for an account.
-pub async fn GetFastlyService(
+pub async fn get_fastly_service(
     configuration: &configuration::Configuration,
     params: GetFastlyServiceParams,
-) -> Result<ResponseContent<crate::datadogV2::FastlyServiceResponse>, Error<GetFastlyServiceError>>
-{
+) -> Result<
+    ResponseContent<Option<crate::datadogV2::model::FastlyServiceResponse>>,
+    Error<GetFastlyServiceError>,
+> {
     let local_configuration = configuration;
 
     // unbox the parameters
@@ -531,10 +539,12 @@ pub async fn GetFastlyService(
 }
 
 /// List Fastly accounts.
-pub async fn ListFastlyAccounts(
+pub async fn list_fastly_accounts(
     configuration: &configuration::Configuration,
-) -> Result<ResponseContent<crate::datadogV2::FastlyAccountsResponse>, Error<ListFastlyAccountsError>>
-{
+) -> Result<
+    ResponseContent<Option<crate::datadogV2::model::FastlyAccountsResponse>>,
+    Error<ListFastlyAccountsError>,
+> {
     let local_configuration = configuration;
 
     // unbox the parameters
@@ -584,11 +594,13 @@ pub async fn ListFastlyAccounts(
 }
 
 /// List Fastly services for an account.
-pub async fn ListFastlyServices(
+pub async fn list_fastly_services(
     configuration: &configuration::Configuration,
     params: ListFastlyServicesParams,
-) -> Result<ResponseContent<crate::datadogV2::FastlyServicesResponse>, Error<ListFastlyServicesError>>
-{
+) -> Result<
+    ResponseContent<Option<crate::datadogV2::model::FastlyServicesResponse>>,
+    Error<ListFastlyServicesError>,
+> {
     let local_configuration = configuration;
 
     // unbox the parameters
@@ -640,11 +652,13 @@ pub async fn ListFastlyServices(
 }
 
 /// Update a Fastly account.
-pub async fn UpdateFastlyAccount(
+pub async fn update_fastly_account(
     configuration: &configuration::Configuration,
     params: UpdateFastlyAccountParams,
-) -> Result<ResponseContent<crate::datadogV2::FastlyAccountResponse>, Error<UpdateFastlyAccountError>>
-{
+) -> Result<
+    ResponseContent<Option<crate::datadogV2::model::FastlyAccountResponse>>,
+    Error<UpdateFastlyAccountError>,
+> {
     let local_configuration = configuration;
 
     // unbox the parameters
@@ -701,11 +715,13 @@ pub async fn UpdateFastlyAccount(
 }
 
 /// Update a Fastly service for an account.
-pub async fn UpdateFastlyService(
+pub async fn update_fastly_service(
     configuration: &configuration::Configuration,
     params: UpdateFastlyServiceParams,
-) -> Result<ResponseContent<crate::datadogV2::FastlyServiceResponse>, Error<UpdateFastlyServiceError>>
-{
+) -> Result<
+    ResponseContent<Option<crate::datadogV2::model::FastlyServiceResponse>>,
+    Error<UpdateFastlyServiceError>,
+> {
     let local_configuration = configuration;
 
     // unbox the parameters
