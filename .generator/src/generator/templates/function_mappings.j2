@@ -1,0 +1,58 @@
+use crate::scenarios::fixtures::DatadogWorld;
+use futures::executor::block_on;
+use serde_json::Value;
+use std::collections::HashMap;
+
+use datadog_api_client::datadog::*;{#
+{% for name, operations in apis["v1"].items() %}
+{%- set classname = "api_"+name%}
+use datadog_api_client::datadogV1::{{classname | snake_case}}::*;
+{%- endfor %}
+#}{%- for version, apis in all_apis.items() %}
+{%- for name, operations in apis.items() %}
+{%- set classname = "api_"+name %}
+use datadog_api_client::datadog{{ version.upper() }}::api::{{classname | snake_case}}::*;
+{%- endfor %}
+{%- endfor %}
+
+pub fn collect_function_calls(world: &mut DatadogWorld) {
+{%- for _, apis in all_apis.items() %}
+{%- for _, operations in apis.items() %}
+{%- for _, _, operation in operations %}
+    world.function_mappings.insert("{{ operation['operationId'] }}".to_string(), test_{{ operation['operationId'] | snake_case }});
+{%- endfor %}
+{%- endfor %}
+{%- endfor %}
+}
+
+{%- for _, apis in all_apis.items() %}
+{%- for _, operations in apis.items() %}
+{% for _, _, operation in operations %}
+{%- set operationParams = operation|parameters|list %}
+fn test_{{ operation['operationId'] | snake_case }}(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    {%- if operationParams|length > 0 -%}
+    let params = {{ operation['operationId'] }}Params {
+        {%- for param in operationParams %}
+        {{ param[0] }}: serde_json::from_value(_parameters.get("{{ param[0] }}").unwrap().clone()).unwrap(),
+        {%- endfor %}
+    };
+    let response = match block_on({{ operation['operationId'] | snake_case}}(&world.config, params)) {
+    {%- else %}
+    let response = match block_on({{ operation['operationId'] | snake_case}}(&world.config)) {
+    {%- endif %}
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::Reqwest(e) => panic!("reqwest error: {}", e.to_string()),
+                Error::Serde(e) => panic!("serde error: {}", e.to_string()),
+                Error::Io(e) => panic!("io error: {}", e.to_string()),
+                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+{% endfor %}
+{%- endfor %}
+{%- endfor %}

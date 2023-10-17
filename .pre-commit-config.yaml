@@ -1,0 +1,26 @@
+repos:
+- repo: local
+  hooks:
+  - id: generate
+    name: Generate
+    language: node
+    entry: bash -c "./generate.sh"
+    files: '^(\.generator/.*|\.pre-commit-config\.yaml|Makefile|\tests/scenarios/features/.*)'
+    pass_filenames: false
+  - id: lint
+    name: Lint
+    language: rust
+    entry: cargo fmt
+    stages: [manual]
+    # files: '^api/.*\.go'
+    # types: ["file", "go"]
+    pass_filenames: false
+  - id: generator
+    name: generator
+    language: python
+    entry: bash -c "cd .generator && poetry install && poetry run python -m generator ./schemas/v2/openapi.yaml -o ../src/"
+    files: "^.generator/(config|schemas/v1|src|poetry.lock|pyproject.toml)"
+    stages: [manual]
+    pass_filenames: false
+    additional_dependencies:
+      - "poetry"

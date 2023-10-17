@@ -19,38 +19,35 @@ def load(filename):
         return JsonRef.replace_refs(yaml.load(fp, Loader=CSafeLoader))
 
 
-def get_name(schema):
+def get_name(schema, version=None):
     name = None
     if hasattr(schema, "__reference__"):
         name = schema.__reference__["$ref"].split("/")[-1]
 
-    return name
+    return f"crate::datadog{version.upper()}::model::{name}" if version else name
 
 
-def type_to_go(schema, alternative_name=None, render_nullable=False, render_new=False):
-    """Return Go type name for the type."""
-    if render_nullable and schema.get("nullable", False):
-        prefix = "Nullable"
-    else:
-        prefix = ""
+def type_to_rust(schema, alternative_name=None, render_nullable=False, render_option=True, render_box=False, version=None):
+    """Return Rust type name for the type."""
 
     # special case for additionalProperties: true
     if schema is True:
-        return "interface{}"
+        return "Value"
 
     if "enum" not in schema:
-        name = formatter.simple_type(schema, render_nullable=render_nullable, render_new=render_new)
+        name = formatter.simple_type(schema, render_nullable=render_nullable, render_option=render_option)
         if name is not None:
             return name
 
-    name = get_name(schema)
+    name = get_name(schema, version)
     if name:
         if "enum" in schema:
-            if render_new and schema.get("nullable", False):
-                return f"New{prefix}{name}"
-            return prefix + name
+            if render_box and schema.get("nullable", False):
+                return f"Box<Option<{name}>>"
+            return f"Option<{name}>" if render_option else name
         if not (schema.get("additionalProperties") and not schema.get("properties")) and schema.get("type", "object") == "object":
-            return prefix + name
+            inner_type = f"Box<{name}>" if render_box else name
+            return f"Option<{inner_type}>" if render_option else inner_type
 
     type_ = schema.get("type")
     if type_ is None:
@@ -64,61 +61,66 @@ def type_to_go(schema, alternative_name=None, render_nullable=False, render_new=
 
     if type_ == "array":
         if name and schema.get("x-generate-alias-as-model", False):
-            return prefix + name
+            return name
         if name or alternative_name:
             alternative_name = (name or alternative_name) + "Item"
-        name = type_to_go(schema["items"], alternative_name=alternative_name)
+        name = type_to_rust(schema["items"], alternative_name=alternative_name, render_nullable=render_nullable, render_option=False, version=version)
         # handle nullable arrays
         if formatter.simple_type(schema["items"]) and schema["items"].get("nullable"):
-            name = "*" + name
+            name = f"Option<{name}>"
         if schema.get("nullable") and formatter.is_primitive(schema["items"]):
-            name = formatter.simple_type(schema["items"], render_nullable=render_nullable, render_new=render_new)
+            name = formatter.simple_type(schema["items"], render_nullable=render_nullable, render_option=False)
             if render_nullable:
-                return f"datadog.{prefix}List[{name}]"
-        return "[]{}".format(name)
+                # return f"datadog.{prefix}List[{name}]"
+                # TODO: implement
+                return "None"
+        if render_option:
+            return f"Option<Vec<{name}>>"
+        return f"Vec<{name}>"
     elif type_ == "object":
         if "additionalProperties" in schema:
-            return "map[string]{}".format(type_to_go(schema["additionalProperties"]))
-        return (
-            prefix + alternative_name
-            if alternative_name
-            and ("properties" in schema or "oneOf" in schema or "anyOf" in schema or "allOf" in schema)
-            else "interface{}"
-        )
+            # return "map[string]{}".format(type_to_rust(schema["additionalProperties"]))
+            return "None"
+        if render_option:
+            return f"Option<Box<{alternative_name}>>"
+        return f"Box<{alternative_name}>"
 
     raise ValueError(f"Unknown type {type_}")
 
 
 def get_type_for_attribute(schema, attribute, current_name=None):
-    """Return Go type name for the attribute."""
+    """Return Rust type name for the attribute."""
     child_schema = schema.get("properties", {}).get(attribute)
     alternative_name = current_name + formatter.camel_case(attribute) if current_name else None
-    return type_to_go(child_schema, alternative_name=alternative_name)
+    return type_to_rust(child_schema, alternative_name=alternative_name)
 
 
-def get_type_for_parameter(parameter):
-    """Return Go type name for the parameter."""
+def get_type_for_parameter(parameter, version=None):
+    """Return Rust type name for the parameter."""
+    render_option = True
+    if "required" in parameter:
+        render_option = not parameter["required"]
     if "content" in parameter:
         assert "in" not in parameter
         for content in parameter["content"].values():
-            return type_to_go(content["schema"])
-    return type_to_go(parameter.get("schema"))
+            return type_to_rust(content["schema"], version=version, render_option=render_option)
+    return type_to_rust(parameter.get("schema"), version=version, render_option=render_option)
 
 
-def get_type_for_response(response):
-    """Return Go type name for the response."""
+def get_type_for_response(response, version):
+    """Return Rust type name for the response."""
     if "content" in response:
         for content in response["content"].values():
             if "schema" in content:
-                return type_to_go(content["schema"])
+                return type_to_rust(content["schema"], version=version)
 
 
-def responses_by_types(operation):
+def responses_by_types(operation, version):
     result = {}
     for response_code, response in operation["responses"].items():
         if int(response_code) < 300:
             continue
-        response_type = get_type_for_response(response)
+        response_type = get_type_for_response(response, version)
         if response_type in result:
             result[response_type][1].append(response_code)
         else:
@@ -300,11 +302,11 @@ def parameter_schema(parameter):
     raise ValueError(f"Unknown schema for parameter {parameter}")
 
 
-def return_type(operation):
+def return_type(operation, version):
     for response in operation.get("responses", {}).values():
         for content in response.get("content", {}).values():
             if "schema" in content:
-                return type_to_go(content["schema"])
+                return type_to_rust(content["schema"], version=version)
         return
 
 
@@ -426,12 +428,12 @@ def get_container_type(operation, attribute_path, stop=None):
         parameter = next(iter(parameter["content"].values()))
         
     if name == attrs[0] and len(attrs) == 1:
-        return type_to_go(parameter["schema"])
+        return type_to_rust(parameter["schema"])
 
     parameter = parameter["schema"]
     for attr in attrs[1:]:
         parameter = parameter["properties"][attr]
-    return type_to_go(parameter)
+    return type_to_rust(parameter)
 
 
 def get_type_at_path(operation, attribute_path):

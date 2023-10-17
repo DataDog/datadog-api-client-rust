@@ -1,0 +1,7 @@
+{% include "partial_header.j2" %}
+
+{% for name, model in models.items() %}
+{%- set classname = "model_"+name%}
+pub mod {{classname | snake_case}};
+pub use self::{{classname | snake_case}}::{{name}};
+{%- endfor %}

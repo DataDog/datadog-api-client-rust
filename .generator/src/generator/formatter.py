@@ -9,63 +9,57 @@ from .utils import snake_case, camel_case, untitle_case, schema_name
 PRIMITIVE_TYPES = ["string", "number", "boolean", "integer"]
 
 KEYWORDS = {
+    "as",
     "break",
-    "case",
-    "chan",
     "const",
     "continue",
-    "default",
-    "defer",
+    "crate",
     "else",
-    "fallthrough",
+    "enum",
+    "extern",
+    "false",
+    "fn",
     "for",
-    "func",
-    "go",
-    "goto",
     "if",
-    "import",
-    "interface",
-    "map",
-    "package",
-    "range",
+    "impl",
+    "in",
+    "let",
+    "loop",
+    "match",
+    "mod",
+    "move",
+    "mut",
+    "pub",
+    "ref",
     "return",
-    "select",
+    "self",
+    "Self",
+    "static",
     "struct",
-    "switch",
+    "super",
+    "trait",
+    "true",
     "type",
-    "var",
-}
-
-SUFFIXES = {
-    # Test
-    "test",
-    # $GOOS
-    "aix",
-    "android",
-    "darwin",
-    "dragonfly",
-    "freebsd",
-    "illumos",
-    "js",
-    "linux",
-    "netbsd",
-    "openbsd",
-    "plan9",
-    "solaris",
-    "windows",
-    # $GOARCH
-    "386",
-    "amd64",
-    "arm",
-    "arm64",
-    "mips",
-    "mips64",
-    "mips64le",
-    "mipsle",
-    "ppc64",
-    "ppc64le",
-    "s390x",
-    "wasm",
+    "unsafe",
+    "use",
+    "where",
+    "while",
+    "async",
+    "await",
+    "dyn",
+    "abstract",
+    "become",
+    "box",
+    "do",
+    "final",
+    "macro",
+    "override",
+    "priv",
+    "typeof",
+    "unsized",
+    "virtual",
+    "yield",
+    "try",
 }
 
 
@@ -74,18 +68,14 @@ def is_primitive(schema):
     return _type in PRIMITIVE_TYPES and "enum" not in schema
 
 
-def block_comment(comment, prefix="#", first_line=True):
+def block_comment(comment, prefix="///", first_line=True):
     lines = comment.split("\n")
     start = "" if first_line else lines[0] + "\n"
     return (start + "\n".join(f"{prefix} {line}".rstrip() for line in lines[(0 if first_line else 1) :])).rstrip()
 
 
 def model_filename(name):
-    filename = snake_case(name)
-    last = filename.split("_")[-1]
-    if last in SUFFIXES:
-        filename += "_"
-    return filename
+    return snake_case(name)
 
 
 def escape_reserved_keyword(word):
@@ -95,7 +85,7 @@ def escape_reserved_keyword(word):
     :return: The escaped word if it was a reserved keyword, the word unchanged otherwise
     """
     if word in KEYWORDS:
-        return f"{word}Var"
+        return f"{word}_"
     return word
 
 
@@ -104,15 +94,15 @@ def attribute_name(attribute):
 
 
 def variable_name(attribute):
-    return escape_reserved_keyword(untitle_case(camel_case(attribute)))
+    return escape_reserved_keyword(snake_case(attribute))
 
 
-def format_value(value, quotes='"', schema=None):
+def format_value(value, quotes='"', schema=None, version=None):
     if schema and "enum" in schema:
         index = schema["enum"].index(value)
         enum_varnames = schema["x-enum-varnames"][index]
         name = schema_name(schema)
-        return f"{name.upper()}_{enum_varnames}"
+        return f"crate::datadog{version.upper()}::model::{name}::{enum_varnames}"
 
     if isinstance(value, str):
         return f"{quotes}{value}{quotes}"
@@ -123,7 +113,7 @@ def format_value(value, quotes='"', schema=None):
     return value
 
 
-def simple_type(schema, render_nullable=False, render_new=False):
+def simple_type(schema, render_nullable=False, render_option=True, render_new=False):
     """Return the simple type of a schema.
 
     :param schema: The schema to extract the type from
@@ -132,34 +122,41 @@ def simple_type(schema, render_nullable=False, render_new=False):
     type_name = schema.get("type")
     type_format = schema.get("format")
     nullable = render_nullable and schema.get("nullable", False)
-
-    nullable_prefix = "datadog.NewNullable" if render_new else "datadog.Nullable"
-
+    
+    inner_type = None
     if type_name == "integer":
-        return {
-            "int32": "int32" if not nullable else f"{nullable_prefix}Int32",
-            "int64": "int64" if not nullable else f"{nullable_prefix}Int64",
-            None: "int32" if not nullable else f"{nullable_prefix}Int32",
+        inner_type = {
+            "int32": "i32",
+            "int64": "i64",
+            None: "i32",
         }[type_format]
 
     if type_name == "number":
-        return {
-            "double": "float64" if not nullable else f"{nullable_prefix}Float64",
-            None: "float" if not nullable else f"{nullable_prefix}Float",
+        inner_type = {
+            "double": "f64",
+            None: "f64",
         }[type_format]
 
     if type_name == "string":
-        return {
-            "date": "time.Time" if not nullable else f"{nullable_prefix}Time",
-            "date-time": "time.Time" if not nullable else f"{nullable_prefix}Time",
-            "email": "string" if not nullable else f"{nullable_prefix}String",
-            "binary": "*os.File",
-            None: "string" if not nullable else f"{nullable_prefix}String",
+        inner_type = {
+            "date": "String",
+            "date-time": "String",
+            "email": "String",
+            "binary": "Vec<u8>",
+            None: "String",
         }[type_format]
     if type_name == "boolean":
-        return "bool" if not nullable else f"{nullable_prefix}Bool"
+        inner_type = "bool"
+    
+    if inner_type == None:
+        return None
 
-    return None
+    simple_type = inner_type
+    if nullable:
+        simple_type = f"Option<{simple_type}>"
+    if render_option:
+        simple_type = f"Option<{simple_type}>"
+    return simple_type
 
 
 def is_reference(schema, attribute):
@@ -195,7 +192,7 @@ def attribute_path(attribute):
 
 
 def go_name(name):
-    """Convert key to Go name.
+    """Convert key to Rust name.
 
     Example:
 
@@ -398,7 +395,7 @@ def format_data_with_schema(
     if replace_values and data in replace_values:
         parameters = replace_values[data]
 
-        # Make sure that variables used in given statements are camelCase for Go linter
+        # Make sure that variables used in given statements are camelCase for Rust linter
         if parameters in variables:
             parameters = go_name(parameters)
 
@@ -651,7 +648,7 @@ def format_data_with_schema_dict(
             else:
                 parameters = saved_parameters
         else:
-            return f"map[string]{nested_schema_name}{{\n{parameters}}}"
+            return f"None"#f"map[string]{nested_schema_name}{{\n{parameters}}}"
 
     if "oneOf" in schema:
         return _format_oneof(schema, data, name, name_prefix, replace_values, required, nullable, **kwargs)
