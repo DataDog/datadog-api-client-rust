@@ -10,11 +10,15 @@ repos:
   - id: lint
     name: Lint
     language: rust
-    entry: cargo fmt
-    stages: [manual]
-    # files: '^api/.*\.go'
-    # types: ["file", "go"]
+    entry: cargo check
     pass_filenames: false
+    stages: [manual]
+  - id: format
+    name: Format
+    language: rust
+    entry: cargo fmt
+    pass_filenames: false
+    stages: [manual]
   - id: generator
     name: generator
     language: python

@@ -26,3 +26,4 @@ pre_commit_wrapper () {
 rm -rf src/* examples/*
 pre_commit_wrapper generator
 pre_commit_wrapper lint
+pre_commit_wrapper format
