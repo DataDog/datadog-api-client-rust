@@ -20,7 +20,7 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     Some(FastlyIntegrationAPI::with_config(world.config.clone()));
             }
         }
-        _ => panic!("{api} API instance not found"),
+        _ => panic!("'{api}' API instance tag not found"),
     }
 }
 
@@ -28,39 +28,33 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("ListFastlyAccounts".to_string(), test_list_fastly_accounts);
-    world.function_mappings.insert(
-        "CreateFastlyAccount".to_string(),
-        test_create_fastly_account,
-    );
-    world.function_mappings.insert(
-        "DeleteFastlyAccount".to_string(),
-        test_delete_fastly_account,
-    );
+    world
+        .function_mappings
+        .insert("CreateFastlyAccount".to_string(), test_create_fastly_account);
+    world
+        .function_mappings
+        .insert("DeleteFastlyAccount".to_string(), test_delete_fastly_account);
     world
         .function_mappings
         .insert("GetFastlyAccount".to_string(), test_get_fastly_account);
-    world.function_mappings.insert(
-        "UpdateFastlyAccount".to_string(),
-        test_update_fastly_account,
-    );
+    world
+        .function_mappings
+        .insert("UpdateFastlyAccount".to_string(), test_update_fastly_account);
     world
         .function_mappings
         .insert("ListFastlyServices".to_string(), test_list_fastly_services);
-    world.function_mappings.insert(
-        "CreateFastlyService".to_string(),
-        test_create_fastly_service,
-    );
-    world.function_mappings.insert(
-        "DeleteFastlyService".to_string(),
-        test_delete_fastly_service,
-    );
+    world
+        .function_mappings
+        .insert("CreateFastlyService".to_string(), test_create_fastly_service);
+    world
+        .function_mappings
+        .insert("DeleteFastlyService".to_string(), test_delete_fastly_service);
     world
         .function_mappings
         .insert("GetFastlyService".to_string(), test_get_fastly_service);
-    world.function_mappings.insert(
-        "UpdateFastlyService".to_string(),
-        test_update_fastly_service,
-    );
+    world
+        .function_mappings
+        .insert("UpdateFastlyService".to_string(), test_update_fastly_service);
 }
 
 fn test_list_fastly_accounts(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
