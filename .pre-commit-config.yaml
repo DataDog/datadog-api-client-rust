@@ -9,10 +9,8 @@ repos:
     pass_filenames: false
   - id: lint
     name: Lint
-    language: rust
-    entry: cargo fix
-    args:
-      - "--allow-staged"
+    entry: cargo clippy
+    language: system
     pass_filenames: false
     stages: [manual]
   - id: format

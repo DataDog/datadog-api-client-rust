@@ -1,4 +1,6 @@
-use crate::scenarios::function_mappings::*;
+use crate::scenarios::function_mappings::{
+    collect_function_calls, initialize_api_instance, ApiInstances,
+};
 use cucumber::{
     event::ScenarioFinished,
     gherkin::{Feature, Rule, Scenario},
@@ -40,6 +42,7 @@ pub struct DatadogWorld {
     pub operation_id: String,
     pub parameters: HashMap<String, Value>,
     pub response: Response,
+    pub api_instances: ApiInstances,
     given_map: Value,
     undo_map: Value,
     undo_operations: Vec<UndoOperation>,
@@ -137,8 +140,8 @@ fn valid_appkey_auth(world: &mut DatadogWorld) {
 }
 
 #[given(expr = "an instance of {string} API")]
-fn instance_of_api(_world: &mut DatadogWorld, _api: String) {
-    // rust client doesn't have concept of an api instance at the moment.
+fn instance_of_api(world: &mut DatadogWorld, api: String) {
+    initialize_api_instance(world, api);
 }
 
 #[given(expr = "there is a valid {string} in the system")]
@@ -171,12 +174,23 @@ fn given_resource_in_system(world: &mut DatadogWorld, given_key: String) {
             };
         }
     }
+
+    if let Some(tag) = given.get("tag") {
+        let mut api_name = tag
+            .as_str()
+            .expect("failed to parse given tag as str")
+            .to_string();
+        api_name.retain(|c| !c.is_whitespace());
+        initialize_api_instance(world, api_name);
+    }
+
     let operation_id = given
         .get("operationId")
-        .unwrap()
+        .expect("operationId missing from given")
         .as_str()
-        .unwrap()
+        .expect("failed to parse given operation id as str")
         .to_string();
+
     world.function_mappings.get(&operation_id).unwrap()(world, &given_parameters);
     match build_undo(world, &operation_id) {
         Ok(Some(undo)) => {
@@ -192,10 +206,8 @@ fn given_resource_in_system(world: &mut DatadogWorld, given_key: String) {
                 map.insert(given_key, fixture);
             }
         }
-    } else {
-        if let Value::Object(ref mut map) = world.fixtures {
-            map.insert(given_key, world.response.object.clone());
-        }
+    } else if let Value::Object(ref mut map) = world.fixtures {
+        map.insert(given_key, world.response.object.clone());
     }
 }
 
@@ -226,7 +238,7 @@ fn body_from_file(world: &mut DatadogWorld, path: String) {
 #[given(expr = "request contains {string} parameter from {string}")]
 fn request_parameter_from_path(world: &mut DatadogWorld, param: String, path: String) {
     let lookup = lookup(&path, &world.fixtures).unwrap();
-    world.parameters.insert(param, Value::from(lookup));
+    world.parameters.insert(param, lookup);
 }
 
 #[given(expr = "request contains {string} parameter with value {}")]
@@ -272,7 +284,7 @@ fn response_has_length(world: &mut DatadogWorld, path: String, expected_len: usi
 
 fn lookup(path: &String, object: &Value) -> Option<Value> {
     let index_re = Regex::new(r"\[(\d+)\]+").unwrap();
-    let mut json_pointer = format!("/{}", path).replace(".", "/");
+    let mut json_pointer = format!("/{}", path).replace('.', "/");
     for (_, [idx]) in index_re
         .captures_iter(&json_pointer.clone())
         .map(|c| c.extract())

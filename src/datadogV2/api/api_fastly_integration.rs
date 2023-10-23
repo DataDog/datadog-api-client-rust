@@ -186,6 +186,7 @@ pub enum UpdateFastlyServiceError {
     UnknownValue(serde_json::Value),
 }
 
+#[derive(Debug, Clone)]
 pub struct FastlyIntegrationAPI {
     config: configuration::Configuration,
 }
@@ -208,7 +209,7 @@ impl FastlyIntegrationAPI {
 
     /// Create a Fastly account.
     pub async fn create_fastly_account(
-        self,
+        &self,
         params: CreateFastlyAccountParams,
     ) -> Result<
         Option<crate::datadogV2::model::FastlyAccountResponse>,
@@ -222,7 +223,7 @@ impl FastlyIntegrationAPI {
 
     /// Create a Fastly account.
     pub async fn create_fastly_account_with_http_info(
-        self,
+        &self,
         params: CreateFastlyAccountParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::FastlyAccountResponse>,
@@ -285,7 +286,7 @@ impl FastlyIntegrationAPI {
 
     /// Create a Fastly service for an account.
     pub async fn create_fastly_service(
-        self,
+        &self,
         params: CreateFastlyServiceParams,
     ) -> Result<
         Option<crate::datadogV2::model::FastlyServiceResponse>,
@@ -299,7 +300,7 @@ impl FastlyIntegrationAPI {
 
     /// Create a Fastly service for an account.
     pub async fn create_fastly_service_with_http_info(
-        self,
+        &self,
         params: CreateFastlyServiceParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::FastlyServiceResponse>,
@@ -364,7 +365,7 @@ impl FastlyIntegrationAPI {
 
     /// Delete a Fastly account.
     pub async fn delete_fastly_account(
-        self,
+        &self,
         params: DeleteFastlyAccountParams,
     ) -> Result<Option<()>, Error<DeleteFastlyAccountError>> {
         match self.delete_fastly_account_with_http_info(params).await {
@@ -375,7 +376,7 @@ impl FastlyIntegrationAPI {
 
     /// Delete a Fastly account.
     pub async fn delete_fastly_account_with_http_info(
-        self,
+        &self,
         params: DeleteFastlyAccountParams,
     ) -> Result<ResponseContent<()>, Error<DeleteFastlyAccountError>> {
         let local_configuration = &self.config;
@@ -431,7 +432,7 @@ impl FastlyIntegrationAPI {
 
     /// Delete a Fastly service for an account.
     pub async fn delete_fastly_service(
-        self,
+        &self,
         params: DeleteFastlyServiceParams,
     ) -> Result<Option<()>, Error<DeleteFastlyServiceError>> {
         match self.delete_fastly_service_with_http_info(params).await {
@@ -442,7 +443,7 @@ impl FastlyIntegrationAPI {
 
     /// Delete a Fastly service for an account.
     pub async fn delete_fastly_service_with_http_info(
-        self,
+        &self,
         params: DeleteFastlyServiceParams,
     ) -> Result<ResponseContent<()>, Error<DeleteFastlyServiceError>> {
         let local_configuration = &self.config;
@@ -500,7 +501,7 @@ impl FastlyIntegrationAPI {
 
     /// Get a Fastly account.
     pub async fn get_fastly_account(
-        self,
+        &self,
         params: GetFastlyAccountParams,
     ) -> Result<Option<crate::datadogV2::model::FastlyAccountResponse>, Error<GetFastlyAccountError>>
     {
@@ -512,7 +513,7 @@ impl FastlyIntegrationAPI {
 
     /// Get a Fastly account.
     pub async fn get_fastly_account_with_http_info(
-        self,
+        &self,
         params: GetFastlyAccountParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::FastlyAccountResponse>,
@@ -573,7 +574,7 @@ impl FastlyIntegrationAPI {
 
     /// Get a Fastly service for an account.
     pub async fn get_fastly_service(
-        self,
+        &self,
         params: GetFastlyServiceParams,
     ) -> Result<Option<crate::datadogV2::model::FastlyServiceResponse>, Error<GetFastlyServiceError>>
     {
@@ -585,7 +586,7 @@ impl FastlyIntegrationAPI {
 
     /// Get a Fastly service for an account.
     pub async fn get_fastly_service_with_http_info(
-        self,
+        &self,
         params: GetFastlyServiceParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::FastlyServiceResponse>,
@@ -648,7 +649,7 @@ impl FastlyIntegrationAPI {
 
     /// List Fastly accounts.
     pub async fn list_fastly_accounts(
-        self,
+        &self,
     ) -> Result<
         Option<crate::datadogV2::model::FastlyAccountsResponse>,
         Error<ListFastlyAccountsError>,
@@ -661,7 +662,7 @@ impl FastlyIntegrationAPI {
 
     /// List Fastly accounts.
     pub async fn list_fastly_accounts_with_http_info(
-        self,
+        &self,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::FastlyAccountsResponse>,
         Error<ListFastlyAccountsError>,
@@ -719,7 +720,7 @@ impl FastlyIntegrationAPI {
 
     /// List Fastly services for an account.
     pub async fn list_fastly_services(
-        self,
+        &self,
         params: ListFastlyServicesParams,
     ) -> Result<
         Option<crate::datadogV2::model::FastlyServicesResponse>,
@@ -733,7 +734,7 @@ impl FastlyIntegrationAPI {
 
     /// List Fastly services for an account.
     pub async fn list_fastly_services_with_http_info(
-        self,
+        &self,
         params: ListFastlyServicesParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::FastlyServicesResponse>,
@@ -794,7 +795,7 @@ impl FastlyIntegrationAPI {
 
     /// Update a Fastly account.
     pub async fn update_fastly_account(
-        self,
+        &self,
         params: UpdateFastlyAccountParams,
     ) -> Result<
         Option<crate::datadogV2::model::FastlyAccountResponse>,
@@ -808,7 +809,7 @@ impl FastlyIntegrationAPI {
 
     /// Update a Fastly account.
     pub async fn update_fastly_account_with_http_info(
-        self,
+        &self,
         params: UpdateFastlyAccountParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::FastlyAccountResponse>,
@@ -873,7 +874,7 @@ impl FastlyIntegrationAPI {
 
     /// Update a Fastly service for an account.
     pub async fn update_fastly_service(
-        self,
+        &self,
         params: UpdateFastlyServiceParams,
     ) -> Result<
         Option<crate::datadogV2::model::FastlyServiceResponse>,
@@ -887,7 +888,7 @@ impl FastlyIntegrationAPI {
 
     /// Update a Fastly service for an account.
     pub async fn update_fastly_service_with_http_info(
-        self,
+        &self,
         params: UpdateFastlyServiceParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::FastlyServiceResponse>,
