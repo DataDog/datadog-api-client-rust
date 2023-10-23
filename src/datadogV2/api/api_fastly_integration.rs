@@ -268,7 +268,7 @@ impl FastlyIntegrationAPI {
                 serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
-                content: local_content.clone(),
+                content: local_content,
                 entity: local_entity,
             })
         } else {
@@ -347,7 +347,7 @@ impl FastlyIntegrationAPI {
                 serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
-                content: local_content.clone(),
+                content: local_content,
                 entity: local_entity,
             })
         } else {
@@ -414,7 +414,7 @@ impl FastlyIntegrationAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             Ok(ResponseContent {
                 status: local_status,
-                content: local_content.clone(),
+                content: local_content,
                 entity: None,
             })
         } else {
@@ -483,7 +483,7 @@ impl FastlyIntegrationAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             Ok(ResponseContent {
                 status: local_status,
-                content: local_content.clone(),
+                content: local_content,
                 entity: None,
             })
         } else {
@@ -556,7 +556,7 @@ impl FastlyIntegrationAPI {
                 serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
-                content: local_content.clone(),
+                content: local_content,
                 entity: local_entity,
             })
         } else {
@@ -631,7 +631,7 @@ impl FastlyIntegrationAPI {
                 serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
-                content: local_content.clone(),
+                content: local_content,
                 entity: local_entity,
             })
         } else {
@@ -702,7 +702,7 @@ impl FastlyIntegrationAPI {
                 serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
-                content: local_content.clone(),
+                content: local_content,
                 entity: local_entity,
             })
         } else {
@@ -777,7 +777,7 @@ impl FastlyIntegrationAPI {
                 serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
-                content: local_content.clone(),
+                content: local_content,
                 entity: local_entity,
             })
         } else {
@@ -856,7 +856,7 @@ impl FastlyIntegrationAPI {
                 serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
-                content: local_content.clone(),
+                content: local_content,
                 entity: local_entity,
             })
         } else {
@@ -937,7 +937,7 @@ impl FastlyIntegrationAPI {
                 serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
-                content: local_content.clone(),
+                content: local_content,
                 entity: local_entity,
             })
         } else {

@@ -10,7 +10,9 @@ repos:
   - id: lint
     name: Lint
     language: rust
-    entry: cargo check
+    entry: cargo fix
+    args:
+      - "--allow-staged"
     pass_filenames: false
     stages: [manual]
   - id: format

@@ -308,13 +308,13 @@ impl {{ structName }} {
             let local_entity: Option<{{returnType}}> = serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
-                content: local_content.clone(),
+                content: local_content,
                 entity: local_entity,
             })
             {%- else %}
             Ok(ResponseContent {
                 status: local_status,
-                content: local_content.clone(),
+                content: local_content,
                 entity: None,
             })
             {%- endif %}
