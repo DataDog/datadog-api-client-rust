@@ -1,4 +1,5 @@
 use crate::scenarios::function_mappings::{collect_function_calls, initialize_api_instance, ApiInstances};
+use chrono::DateTime;
 use cucumber::{
     event::ScenarioFinished,
     gherkin::{Feature, Rule, Scenario},
@@ -6,13 +7,18 @@ use cucumber::{
 };
 use datadog_api_client::datadog::configuration::Configuration;
 use handlebars::Handlebars;
+use log::debug;
 use regex::Regex;
+use reqwest_middleware::ClientBuilder;
+use rvcr::{VCRMiddleware, VCRMode};
 use serde_json::{json, Value};
 use sha256::digest;
 use std::{
     collections::HashMap,
-    fs::{read_to_string, File},
+    env,
+    fs::{create_dir_all, read_to_string, File},
     io::BufReader,
+    path::PathBuf,
     time::SystemTime,
 };
 
@@ -64,37 +70,107 @@ pub async fn before_scenario(feature: &Feature, _rule: Option<&Rule>, scenario: 
     let undo_file = File::open(format!("tests/scenarios/features/v{}/undo.json", world.api_version)).unwrap();
     world.undo_map = serde_json::from_reader(BufReader::new(undo_file)).unwrap();
 
-    let mut config = Configuration::new();
-    config.api_key_auth = Some("00000000000000000000000000000000".to_string());
-    config.app_key_auth = Some("0000000000000000000000000000000000000000".to_string());
-    world.config = config;
-
     let non_alnum_re = Regex::new(r"[^A-Za-z0-9]+").unwrap();
-    let prefix = match true {
-        true => "Test-Rust",
-        false => "Test",
+    let escaped_filename = non_alnum_re.replace_all(scenario.name.as_str(), "-").to_string();
+    let filename = match escaped_filename.len() > 100 {
+        true => escaped_filename[..100].to_string(),
+        false => escaped_filename,
     };
-    let now = SystemTime::now()
+    let mut prefix = "Test".to_string();
+    let mut cassette_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+    cassette_dir.push(format!(
+        "tests/scenarios/cassettes/v{}/Feature_{}",
+        world.api_version,
+        feature.name.replace(' ', "_")
+    ));
+    create_dir_all(&cassette_dir).expect("failed to create cassette directory");
+    let mut cassette = cassette_dir.clone();
+    cassette.push(format!("{}.json", filename));
+    let mut freeze = cassette_dir.clone();
+    freeze.push(format!("{}.frozen", filename));
+    let mut config = Configuration::new();
+    let mut frozen_time = SystemTime::now()
         .duration_since(SystemTime::UNIX_EPOCH)
         .unwrap()
         .as_secs();
+
+    let vcr_client_builder = ClientBuilder::new(reqwest::Client::new());
+    config.client = match env::var("RECORD").unwrap_or("false".to_string()).as_str() {
+        "none" => {
+            prefix.push_str("-Rust");
+            vcr_client_builder.build()
+        }
+        "true" => {
+            // let _ = remove_file(cassette.clone());
+            // let _ = remove_file(freeze.clone());
+            // let mut freeze_file = File::create(freeze).expect("failed to write freeze file");
+            // freeze_file
+            //     .write_all(
+            //         DateTime::to_rfc3339(
+            //             &DateTime::from_timestamp(frozen_time as i64, 0)
+            //                 .expect("failed to convert timestamp to datetime"),
+            //         )
+            //         .as_bytes(),
+            //     )
+            //     .expect("failed to write freeze file");
+            // let middleware: VCRMiddleware = VCRMiddleware::try_from(cassette)
+            //     .expect("Failed to initialize rVCR middleware")
+            //     .with_mode(VCRMode::Record)
+            //     .with_modify_request(|req| {
+            //         req.headers.remove_entry("dd-api-key");
+            //         req.headers.remove_entry("dd-application-key");
+            //     })
+            //     .with_modify_response(|res| {
+            //         res.headers.remove_entry("content-security-policy");
+            //     });
+            // vcr_client_builder.with(middleware).build()
+            panic!("sdk's shouldn't be recording, that's the spec repo's job.");
+        }
+        _ => {
+            frozen_time =
+                DateTime::parse_from_rfc3339(read_to_string(freeze).expect("Failed to read freeze file").as_str())
+                    .expect("Failed to parse freeze file time")
+                    .signed_duration_since(DateTime::UNIX_EPOCH)
+                    .num_seconds() as u64;
+            debug!("{}", frozen_time);
+            let middleware: VCRMiddleware = VCRMiddleware::try_from(cassette)
+                .expect("Failed to initialize rVCR middleware")
+                .with_mode(VCRMode::Replay)
+                .with_modify_request(|req| {
+                    req.headers.remove_entry("dd-api-key");
+                    req.headers.remove_entry("dd-application-key");
+                })
+                .with_modify_response(|res| {
+                    res.headers.remove_entry("content-security-policy");
+                })
+                .with_request_matcher(|vcr_req, req| {
+                    vcr_req.uri.to_string() == req.uri.to_string()
+                        && vcr_req.body.string == req.body.string
+                        && vcr_req.method == req.method
+                });
+            vcr_client_builder.with(middleware).build()
+        }
+    };
+    config.api_key_auth = Some("00000000000000000000000000000000".to_string());
+    config.app_key_auth = Some("0000000000000000000000000000000000000000".to_string());
+    world.config = config;
 
     let escaped_name = non_alnum_re.replace_all(scenario.name.as_str(), "_").to_string();
     let name = match escaped_name.len() > 100 {
         true => escaped_name[..100].to_string(),
         false => escaped_name,
     };
-    let unique = format!("{}-{}-{}", prefix, name, now);
+    let unique = format!("{}-{}-{}", prefix, name, frozen_time);
     let unique_alnum = non_alnum_re.replace_all(unique.as_str(), "").to_string();
     world.fixtures = json!({
         "unique": unique,
-        "unique_lower": unique.to_ascii_lowercase(),
+        "unique_lowe: Stringr": unique.to_ascii_lowercase(),
         "unique_upper": unique.to_ascii_uppercase(),
         "unique_alnum": unique_alnum,
         "unique_lower_alnum": unique_alnum.to_ascii_lowercase(),
         "unique_upper_alnum": unique_alnum.to_ascii_uppercase(),
         "unique_hash": digest(unique)[..16],
-        "now": now,
+        "now": frozen_time,
     });
 }
 
@@ -114,12 +190,12 @@ pub async fn after_scenario(
 
 #[given(expr = "a valid \"apiKeyAuth\" key in the system")]
 fn valid_apikey_auth(world: &mut DatadogWorld) {
-    world.config.api_key_auth = std::env::var("DD_TEST_CLIENT_API_KEY").ok();
+    world.config.api_key_auth = env::var("DD_TEST_CLIENT_API_KEY").ok();
 }
 
 #[given(expr = "a valid \"appKeyAuth\" key in the system")]
 fn valid_appkey_auth(world: &mut DatadogWorld) {
-    world.config.app_key_auth = std::env::var("DD_TEST_CLIENT_APP_KEY").ok();
+    world.config.app_key_auth = env::var("DD_TEST_CLIENT_APP_KEY").ok();
 }
 
 #[given(expr = "an instance of {string} API")]
@@ -169,9 +245,7 @@ fn given_resource_in_system(world: &mut DatadogWorld, given_key: String) {
 
     world.function_mappings.get(&operation_id).unwrap()(world, &given_parameters);
     match build_undo(world, &operation_id) {
-        Ok(Some(undo)) => {
-            world.undo_operations.push(undo);
-        }
+        Ok(Some(undo)) => world.undo_operations.push(undo),
         Ok(None) => {}
         Err(err) => panic!("{err}"),
     }
@@ -256,7 +330,6 @@ fn lookup(path: &String, object: &Value) -> Option<Value> {
     for (_, [idx]) in index_re.captures_iter(&json_pointer.clone()).map(|c| c.extract()) {
         json_pointer = index_re.replace(&json_pointer, format!("/{idx}")).to_string();
     }
-
     return object.pointer(&json_pointer).cloned();
 }
 
