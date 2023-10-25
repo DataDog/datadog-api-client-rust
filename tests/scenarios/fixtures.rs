@@ -53,7 +53,7 @@ pub struct DatadogWorld {
 }
 
 pub async fn before_scenario(feature: &Feature, _rule: Option<&Rule>, scenario: &Scenario, world: &mut DatadogWorld) {
-    let api_version_re = Regex::new(r"tests/scenarios/features/v(\d+)/").unwrap();
+    let api_version_re = Regex::new(r"tests/scenarios/features/v(\d+)/").expect("api version regex failed");
     // TODO: refactor this lol
     world.api_version = api_version_re
         .captures(feature.path.as_ref().unwrap().to_str().unwrap())
@@ -65,12 +65,14 @@ pub async fn before_scenario(feature: &Feature, _rule: Option<&Rule>, scenario: 
         .unwrap();
 
     collect_function_calls(world);
-    let given_file = File::open(format!("tests/scenarios/features/v{}/given.json", world.api_version)).unwrap();
-    world.given_map = serde_json::from_reader(BufReader::new(given_file)).unwrap();
-    let undo_file = File::open(format!("tests/scenarios/features/v{}/undo.json", world.api_version)).unwrap();
-    world.undo_map = serde_json::from_reader(BufReader::new(undo_file)).unwrap();
+    let given_file = File::open(format!("tests/scenarios/features/v{}/given.json", world.api_version))
+        .expect("failed to open given.json file");
+    world.given_map = serde_json::from_reader(BufReader::new(given_file)).expect("failed to deserialize given.json");
+    let undo_file = File::open(format!("tests/scenarios/features/v{}/undo.json", world.api_version))
+        .expect("failed to open undo.json file");
+    world.undo_map = serde_json::from_reader(BufReader::new(undo_file)).expect("failed to deserialize undo.json");
 
-    let non_alnum_re = Regex::new(r"[^A-Za-z0-9]+").unwrap();
+    let non_alnum_re = Regex::new(r"[^A-Za-z0-9]+").expect("non alnum regex failed");
     let escaped_filename = non_alnum_re.replace_all(scenario.name.as_str(), "-").to_string();
     let filename = match escaped_filename.len() > 100 {
         true => escaped_filename[..100].to_string(),
@@ -183,7 +185,10 @@ pub async fn after_scenario(
 ) {
     if let Some(world) = world {
         for undo in world.undo_operations.clone().iter().rev() {
-            world.function_mappings.get(&undo.operation_id).unwrap()(world, &undo.parameters);
+            world
+                .function_mappings
+                .get(&undo.operation_id)
+                .expect("undo operation not found")(world, &undo.parameters);
         }
     }
 }
@@ -243,7 +248,10 @@ fn given_resource_in_system(world: &mut DatadogWorld, given_key: String) {
         .expect("failed to parse given operation id as str")
         .to_string();
 
-    world.function_mappings.get(&operation_id).unwrap()(world, &given_parameters);
+    world
+        .function_mappings
+        .get(&operation_id)
+        .expect("given operation not found")(world, &given_parameters);
     match build_undo(world, &operation_id) {
         Ok(Some(undo)) => world.undo_operations.push(undo),
         Ok(None) => {}
@@ -295,7 +303,10 @@ fn request_parameter_with_value(world: &mut DatadogWorld, param: String, value: 
 
 #[when(regex = r"^the request is sent$")]
 fn request_sent(world: &mut DatadogWorld) {
-    world.function_mappings.get(&world.operation_id).unwrap()(world, &world.parameters.clone());
+    world
+        .function_mappings
+        .get(&world.operation_id)
+        .expect("request operation not found")(world, &world.parameters.clone());
     match build_undo(world, &world.operation_id.clone()) {
         Ok(Some(undo)) => {
             world.undo_operations.push(undo);
@@ -312,7 +323,7 @@ fn response_status_is(world: &mut DatadogWorld, status_code: u16, _status_messag
 
 #[then(expr = "the response {string} is equal to {}")]
 fn response_equal_to(world: &mut DatadogWorld, path: String, value: String) {
-    let lookup = lookup(&path, &world.response.object).unwrap();
+    let lookup = lookup(&path, &world.response.object).expect("value not found in response");
     let rendered_value = template(value, &world.fixtures);
     let expected: Value = serde_json::from_str(rendered_value.as_str()).unwrap();
     assert_eq!(lookup, expected);
@@ -325,7 +336,7 @@ fn response_has_length(world: &mut DatadogWorld, path: String, expected_len: usi
 }
 
 fn lookup(path: &String, object: &Value) -> Option<Value> {
-    let index_re = Regex::new(r"\[(\d+)\]+").unwrap();
+    let index_re = Regex::new(r"\[(\d+)\]+").expect("index regex failed");
     let mut json_pointer = format!("/{}", path).replace('.', "/");
     for (_, [idx]) in index_re.captures_iter(&json_pointer.clone()).map(|c| c.extract()) {
         json_pointer = index_re.replace(&json_pointer, format!("/{idx}")).to_string();
@@ -334,7 +345,9 @@ fn lookup(path: &String, object: &Value) -> Option<Value> {
 }
 
 fn template(string: String, fixtures: &Value) -> String {
-    Handlebars::new().render_template(string.as_str(), &fixtures).unwrap()
+    Handlebars::new()
+        .render_template(string.as_str(), &fixtures)
+        .expect("failed to apply template")
 }
 
 fn build_undo(world: &mut DatadogWorld, operation_id: &String) -> Result<Option<UndoOperation>, Value> {
