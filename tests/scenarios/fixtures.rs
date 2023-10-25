@@ -81,9 +81,9 @@ pub async fn before_scenario(feature: &Feature, _rule: Option<&Rule>, scenario: 
     let mut prefix = "Test".to_string();
     let mut cassette_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     cassette_dir.push(format!(
-        "tests/scenarios/cassettes/v{}/Feature_{}",
+        "tests/scenarios/cassettes/v{}/{}",
         world.api_version,
-        feature.name.replace(' ', "_")
+        feature.name.replace(' ', "_").to_lowercase()
     ));
     create_dir_all(&cassette_dir).expect("failed to create cassette directory");
     let mut cassette = cassette_dir.clone();
