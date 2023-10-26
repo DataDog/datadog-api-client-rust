@@ -4,6 +4,7 @@
 
 use crate::datadog::*;
 use reqwest;
+use serde::{Deserialize, Serialize};
 
 /// CreateFastlyAccountParams is a struct for passing parameters to the method [`CreateFastlyAccount`]
 #[derive(Clone, Debug, Default)]

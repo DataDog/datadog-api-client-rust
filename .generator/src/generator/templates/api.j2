@@ -1,6 +1,7 @@
 {% include "partial_header.j2" %}
 
 use reqwest;
+use serde::{Serialize, Deserialize};
 use crate::datadog::*;
 
 {% for path, method, operation in operations|sort(attribute="2.operationId", case_sensitive=True) %}

@@ -9,14 +9,14 @@ pub struct {{ name }} {
 {%- if schema.deprecated %}
 	#[deprecated]
 {%- endif %}
-    #[serde(rename = "{{ attr }}"{% if not required and nullable%}, default, with = "::serde_with::rust::double_option"{% endif %}{% if not required %}, skip_serializing_if = "Option::is_none"{% endif %}{% if not required %}{% if nullable %}, deserialize_with = "Option::deserialize"{% endif %}{% endif %})]
+    #[serde(rename = "{{ attr }}"{% if not required and nullable%}, default, with = "::serde_with::rust::double_option"{% endif %}{% if not required %}, skip_serializing_if = "Option::is_none"{% endif %}{% if not required %}{% endif %})]
     pub {{propertyName}}: {{dataType}},
 {%- endfor %}
 }
 
 impl {{ name }} {
     {{ model.description | block_comment }}
-    pub fn new({% for attr, schema in model.get("properties", {}).items() if attr in model.required %}{%- set propertyName = attr|variable_name %}{%- set dataType = get_type(schema, alternative_name=name + propertyName, render_nullable=True, render_option=False, version=version) %}{%- set nullable = schema.get("nullable", False)%}{{propertyName}}: {{ dataType }}{%- if not loop.last %}, {% endif %}{% endfor %}) -> {{ name }} {
+    pub fn new({% for attr, schema in model.get("properties", {}).items() if attr in model.required %}{%- set nullable = schema.get("nullable", False)%}{%- set propertyName = attr|variable_name %}{%- set dataType = get_type(schema, alternative_name=name + propertyName, render_nullable=nullable, render_option=False, version=version) %}{%- set nullable = schema.get("nullable", False)%}{{propertyName}}: {{ dataType }}{%- if not loop.last %}, {% endif %}{% endfor %}) -> {{ name }} {
         {{ name }} {
             {%- for attr, schema in model.get("properties", {}).items() %}
             {%- set propertyName = attr|variable_name %}
@@ -29,8 +29,6 @@ impl {{ name }} {
             {%- else %}
             {{ attr|variable_name }}: {{ attr|variable_name }},
             {%- endif %}
-            {%- elif schema.default is defined %}
-            {{ attr|variable_name }}: Some({{ schema.default|format_value(schema=schema, version=version) }}),
             {%- else %}
             {{ attr|variable_name }}: None,
             {%- endif %}

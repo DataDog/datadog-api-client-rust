@@ -35,7 +35,7 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
     {%- set fieldName = "api_"+name %}
     {%- set structName = name|camel_case +"API" %}
         "{{name|camel_case}}" => {
-            if world.api_instances.api_fastly_integration.is_none() {
+            if world.api_instances.{{fieldName | snake_case}}.is_none() {
                 world.api_instances.{{fieldName | snake_case}} = Some({{structName}}::with_config(world.config.clone()));
             }
         },
@@ -65,7 +65,7 @@ fn test_{{ operation['operationId'] | snake_case }}(world: &mut DatadogWorld, _p
     {%- if operationParams|length > 0 -%}
     let params = {{ operation['operationId'] }}Params {
         {%- for param in operationParams %}
-        {{ param[0] }}: serde_json::from_value(_parameters.get("{{ param[0] }}").unwrap().clone()).unwrap(),
+        {{ param[0] | variable_name }}: serde_json::from_value(_parameters.get("{{ param[0] }}").unwrap().clone()).unwrap(),
         {%- endfor %}
     };
     let response = match block_on(api.{{ operation['operationId'] | snake_case}}_with_http_info(params)) {

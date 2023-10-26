@@ -26,6 +26,12 @@ def get_name(schema, version=None):
 
     return f"crate::datadog{version.upper()}::model::{name}" if version else name
 
+def option_wrapper(name, option, nullable):
+    if option:
+        name = f"Option<{name}>"
+    if nullable:
+        name = f"Option<{name}>"
+    return name
 
 def type_to_rust(schema, alternative_name=None, render_nullable=False, render_option=True, render_box=False, version=None):
     """Return Rust type name for the type."""
@@ -42,12 +48,10 @@ def type_to_rust(schema, alternative_name=None, render_nullable=False, render_op
     name = get_name(schema, version)
     if name:
         if "enum" in schema:
-            if render_box and schema.get("nullable", False):
-                return f"Box<Option<{name}>>"
-            return f"Option<{name}>" if render_option else name
+            return option_wrapper(name, render_option, render_nullable)
         if not (schema.get("additionalProperties") and not schema.get("properties")) and schema.get("type", "object") == "object":
-            inner_type = f"Box<{name}>" if render_box else name
-            return f"Option<{inner_type}>" if render_option else inner_type
+            name = f"Box<{name}>" if render_box else name
+            return option_wrapper(name, render_option, render_nullable)
 
     type_ = schema.get("type")
     if type_ is None:
@@ -70,13 +74,7 @@ def type_to_rust(schema, alternative_name=None, render_nullable=False, render_op
             name = f"Option<{name}>"
         if schema.get("nullable") and formatter.is_primitive(schema["items"]):
             name = formatter.simple_type(schema["items"], render_nullable=render_nullable, render_option=False)
-            if render_nullable:
-                # return f"datadog.{prefix}List[{name}]"
-                # TODO: implement
-                return "None"
-        if render_option:
-            return f"Option<Vec<{name}>>"
-        return f"Vec<{name}>"
+        return option_wrapper(f"Vec<{name}>", render_option, render_nullable)
     elif type_ == "object":
         if "additionalProperties" in schema:
             # return "map[string]{}".format(type_to_rust(schema["additionalProperties"]))
