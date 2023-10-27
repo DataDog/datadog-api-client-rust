@@ -2,14 +2,16 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Serialize};
+use serde_with::skip_serializing_none;
 
+#[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct IPAllowlistEntryData {
     /// Attributes of the IP allowlist entry.
-    #[serde(rename = "attributes", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "attributes")]
     pub attributes: Option<Box<crate::datadogV2::model::IPAllowlistEntryAttributes>>,
     /// The unique identifier of the IP allowlist entry.
-    #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "id")]
     pub id: Option<String>,
     /// IP allowlist Entry type.
     #[serde(rename = "type")]
@@ -22,7 +24,7 @@ impl IPAllowlistEntryData {
         IPAllowlistEntryData {
             attributes: None,
             id: None,
-            type_: type_,
+            type_,
         }
     }
 }

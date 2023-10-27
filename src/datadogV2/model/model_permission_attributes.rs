@@ -2,29 +2,31 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Serialize};
+use serde_with::skip_serializing_none;
 
+#[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct PermissionAttributes {
     /// Creation time of the permission.
-    #[serde(rename = "created", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "created")]
     pub created: Option<String>,
     /// Description of the permission.
-    #[serde(rename = "description", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "description")]
     pub description: Option<String>,
     /// Displayed name for the permission.
-    #[serde(rename = "display_name", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "display_name")]
     pub display_name: Option<String>,
     /// Display type.
-    #[serde(rename = "display_type", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "display_type")]
     pub display_type: Option<String>,
     /// Name of the permission group.
-    #[serde(rename = "group_name", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "group_name")]
     pub group_name: Option<String>,
     /// Name of the permission.
-    #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "name")]
     pub name: Option<String>,
     /// Whether or not the permission is restricted.
-    #[serde(rename = "restricted", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "restricted")]
     pub restricted: Option<bool>,
 }
 

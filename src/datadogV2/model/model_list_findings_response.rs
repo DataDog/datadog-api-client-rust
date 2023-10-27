@@ -2,7 +2,9 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Serialize};
+use serde_with::skip_serializing_none;
 
+#[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct ListFindingsResponse {
     /// Array of findings.
@@ -20,7 +22,7 @@ impl ListFindingsResponse {
         meta: crate::datadogV2::model::ListFindingsMeta,
     ) -> ListFindingsResponse {
         ListFindingsResponse {
-            data: data,
+            data,
             meta: Box::new(meta),
         }
     }

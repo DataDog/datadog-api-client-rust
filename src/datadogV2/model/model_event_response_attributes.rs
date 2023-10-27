@@ -2,20 +2,22 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Serialize};
+use serde_with::skip_serializing_none;
 
+#[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct EventResponseAttributes {
     /// Object description of attributes from your event.
-    #[serde(rename = "attributes", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "attributes")]
     pub attributes: Option<Box<crate::datadogV2::model::EventAttributes>>,
     /// The message of the event.
-    #[serde(rename = "message", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "message")]
     pub message: Option<String>,
     /// An array of tags associated with the event.
-    #[serde(rename = "tags", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
     /// The timestamp of the event.
-    #[serde(rename = "timestamp", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "timestamp")]
     pub timestamp: Option<String>,
 }
 

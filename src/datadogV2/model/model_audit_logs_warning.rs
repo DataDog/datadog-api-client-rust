@@ -2,17 +2,19 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Serialize};
+use serde_with::skip_serializing_none;
 
+#[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct AuditLogsWarning {
     /// Unique code for this type of warning.
-    #[serde(rename = "code", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "code")]
     pub code: Option<String>,
     /// Detailed explanation of this specific warning.
-    #[serde(rename = "detail", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "detail")]
     pub detail: Option<String>,
     /// Short human-readable summary of the warning.
-    #[serde(rename = "title", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "title")]
     pub title: Option<String>,
 }
 

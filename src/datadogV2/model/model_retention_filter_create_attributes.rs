@@ -2,7 +2,9 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Serialize};
+use serde_with::skip_serializing_none;
 
+#[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct RetentionFilterCreateAttributes {
     /// Enable/Disable the retention filter.
@@ -33,11 +35,11 @@ impl RetentionFilterCreateAttributes {
         rate: f64,
     ) -> RetentionFilterCreateAttributes {
         RetentionFilterCreateAttributes {
-            enabled: enabled,
+            enabled,
             filter: Box::new(filter),
-            filter_type: filter_type,
-            name: name,
-            rate: rate,
+            filter_type,
+            name,
+            rate,
         }
     }
 }

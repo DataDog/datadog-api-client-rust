@@ -2,7 +2,9 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Serialize};
+use serde_with::skip_serializing_none;
 
+#[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct OpsgenieServicesResponse {
     /// An array of Opsgenie services.
@@ -13,6 +15,6 @@ pub struct OpsgenieServicesResponse {
 impl OpsgenieServicesResponse {
     /// Response with a list of Opsgenie services.
     pub fn new(data: Vec<crate::datadogV2::model::OpsgenieServiceResponseData>) -> OpsgenieServicesResponse {
-        OpsgenieServicesResponse { data: data }
+        OpsgenieServicesResponse { data }
     }
 }

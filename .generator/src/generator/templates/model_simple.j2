@@ -1,3 +1,6 @@
+use serde_with::skip_serializing_none;
+
+#[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct {{ name }} {
 {%- for attr, schema in model.get("properties", {}).items() %}
@@ -9,7 +12,7 @@ pub struct {{ name }} {
 {%- if schema.deprecated %}
 	#[deprecated]
 {%- endif %}
-    #[serde(rename = "{{ attr }}"{% if not required and nullable%}, default, with = "::serde_with::rust::double_option"{% endif %}{% if not required %}, skip_serializing_if = "Option::is_none"{% endif %}{% if not required %}{% endif %})]
+    #[serde(rename = "{{ attr }}"{% if not required and nullable%}, default, with = "::serde_with::rust::double_option"{% endif %})]
     pub {{propertyName}}: {{dataType}},
 {%- endfor %}
 }
@@ -24,10 +27,10 @@ impl {{ name }} {
             {%- set nullable = schema.get("nullable", False)%}
             {%- set dataType = get_type(schema, alternative_name=name + propertyName, render_nullable=nullable, render_option=not required, render_box=True, version=version) %}
             {%- if attr in model.get("required", []) %}
-            {%- if "Box" in dataType %}
+            {%- if "Box<" in dataType %}
             {{ attr|variable_name }}: Box::new({{ attr|variable_name }}),
             {%- else %}
-            {{ attr|variable_name }}: {{ attr|variable_name }},
+            {{ attr|variable_name }},
             {%- endif %}
             {%- else %}
             {{ attr|variable_name }}: None,

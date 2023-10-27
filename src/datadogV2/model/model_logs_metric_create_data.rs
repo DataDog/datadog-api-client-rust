@@ -2,7 +2,9 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Serialize};
+use serde_with::skip_serializing_none;
 
+#[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct LogsMetricCreateData {
     /// The object describing the Datadog log-based metric to create.
@@ -25,8 +27,8 @@ impl LogsMetricCreateData {
     ) -> LogsMetricCreateData {
         LogsMetricCreateData {
             attributes: Box::new(attributes),
-            id: id,
-            type_: type_,
+            id,
+            type_,
         }
     }
 }

@@ -2,26 +2,28 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Serialize};
+use serde_with::skip_serializing_none;
 
+#[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct HourlyUsageAttributes {
     /// List of the measured usage values for the product family for the org for the time period.
-    #[serde(rename = "measurements", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "measurements")]
     pub measurements: Option<Vec<crate::datadogV2::model::HourlyUsageMeasurement>>,
     /// The organization name.
-    #[serde(rename = "org_name", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "org_name")]
     pub org_name: Option<String>,
     /// The product for which usage is being reported.
-    #[serde(rename = "product_family", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "product_family")]
     pub product_family: Option<String>,
     /// The organization public ID.
-    #[serde(rename = "public_id", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "public_id")]
     pub public_id: Option<String>,
     /// The region of the Datadog instance that the organization belongs to.
-    #[serde(rename = "region", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "region")]
     pub region: Option<String>,
     /// Datetime in ISO-8601 format, UTC. The hour for the usage.
-    #[serde(rename = "timestamp", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "timestamp")]
     pub timestamp: Option<String>,
 }
 

@@ -2,19 +2,16 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Serialize};
+use serde_with::skip_serializing_none;
 
+#[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct CloudWorkloadSecurityAgentRuleUpdaterAttributes {
     /// The handle of the user.
-    #[serde(rename = "handle", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "handle")]
     pub handle: Option<String>,
     /// The name of the user.
-    #[serde(
-        rename = "name",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
+    #[serde(rename = "name", default, with = "::serde_with::rust::double_option")]
     pub name: Option<Option<String>>,
 }
 

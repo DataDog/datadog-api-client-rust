@@ -2,7 +2,9 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Serialize};
+use serde_with::skip_serializing_none;
 
+#[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct RetentionFiltersResponse {
     /// A list of retention filters objects.
@@ -13,6 +15,6 @@ pub struct RetentionFiltersResponse {
 impl RetentionFiltersResponse {
     /// An ordered list of retention filters.
     pub fn new(data: Vec<crate::datadogV2::model::RetentionFilterAll>) -> RetentionFiltersResponse {
-        RetentionFiltersResponse { data: data }
+        RetentionFiltersResponse { data }
     }
 }

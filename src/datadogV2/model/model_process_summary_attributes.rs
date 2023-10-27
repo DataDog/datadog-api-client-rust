@@ -2,32 +2,34 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Serialize};
+use serde_with::skip_serializing_none;
 
+#[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct ProcessSummaryAttributes {
     /// Process command line.
-    #[serde(rename = "cmdline", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "cmdline")]
     pub cmdline: Option<String>,
     /// Host running the process.
-    #[serde(rename = "host", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "host")]
     pub host: Option<String>,
     /// Process ID.
-    #[serde(rename = "pid", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "pid")]
     pub pid: Option<i64>,
     /// Parent process ID.
-    #[serde(rename = "ppid", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "ppid")]
     pub ppid: Option<i64>,
     /// Time the process was started.
-    #[serde(rename = "start", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "start")]
     pub start: Option<String>,
     /// List of tags associated with the process.
-    #[serde(rename = "tags", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
     /// Time the process was seen.
-    #[serde(rename = "timestamp", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "timestamp")]
     pub timestamp: Option<String>,
     /// Process owner.
-    #[serde(rename = "user", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "user")]
     pub user: Option<String>,
 }
 

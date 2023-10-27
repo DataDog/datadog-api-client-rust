@@ -2,17 +2,19 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Serialize};
+use serde_with::skip_serializing_none;
 
+#[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct MetricOrigin {
     /// The origin metric type code
-    #[serde(rename = "metric_type", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "metric_type")]
     pub metric_type: Option<i32>,
     /// The origin product code
-    #[serde(rename = "product", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "product")]
     pub product: Option<i32>,
     /// The origin service code
-    #[serde(rename = "service", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "service")]
     pub service: Option<i32>,
 }
 

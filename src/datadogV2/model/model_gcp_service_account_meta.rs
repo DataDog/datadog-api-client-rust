@@ -2,11 +2,13 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Serialize};
+use serde_with::skip_serializing_none;
 
+#[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct GCPServiceAccountMeta {
     /// The current list of projects accessible from your service account.
-    #[serde(rename = "accessible_projects", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "accessible_projects")]
     pub accessible_projects: Option<Vec<String>>,
 }
 

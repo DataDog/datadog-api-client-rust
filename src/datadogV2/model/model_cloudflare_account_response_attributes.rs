@@ -2,11 +2,13 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Serialize};
+use serde_with::skip_serializing_none;
 
+#[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct CloudflareAccountResponseAttributes {
     /// The email associated with the Cloudflare account.
-    #[serde(rename = "email", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "email")]
     pub email: Option<String>,
     /// The name of the Cloudflare account.
     #[serde(rename = "name")]
@@ -16,9 +18,6 @@ pub struct CloudflareAccountResponseAttributes {
 impl CloudflareAccountResponseAttributes {
     /// Attributes object of a Cloudflare account.
     pub fn new(name: String) -> CloudflareAccountResponseAttributes {
-        CloudflareAccountResponseAttributes {
-            email: None,
-            name: name,
-        }
+        CloudflareAccountResponseAttributes { email: None, name }
     }
 }

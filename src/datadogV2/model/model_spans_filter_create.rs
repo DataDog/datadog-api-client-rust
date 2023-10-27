@@ -2,7 +2,9 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Serialize};
+use serde_with::skip_serializing_none;
 
+#[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct SpansFilterCreate {
     /// The search query - following the [span search syntax](https://docs.datadoghq.com/tracing/trace_explorer/query_syntax/).
@@ -13,6 +15,6 @@ pub struct SpansFilterCreate {
 impl SpansFilterCreate {
     /// The spans filter. Spans matching this filter will be indexed and stored.
     pub fn new(query: String) -> SpansFilterCreate {
-        SpansFilterCreate { query: query }
+        SpansFilterCreate { query }
     }
 }

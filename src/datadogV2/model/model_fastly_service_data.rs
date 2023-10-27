@@ -2,11 +2,13 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Serialize};
+use serde_with::skip_serializing_none;
 
+#[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct FastlyServiceData {
     /// Attributes object for Fastly service requests.
-    #[serde(rename = "attributes", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "attributes")]
     pub attributes: Option<Box<crate::datadogV2::model::FastlyServiceAttributes>>,
     /// The ID of the Fastly service.
     #[serde(rename = "id")]
@@ -21,8 +23,8 @@ impl FastlyServiceData {
     pub fn new(id: String, type_: crate::datadogV2::model::FastlyServiceType) -> FastlyServiceData {
         FastlyServiceData {
             attributes: None,
-            id: id,
-            type_: type_,
+            id,
+            type_,
         }
     }
 }

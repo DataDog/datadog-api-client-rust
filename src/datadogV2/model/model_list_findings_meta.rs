@@ -2,14 +2,16 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Serialize};
+use serde_with::skip_serializing_none;
 
+#[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct ListFindingsMeta {
     /// Pagination and findings count information.
-    #[serde(rename = "page", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "page")]
     pub page: Option<Box<crate::datadogV2::model::ListFindingsPage>>,
     /// The point in time corresponding to the listed findings.
-    #[serde(rename = "snapshot_timestamp", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "snapshot_timestamp")]
     pub snapshot_timestamp: Option<i64>,
 }
 

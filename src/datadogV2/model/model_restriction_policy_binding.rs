@@ -2,7 +2,9 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Serialize};
+use serde_with::skip_serializing_none;
 
+#[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct RestrictionPolicyBinding {
     /// An array of principals. A principal is a subject or group of subjects.
@@ -19,9 +21,6 @@ pub struct RestrictionPolicyBinding {
 impl RestrictionPolicyBinding {
     /// Specifies which principals are associated with a relation.
     pub fn new(principals: Vec<String>, relation: String) -> RestrictionPolicyBinding {
-        RestrictionPolicyBinding {
-            principals: principals,
-            relation: relation,
-        }
+        RestrictionPolicyBinding { principals, relation }
     }
 }

@@ -2,25 +2,27 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Serialize};
+use serde_with::skip_serializing_none;
 
+#[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct AuditLogsEventAttributes {
     /// JSON object of attributes from Audit Logs events.
-    #[serde(rename = "attributes", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "attributes")]
     pub attributes: Option<Box<crate::datadogV2::model::None>>,
     /// Message of the event.
-    #[serde(rename = "message", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "message")]
     pub message: Option<String>,
     /// Name of the application or service generating Audit Logs events.
     /// This name is used to correlate Audit Logs to APM, so make sure you specify the same
     /// value when you use both products.
-    #[serde(rename = "service", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "service")]
     pub service: Option<String>,
     /// Array of tags associated with your event.
-    #[serde(rename = "tags", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
     /// Timestamp of your event.
-    #[serde(rename = "timestamp", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "timestamp")]
     pub timestamp: Option<String>,
 }
 
