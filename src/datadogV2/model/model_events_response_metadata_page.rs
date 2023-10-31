@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Pagination attributes.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct EventsResponseMetadataPage {
@@ -14,7 +15,6 @@ pub struct EventsResponseMetadataPage {
 }
 
 impl EventsResponseMetadataPage {
-    /// Pagination attributes.
     pub fn new() -> EventsResponseMetadataPage {
         EventsResponseMetadataPage { after: None }
     }

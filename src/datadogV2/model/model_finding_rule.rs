@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The rule that triggered this finding.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct FindingRule {
@@ -16,7 +17,6 @@ pub struct FindingRule {
 }
 
 impl FindingRule {
-    /// The rule that triggered this finding.
     pub fn new() -> FindingRule {
         FindingRule { id: None, name: None }
     }

@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Attributes object for updating a Cloudflare account.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct CloudflareAccountUpdateRequestAttributes {
@@ -16,7 +17,6 @@ pub struct CloudflareAccountUpdateRequestAttributes {
 }
 
 impl CloudflareAccountUpdateRequestAttributes {
-    /// Attributes object for updating a Cloudflare account.
     pub fn new(api_key: String) -> CloudflareAccountUpdateRequestAttributes {
         CloudflareAccountUpdateRequestAttributes { api_key, email: None }
     }

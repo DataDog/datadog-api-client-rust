@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The metadata for the current pagination.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct HourlyUsagePagination {
@@ -13,7 +14,6 @@ pub struct HourlyUsagePagination {
 }
 
 impl HourlyUsagePagination {
-    /// The metadata for the current pagination.
     pub fn new() -> HourlyUsagePagination {
         HourlyUsagePagination { next_record_id: None }
     }

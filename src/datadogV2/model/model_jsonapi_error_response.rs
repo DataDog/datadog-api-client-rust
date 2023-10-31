@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// API error response.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct JSONAPIErrorResponse {
@@ -13,7 +14,6 @@ pub struct JSONAPIErrorResponse {
 }
 
 impl JSONAPIErrorResponse {
-    /// API error response.
     pub fn new(errors: Vec<crate::datadogV2::model::JSONAPIErrorItem>) -> JSONAPIErrorResponse {
         JSONAPIErrorResponse { errors }
     }

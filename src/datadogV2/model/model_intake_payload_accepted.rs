@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The payload accepted for intake.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct IntakePayloadAccepted {
@@ -13,7 +14,6 @@ pub struct IntakePayloadAccepted {
 }
 
 impl IntakePayloadAccepted {
-    /// The payload accepted for intake.
     pub fn new() -> IntakePayloadAccepted {
         IntakePayloadAccepted { errors: None }
     }

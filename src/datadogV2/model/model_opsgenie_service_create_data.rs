@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Opsgenie service data for a create request.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct OpsgenieServiceCreateData {
@@ -16,7 +17,6 @@ pub struct OpsgenieServiceCreateData {
 }
 
 impl OpsgenieServiceCreateData {
-    /// Opsgenie service data for a create request.
     pub fn new(
         attributes: crate::datadogV2::model::OpsgenieServiceCreateAttributes,
         type_: crate::datadogV2::model::OpsgenieServiceType,

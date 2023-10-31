@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The search and filter query settings.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct EventsQueryFilter {
@@ -19,7 +20,6 @@ pub struct EventsQueryFilter {
 }
 
 impl EventsQueryFilter {
-    /// The search and filter query settings.
     pub fn new() -> EventsQueryFilter {
         EventsQueryFilter {
             from: None,

@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Restriction policy object.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct RestrictionPolicy {
@@ -19,7 +20,6 @@ pub struct RestrictionPolicy {
 }
 
 impl RestrictionPolicy {
-    /// Restriction policy object.
     pub fn new(
         attributes: crate::datadogV2::model::RestrictionPolicyAttributes,
         id: String,

@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Data object for updating a Fastly account.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct FastlyAccountUpdateRequestData {
@@ -16,7 +17,6 @@ pub struct FastlyAccountUpdateRequestData {
 }
 
 impl FastlyAccountUpdateRequestData {
-    /// Data object for updating a Fastly account.
     pub fn new() -> FastlyAccountUpdateRequestData {
         FastlyAccountUpdateRequestData {
             attributes: None,

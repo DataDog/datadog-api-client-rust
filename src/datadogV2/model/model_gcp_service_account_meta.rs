@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Additional information related to your service account.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct GCPServiceAccountMeta {
@@ -13,7 +14,6 @@ pub struct GCPServiceAccountMeta {
 }
 
 impl GCPServiceAccountMeta {
-    /// Additional information related to your service account.
     pub fn new() -> GCPServiceAccountMeta {
         GCPServiceAccountMeta {
             accessible_projects: None,

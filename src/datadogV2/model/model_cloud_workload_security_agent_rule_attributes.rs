@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// A Cloud Workload Security Agent rule returned by the API.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct CloudWorkloadSecurityAgentRuleAttributes {
@@ -55,7 +56,6 @@ pub struct CloudWorkloadSecurityAgentRuleAttributes {
 }
 
 impl CloudWorkloadSecurityAgentRuleAttributes {
-    /// A Cloud Workload Security Agent rule returned by the API.
     pub fn new() -> CloudWorkloadSecurityAgentRuleAttributes {
         CloudWorkloadSecurityAgentRuleAttributes {
             agent_constraint: None,

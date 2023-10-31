@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Request containing the list of dashboards to update to.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct DashboardListUpdateItemsRequest {
@@ -13,7 +14,6 @@ pub struct DashboardListUpdateItemsRequest {
 }
 
 impl DashboardListUpdateItemsRequest {
-    /// Request containing the list of dashboards to update to.
     pub fn new() -> DashboardListUpdateItemsRequest {
         DashboardListUpdateItemsRequest { dashboards: None }
     }

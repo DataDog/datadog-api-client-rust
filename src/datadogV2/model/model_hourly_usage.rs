@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Hourly usage for a product family for an org.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct HourlyUsage {
@@ -19,7 +20,6 @@ pub struct HourlyUsage {
 }
 
 impl HourlyUsage {
-    /// Hourly usage for a product family for an org.
     pub fn new() -> HourlyUsage {
         HourlyUsage {
             attributes: None,

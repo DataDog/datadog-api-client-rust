@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Model representation of a Confluent Cloud resource.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct ConfluentResourceResponseAttributes {
@@ -22,7 +23,6 @@ pub struct ConfluentResourceResponseAttributes {
 }
 
 impl ConfluentResourceResponseAttributes {
-    /// Model representation of a Confluent Cloud resource.
     pub fn new(resource_type: String) -> ConfluentResourceResponseAttributes {
         ConfluentResourceResponseAttributes {
             enable_custom_metrics: None,

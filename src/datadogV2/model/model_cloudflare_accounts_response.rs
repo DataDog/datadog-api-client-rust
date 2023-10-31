@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The expected response schema when getting Cloudflare accounts.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct CloudflareAccountsResponse {
@@ -13,7 +14,6 @@ pub struct CloudflareAccountsResponse {
 }
 
 impl CloudflareAccountsResponse {
-    /// The expected response schema when getting Cloudflare accounts.
     pub fn new() -> CloudflareAccountsResponse {
         CloudflareAccountsResponse { data: None }
     }

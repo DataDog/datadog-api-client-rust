@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The attributes of the retention filter.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct RetentionFilterAllAttributes {
@@ -44,7 +45,6 @@ pub struct RetentionFilterAllAttributes {
 }
 
 impl RetentionFilterAllAttributes {
-    /// The attributes of the retention filter.
     pub fn new() -> RetentionFilterAllAttributes {
         RetentionFilterAllAttributes {
             created_at: None,

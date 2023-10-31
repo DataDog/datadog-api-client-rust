@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Logs that are sent over HTTP.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct HTTPLogItem {
@@ -31,7 +32,6 @@ pub struct HTTPLogItem {
 }
 
 impl HTTPLogItem {
-    /// Logs that are sent over HTTP.
     pub fn new(message: String) -> HTTPLogItem {
         HTTPLogItem {
             ddsource: None,

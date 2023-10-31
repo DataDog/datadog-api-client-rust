@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Invalid query performed.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct HTTPLogErrors {
@@ -13,7 +14,6 @@ pub struct HTTPLogErrors {
 }
 
 impl HTTPLogErrors {
-    /// Invalid query performed.
     pub fn new() -> HTTPLogErrors {
         HTTPLogErrors { errors: None }
     }

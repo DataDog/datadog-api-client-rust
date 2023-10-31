@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Metric origin information.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct MetricOrigin {
@@ -19,7 +20,6 @@ pub struct MetricOrigin {
 }
 
 impl MetricOrigin {
-    /// Metric origin information.
     pub fn new() -> MetricOrigin {
         MetricOrigin {
             metric_type: None,

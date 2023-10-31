@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The compute rule to compute the span-based metric.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct SpansMetricUpdateCompute {
@@ -14,7 +15,6 @@ pub struct SpansMetricUpdateCompute {
 }
 
 impl SpansMetricUpdateCompute {
-    /// The compute rule to compute the span-based metric.
     pub fn new() -> SpansMetricUpdateCompute {
         SpansMetricUpdateCompute {
             include_percentiles: None,

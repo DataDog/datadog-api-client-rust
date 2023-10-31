@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Object containing all your STS enabled accounts.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct GCPSTSServiceAccountsResponse {
@@ -13,7 +14,6 @@ pub struct GCPSTSServiceAccountsResponse {
 }
 
 impl GCPSTSServiceAccountsResponse {
-    /// Object containing all your STS enabled accounts.
     pub fn new() -> GCPSTSServiceAccountsResponse {
         GCPSTSServiceAccountsResponse { data: None }
     }

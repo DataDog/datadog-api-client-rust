@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The metadata associated with a request.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct EventsResponseMetadata {
@@ -26,7 +27,6 @@ pub struct EventsResponseMetadata {
 }
 
 impl EventsResponseMetadata {
-    /// The metadata associated with a request.
     pub fn new() -> EventsResponseMetadata {
         EventsResponseMetadata {
             elapsed: None,

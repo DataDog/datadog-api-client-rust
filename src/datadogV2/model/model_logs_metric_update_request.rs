@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The new log-based metric body.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct LogsMetricUpdateRequest {
@@ -13,7 +14,6 @@ pub struct LogsMetricUpdateRequest {
 }
 
 impl LogsMetricUpdateRequest {
-    /// The new log-based metric body.
     pub fn new(data: crate::datadogV2::model::LogsMetricUpdateData) -> LogsMetricUpdateRequest {
         LogsMetricUpdateRequest { data: Box::new(data) }
     }

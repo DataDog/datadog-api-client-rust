@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Response object that includes an Agent rule.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct CloudWorkloadSecurityAgentRuleResponse {
@@ -13,7 +14,6 @@ pub struct CloudWorkloadSecurityAgentRuleResponse {
 }
 
 impl CloudWorkloadSecurityAgentRuleResponse {
-    /// Response object that includes an Agent rule.
     pub fn new() -> CloudWorkloadSecurityAgentRuleResponse {
         CloudWorkloadSecurityAgentRuleResponse { data: None }
     }

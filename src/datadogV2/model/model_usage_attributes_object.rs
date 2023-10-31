@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Usage attributes data.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct UsageAttributesObject {
@@ -28,7 +29,6 @@ pub struct UsageAttributesObject {
 }
 
 impl UsageAttributesObject {
-    /// Usage attributes data.
     pub fn new() -> UsageAttributesObject {
         UsageAttributesObject {
             org_name: None,

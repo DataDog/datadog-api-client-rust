@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// API error response body
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct JSONAPIErrorItem {
@@ -19,7 +20,6 @@ pub struct JSONAPIErrorItem {
 }
 
 impl JSONAPIErrorItem {
-    /// API error response body
     pub fn new() -> JSONAPIErrorItem {
         JSONAPIErrorItem {
             detail: None,

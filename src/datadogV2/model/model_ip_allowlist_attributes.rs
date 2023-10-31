@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Attributes of the IP allowlist.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct IPAllowlistAttributes {
@@ -16,7 +17,6 @@ pub struct IPAllowlistAttributes {
 }
 
 impl IPAllowlistAttributes {
-    /// Attributes of the IP allowlist.
     pub fn new() -> IPAllowlistAttributes {
         IPAllowlistAttributes {
             enabled: None,

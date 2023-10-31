@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The spans filter used to index spans.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct SpansFilter {
@@ -13,7 +14,6 @@ pub struct SpansFilter {
 }
 
 impl SpansFilter {
-    /// The spans filter used to index spans.
     pub fn new() -> SpansFilter {
         SpansFilter { query: None }
     }

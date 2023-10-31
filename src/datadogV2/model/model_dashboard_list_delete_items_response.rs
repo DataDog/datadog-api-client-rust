@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Response containing a list of deleted dashboards.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct DashboardListDeleteItemsResponse {
@@ -13,7 +14,6 @@ pub struct DashboardListDeleteItemsResponse {
 }
 
 impl DashboardListDeleteItemsResponse {
-    /// Response containing a list of deleted dashboards.
     pub fn new() -> DashboardListDeleteItemsResponse {
         DashboardListDeleteItemsResponse {
             deleted_dashboards_from_list: None,

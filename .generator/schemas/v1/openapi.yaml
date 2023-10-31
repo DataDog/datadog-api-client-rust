@@ -655,6 +655,14 @@ components:
           description: Your Azure web application secret key.
           example: testingx./Sw*g/Y33t..R1cH+hScMDt
           type: string
+        container_app_filters:
+          description: 'Limit the Azure container apps that are pulled into Datadog
+            using tags.
+
+            Only container apps that match one of the defined tags are imported into
+            Datadog.'
+          example: key:value,filter:example
+          type: string
         cspm_enabled:
           description: Enable Cloud Security Management Misconfigurations for your
             organization.
@@ -1902,12 +1910,15 @@ components:
       - appsec_fargate_usage
       - appsec_usage
       - browser_usage
+      - ci_pipeline_indexed_spans_usage
+      - ci_test_indexed_spans_usage
       - ci_visibility_itr_usage
       - cloud_siem_usage
       - container_excl_agent_usage
       - container_usage
       - cspm_containers_usage
       - cspm_hosts_usage
+      - custom_event_usage
       - custom_ingested_timeseries_usage
       - custom_timeseries_usage
       - cws_containers_usage
@@ -1921,9 +1932,22 @@ components:
       - estimated_rum_sessions_usage
       - fargate_usage
       - functions_usage
+      - indexed_spans_usage
       - infra_host_usage
+      - ingested_logs_bytes_usage
+      - ingested_spans_bytes_usage
       - invocations_usage
       - lambda_traced_invocations_usage
+      - logs_indexed_15day_usage
+      - logs_indexed_180day_usage
+      - logs_indexed_30day_usage
+      - logs_indexed_360day_usage
+      - logs_indexed_3day_usage
+      - logs_indexed_45day_usage
+      - logs_indexed_60day_usage
+      - logs_indexed_7day_usage
+      - logs_indexed_90day_usage
+      - logs_indexed_custom_retention_usage
       - mobile_app_testing_usage
       - ndm_netflow_usage
       - npm_host_usage
@@ -1931,8 +1955,11 @@ components:
       - profiled_container_usage
       - profiled_fargate_usage
       - profiled_host_usage
+      - rum_browser_mobile_sessions_usage
+      - rum_replay_sessions_usage
       - sds_scanned_bytes_usage
       - serverless_apps_usage
+      - siem_ingested_bytes_usage
       - snmp_usage
       - universal_service_monitoring_usage
       - vuln_management_hosts_usage
@@ -1945,12 +1972,15 @@ components:
       - APPSEC_FARGATE_USAGE
       - APPSEC_USAGE
       - BROWSER_USAGE
+      - CI_PIPELINE_INDEXED_SPANS_USAGE
+      - CI_TEST_INDEXED_SPANS_USAGE
       - CI_VISIBILITY_ITR_USAGE
       - CLOUD_SIEM_USAGE
       - CONTAINER_EXCL_AGENT_USAGE
       - CONTAINER_USAGE
       - CSPM_CONTAINERS_USAGE
       - CSPM_HOSTS_USAGE
+      - CUSTOM_EVENT_USAGE
       - CUSTOM_INGESTED_TIMESERIES_USAGE
       - CUSTOM_TIMESERIES_USAGE
       - CWS_CONTAINERS_USAGE
@@ -1964,9 +1994,22 @@ components:
       - ESTIMATED_RUM_SESSIONS_USAGE
       - FARGATE_USAGE
       - FUNCTIONS_USAGE
+      - INDEXED_SPANS_USAGE
       - INFRA_HOST_USAGE
+      - INGESTED_LOGS_BYTES_USAGE
+      - INGESTED_SPANS_BYTES_USAGE
       - INVOCATIONS_USAGE
       - LAMBDA_TRACED_INVOCATIONS_USAGE
+      - LOGS_INDEXED_15DAY_USAGE
+      - LOGS_INDEXED_180DAY_USAGE
+      - LOGS_INDEXED_30DAY_USAGE
+      - LOGS_INDEXED_360DAY_USAGE
+      - LOGS_INDEXED_3DAY_USAGE
+      - LOGS_INDEXED_45DAY_USAGE
+      - LOGS_INDEXED_60DAY_USAGE
+      - LOGS_INDEXED_7DAY_USAGE
+      - LOGS_INDEXED_90DAY_USAGE
+      - LOGS_INDEXED_CUSTOM_RETENTION_USAGE
       - MOBILE_APP_TESTING_USAGE
       - NDM_NETFLOW_USAGE
       - NPM_HOST_USAGE
@@ -1974,8 +2017,11 @@ components:
       - PROFILED_CONTAINER_USAGE
       - PROFILED_FARGATE_USAGE
       - PROFILED_HOST_USAGE
+      - RUM_BROWSER_MOBILE_SESSIONS_USAGE
+      - RUM_REPLAY_SESSIONS_USAGE
       - SDS_SCANNED_BYTES_USAGE
       - SERVERLESS_APPS_USAGE
+      - SIEM_INGESTED_BYTES_USAGE
       - SNMP_USAGE
       - UNIVERSAL_SERVICE_MONITORING_USAGE
       - VULN_MANAGEMENT_HOSTS_USAGE
@@ -2926,298 +2972,6 @@ components:
           readOnly: true
           type: string
       type: object
-    MonitorGroupSearchResponse:
-      description: The response of a monitor group search.
-      example:
-        counts:
-          status:
-          - count: 2
-            name: OK
-          type:
-          - count: 2
-            name: metric
-        groups:
-        - group: '*'
-          group_tags:
-          - '*'
-          last_nodata_ts: 0
-          last_triggered_ts: 1525702966
-          monitor_id: 2738266
-          monitor_name: '[demo] Cassandra disk usage is high on {{host.name}}'
-          status: OK
-        - group: '*'
-          group_tags:
-          - '*'
-          last_nodata_ts: 0
-          last_triggered_ts: 1525703008
-          monitor_id: 1576648
-          monitor_name: '[demo] Disk usage is high on {{host.name}}'
-          status: OK
-        metadata:
-          page: 0
-          page_count: 2
-          per_page: 30
-          total_count: 2
-      properties:
-        counts:
-          $ref: '#/components/schemas/MonitorGroupSearchResponseCounts'
-        groups:
-          description: The list of found monitor groups.
-          items:
-            $ref: '#/components/schemas/MonitorGroupSearchResult'
-          readOnly: true
-          type: array
-        metadata:
-          $ref: '#/components/schemas/MonitorSearchResponseMetadata'
-      type: object
-    MonitorGroupSearchResponseCounts:
-      description: The counts of monitor groups per different criteria.
-      properties:
-        status:
-          $ref: '#/components/schemas/MonitorSearchCount'
-        type:
-          $ref: '#/components/schemas/MonitorSearchCount'
-      readOnly: true
-      type: object
-    MonitorGroupSearchResult:
-      description: A single monitor group search result.
-      properties:
-        group:
-          description: The name of the group.
-          readOnly: true
-          type: string
-        group_tags:
-          description: The list of tags of the monitor group.
-          items:
-            description: One monitor group tag.
-            readOnly: true
-            type: string
-          readOnly: true
-          type: array
-        last_nodata_ts:
-          description: Latest timestamp the monitor group was in NO_DATA state.
-          format: int64
-          readOnly: true
-          type: integer
-        last_triggered_ts:
-          description: Latest timestamp the monitor group triggered.
-          format: int64
-          nullable: true
-          readOnly: true
-          type: integer
-        monitor_id:
-          description: The ID of the monitor.
-          format: int64
-          readOnly: true
-          type: integer
-        monitor_name:
-          description: The name of the monitor.
-          readOnly: true
-          type: string
-        status:
-          $ref: '#/components/schemas/MonitorOverallStates'
-      type: object
-    MonitorSearchCount:
-      description: Search facets.
-      items:
-        $ref: '#/components/schemas/MonitorSearchCountItem'
-      type: array
-    MonitorSearchCountItem:
-      description: A facet item.
-      properties:
-        count:
-          description: The number of found monitors with the listed value.
-          format: int64
-          readOnly: true
-          type: integer
-        name:
-          description: The facet value.
-          readOnly: true
-      type: object
-    MonitorSearchResponse:
-      description: The response form a monitor search.
-      example:
-        counts:
-          muted:
-          - count: 3
-            name: false
-          - count: 3
-            name: true
-          status:
-          - count: 4
-            name: No Data
-          - count: 2
-            name: OK
-          tag:
-          - count: 6
-            name: service:cassandra
-          type:
-          - count: 6
-            name: metric
-        metadata:
-          page: 0
-          page_count: 6
-          per_page: 30
-          total_count: 6
-        monitors:
-        - classification: metric
-          creator:
-            handle: john@datadoghq.com
-            name: John Doe
-          id: 2699850
-          last_triggered_ts: null
-          metrics:
-          - system.cpu.user
-          name: Cassandra CPU is high on {{host.name}} in {{availability-zone.name}}
-          notifications:
-          - handle: jane@datadoghq.com
-            name: Jane Doe
-          org_id: 1234
-          scopes:
-          - '!availability-zone:us-east-1c'
-          - name:cassandra
-          status: No Data
-          tags:
-          - service:cassandra
-          type: query alert
-      properties:
-        counts:
-          $ref: '#/components/schemas/MonitorSearchResponseCounts'
-        metadata:
-          $ref: '#/components/schemas/MonitorSearchResponseMetadata'
-        monitors:
-          description: The list of found monitors.
-          items:
-            $ref: '#/components/schemas/MonitorSearchResult'
-          readOnly: true
-          type: array
-      type: object
-    MonitorSearchResponseCounts:
-      description: The counts of monitors per different criteria.
-      properties:
-        muted:
-          $ref: '#/components/schemas/MonitorSearchCount'
-        status:
-          $ref: '#/components/schemas/MonitorSearchCount'
-        tag:
-          $ref: '#/components/schemas/MonitorSearchCount'
-        type:
-          $ref: '#/components/schemas/MonitorSearchCount'
-      readOnly: true
-      type: object
-    MonitorSearchResponseMetadata:
-      description: Metadata about the response.
-      properties:
-        page:
-          description: The page to start paginating from.
-          format: int64
-          readOnly: true
-          type: integer
-        page_count:
-          description: The number of pages.
-          format: int64
-          readOnly: true
-          type: integer
-        per_page:
-          description: The number of monitors to return per page.
-          format: int64
-          readOnly: true
-          type: integer
-        total_count:
-          description: The total number of monitors.
-          format: int64
-          readOnly: true
-          type: integer
-      type: object
-    MonitorSearchResult:
-      description: Holds search results.
-      properties:
-        classification:
-          description: Classification of the monitor.
-          readOnly: true
-          type: string
-        creator:
-          $ref: '#/components/schemas/Creator'
-        id:
-          description: ID of the monitor.
-          format: int64
-          readOnly: true
-          type: integer
-        last_triggered_ts:
-          description: Latest timestamp the monitor triggered.
-          format: int64
-          nullable: true
-          readOnly: true
-          type: integer
-        metrics:
-          description: Metrics used by the monitor.
-          items:
-            description: A metric used by the monitor.
-            readOnly: true
-            type: string
-          readOnly: true
-          type: array
-        name:
-          description: The monitor name.
-          readOnly: true
-          type: string
-        notifications:
-          description: The notification triggered by the monitor.
-          items:
-            $ref: '#/components/schemas/MonitorSearchResultNotification'
-          readOnly: true
-          type: array
-        org_id:
-          description: The ID of the organization.
-          format: int64
-          readOnly: true
-          type: integer
-        query:
-          description: The monitor query.
-          example: avg(last_5m):sum:system.net.bytes_rcvd{host:host0} > 100
-          type: string
-        scopes:
-          description: 'The scope(s) to which the downtime applies, for example `host:app2`.
-
-            Provide multiple scopes as a comma-separated list, for example `env:dev,env:prod`.
-
-            The resulting downtime applies to sources that matches ALL provided scopes
-
-            (that is `env:dev AND env:prod`), NOT any of them.'
-          example:
-          - host:app2
-          - env:dev,env:prod
-          items:
-            description: Scope value(s).
-            readOnly: true
-            type: string
-          type: array
-        status:
-          $ref: '#/components/schemas/MonitorOverallStates'
-        tags:
-          description: Tags associated with the monitor.
-          items:
-            description: A tag associated with the monitor.
-            readOnly: true
-            type: string
-          readOnly: true
-          type: array
-        type:
-          $ref: '#/components/schemas/MonitorType'
-      type: object
-    MonitorSearchResultNotification:
-      description: A notification triggered by the monitor.
-      properties:
-        handle:
-          description: The email address that received the notification.
-          readOnly: true
-          type: string
-        name:
-          description: The username receiving the notification
-          readOnly: true
-          type: string
-      readOnly: true
-      type: object
     MonthlyUsageAttributionBody:
       description: Usage Summary by tag for a given organization.
       properties:
@@ -3362,6 +3116,44 @@ components:
       - vuln_management_hosts_percentage
       - sds_scanned_bytes_usage
       - sds_scanned_bytes_percentage
+      - ci_test_indexed_spans_usage
+      - ci_test_indexed_spans_percentage
+      - ingested_logs_bytes_usage
+      - ingested_logs_bytes_percentage
+      - ci_pipeline_indexed_spans_usage
+      - ci_pipeline_indexed_spans_percentage
+      - indexed_spans_usage
+      - indexed_spans_percentage
+      - custom_event_usage
+      - custom_event_percentage
+      - logs_indexed_custom_retention_usage
+      - logs_indexed_custom_retention_percentage
+      - logs_indexed_360day_usage
+      - logs_indexed_360day_percentage
+      - logs_indexed_180day_usage
+      - logs_indexed_180day_percentage
+      - logs_indexed_90day_usage
+      - logs_indexed_90day_percentage
+      - logs_indexed_60day_usage
+      - logs_indexed_60day_percentage
+      - logs_indexed_45day_usage
+      - logs_indexed_45day_percentage
+      - logs_indexed_30day_usage
+      - logs_indexed_30day_percentage
+      - logs_indexed_15day_usage
+      - logs_indexed_15day_percentage
+      - logs_indexed_7day_usage
+      - logs_indexed_7day_percentage
+      - logs_indexed_3day_usage
+      - logs_indexed_3day_percentage
+      - rum_replay_sessions_usage
+      - rum_replay_sessions_percentage
+      - rum_browser_mobile_sessions_usage
+      - rum_browser_mobile_sessions_percentage
+      - ingested_spans_bytes_usage
+      - ingested_spans_bytes_percentage
+      - siem_ingested_bytes_usage
+      - siem_ingested_bytes_percentage
       - '*'
       type: string
       x-enum-varnames:
@@ -3447,6 +3239,44 @@ components:
       - VULN_MANAGEMENT_HOSTS_PERCENTAGE
       - SDS_SCANNED_BYTES_USAGE
       - SDS_SCANNED_BYTES_PERCENTAGE
+      - CI_TEST_INDEXED_SPANS_USAGE
+      - CI_TEST_INDEXED_SPANS_PERCENTAGE
+      - INGESTED_LOGS_BYTES_USAGE
+      - INGESTED_LOGS_BYTES_PERCENTAGE
+      - CI_PIPELINE_INDEXED_SPANS_USAGE
+      - CI_PIPELINE_INDEXED_SPANS_PERCENTAGE
+      - INDEXED_SPANS_USAGE
+      - INDEXED_SPANS_PERCENTAGE
+      - CUSTOM_EVENT_USAGE
+      - CUSTOM_EVENT_PERCENTAGE
+      - LOGS_INDEXED_CUSTOM_RETENTION_USAGE
+      - LOGS_INDEXED_CUSTOM_RETENTION_PERCENTAGE
+      - LOGS_INDEXED_360DAY_USAGE
+      - LOGS_INDEXED_360DAY_PERCENTAGE
+      - LOGS_INDEXED_180DAY_USAGE
+      - LOGS_INDEXED_180DAY_PERCENTAGE
+      - LOGS_INDEXED_90DAY_USAGE
+      - LOGS_INDEXED_90DAY_PERCENTAGE
+      - LOGS_INDEXED_60DAY_USAGE
+      - LOGS_INDEXED_60DAY_PERCENTAGE
+      - LOGS_INDEXED_45DAY_USAGE
+      - LOGS_INDEXED_45DAY_PERCENTAGE
+      - LOGS_INDEXED_30DAY_USAGE
+      - LOGS_INDEXED_30DAY_PERCENTAGE
+      - LOGS_INDEXED_15DAY_USAGE
+      - LOGS_INDEXED_15DAY_PERCENTAGE
+      - LOGS_INDEXED_7DAY_USAGE
+      - LOGS_INDEXED_7DAY_PERCENTAGE
+      - LOGS_INDEXED_3DAY_USAGE
+      - LOGS_INDEXED_3DAY_PERCENTAGE
+      - RUM_REPLAY_SESSIONS_USAGE
+      - RUM_REPLAY_SESSIONS_PERCENTAGE
+      - RUM_BROWSER_MOBILE_SESSIONS_USAGE
+      - RUM_BROWSER_MOBILE_SESSIONS_PERCENTAGE
+      - INGESTED_SPANS_BYTES_USAGE
+      - INGESTED_SPANS_BYTES_PERCENTAGE
+      - SIEM_INGESTED_BYTES_USAGE
+      - SIEM_INGESTED_BYTES_PERCENTAGE
       - ALL
     MonthlyUsageAttributionValues:
       description: Fields in Usage Summary by tag(s).
@@ -3511,6 +3341,22 @@ components:
           description: The synthetic browser test usage by tag(s).
           format: double
           type: number
+        ci_pipeline_indexed_spans_percentage:
+          description: The percentage of CI Pipeline Indexed Spans usage by tag(s).
+          format: double
+          type: number
+        ci_pipeline_indexed_spans_usage:
+          description: The total CI Pipeline Indexed Spans usage by tag(s).
+          format: double
+          type: number
+        ci_test_indexed_spans_percentage:
+          description: The percentage of CI Test Indexed Spans usage by tag(s).
+          format: double
+          type: number
+        ci_test_indexed_spans_usage:
+          description: The total CI Test Indexed Spans usage by tag(s).
+          format: double
+          type: number
         ci_visibility_itr_percentage:
           description: The percentage of Git committers for Intelligent Test Runner
             usage by tag(s).
@@ -3563,6 +3409,14 @@ components:
           type: number
         cspm_hosts_usage:
           description: The Cloud Security Management Pro host usage by tag(s).
+          format: double
+          type: number
+        custom_event_percentage:
+          description: The percentage of Custom Events usage by tag(s).
+          format: double
+          type: number
+        custom_event_usage:
+          description: The total Custom Events usage by tag(s).
           format: double
           type: number
         custom_ingested_timeseries_percentage:
@@ -3670,12 +3524,36 @@ components:
           description: The Lambda function usage by tag(s).
           format: double
           type: number
+        indexed_spans_percentage:
+          description: The percentage of APM Indexed Spans usage by tag(s).
+          format: double
+          type: number
+        indexed_spans_usage:
+          description: The total APM Indexed Spans usage by tag(s).
+          format: double
+          type: number
         infra_host_percentage:
           description: The percentage of infrastructure host usage by tag(s).
           format: double
           type: number
         infra_host_usage:
           description: The infrastructure host usage by tag(s).
+          format: double
+          type: number
+        ingested_logs_bytes_percentage:
+          description: The percentage of Ingested Logs usage by tag(s).
+          format: double
+          type: number
+        ingested_logs_bytes_usage:
+          description: The total Ingested Logs usage by tag(s).
+          format: double
+          type: number
+        ingested_spans_bytes_percentage:
+          description: The percentage of APM Ingested Spans usage by tag(s).
+          format: double
+          type: number
+        ingested_spans_bytes_usage:
+          description: The total APM Ingested Spans usage by tag(s).
           format: double
           type: number
         invocations_percentage:
@@ -3692,6 +3570,94 @@ components:
           type: number
         lambda_traced_invocations_usage:
           description: The Serverless APM usage by tag(s).
+          format: double
+          type: number
+        logs_indexed_15day_percentage:
+          description: The percentage of Indexed Logs (15-day Retention) usage by
+            tag(s).
+          format: double
+          type: number
+        logs_indexed_15day_usage:
+          description: The total Indexed Logs (15-day Retention) usage by tag(s).
+          format: double
+          type: number
+        logs_indexed_180day_percentage:
+          description: The percentage of Indexed Logs (180-day Retention) usage by
+            tag(s).
+          format: double
+          type: number
+        logs_indexed_180day_usage:
+          description: The total Indexed Logs (180-day Retention) usage by tag(s).
+          format: double
+          type: number
+        logs_indexed_30day_percentage:
+          description: The percentage of Indexed Logs (30-day Retention) usage by
+            tag(s).
+          format: double
+          type: number
+        logs_indexed_30day_usage:
+          description: The total Indexed Logs (30-day Retention) usage by tag(s).
+          format: double
+          type: number
+        logs_indexed_360day_percentage:
+          description: The percentage of Indexed Logs (360-day Retention) usage by
+            tag(s).
+          format: double
+          type: number
+        logs_indexed_360day_usage:
+          description: The total Indexed Logs (360-day Retention) usage by tag(s).
+          format: double
+          type: number
+        logs_indexed_3day_percentage:
+          description: The percentage of Indexed Logs (3-day Retention) usage by tag(s).
+          format: double
+          type: number
+        logs_indexed_3day_usage:
+          description: The total Indexed Logs (3-day Retention) usage by tag(s).
+          format: double
+          type: number
+        logs_indexed_45day_percentage:
+          description: The percentage of Indexed Logs (45-day Retention) usage by
+            tag(s).
+          format: double
+          type: number
+        logs_indexed_45day_usage:
+          description: The total Indexed Logs (45-day Retention) usage by tag(s).
+          format: double
+          type: number
+        logs_indexed_60day_percentage:
+          description: The percentage of Indexed Logs (60-day Retention) usage by
+            tag(s).
+          format: double
+          type: number
+        logs_indexed_60day_usage:
+          description: The total Indexed Logs (60-day Retention) usage by tag(s).
+          format: double
+          type: number
+        logs_indexed_7day_percentage:
+          description: The percentage of Indexed Logs (7-day Retention) usage by tag(s).
+          format: double
+          type: number
+        logs_indexed_7day_usage:
+          description: The total Indexed Logs (7-day Retention) usage by tag(s).
+          format: double
+          type: number
+        logs_indexed_90day_percentage:
+          description: The percentage of Indexed Logs (90-day Retention) usage by
+            tag(s).
+          format: double
+          type: number
+        logs_indexed_90day_usage:
+          description: The total Indexed Logs (90-day Retention) usage by tag(s).
+          format: double
+          type: number
+        logs_indexed_custom_retention_percentage:
+          description: The percentage of Indexed Logs (Custom Retention) usage by
+            tag(s).
+          format: double
+          type: number
+        logs_indexed_custom_retention_usage:
+          description: The total Indexed Logs (Custom Retention) usage by tag(s).
           format: double
           type: number
         mobile_app_testing_percentage:
@@ -3752,6 +3718,22 @@ components:
           description: The profiled hosts usage by tag(s).
           format: double
           type: number
+        rum_browser_mobile_sessions_percentage:
+          description: The percentage of RUM Browser and Mobile usage by tag(s).
+          format: double
+          type: number
+        rum_browser_mobile_sessions_usage:
+          description: The total RUM Browser and Mobile usage by tag(s).
+          format: double
+          type: number
+        rum_replay_sessions_percentage:
+          description: The percentage of RUM Replay Sessions usage by tag(s).
+          format: double
+          type: number
+        rum_replay_sessions_usage:
+          description: The total RUM Replay Sessions usage by tag(s).
+          format: double
+          type: number
         sds_scanned_bytes_percentage:
           description: The percentage of Sensitive Data Scanner usage by tag(s).
           format: double
@@ -3766,6 +3748,14 @@ components:
           type: number
         serverless_apps_usage:
           description: The total Serverless Apps usage by tag(s).
+          format: double
+          type: number
+        siem_ingested_bytes_percentage:
+          description: The percentage of SIEM usage by tag(s).
+          format: double
+          type: number
+        siem_ingested_bytes_usage:
+          description: The total SIEM usage by tag(s).
           format: double
           type: number
         snmp_percentage:
@@ -12181,6 +12171,10 @@ paths:
           description: Authentication Error
         '429':
           $ref: '#/components/responses/TooManyRequestsResponse'
+      security:
+      - apiKeyAuth: []
+        appKeyAuth: []
+      - AuthZ: []
       summary: Get all Amazon EventBridge sources
       tags:
       - AWS Integration
@@ -14071,178 +14065,6 @@ paths:
       tags:
       - Metrics
       x-codegen-request-body-name: body
-  /api/v1/monitor/groups/search:
-    get:
-      description: Search and filter your monitor groups details.
-      operationId: SearchMonitorGroups
-      parameters:
-      - description: 'After entering a search query in your [Manage Monitor page][1]
-          use the query parameter value in the
-
-          URL of the page as value for this parameter. Consult the dedicated [manage
-          monitor documentation][2]
-
-          page to learn more.
-
-
-          The query can contain any number of space-separated monitor attributes,
-          for instance `query="type:metric status:alert"`.
-
-
-          [1]: https://app.datadoghq.com/monitors/manage
-
-          [2]: /monitors/manage/#find-the-monitors'
-        in: query
-        name: query
-        required: false
-        schema:
-          type: string
-      - description: Page to start paginating from.
-        in: query
-        name: page
-        required: false
-        schema:
-          default: 0
-          format: int64
-          type: integer
-      - description: Number of monitors to return per page.
-        in: query
-        name: per_page
-        required: false
-        schema:
-          default: 30
-          format: int64
-          type: integer
-      - description: 'String for sort order, composed of field and sort order separate
-          by a comma, for example `name,asc`. Supported sort directions: `asc`, `desc`.
-          Supported fields:
-
-
-          * `name`
-
-          * `status`
-
-          * `tags`'
-        in: query
-        name: sort
-        required: false
-        schema:
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MonitorGroupSearchResponse'
-          description: OK
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIErrorResponse'
-          description: Bad Request
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIErrorResponse'
-          description: Forbidden
-        '429':
-          $ref: '#/components/responses/TooManyRequestsResponse'
-      security:
-      - apiKeyAuth: []
-        appKeyAuth: []
-      - AuthZ:
-        - monitors_read
-      summary: Monitors group search
-      tags:
-      - Monitors
-  /api/v1/monitor/search:
-    get:
-      description: Search and filter your monitors details.
-      operationId: SearchMonitors
-      parameters:
-      - description: 'After entering a search query in your [Manage Monitor page][1]
-          use the query parameter value in the
-
-          URL of the page as value for this parameter. Consult the dedicated [manage
-          monitor documentation][2]
-
-          page to learn more.
-
-
-          The query can contain any number of space-separated monitor attributes,
-          for instance `query="type:metric status:alert"`.
-
-
-          [1]: https://app.datadoghq.com/monitors/manage
-
-          [2]: /monitors/manage/#find-the-monitors'
-        in: query
-        name: query
-        required: false
-        schema:
-          type: string
-      - description: Page to start paginating from.
-        in: query
-        name: page
-        required: false
-        schema:
-          default: 0
-          format: int64
-          type: integer
-      - description: Number of monitors to return per page.
-        in: query
-        name: per_page
-        required: false
-        schema:
-          default: 30
-          format: int64
-          type: integer
-      - description: 'String for sort order, composed of field and sort order separate
-          by a comma, for example `name,asc`. Supported sort directions: `asc`, `desc`.
-          Supported fields:
-
-
-          * `name`
-
-          * `status`
-
-          * `tags`'
-        in: query
-        name: sort
-        required: false
-        schema:
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MonitorSearchResponse'
-          description: OK
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIErrorResponse'
-          description: Bad Request
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIErrorResponse'
-          description: Forbidden
-        '429':
-          $ref: '#/components/responses/TooManyRequestsResponse'
-      security:
-      - apiKeyAuth: []
-        appKeyAuth: []
-      - AuthZ:
-        - monitors_read
-      summary: Monitors search
-      tags:
-      - Monitors
   /api/v1/monitor/{monitor_id}/downtimes:
     get:
       description: Get all active downtimes for the specified monitor.

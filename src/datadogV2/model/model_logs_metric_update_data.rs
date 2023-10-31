@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The new log-based metric properties.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct LogsMetricUpdateData {
@@ -16,7 +17,6 @@ pub struct LogsMetricUpdateData {
 }
 
 impl LogsMetricUpdateData {
-    /// The new log-based metric properties.
     pub fn new(
         attributes: crate::datadogV2::model::LogsMetricUpdateAttributes,
         type_: crate::datadogV2::model::LogsMetricType,

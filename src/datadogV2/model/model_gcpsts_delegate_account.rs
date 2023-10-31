@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Datadog principal service account info.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct GCPSTSDelegateAccount {
@@ -19,7 +20,6 @@ pub struct GCPSTSDelegateAccount {
 }
 
 impl GCPSTSDelegateAccount {
-    /// Datadog principal service account info.
     pub fn new() -> GCPSTSDelegateAccount {
         GCPSTSDelegateAccount {
             attributes: None,

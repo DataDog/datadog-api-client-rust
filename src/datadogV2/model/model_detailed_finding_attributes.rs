@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The JSON:API attributes of the detailed finding.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct DetailedFindingAttributes {
@@ -24,7 +25,7 @@ pub struct DetailedFindingAttributes {
     pub resource: Option<String>,
     /// The resource configuration for this finding.
     #[serde(rename = "resource_configuration")]
-    pub resource_configuration: Option<Box<crate::datadogV2::model::None>>,
+    pub resource_configuration: Option<std::collections::HashMap<String, serde_json::Value>>,
     /// The date on which the resource was discovered (Unix ms).
     #[serde(rename = "resource_discovery_date")]
     pub resource_discovery_date: Option<i64>,
@@ -43,7 +44,6 @@ pub struct DetailedFindingAttributes {
 }
 
 impl DetailedFindingAttributes {
-    /// The JSON:API attributes of the detailed finding.
     pub fn new() -> DetailedFindingAttributes {
         DetailedFindingAttributes {
             evaluation: None,

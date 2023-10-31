@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// List of errors.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct HTTPLogError {
@@ -19,7 +20,6 @@ pub struct HTTPLogError {
 }
 
 impl HTTPLogError {
-    /// List of errors.
     pub fn new() -> HTTPLogError {
         HTTPLogError {
             detail: None,

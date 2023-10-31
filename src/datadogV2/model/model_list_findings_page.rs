@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Pagination and findings count information.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct ListFindingsPage {
@@ -16,7 +17,6 @@ pub struct ListFindingsPage {
 }
 
 impl ListFindingsPage {
-    /// Pagination and findings count information.
     pub fn new() -> ListFindingsPage {
         ListFindingsPage {
             cursor: None,

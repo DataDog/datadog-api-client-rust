@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The attributes of a Confluent account.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct ConfluentAccountResponseAttributes {
@@ -19,7 +20,6 @@ pub struct ConfluentAccountResponseAttributes {
 }
 
 impl ConfluentAccountResponseAttributes {
-    /// The attributes of a Confluent account.
     pub fn new(api_key: String) -> ConfluentAccountResponseAttributes {
         ConfluentAccountResponseAttributes {
             api_key,

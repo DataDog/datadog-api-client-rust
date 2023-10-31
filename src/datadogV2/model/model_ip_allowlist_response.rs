@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Response containing information about the IP allowlist.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct IPAllowlistResponse {
@@ -13,7 +14,6 @@ pub struct IPAllowlistResponse {
 }
 
 impl IPAllowlistResponse {
-    /// Response containing information about the IP allowlist.
     pub fn new() -> IPAllowlistResponse {
         IPAllowlistResponse { data: None }
     }

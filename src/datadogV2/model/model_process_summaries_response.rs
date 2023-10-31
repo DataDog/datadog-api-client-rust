@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// List of process summaries.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct ProcessSummariesResponse {
@@ -16,7 +17,6 @@ pub struct ProcessSummariesResponse {
 }
 
 impl ProcessSummariesResponse {
-    /// List of process summaries.
     pub fn new() -> ProcessSummariesResponse {
         ProcessSummariesResponse { data: None, meta: None }
     }

@@ -80,7 +80,7 @@ impl LogsAPI {
     pub async fn submit_log(
         &self,
         params: SubmitLogParams,
-    ) -> Result<Option<crate::datadogV2::model::None>, Error<SubmitLogError>> {
+    ) -> Result<Option<std::collections::HashMap<String, serde_json::Value>>, Error<SubmitLogError>> {
         match self.submit_log_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -114,7 +114,7 @@ impl LogsAPI {
     pub async fn submit_log_with_http_info(
         &self,
         params: SubmitLogParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::None>, Error<SubmitLogError>> {
+    ) -> Result<ResponseContent<std::collections::HashMap<String, serde_json::Value>>, Error<SubmitLogError>> {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -145,7 +145,8 @@ impl LogsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::None> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<std::collections::HashMap<String, serde_json::Value>> =
+                serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
                 content: local_content,

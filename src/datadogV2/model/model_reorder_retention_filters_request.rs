@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// A list of retention filters to reorder.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct ReorderRetentionFiltersRequest {
@@ -13,7 +14,6 @@ pub struct ReorderRetentionFiltersRequest {
 }
 
 impl ReorderRetentionFiltersRequest {
-    /// A list of retention filters to reorder.
     pub fn new(data: Vec<crate::datadogV2::model::RetentionFilterWithoutAttributes>) -> ReorderRetentionFiltersRequest {
         ReorderRetentionFiltersRequest { data }
     }

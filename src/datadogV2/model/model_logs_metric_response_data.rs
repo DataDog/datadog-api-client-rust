@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The log-based metric properties.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct LogsMetricResponseData {
@@ -19,7 +20,6 @@ pub struct LogsMetricResponseData {
 }
 
 impl LogsMetricResponseData {
-    /// The log-based metric properties.
     pub fn new() -> LogsMetricResponseData {
         LogsMetricResponseData {
             attributes: None,

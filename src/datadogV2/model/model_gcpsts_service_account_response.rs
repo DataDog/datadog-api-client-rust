@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The account creation response.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct GCPSTSServiceAccountResponse {
@@ -13,7 +14,6 @@ pub struct GCPSTSServiceAccountResponse {
 }
 
 impl GCPSTSServiceAccountResponse {
-    /// The account creation response.
     pub fn new() -> GCPSTSServiceAccountResponse {
         GCPSTSServiceAccountResponse { data: None }
     }

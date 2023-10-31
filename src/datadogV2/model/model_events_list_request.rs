@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The object sent with the request to retrieve a list of events from your organization.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct EventsListRequest {
@@ -23,7 +24,6 @@ pub struct EventsListRequest {
 }
 
 impl EventsListRequest {
-    /// The object sent with the request to retrieve a list of events from your organization.
     pub fn new() -> EventsListRequest {
         EventsListRequest {
             filter: None,

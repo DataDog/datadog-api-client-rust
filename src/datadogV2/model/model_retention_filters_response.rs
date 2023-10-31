@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// An ordered list of retention filters.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct RetentionFiltersResponse {
@@ -13,7 +14,6 @@ pub struct RetentionFiltersResponse {
 }
 
 impl RetentionFiltersResponse {
-    /// An ordered list of retention filters.
     pub fn new(data: Vec<crate::datadogV2::model::RetentionFilterAll>) -> RetentionFiltersResponse {
         RetentionFiltersResponse { data }
     }

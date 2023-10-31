@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The attributes from an Opsgenie service response.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct OpsgenieServiceResponseAttributes {
@@ -19,7 +20,6 @@ pub struct OpsgenieServiceResponseAttributes {
 }
 
 impl OpsgenieServiceResponseAttributes {
-    /// The attributes from an Opsgenie service response.
     pub fn new() -> OpsgenieServiceResponseAttributes {
         OpsgenieServiceResponseAttributes {
             custom_url: None,

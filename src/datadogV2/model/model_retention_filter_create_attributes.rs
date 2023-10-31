@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The object describing the configuration of the retention filter to create/update.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct RetentionFilterCreateAttributes {
@@ -26,7 +27,6 @@ pub struct RetentionFilterCreateAttributes {
 }
 
 impl RetentionFilterCreateAttributes {
-    /// The object describing the configuration of the retention filter to create/update.
     pub fn new(
         enabled: bool,
         filter: crate::datadogV2::model::SpansFilterCreate,

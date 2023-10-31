@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Specifies which principals are associated with a relation.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct RestrictionPolicyBinding {
@@ -19,7 +20,6 @@ pub struct RestrictionPolicyBinding {
 }
 
 impl RestrictionPolicyBinding {
-    /// Specifies which principals are associated with a relation.
     pub fn new(principals: Vec<String>, relation: String) -> RestrictionPolicyBinding {
         RestrictionPolicyBinding { principals, relation }
     }

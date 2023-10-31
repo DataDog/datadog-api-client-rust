@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Paging attributes for listing events.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct AuditLogsQueryPageOptions {
@@ -16,7 +17,6 @@ pub struct AuditLogsQueryPageOptions {
 }
 
 impl AuditLogsQueryPageOptions {
-    /// Paging attributes for listing events.
     pub fn new() -> AuditLogsQueryPageOptions {
         AuditLogsQueryPageOptions {
             cursor: None,

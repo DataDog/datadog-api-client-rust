@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Links attributes.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct EventsListResponseLinks {
@@ -14,7 +15,6 @@ pub struct EventsListResponseLinks {
 }
 
 impl EventsListResponseLinks {
-    /// Links attributes.
     pub fn new() -> EventsListResponseLinks {
         EventsListResponseLinks { next: None }
     }

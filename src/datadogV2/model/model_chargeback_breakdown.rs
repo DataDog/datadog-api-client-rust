@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Charges breakdown.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct ChargebackBreakdown {
@@ -19,7 +20,6 @@ pub struct ChargebackBreakdown {
 }
 
 impl ChargebackBreakdown {
-    /// Charges breakdown.
     pub fn new() -> ChargebackBreakdown {
         ChargebackBreakdown {
             charge_type: None,

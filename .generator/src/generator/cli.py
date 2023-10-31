@@ -56,6 +56,7 @@ def cli(specs, output):
     env.globals["get_type_for_parameter"] = openapi.get_type_for_parameter
     env.globals["get_type"] = openapi.type_to_rust
     env.globals["get_default"] = openapi.get_default
+    env.globals["get_deprecated"] = openapi.get_deprecated
     env.globals["get_container"] = openapi.get_container
     env.globals["get_container_type"] = openapi.get_container_type
     env.globals["get_type_at_path"] = openapi.get_type_at_path

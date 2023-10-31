@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The request for a Audit Logs events list.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct AuditLogsSearchEventsRequest {
@@ -23,7 +24,6 @@ pub struct AuditLogsSearchEventsRequest {
 }
 
 impl AuditLogsSearchEventsRequest {
-    /// The request for a Audit Logs events list.
     pub fn new() -> AuditLogsSearchEventsRequest {
         AuditLogsSearchEventsRequest {
             filter: None,

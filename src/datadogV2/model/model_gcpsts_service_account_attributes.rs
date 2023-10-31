@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Attributes associated with your service account.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct GCPSTSServiceAccountAttributes {
@@ -25,7 +26,6 @@ pub struct GCPSTSServiceAccountAttributes {
 }
 
 impl GCPSTSServiceAccountAttributes {
-    /// Attributes associated with your service account.
     pub fn new() -> GCPSTSServiceAccountAttributes {
         GCPSTSServiceAccountAttributes {
             account_tags: None,

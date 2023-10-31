@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The new mute finding request.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct MuteFindingRequest {
@@ -13,7 +14,6 @@ pub struct MuteFindingRequest {
 }
 
 impl MuteFindingRequest {
-    /// The new mute finding request.
     pub fn new(data: crate::datadogV2::model::MuteFindingRequestData) -> MuteFindingRequest {
         MuteFindingRequest { data: Box::new(data) }
     }

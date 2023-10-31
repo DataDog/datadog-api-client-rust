@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Attributes object for Fastly service requests.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct FastlyServiceAttributes {
@@ -13,7 +14,6 @@ pub struct FastlyServiceAttributes {
 }
 
 impl FastlyServiceAttributes {
-    /// Attributes object for Fastly service requests.
     pub fn new() -> FastlyServiceAttributes {
         FastlyServiceAttributes { tags: None }
     }

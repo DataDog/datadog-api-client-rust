@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Permission object.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct Permission {
@@ -19,7 +20,6 @@ pub struct Permission {
 }
 
 impl Permission {
-    /// Permission object.
     pub fn new(type_: crate::datadogV2::model::PermissionsType) -> Permission {
         Permission {
             attributes: None,

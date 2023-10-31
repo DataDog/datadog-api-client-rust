@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The attributes of the user who created the Agent rule.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct CloudWorkloadSecurityAgentRuleCreatorAttributes {
@@ -16,7 +17,6 @@ pub struct CloudWorkloadSecurityAgentRuleCreatorAttributes {
 }
 
 impl CloudWorkloadSecurityAgentRuleCreatorAttributes {
-    /// The attributes of the user who created the Agent rule.
     pub fn new() -> CloudWorkloadSecurityAgentRuleCreatorAttributes {
         CloudWorkloadSecurityAgentRuleCreatorAttributes {
             handle: None,

@@ -24,7 +24,7 @@ def get_name(schema, version=None):
     if hasattr(schema, "__reference__"):
         name = schema.__reference__["$ref"].split("/")[-1]
 
-    return f"crate::datadog{version.upper()}::model::{name}" if version else name
+    return f"crate::datadog{version.upper()}::model::{name}" if version and name else name
 
 def option_wrapper(name, option, nullable):
     if option:
@@ -37,8 +37,8 @@ def type_to_rust(schema, alternative_name=None, render_nullable=False, render_op
     """Return Rust type name for the type."""
 
     # special case for additionalProperties: true
-    if schema is True:
-        return "Value"
+    if schema is True or schema == {}:
+        return "serde_json::Value"
 
     if "enum" not in schema:
         name = formatter.simple_type(schema, render_nullable=render_nullable, render_option=render_option)
@@ -76,12 +76,10 @@ def type_to_rust(schema, alternative_name=None, render_nullable=False, render_op
             name = formatter.simple_type(schema["items"], render_nullable=render_nullable, render_option=False)
         return option_wrapper(f"Vec<{name}>", render_option, render_nullable)
     elif type_ == "object":
+        name = "serde_json::Value"
         if "additionalProperties" in schema:
-            # return "map[string]{}".format(type_to_rust(schema["additionalProperties"]))
-            return "None"
-        if render_option:
-            return f"Option<Box<{alternative_name}>>"
-        return f"Box<{alternative_name}>"
+            name = type_to_rust(schema["additionalProperties"])
+        return option_wrapper(f"std::collections::HashMap<String, {name}>", render_option, render_nullable)
 
     raise ValueError(f"Unknown type {type_}")
 
@@ -414,6 +412,14 @@ def get_container(operation, attribute_path, container_name="o[0]"):
         if name == attribute_name and parameter["required"]:
             return '{}.{}'.format(name, ".".join(formatter.attribute_name(a) for a in attribute_path.split(".")[1:]))
     return f'{container_name}.{formatter.attribute_path(attribute_path)}'
+
+
+def get_deprecated(schema):
+    if "properties" in schema:
+        for property in schema["properties"].values():
+            if property.get("deprecated", False):
+                return True
+    return False
 
 
 def get_container_type(operation, attribute_path, stop=None):

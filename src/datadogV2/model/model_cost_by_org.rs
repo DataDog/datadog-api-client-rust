@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Cost data.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct CostByOrg {
@@ -19,7 +20,6 @@ pub struct CostByOrg {
 }
 
 impl CostByOrg {
-    /// Cost data.
     pub fn new() -> CostByOrg {
         CostByOrg {
             attributes: None,

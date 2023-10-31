@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Response metadata object.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct ProcessSummariesMeta {
@@ -13,7 +14,6 @@ pub struct ProcessSummariesMeta {
 }
 
 impl ProcessSummariesMeta {
-    /// Response metadata object.
     pub fn new() -> ProcessSummariesMeta {
         ProcessSummariesMeta { page: None }
     }

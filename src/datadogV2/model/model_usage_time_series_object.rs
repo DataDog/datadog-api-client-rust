@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Usage timeseries data.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct UsageTimeSeriesObject {
@@ -16,7 +17,6 @@ pub struct UsageTimeSeriesObject {
 }
 
 impl UsageTimeSeriesObject {
-    /// Usage timeseries data.
     pub fn new() -> UsageTimeSeriesObject {
         UsageTimeSeriesObject {
             timestamp: None,

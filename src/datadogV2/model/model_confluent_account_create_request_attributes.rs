@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Attributes associated with the account creation request.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct ConfluentAccountCreateRequestAttributes {
@@ -22,7 +23,6 @@ pub struct ConfluentAccountCreateRequestAttributes {
 }
 
 impl ConfluentAccountCreateRequestAttributes {
-    /// Attributes associated with the account creation request.
     pub fn new(api_key: String, api_secret: String) -> ConfluentAccountCreateRequestAttributes {
         ConfluentAccountCreateRequestAttributes {
             api_key,

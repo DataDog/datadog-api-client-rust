@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The new span-based metric properties.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct SpansMetricCreateData {
@@ -19,7 +20,6 @@ pub struct SpansMetricCreateData {
 }
 
 impl SpansMetricCreateData {
-    /// The new span-based metric properties.
     pub fn new(
         attributes: crate::datadogV2::model::SpansMetricCreateAttributes,
         id: String,

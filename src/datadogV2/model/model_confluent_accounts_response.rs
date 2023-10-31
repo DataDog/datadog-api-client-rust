@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Confluent account returned by the API.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct ConfluentAccountsResponse {
@@ -13,7 +14,6 @@ pub struct ConfluentAccountsResponse {
 }
 
 impl ConfluentAccountsResponse {
-    /// Confluent account returned by the API.
     pub fn new() -> ConfluentAccountsResponse {
         ConfluentAccountsResponse { data: None }
     }

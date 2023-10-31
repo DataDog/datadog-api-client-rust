@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Creator of the object.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct Creator {
@@ -19,7 +20,6 @@ pub struct Creator {
 }
 
 impl Creator {
-    /// Creator of the object.
     pub fn new() -> Creator {
         Creator {
             email: None,

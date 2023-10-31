@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// JSON:API request for updating a Confluent resource.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct ConfluentResourceRequestData {
@@ -19,7 +20,6 @@ pub struct ConfluentResourceRequestData {
 }
 
 impl ConfluentResourceRequestData {
-    /// JSON:API request for updating a Confluent resource.
     pub fn new(
         attributes: crate::datadogV2::model::ConfluentResourceRequestAttributes,
         id: String,

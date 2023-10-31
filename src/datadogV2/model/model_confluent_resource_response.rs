@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Response schema when interacting with a Confluent resource.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct ConfluentResourceResponse {
@@ -13,7 +14,6 @@ pub struct ConfluentResourceResponse {
 }
 
 impl ConfluentResourceResponse {
-    /// Response schema when interacting with a Confluent resource.
     pub fn new() -> ConfluentResourceResponse {
         ConfluentResourceResponse { data: None }
     }

@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// A warning message indicating something is wrong with the query.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct EventsWarning {
@@ -19,7 +20,6 @@ pub struct EventsWarning {
 }
 
 impl EventsWarning {
-    /// A warning message indicating something is wrong with the query.
     pub fn new() -> EventsWarning {
         EventsWarning {
             code: None,

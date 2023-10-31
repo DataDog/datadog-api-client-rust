@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The object description of an event response attribute.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct EventResponseAttributes {
@@ -22,7 +23,6 @@ pub struct EventResponseAttributes {
 }
 
 impl EventResponseAttributes {
-    /// The object description of an event response attribute.
     pub fn new() -> EventResponseAttributes {
         EventResponseAttributes {
             attributes: None,

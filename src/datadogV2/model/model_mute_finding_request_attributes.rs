@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The mute properties to be updated.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct MuteFindingRequestAttributes {
@@ -13,7 +14,6 @@ pub struct MuteFindingRequestAttributes {
 }
 
 impl MuteFindingRequestAttributes {
-    /// The mute properties to be updated.
     pub fn new(mute: crate::datadogV2::model::MuteFindingRequestProperties) -> MuteFindingRequestAttributes {
         MuteFindingRequestAttributes { mute: Box::new(mute) }
     }

@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Search and filter query settings.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct AuditLogsQueryFilter {
@@ -19,7 +20,6 @@ pub struct AuditLogsQueryFilter {
 }
 
 impl AuditLogsQueryFilter {
-    /// Search and filter query settings.
     pub fn new() -> AuditLogsQueryFilter {
         AuditLogsQueryFilter {
             from: None,

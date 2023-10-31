@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The response object with all events matching the request and pagination information.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct EventsListResponse {
@@ -19,7 +20,6 @@ pub struct EventsListResponse {
 }
 
 impl EventsListResponse {
-    /// The response object with all events matching the request and pagination information.
     pub fn new() -> EventsListResponse {
         EventsListResponse {
             data: None,

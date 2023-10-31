@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Usage data.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct UsageDataObject {
@@ -19,7 +20,6 @@ pub struct UsageDataObject {
 }
 
 impl UsageDataObject {
-    /// Usage data.
     pub fn new() -> UsageDataObject {
         UsageDataObject {
             attributes: None,

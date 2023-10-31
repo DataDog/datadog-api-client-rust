@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// A dashboard within a list.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct DashboardListItemResponse {
@@ -16,7 +17,6 @@ pub struct DashboardListItemResponse {
 }
 
 impl DashboardListItemResponse {
-    /// A dashboard within a list.
     pub fn new(id: String, type_: crate::datadogV2::model::DashboardType) -> DashboardListItemResponse {
         DashboardListItemResponse { id, type_ }
     }

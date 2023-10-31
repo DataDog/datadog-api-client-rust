@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Response with a list of Opsgenie services.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct OpsgenieServicesResponse {
@@ -13,7 +14,6 @@ pub struct OpsgenieServicesResponse {
 }
 
 impl OpsgenieServicesResponse {
-    /// Response with a list of Opsgenie services.
     pub fn new(data: Vec<crate::datadogV2::model::OpsgenieServiceResponseData>) -> OpsgenieServicesResponse {
         OpsgenieServicesResponse { data }
     }

@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// IP allowlist entry object.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct IPAllowlistEntry {
@@ -13,7 +14,6 @@ pub struct IPAllowlistEntry {
 }
 
 impl IPAllowlistEntry {
-    /// IP allowlist entry object.
     pub fn new(data: crate::datadogV2::model::IPAllowlistEntryData) -> IPAllowlistEntry {
         IPAllowlistEntry { data: Box::new(data) }
     }

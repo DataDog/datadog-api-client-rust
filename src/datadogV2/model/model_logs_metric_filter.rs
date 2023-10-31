@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The log-based metric filter. Logs matching this filter will be aggregated in this metric.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct LogsMetricFilter {
@@ -13,7 +14,6 @@ pub struct LogsMetricFilter {
 }
 
 impl LogsMetricFilter {
-    /// The log-based metric filter. Logs matching this filter will be aggregated in this metric.
     pub fn new() -> LogsMetricFilter {
         LogsMetricFilter { query: None }
     }

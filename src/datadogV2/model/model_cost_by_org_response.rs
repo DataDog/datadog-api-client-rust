@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Chargeback Summary response.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct CostByOrgResponse {
@@ -13,7 +14,6 @@ pub struct CostByOrgResponse {
 }
 
 impl CostByOrgResponse {
-    /// Chargeback Summary response.
     pub fn new() -> CostByOrgResponse {
         CostByOrgResponse { data: None }
     }

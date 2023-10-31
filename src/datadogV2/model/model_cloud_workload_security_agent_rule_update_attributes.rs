@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Update an existing Cloud Workload Security Agent rule.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct CloudWorkloadSecurityAgentRuleUpdateAttributes {
@@ -19,7 +20,6 @@ pub struct CloudWorkloadSecurityAgentRuleUpdateAttributes {
 }
 
 impl CloudWorkloadSecurityAgentRuleUpdateAttributes {
-    /// Update an existing Cloud Workload Security Agent rule.
     pub fn new() -> CloudWorkloadSecurityAgentRuleUpdateAttributes {
         CloudWorkloadSecurityAgentRuleUpdateAttributes {
             description: None,

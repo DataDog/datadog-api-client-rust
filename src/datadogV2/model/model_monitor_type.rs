@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Attributes from the monitor that triggered the event.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct MonitorType {
@@ -43,7 +44,6 @@ pub struct MonitorType {
 }
 
 impl MonitorType {
-    /// Attributes from the monitor that triggered the event.
     pub fn new() -> MonitorType {
         MonitorType {
             created_at: None,

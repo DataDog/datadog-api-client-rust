@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Attributes object for creating a Fastly account.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct FastlyAccountCreateRequestAttributes {
@@ -19,7 +20,6 @@ pub struct FastlyAccountCreateRequestAttributes {
 }
 
 impl FastlyAccountCreateRequestAttributes {
-    /// Attributes object for creating a Fastly account.
     pub fn new(api_key: String, name: String) -> FastlyAccountCreateRequestAttributes {
         FastlyAccountCreateRequestAttributes {
             api_key,

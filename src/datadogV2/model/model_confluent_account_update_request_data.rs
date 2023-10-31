@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Data object for updating a Confluent account.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct ConfluentAccountUpdateRequestData {
@@ -16,7 +17,6 @@ pub struct ConfluentAccountUpdateRequestData {
 }
 
 impl ConfluentAccountUpdateRequestData {
-    /// Data object for updating a Confluent account.
     pub fn new(
         attributes: crate::datadogV2::model::ConfluentAccountUpdateRequestAttributes,
         type_: crate::datadogV2::model::ConfluentAccountType,

@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The span-based metric object.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct SpansMetricResponse {
@@ -13,7 +14,6 @@ pub struct SpansMetricResponse {
 }
 
 impl SpansMetricResponse {
-    /// The span-based metric object.
     pub fn new() -> SpansMetricResponse {
         SpansMetricResponse { data: None }
     }

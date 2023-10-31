@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The expected response schema when getting a finding.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct GetFindingResponse {
@@ -13,7 +14,6 @@ pub struct GetFindingResponse {
 }
 
 impl GetFindingResponse {
-    /// The expected response schema when getting a finding.
     pub fn new(data: crate::datadogV2::model::DetailedFinding) -> GetFindingResponse {
         GetFindingResponse { data: Box::new(data) }
     }

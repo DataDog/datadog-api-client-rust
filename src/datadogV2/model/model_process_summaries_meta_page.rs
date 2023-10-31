@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Paging attributes.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct ProcessSummariesMetaPage {
@@ -17,7 +18,6 @@ pub struct ProcessSummariesMetaPage {
 }
 
 impl ProcessSummariesMetaPage {
-    /// Paging attributes.
     pub fn new() -> ProcessSummariesMetaPage {
         ProcessSummariesMetaPage {
             after: None,

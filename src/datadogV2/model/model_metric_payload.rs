@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The metrics' payload.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct MetricPayload {
@@ -13,7 +14,6 @@ pub struct MetricPayload {
 }
 
 impl MetricPayload {
-    /// The metrics' payload.
     pub fn new(series: Vec<crate::datadogV2::model::MetricSeries>) -> MetricPayload {
         MetricPayload { series }
     }

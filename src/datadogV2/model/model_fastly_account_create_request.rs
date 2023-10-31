@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Payload schema when adding a Fastly account.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct FastlyAccountCreateRequest {
@@ -13,7 +14,6 @@ pub struct FastlyAccountCreateRequest {
 }
 
 impl FastlyAccountCreateRequest {
-    /// Payload schema when adding a Fastly account.
     pub fn new(data: crate::datadogV2::model::FastlyAccountCreateRequestData) -> FastlyAccountCreateRequest {
         FastlyAccountCreateRequest { data: Box::new(data) }
     }

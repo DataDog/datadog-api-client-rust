@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Object for a single Agent rule.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct CloudWorkloadSecurityAgentRuleCreateData {
@@ -16,7 +17,6 @@ pub struct CloudWorkloadSecurityAgentRuleCreateData {
 }
 
 impl CloudWorkloadSecurityAgentRuleCreateData {
-    /// Object for a single Agent rule.
     pub fn new(
         attributes: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateAttributes,
         type_: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleType,

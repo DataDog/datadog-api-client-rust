@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Dashboards within a list.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct DashboardListItems {
@@ -16,7 +17,6 @@ pub struct DashboardListItems {
 }
 
 impl DashboardListItems {
-    /// Dashboards within a list.
     pub fn new(dashboards: Vec<crate::datadogV2::model::DashboardListItem>) -> DashboardListItems {
         DashboardListItems {
             dashboards,

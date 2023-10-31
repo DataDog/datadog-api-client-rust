@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Data object containing the updated finding.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct MuteFindingResponseData {
@@ -19,7 +20,6 @@ pub struct MuteFindingResponseData {
 }
 
 impl MuteFindingResponseData {
-    /// Data object containing the updated finding.
     pub fn new() -> MuteFindingResponseData {
         MuteFindingResponseData {
             attributes: None,

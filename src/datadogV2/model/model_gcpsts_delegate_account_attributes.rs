@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Your delegate account attributes.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct GCPSTSDelegateAccountAttributes {
@@ -13,7 +14,6 @@ pub struct GCPSTSDelegateAccountAttributes {
 }
 
 impl GCPSTSDelegateAccountAttributes {
-    /// Your delegate account attributes.
     pub fn new() -> GCPSTSDelegateAccountAttributes {
         GCPSTSDelegateAccountAttributes {
             delegate_account_email: None,

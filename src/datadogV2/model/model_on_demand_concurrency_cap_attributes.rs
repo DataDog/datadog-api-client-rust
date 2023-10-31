@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// On-demand concurrency cap attributes.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct OnDemandConcurrencyCapAttributes {
@@ -13,7 +14,6 @@ pub struct OnDemandConcurrencyCapAttributes {
 }
 
 impl OnDemandConcurrencyCapAttributes {
-    /// On-demand concurrency cap attributes.
     pub fn new() -> OnDemandConcurrencyCapAttributes {
         OnDemandConcurrencyCapAttributes {
             on_demand_concurrency_cap: None,

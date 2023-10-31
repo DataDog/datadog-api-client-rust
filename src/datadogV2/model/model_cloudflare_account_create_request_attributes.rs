@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Attributes object for creating a Cloudflare account.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct CloudflareAccountCreateRequestAttributes {
@@ -19,7 +20,6 @@ pub struct CloudflareAccountCreateRequestAttributes {
 }
 
 impl CloudflareAccountCreateRequestAttributes {
-    /// Attributes object for creating a Cloudflare account.
     pub fn new(api_key: String, name: String) -> CloudflareAccountCreateRequestAttributes {
         CloudflareAccountCreateRequestAttributes {
             api_key,

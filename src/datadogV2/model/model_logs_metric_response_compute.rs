@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The compute rule to compute the log-based metric.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct LogsMetricResponseCompute {
@@ -20,7 +21,6 @@ pub struct LogsMetricResponseCompute {
 }
 
 impl LogsMetricResponseCompute {
-    /// The compute rule to compute the log-based metric.
     pub fn new() -> LogsMetricResponseCompute {
         LogsMetricResponseCompute {
             aggregation_type: None,

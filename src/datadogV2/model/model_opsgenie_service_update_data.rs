@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Opsgenie service for an update request.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct OpsgenieServiceUpdateData {
@@ -19,7 +20,6 @@ pub struct OpsgenieServiceUpdateData {
 }
 
 impl OpsgenieServiceUpdateData {
-    /// Opsgenie service for an update request.
     pub fn new(
         attributes: crate::datadogV2::model::OpsgenieServiceUpdateAttributes,
         id: String,

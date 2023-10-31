@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// A point object is of the form `{POSIX_timestamp, numeric_value}`.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct MetricPoint {
@@ -17,7 +18,6 @@ pub struct MetricPoint {
 }
 
 impl MetricPoint {
-    /// A point object is of the form `{POSIX_timestamp, numeric_value}`.
     pub fn new() -> MetricPoint {
         MetricPoint {
             timestamp: None,

@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// A single finding without the message and resource configuration.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct Finding {
@@ -19,7 +20,6 @@ pub struct Finding {
 }
 
 impl Finding {
-    /// A single finding without the message and resource configuration.
     pub fn new() -> Finding {
         Finding {
             attributes: None,

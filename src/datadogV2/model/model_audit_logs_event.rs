@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Object description of an Audit Logs event after it is processed and stored by Datadog.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct AuditLogsEvent {
@@ -19,7 +20,6 @@ pub struct AuditLogsEvent {
 }
 
 impl AuditLogsEvent {
-    /// Object description of an Audit Logs event after it is processed and stored by Datadog.
     pub fn new() -> AuditLogsEvent {
         AuditLogsEvent {
             attributes: None,

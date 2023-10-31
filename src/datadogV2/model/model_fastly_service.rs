@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The schema representation of a Fastly service.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct FastlyService {
@@ -16,7 +17,6 @@ pub struct FastlyService {
 }
 
 impl FastlyService {
-    /// The schema representation of a Fastly service.
     pub fn new(id: String) -> FastlyService {
         FastlyService { id, tags: None }
     }

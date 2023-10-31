@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Response object that includes a list of Agent rule.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct CloudWorkloadSecurityAgentRulesListResponse {
@@ -13,7 +14,6 @@ pub struct CloudWorkloadSecurityAgentRulesListResponse {
 }
 
 impl CloudWorkloadSecurityAgentRulesListResponse {
-    /// Response object that includes a list of Agent rule.
     pub fn new() -> CloudWorkloadSecurityAgentRulesListResponse {
         CloudWorkloadSecurityAgentRulesListResponse { data: None }
     }

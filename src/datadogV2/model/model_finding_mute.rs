@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Information about the mute status of this finding.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct FindingMute {
@@ -28,7 +29,6 @@ pub struct FindingMute {
 }
 
 impl FindingMute {
-    /// Information about the mute status of this finding.
     pub fn new() -> FindingMute {
         FindingMute {
             description: None,

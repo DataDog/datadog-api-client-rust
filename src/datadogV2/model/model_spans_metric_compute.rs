@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The compute rule to compute the span-based metric.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct SpansMetricCompute {
@@ -20,7 +21,6 @@ pub struct SpansMetricCompute {
 }
 
 impl SpansMetricCompute {
-    /// The compute rule to compute the span-based metric.
     pub fn new(aggregation_type: crate::datadogV2::model::SpansMetricComputeAggregationType) -> SpansMetricCompute {
         SpansMetricCompute {
             aggregation_type,

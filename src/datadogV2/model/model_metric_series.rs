@@ -4,6 +4,8 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// A metric to submit to Datadog.
+/// See [Datadog metrics](https://docs.datadoghq.com/developers/metrics/#custom-metrics-properties).
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct MetricSeries {
@@ -37,8 +39,6 @@ pub struct MetricSeries {
 }
 
 impl MetricSeries {
-    /// A metric to submit to Datadog.
-    /// See [Datadog metrics](https://docs.datadoghq.com/developers/metrics/#custom-metrics-properties).
     pub fn new(metric: String, points: Vec<crate::datadogV2::model::MetricPoint>) -> MetricSeries {
         MetricSeries {
             interval: None,

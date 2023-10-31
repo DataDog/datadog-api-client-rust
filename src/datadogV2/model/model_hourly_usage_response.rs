@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Hourly usage response.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct HourlyUsageResponse {
@@ -16,7 +17,6 @@ pub struct HourlyUsageResponse {
 }
 
 impl HourlyUsageResponse {
-    /// Hourly usage response.
     pub fn new() -> HourlyUsageResponse {
         HourlyUsageResponse { data: None, meta: None }
     }

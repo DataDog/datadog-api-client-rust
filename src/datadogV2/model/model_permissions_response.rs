@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Payload with API-returned permissions.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct PermissionsResponse {
@@ -13,7 +14,6 @@ pub struct PermissionsResponse {
 }
 
 impl PermissionsResponse {
-    /// Payload with API-returned permissions.
     pub fn new() -> PermissionsResponse {
         PermissionsResponse { data: None }
     }

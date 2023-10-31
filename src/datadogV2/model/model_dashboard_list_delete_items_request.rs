@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Request containing a list of dashboards to delete.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct DashboardListDeleteItemsRequest {
@@ -13,7 +14,6 @@ pub struct DashboardListDeleteItemsRequest {
 }
 
 impl DashboardListDeleteItemsRequest {
-    /// Request containing a list of dashboards to delete.
     pub fn new() -> DashboardListDeleteItemsRequest {
         DashboardListDeleteItemsRequest { dashboards: None }
     }

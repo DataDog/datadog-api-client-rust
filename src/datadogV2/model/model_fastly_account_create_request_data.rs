@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Data object for creating a Fastly account.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct FastlyAccountCreateRequestData {
@@ -16,7 +17,6 @@ pub struct FastlyAccountCreateRequestData {
 }
 
 impl FastlyAccountCreateRequestData {
-    /// Data object for creating a Fastly account.
     pub fn new(
         attributes: crate::datadogV2::model::FastlyAccountCreateRequestAttributes,
         type_: crate::datadogV2::model::FastlyAccountType,

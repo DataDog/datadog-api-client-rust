@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The object description of an event after being processed and stored by Datadog.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct EventResponse {
@@ -19,7 +20,6 @@ pub struct EventResponse {
 }
 
 impl EventResponse {
-    /// The object description of an event after being processed and stored by Datadog.
     pub fn new() -> EventResponse {
         EventResponse {
             attributes: None,

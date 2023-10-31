@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Your delegate service account response data.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct GCPSTSDelegateAccountResponse {
@@ -13,7 +14,6 @@ pub struct GCPSTSDelegateAccountResponse {
 }
 
 impl GCPSTSDelegateAccountResponse {
-    /// Your delegate service account response data.
     pub fn new() -> GCPSTSDelegateAccountResponse {
         GCPSTSDelegateAccountResponse { data: None }
     }

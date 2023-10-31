@@ -4,6 +4,8 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The global query options that are used. Either provide a timezone or a time offset but not both,
+/// otherwise the query fails.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct EventsQueryOptions {
@@ -16,8 +18,6 @@ pub struct EventsQueryOptions {
 }
 
 impl EventsQueryOptions {
-    /// The global query options that are used. Either provide a timezone or a time offset but not both,
-    /// otherwise the query fails.
     pub fn new() -> EventsQueryOptions {
         EventsQueryOptions {
             time_offset: None,

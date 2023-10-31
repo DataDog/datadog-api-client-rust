@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The expected response schema.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct MuteFindingResponse {
@@ -13,7 +14,6 @@ pub struct MuteFindingResponse {
 }
 
 impl MuteFindingResponse {
-    /// The expected response schema.
     pub fn new(data: crate::datadogV2::model::MuteFindingResponseData) -> MuteFindingResponse {
         MuteFindingResponse { data: Box::new(data) }
     }

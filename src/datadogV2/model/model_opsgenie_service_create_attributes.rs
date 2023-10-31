@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The Opsgenie service attributes for a create request.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct OpsgenieServiceCreateAttributes {
@@ -22,7 +23,6 @@ pub struct OpsgenieServiceCreateAttributes {
 }
 
 impl OpsgenieServiceCreateAttributes {
-    /// The Opsgenie service attributes for a create request.
     pub fn new(
         name: String,
         opsgenie_api_key: String,

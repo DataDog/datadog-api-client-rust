@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The JSON:API attributes of the finding.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct MuteFindingResponseAttributes {
@@ -37,7 +38,6 @@ pub struct MuteFindingResponseAttributes {
 }
 
 impl MuteFindingResponseAttributes {
-    /// The JSON:API attributes of the finding.
     pub fn new() -> MuteFindingResponseAttributes {
         MuteFindingResponseAttributes {
             evaluation: None,

@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The span-based metric properties that will be updated.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct SpansMetricUpdateAttributes {
@@ -19,7 +20,6 @@ pub struct SpansMetricUpdateAttributes {
 }
 
 impl SpansMetricUpdateAttributes {
-    /// The span-based metric properties that will be updated.
     pub fn new() -> SpansMetricUpdateAttributes {
         SpansMetricUpdateAttributes {
             compute: None,

@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Info on your service account.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct GCPSTSServiceAccount {
@@ -22,7 +23,6 @@ pub struct GCPSTSServiceAccount {
 }
 
 impl GCPSTSServiceAccount {
-    /// Info on your service account.
     pub fn new() -> GCPSTSServiceAccount {
         GCPSTSServiceAccount {
             attributes: None,

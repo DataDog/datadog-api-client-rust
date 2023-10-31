@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Usage amount for a given usage type.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct HourlyUsageMeasurement {
@@ -16,7 +17,6 @@ pub struct HourlyUsageMeasurement {
 }
 
 impl HourlyUsageMeasurement {
-    /// Usage amount for a given usage type.
     pub fn new() -> HourlyUsageMeasurement {
         HourlyUsageMeasurement {
             usage_type: None,

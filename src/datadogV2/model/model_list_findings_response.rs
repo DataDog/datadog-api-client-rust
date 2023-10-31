@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The expected response schema when listing findings.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct ListFindingsResponse {
@@ -16,7 +17,6 @@ pub struct ListFindingsResponse {
 }
 
 impl ListFindingsResponse {
-    /// The expected response schema when listing findings.
     pub fn new(
         data: Vec<crate::datadogV2::model::Finding>,
         meta: crate::datadogV2::model::ListFindingsMeta,

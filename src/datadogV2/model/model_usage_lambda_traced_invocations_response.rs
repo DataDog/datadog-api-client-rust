@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// Lambda Traced Invocations usage response.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct UsageLambdaTracedInvocationsResponse {
@@ -13,7 +14,6 @@ pub struct UsageLambdaTracedInvocationsResponse {
 }
 
 impl UsageLambdaTracedInvocationsResponse {
-    /// Lambda Traced Invocations usage response.
     pub fn new() -> UsageLambdaTracedInvocationsResponse {
         UsageLambdaTracedInvocationsResponse { data: None }
     }

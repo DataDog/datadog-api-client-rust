@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The span-based metric filter. Spans matching this filter will be aggregated in this metric.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct SpansMetricFilter {
@@ -13,7 +14,6 @@ pub struct SpansMetricFilter {
 }
 
 impl SpansMetricFilter {
-    /// The span-based metric filter. Spans matching this filter will be aggregated in this metric.
     pub fn new() -> SpansMetricFilter {
         SpansMetricFilter { query: None }
     }

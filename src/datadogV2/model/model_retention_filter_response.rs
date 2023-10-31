@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
+/// The retention filters definition.
 #[skip_serializing_none]
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct RetentionFilterResponse {
@@ -13,7 +14,6 @@ pub struct RetentionFilterResponse {
 }
 
 impl RetentionFilterResponse {
-    /// The retention filters definition.
     pub fn new() -> RetentionFilterResponse {
         RetentionFilterResponse { data: None }
     }
