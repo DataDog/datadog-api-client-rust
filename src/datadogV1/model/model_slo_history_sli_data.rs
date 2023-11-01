@@ -11,7 +11,7 @@ use serde_with::skip_serializing_none;
 pub struct SLOHistorySLIData {
     /// A mapping of threshold `timeframe` to the remaining error budget.
     #[serde(rename = "error_budget_remaining")]
-    pub error_budget_remaining: Option<std::collections::HashMap<String, Option<f64>>>,
+    pub error_budget_remaining: Option<std::collections::HashMap<String, f64>>,
     /// An array of error objects returned while querying the history data for the service level objective.
     #[serde(rename = "errors")]
     pub errors: Option<Vec<crate::datadogV1::model::SLOHistoryResponseErrorWithType>>,
@@ -32,7 +32,7 @@ pub struct SLOHistorySLIData {
     pub name: Option<String>,
     /// A mapping of threshold `timeframe` to number of accurate decimals, regardless of the from && to timestamp.
     #[serde(rename = "precision")]
-    pub precision: Option<std::collections::HashMap<String, Option<f64>>>,
+    pub precision: Option<std::collections::HashMap<String, f64>>,
     /// For `monitor` based SLOs, when `true` this indicates that a replay is in progress to give an accurate uptime
     /// calculation.
     #[serde(rename = "preview")]

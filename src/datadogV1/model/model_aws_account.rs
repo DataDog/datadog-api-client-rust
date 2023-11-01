@@ -18,7 +18,7 @@ pub struct AWSAccount {
     /// that enables or disables metric collection for specific AWS namespaces for this
     /// AWS account only.
     #[serde(rename = "account_specific_namespace_rules")]
-    pub account_specific_namespace_rules: Option<std::collections::HashMap<String, Option<bool>>>,
+    pub account_specific_namespace_rules: Option<std::collections::HashMap<String, bool>>,
     /// Whether Datadog collects cloud security posture management resources from your AWS account. This includes additional resources not covered under the general `resource_collection`.
     #[serde(rename = "cspm_resource_collection_enabled")]
     pub cspm_resource_collection_enabled: Option<bool>,

@@ -13,13 +13,13 @@ pub struct IPPrefixesSynthetics {
     pub prefixes_ipv4: Option<Vec<String>>,
     /// List of IPv4 prefixes by location.
     #[serde(rename = "prefixes_ipv4_by_location")]
-    pub prefixes_ipv4_by_location: Option<std::collections::HashMap<String, Option<Vec<String>>>>,
+    pub prefixes_ipv4_by_location: Option<std::collections::HashMap<String, Vec<String>>>,
     /// List of IPv6 prefixes.
     #[serde(rename = "prefixes_ipv6")]
     pub prefixes_ipv6: Option<Vec<String>>,
     /// List of IPv6 prefixes by location.
     #[serde(rename = "prefixes_ipv6_by_location")]
-    pub prefixes_ipv6_by_location: Option<std::collections::HashMap<String, Option<Vec<String>>>>,
+    pub prefixes_ipv6_by_location: Option<std::collections::HashMap<String, Vec<String>>>,
 }
 
 impl IPPrefixesSynthetics {

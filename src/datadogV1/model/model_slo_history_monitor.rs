@@ -11,7 +11,7 @@ use serde_with::skip_serializing_none;
 pub struct SLOHistoryMonitor {
     /// A mapping of threshold `timeframe` to the remaining error budget.
     #[serde(rename = "error_budget_remaining")]
-    pub error_budget_remaining: Option<std::collections::HashMap<String, Option<f64>>>,
+    pub error_budget_remaining: Option<std::collections::HashMap<String, f64>>,
     /// An array of error objects returned while querying the history data for the service level objective.
     #[serde(rename = "errors")]
     pub errors: Option<Vec<crate::datadogV1::model::SLOHistoryResponseErrorWithType>>,

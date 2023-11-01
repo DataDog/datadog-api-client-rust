@@ -13,7 +13,7 @@ pub struct SLODeleteResponse {
     pub data: Option<Vec<String>>,
     /// An dictionary containing the ID of the SLO as key and a deletion error as value.
     #[serde(rename = "errors")]
-    pub errors: Option<std::collections::HashMap<String, Option<String>>>,
+    pub errors: Option<std::collections::HashMap<String, String>>,
 }
 
 impl SLODeleteResponse {

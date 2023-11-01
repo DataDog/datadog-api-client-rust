@@ -33,7 +33,7 @@ pub struct DeleteSLOParams {
 #[derive(Clone, Debug, Default)]
 pub struct DeleteSLOTimeframeInBulkParams {
     /// Delete multiple service level objective objects request body.
-    pub body: std::collections::HashMap<String, Option<Vec<SLOTimeframe>>>,
+    pub body: std::collections::HashMap<String, Vec<crate::datadogV1::model::SLOTimeframe>>,
 }
 
 /// GetSLOParams is a struct for passing parameters to the method [`GetSLO`]

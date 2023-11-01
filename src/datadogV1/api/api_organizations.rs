@@ -521,8 +521,12 @@ impl OrganizationsAPI {
             local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
         };
 
-        // body params
-        local_req_builder = local_req_builder.json(&body);
+        let mut local_form = reqwest::multipart::Form::new();
+        local_form = local_form.part(
+            "idp_file",
+            reqwest::multipart::Part::bytes(idp_file).file_name("idp_file"),
+        );
+        local_req_builder = local_req_builder.multipart(local_form);
 
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;

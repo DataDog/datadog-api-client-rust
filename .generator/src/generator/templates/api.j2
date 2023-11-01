@@ -73,6 +73,7 @@ impl {{ structName }} {
     {% for path, method, operation in operations|sort(attribute="2.operationId", case_sensitive=True) %}
     {%- set httpMethod = method.upper() %}
     {%- set returnType = operation|return_type(version) %}
+    {%- set formParameter = operation|form_parameter %}
     {% if operation.description is defined %}
     {{ operation.description | block_comment }}
     {%- endif %}
@@ -194,6 +195,20 @@ impl {{ structName }} {
         {%- endfor %}
         {%- endfor %}
         {%- endif %}
+        {% if formParameter %}
+        {%- if formParameter.required %}
+        let mut local_form = reqwest::multipart::Form::new();
+        local_form = local_form.part("{{formParameter.name}}", reqwest::multipart::Part::bytes({{formParameter.name}}).file_name("{{formParameter.name}}"));
+        local_req_builder = local_req_builder.multipart(local_form);
+        {%- else %}
+        if let Some({{formParameter.name}}) = {{formParameter.name}} {
+            let mut local_form = reqwest::multipart::Form::new();
+            local_form = local_form.part("{{formParameter.name}}", reqwest::multipart::Part::bytes({{formParameter.name}}).file_name("{{formParameter.name}}"));
+            local_req_builder = local_req_builder.multipart(local_form);
+        };
+        {%- endif %}
+        {%- endif %}
+
         {#
         {{#isMultipart}}
         {{#hasFormParams}}
