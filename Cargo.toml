@@ -3,35 +3,34 @@ name = "datadog-api-client"
 version = "1.0.0"
 authors = ["support@datadoghq.com"]
 description = "Collection of all Datadog Public endpoints."
-# Override this license by providing a License Object in the OpenAPI.
 license = "Apache-2.0"
 edition = "2021"
 
 [dependencies]
-serde = "^1.0"
-serde_derive = "^1.0"
-serde_with = "^2.0"
-serde_json = "^1.0"
-url = "^2.2"
-uuid = { version = "^1.0", features = ["serde"] }
-rustc_version = "0.4.0"
 log = "0.4.20"
 reqwest-middleware = "0.1.6"
+rustc_version = "0.4.0"
+serde = "^1.0"
+serde_derive = "^1.0"
+serde_json = "^1.0"
+serde_with = "^2.0"
+url = "^2.2"
+uuid = { version = "^1.0", features = ["serde"] }
 [dependencies.reqwest]
-version = "^0.11"
 features = ["json", "multipart"]
+version = "^0.11"
 
 [dev-dependencies]
+chrono = "0.4.31"
 cucumber = "0.19.1"
 env_logger = "0.10.0"
-tokio = { version = "1.10", features = ["macros", "rt-multi-thread", "time"] }
+futures = "0.3.28"
 handlebars = "4.4.0"
 regex = "1.9.5"
-sha256 = "1.4.0"
-futures = "0.3.28"
 rvcr = { git = "https://github.com/nkzou/rvcr.git", rev = "b8f84bc0dfacd539fdc6f7446637c6276dcbb57c" }
-chrono = "0.4.31"
+sha256 = "1.4.0"
+tokio = { version = "1.10", features = ["macros", "rt-multi-thread", "time"] }
 
 [[test]]
-name = "main"
 harness = false  # allows Cucumber to print output instead of libtest
+name = "main"
