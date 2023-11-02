@@ -166,7 +166,7 @@ pub async fn before_scenario(feature: &Feature, _rule: Option<&Rule>, scenario: 
     let unique_alnum = non_alnum_re.replace_all(unique.as_str(), "").to_string();
     world.fixtures = json!({
         "unique": unique,
-        "unique_lowe: Stringr": unique.to_ascii_lowercase(),
+        "unique_lower": unique.to_ascii_lowercase(),
         "unique_upper": unique.to_ascii_uppercase(),
         "unique_alnum": unique_alnum,
         "unique_lower_alnum": unique_alnum.to_ascii_lowercase(),
@@ -283,7 +283,7 @@ fn body_with_value(world: &mut DatadogWorld, body: String) {
 
 #[given(regex = r"^body from file (.*)$")]
 fn body_from_file(world: &mut DatadogWorld, path: String) {
-    let body = read_to_string(format!("tests/scenarios/features/v{}/{}", world.api_version, path,)).unwrap();
+    let body = read_to_string(format!("tests/scenarios/features/v{}/{}", world.api_version, path)).unwrap();
     let rendered = template(body, &world.fixtures);
     let body_struct = serde_json::from_str(rendered.as_str()).unwrap();
     world.parameters.insert("body".to_string(), body_struct);
