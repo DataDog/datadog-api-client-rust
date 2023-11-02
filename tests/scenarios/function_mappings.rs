@@ -20,7 +20,7 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     Some(FastlyIntegrationAPI::with_config(world.config.clone()));
             }
         }
-        _ => panic!("'{api}' API instance tag not found"),
+        _ => panic!("{api} API instance not found"),
     }
 }
 
