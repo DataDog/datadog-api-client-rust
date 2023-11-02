@@ -306,7 +306,7 @@ def return_type(operation, version):
     for response in operation.get("responses", {}).values():
         for content in response.get("content", {}).values():
             if "schema" in content:
-                return type_to_rust(content["schema"], version=version)
+                return type_to_rust(content["schema"], version=version, render_option=False)
         return
 
 

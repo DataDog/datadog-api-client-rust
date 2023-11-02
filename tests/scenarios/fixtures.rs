@@ -1,4 +1,4 @@
-use crate::scenarios::function_mappings::*;
+use crate::scenarios::function_mappings::{collect_function_calls, initialize_api_instance, ApiInstances};
 use cucumber::{
     event::ScenarioFinished,
     gherkin::{Feature, Rule, Scenario},
@@ -40,17 +40,13 @@ pub struct DatadogWorld {
     pub operation_id: String,
     pub parameters: HashMap<String, Value>,
     pub response: Response,
+    pub api_instances: ApiInstances,
     given_map: Value,
     undo_map: Value,
     undo_operations: Vec<UndoOperation>,
 }
 
-pub async fn before_scenario(
-    feature: &Feature,
-    _rule: Option<&Rule>,
-    scenario: &Scenario,
-    world: &mut DatadogWorld,
-) {
+pub async fn before_scenario(feature: &Feature, _rule: Option<&Rule>, scenario: &Scenario, world: &mut DatadogWorld) {
     let api_version_re = Regex::new(r"tests/scenarios/features/v(\d+)/").unwrap();
     // TODO: refactor this lol
     world.api_version = api_version_re
@@ -63,17 +59,9 @@ pub async fn before_scenario(
         .unwrap();
 
     collect_function_calls(world);
-    let given_file = File::open(format!(
-        "tests/scenarios/features/v{}/given.json",
-        world.api_version
-    ))
-    .unwrap();
+    let given_file = File::open(format!("tests/scenarios/features/v{}/given.json", world.api_version)).unwrap();
     world.given_map = serde_json::from_reader(BufReader::new(given_file)).unwrap();
-    let undo_file = File::open(format!(
-        "tests/scenarios/features/v{}/undo.json",
-        world.api_version
-    ))
-    .unwrap();
+    let undo_file = File::open(format!("tests/scenarios/features/v{}/undo.json", world.api_version)).unwrap();
     world.undo_map = serde_json::from_reader(BufReader::new(undo_file)).unwrap();
 
     let mut config = Configuration::new();
@@ -91,9 +79,7 @@ pub async fn before_scenario(
         .unwrap()
         .as_secs();
 
-    let escaped_name = non_alnum_re
-        .replace_all(scenario.name.as_str(), "_")
-        .to_string();
+    let escaped_name = non_alnum_re.replace_all(scenario.name.as_str(), "_").to_string();
     let name = match escaped_name.len() > 100 {
         true => escaped_name[..100].to_string(),
         false => escaped_name,
@@ -137,8 +123,8 @@ fn valid_appkey_auth(world: &mut DatadogWorld) {
 }
 
 #[given(expr = "an instance of {string} API")]
-fn instance_of_api(_world: &mut DatadogWorld, _api: String) {
-    // rust client doesn't have concept of an api instance at the moment.
+fn instance_of_api(world: &mut DatadogWorld, api: String) {
+    initialize_api_instance(world, api);
 }
 
 #[given(expr = "there is a valid {string} in the system")]
@@ -156,27 +142,31 @@ fn given_resource_in_system(world: &mut DatadogWorld, given_key: String) {
         for param in params.as_array().unwrap() {
             let param_name = param.get("name").unwrap().as_str().unwrap().to_string();
             if let Some(source) = param.get("source") {
-                if let Some(value) = lookup(&source.as_str().unwrap().to_string(), &world.fixtures)
-                {
+                if let Some(value) = lookup(&source.as_str().unwrap().to_string(), &world.fixtures) {
                     given_parameters.insert(param_name.clone(), value);
                 }
             };
             if let Some(template_value) = param.get("value") {
                 let mut rendered = template(template_value.to_string(), &world.fixtures);
                 rendered = serde_json::from_str(rendered.as_str()).unwrap();
-                given_parameters.insert(
-                    param_name.clone(),
-                    serde_json::from_str(rendered.as_str()).unwrap(),
-                );
+                given_parameters.insert(param_name.clone(), serde_json::from_str(rendered.as_str()).unwrap());
             };
         }
     }
+
+    if let Some(tag) = given.get("tag") {
+        let mut api_name = tag.as_str().expect("failed to parse given tag as str").to_string();
+        api_name.retain(|c| !c.is_whitespace());
+        initialize_api_instance(world, api_name);
+    }
+
     let operation_id = given
         .get("operationId")
-        .unwrap()
+        .expect("operationId missing from given")
         .as_str()
-        .unwrap()
+        .expect("failed to parse given operation id as str")
         .to_string();
+
     world.function_mappings.get(&operation_id).unwrap()(world, &given_parameters);
     match build_undo(world, &operation_id) {
         Ok(Some(undo)) => {
@@ -192,10 +182,8 @@ fn given_resource_in_system(world: &mut DatadogWorld, given_key: String) {
                 map.insert(given_key, fixture);
             }
         }
-    } else {
-        if let Value::Object(ref mut map) = world.fixtures {
-            map.insert(given_key, world.response.object.clone());
-        }
+    } else if let Value::Object(ref mut map) = world.fixtures {
+        map.insert(given_key, world.response.object.clone());
     }
 }
 
@@ -213,11 +201,7 @@ fn body_with_value(world: &mut DatadogWorld, body: String) {
 
 #[given(regex = r"^body from file (.*)$")]
 fn body_from_file(world: &mut DatadogWorld, path: String) {
-    let body = read_to_string(format!(
-        "tests/scenarios/features/v{}/{}",
-        world.api_version, path,
-    ))
-    .unwrap();
+    let body = read_to_string(format!("tests/scenarios/features/v{}/{}", world.api_version, path,)).unwrap();
     let rendered = template(body, &world.fixtures);
     let body_struct = serde_json::from_str(rendered.as_str()).unwrap();
     world.parameters.insert("body".to_string(), body_struct);
@@ -226,7 +210,7 @@ fn body_from_file(world: &mut DatadogWorld, path: String) {
 #[given(expr = "request contains {string} parameter from {string}")]
 fn request_parameter_from_path(world: &mut DatadogWorld, param: String, path: String) {
     let lookup = lookup(&path, &world.fixtures).unwrap();
-    world.parameters.insert(param, Value::from(lookup));
+    world.parameters.insert(param, lookup);
 }
 
 #[given(expr = "request contains {string} parameter with value {}")]
@@ -262,64 +246,37 @@ fn response_equal_to(world: &mut DatadogWorld, path: String, value: String) {
 
 #[then(expr = "the response {string} has length {int}")]
 fn response_has_length(world: &mut DatadogWorld, path: String, expected_len: usize) {
-    let len = lookup(&path, &world.response.object)
-        .unwrap()
-        .as_array()
-        .unwrap()
-        .len();
+    let len = lookup(&path, &world.response.object).unwrap().as_array().unwrap().len();
     assert_eq!(len, expected_len);
 }
 
 fn lookup(path: &String, object: &Value) -> Option<Value> {
     let index_re = Regex::new(r"\[(\d+)\]+").unwrap();
-    let mut json_pointer = format!("/{}", path).replace(".", "/");
-    for (_, [idx]) in index_re
-        .captures_iter(&json_pointer.clone())
-        .map(|c| c.extract())
-    {
-        json_pointer = index_re
-            .replace(&json_pointer, format!("/{idx}"))
-            .to_string();
+    let mut json_pointer = format!("/{}", path).replace('.', "/");
+    for (_, [idx]) in index_re.captures_iter(&json_pointer.clone()).map(|c| c.extract()) {
+        json_pointer = index_re.replace(&json_pointer, format!("/{idx}")).to_string();
     }
 
     return object.pointer(&json_pointer).cloned();
 }
 
 fn template(string: String, fixtures: &Value) -> String {
-    Handlebars::new()
-        .render_template(string.as_str(), &fixtures)
-        .unwrap()
+    Handlebars::new().render_template(string.as_str(), &fixtures).unwrap()
 }
 
-fn build_undo(
-    world: &mut DatadogWorld,
-    operation_id: &String,
-) -> Result<Option<UndoOperation>, Value> {
-    let undo = world
-        .undo_map
-        .get(operation_id)
-        .unwrap()
-        .get("undo")
-        .unwrap();
+fn build_undo(world: &mut DatadogWorld, operation_id: &String) -> Result<Option<UndoOperation>, Value> {
+    let undo = world.undo_map.get(operation_id).unwrap().get("undo").unwrap();
     match undo.get("type").unwrap().as_str() {
         Some("unsafe") => {
             let mut undo_operation = UndoOperation {
-                operation_id: undo
-                    .get("operationId")
-                    .unwrap()
-                    .as_str()
-                    .unwrap()
-                    .to_string(),
+                operation_id: undo.get("operationId").unwrap().as_str().unwrap().to_string(),
                 parameters: HashMap::new(),
             };
             let params = undo.get("parameters").unwrap().as_array().unwrap();
             for param in params {
                 let param_name = param.get("name").unwrap().as_str().unwrap().to_string();
                 if let Some(source) = param.get("source") {
-                    if let Some(value) = lookup(
-                        &source.as_str().unwrap().to_string(),
-                        &world.response.object,
-                    ) {
+                    if let Some(value) = lookup(&source.as_str().unwrap().to_string(), &world.response.object) {
                         undo_operation.parameters.insert(param_name.clone(), value);
                     }
                 };

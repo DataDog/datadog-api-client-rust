@@ -9,12 +9,16 @@ repos:
     pass_filenames: false
   - id: lint
     name: Lint
+    entry: cargo clippy
+    language: system
+    pass_filenames: false
+    stages: [manual]
+  - id: format
+    name: Format
     language: rust
     entry: cargo fmt
-    stages: [manual]
-    # files: '^api/.*\.go'
-    # types: ["file", "go"]
     pass_filenames: false
+    stages: [manual]
   - id: generator
     name: generator
     language: python

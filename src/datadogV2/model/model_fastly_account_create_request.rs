@@ -11,11 +11,7 @@ pub struct FastlyAccountCreateRequest {
 
 impl FastlyAccountCreateRequest {
     /// Payload schema when adding a Fastly account.
-    pub fn new(
-        data: crate::datadogV2::model::FastlyAccountCreateRequestData,
-    ) -> FastlyAccountCreateRequest {
-        FastlyAccountCreateRequest {
-            data: Box::new(data),
-        }
+    pub fn new(data: crate::datadogV2::model::FastlyAccountCreateRequestData) -> FastlyAccountCreateRequest {
+        FastlyAccountCreateRequest { data: Box::new(data) }
     }
 }
