@@ -283,7 +283,7 @@ fn body_with_value(world: &mut DatadogWorld, body: String) {
 
 #[given(regex = r"^body from file (.*)$")]
 fn body_from_file(world: &mut DatadogWorld, path: String) {
-    let body = read_to_string(format!("tests/scenarios/features/v{}/{}", world.api_version, path,)).unwrap();
+    let body = read_to_string(format!("tests/scenarios/features/v{}/{}", world.api_version, path)).unwrap();
     let rendered = template(body, &world.fixtures);
     let body_struct = serde_json::from_str(rendered.as_str()).unwrap();
     world.parameters.insert("body".to_string(), body_struct);
