@@ -8,7 +8,7 @@ use std::env;
 pub struct Configuration {
     pub base_path: String,
     pub user_agent: Option<String>,
-    pub client: reqwest::Client,
+    pub client: reqwest_middleware::ClientWithMiddleware,
     pub api_key_auth: Option<String>,
     pub app_key_auth: Option<String>,
 }
@@ -21,6 +21,7 @@ impl Configuration {
 
 impl Default for Configuration {
     fn default() -> Self {
+        let http_client = reqwest_middleware::ClientBuilder::new(reqwest::Client::new());
         Configuration {
             base_path: "https://api.datadoghq.com".to_owned(),
             user_agent: Some(format!(
@@ -30,7 +31,7 @@ impl Default for Configuration {
                 env::consts::OS,
                 env::consts::ARCH,
             )),
-            client: reqwest::Client::new(),
+            client: http_client.build(),
             api_key_auth: env::var("DD_API_KEY").ok(),
             app_key_auth: env::var("DD_APP_KEY").ok(),
         }

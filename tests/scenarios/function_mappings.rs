@@ -67,10 +67,8 @@ fn test_list_fastly_accounts(world: &mut DatadogWorld, _parameters: &HashMap<Str
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::Reqwest(e) => panic!("reqwest error: {}", e),
-                Error::Serde(e) => panic!("serde error: {}", e),
-                Error::Io(e) => panic!("io error: {}", e),
                 Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                _ => panic!("error parsing response: {}", error),
             };
         }
     };
@@ -91,10 +89,8 @@ fn test_create_fastly_account(world: &mut DatadogWorld, _parameters: &HashMap<St
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::Reqwest(e) => panic!("reqwest error: {}", e),
-                Error::Serde(e) => panic!("serde error: {}", e),
-                Error::Io(e) => panic!("io error: {}", e),
                 Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                _ => panic!("error parsing response: {}", error),
             };
         }
     };
@@ -115,10 +111,8 @@ fn test_delete_fastly_account(world: &mut DatadogWorld, _parameters: &HashMap<St
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::Reqwest(e) => panic!("reqwest error: {}", e),
-                Error::Serde(e) => panic!("serde error: {}", e),
-                Error::Io(e) => panic!("io error: {}", e),
                 Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                _ => panic!("error parsing response: {}", error),
             };
         }
     };
@@ -139,10 +133,8 @@ fn test_get_fastly_account(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::Reqwest(e) => panic!("reqwest error: {}", e),
-                Error::Serde(e) => panic!("serde error: {}", e),
-                Error::Io(e) => panic!("io error: {}", e),
                 Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                _ => panic!("error parsing response: {}", error),
             };
         }
     };
@@ -164,10 +156,8 @@ fn test_update_fastly_account(world: &mut DatadogWorld, _parameters: &HashMap<St
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::Reqwest(e) => panic!("reqwest error: {}", e),
-                Error::Serde(e) => panic!("serde error: {}", e),
-                Error::Io(e) => panic!("io error: {}", e),
                 Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                _ => panic!("error parsing response: {}", error),
             };
         }
     };
@@ -188,10 +178,8 @@ fn test_list_fastly_services(world: &mut DatadogWorld, _parameters: &HashMap<Str
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::Reqwest(e) => panic!("reqwest error: {}", e),
-                Error::Serde(e) => panic!("serde error: {}", e),
-                Error::Io(e) => panic!("io error: {}", e),
                 Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                _ => panic!("error parsing response: {}", error),
             };
         }
     };
@@ -213,10 +201,8 @@ fn test_create_fastly_service(world: &mut DatadogWorld, _parameters: &HashMap<St
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::Reqwest(e) => panic!("reqwest error: {}", e),
-                Error::Serde(e) => panic!("serde error: {}", e),
-                Error::Io(e) => panic!("io error: {}", e),
                 Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                _ => panic!("error parsing response: {}", error),
             };
         }
     };
@@ -238,10 +224,8 @@ fn test_delete_fastly_service(world: &mut DatadogWorld, _parameters: &HashMap<St
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::Reqwest(e) => panic!("reqwest error: {}", e),
-                Error::Serde(e) => panic!("serde error: {}", e),
-                Error::Io(e) => panic!("io error: {}", e),
                 Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                _ => panic!("error parsing response: {}", error),
             };
         }
     };
@@ -263,10 +247,8 @@ fn test_get_fastly_service(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::Reqwest(e) => panic!("reqwest error: {}", e),
-                Error::Serde(e) => panic!("serde error: {}", e),
-                Error::Io(e) => panic!("io error: {}", e),
                 Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                _ => panic!("error parsing response: {}", error),
             };
         }
     };
@@ -289,10 +271,8 @@ fn test_update_fastly_service(world: &mut DatadogWorld, _parameters: &HashMap<St
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::Reqwest(e) => panic!("reqwest error: {}", e),
-                Error::Serde(e) => panic!("serde error: {}", e),
-                Error::Io(e) => panic!("io error: {}", e),
                 Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                _ => panic!("error parsing response: {}", error),
             };
         }
     };

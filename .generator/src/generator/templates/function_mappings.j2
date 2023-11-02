@@ -75,10 +75,8 @@ fn test_{{ operation['operationId'] | snake_case }}(world: &mut DatadogWorld, _p
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::Reqwest(e) => panic!("reqwest error: {}", e),
-                Error::Serde(e) => panic!("serde error: {}", e),
-                Error::Io(e) => panic!("io error: {}", e),
                 Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                _ => panic!("error parsing response: {}", error),
             };
         }
     };
