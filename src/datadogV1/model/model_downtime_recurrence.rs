@@ -25,15 +25,27 @@ pub struct DowntimeRecurrence {
     pub type_: Option<String>,
     /// The date at which the recurrence should end as a POSIX timestamp.
     /// `until_occurences` and `until_date` are mutually exclusive.
-    #[serde(rename = "until_date", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "until_date",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub until_date: Option<Option<i64>>,
     /// How many times the downtime is rescheduled.
     /// `until_occurences` and `until_date` are mutually exclusive.
-    #[serde(rename = "until_occurrences", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "until_occurrences",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub until_occurrences: Option<Option<i32>>,
     /// A list of week days to repeat on. Choose from `Mon`, `Tue`, `Wed`, `Thu`, `Fri`, `Sat` or `Sun`.
     /// Only applicable when type is weeks. First letter must be capitalized.
-    #[serde(rename = "week_days", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "week_days",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub week_days: Option<Option<Vec<String>>>,
 }
 

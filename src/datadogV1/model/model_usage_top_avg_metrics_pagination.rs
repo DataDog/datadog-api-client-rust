@@ -12,7 +12,11 @@ pub struct UsageTopAvgMetricsPagination {
     #[serde(rename = "limit")]
     pub limit: Option<i64>,
     /// The cursor to get the next results (if any). To make the next request, use the same parameters and add `next_record_id`.
-    #[serde(rename = "next_record_id", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "next_record_id",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub next_record_id: Option<Option<String>>,
     /// Total number of records.
     #[serde(

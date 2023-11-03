@@ -18,6 +18,9 @@ pub struct AWSLogsServicesRequest {
 
 impl AWSLogsServicesRequest {
     pub fn new(account_id: String, services: Vec<String>) -> AWSLogsServicesRequest {
-        AWSLogsServicesRequest { account_id, services }
+        AWSLogsServicesRequest {
+            account_id,
+            services,
+        }
     }
 }

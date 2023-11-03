@@ -105,18 +105,28 @@ impl ToString for UsageAttributionSort {
             Self::LAMBDA_INVOCATIONS_USAGE => String::from("lambda_invocations_usage"),
             Self::LAMBDA_INVOCATIONS_PERCENTAGE => String::from("lambda_invocations_percentage"),
             Self::ESTIMATED_INDEXED_LOGS_USAGE => String::from("estimated_indexed_logs_usage"),
-            Self::ESTIMATED_INDEXED_LOGS_PERCENTAGE => String::from("estimated_indexed_logs_percentage"),
+            Self::ESTIMATED_INDEXED_LOGS_PERCENTAGE => {
+                String::from("estimated_indexed_logs_percentage")
+            }
             Self::ESTIMATED_INGESTED_LOGS_USAGE => String::from("estimated_ingested_logs_usage"),
-            Self::ESTIMATED_INGESTED_LOGS_PERCENTAGE => String::from("estimated_ingested_logs_percentage"),
+            Self::ESTIMATED_INGESTED_LOGS_PERCENTAGE => {
+                String::from("estimated_ingested_logs_percentage")
+            }
             Self::ESTIMATED_INDEXED_SPANS_USAGE => String::from("estimated_indexed_spans_usage"),
-            Self::ESTIMATED_INDEXED_SPANS_PERCENTAGE => String::from("estimated_indexed_spans_percentage"),
+            Self::ESTIMATED_INDEXED_SPANS_PERCENTAGE => {
+                String::from("estimated_indexed_spans_percentage")
+            }
             Self::ESTIMATED_INGESTED_SPANS_USAGE => String::from("estimated_ingested_spans_usage"),
-            Self::ESTIMATED_INGESTED_SPANS_PERCENTAGE => String::from("estimated_ingested_spans_percentage"),
+            Self::ESTIMATED_INGESTED_SPANS_PERCENTAGE => {
+                String::from("estimated_ingested_spans_percentage")
+            }
             Self::APM_FARGATE_USAGE => String::from("apm_fargate_usage"),
             Self::APM_FARGATE_PERCENTAGE => String::from("apm_fargate_percentage"),
             Self::APPSEC_FARGATE_USAGE => String::from("appsec_fargate_usage"),
             Self::APPSEC_FARGATE_PERCENTAGE => String::from("appsec_fargate_percentage"),
-            Self::ESTIMATED_RUM_USAGE_ATTRIBUTION_USAGE => String::from("estimated_rum_usage_attribution_usage"),
+            Self::ESTIMATED_RUM_USAGE_ATTRIBUTION_USAGE => {
+                String::from("estimated_rum_usage_attribution_usage")
+            }
             Self::ESTIMATED_RUM_USAGE_ATTRIBUTION_PERCENTAGE => {
                 String::from("estimated_rum_usage_attribution_percentage")
             }

@@ -29,7 +29,11 @@ pub struct EventCreateRequest {
     #[serde(rename = "host")]
     pub host: Option<String>,
     /// The priority of the event. For example, `normal` or `low`.
-    #[serde(rename = "priority", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "priority",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub priority: Option<Option<crate::datadogV1::model::EventPriority>>,
     /// ID of the parent event. Must be sent as an integer (that is no quotes).
     #[serde(rename = "related_event_id")]

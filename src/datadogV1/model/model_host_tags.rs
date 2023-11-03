@@ -18,6 +18,9 @@ pub struct HostTags {
 
 impl HostTags {
     pub fn new() -> HostTags {
-        HostTags { host: None, tags: None }
+        HostTags {
+            host: None,
+            tags: None,
+        }
     }
 }

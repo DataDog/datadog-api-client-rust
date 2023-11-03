@@ -26,7 +26,11 @@ pub struct WebhooksIntegrationUpdateRequest {
     /// If given a JSON payload, the webhook returns the payload
     /// specified by the given payload.
     /// [Webhooks variable usage](https://docs.datadoghq.com/integrations/webhooks/#usage).
-    #[serde(rename = "payload", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "payload",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub payload: Option<Option<String>>,
     /// URL of the webhook.
     #[serde(rename = "url")]

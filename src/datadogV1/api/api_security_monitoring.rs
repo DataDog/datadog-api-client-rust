@@ -125,10 +125,14 @@ impl SecurityMonitoringAPI {
             local_configuration.base_path,
             signal_id = urlencode(signal_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -205,10 +209,14 @@ impl SecurityMonitoringAPI {
             local_configuration.base_path,
             signal_id = urlencode(signal_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -255,7 +263,10 @@ impl SecurityMonitoringAPI {
         Option<crate::datadogV1::model::SuccessfulSignalUpdateResponse>,
         Error<EditSecurityMonitoringSignalStateError>,
     > {
-        match self.edit_security_monitoring_signal_state_with_http_info(params).await {
+        match self
+            .edit_security_monitoring_signal_state_with_http_info(params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -282,10 +293,14 @@ impl SecurityMonitoringAPI {
             local_configuration.base_path,
             signal_id = urlencode(signal_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

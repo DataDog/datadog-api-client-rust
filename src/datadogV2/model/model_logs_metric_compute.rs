@@ -21,7 +21,9 @@ pub struct LogsMetricCompute {
 }
 
 impl LogsMetricCompute {
-    pub fn new(aggregation_type: crate::datadogV2::model::LogsMetricComputeAggregationType) -> LogsMetricCompute {
+    pub fn new(
+        aggregation_type: crate::datadogV2::model::LogsMetricComputeAggregationType,
+    ) -> LogsMetricCompute {
         LogsMetricCompute {
             aggregation_type,
             include_percentiles: None,

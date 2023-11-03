@@ -18,7 +18,11 @@ pub struct UsageSNMPHour {
     #[serde(rename = "public_id")]
     pub public_id: Option<String>,
     /// Contains the number of SNMP devices.
-    #[serde(rename = "snmp_devices", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "snmp_devices",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub snmp_devices: Option<Option<i64>>,
 }
 

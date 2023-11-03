@@ -215,7 +215,8 @@ impl UsageMeteringAPI {
     pub async fn get_cost_by_org_with_http_info(
         &self,
         params: GetCostByOrgParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::CostByOrgResponse>, Error<GetCostByOrgError>> {
+    ) -> Result<ResponseContent<crate::datadogV2::model::CostByOrgResponse>, Error<GetCostByOrgError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -225,10 +226,18 @@ impl UsageMeteringAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v2/usage/cost_by_org", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        local_req_builder = local_req_builder.query(&[("start_month", &start_month.to_string())]);
+        if let Some(ref local_str) = end_month {
+            local_req_builder = local_req_builder.query(&[("end_month", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -270,7 +279,8 @@ impl UsageMeteringAPI {
     pub async fn get_estimated_cost_by_org(
         &self,
         params: GetEstimatedCostByOrgParams,
-    ) -> Result<Option<crate::datadogV2::model::CostByOrgResponse>, Error<GetEstimatedCostByOrgError>> {
+    ) -> Result<Option<crate::datadogV2::model::CostByOrgResponse>, Error<GetEstimatedCostByOrgError>>
+    {
         match self.get_estimated_cost_by_org_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -284,7 +294,10 @@ impl UsageMeteringAPI {
     pub async fn get_estimated_cost_by_org_with_http_info(
         &self,
         params: GetEstimatedCostByOrgParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::CostByOrgResponse>, Error<GetEstimatedCostByOrgError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::CostByOrgResponse>,
+        Error<GetEstimatedCostByOrgError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -296,11 +309,33 @@ impl UsageMeteringAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/usage/estimated_cost", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v2/usage/estimated_cost",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        if let Some(ref local_str) = view {
+            local_req_builder = local_req_builder.query(&[("view", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = start_month {
+            local_req_builder = local_req_builder.query(&[("start_month", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = end_month {
+            local_req_builder = local_req_builder.query(&[("end_month", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = start_date {
+            local_req_builder = local_req_builder.query(&[("start_date", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = end_date {
+            local_req_builder = local_req_builder.query(&[("end_date", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -325,7 +360,8 @@ impl UsageMeteringAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<GetEstimatedCostByOrgError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetEstimatedCostByOrgError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -340,7 +376,10 @@ impl UsageMeteringAPI {
     pub async fn get_historical_cost_by_org(
         &self,
         params: GetHistoricalCostByOrgParams,
-    ) -> Result<Option<crate::datadogV2::model::CostByOrgResponse>, Error<GetHistoricalCostByOrgError>> {
+    ) -> Result<
+        Option<crate::datadogV2::model::CostByOrgResponse>,
+        Error<GetHistoricalCostByOrgError>,
+    > {
         match self.get_historical_cost_by_org_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -352,7 +391,10 @@ impl UsageMeteringAPI {
     pub async fn get_historical_cost_by_org_with_http_info(
         &self,
         params: GetHistoricalCostByOrgParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::CostByOrgResponse>, Error<GetHistoricalCostByOrgError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::CostByOrgResponse>,
+        Error<GetHistoricalCostByOrgError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -362,11 +404,25 @@ impl UsageMeteringAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/usage/historical_cost", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v2/usage/historical_cost",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        local_req_builder = local_req_builder.query(&[("start_month", &start_month.to_string())]);
+        if let Some(ref local_str) = view {
+            local_req_builder = local_req_builder.query(&[("view", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = end_month {
+            local_req_builder = local_req_builder.query(&[("end_month", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -391,7 +447,8 @@ impl UsageMeteringAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<GetHistoricalCostByOrgError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetHistoricalCostByOrgError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -405,7 +462,8 @@ impl UsageMeteringAPI {
     pub async fn get_hourly_usage(
         &self,
         params: GetHourlyUsageParams,
-    ) -> Result<Option<crate::datadogV2::model::HourlyUsageResponse>, Error<GetHourlyUsageError>> {
+    ) -> Result<Option<crate::datadogV2::model::HourlyUsageResponse>, Error<GetHourlyUsageError>>
+    {
         match self.get_hourly_usage_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -416,7 +474,10 @@ impl UsageMeteringAPI {
     pub async fn get_hourly_usage_with_http_info(
         &self,
         params: GetHourlyUsageParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::HourlyUsageResponse>, Error<GetHourlyUsageError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::HourlyUsageResponse>,
+        Error<GetHourlyUsageError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -431,11 +492,49 @@ impl UsageMeteringAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/usage/hourly_usage", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v2/usage/hourly_usage",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        local_req_builder = local_req_builder.query(&[(
+            "filter[timestamp][start]",
+            &filter_timestamp_start.to_string(),
+        )]);
+        local_req_builder = local_req_builder.query(&[(
+            "filter[product_families]",
+            &filter_product_families.to_string(),
+        )]);
+        if let Some(ref local_str) = filter_timestamp_end {
+            local_req_builder =
+                local_req_builder.query(&[("filter[timestamp][end]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = filter_include_descendants {
+            local_req_builder =
+                local_req_builder.query(&[("filter[include_descendants]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = filter_include_breakdown {
+            local_req_builder =
+                local_req_builder.query(&[("filter[include_breakdown]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = filter_versions {
+            local_req_builder =
+                local_req_builder.query(&[("filter[versions]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = page_limit {
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = page_next_record_id {
+            local_req_builder =
+                local_req_builder.query(&[("page[next_record_id]", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -460,7 +559,8 @@ impl UsageMeteringAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<GetHourlyUsageError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetHourlyUsageError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -505,11 +605,22 @@ impl UsageMeteringAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/usage/application_security", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v2/usage/application_security",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        if let Some(ref local_str) = end_hr {
+            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -526,8 +637,9 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::UsageApplicationSecurityMonitoringResponse> =
-                serde_json::from_str(&local_content).ok();
+            let local_entity: Option<
+                crate::datadogV2::model::UsageApplicationSecurityMonitoringResponse,
+            > = serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -554,7 +666,10 @@ impl UsageMeteringAPI {
         Option<crate::datadogV2::model::UsageLambdaTracedInvocationsResponse>,
         Error<GetUsageLambdaTracedInvocationsError>,
     > {
-        match self.get_usage_lambda_traced_invocations_with_http_info(params).await {
+        match self
+            .get_usage_lambda_traced_invocations_with_http_info(params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -581,10 +696,18 @@ impl UsageMeteringAPI {
             "{}/api/v2/usage/lambda_traced_invocations",
             local_configuration.base_path
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        if let Some(ref local_str) = end_hr {
+            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -601,15 +724,17 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::UsageLambdaTracedInvocationsResponse> =
-                serde_json::from_str(&local_content).ok();
+            let local_entity: Option<
+                crate::datadogV2::model::UsageLambdaTracedInvocationsResponse,
+            > = serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<GetUsageLambdaTracedInvocationsError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetUsageLambdaTracedInvocationsError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -628,7 +753,10 @@ impl UsageMeteringAPI {
         Option<crate::datadogV2::model::UsageObservabilityPipelinesResponse>,
         Error<GetUsageObservabilityPipelinesError>,
     > {
-        match self.get_usage_observability_pipelines_with_http_info(params).await {
+        match self
+            .get_usage_observability_pipelines_with_http_info(params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -651,11 +779,22 @@ impl UsageMeteringAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/usage/observability_pipelines", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v2/usage/observability_pipelines",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        if let Some(ref local_str) = end_hr {
+            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -680,7 +819,8 @@ impl UsageMeteringAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<GetUsageObservabilityPipelinesError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetUsageObservabilityPipelinesError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,

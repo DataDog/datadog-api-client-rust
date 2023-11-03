@@ -15,6 +15,8 @@ pub struct SpansMetricUpdateRequest {
 
 impl SpansMetricUpdateRequest {
     pub fn new(data: crate::datadogV2::model::SpansMetricUpdateData) -> SpansMetricUpdateRequest {
-        SpansMetricUpdateRequest { data: Box::new(data) }
+        SpansMetricUpdateRequest {
+            data: Box::new(data),
+        }
     }
 }

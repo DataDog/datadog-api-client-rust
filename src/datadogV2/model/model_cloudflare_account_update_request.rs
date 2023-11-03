@@ -14,7 +14,11 @@ pub struct CloudflareAccountUpdateRequest {
 }
 
 impl CloudflareAccountUpdateRequest {
-    pub fn new(data: crate::datadogV2::model::CloudflareAccountUpdateRequestData) -> CloudflareAccountUpdateRequest {
-        CloudflareAccountUpdateRequest { data: Box::new(data) }
+    pub fn new(
+        data: crate::datadogV2::model::CloudflareAccountUpdateRequestData,
+    ) -> CloudflareAccountUpdateRequest {
+        CloudflareAccountUpdateRequest {
+            data: Box::new(data),
+        }
     }
 }

@@ -10,11 +10,19 @@ use serde_with::skip_serializing_none;
 pub struct UsageHostHour {
     /// Contains the total number of infrastructure hosts reporting
     /// during a given hour that were running the Datadog Agent.
-    #[serde(rename = "agent_host_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "agent_host_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub agent_host_count: Option<Option<i64>>,
     /// Contains the total number of hosts that reported through Alibaba integration
     /// (and were NOT running the Datadog Agent).
-    #[serde(rename = "alibaba_host_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "alibaba_host_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub alibaba_host_count: Option<Option<i64>>,
     /// Contains the total number of Azure App Services hosts using APM.
     #[serde(
@@ -25,29 +33,57 @@ pub struct UsageHostHour {
     pub apm_azure_app_service_host_count: Option<Option<i64>>,
     /// Shows the total number of hosts using APM during the hour,
     /// these are counted as billable (except during trial periods).
-    #[serde(rename = "apm_host_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "apm_host_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub apm_host_count: Option<Option<i64>>,
     /// Contains the total number of hosts that reported through the AWS integration
     /// (and were NOT running the Datadog Agent).
-    #[serde(rename = "aws_host_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "aws_host_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub aws_host_count: Option<Option<i64>>,
     /// Contains the total number of hosts that reported through Azure integration
     /// (and were NOT running the Datadog Agent).
-    #[serde(rename = "azure_host_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "azure_host_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub azure_host_count: Option<Option<i64>>,
     /// Shows the total number of containers reported by the Docker integration during the hour.
-    #[serde(rename = "container_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "container_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub container_count: Option<Option<i64>>,
     /// Contains the total number of hosts that reported through the Google Cloud integration
     /// (and were NOT running the Datadog Agent).
-    #[serde(rename = "gcp_host_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "gcp_host_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub gcp_host_count: Option<Option<i64>>,
     /// Contains the total number of Heroku dynos reported by the Datadog Agent.
-    #[serde(rename = "heroku_host_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "heroku_host_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub heroku_host_count: Option<Option<i64>>,
     /// Contains the total number of billable infrastructure hosts reporting during a given hour.
     /// This is the sum of `agent_host_count`, `aws_host_count`, and `gcp_host_count`.
-    #[serde(rename = "host_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "host_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub host_count: Option<Option<i64>>,
     /// The hour for the usage.
     #[serde(rename = "hour", default, with = "::serde_with::rust::double_option")]
@@ -82,7 +118,11 @@ pub struct UsageHostHour {
     pub public_id: Option<String>,
     /// Contains the total number of hosts that reported through vSphere integration
     /// (and were NOT running the Datadog Agent).
-    #[serde(rename = "vsphere_host_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "vsphere_host_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub vsphere_host_count: Option<Option<i64>>,
 }
 

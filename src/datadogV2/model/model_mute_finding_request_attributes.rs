@@ -14,7 +14,11 @@ pub struct MuteFindingRequestAttributes {
 }
 
 impl MuteFindingRequestAttributes {
-    pub fn new(mute: crate::datadogV2::model::MuteFindingRequestProperties) -> MuteFindingRequestAttributes {
-        MuteFindingRequestAttributes { mute: Box::new(mute) }
+    pub fn new(
+        mute: crate::datadogV2::model::MuteFindingRequestProperties,
+    ) -> MuteFindingRequestAttributes {
+        MuteFindingRequestAttributes {
+            mute: Box::new(mute),
+        }
     }
 }

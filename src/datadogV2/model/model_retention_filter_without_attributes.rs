@@ -17,7 +17,10 @@ pub struct RetentionFilterWithoutAttributes {
 }
 
 impl RetentionFilterWithoutAttributes {
-    pub fn new(id: String, type_: crate::datadogV2::model::ApmRetentionFilterType) -> RetentionFilterWithoutAttributes {
+    pub fn new(
+        id: String,
+        type_: crate::datadogV2::model::ApmRetentionFilterType,
+    ) -> RetentionFilterWithoutAttributes {
         RetentionFilterWithoutAttributes { id, type_ }
     }
 }

@@ -21,7 +21,11 @@ pub struct UsageRumSessionsHour {
     #[serde(rename = "replay_session_count")]
     pub replay_session_count: Option<i64>,
     /// Contains the number of browser RUM Lite Sessions.
-    #[serde(rename = "session_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "session_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub session_count: Option<Option<i64>>,
     /// Contains the number of mobile RUM Sessions on Android (data available beginning December 1, 2020).
     #[serde(
@@ -38,7 +42,11 @@ pub struct UsageRumSessionsHour {
     )]
     pub session_count_flutter: Option<Option<i64>>,
     /// Contains the number of mobile RUM Sessions on iOS (data available beginning December 1, 2020).
-    #[serde(rename = "session_count_ios", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "session_count_ios",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub session_count_ios: Option<Option<i64>>,
     /// Contains the number of mobile RUM Sessions on React Native (data available beginning May 1, 2022).
     #[serde(

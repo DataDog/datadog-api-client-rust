@@ -13,7 +13,11 @@ pub struct DowntimeChild {
     #[serde(rename = "active")]
     pub active: Option<bool>,
     /// If a scheduled downtime is canceled.
-    #[serde(rename = "canceled", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "canceled",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub canceled: Option<Option<i64>>,
     /// User ID of the downtime creator.
     #[serde(rename = "creator_id")]
@@ -35,11 +39,19 @@ pub struct DowntimeChild {
     pub id: Option<i64>,
     /// A message to include with notifications for this downtime.
     /// Email notifications can be sent to specific users by using the same `@username` notation as events.
-    #[serde(rename = "message", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "message",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub message: Option<Option<String>>,
     /// A single monitor to which the downtime applies.
     /// If not provided, the downtime applies to all monitors.
-    #[serde(rename = "monitor_id", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "monitor_id",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub monitor_id: Option<Option<i64>>,
     /// A comma-separated list of monitor tags. For example, tags that are applied directly to monitors,
     /// not tags that are used in monitor queries (which are filtered by the scope parameter), to which the downtime applies.
@@ -60,10 +72,18 @@ pub struct DowntimeChild {
     #[serde(rename = "notify_end_types")]
     pub notify_end_types: Option<Vec<crate::datadogV1::model::NotifyEndType>>,
     /// ID of the parent Downtime.
-    #[serde(rename = "parent_id", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "parent_id",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub parent_id: Option<Option<i64>>,
     /// An object defining the recurrence of the downtime.
-    #[serde(rename = "recurrence", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "recurrence",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub recurrence: Option<Option<Box<crate::datadogV1::model::DowntimeRecurrence>>>,
     /// The scope(s) to which the downtime applies and must be in `key:value` format. For example, `host:app2`.
     /// Provide multiple scopes as a comma-separated list like `env:dev,env:prod`.
@@ -78,7 +98,11 @@ pub struct DowntimeChild {
     #[serde(rename = "timezone")]
     pub timezone: Option<String>,
     /// ID of the last user that updated the downtime.
-    #[serde(rename = "updater_id", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "updater_id",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub updater_id: Option<Option<i32>>,
 }
 

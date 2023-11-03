@@ -112,7 +112,10 @@ impl EventsAPI {
     pub async fn create_event_with_http_info(
         &self,
         params: CreateEventParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::EventCreateResponse>, Error<CreateEventError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::EventCreateResponse>,
+        Error<CreateEventError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -121,10 +124,14 @@ impl EventsAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/events", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -193,10 +200,14 @@ impl EventsAPI {
             local_configuration.base_path,
             event_id = event_id
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -262,7 +273,8 @@ impl EventsAPI {
     pub async fn list_events_with_http_info(
         &self,
         params: ListEventsParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::EventListResponse>, Error<ListEventsError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::EventListResponse>, Error<ListEventsError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -278,10 +290,36 @@ impl EventsAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/events", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        local_req_builder = local_req_builder.query(&[("start", &start.to_string())]);
+        local_req_builder = local_req_builder.query(&[("end", &end.to_string())]);
+        if let Some(ref local_str) = priority {
+            local_req_builder = local_req_builder.query(&[("priority", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = sources {
+            local_req_builder = local_req_builder.query(&[("sources", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = tags {
+            local_req_builder = local_req_builder.query(&[("tags", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = unaggregated {
+            local_req_builder =
+                local_req_builder.query(&[("unaggregated", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = exclude_aggregate {
+            local_req_builder =
+                local_req_builder.query(&[("exclude_aggregate", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = page {
+            local_req_builder = local_req_builder.query(&[("page", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

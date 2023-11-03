@@ -95,7 +95,8 @@ impl LogsAPI {
     pub async fn list_logs_with_http_info(
         &self,
         params: ListLogsParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::LogsListResponse>, Error<ListLogsError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::LogsListResponse>, Error<ListLogsError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -104,10 +105,14 @@ impl LogsAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/logs-queries/list", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -167,7 +172,8 @@ impl LogsAPI {
     pub async fn submit_log(
         &self,
         params: SubmitLogParams,
-    ) -> Result<Option<std::collections::HashMap<String, serde_json::Value>>, Error<SubmitLogError>> {
+    ) -> Result<Option<std::collections::HashMap<String, serde_json::Value>>, Error<SubmitLogError>>
+    {
         match self.submit_log_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -196,7 +202,10 @@ impl LogsAPI {
     pub async fn submit_log_with_http_info(
         &self,
         params: SubmitLogParams,
-    ) -> Result<ResponseContent<std::collections::HashMap<String, serde_json::Value>>, Error<SubmitLogError>> {
+    ) -> Result<
+        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        Error<SubmitLogError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -207,10 +216,20 @@ impl LogsAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/v1/input", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
+        if let Some(ref local) = content_encoding {
+            local_req_builder = local_req_builder.header("Content-Encoding", &local.to_string());
+        };
+        if let Some(ref local_str) = ddtags {
+            local_req_builder = local_req_builder.query(&[("ddtags", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

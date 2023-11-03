@@ -10,7 +10,8 @@ use serde_with::skip_serializing_none;
 pub struct DashboardListDeleteItemsResponse {
     /// List of dashboards deleted from the dashboard list.
     #[serde(rename = "deleted_dashboards_from_list")]
-    pub deleted_dashboards_from_list: Option<Vec<crate::datadogV2::model::DashboardListItemResponse>>,
+    pub deleted_dashboards_from_list:
+        Option<Vec<crate::datadogV2::model::DashboardListItemResponse>>,
 }
 
 impl DashboardListDeleteItemsResponse {

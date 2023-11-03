@@ -40,7 +40,8 @@ impl RolesAPI {
     /// Returns a list of all permissions, including name, description, and ID.
     pub async fn list_permissions(
         &self,
-    ) -> Result<Option<crate::datadogV2::model::PermissionsResponse>, Error<ListPermissionsError>> {
+    ) -> Result<Option<crate::datadogV2::model::PermissionsResponse>, Error<ListPermissionsError>>
+    {
         match self.list_permissions_with_http_info().await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -50,7 +51,10 @@ impl RolesAPI {
     /// Returns a list of all permissions, including name, description, and ID.
     pub async fn list_permissions_with_http_info(
         &self,
-    ) -> Result<ResponseContent<crate::datadogV2::model::PermissionsResponse>, Error<ListPermissionsError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::PermissionsResponse>,
+        Error<ListPermissionsError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -58,10 +62,12 @@ impl RolesAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v2/permissions", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -86,7 +92,8 @@ impl RolesAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<ListPermissionsError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<ListPermissionsError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,

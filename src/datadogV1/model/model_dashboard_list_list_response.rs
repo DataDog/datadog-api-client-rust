@@ -15,6 +15,8 @@ pub struct DashboardListListResponse {
 
 impl DashboardListListResponse {
     pub fn new() -> DashboardListListResponse {
-        DashboardListListResponse { dashboard_lists: None }
+        DashboardListListResponse {
+            dashboard_lists: None,
+        }
     }
 }

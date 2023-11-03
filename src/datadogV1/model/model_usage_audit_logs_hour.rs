@@ -12,7 +12,11 @@ pub struct UsageAuditLogsHour {
     #[serde(rename = "hour")]
     pub hour: Option<String>,
     /// The total number of audit logs lines indexed during a given hour.
-    #[serde(rename = "lines_indexed", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "lines_indexed",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub lines_indexed: Option<Option<i64>>,
     /// The organization name.
     #[serde(rename = "org_name")]

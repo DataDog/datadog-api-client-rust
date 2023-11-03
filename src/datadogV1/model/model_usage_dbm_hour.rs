@@ -9,10 +9,18 @@ use serde_with::skip_serializing_none;
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct UsageDBMHour {
     /// The total number of Database Monitoring host hours from the start of the given hour’s month until the given hour.
-    #[serde(rename = "dbm_host_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "dbm_host_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub dbm_host_count: Option<Option<i64>>,
     /// The total number of normalized Database Monitoring queries from the start of the given hour’s month until the given hour.
-    #[serde(rename = "dbm_queries_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "dbm_queries_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub dbm_queries_count: Option<Option<i64>>,
     /// The hour for the usage.
     #[serde(rename = "hour")]

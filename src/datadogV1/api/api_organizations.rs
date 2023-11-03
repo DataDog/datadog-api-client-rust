@@ -138,7 +138,10 @@ impl OrganizationsAPI {
     pub async fn create_child_org(
         &self,
         params: CreateChildOrgParams,
-    ) -> Result<Option<crate::datadogV1::model::OrganizationCreateResponse>, Error<CreateChildOrgError>> {
+    ) -> Result<
+        Option<crate::datadogV1::model::OrganizationCreateResponse>,
+        Error<CreateChildOrgError>,
+    > {
         match self.create_child_org_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -158,7 +161,10 @@ impl OrganizationsAPI {
     pub async fn create_child_org_with_http_info(
         &self,
         params: CreateChildOrgParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::OrganizationCreateResponse>, Error<CreateChildOrgError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::OrganizationCreateResponse>,
+        Error<CreateChildOrgError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -167,10 +173,14 @@ impl OrganizationsAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/org", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -198,7 +208,8 @@ impl OrganizationsAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<CreateChildOrgError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CreateChildOrgError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -212,7 +223,8 @@ impl OrganizationsAPI {
     pub async fn downgrade_org(
         &self,
         params: DowngradeOrgParams,
-    ) -> Result<Option<crate::datadogV1::model::OrgDowngradedResponse>, Error<DowngradeOrgError>> {
+    ) -> Result<Option<crate::datadogV1::model::OrgDowngradedResponse>, Error<DowngradeOrgError>>
+    {
         match self.downgrade_org_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -223,7 +235,10 @@ impl OrganizationsAPI {
     pub async fn downgrade_org_with_http_info(
         &self,
         params: DowngradeOrgParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::OrgDowngradedResponse>, Error<DowngradeOrgError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::OrgDowngradedResponse>,
+        Error<DowngradeOrgError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -236,10 +251,14 @@ impl OrganizationsAPI {
             local_configuration.base_path,
             public_id = urlencode(public_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -289,7 +308,8 @@ impl OrganizationsAPI {
     pub async fn get_org_with_http_info(
         &self,
         params: GetOrgParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::OrganizationResponse>, Error<GetOrgError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::OrganizationResponse>, Error<GetOrgError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -302,10 +322,14 @@ impl OrganizationsAPI {
             local_configuration.base_path,
             public_id = urlencode(public_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -343,7 +367,8 @@ impl OrganizationsAPI {
     /// This endpoint returns data on your top-level organization.
     pub async fn list_orgs(
         &self,
-    ) -> Result<Option<crate::datadogV1::model::OrganizationListResponse>, Error<ListOrgsError>> {
+    ) -> Result<Option<crate::datadogV1::model::OrganizationListResponse>, Error<ListOrgsError>>
+    {
         match self.list_orgs_with_http_info().await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -353,7 +378,10 @@ impl OrganizationsAPI {
     /// This endpoint returns data on your top-level organization.
     pub async fn list_orgs_with_http_info(
         &self,
-    ) -> Result<ResponseContent<crate::datadogV1::model::OrganizationListResponse>, Error<ListOrgsError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::OrganizationListResponse>,
+        Error<ListOrgsError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -361,10 +389,12 @@ impl OrganizationsAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/org", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -414,7 +444,8 @@ impl OrganizationsAPI {
     pub async fn update_org_with_http_info(
         &self,
         params: UpdateOrgParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::OrganizationResponse>, Error<UpdateOrgError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::OrganizationResponse>, Error<UpdateOrgError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -428,10 +459,14 @@ impl OrganizationsAPI {
             local_configuration.base_path,
             public_id = urlencode(public_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -494,7 +529,8 @@ impl OrganizationsAPI {
     pub async fn upload_id_p_for_org_with_http_info(
         &self,
         params: UploadIdPForOrgParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::IdpResponse>, Error<UploadIdPForOrgError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::IdpResponse>, Error<UploadIdPForOrgError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -508,10 +544,14 @@ impl OrganizationsAPI {
             local_configuration.base_path,
             public_id = urlencode(public_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -535,14 +575,16 @@ impl OrganizationsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::IdpResponse> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<crate::datadogV1::model::IdpResponse> =
+                serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<UploadIdPForOrgError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<UploadIdPForOrgError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,

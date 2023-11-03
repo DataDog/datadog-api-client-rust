@@ -9,12 +9,18 @@ use serde_with::skip_serializing_none;
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct MonthlyUsageAttributionPagination {
     /// The cursor to use to get the next results, if any. To make the next request, use the same parameters with the addition of the `next_record_id`.
-    #[serde(rename = "next_record_id", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "next_record_id",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub next_record_id: Option<Option<String>>,
 }
 
 impl MonthlyUsageAttributionPagination {
     pub fn new() -> MonthlyUsageAttributionPagination {
-        MonthlyUsageAttributionPagination { next_record_id: None }
+        MonthlyUsageAttributionPagination {
+            next_record_id: None,
+        }
     }
 }

@@ -9,13 +9,25 @@ use serde_with::skip_serializing_none;
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct UsageCloudSecurityPostureManagementHour {
     /// The number of Cloud Security Management Pro Azure app services hosts during a given hour.
-    #[serde(rename = "aas_host_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "aas_host_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub aas_host_count: Option<Option<f64>>,
     /// The number of Cloud Security Management Pro AWS hosts during a given hour.
-    #[serde(rename = "aws_host_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "aws_host_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub aws_host_count: Option<Option<f64>>,
     /// The number of Cloud Security Management Pro Azure hosts during a given hour.
-    #[serde(rename = "azure_host_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "azure_host_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub azure_host_count: Option<Option<f64>>,
     /// The number of Cloud Security Management Pro hosts during a given hour.
     #[serde(
@@ -25,13 +37,25 @@ pub struct UsageCloudSecurityPostureManagementHour {
     )]
     pub compliance_host_count: Option<Option<f64>>,
     /// The total number of Cloud Security Management Pro containers during a given hour.
-    #[serde(rename = "container_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "container_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub container_count: Option<Option<f64>>,
     /// The number of Cloud Security Management Pro GCP hosts during a given hour.
-    #[serde(rename = "gcp_host_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "gcp_host_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub gcp_host_count: Option<Option<f64>>,
     /// The total number of Cloud Security Management Pro hosts during a given hour.
-    #[serde(rename = "host_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "host_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub host_count: Option<Option<f64>>,
     /// The hour for the usage.
     #[serde(rename = "hour")]

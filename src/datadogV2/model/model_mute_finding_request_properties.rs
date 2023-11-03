@@ -25,7 +25,10 @@ pub struct MuteFindingRequestProperties {
 }
 
 impl MuteFindingRequestProperties {
-    pub fn new(muted: bool, reason: crate::datadogV2::model::FindingMuteReason) -> MuteFindingRequestProperties {
+    pub fn new(
+        muted: bool,
+        reason: crate::datadogV2::model::FindingMuteReason,
+    ) -> MuteFindingRequestProperties {
         MuteFindingRequestProperties {
             description: None,
             expiration_date: None,

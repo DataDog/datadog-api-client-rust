@@ -27,6 +27,10 @@ impl SLOBulkDeleteError {
         message: String,
         timeframe: crate::datadogV1::model::SLOErrorTimeframe,
     ) -> SLOBulkDeleteError {
-        SLOBulkDeleteError { id, message, timeframe }
+        SLOBulkDeleteError {
+            id,
+            message,
+            timeframe,
+        }
     }
 }

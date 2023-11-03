@@ -9,7 +9,11 @@ use serde_with::skip_serializing_none;
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct User {
     /// The access role of the user. Options are **st** (standard user), **adm** (admin user), or **ro** (read-only user).
-    #[serde(rename = "access_role", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "access_role",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub access_role: Option<Option<crate::datadogV1::model::AccessRole>>,
     /// The new disabled status of the user.
     #[serde(rename = "disabled")]

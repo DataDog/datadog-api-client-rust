@@ -13,7 +13,11 @@ pub struct Series {
     #[serde(rename = "host")]
     pub host: Option<String>,
     /// If the type of the metric is rate or count, define the corresponding interval.
-    #[serde(rename = "interval", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "interval",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub interval: Option<Option<i64>>,
     /// The name of the timeseries.
     #[serde(rename = "metric")]

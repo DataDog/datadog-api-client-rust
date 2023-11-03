@@ -14,7 +14,11 @@ pub struct FastlyAccountCreateRequest {
 }
 
 impl FastlyAccountCreateRequest {
-    pub fn new(data: crate::datadogV2::model::FastlyAccountCreateRequestData) -> FastlyAccountCreateRequest {
-        FastlyAccountCreateRequest { data: Box::new(data) }
+    pub fn new(
+        data: crate::datadogV2::model::FastlyAccountCreateRequestData,
+    ) -> FastlyAccountCreateRequest {
+        FastlyAccountCreateRequest {
+            data: Box::new(data),
+        }
     }
 }

@@ -14,7 +14,11 @@ pub struct OpsgenieServiceUpdateRequest {
 }
 
 impl OpsgenieServiceUpdateRequest {
-    pub fn new(data: crate::datadogV2::model::OpsgenieServiceUpdateData) -> OpsgenieServiceUpdateRequest {
-        OpsgenieServiceUpdateRequest { data: Box::new(data) }
+    pub fn new(
+        data: crate::datadogV2::model::OpsgenieServiceUpdateData,
+    ) -> OpsgenieServiceUpdateRequest {
+        OpsgenieServiceUpdateRequest {
+            data: Box::new(data),
+        }
     }
 }

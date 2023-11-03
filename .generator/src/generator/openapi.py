@@ -124,6 +124,16 @@ def responses_by_types(operation, version):
     return result.items()
 
 
+def get_apis_and_versions(all_apis):
+    result = {}
+    for version, api in all_apis.items():
+        for name, _ in api.items():
+            if name not in result:
+                result[name] = []
+            result[name].append(version)
+    return result.items()
+
+
 def child_models(schema, alternative_name=None, seen=None, parent=None):
     seen = seen or set()
     current_name = get_name(schema)

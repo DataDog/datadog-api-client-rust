@@ -114,7 +114,10 @@ impl CloudflareIntegrationAPI {
     pub async fn create_cloudflare_account(
         &self,
         params: CreateCloudflareAccountParams,
-    ) -> Result<Option<crate::datadogV2::model::CloudflareAccountResponse>, Error<CreateCloudflareAccountError>> {
+    ) -> Result<
+        Option<crate::datadogV2::model::CloudflareAccountResponse>,
+        Error<CreateCloudflareAccountError>,
+    > {
         match self.create_cloudflare_account_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -125,8 +128,10 @@ impl CloudflareIntegrationAPI {
     pub async fn create_cloudflare_account_with_http_info(
         &self,
         params: CreateCloudflareAccountParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::CloudflareAccountResponse>, Error<CreateCloudflareAccountError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::CloudflareAccountResponse>,
+        Error<CreateCloudflareAccountError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -138,10 +143,14 @@ impl CloudflareIntegrationAPI {
             "{}/api/v2/integrations/cloudflare/accounts",
             local_configuration.base_path
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -169,7 +178,8 @@ impl CloudflareIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<CreateCloudflareAccountError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CreateCloudflareAccountError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -207,10 +217,14 @@ impl CloudflareIntegrationAPI {
             local_configuration.base_path,
             account_id = urlencode(account_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -233,7 +247,8 @@ impl CloudflareIntegrationAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteCloudflareAccountError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<DeleteCloudflareAccountError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -247,7 +262,10 @@ impl CloudflareIntegrationAPI {
     pub async fn get_cloudflare_account(
         &self,
         params: GetCloudflareAccountParams,
-    ) -> Result<Option<crate::datadogV2::model::CloudflareAccountResponse>, Error<GetCloudflareAccountError>> {
+    ) -> Result<
+        Option<crate::datadogV2::model::CloudflareAccountResponse>,
+        Error<GetCloudflareAccountError>,
+    > {
         match self.get_cloudflare_account_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -258,8 +276,10 @@ impl CloudflareIntegrationAPI {
     pub async fn get_cloudflare_account_with_http_info(
         &self,
         params: GetCloudflareAccountParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::CloudflareAccountResponse>, Error<GetCloudflareAccountError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::CloudflareAccountResponse>,
+        Error<GetCloudflareAccountError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -272,10 +292,14 @@ impl CloudflareIntegrationAPI {
             local_configuration.base_path,
             account_id = urlencode(account_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -300,7 +324,8 @@ impl CloudflareIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<GetCloudflareAccountError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetCloudflareAccountError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -313,7 +338,10 @@ impl CloudflareIntegrationAPI {
     /// List Cloudflare accounts.
     pub async fn list_cloudflare_accounts(
         &self,
-    ) -> Result<Option<crate::datadogV2::model::CloudflareAccountsResponse>, Error<ListCloudflareAccountsError>> {
+    ) -> Result<
+        Option<crate::datadogV2::model::CloudflareAccountsResponse>,
+        Error<ListCloudflareAccountsError>,
+    > {
         match self.list_cloudflare_accounts_with_http_info().await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -323,8 +351,10 @@ impl CloudflareIntegrationAPI {
     /// List Cloudflare accounts.
     pub async fn list_cloudflare_accounts_with_http_info(
         &self,
-    ) -> Result<ResponseContent<crate::datadogV2::model::CloudflareAccountsResponse>, Error<ListCloudflareAccountsError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::CloudflareAccountsResponse>,
+        Error<ListCloudflareAccountsError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -335,10 +365,12 @@ impl CloudflareIntegrationAPI {
             "{}/api/v2/integrations/cloudflare/accounts",
             local_configuration.base_path
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -363,7 +395,8 @@ impl CloudflareIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<ListCloudflareAccountsError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<ListCloudflareAccountsError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -377,7 +410,10 @@ impl CloudflareIntegrationAPI {
     pub async fn update_cloudflare_account(
         &self,
         params: UpdateCloudflareAccountParams,
-    ) -> Result<Option<crate::datadogV2::model::CloudflareAccountResponse>, Error<UpdateCloudflareAccountError>> {
+    ) -> Result<
+        Option<crate::datadogV2::model::CloudflareAccountResponse>,
+        Error<UpdateCloudflareAccountError>,
+    > {
         match self.update_cloudflare_account_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -388,8 +424,10 @@ impl CloudflareIntegrationAPI {
     pub async fn update_cloudflare_account_with_http_info(
         &self,
         params: UpdateCloudflareAccountParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::CloudflareAccountResponse>, Error<UpdateCloudflareAccountError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::CloudflareAccountResponse>,
+        Error<UpdateCloudflareAccountError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -403,10 +441,14 @@ impl CloudflareIntegrationAPI {
             local_configuration.base_path,
             account_id = urlencode(account_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -434,7 +476,8 @@ impl CloudflareIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<UpdateCloudflareAccountError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<UpdateCloudflareAccountError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,

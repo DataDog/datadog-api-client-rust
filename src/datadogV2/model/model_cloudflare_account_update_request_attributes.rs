@@ -18,6 +18,9 @@ pub struct CloudflareAccountUpdateRequestAttributes {
 
 impl CloudflareAccountUpdateRequestAttributes {
     pub fn new(api_key: String) -> CloudflareAccountUpdateRequestAttributes {
-        CloudflareAccountUpdateRequestAttributes { api_key, email: None }
+        CloudflareAccountUpdateRequestAttributes {
+            api_key,
+            email: None,
+        }
     }
 }

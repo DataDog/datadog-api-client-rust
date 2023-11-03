@@ -116,7 +116,10 @@ impl OpsgenieIntegrationAPI {
     pub async fn create_opsgenie_service(
         &self,
         params: CreateOpsgenieServiceParams,
-    ) -> Result<Option<crate::datadogV2::model::OpsgenieServiceResponse>, Error<CreateOpsgenieServiceError>> {
+    ) -> Result<
+        Option<crate::datadogV2::model::OpsgenieServiceResponse>,
+        Error<CreateOpsgenieServiceError>,
+    > {
         match self.create_opsgenie_service_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -127,8 +130,10 @@ impl OpsgenieIntegrationAPI {
     pub async fn create_opsgenie_service_with_http_info(
         &self,
         params: CreateOpsgenieServiceParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::OpsgenieServiceResponse>, Error<CreateOpsgenieServiceError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::OpsgenieServiceResponse>,
+        Error<CreateOpsgenieServiceError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -136,11 +141,18 @@ impl OpsgenieIntegrationAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/integration/opsgenie/services", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v2/integration/opsgenie/services",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -168,7 +180,8 @@ impl OpsgenieIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<CreateOpsgenieServiceError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CreateOpsgenieServiceError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -206,10 +219,14 @@ impl OpsgenieIntegrationAPI {
             local_configuration.base_path,
             integration_service_id = urlencode(integration_service_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -232,7 +249,8 @@ impl OpsgenieIntegrationAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteOpsgenieServiceError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<DeleteOpsgenieServiceError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -246,7 +264,10 @@ impl OpsgenieIntegrationAPI {
     pub async fn get_opsgenie_service(
         &self,
         params: GetOpsgenieServiceParams,
-    ) -> Result<Option<crate::datadogV2::model::OpsgenieServiceResponse>, Error<GetOpsgenieServiceError>> {
+    ) -> Result<
+        Option<crate::datadogV2::model::OpsgenieServiceResponse>,
+        Error<GetOpsgenieServiceError>,
+    > {
         match self.get_opsgenie_service_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -257,7 +278,10 @@ impl OpsgenieIntegrationAPI {
     pub async fn get_opsgenie_service_with_http_info(
         &self,
         params: GetOpsgenieServiceParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::OpsgenieServiceResponse>, Error<GetOpsgenieServiceError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::OpsgenieServiceResponse>,
+        Error<GetOpsgenieServiceError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -270,10 +294,14 @@ impl OpsgenieIntegrationAPI {
             local_configuration.base_path,
             integration_service_id = urlencode(integration_service_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -298,7 +326,8 @@ impl OpsgenieIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<GetOpsgenieServiceError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetOpsgenieServiceError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -311,7 +340,10 @@ impl OpsgenieIntegrationAPI {
     /// Get a list of all services from the Datadog Opsgenie integration.
     pub async fn list_opsgenie_services(
         &self,
-    ) -> Result<Option<crate::datadogV2::model::OpsgenieServicesResponse>, Error<ListOpsgenieServicesError>> {
+    ) -> Result<
+        Option<crate::datadogV2::model::OpsgenieServicesResponse>,
+        Error<ListOpsgenieServicesError>,
+    > {
         match self.list_opsgenie_services_with_http_info().await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -321,19 +353,26 @@ impl OpsgenieIntegrationAPI {
     /// Get a list of all services from the Datadog Opsgenie integration.
     pub async fn list_opsgenie_services_with_http_info(
         &self,
-    ) -> Result<ResponseContent<crate::datadogV2::model::OpsgenieServicesResponse>, Error<ListOpsgenieServicesError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::OpsgenieServicesResponse>,
+        Error<ListOpsgenieServicesError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/integration/opsgenie/services", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v2/integration/opsgenie/services",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -358,7 +397,8 @@ impl OpsgenieIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<ListOpsgenieServicesError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<ListOpsgenieServicesError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -372,7 +412,10 @@ impl OpsgenieIntegrationAPI {
     pub async fn update_opsgenie_service(
         &self,
         params: UpdateOpsgenieServiceParams,
-    ) -> Result<Option<crate::datadogV2::model::OpsgenieServiceResponse>, Error<UpdateOpsgenieServiceError>> {
+    ) -> Result<
+        Option<crate::datadogV2::model::OpsgenieServiceResponse>,
+        Error<UpdateOpsgenieServiceError>,
+    > {
         match self.update_opsgenie_service_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -383,8 +426,10 @@ impl OpsgenieIntegrationAPI {
     pub async fn update_opsgenie_service_with_http_info(
         &self,
         params: UpdateOpsgenieServiceParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::OpsgenieServiceResponse>, Error<UpdateOpsgenieServiceError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::OpsgenieServiceResponse>,
+        Error<UpdateOpsgenieServiceError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -398,10 +443,14 @@ impl OpsgenieIntegrationAPI {
             local_configuration.base_path,
             integration_service_id = urlencode(integration_service_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -429,7 +478,8 @@ impl OpsgenieIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<UpdateOpsgenieServiceError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<UpdateOpsgenieServiceError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,

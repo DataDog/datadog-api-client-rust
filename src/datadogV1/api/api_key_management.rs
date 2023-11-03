@@ -201,7 +201,8 @@ impl KeyManagementAPI {
     pub async fn create_api_key_with_http_info(
         &self,
         params: CreateAPIKeyParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::ApiKeyResponse>, Error<CreateAPIKeyError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::ApiKeyResponse>, Error<CreateAPIKeyError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -210,10 +211,14 @@ impl KeyManagementAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/api_key", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -255,7 +260,10 @@ impl KeyManagementAPI {
     pub async fn create_application_key(
         &self,
         params: CreateApplicationKeyParams,
-    ) -> Result<Option<crate::datadogV1::model::ApplicationKeyResponse>, Error<CreateApplicationKeyError>> {
+    ) -> Result<
+        Option<crate::datadogV1::model::ApplicationKeyResponse>,
+        Error<CreateApplicationKeyError>,
+    > {
         match self.create_application_key_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -266,8 +274,10 @@ impl KeyManagementAPI {
     pub async fn create_application_key_with_http_info(
         &self,
         params: CreateApplicationKeyParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::ApplicationKeyResponse>, Error<CreateApplicationKeyError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::ApplicationKeyResponse>,
+        Error<CreateApplicationKeyError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -276,10 +286,14 @@ impl KeyManagementAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/application_key", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -307,7 +321,8 @@ impl KeyManagementAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<CreateApplicationKeyError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CreateApplicationKeyError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -332,7 +347,8 @@ impl KeyManagementAPI {
     pub async fn delete_api_key_with_http_info(
         &self,
         params: DeleteAPIKeyParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::ApiKeyResponse>, Error<DeleteAPIKeyError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::ApiKeyResponse>, Error<DeleteAPIKeyError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -345,10 +361,14 @@ impl KeyManagementAPI {
             local_configuration.base_path,
             key = urlencode(key)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -387,7 +407,10 @@ impl KeyManagementAPI {
     pub async fn delete_application_key(
         &self,
         params: DeleteApplicationKeyParams,
-    ) -> Result<Option<crate::datadogV1::model::ApplicationKeyResponse>, Error<DeleteApplicationKeyError>> {
+    ) -> Result<
+        Option<crate::datadogV1::model::ApplicationKeyResponse>,
+        Error<DeleteApplicationKeyError>,
+    > {
         match self.delete_application_key_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -398,8 +421,10 @@ impl KeyManagementAPI {
     pub async fn delete_application_key_with_http_info(
         &self,
         params: DeleteApplicationKeyParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::ApplicationKeyResponse>, Error<DeleteApplicationKeyError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::ApplicationKeyResponse>,
+        Error<DeleteApplicationKeyError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -412,10 +437,14 @@ impl KeyManagementAPI {
             local_configuration.base_path,
             key = urlencode(key)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -440,7 +469,8 @@ impl KeyManagementAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<DeleteApplicationKeyError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<DeleteApplicationKeyError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -465,7 +495,8 @@ impl KeyManagementAPI {
     pub async fn get_api_key_with_http_info(
         &self,
         params: GetAPIKeyParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::ApiKeyResponse>, Error<GetAPIKeyError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::ApiKeyResponse>, Error<GetAPIKeyError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -478,10 +509,14 @@ impl KeyManagementAPI {
             local_configuration.base_path,
             key = urlencode(key)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -520,7 +555,10 @@ impl KeyManagementAPI {
     pub async fn get_application_key(
         &self,
         params: GetApplicationKeyParams,
-    ) -> Result<Option<crate::datadogV1::model::ApplicationKeyResponse>, Error<GetApplicationKeyError>> {
+    ) -> Result<
+        Option<crate::datadogV1::model::ApplicationKeyResponse>,
+        Error<GetApplicationKeyError>,
+    > {
         match self.get_application_key_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -531,7 +569,10 @@ impl KeyManagementAPI {
     pub async fn get_application_key_with_http_info(
         &self,
         params: GetApplicationKeyParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::ApplicationKeyResponse>, Error<GetApplicationKeyError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::ApplicationKeyResponse>,
+        Error<GetApplicationKeyError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -544,10 +585,14 @@ impl KeyManagementAPI {
             local_configuration.base_path,
             key = urlencode(key)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -572,7 +617,8 @@ impl KeyManagementAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<GetApplicationKeyError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetApplicationKeyError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -595,7 +641,8 @@ impl KeyManagementAPI {
     /// Get all API keys available for your account.
     pub async fn list_api_keys_with_http_info(
         &self,
-    ) -> Result<ResponseContent<crate::datadogV1::model::ApiKeyListResponse>, Error<ListAPIKeysError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::ApiKeyListResponse>, Error<ListAPIKeysError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -603,10 +650,12 @@ impl KeyManagementAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/api_key", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -644,7 +693,10 @@ impl KeyManagementAPI {
     /// Get all application keys available for your Datadog account.
     pub async fn list_application_keys(
         &self,
-    ) -> Result<Option<crate::datadogV1::model::ApplicationKeyListResponse>, Error<ListApplicationKeysError>> {
+    ) -> Result<
+        Option<crate::datadogV1::model::ApplicationKeyListResponse>,
+        Error<ListApplicationKeysError>,
+    > {
         match self.list_application_keys_with_http_info().await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -654,8 +706,10 @@ impl KeyManagementAPI {
     /// Get all application keys available for your Datadog account.
     pub async fn list_application_keys_with_http_info(
         &self,
-    ) -> Result<ResponseContent<crate::datadogV1::model::ApplicationKeyListResponse>, Error<ListApplicationKeysError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::ApplicationKeyListResponse>,
+        Error<ListApplicationKeysError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -663,10 +717,12 @@ impl KeyManagementAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/application_key", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -691,7 +747,8 @@ impl KeyManagementAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<ListApplicationKeysError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<ListApplicationKeysError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -716,7 +773,8 @@ impl KeyManagementAPI {
     pub async fn update_api_key_with_http_info(
         &self,
         params: UpdateAPIKeyParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::ApiKeyResponse>, Error<UpdateAPIKeyError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::ApiKeyResponse>, Error<UpdateAPIKeyError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -730,10 +788,14 @@ impl KeyManagementAPI {
             local_configuration.base_path,
             key = urlencode(key)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -775,7 +837,10 @@ impl KeyManagementAPI {
     pub async fn update_application_key(
         &self,
         params: UpdateApplicationKeyParams,
-    ) -> Result<Option<crate::datadogV1::model::ApplicationKeyResponse>, Error<UpdateApplicationKeyError>> {
+    ) -> Result<
+        Option<crate::datadogV1::model::ApplicationKeyResponse>,
+        Error<UpdateApplicationKeyError>,
+    > {
         match self.update_application_key_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -786,8 +851,10 @@ impl KeyManagementAPI {
     pub async fn update_application_key_with_http_info(
         &self,
         params: UpdateApplicationKeyParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::ApplicationKeyResponse>, Error<UpdateApplicationKeyError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::ApplicationKeyResponse>,
+        Error<UpdateApplicationKeyError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -801,10 +868,14 @@ impl KeyManagementAPI {
             local_configuration.base_path,
             key = urlencode(key)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -832,7 +903,8 @@ impl KeyManagementAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<UpdateApplicationKeyError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<UpdateApplicationKeyError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,

@@ -15,6 +15,8 @@ pub struct SpansMetricCreateRequest {
 
 impl SpansMetricCreateRequest {
     pub fn new(data: crate::datadogV2::model::SpansMetricCreateData) -> SpansMetricCreateRequest {
-        SpansMetricCreateRequest { data: Box::new(data) }
+        SpansMetricCreateRequest {
+            data: Box::new(data),
+        }
     }
 }

@@ -9,7 +9,11 @@ use serde_with::skip_serializing_none;
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct SLOStatus {
     /// Error message if SLO status or error budget could not be calculated.
-    #[serde(rename = "calculation_error", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "calculation_error",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub calculation_error: Option<Option<String>>,
     /// Remaining error budget of the SLO in percentage.
     #[serde(
@@ -28,12 +32,17 @@ pub struct SLOStatus {
         default,
         with = "::serde_with::rust::double_option"
     )]
-    pub raw_error_budget_remaining: Option<Option<Box<crate::datadogV1::model::SLORawErrorBudgetRemaining>>>,
+    pub raw_error_budget_remaining:
+        Option<Option<Box<crate::datadogV1::model::SLORawErrorBudgetRemaining>>>,
     /// The current service level indicator (SLI) of the SLO, also known as 'status'. This is a percentage value from 0-100 (inclusive).
     #[serde(rename = "sli", default, with = "::serde_with::rust::double_option")]
     pub sli: Option<Option<f64>>,
     /// The number of decimal places the SLI value is accurate to.
-    #[serde(rename = "span_precision", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "span_precision",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub span_precision: Option<Option<i64>>,
     /// State of the SLO.
     #[serde(rename = "state")]

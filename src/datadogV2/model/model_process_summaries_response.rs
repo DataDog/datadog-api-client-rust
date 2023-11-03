@@ -18,6 +18,9 @@ pub struct ProcessSummariesResponse {
 
 impl ProcessSummariesResponse {
     pub fn new() -> ProcessSummariesResponse {
-        ProcessSummariesResponse { data: None, meta: None }
+        ProcessSummariesResponse {
+            data: None,
+            meta: None,
+        }
     }
 }

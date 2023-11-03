@@ -12,7 +12,11 @@ pub struct UsageIoTHour {
     #[serde(rename = "hour")]
     pub hour: Option<String>,
     /// The total number of IoT devices during a given hour.
-    #[serde(rename = "iot_device_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "iot_device_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub iot_device_count: Option<Option<i64>>,
     /// The organization name.
     #[serde(rename = "org_name")]

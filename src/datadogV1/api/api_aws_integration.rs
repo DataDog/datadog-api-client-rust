@@ -241,7 +241,10 @@ impl AwsIntegrationAPI {
     pub async fn create_aws_account(
         &self,
         params: CreateAWSAccountParams,
-    ) -> Result<Option<crate::datadogV1::model::AWSAccountCreateResponse>, Error<CreateAWSAccountError>> {
+    ) -> Result<
+        Option<crate::datadogV1::model::AWSAccountCreateResponse>,
+        Error<CreateAWSAccountError>,
+    > {
         match self.create_aws_account_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -255,7 +258,10 @@ impl AwsIntegrationAPI {
     pub async fn create_aws_account_with_http_info(
         &self,
         params: CreateAWSAccountParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::AWSAccountCreateResponse>, Error<CreateAWSAccountError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::AWSAccountCreateResponse>,
+        Error<CreateAWSAccountError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -264,10 +270,14 @@ impl AwsIntegrationAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/integration/aws", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -295,7 +305,8 @@ impl AwsIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<CreateAWSAccountError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CreateAWSAccountError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -309,9 +320,14 @@ impl AwsIntegrationAPI {
     pub async fn create_aws_event_bridge_source(
         &self,
         params: CreateAWSEventBridgeSourceParams,
-    ) -> Result<Option<crate::datadogV1::model::AWSEventBridgeCreateResponse>, Error<CreateAWSEventBridgeSourceError>>
-    {
-        match self.create_aws_event_bridge_source_with_http_info(params).await {
+    ) -> Result<
+        Option<crate::datadogV1::model::AWSEventBridgeCreateResponse>,
+        Error<CreateAWSEventBridgeSourceError>,
+    > {
+        match self
+            .create_aws_event_bridge_source_with_http_info(params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -332,11 +348,18 @@ impl AwsIntegrationAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/integration/aws/event_bridge", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v1/integration/aws/event_bridge",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -364,7 +387,8 @@ impl AwsIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<CreateAWSEventBridgeSourceError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CreateAWSEventBridgeSourceError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -378,7 +402,10 @@ impl AwsIntegrationAPI {
     pub async fn create_aws_tag_filter(
         &self,
         params: CreateAWSTagFilterParams,
-    ) -> Result<Option<std::collections::HashMap<String, serde_json::Value>>, Error<CreateAWSTagFilterError>> {
+    ) -> Result<
+        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Error<CreateAWSTagFilterError>,
+    > {
         match self.create_aws_tag_filter_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -389,8 +416,10 @@ impl AwsIntegrationAPI {
     pub async fn create_aws_tag_filter_with_http_info(
         &self,
         params: CreateAWSTagFilterParams,
-    ) -> Result<ResponseContent<std::collections::HashMap<String, serde_json::Value>>, Error<CreateAWSTagFilterError>>
-    {
+    ) -> Result<
+        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        Error<CreateAWSTagFilterError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -398,11 +427,18 @@ impl AwsIntegrationAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/integration/aws/filtering", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v1/integration/aws/filtering",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -430,7 +466,8 @@ impl AwsIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<CreateAWSTagFilterError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CreateAWSTagFilterError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -444,7 +481,10 @@ impl AwsIntegrationAPI {
     pub async fn create_new_aws_external_id(
         &self,
         params: CreateNewAWSExternalIDParams,
-    ) -> Result<Option<crate::datadogV1::model::AWSAccountCreateResponse>, Error<CreateNewAWSExternalIDError>> {
+    ) -> Result<
+        Option<crate::datadogV1::model::AWSAccountCreateResponse>,
+        Error<CreateNewAWSExternalIDError>,
+    > {
         match self.create_new_aws_external_id_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -455,8 +495,10 @@ impl AwsIntegrationAPI {
     pub async fn create_new_aws_external_id_with_http_info(
         &self,
         params: CreateNewAWSExternalIDParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::AWSAccountCreateResponse>, Error<CreateNewAWSExternalIDError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::AWSAccountCreateResponse>,
+        Error<CreateNewAWSExternalIDError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -468,10 +510,14 @@ impl AwsIntegrationAPI {
             "{}/api/v1/integration/aws/generate_new_external_id",
             local_configuration.base_path
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -499,7 +545,8 @@ impl AwsIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<CreateNewAWSExternalIDError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CreateNewAWSExternalIDError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -513,7 +560,10 @@ impl AwsIntegrationAPI {
     pub async fn delete_aws_account(
         &self,
         params: DeleteAWSAccountParams,
-    ) -> Result<Option<std::collections::HashMap<String, serde_json::Value>>, Error<DeleteAWSAccountError>> {
+    ) -> Result<
+        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Error<DeleteAWSAccountError>,
+    > {
         match self.delete_aws_account_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -524,8 +574,10 @@ impl AwsIntegrationAPI {
     pub async fn delete_aws_account_with_http_info(
         &self,
         params: DeleteAWSAccountParams,
-    ) -> Result<ResponseContent<std::collections::HashMap<String, serde_json::Value>>, Error<DeleteAWSAccountError>>
-    {
+    ) -> Result<
+        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        Error<DeleteAWSAccountError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -534,10 +586,14 @@ impl AwsIntegrationAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/integration/aws", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -565,7 +621,8 @@ impl AwsIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<DeleteAWSAccountError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<DeleteAWSAccountError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -579,9 +636,14 @@ impl AwsIntegrationAPI {
     pub async fn delete_aws_event_bridge_source(
         &self,
         params: DeleteAWSEventBridgeSourceParams,
-    ) -> Result<Option<crate::datadogV1::model::AWSEventBridgeDeleteResponse>, Error<DeleteAWSEventBridgeSourceError>>
-    {
-        match self.delete_aws_event_bridge_source_with_http_info(params).await {
+    ) -> Result<
+        Option<crate::datadogV1::model::AWSEventBridgeDeleteResponse>,
+        Error<DeleteAWSEventBridgeSourceError>,
+    > {
+        match self
+            .delete_aws_event_bridge_source_with_http_info(params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -602,11 +664,18 @@ impl AwsIntegrationAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/integration/aws/event_bridge", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v1/integration/aws/event_bridge",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -634,7 +703,8 @@ impl AwsIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<DeleteAWSEventBridgeSourceError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<DeleteAWSEventBridgeSourceError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -648,7 +718,10 @@ impl AwsIntegrationAPI {
     pub async fn delete_aws_tag_filter(
         &self,
         params: DeleteAWSTagFilterParams,
-    ) -> Result<Option<std::collections::HashMap<String, serde_json::Value>>, Error<DeleteAWSTagFilterError>> {
+    ) -> Result<
+        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Error<DeleteAWSTagFilterError>,
+    > {
         match self.delete_aws_tag_filter_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -659,8 +732,10 @@ impl AwsIntegrationAPI {
     pub async fn delete_aws_tag_filter_with_http_info(
         &self,
         params: DeleteAWSTagFilterParams,
-    ) -> Result<ResponseContent<std::collections::HashMap<String, serde_json::Value>>, Error<DeleteAWSTagFilterError>>
-    {
+    ) -> Result<
+        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        Error<DeleteAWSTagFilterError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -668,11 +743,18 @@ impl AwsIntegrationAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/integration/aws/filtering", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v1/integration/aws/filtering",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -700,7 +782,8 @@ impl AwsIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<DeleteAWSTagFilterError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<DeleteAWSTagFilterError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -714,7 +797,8 @@ impl AwsIntegrationAPI {
     pub async fn list_aws_accounts(
         &self,
         params: ListAWSAccountsParams,
-    ) -> Result<Option<crate::datadogV1::model::AWSAccountListResponse>, Error<ListAWSAccountsError>> {
+    ) -> Result<Option<crate::datadogV1::model::AWSAccountListResponse>, Error<ListAWSAccountsError>>
+    {
         match self.list_aws_accounts_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -725,7 +809,10 @@ impl AwsIntegrationAPI {
     pub async fn list_aws_accounts_with_http_info(
         &self,
         params: ListAWSAccountsParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::AWSAccountListResponse>, Error<ListAWSAccountsError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::AWSAccountListResponse>,
+        Error<ListAWSAccountsError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -736,10 +823,24 @@ impl AwsIntegrationAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/integration/aws", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        if let Some(ref local_str) = account_id {
+            local_req_builder = local_req_builder.query(&[("account_id", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = role_name {
+            local_req_builder = local_req_builder.query(&[("role_name", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = access_key_id {
+            local_req_builder =
+                local_req_builder.query(&[("access_key_id", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -764,7 +865,8 @@ impl AwsIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<ListAWSAccountsError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<ListAWSAccountsError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -777,8 +879,10 @@ impl AwsIntegrationAPI {
     /// Get all Amazon EventBridge sources.
     pub async fn list_aws_event_bridge_sources(
         &self,
-    ) -> Result<Option<crate::datadogV1::model::AWSEventBridgeListResponse>, Error<ListAWSEventBridgeSourcesError>>
-    {
+    ) -> Result<
+        Option<crate::datadogV1::model::AWSEventBridgeListResponse>,
+        Error<ListAWSEventBridgeSourcesError>,
+    > {
         match self.list_aws_event_bridge_sources_with_http_info().await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -798,11 +902,16 @@ impl AwsIntegrationAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/integration/aws/event_bridge", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v1/integration/aws/event_bridge",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -827,7 +936,8 @@ impl AwsIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<ListAWSEventBridgeSourcesError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<ListAWSEventBridgeSourcesError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -841,7 +951,10 @@ impl AwsIntegrationAPI {
     pub async fn list_aws_tag_filters(
         &self,
         params: ListAWSTagFiltersParams,
-    ) -> Result<Option<crate::datadogV1::model::AWSTagFilterListResponse>, Error<ListAWSTagFiltersError>> {
+    ) -> Result<
+        Option<crate::datadogV1::model::AWSTagFilterListResponse>,
+        Error<ListAWSTagFiltersError>,
+    > {
         match self.list_aws_tag_filters_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -852,7 +965,10 @@ impl AwsIntegrationAPI {
     pub async fn list_aws_tag_filters_with_http_info(
         &self,
         params: ListAWSTagFiltersParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::AWSTagFilterListResponse>, Error<ListAWSTagFiltersError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::AWSTagFilterListResponse>,
+        Error<ListAWSTagFiltersError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -860,11 +976,19 @@ impl AwsIntegrationAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/integration/aws/filtering", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v1/integration/aws/filtering",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        local_req_builder = local_req_builder.query(&[("account_id", &account_id.to_string())]);
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -889,7 +1013,8 @@ impl AwsIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<ListAWSTagFiltersError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<ListAWSTagFiltersError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -923,10 +1048,12 @@ impl AwsIntegrationAPI {
             "{}/api/v1/integration/aws/available_namespace_rules",
             local_configuration.base_path
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -950,7 +1077,8 @@ impl AwsIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<ListAvailableAWSNamespacesError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<ListAvailableAWSNamespacesError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -964,7 +1092,10 @@ impl AwsIntegrationAPI {
     pub async fn update_aws_account(
         &self,
         params: UpdateAWSAccountParams,
-    ) -> Result<Option<std::collections::HashMap<String, serde_json::Value>>, Error<UpdateAWSAccountError>> {
+    ) -> Result<
+        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Error<UpdateAWSAccountError>,
+    > {
         match self.update_aws_account_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -975,8 +1106,10 @@ impl AwsIntegrationAPI {
     pub async fn update_aws_account_with_http_info(
         &self,
         params: UpdateAWSAccountParams,
-    ) -> Result<ResponseContent<std::collections::HashMap<String, serde_json::Value>>, Error<UpdateAWSAccountError>>
-    {
+    ) -> Result<
+        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        Error<UpdateAWSAccountError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -988,10 +1121,24 @@ impl AwsIntegrationAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/integration/aws", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build parameters
+        if let Some(ref local_str) = account_id {
+            local_req_builder = local_req_builder.query(&[("account_id", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = role_name {
+            local_req_builder = local_req_builder.query(&[("role_name", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = access_key_id {
+            local_req_builder =
+                local_req_builder.query(&[("access_key_id", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1019,7 +1166,8 @@ impl AwsIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<UpdateAWSAccountError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<UpdateAWSAccountError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,

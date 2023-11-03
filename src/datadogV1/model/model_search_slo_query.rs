@@ -15,7 +15,11 @@ pub struct SearchSLOQuery {
     pub denominator: Option<String>,
     /// Metric names used in the query's numerator and denominator.
     /// This field will return null and will be implemented in the next version of this endpoint.
-    #[serde(rename = "metrics", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "metrics",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub metrics: Option<Option<Vec<String>>>,
     /// A Datadog metric query for good events.
     #[serde(rename = "numerator")]

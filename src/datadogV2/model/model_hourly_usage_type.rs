@@ -17,8 +17,12 @@ impl ToString for HourlyUsageType {
     fn to_string(&self) -> String {
         match self {
             Self::APP_SEC_HOST_COUNT => String::from("app_sec_host_count"),
-            Self::OBSERVABILITY_PIPELINES_BYTES_PROCESSSED => String::from("observability_pipelines_bytes_processed"),
-            Self::LAMBDA_TRACED_INVOCATIONS_COUNT => String::from("lambda_traced_invocations_count"),
+            Self::OBSERVABILITY_PIPELINES_BYTES_PROCESSSED => {
+                String::from("observability_pipelines_bytes_processed")
+            }
+            Self::LAMBDA_TRACED_INVOCATIONS_COUNT => {
+                String::from("lambda_traced_invocations_count")
+            }
         }
     }
 }

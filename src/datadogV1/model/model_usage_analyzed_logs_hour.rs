@@ -9,7 +9,11 @@ use serde_with::skip_serializing_none;
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct UsageAnalyzedLogsHour {
     /// Contains the number of analyzed logs.
-    #[serde(rename = "analyzed_logs", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "analyzed_logs",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub analyzed_logs: Option<Option<i64>>,
     /// The hour for the usage.
     #[serde(rename = "hour")]

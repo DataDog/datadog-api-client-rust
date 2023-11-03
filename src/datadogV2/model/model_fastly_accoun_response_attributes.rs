@@ -18,6 +18,9 @@ pub struct FastlyAccounResponseAttributes {
 
 impl FastlyAccounResponseAttributes {
     pub fn new(name: String) -> FastlyAccounResponseAttributes {
-        FastlyAccounResponseAttributes { name, services: None }
+        FastlyAccounResponseAttributes {
+            name,
+            services: None,
+        }
     }
 }

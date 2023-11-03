@@ -22,7 +22,8 @@ pub struct CloudWorkloadSecurityAgentRuleAttributes {
     pub creation_date: Option<i64>,
     /// The attributes of the user who created the Agent rule.
     #[serde(rename = "creator")]
-    pub creator: Option<Box<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreatorAttributes>>,
+    pub creator:
+        Option<Box<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreatorAttributes>>,
     /// Whether the rule is included by default.
     #[serde(rename = "defaultRule")]
     pub default_rule: Option<bool>,
@@ -49,7 +50,8 @@ pub struct CloudWorkloadSecurityAgentRuleAttributes {
     pub updated_at: Option<i64>,
     /// The attributes of the user who last updated the Agent rule.
     #[serde(rename = "updater")]
-    pub updater: Option<Box<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleUpdaterAttributes>>,
+    pub updater:
+        Option<Box<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleUpdaterAttributes>>,
     /// The version of the Agent rule.
     #[serde(rename = "version")]
     pub version: Option<i64>,

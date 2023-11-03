@@ -15,6 +15,8 @@ pub struct MuteFindingRequest {
 
 impl MuteFindingRequest {
     pub fn new(data: crate::datadogV2::model::MuteFindingRequestData) -> MuteFindingRequest {
-        MuteFindingRequest { data: Box::new(data) }
+        MuteFindingRequest {
+            data: Box::new(data),
+        }
     }
 }

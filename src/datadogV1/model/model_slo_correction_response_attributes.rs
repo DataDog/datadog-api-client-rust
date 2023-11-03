@@ -12,7 +12,11 @@ pub struct SLOCorrectionResponseAttributes {
     #[serde(rename = "category")]
     pub category: Option<crate::datadogV1::model::SLOCorrectionCategory>,
     /// The epoch timestamp of when the correction was created at.
-    #[serde(rename = "created_at", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "created_at",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub created_at: Option<Option<i64>>,
     /// Object describing the creator of the shared element.
     #[serde(rename = "creator")]
@@ -21,17 +25,30 @@ pub struct SLOCorrectionResponseAttributes {
     #[serde(rename = "description")]
     pub description: Option<String>,
     /// Length of time (in seconds) for a specified `rrule` recurring SLO correction.
-    #[serde(rename = "duration", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "duration",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub duration: Option<Option<i64>>,
     /// Ending time of the correction in epoch seconds.
     #[serde(rename = "end", default, with = "::serde_with::rust::double_option")]
     pub end: Option<Option<i64>>,
     /// The epoch timestamp of when the correction was modified at.
-    #[serde(rename = "modified_at", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "modified_at",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub modified_at: Option<Option<i64>>,
     /// Modifier of the object.
-    #[serde(rename = "modifier", default, with = "::serde_with::rust::double_option")]
-    pub modifier: Option<Option<Box<crate::datadogV1::model::SLOCorrectionResponseAttributesModifier>>>,
+    #[serde(
+        rename = "modifier",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub modifier:
+        Option<Option<Box<crate::datadogV1::model::SLOCorrectionResponseAttributesModifier>>>,
     /// The recurrence rules as defined in the iCalendar RFC 5545. The supported rules for SLO corrections
     /// are `FREQ`, `INTERVAL`, `COUNT`, and `UNTIL`.
     #[serde(rename = "rrule", default, with = "::serde_with::rust::double_option")]

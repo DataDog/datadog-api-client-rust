@@ -113,7 +113,8 @@ impl LogsMetricsAPI {
     pub async fn create_logs_metric(
         &self,
         params: CreateLogsMetricParams,
-    ) -> Result<Option<crate::datadogV2::model::LogsMetricResponse>, Error<CreateLogsMetricError>> {
+    ) -> Result<Option<crate::datadogV2::model::LogsMetricResponse>, Error<CreateLogsMetricError>>
+    {
         match self.create_logs_metric_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -125,7 +126,10 @@ impl LogsMetricsAPI {
     pub async fn create_logs_metric_with_http_info(
         &self,
         params: CreateLogsMetricParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::LogsMetricResponse>, Error<CreateLogsMetricError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::LogsMetricResponse>,
+        Error<CreateLogsMetricError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -133,11 +137,18 @@ impl LogsMetricsAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/logs/config/metrics", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v2/logs/config/metrics",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -165,7 +176,8 @@ impl LogsMetricsAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<CreateLogsMetricError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CreateLogsMetricError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -203,10 +215,14 @@ impl LogsMetricsAPI {
             local_configuration.base_path,
             metric_id = urlencode(metric_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -229,7 +245,8 @@ impl LogsMetricsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteLogsMetricError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<DeleteLogsMetricError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -243,7 +260,8 @@ impl LogsMetricsAPI {
     pub async fn get_logs_metric(
         &self,
         params: GetLogsMetricParams,
-    ) -> Result<Option<crate::datadogV2::model::LogsMetricResponse>, Error<GetLogsMetricError>> {
+    ) -> Result<Option<crate::datadogV2::model::LogsMetricResponse>, Error<GetLogsMetricError>>
+    {
         match self.get_logs_metric_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -254,7 +272,10 @@ impl LogsMetricsAPI {
     pub async fn get_logs_metric_with_http_info(
         &self,
         params: GetLogsMetricParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::LogsMetricResponse>, Error<GetLogsMetricError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::LogsMetricResponse>,
+        Error<GetLogsMetricError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -267,10 +288,14 @@ impl LogsMetricsAPI {
             local_configuration.base_path,
             metric_id = urlencode(metric_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -295,7 +320,8 @@ impl LogsMetricsAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<GetLogsMetricError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetLogsMetricError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -308,7 +334,8 @@ impl LogsMetricsAPI {
     /// Get the list of configured log-based metrics with their definitions.
     pub async fn list_logs_metrics(
         &self,
-    ) -> Result<Option<crate::datadogV2::model::LogsMetricsResponse>, Error<ListLogsMetricsError>> {
+    ) -> Result<Option<crate::datadogV2::model::LogsMetricsResponse>, Error<ListLogsMetricsError>>
+    {
         match self.list_logs_metrics_with_http_info().await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -318,18 +345,26 @@ impl LogsMetricsAPI {
     /// Get the list of configured log-based metrics with their definitions.
     pub async fn list_logs_metrics_with_http_info(
         &self,
-    ) -> Result<ResponseContent<crate::datadogV2::model::LogsMetricsResponse>, Error<ListLogsMetricsError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::LogsMetricsResponse>,
+        Error<ListLogsMetricsError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/logs/config/metrics", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v2/logs/config/metrics",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -354,7 +389,8 @@ impl LogsMetricsAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<ListLogsMetricsError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<ListLogsMetricsError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -369,7 +405,8 @@ impl LogsMetricsAPI {
     pub async fn update_logs_metric(
         &self,
         params: UpdateLogsMetricParams,
-    ) -> Result<Option<crate::datadogV2::model::LogsMetricResponse>, Error<UpdateLogsMetricError>> {
+    ) -> Result<Option<crate::datadogV2::model::LogsMetricResponse>, Error<UpdateLogsMetricError>>
+    {
         match self.update_logs_metric_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -381,7 +418,10 @@ impl LogsMetricsAPI {
     pub async fn update_logs_metric_with_http_info(
         &self,
         params: UpdateLogsMetricParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::LogsMetricResponse>, Error<UpdateLogsMetricError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::LogsMetricResponse>,
+        Error<UpdateLogsMetricError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -395,10 +435,14 @@ impl LogsMetricsAPI {
             local_configuration.base_path,
             metric_id = urlencode(metric_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -426,7 +470,8 @@ impl LogsMetricsAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<UpdateLogsMetricError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<UpdateLogsMetricError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,

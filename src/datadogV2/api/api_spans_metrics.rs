@@ -113,7 +113,8 @@ impl SpansMetricsAPI {
     pub async fn create_spans_metric(
         &self,
         params: CreateSpansMetricParams,
-    ) -> Result<Option<crate::datadogV2::model::SpansMetricResponse>, Error<CreateSpansMetricError>> {
+    ) -> Result<Option<crate::datadogV2::model::SpansMetricResponse>, Error<CreateSpansMetricError>>
+    {
         match self.create_spans_metric_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -125,7 +126,10 @@ impl SpansMetricsAPI {
     pub async fn create_spans_metric_with_http_info(
         &self,
         params: CreateSpansMetricParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::SpansMetricResponse>, Error<CreateSpansMetricError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::SpansMetricResponse>,
+        Error<CreateSpansMetricError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -133,11 +137,18 @@ impl SpansMetricsAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/apm/config/metrics", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v2/apm/config/metrics",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -165,7 +176,8 @@ impl SpansMetricsAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<CreateSpansMetricError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CreateSpansMetricError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -203,10 +215,14 @@ impl SpansMetricsAPI {
             local_configuration.base_path,
             metric_id = urlencode(metric_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -229,7 +245,8 @@ impl SpansMetricsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteSpansMetricError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<DeleteSpansMetricError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -243,7 +260,8 @@ impl SpansMetricsAPI {
     pub async fn get_spans_metric(
         &self,
         params: GetSpansMetricParams,
-    ) -> Result<Option<crate::datadogV2::model::SpansMetricResponse>, Error<GetSpansMetricError>> {
+    ) -> Result<Option<crate::datadogV2::model::SpansMetricResponse>, Error<GetSpansMetricError>>
+    {
         match self.get_spans_metric_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -254,7 +272,10 @@ impl SpansMetricsAPI {
     pub async fn get_spans_metric_with_http_info(
         &self,
         params: GetSpansMetricParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::SpansMetricResponse>, Error<GetSpansMetricError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::SpansMetricResponse>,
+        Error<GetSpansMetricError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -267,10 +288,14 @@ impl SpansMetricsAPI {
             local_configuration.base_path,
             metric_id = urlencode(metric_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -295,7 +320,8 @@ impl SpansMetricsAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<GetSpansMetricError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetSpansMetricError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -308,7 +334,8 @@ impl SpansMetricsAPI {
     /// Get the list of configured span-based metrics with their definitions.
     pub async fn list_spans_metrics(
         &self,
-    ) -> Result<Option<crate::datadogV2::model::SpansMetricsResponse>, Error<ListSpansMetricsError>> {
+    ) -> Result<Option<crate::datadogV2::model::SpansMetricsResponse>, Error<ListSpansMetricsError>>
+    {
         match self.list_spans_metrics_with_http_info().await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -318,18 +345,26 @@ impl SpansMetricsAPI {
     /// Get the list of configured span-based metrics with their definitions.
     pub async fn list_spans_metrics_with_http_info(
         &self,
-    ) -> Result<ResponseContent<crate::datadogV2::model::SpansMetricsResponse>, Error<ListSpansMetricsError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::SpansMetricsResponse>,
+        Error<ListSpansMetricsError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/apm/config/metrics", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v2/apm/config/metrics",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -354,7 +389,8 @@ impl SpansMetricsAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<ListSpansMetricsError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<ListSpansMetricsError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -369,7 +405,8 @@ impl SpansMetricsAPI {
     pub async fn update_spans_metric(
         &self,
         params: UpdateSpansMetricParams,
-    ) -> Result<Option<crate::datadogV2::model::SpansMetricResponse>, Error<UpdateSpansMetricError>> {
+    ) -> Result<Option<crate::datadogV2::model::SpansMetricResponse>, Error<UpdateSpansMetricError>>
+    {
         match self.update_spans_metric_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -381,7 +418,10 @@ impl SpansMetricsAPI {
     pub async fn update_spans_metric_with_http_info(
         &self,
         params: UpdateSpansMetricParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::SpansMetricResponse>, Error<UpdateSpansMetricError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::SpansMetricResponse>,
+        Error<UpdateSpansMetricError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -395,10 +435,14 @@ impl SpansMetricsAPI {
             local_configuration.base_path,
             metric_id = urlencode(metric_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -426,7 +470,8 @@ impl SpansMetricsAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<UpdateSpansMetricError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<UpdateSpansMetricError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,

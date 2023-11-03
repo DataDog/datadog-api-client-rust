@@ -17,8 +17,12 @@ impl ToString for RetentionFilterAllType {
     fn to_string(&self) -> String {
         match self {
             Self::SPANS_SAMPLING_PROCESSOR => String::from("spans-sampling-processor"),
-            Self::SPANS_ERRORS_SAMPLING_PROCESSOR => String::from("spans-errors-sampling-processor"),
-            Self::SPANS_APPSEC_SAMPLING_PROCESSOR => String::from("spans-appsec-sampling-processor"),
+            Self::SPANS_ERRORS_SAMPLING_PROCESSOR => {
+                String::from("spans-errors-sampling-processor")
+            }
+            Self::SPANS_APPSEC_SAMPLING_PROCESSOR => {
+                String::from("spans-appsec-sampling-processor")
+            }
         }
     }
 }

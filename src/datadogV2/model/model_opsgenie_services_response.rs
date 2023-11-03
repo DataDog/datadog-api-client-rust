@@ -14,7 +14,9 @@ pub struct OpsgenieServicesResponse {
 }
 
 impl OpsgenieServicesResponse {
-    pub fn new(data: Vec<crate::datadogV2::model::OpsgenieServiceResponseData>) -> OpsgenieServicesResponse {
+    pub fn new(
+        data: Vec<crate::datadogV2::model::OpsgenieServiceResponseData>,
+    ) -> OpsgenieServicesResponse {
         OpsgenieServicesResponse { data }
     }
 }

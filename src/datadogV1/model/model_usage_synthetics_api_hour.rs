@@ -9,7 +9,11 @@ use serde_with::skip_serializing_none;
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct UsageSyntheticsAPIHour {
     /// Contains the number of Synthetics API tests run.
-    #[serde(rename = "check_calls_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "check_calls_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub check_calls_count: Option<Option<i64>>,
     /// The hour for the usage.
     #[serde(rename = "hour")]

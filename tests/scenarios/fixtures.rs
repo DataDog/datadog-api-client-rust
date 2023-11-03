@@ -1,4 +1,6 @@
-use crate::scenarios::function_mappings::{collect_function_calls, initialize_api_instance, ApiInstances};
+use crate::scenarios::function_mappings::{
+    collect_function_calls, initialize_api_instance, ApiInstances,
+};
 use chrono::DateTime;
 use cucumber::{
     event::ScenarioFinished,
@@ -52,8 +54,14 @@ pub struct DatadogWorld {
     undo_operations: Vec<UndoOperation>,
 }
 
-pub async fn before_scenario(feature: &Feature, _rule: Option<&Rule>, scenario: &Scenario, world: &mut DatadogWorld) {
-    let api_version_re = Regex::new(r"tests/scenarios/features/v(\d+)/").expect("api version regex failed");
+pub async fn before_scenario(
+    feature: &Feature,
+    _rule: Option<&Rule>,
+    scenario: &Scenario,
+    world: &mut DatadogWorld,
+) {
+    let api_version_re =
+        Regex::new(r"tests/scenarios/features/v(\d+)/").expect("api version regex failed");
     // TODO: refactor this lol
     world.api_version = api_version_re
         .captures(feature.path.as_ref().unwrap().to_str().unwrap())
@@ -65,15 +73,25 @@ pub async fn before_scenario(feature: &Feature, _rule: Option<&Rule>, scenario: 
         .unwrap();
 
     collect_function_calls(world);
-    let given_file = File::open(format!("tests/scenarios/features/v{}/given.json", world.api_version))
-        .expect("failed to open given.json file");
-    world.given_map = serde_json::from_reader(BufReader::new(given_file)).expect("failed to deserialize given.json");
-    let undo_file = File::open(format!("tests/scenarios/features/v{}/undo.json", world.api_version))
-        .expect("failed to open undo.json file");
-    world.undo_map = serde_json::from_reader(BufReader::new(undo_file)).expect("failed to deserialize undo.json");
+    let given_file = File::open(format!(
+        "tests/scenarios/features/v{}/given.json",
+        world.api_version
+    ))
+    .expect("failed to open given.json file");
+    world.given_map = serde_json::from_reader(BufReader::new(given_file))
+        .expect("failed to deserialize given.json");
+    let undo_file = File::open(format!(
+        "tests/scenarios/features/v{}/undo.json",
+        world.api_version
+    ))
+    .expect("failed to open undo.json file");
+    world.undo_map = serde_json::from_reader(BufReader::new(undo_file))
+        .expect("failed to deserialize undo.json");
 
     let non_alnum_re = Regex::new(r"[^A-Za-z0-9]+").expect("non alnum regex failed");
-    let escaped_filename = non_alnum_re.replace_all(scenario.name.as_str(), "-").to_string();
+    let escaped_filename = non_alnum_re
+        .replace_all(scenario.name.as_str(), "-")
+        .to_string();
     let filename = match escaped_filename.len() > 100 {
         true => escaped_filename[..100].to_string(),
         false => escaped_filename,
@@ -129,11 +147,14 @@ pub async fn before_scenario(feature: &Feature, _rule: Option<&Rule>, scenario: 
             panic!("sdk's shouldn't be recording, that's the spec repo's job.");
         }
         _ => {
-            frozen_time =
-                DateTime::parse_from_rfc3339(read_to_string(freeze).expect("Failed to read freeze file").as_str())
-                    .expect("Failed to parse freeze file time")
-                    .signed_duration_since(DateTime::UNIX_EPOCH)
-                    .num_seconds() as u64;
+            frozen_time = DateTime::parse_from_rfc3339(
+                read_to_string(freeze)
+                    .expect("Failed to read freeze file")
+                    .as_str(),
+            )
+            .expect("Failed to parse freeze file time")
+            .signed_duration_since(DateTime::UNIX_EPOCH)
+            .num_seconds() as u64;
             debug!("{}", frozen_time);
             let middleware: VCRMiddleware = VCRMiddleware::try_from(cassette)
                 .expect("Failed to initialize rVCR middleware")
@@ -157,7 +178,9 @@ pub async fn before_scenario(feature: &Feature, _rule: Option<&Rule>, scenario: 
     config.app_key_auth = Some("0000000000000000000000000000000000000000".to_string());
     world.config = config;
 
-    let escaped_name = non_alnum_re.replace_all(scenario.name.as_str(), "_").to_string();
+    let escaped_name = non_alnum_re
+        .replace_all(scenario.name.as_str(), "_")
+        .to_string();
     let name = match escaped_name.len() > 100 {
         true => escaped_name[..100].to_string(),
         false => escaped_name,
@@ -223,20 +246,27 @@ fn given_resource_in_system(world: &mut DatadogWorld, given_key: String) {
         for param in params.as_array().unwrap() {
             let param_name = param.get("name").unwrap().as_str().unwrap().to_string();
             if let Some(source) = param.get("source") {
-                if let Some(value) = lookup(&source.as_str().unwrap().to_string(), &world.fixtures) {
+                if let Some(value) = lookup(&source.as_str().unwrap().to_string(), &world.fixtures)
+                {
                     given_parameters.insert(param_name.clone(), value);
                 }
             };
             if let Some(template_value) = param.get("value") {
                 let mut rendered = template(template_value.to_string(), &world.fixtures);
                 rendered = serde_json::from_str(rendered.as_str()).unwrap();
-                given_parameters.insert(param_name.clone(), serde_json::from_str(rendered.as_str()).unwrap());
+                given_parameters.insert(
+                    param_name.clone(),
+                    serde_json::from_str(rendered.as_str()).unwrap(),
+                );
             };
         }
     }
 
     if let Some(tag) = given.get("tag") {
-        let mut api_name = tag.as_str().expect("failed to parse given tag as str").to_string();
+        let mut api_name = tag
+            .as_str()
+            .expect("failed to parse given tag as str")
+            .to_string();
         api_name.retain(|c| !c.is_whitespace());
         initialize_api_instance(world, api_name);
     }
@@ -283,7 +313,11 @@ fn body_with_value(world: &mut DatadogWorld, body: String) {
 
 #[given(regex = r"^body from file (.*)$")]
 fn body_from_file(world: &mut DatadogWorld, path: String) {
-    let body = read_to_string(format!("tests/scenarios/features/v{}/{}", world.api_version, path)).unwrap();
+    let body = read_to_string(format!(
+        "tests/scenarios/features/v{}/{}",
+        world.api_version, path
+    ))
+    .unwrap();
     let rendered = template(body, &world.fixtures);
     let body_struct = serde_json::from_str(rendered.as_str()).unwrap();
     world.parameters.insert("body".to_string(), body_struct);
@@ -331,15 +365,24 @@ fn response_equal_to(world: &mut DatadogWorld, path: String, value: String) {
 
 #[then(expr = "the response {string} has length {int}")]
 fn response_has_length(world: &mut DatadogWorld, path: String, expected_len: usize) {
-    let len = lookup(&path, &world.response.object).unwrap().as_array().unwrap().len();
+    let len = lookup(&path, &world.response.object)
+        .unwrap()
+        .as_array()
+        .unwrap()
+        .len();
     assert_eq!(len, expected_len);
 }
 
 fn lookup(path: &String, object: &Value) -> Option<Value> {
     let index_re = Regex::new(r"\[(\d+)\]+").expect("index regex failed");
     let mut json_pointer = format!("/{}", path).replace('.', "/");
-    for (_, [idx]) in index_re.captures_iter(&json_pointer.clone()).map(|c| c.extract()) {
-        json_pointer = index_re.replace(&json_pointer, format!("/{idx}")).to_string();
+    for (_, [idx]) in index_re
+        .captures_iter(&json_pointer.clone())
+        .map(|c| c.extract())
+    {
+        json_pointer = index_re
+            .replace(&json_pointer, format!("/{idx}"))
+            .to_string();
     }
     return object.pointer(&json_pointer).cloned();
 }
@@ -350,19 +393,35 @@ fn template(string: String, fixtures: &Value) -> String {
         .expect("failed to apply template")
 }
 
-fn build_undo(world: &mut DatadogWorld, operation_id: &String) -> Result<Option<UndoOperation>, Value> {
-    let undo = world.undo_map.get(operation_id).unwrap().get("undo").unwrap();
+fn build_undo(
+    world: &mut DatadogWorld,
+    operation_id: &String,
+) -> Result<Option<UndoOperation>, Value> {
+    let undo = world
+        .undo_map
+        .get(operation_id)
+        .unwrap()
+        .get("undo")
+        .unwrap();
     match undo.get("type").unwrap().as_str() {
         Some("unsafe") => {
             let mut undo_operation = UndoOperation {
-                operation_id: undo.get("operationId").unwrap().as_str().unwrap().to_string(),
+                operation_id: undo
+                    .get("operationId")
+                    .unwrap()
+                    .as_str()
+                    .unwrap()
+                    .to_string(),
                 parameters: HashMap::new(),
             };
             let params = undo.get("parameters").unwrap().as_array().unwrap();
             for param in params {
                 let param_name = param.get("name").unwrap().as_str().unwrap().to_string();
                 if let Some(source) = param.get("source") {
-                    if let Some(value) = lookup(&source.as_str().unwrap().to_string(), &world.response.object) {
+                    if let Some(value) = lookup(
+                        &source.as_str().unwrap().to_string(),
+                        &world.response.object,
+                    ) {
                         undo_operation.parameters.insert(param_name.clone(), value);
                     }
                 };

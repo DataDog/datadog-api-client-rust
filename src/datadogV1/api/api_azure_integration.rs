@@ -115,7 +115,10 @@ impl AzureIntegrationAPI {
     pub async fn create_azure_integration(
         &self,
         params: CreateAzureIntegrationParams,
-    ) -> Result<Option<std::collections::HashMap<String, serde_json::Value>>, Error<CreateAzureIntegrationError>> {
+    ) -> Result<
+        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Error<CreateAzureIntegrationError>,
+    > {
         match self.create_azure_integration_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -132,8 +135,10 @@ impl AzureIntegrationAPI {
     pub async fn create_azure_integration_with_http_info(
         &self,
         params: CreateAzureIntegrationParams,
-    ) -> Result<ResponseContent<std::collections::HashMap<String, serde_json::Value>>, Error<CreateAzureIntegrationError>>
-    {
+    ) -> Result<
+        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        Error<CreateAzureIntegrationError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -142,10 +147,14 @@ impl AzureIntegrationAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/integration/azure", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -173,7 +182,8 @@ impl AzureIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<CreateAzureIntegrationError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CreateAzureIntegrationError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -187,7 +197,10 @@ impl AzureIntegrationAPI {
     pub async fn delete_azure_integration(
         &self,
         params: DeleteAzureIntegrationParams,
-    ) -> Result<Option<std::collections::HashMap<String, serde_json::Value>>, Error<DeleteAzureIntegrationError>> {
+    ) -> Result<
+        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Error<DeleteAzureIntegrationError>,
+    > {
         match self.delete_azure_integration_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -198,8 +211,10 @@ impl AzureIntegrationAPI {
     pub async fn delete_azure_integration_with_http_info(
         &self,
         params: DeleteAzureIntegrationParams,
-    ) -> Result<ResponseContent<std::collections::HashMap<String, serde_json::Value>>, Error<DeleteAzureIntegrationError>>
-    {
+    ) -> Result<
+        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        Error<DeleteAzureIntegrationError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -208,10 +223,14 @@ impl AzureIntegrationAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/integration/azure", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -239,7 +258,8 @@ impl AzureIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<DeleteAzureIntegrationError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<DeleteAzureIntegrationError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -252,7 +272,8 @@ impl AzureIntegrationAPI {
     /// List all Datadog-Azure integrations configured in your Datadog account.
     pub async fn list_azure_integration(
         &self,
-    ) -> Result<Option<Vec<crate::datadogV1::model::AzureAccount>>, Error<ListAzureIntegrationError>> {
+    ) -> Result<Option<Vec<crate::datadogV1::model::AzureAccount>>, Error<ListAzureIntegrationError>>
+    {
         match self.list_azure_integration_with_http_info().await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -262,7 +283,10 @@ impl AzureIntegrationAPI {
     /// List all Datadog-Azure integrations configured in your Datadog account.
     pub async fn list_azure_integration_with_http_info(
         &self,
-    ) -> Result<ResponseContent<Vec<crate::datadogV1::model::AzureAccount>>, Error<ListAzureIntegrationError>> {
+    ) -> Result<
+        ResponseContent<Vec<crate::datadogV1::model::AzureAccount>>,
+        Error<ListAzureIntegrationError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -270,10 +294,12 @@ impl AzureIntegrationAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/integration/azure", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -298,7 +324,8 @@ impl AzureIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<ListAzureIntegrationError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<ListAzureIntegrationError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -312,7 +339,10 @@ impl AzureIntegrationAPI {
     pub async fn update_azure_host_filters(
         &self,
         params: UpdateAzureHostFiltersParams,
-    ) -> Result<Option<std::collections::HashMap<String, serde_json::Value>>, Error<UpdateAzureHostFiltersError>> {
+    ) -> Result<
+        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Error<UpdateAzureHostFiltersError>,
+    > {
         match self.update_azure_host_filters_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -323,8 +353,10 @@ impl AzureIntegrationAPI {
     pub async fn update_azure_host_filters_with_http_info(
         &self,
         params: UpdateAzureHostFiltersParams,
-    ) -> Result<ResponseContent<std::collections::HashMap<String, serde_json::Value>>, Error<UpdateAzureHostFiltersError>>
-    {
+    ) -> Result<
+        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        Error<UpdateAzureHostFiltersError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -336,10 +368,14 @@ impl AzureIntegrationAPI {
             "{}/api/v1/integration/azure/host_filters",
             local_configuration.base_path
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -367,7 +403,8 @@ impl AzureIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<UpdateAzureHostFiltersError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<UpdateAzureHostFiltersError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -383,7 +420,10 @@ impl AzureIntegrationAPI {
     pub async fn update_azure_integration(
         &self,
         params: UpdateAzureIntegrationParams,
-    ) -> Result<Option<std::collections::HashMap<String, serde_json::Value>>, Error<UpdateAzureIntegrationError>> {
+    ) -> Result<
+        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Error<UpdateAzureIntegrationError>,
+    > {
         match self.update_azure_integration_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -396,8 +436,10 @@ impl AzureIntegrationAPI {
     pub async fn update_azure_integration_with_http_info(
         &self,
         params: UpdateAzureIntegrationParams,
-    ) -> Result<ResponseContent<std::collections::HashMap<String, serde_json::Value>>, Error<UpdateAzureIntegrationError>>
-    {
+    ) -> Result<
+        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        Error<UpdateAzureIntegrationError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -406,10 +448,14 @@ impl AzureIntegrationAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/integration/azure", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -437,7 +483,8 @@ impl AzureIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<UpdateAzureIntegrationError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<UpdateAzureIntegrationError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,

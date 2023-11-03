@@ -21,7 +21,9 @@ pub struct SpansMetricCompute {
 }
 
 impl SpansMetricCompute {
-    pub fn new(aggregation_type: crate::datadogV2::model::SpansMetricComputeAggregationType) -> SpansMetricCompute {
+    pub fn new(
+        aggregation_type: crate::datadogV2::model::SpansMetricComputeAggregationType,
+    ) -> SpansMetricCompute {
         SpansMetricCompute {
             aggregation_type,
             include_percentiles: None,

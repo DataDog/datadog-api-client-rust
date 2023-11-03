@@ -9,16 +9,28 @@ use serde_with::skip_serializing_none;
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct UsageSDSHour {
     /// The total number of bytes scanned of APM usage across all usage types by the Sensitive Data Scanner from the start of the given hour’s month until the given hour.
-    #[serde(rename = "apm_scanned_bytes", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "apm_scanned_bytes",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub apm_scanned_bytes: Option<Option<i64>>,
     /// The total number of bytes scanned of Events usage across all usage types by the Sensitive Data Scanner from the start of the given hour’s month until the given hour.
-    #[serde(rename = "events_scanned_bytes", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "events_scanned_bytes",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub events_scanned_bytes: Option<Option<i64>>,
     /// The hour for the usage.
     #[serde(rename = "hour")]
     pub hour: Option<String>,
     /// The total number of bytes scanned of logs usage by the Sensitive Data Scanner from the start of the given hour’s month until the given hour.
-    #[serde(rename = "logs_scanned_bytes", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "logs_scanned_bytes",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub logs_scanned_bytes: Option<Option<i64>>,
     /// The organization name.
     #[serde(rename = "org_name")]
@@ -27,10 +39,18 @@ pub struct UsageSDSHour {
     #[serde(rename = "public_id")]
     pub public_id: Option<String>,
     /// The total number of bytes scanned of RUM usage across all usage types by the Sensitive Data Scanner from the start of the given hour’s month until the given hour.
-    #[serde(rename = "rum_scanned_bytes", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "rum_scanned_bytes",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub rum_scanned_bytes: Option<Option<i64>>,
     /// The total number of bytes scanned across all usage types by the Sensitive Data Scanner from the start of the given hour’s month until the given hour.
-    #[serde(rename = "total_scanned_bytes", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "total_scanned_bytes",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub total_scanned_bytes: Option<Option<i64>>,
 }
 

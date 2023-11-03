@@ -21,6 +21,9 @@ pub struct RestrictionPolicyBinding {
 
 impl RestrictionPolicyBinding {
     pub fn new(principals: Vec<String>, relation: String) -> RestrictionPolicyBinding {
-        RestrictionPolicyBinding { principals, relation }
+        RestrictionPolicyBinding {
+            principals,
+            relation,
+        }
     }
 }

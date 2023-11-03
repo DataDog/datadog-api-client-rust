@@ -9,10 +9,18 @@ use serde_with::skip_serializing_none;
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct UsageFargateHour {
     /// The high-water mark of APM ECS Fargate tasks during the given hour.
-    #[serde(rename = "apm_fargate_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "apm_fargate_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub apm_fargate_count: Option<Option<i64>>,
     /// The Application Security Monitoring ECS Fargate tasks during the given hour.
-    #[serde(rename = "appsec_fargate_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "appsec_fargate_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub appsec_fargate_count: Option<Option<i64>>,
     /// The average profiled task count for Fargate Profiling.
     #[serde(
@@ -31,7 +39,11 @@ pub struct UsageFargateHour {
     #[serde(rename = "public_id")]
     pub public_id: Option<String>,
     /// The number of Fargate tasks run.
-    #[serde(rename = "tasks_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "tasks_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub tasks_count: Option<Option<i64>>,
 }
 

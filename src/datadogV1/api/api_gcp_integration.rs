@@ -92,7 +92,10 @@ impl GcpIntegrationAPI {
     pub async fn create_gcp_integration(
         &self,
         params: CreateGCPIntegrationParams,
-    ) -> Result<Option<std::collections::HashMap<String, serde_json::Value>>, Error<CreateGCPIntegrationError>> {
+    ) -> Result<
+        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Error<CreateGCPIntegrationError>,
+    > {
         match self.create_gcp_integration_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -103,8 +106,10 @@ impl GcpIntegrationAPI {
     pub async fn create_gcp_integration_with_http_info(
         &self,
         params: CreateGCPIntegrationParams,
-    ) -> Result<ResponseContent<std::collections::HashMap<String, serde_json::Value>>, Error<CreateGCPIntegrationError>>
-    {
+    ) -> Result<
+        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        Error<CreateGCPIntegrationError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -113,10 +118,14 @@ impl GcpIntegrationAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/integration/gcp", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -144,7 +153,8 @@ impl GcpIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<CreateGCPIntegrationError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CreateGCPIntegrationError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -158,7 +168,10 @@ impl GcpIntegrationAPI {
     pub async fn delete_gcp_integration(
         &self,
         params: DeleteGCPIntegrationParams,
-    ) -> Result<Option<std::collections::HashMap<String, serde_json::Value>>, Error<DeleteGCPIntegrationError>> {
+    ) -> Result<
+        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Error<DeleteGCPIntegrationError>,
+    > {
         match self.delete_gcp_integration_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -169,8 +182,10 @@ impl GcpIntegrationAPI {
     pub async fn delete_gcp_integration_with_http_info(
         &self,
         params: DeleteGCPIntegrationParams,
-    ) -> Result<ResponseContent<std::collections::HashMap<String, serde_json::Value>>, Error<DeleteGCPIntegrationError>>
-    {
+    ) -> Result<
+        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        Error<DeleteGCPIntegrationError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -179,10 +194,14 @@ impl GcpIntegrationAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/integration/gcp", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -210,7 +229,8 @@ impl GcpIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<DeleteGCPIntegrationError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<DeleteGCPIntegrationError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -223,7 +243,8 @@ impl GcpIntegrationAPI {
     /// This endpoint is deprecated – use the V2 endpoints instead. List all Datadog-GCP integrations configured in your Datadog account.
     pub async fn list_gcp_integration(
         &self,
-    ) -> Result<Option<Vec<crate::datadogV1::model::GCPAccount>>, Error<ListGCPIntegrationError>> {
+    ) -> Result<Option<Vec<crate::datadogV1::model::GCPAccount>>, Error<ListGCPIntegrationError>>
+    {
         match self.list_gcp_integration_with_http_info().await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -233,7 +254,10 @@ impl GcpIntegrationAPI {
     /// This endpoint is deprecated – use the V2 endpoints instead. List all Datadog-GCP integrations configured in your Datadog account.
     pub async fn list_gcp_integration_with_http_info(
         &self,
-    ) -> Result<ResponseContent<Vec<crate::datadogV1::model::GCPAccount>>, Error<ListGCPIntegrationError>> {
+    ) -> Result<
+        ResponseContent<Vec<crate::datadogV1::model::GCPAccount>>,
+        Error<ListGCPIntegrationError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -241,10 +265,12 @@ impl GcpIntegrationAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/integration/gcp", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -269,7 +295,8 @@ impl GcpIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<ListGCPIntegrationError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<ListGCPIntegrationError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -286,7 +313,10 @@ impl GcpIntegrationAPI {
     pub async fn update_gcp_integration(
         &self,
         params: UpdateGCPIntegrationParams,
-    ) -> Result<Option<std::collections::HashMap<String, serde_json::Value>>, Error<UpdateGCPIntegrationError>> {
+    ) -> Result<
+        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Error<UpdateGCPIntegrationError>,
+    > {
         match self.update_gcp_integration_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -300,8 +330,10 @@ impl GcpIntegrationAPI {
     pub async fn update_gcp_integration_with_http_info(
         &self,
         params: UpdateGCPIntegrationParams,
-    ) -> Result<ResponseContent<std::collections::HashMap<String, serde_json::Value>>, Error<UpdateGCPIntegrationError>>
-    {
+    ) -> Result<
+        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        Error<UpdateGCPIntegrationError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -310,10 +342,14 @@ impl GcpIntegrationAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/integration/gcp", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -341,7 +377,8 @@ impl GcpIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<UpdateGCPIntegrationError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<UpdateGCPIntegrationError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,

@@ -15,6 +15,8 @@ pub struct ApplicationKeyListResponse {
 
 impl ApplicationKeyListResponse {
     pub fn new() -> ApplicationKeyListResponse {
-        ApplicationKeyListResponse { application_keys: None }
+        ApplicationKeyListResponse {
+            application_keys: None,
+        }
     }
 }

@@ -121,7 +121,10 @@ impl ServiceLevelObjectiveCorrectionsAPI {
     pub async fn create_slo_correction(
         &self,
         params: CreateSLOCorrectionParams,
-    ) -> Result<Option<crate::datadogV1::model::SLOCorrectionResponse>, Error<CreateSLOCorrectionError>> {
+    ) -> Result<
+        Option<crate::datadogV1::model::SLOCorrectionResponse>,
+        Error<CreateSLOCorrectionError>,
+    > {
         match self.create_slo_correction_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -132,7 +135,10 @@ impl ServiceLevelObjectiveCorrectionsAPI {
     pub async fn create_slo_correction_with_http_info(
         &self,
         params: CreateSLOCorrectionParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::SLOCorrectionResponse>, Error<CreateSLOCorrectionError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::SLOCorrectionResponse>,
+        Error<CreateSLOCorrectionError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -141,10 +147,14 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/slo/correction", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -172,7 +182,8 @@ impl ServiceLevelObjectiveCorrectionsAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<CreateSLOCorrectionError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CreateSLOCorrectionError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -210,10 +221,14 @@ impl ServiceLevelObjectiveCorrectionsAPI {
             local_configuration.base_path,
             slo_correction_id = urlencode(slo_correction_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -236,7 +251,8 @@ impl ServiceLevelObjectiveCorrectionsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteSLOCorrectionError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<DeleteSLOCorrectionError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -250,7 +266,8 @@ impl ServiceLevelObjectiveCorrectionsAPI {
     pub async fn get_slo_correction(
         &self,
         params: GetSLOCorrectionParams,
-    ) -> Result<Option<crate::datadogV1::model::SLOCorrectionResponse>, Error<GetSLOCorrectionError>> {
+    ) -> Result<Option<crate::datadogV1::model::SLOCorrectionResponse>, Error<GetSLOCorrectionError>>
+    {
         match self.get_slo_correction_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -261,7 +278,10 @@ impl ServiceLevelObjectiveCorrectionsAPI {
     pub async fn get_slo_correction_with_http_info(
         &self,
         params: GetSLOCorrectionParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::SLOCorrectionResponse>, Error<GetSLOCorrectionError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::SLOCorrectionResponse>,
+        Error<GetSLOCorrectionError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -274,10 +294,14 @@ impl ServiceLevelObjectiveCorrectionsAPI {
             local_configuration.base_path,
             slo_correction_id = urlencode(slo_correction_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -302,7 +326,8 @@ impl ServiceLevelObjectiveCorrectionsAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<GetSLOCorrectionError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetSLOCorrectionError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -316,7 +341,10 @@ impl ServiceLevelObjectiveCorrectionsAPI {
     pub async fn list_slo_correction(
         &self,
         params: ListSLOCorrectionParams,
-    ) -> Result<Option<crate::datadogV1::model::SLOCorrectionListResponse>, Error<ListSLOCorrectionError>> {
+    ) -> Result<
+        Option<crate::datadogV1::model::SLOCorrectionListResponse>,
+        Error<ListSLOCorrectionError>,
+    > {
         match self.list_slo_correction_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -327,8 +355,10 @@ impl ServiceLevelObjectiveCorrectionsAPI {
     pub async fn list_slo_correction_with_http_info(
         &self,
         params: ListSLOCorrectionParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::SLOCorrectionListResponse>, Error<ListSLOCorrectionError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::SLOCorrectionListResponse>,
+        Error<ListSLOCorrectionError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -338,10 +368,20 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/slo/correction", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        if let Some(ref local_str) = offset {
+            local_req_builder = local_req_builder.query(&[("offset", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = limit {
+            local_req_builder = local_req_builder.query(&[("limit", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -366,7 +406,8 @@ impl ServiceLevelObjectiveCorrectionsAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<ListSLOCorrectionError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<ListSLOCorrectionError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -380,7 +421,10 @@ impl ServiceLevelObjectiveCorrectionsAPI {
     pub async fn update_slo_correction(
         &self,
         params: UpdateSLOCorrectionParams,
-    ) -> Result<Option<crate::datadogV1::model::SLOCorrectionResponse>, Error<UpdateSLOCorrectionError>> {
+    ) -> Result<
+        Option<crate::datadogV1::model::SLOCorrectionResponse>,
+        Error<UpdateSLOCorrectionError>,
+    > {
         match self.update_slo_correction_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -391,7 +435,10 @@ impl ServiceLevelObjectiveCorrectionsAPI {
     pub async fn update_slo_correction_with_http_info(
         &self,
         params: UpdateSLOCorrectionParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::SLOCorrectionResponse>, Error<UpdateSLOCorrectionError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::SLOCorrectionResponse>,
+        Error<UpdateSLOCorrectionError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -405,10 +452,14 @@ impl ServiceLevelObjectiveCorrectionsAPI {
             local_configuration.base_path,
             slo_correction_id = urlencode(slo_correction_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -436,7 +487,8 @@ impl ServiceLevelObjectiveCorrectionsAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<UpdateSLOCorrectionError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<UpdateSLOCorrectionError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,

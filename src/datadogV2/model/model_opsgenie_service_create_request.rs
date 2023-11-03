@@ -14,7 +14,11 @@ pub struct OpsgenieServiceCreateRequest {
 }
 
 impl OpsgenieServiceCreateRequest {
-    pub fn new(data: crate::datadogV2::model::OpsgenieServiceCreateData) -> OpsgenieServiceCreateRequest {
-        OpsgenieServiceCreateRequest { data: Box::new(data) }
+    pub fn new(
+        data: crate::datadogV2::model::OpsgenieServiceCreateData,
+    ) -> OpsgenieServiceCreateRequest {
+        OpsgenieServiceCreateRequest {
+            data: Box::new(data),
+        }
     }
 }

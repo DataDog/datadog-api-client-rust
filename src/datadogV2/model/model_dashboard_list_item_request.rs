@@ -17,7 +17,10 @@ pub struct DashboardListItemRequest {
 }
 
 impl DashboardListItemRequest {
-    pub fn new(id: String, type_: crate::datadogV2::model::DashboardType) -> DashboardListItemRequest {
+    pub fn new(
+        id: String,
+        type_: crate::datadogV2::model::DashboardType,
+    ) -> DashboardListItemRequest {
         DashboardListItemRequest { id, type_ }
     }
 }

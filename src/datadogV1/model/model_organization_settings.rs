@@ -34,7 +34,8 @@ pub struct OrganizationSettings {
     pub saml_idp_endpoint: Option<String>,
     /// Has one property enabled (boolean).
     #[serde(rename = "saml_idp_initiated_login")]
-    pub saml_idp_initiated_login: Option<Box<crate::datadogV1::model::OrganizationSettingsSamlIdpInitiatedLogin>>,
+    pub saml_idp_initiated_login:
+        Option<Box<crate::datadogV1::model::OrganizationSettingsSamlIdpInitiatedLogin>>,
     /// Whether or not a SAML identity provider metadata file was provided to the Datadog organization.
     #[serde(rename = "saml_idp_metadata_uploaded")]
     pub saml_idp_metadata_uploaded: Option<bool>,

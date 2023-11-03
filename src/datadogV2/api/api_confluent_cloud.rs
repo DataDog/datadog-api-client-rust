@@ -216,7 +216,10 @@ impl ConfluentCloudAPI {
     pub async fn create_confluent_account(
         &self,
         params: CreateConfluentAccountParams,
-    ) -> Result<Option<crate::datadogV2::model::ConfluentAccountResponse>, Error<CreateConfluentAccountError>> {
+    ) -> Result<
+        Option<crate::datadogV2::model::ConfluentAccountResponse>,
+        Error<CreateConfluentAccountError>,
+    > {
         match self.create_confluent_account_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -227,8 +230,10 @@ impl ConfluentCloudAPI {
     pub async fn create_confluent_account_with_http_info(
         &self,
         params: CreateConfluentAccountParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::ConfluentAccountResponse>, Error<CreateConfluentAccountError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::ConfluentAccountResponse>,
+        Error<CreateConfluentAccountError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -240,10 +245,14 @@ impl ConfluentCloudAPI {
             "{}/api/v2/integrations/confluent-cloud/accounts",
             local_configuration.base_path
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -271,7 +280,8 @@ impl ConfluentCloudAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<CreateConfluentAccountError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CreateConfluentAccountError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -285,7 +295,10 @@ impl ConfluentCloudAPI {
     pub async fn create_confluent_resource(
         &self,
         params: CreateConfluentResourceParams,
-    ) -> Result<Option<crate::datadogV2::model::ConfluentResourceResponse>, Error<CreateConfluentResourceError>> {
+    ) -> Result<
+        Option<crate::datadogV2::model::ConfluentResourceResponse>,
+        Error<CreateConfluentResourceError>,
+    > {
         match self.create_confluent_resource_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -296,8 +309,10 @@ impl ConfluentCloudAPI {
     pub async fn create_confluent_resource_with_http_info(
         &self,
         params: CreateConfluentResourceParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::ConfluentResourceResponse>, Error<CreateConfluentResourceError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::ConfluentResourceResponse>,
+        Error<CreateConfluentResourceError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -311,10 +326,14 @@ impl ConfluentCloudAPI {
             local_configuration.base_path,
             account_id = urlencode(account_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -342,7 +361,8 @@ impl ConfluentCloudAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<CreateConfluentResourceError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CreateConfluentResourceError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -380,10 +400,14 @@ impl ConfluentCloudAPI {
             local_configuration.base_path,
             account_id = urlencode(account_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -406,7 +430,8 @@ impl ConfluentCloudAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteConfluentAccountError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<DeleteConfluentAccountError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -446,10 +471,14 @@ impl ConfluentCloudAPI {
             account_id = urlencode(account_id),
             resource_id = urlencode(resource_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -472,7 +501,8 @@ impl ConfluentCloudAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteConfluentResourceError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<DeleteConfluentResourceError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -486,7 +516,10 @@ impl ConfluentCloudAPI {
     pub async fn get_confluent_account(
         &self,
         params: GetConfluentAccountParams,
-    ) -> Result<Option<crate::datadogV2::model::ConfluentAccountResponse>, Error<GetConfluentAccountError>> {
+    ) -> Result<
+        Option<crate::datadogV2::model::ConfluentAccountResponse>,
+        Error<GetConfluentAccountError>,
+    > {
         match self.get_confluent_account_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -497,8 +530,10 @@ impl ConfluentCloudAPI {
     pub async fn get_confluent_account_with_http_info(
         &self,
         params: GetConfluentAccountParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::ConfluentAccountResponse>, Error<GetConfluentAccountError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::ConfluentAccountResponse>,
+        Error<GetConfluentAccountError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -511,10 +546,14 @@ impl ConfluentCloudAPI {
             local_configuration.base_path,
             account_id = urlencode(account_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -539,7 +578,8 @@ impl ConfluentCloudAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<GetConfluentAccountError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetConfluentAccountError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -553,7 +593,10 @@ impl ConfluentCloudAPI {
     pub async fn get_confluent_resource(
         &self,
         params: GetConfluentResourceParams,
-    ) -> Result<Option<crate::datadogV2::model::ConfluentResourceResponse>, Error<GetConfluentResourceError>> {
+    ) -> Result<
+        Option<crate::datadogV2::model::ConfluentResourceResponse>,
+        Error<GetConfluentResourceError>,
+    > {
         match self.get_confluent_resource_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -564,8 +607,10 @@ impl ConfluentCloudAPI {
     pub async fn get_confluent_resource_with_http_info(
         &self,
         params: GetConfluentResourceParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::ConfluentResourceResponse>, Error<GetConfluentResourceError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::ConfluentResourceResponse>,
+        Error<GetConfluentResourceError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -580,10 +625,14 @@ impl ConfluentCloudAPI {
             account_id = urlencode(account_id),
             resource_id = urlencode(resource_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -608,7 +657,8 @@ impl ConfluentCloudAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<GetConfluentResourceError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetConfluentResourceError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -621,7 +671,10 @@ impl ConfluentCloudAPI {
     /// List Confluent accounts.
     pub async fn list_confluent_account(
         &self,
-    ) -> Result<Option<crate::datadogV2::model::ConfluentAccountsResponse>, Error<ListConfluentAccountError>> {
+    ) -> Result<
+        Option<crate::datadogV2::model::ConfluentAccountsResponse>,
+        Error<ListConfluentAccountError>,
+    > {
         match self.list_confluent_account_with_http_info().await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -631,8 +684,10 @@ impl ConfluentCloudAPI {
     /// List Confluent accounts.
     pub async fn list_confluent_account_with_http_info(
         &self,
-    ) -> Result<ResponseContent<crate::datadogV2::model::ConfluentAccountsResponse>, Error<ListConfluentAccountError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::ConfluentAccountsResponse>,
+        Error<ListConfluentAccountError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -643,10 +698,12 @@ impl ConfluentCloudAPI {
             "{}/api/v2/integrations/confluent-cloud/accounts",
             local_configuration.base_path
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -671,7 +728,8 @@ impl ConfluentCloudAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<ListConfluentAccountError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<ListConfluentAccountError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -685,7 +743,10 @@ impl ConfluentCloudAPI {
     pub async fn list_confluent_resource(
         &self,
         params: ListConfluentResourceParams,
-    ) -> Result<Option<crate::datadogV2::model::ConfluentResourcesResponse>, Error<ListConfluentResourceError>> {
+    ) -> Result<
+        Option<crate::datadogV2::model::ConfluentResourcesResponse>,
+        Error<ListConfluentResourceError>,
+    > {
         match self.list_confluent_resource_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -696,8 +757,10 @@ impl ConfluentCloudAPI {
     pub async fn list_confluent_resource_with_http_info(
         &self,
         params: ListConfluentResourceParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::ConfluentResourcesResponse>, Error<ListConfluentResourceError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::ConfluentResourcesResponse>,
+        Error<ListConfluentResourceError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -710,10 +773,14 @@ impl ConfluentCloudAPI {
             local_configuration.base_path,
             account_id = urlencode(account_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -738,7 +805,8 @@ impl ConfluentCloudAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<ListConfluentResourceError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<ListConfluentResourceError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -752,7 +820,10 @@ impl ConfluentCloudAPI {
     pub async fn update_confluent_account(
         &self,
         params: UpdateConfluentAccountParams,
-    ) -> Result<Option<crate::datadogV2::model::ConfluentAccountResponse>, Error<UpdateConfluentAccountError>> {
+    ) -> Result<
+        Option<crate::datadogV2::model::ConfluentAccountResponse>,
+        Error<UpdateConfluentAccountError>,
+    > {
         match self.update_confluent_account_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -763,8 +834,10 @@ impl ConfluentCloudAPI {
     pub async fn update_confluent_account_with_http_info(
         &self,
         params: UpdateConfluentAccountParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::ConfluentAccountResponse>, Error<UpdateConfluentAccountError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::ConfluentAccountResponse>,
+        Error<UpdateConfluentAccountError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -778,10 +851,14 @@ impl ConfluentCloudAPI {
             local_configuration.base_path,
             account_id = urlencode(account_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -809,7 +886,8 @@ impl ConfluentCloudAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<UpdateConfluentAccountError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<UpdateConfluentAccountError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -823,7 +901,10 @@ impl ConfluentCloudAPI {
     pub async fn update_confluent_resource(
         &self,
         params: UpdateConfluentResourceParams,
-    ) -> Result<Option<crate::datadogV2::model::ConfluentResourceResponse>, Error<UpdateConfluentResourceError>> {
+    ) -> Result<
+        Option<crate::datadogV2::model::ConfluentResourceResponse>,
+        Error<UpdateConfluentResourceError>,
+    > {
         match self.update_confluent_resource_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -834,8 +915,10 @@ impl ConfluentCloudAPI {
     pub async fn update_confluent_resource_with_http_info(
         &self,
         params: UpdateConfluentResourceParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::ConfluentResourceResponse>, Error<UpdateConfluentResourceError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::ConfluentResourceResponse>,
+        Error<UpdateConfluentResourceError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -851,10 +934,14 @@ impl ConfluentCloudAPI {
             account_id = urlencode(account_id),
             resource_id = urlencode(resource_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -882,7 +969,8 @@ impl ConfluentCloudAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<UpdateConfluentResourceError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<UpdateConfluentResourceError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,

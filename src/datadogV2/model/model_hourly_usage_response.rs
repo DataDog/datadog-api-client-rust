@@ -18,6 +18,9 @@ pub struct HourlyUsageResponse {
 
 impl HourlyUsageResponse {
     pub fn new() -> HourlyUsageResponse {
-        HourlyUsageResponse { data: None, meta: None }
+        HourlyUsageResponse {
+            data: None,
+            meta: None,
+        }
     }
 }

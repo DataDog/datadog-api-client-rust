@@ -18,6 +18,9 @@ pub struct AWSAccountAndLambdaRequest {
 
 impl AWSAccountAndLambdaRequest {
     pub fn new(account_id: String, lambda_arn: String) -> AWSAccountAndLambdaRequest {
-        AWSAccountAndLambdaRequest { account_id, lambda_arn }
+        AWSAccountAndLambdaRequest {
+            account_id,
+            lambda_arn,
+        }
     }
 }

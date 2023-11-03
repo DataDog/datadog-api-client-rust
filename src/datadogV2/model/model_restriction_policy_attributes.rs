@@ -14,7 +14,9 @@ pub struct RestrictionPolicyAttributes {
 }
 
 impl RestrictionPolicyAttributes {
-    pub fn new(bindings: Vec<crate::datadogV2::model::RestrictionPolicyBinding>) -> RestrictionPolicyAttributes {
+    pub fn new(
+        bindings: Vec<crate::datadogV2::model::RestrictionPolicyBinding>,
+    ) -> RestrictionPolicyAttributes {
         RestrictionPolicyAttributes { bindings }
     }
 }

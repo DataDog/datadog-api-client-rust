@@ -20,7 +20,9 @@ pub struct SpansMetricCreateAttributes {
 }
 
 impl SpansMetricCreateAttributes {
-    pub fn new(compute: crate::datadogV2::model::SpansMetricCompute) -> SpansMetricCreateAttributes {
+    pub fn new(
+        compute: crate::datadogV2::model::SpansMetricCompute,
+    ) -> SpansMetricCreateAttributes {
         SpansMetricCreateAttributes {
             compute: Box::new(compute),
             filter: None,

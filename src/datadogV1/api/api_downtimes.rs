@@ -179,10 +179,14 @@ impl DowntimesAPI {
             local_configuration.base_path,
             downtime_id = downtime_id
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -205,7 +209,8 @@ impl DowntimesAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<CancelDowntimeError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CancelDowntimeError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -219,7 +224,10 @@ impl DowntimesAPI {
     pub async fn cancel_downtimes_by_scope(
         &self,
         params: CancelDowntimesByScopeParams,
-    ) -> Result<Option<crate::datadogV1::model::CanceledDowntimesIds>, Error<CancelDowntimesByScopeError>> {
+    ) -> Result<
+        Option<crate::datadogV1::model::CanceledDowntimesIds>,
+        Error<CancelDowntimesByScopeError>,
+    > {
         match self.cancel_downtimes_by_scope_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -230,8 +238,10 @@ impl DowntimesAPI {
     pub async fn cancel_downtimes_by_scope_with_http_info(
         &self,
         params: CancelDowntimesByScopeParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::CanceledDowntimesIds>, Error<CancelDowntimesByScopeError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::CanceledDowntimesIds>,
+        Error<CancelDowntimesByScopeError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -239,11 +249,18 @@ impl DowntimesAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/downtime/cancel/by_scope", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v1/downtime/cancel/by_scope",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -271,7 +288,8 @@ impl DowntimesAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<CancelDowntimesByScopeError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CancelDowntimesByScopeError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -296,7 +314,8 @@ impl DowntimesAPI {
     pub async fn create_downtime_with_http_info(
         &self,
         params: CreateDowntimeParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::Downtime>, Error<CreateDowntimeError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::Downtime>, Error<CreateDowntimeError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -305,10 +324,14 @@ impl DowntimesAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/downtime", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -328,14 +351,16 @@ impl DowntimesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::Downtime> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<crate::datadogV1::model::Downtime> =
+                serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<CreateDowntimeError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CreateDowntimeError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -373,10 +398,14 @@ impl DowntimesAPI {
             local_configuration.base_path,
             downtime_id = downtime_id
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -393,7 +422,8 @@ impl DowntimesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::Downtime> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<crate::datadogV1::model::Downtime> =
+                serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -425,7 +455,8 @@ impl DowntimesAPI {
     pub async fn list_downtimes_with_http_info(
         &self,
         params: ListDowntimesParams,
-    ) -> Result<ResponseContent<Vec<crate::datadogV1::model::Downtime>>, Error<ListDowntimesError>> {
+    ) -> Result<ResponseContent<Vec<crate::datadogV1::model::Downtime>>, Error<ListDowntimesError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -435,10 +466,22 @@ impl DowntimesAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/downtime", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        if let Some(ref local_str) = current_only {
+            local_req_builder =
+                local_req_builder.query(&[("current_only", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = with_creator {
+            local_req_builder =
+                local_req_builder.query(&[("with_creator", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -463,7 +506,8 @@ impl DowntimesAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<ListDowntimesError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<ListDowntimesError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -477,7 +521,8 @@ impl DowntimesAPI {
     pub async fn list_monitor_downtimes(
         &self,
         params: ListMonitorDowntimesParams,
-    ) -> Result<Option<Vec<crate::datadogV1::model::Downtime>>, Error<ListMonitorDowntimesError>> {
+    ) -> Result<Option<Vec<crate::datadogV1::model::Downtime>>, Error<ListMonitorDowntimesError>>
+    {
         match self.list_monitor_downtimes_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -488,7 +533,10 @@ impl DowntimesAPI {
     pub async fn list_monitor_downtimes_with_http_info(
         &self,
         params: ListMonitorDowntimesParams,
-    ) -> Result<ResponseContent<Vec<crate::datadogV1::model::Downtime>>, Error<ListMonitorDowntimesError>> {
+    ) -> Result<
+        ResponseContent<Vec<crate::datadogV1::model::Downtime>>,
+        Error<ListMonitorDowntimesError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -501,10 +549,14 @@ impl DowntimesAPI {
             local_configuration.base_path,
             monitor_id = monitor_id
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -529,7 +581,8 @@ impl DowntimesAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<ListMonitorDowntimesError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<ListMonitorDowntimesError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -554,7 +607,8 @@ impl DowntimesAPI {
     pub async fn update_downtime_with_http_info(
         &self,
         params: UpdateDowntimeParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::Downtime>, Error<UpdateDowntimeError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::Downtime>, Error<UpdateDowntimeError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -568,10 +622,14 @@ impl DowntimesAPI {
             local_configuration.base_path,
             downtime_id = downtime_id
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -591,14 +649,16 @@ impl DowntimesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::Downtime> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<crate::datadogV1::model::Downtime> =
+                serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<UpdateDowntimeError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<UpdateDowntimeError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,

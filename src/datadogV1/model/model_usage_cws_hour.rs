@@ -9,10 +9,18 @@ use serde_with::skip_serializing_none;
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct UsageCWSHour {
     /// The total number of Cloud Workload Security container hours from the start of the given hour’s month until the given hour.
-    #[serde(rename = "cws_container_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "cws_container_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub cws_container_count: Option<Option<i64>>,
     /// The total number of Cloud Workload Security host hours from the start of the given hour’s month until the given hour.
-    #[serde(rename = "cws_host_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "cws_host_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub cws_host_count: Option<Option<i64>>,
     /// The hour for the usage.
     #[serde(rename = "hour")]

@@ -14,7 +14,11 @@ pub struct ConfluentResourceRequest {
 }
 
 impl ConfluentResourceRequest {
-    pub fn new(data: crate::datadogV2::model::ConfluentResourceRequestData) -> ConfluentResourceRequest {
-        ConfluentResourceRequest { data: Box::new(data) }
+    pub fn new(
+        data: crate::datadogV2::model::ConfluentResourceRequestData,
+    ) -> ConfluentResourceRequest {
+        ConfluentResourceRequest {
+            data: Box::new(data),
+        }
     }
 }

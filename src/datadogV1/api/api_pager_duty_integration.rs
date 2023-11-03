@@ -102,9 +102,14 @@ impl PagerDutyIntegrationAPI {
     pub async fn create_pager_duty_integration_service(
         &self,
         params: CreatePagerDutyIntegrationServiceParams,
-    ) -> Result<Option<crate::datadogV1::model::PagerDutyServiceName>, Error<CreatePagerDutyIntegrationServiceError>>
-    {
-        match self.create_pager_duty_integration_service_with_http_info(params).await {
+    ) -> Result<
+        Option<crate::datadogV1::model::PagerDutyServiceName>,
+        Error<CreatePagerDutyIntegrationServiceError>,
+    > {
+        match self
+            .create_pager_duty_integration_service_with_http_info(params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -129,10 +134,14 @@ impl PagerDutyIntegrationAPI {
             "{}/api/v1/integration/pagerduty/configuration/services",
             local_configuration.base_path
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -176,7 +185,10 @@ impl PagerDutyIntegrationAPI {
         &self,
         params: DeletePagerDutyIntegrationServiceParams,
     ) -> Result<Option<()>, Error<DeletePagerDutyIntegrationServiceError>> {
-        match self.delete_pager_duty_integration_service_with_http_info(params).await {
+        match self
+            .delete_pager_duty_integration_service_with_http_info(params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -199,10 +211,14 @@ impl PagerDutyIntegrationAPI {
             local_configuration.base_path,
             service_name = urlencode(service_name)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -240,8 +256,14 @@ impl PagerDutyIntegrationAPI {
     pub async fn get_pager_duty_integration_service(
         &self,
         params: GetPagerDutyIntegrationServiceParams,
-    ) -> Result<Option<crate::datadogV1::model::PagerDutyServiceName>, Error<GetPagerDutyIntegrationServiceError>> {
-        match self.get_pager_duty_integration_service_with_http_info(params).await {
+    ) -> Result<
+        Option<crate::datadogV1::model::PagerDutyServiceName>,
+        Error<GetPagerDutyIntegrationServiceError>,
+    > {
+        match self
+            .get_pager_duty_integration_service_with_http_info(params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -267,10 +289,14 @@ impl PagerDutyIntegrationAPI {
             local_configuration.base_path,
             service_name = urlencode(service_name)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -295,7 +321,8 @@ impl PagerDutyIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<GetPagerDutyIntegrationServiceError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetPagerDutyIntegrationServiceError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -310,7 +337,10 @@ impl PagerDutyIntegrationAPI {
         &self,
         params: UpdatePagerDutyIntegrationServiceParams,
     ) -> Result<Option<()>, Error<UpdatePagerDutyIntegrationServiceError>> {
-        match self.update_pager_duty_integration_service_with_http_info(params).await {
+        match self
+            .update_pager_duty_integration_service_with_http_info(params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -334,10 +364,14 @@ impl PagerDutyIntegrationAPI {
             local_configuration.base_path,
             service_name = urlencode(service_name)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

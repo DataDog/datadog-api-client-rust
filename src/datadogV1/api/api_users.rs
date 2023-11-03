@@ -130,7 +130,8 @@ impl UsersAPI {
     pub async fn create_user_with_http_info(
         &self,
         params: CreateUserParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::UserResponse>, Error<CreateUserError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::UserResponse>, Error<CreateUserError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -139,10 +140,14 @@ impl UsersAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/user", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -162,7 +167,8 @@ impl UsersAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UserResponse> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<crate::datadogV1::model::UserResponse> =
+                serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -200,7 +206,10 @@ impl UsersAPI {
     pub async fn disable_user_with_http_info(
         &self,
         params: DisableUserParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::UserDisableResponse>, Error<DisableUserError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::UserDisableResponse>,
+        Error<DisableUserError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -213,10 +222,14 @@ impl UsersAPI {
             local_configuration.base_path,
             user_handle = urlencode(user_handle)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -279,10 +292,14 @@ impl UsersAPI {
             local_configuration.base_path,
             user_handle = urlencode(user_handle)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -299,7 +316,8 @@ impl UsersAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UserResponse> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<crate::datadogV1::model::UserResponse> =
+                serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -317,7 +335,9 @@ impl UsersAPI {
     }
 
     /// List all users for your organization.
-    pub async fn list_users(&self) -> Result<Option<crate::datadogV1::model::UserListResponse>, Error<ListUsersError>> {
+    pub async fn list_users(
+        &self,
+    ) -> Result<Option<crate::datadogV1::model::UserListResponse>, Error<ListUsersError>> {
         match self.list_users_with_http_info().await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -327,7 +347,8 @@ impl UsersAPI {
     /// List all users for your organization.
     pub async fn list_users_with_http_info(
         &self,
-    ) -> Result<ResponseContent<crate::datadogV1::model::UserListResponse>, Error<ListUsersError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::UserListResponse>, Error<ListUsersError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -335,10 +356,12 @@ impl UsersAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/user", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -392,7 +415,8 @@ impl UsersAPI {
     pub async fn update_user_with_http_info(
         &self,
         params: UpdateUserParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::UserResponse>, Error<UpdateUserError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::UserResponse>, Error<UpdateUserError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -406,10 +430,14 @@ impl UsersAPI {
             local_configuration.base_path,
             user_handle = urlencode(user_handle)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -429,7 +457,8 @@ impl UsersAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UserResponse> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<crate::datadogV1::model::UserResponse> =
+                serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
                 content: local_content,

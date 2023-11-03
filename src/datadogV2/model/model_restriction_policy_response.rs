@@ -15,6 +15,8 @@ pub struct RestrictionPolicyResponse {
 
 impl RestrictionPolicyResponse {
     pub fn new(data: crate::datadogV2::model::RestrictionPolicy) -> RestrictionPolicyResponse {
-        RestrictionPolicyResponse { data: Box::new(data) }
+        RestrictionPolicyResponse {
+            data: Box::new(data),
+        }
     }
 }

@@ -10,7 +10,11 @@ use serde_with::skip_serializing_none;
 pub struct WebhooksIntegration {
     /// If `null`, uses no header.
     /// If given a JSON payload, these will be headers attached to your webhook.
-    #[serde(rename = "custom_headers", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "custom_headers",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub custom_headers: Option<Option<String>>,
     /// Encoding type. Can be given either `json` or `form`.
     #[serde(rename = "encode_as")]
@@ -24,7 +28,11 @@ pub struct WebhooksIntegration {
     /// If given a JSON payload, the webhook returns the payload
     /// specified by the given payload.
     /// [Webhooks variable usage](https://docs.datadoghq.com/integrations/webhooks/#usage).
-    #[serde(rename = "payload", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "payload",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub payload: Option<Option<String>>,
     /// URL of the webhook.
     #[serde(rename = "url")]

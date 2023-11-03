@@ -14,7 +14,11 @@ pub struct RetentionFilterUpdateRequest {
 }
 
 impl RetentionFilterUpdateRequest {
-    pub fn new(data: crate::datadogV2::model::RetentionFilterUpdateData) -> RetentionFilterUpdateRequest {
-        RetentionFilterUpdateRequest { data: Box::new(data) }
+    pub fn new(
+        data: crate::datadogV2::model::RetentionFilterUpdateData,
+    ) -> RetentionFilterUpdateRequest {
+        RetentionFilterUpdateRequest {
+            data: Box::new(data),
+        }
     }
 }

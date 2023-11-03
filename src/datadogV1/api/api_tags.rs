@@ -144,7 +144,8 @@ impl TagsAPI {
     pub async fn create_host_tags_with_http_info(
         &self,
         params: CreateHostTagsParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::HostTags>, Error<CreateHostTagsError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::HostTags>, Error<CreateHostTagsError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -159,10 +160,17 @@ impl TagsAPI {
             local_configuration.base_path,
             host_name = urlencode(host_name)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
+        if let Some(ref local_str) = source {
+            local_req_builder = local_req_builder.query(&[("source", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -182,14 +190,16 @@ impl TagsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::HostTags> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<crate::datadogV1::model::HostTags> =
+                serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<CreateHostTagsError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CreateHostTagsError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -230,10 +240,17 @@ impl TagsAPI {
             local_configuration.base_path,
             host_name = urlencode(host_name)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build parameters
+        if let Some(ref local_str) = source {
+            local_req_builder = local_req_builder.query(&[("source", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -256,7 +273,8 @@ impl TagsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteHostTagsError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<DeleteHostTagsError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -295,10 +313,17 @@ impl TagsAPI {
             local_configuration.base_path,
             host_name = urlencode(host_name)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        if let Some(ref local_str) = source {
+            local_req_builder = local_req_builder.query(&[("source", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -315,7 +340,8 @@ impl TagsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::HostTags> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<crate::datadogV1::model::HostTags> =
+                serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -347,7 +373,8 @@ impl TagsAPI {
     pub async fn list_host_tags_with_http_info(
         &self,
         params: ListHostTagsParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::TagToHosts>, Error<ListHostTagsError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::TagToHosts>, Error<ListHostTagsError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -356,10 +383,17 @@ impl TagsAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/tags/hosts", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        if let Some(ref local_str) = source {
+            local_req_builder = local_req_builder.query(&[("source", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -376,7 +410,8 @@ impl TagsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::TagToHosts> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<crate::datadogV1::model::TagToHosts> =
+                serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -410,7 +445,8 @@ impl TagsAPI {
     pub async fn update_host_tags_with_http_info(
         &self,
         params: UpdateHostTagsParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::HostTags>, Error<UpdateHostTagsError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::HostTags>, Error<UpdateHostTagsError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -425,10 +461,17 @@ impl TagsAPI {
             local_configuration.base_path,
             host_name = urlencode(host_name)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build parameters
+        if let Some(ref local_str) = source {
+            local_req_builder = local_req_builder.query(&[("source", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -448,14 +491,16 @@ impl TagsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::HostTags> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<crate::datadogV1::model::HostTags> =
+                serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<UpdateHostTagsError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<UpdateHostTagsError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,

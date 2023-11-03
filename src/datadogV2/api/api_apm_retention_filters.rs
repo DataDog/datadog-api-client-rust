@@ -130,8 +130,14 @@ impl ApmRetentionFiltersAPI {
     pub async fn create_apm_retention_filter(
         &self,
         params: CreateApmRetentionFilterParams,
-    ) -> Result<Option<crate::datadogV2::model::RetentionFilterResponse>, Error<CreateApmRetentionFilterError>> {
-        match self.create_apm_retention_filter_with_http_info(params).await {
+    ) -> Result<
+        Option<crate::datadogV2::model::RetentionFilterResponse>,
+        Error<CreateApmRetentionFilterError>,
+    > {
+        match self
+            .create_apm_retention_filter_with_http_info(params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -142,8 +148,10 @@ impl ApmRetentionFiltersAPI {
     pub async fn create_apm_retention_filter_with_http_info(
         &self,
         params: CreateApmRetentionFilterParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::RetentionFilterResponse>, Error<CreateApmRetentionFilterError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::RetentionFilterResponse>,
+        Error<CreateApmRetentionFilterError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -151,11 +159,18 @@ impl ApmRetentionFiltersAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/apm/config/retention-filters", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v2/apm/config/retention-filters",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -183,7 +198,8 @@ impl ApmRetentionFiltersAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<CreateApmRetentionFilterError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CreateApmRetentionFilterError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -198,7 +214,10 @@ impl ApmRetentionFiltersAPI {
         &self,
         params: DeleteApmRetentionFilterParams,
     ) -> Result<Option<()>, Error<DeleteApmRetentionFilterError>> {
-        match self.delete_apm_retention_filter_with_http_info(params).await {
+        match self
+            .delete_apm_retention_filter_with_http_info(params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -221,10 +240,14 @@ impl ApmRetentionFiltersAPI {
             local_configuration.base_path,
             filter_id = urlencode(filter_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -247,7 +270,8 @@ impl ApmRetentionFiltersAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteApmRetentionFilterError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<DeleteApmRetentionFilterError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -261,7 +285,10 @@ impl ApmRetentionFiltersAPI {
     pub async fn get_apm_retention_filter(
         &self,
         params: GetApmRetentionFilterParams,
-    ) -> Result<Option<crate::datadogV2::model::RetentionFilterResponse>, Error<GetApmRetentionFilterError>> {
+    ) -> Result<
+        Option<crate::datadogV2::model::RetentionFilterResponse>,
+        Error<GetApmRetentionFilterError>,
+    > {
         match self.get_apm_retention_filter_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -272,8 +299,10 @@ impl ApmRetentionFiltersAPI {
     pub async fn get_apm_retention_filter_with_http_info(
         &self,
         params: GetApmRetentionFilterParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::RetentionFilterResponse>, Error<GetApmRetentionFilterError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::RetentionFilterResponse>,
+        Error<GetApmRetentionFilterError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -286,10 +315,14 @@ impl ApmRetentionFiltersAPI {
             local_configuration.base_path,
             filter_id = urlencode(filter_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -314,7 +347,8 @@ impl ApmRetentionFiltersAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<GetApmRetentionFilterError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetApmRetentionFilterError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -327,7 +361,10 @@ impl ApmRetentionFiltersAPI {
     /// Get the list of APM retention filters.
     pub async fn list_apm_retention_filters(
         &self,
-    ) -> Result<Option<crate::datadogV2::model::RetentionFiltersResponse>, Error<ListApmRetentionFiltersError>> {
+    ) -> Result<
+        Option<crate::datadogV2::model::RetentionFiltersResponse>,
+        Error<ListApmRetentionFiltersError>,
+    > {
         match self.list_apm_retention_filters_with_http_info().await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -337,19 +374,26 @@ impl ApmRetentionFiltersAPI {
     /// Get the list of APM retention filters.
     pub async fn list_apm_retention_filters_with_http_info(
         &self,
-    ) -> Result<ResponseContent<crate::datadogV2::model::RetentionFiltersResponse>, Error<ListApmRetentionFiltersError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::RetentionFiltersResponse>,
+        Error<ListApmRetentionFiltersError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/apm/config/retention-filters", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v2/apm/config/retention-filters",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -374,7 +418,8 @@ impl ApmRetentionFiltersAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<ListApmRetentionFiltersError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<ListApmRetentionFiltersError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -389,7 +434,10 @@ impl ApmRetentionFiltersAPI {
         &self,
         params: ReorderApmRetentionFiltersParams,
     ) -> Result<Option<()>, Error<ReorderApmRetentionFiltersError>> {
-        match self.reorder_apm_retention_filters_with_http_info(params).await {
+        match self
+            .reorder_apm_retention_filters_with_http_info(params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -411,10 +459,14 @@ impl ApmRetentionFiltersAPI {
             "{}/api/v2/apm/config/retention-filters-execution-order",
             local_configuration.base_path
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -440,7 +492,8 @@ impl ApmRetentionFiltersAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<ReorderApmRetentionFiltersError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<ReorderApmRetentionFiltersError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -454,8 +507,14 @@ impl ApmRetentionFiltersAPI {
     pub async fn update_apm_retention_filter(
         &self,
         params: UpdateApmRetentionFilterParams,
-    ) -> Result<Option<crate::datadogV2::model::RetentionFilterResponse>, Error<UpdateApmRetentionFilterError>> {
-        match self.update_apm_retention_filter_with_http_info(params).await {
+    ) -> Result<
+        Option<crate::datadogV2::model::RetentionFilterResponse>,
+        Error<UpdateApmRetentionFilterError>,
+    > {
+        match self
+            .update_apm_retention_filter_with_http_info(params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -465,8 +524,10 @@ impl ApmRetentionFiltersAPI {
     pub async fn update_apm_retention_filter_with_http_info(
         &self,
         params: UpdateApmRetentionFilterParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::RetentionFilterResponse>, Error<UpdateApmRetentionFilterError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::RetentionFilterResponse>,
+        Error<UpdateApmRetentionFilterError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -480,10 +541,14 @@ impl ApmRetentionFiltersAPI {
             local_configuration.base_path,
             filter_id = urlencode(filter_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -511,7 +576,8 @@ impl ApmRetentionFiltersAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<UpdateApmRetentionFilterError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<UpdateApmRetentionFilterError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,

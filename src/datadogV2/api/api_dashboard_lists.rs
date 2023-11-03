@@ -108,9 +108,14 @@ impl DashboardListsAPI {
     pub async fn create_dashboard_list_items(
         &self,
         params: CreateDashboardListItemsParams,
-    ) -> Result<Option<crate::datadogV2::model::DashboardListAddItemsResponse>, Error<CreateDashboardListItemsError>>
-    {
-        match self.create_dashboard_list_items_with_http_info(params).await {
+    ) -> Result<
+        Option<crate::datadogV2::model::DashboardListAddItemsResponse>,
+        Error<CreateDashboardListItemsError>,
+    > {
+        match self
+            .create_dashboard_list_items_with_http_info(params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -137,10 +142,14 @@ impl DashboardListsAPI {
             local_configuration.base_path,
             dashboard_list_id = dashboard_list_id
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -168,7 +177,8 @@ impl DashboardListsAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<CreateDashboardListItemsError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CreateDashboardListItemsError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -182,9 +192,14 @@ impl DashboardListsAPI {
     pub async fn delete_dashboard_list_items(
         &self,
         params: DeleteDashboardListItemsParams,
-    ) -> Result<Option<crate::datadogV2::model::DashboardListDeleteItemsResponse>, Error<DeleteDashboardListItemsError>>
-    {
-        match self.delete_dashboard_list_items_with_http_info(params).await {
+    ) -> Result<
+        Option<crate::datadogV2::model::DashboardListDeleteItemsResponse>,
+        Error<DeleteDashboardListItemsError>,
+    > {
+        match self
+            .delete_dashboard_list_items_with_http_info(params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -211,10 +226,14 @@ impl DashboardListsAPI {
             local_configuration.base_path,
             dashboard_list_id = dashboard_list_id
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -242,7 +261,8 @@ impl DashboardListsAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<DeleteDashboardListItemsError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<DeleteDashboardListItemsError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -256,7 +276,10 @@ impl DashboardListsAPI {
     pub async fn get_dashboard_list_items(
         &self,
         params: GetDashboardListItemsParams,
-    ) -> Result<Option<crate::datadogV2::model::DashboardListItems>, Error<GetDashboardListItemsError>> {
+    ) -> Result<
+        Option<crate::datadogV2::model::DashboardListItems>,
+        Error<GetDashboardListItemsError>,
+    > {
         match self.get_dashboard_list_items_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -267,7 +290,10 @@ impl DashboardListsAPI {
     pub async fn get_dashboard_list_items_with_http_info(
         &self,
         params: GetDashboardListItemsParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::DashboardListItems>, Error<GetDashboardListItemsError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::DashboardListItems>,
+        Error<GetDashboardListItemsError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -280,10 +306,14 @@ impl DashboardListsAPI {
             local_configuration.base_path,
             dashboard_list_id = dashboard_list_id
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -308,7 +338,8 @@ impl DashboardListsAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<GetDashboardListItemsError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetDashboardListItemsError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -322,9 +353,14 @@ impl DashboardListsAPI {
     pub async fn update_dashboard_list_items(
         &self,
         params: UpdateDashboardListItemsParams,
-    ) -> Result<Option<crate::datadogV2::model::DashboardListUpdateItemsResponse>, Error<UpdateDashboardListItemsError>>
-    {
-        match self.update_dashboard_list_items_with_http_info(params).await {
+    ) -> Result<
+        Option<crate::datadogV2::model::DashboardListUpdateItemsResponse>,
+        Error<UpdateDashboardListItemsError>,
+    > {
+        match self
+            .update_dashboard_list_items_with_http_info(params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -351,10 +387,14 @@ impl DashboardListsAPI {
             local_configuration.base_path,
             dashboard_list_id = dashboard_list_id
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -382,7 +422,8 @@ impl DashboardListsAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<UpdateDashboardListItemsError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<UpdateDashboardListItemsError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,

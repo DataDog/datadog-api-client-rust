@@ -27,7 +27,8 @@ pub struct SLOHistoryMetricsSeriesMetadata {
     /// For example, bytes represents one unit object and bytes per second represents two unit objects.
     /// If a metric query only has one unit object, the second array element is null.
     #[serde(rename = "unit", default, with = "::serde_with::rust::double_option")]
-    pub unit: Option<Option<Vec<Option<crate::datadogV1::model::SLOHistoryMetricsSeriesMetadataUnit>>>>,
+    pub unit:
+        Option<Option<Vec<Option<crate::datadogV1::model::SLOHistoryMetricsSeriesMetadataUnit>>>>,
 }
 
 impl SLOHistoryMetricsSeriesMetadata {

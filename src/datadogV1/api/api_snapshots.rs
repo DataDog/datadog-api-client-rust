@@ -77,7 +77,8 @@ impl SnapshotsAPI {
     pub async fn get_graph_snapshot_with_http_info(
         &self,
         params: GetGraphSnapshotParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::GraphSnapshot>, Error<GetGraphSnapshotError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::GraphSnapshot>, Error<GetGraphSnapshotError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -93,10 +94,35 @@ impl SnapshotsAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/graph/snapshot", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        local_req_builder = local_req_builder.query(&[("start", &start.to_string())]);
+        local_req_builder = local_req_builder.query(&[("end", &end.to_string())]);
+        if let Some(ref local_str) = metric_query {
+            local_req_builder =
+                local_req_builder.query(&[("metric_query", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = event_query {
+            local_req_builder = local_req_builder.query(&[("event_query", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = graph_def {
+            local_req_builder = local_req_builder.query(&[("graph_def", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = title {
+            local_req_builder = local_req_builder.query(&[("title", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = height {
+            local_req_builder = local_req_builder.query(&[("height", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = width {
+            local_req_builder = local_req_builder.query(&[("width", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -121,7 +147,8 @@ impl SnapshotsAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<GetGraphSnapshotError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetGraphSnapshotError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,

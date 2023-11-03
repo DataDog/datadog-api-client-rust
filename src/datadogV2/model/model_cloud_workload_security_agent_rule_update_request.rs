@@ -17,6 +17,8 @@ impl CloudWorkloadSecurityAgentRuleUpdateRequest {
     pub fn new(
         data: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleUpdateData,
     ) -> CloudWorkloadSecurityAgentRuleUpdateRequest {
-        CloudWorkloadSecurityAgentRuleUpdateRequest { data: Box::new(data) }
+        CloudWorkloadSecurityAgentRuleUpdateRequest {
+            data: Box::new(data),
+        }
     }
 }

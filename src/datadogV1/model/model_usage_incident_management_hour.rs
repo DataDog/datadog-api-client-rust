@@ -12,7 +12,11 @@ pub struct UsageIncidentManagementHour {
     #[serde(rename = "hour")]
     pub hour: Option<String>,
     /// Contains the total number monthly active users from the start of the given hour's month until the given hour.
-    #[serde(rename = "monthly_active_users", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "monthly_active_users",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub monthly_active_users: Option<Option<i64>>,
     /// The organization name.
     #[serde(rename = "org_name")]

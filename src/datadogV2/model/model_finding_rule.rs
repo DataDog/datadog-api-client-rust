@@ -18,6 +18,9 @@ pub struct FindingRule {
 
 impl FindingRule {
     pub fn new() -> FindingRule {
-        FindingRule { id: None, name: None }
+        FindingRule {
+            id: None,
+            name: None,
+        }
     }
 }

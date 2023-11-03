@@ -18,6 +18,9 @@ pub struct LogsMetricGroupBy {
 
 impl LogsMetricGroupBy {
     pub fn new(path: String) -> LogsMetricGroupBy {
-        LogsMetricGroupBy { path, tag_name: None }
+        LogsMetricGroupBy {
+            path,
+            tag_name: None,
+        }
     }
 }

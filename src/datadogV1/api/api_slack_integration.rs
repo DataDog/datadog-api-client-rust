@@ -131,9 +131,14 @@ impl SlackIntegrationAPI {
     pub async fn create_slack_integration_channel(
         &self,
         params: CreateSlackIntegrationChannelParams,
-    ) -> Result<Option<crate::datadogV1::model::SlackIntegrationChannel>, Error<CreateSlackIntegrationChannelError>>
-    {
-        match self.create_slack_integration_channel_with_http_info(params).await {
+    ) -> Result<
+        Option<crate::datadogV1::model::SlackIntegrationChannel>,
+        Error<CreateSlackIntegrationChannelError>,
+    > {
+        match self
+            .create_slack_integration_channel_with_http_info(params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -160,10 +165,14 @@ impl SlackIntegrationAPI {
             local_configuration.base_path,
             account_name = urlencode(account_name)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -191,7 +200,8 @@ impl SlackIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<CreateSlackIntegrationChannelError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CreateSlackIntegrationChannelError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -205,8 +215,14 @@ impl SlackIntegrationAPI {
     pub async fn get_slack_integration_channel(
         &self,
         params: GetSlackIntegrationChannelParams,
-    ) -> Result<Option<crate::datadogV1::model::SlackIntegrationChannel>, Error<GetSlackIntegrationChannelError>> {
-        match self.get_slack_integration_channel_with_http_info(params).await {
+    ) -> Result<
+        Option<crate::datadogV1::model::SlackIntegrationChannel>,
+        Error<GetSlackIntegrationChannelError>,
+    > {
+        match self
+            .get_slack_integration_channel_with_http_info(params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -216,8 +232,10 @@ impl SlackIntegrationAPI {
     pub async fn get_slack_integration_channel_with_http_info(
         &self,
         params: GetSlackIntegrationChannelParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::SlackIntegrationChannel>, Error<GetSlackIntegrationChannelError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::SlackIntegrationChannel>,
+        Error<GetSlackIntegrationChannelError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -227,15 +245,20 @@ impl SlackIntegrationAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
-            "{}/api/v1/integration/slack/configuration/accounts/{account_name}/channels/{channel_name}",
-            local_configuration.base_path,
-            account_name = urlencode(account_name),
-            channel_name = urlencode(channel_name)
-        );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            "{}/api/v1/integration/slack/configuration/accounts/{account_name}/channels/{channel_name}", 
+            local_configuration.base_path, account_name=
+            urlencode(account_name)
+            , channel_name=
+            urlencode(channel_name)
+            );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -260,7 +283,8 @@ impl SlackIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<GetSlackIntegrationChannelError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetSlackIntegrationChannelError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -274,9 +298,14 @@ impl SlackIntegrationAPI {
     pub async fn get_slack_integration_channels(
         &self,
         params: GetSlackIntegrationChannelsParams,
-    ) -> Result<Option<Vec<crate::datadogV1::model::SlackIntegrationChannel>>, Error<GetSlackIntegrationChannelsError>>
-    {
-        match self.get_slack_integration_channels_with_http_info(params).await {
+    ) -> Result<
+        Option<Vec<crate::datadogV1::model::SlackIntegrationChannel>>,
+        Error<GetSlackIntegrationChannelsError>,
+    > {
+        match self
+            .get_slack_integration_channels_with_http_info(params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -302,10 +331,14 @@ impl SlackIntegrationAPI {
             local_configuration.base_path,
             account_name = urlencode(account_name)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -330,7 +363,8 @@ impl SlackIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<GetSlackIntegrationChannelsError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetSlackIntegrationChannelsError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -345,7 +379,10 @@ impl SlackIntegrationAPI {
         &self,
         params: RemoveSlackIntegrationChannelParams,
     ) -> Result<Option<()>, Error<RemoveSlackIntegrationChannelError>> {
-        match self.remove_slack_integration_channel_with_http_info(params).await {
+        match self
+            .remove_slack_integration_channel_with_http_info(params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -365,15 +402,20 @@ impl SlackIntegrationAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
-            "{}/api/v1/integration/slack/configuration/accounts/{account_name}/channels/{channel_name}",
-            local_configuration.base_path,
-            account_name = urlencode(account_name),
-            channel_name = urlencode(channel_name)
-        );
-        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            "{}/api/v1/integration/slack/configuration/accounts/{account_name}/channels/{channel_name}", 
+            local_configuration.base_path, account_name=
+            urlencode(account_name)
+            , channel_name=
+            urlencode(channel_name)
+            );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -396,7 +438,8 @@ impl SlackIntegrationAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<RemoveSlackIntegrationChannelError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<RemoveSlackIntegrationChannelError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -410,9 +453,14 @@ impl SlackIntegrationAPI {
     pub async fn update_slack_integration_channel(
         &self,
         params: UpdateSlackIntegrationChannelParams,
-    ) -> Result<Option<crate::datadogV1::model::SlackIntegrationChannel>, Error<UpdateSlackIntegrationChannelError>>
-    {
-        match self.update_slack_integration_channel_with_http_info(params).await {
+    ) -> Result<
+        Option<crate::datadogV1::model::SlackIntegrationChannel>,
+        Error<UpdateSlackIntegrationChannelError>,
+    > {
+        match self
+            .update_slack_integration_channel_with_http_info(params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -436,15 +484,20 @@ impl SlackIntegrationAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
-            "{}/api/v1/integration/slack/configuration/accounts/{account_name}/channels/{channel_name}",
-            local_configuration.base_path,
-            account_name = urlencode(account_name),
-            channel_name = urlencode(channel_name)
-        );
-        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            "{}/api/v1/integration/slack/configuration/accounts/{account_name}/channels/{channel_name}", 
+            local_configuration.base_path, account_name=
+            urlencode(account_name)
+            , channel_name=
+            urlencode(channel_name)
+            );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -472,7 +525,8 @@ impl SlackIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<UpdateSlackIntegrationChannelError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<UpdateSlackIntegrationChannelError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,

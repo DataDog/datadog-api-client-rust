@@ -111,7 +111,8 @@ impl DashboardListsAPI {
     pub async fn create_dashboard_list(
         &self,
         params: CreateDashboardListParams,
-    ) -> Result<Option<crate::datadogV1::model::DashboardList>, Error<CreateDashboardListError>> {
+    ) -> Result<Option<crate::datadogV1::model::DashboardList>, Error<CreateDashboardListError>>
+    {
         match self.create_dashboard_list_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -122,7 +123,10 @@ impl DashboardListsAPI {
     pub async fn create_dashboard_list_with_http_info(
         &self,
         params: CreateDashboardListParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::DashboardList>, Error<CreateDashboardListError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::DashboardList>,
+        Error<CreateDashboardListError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -130,11 +134,18 @@ impl DashboardListsAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/dashboard/lists/manual", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v1/dashboard/lists/manual",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -162,7 +173,8 @@ impl DashboardListsAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<CreateDashboardListError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CreateDashboardListError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -176,7 +188,10 @@ impl DashboardListsAPI {
     pub async fn delete_dashboard_list(
         &self,
         params: DeleteDashboardListParams,
-    ) -> Result<Option<crate::datadogV1::model::DashboardListDeleteResponse>, Error<DeleteDashboardListError>> {
+    ) -> Result<
+        Option<crate::datadogV1::model::DashboardListDeleteResponse>,
+        Error<DeleteDashboardListError>,
+    > {
         match self.delete_dashboard_list_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -187,8 +202,10 @@ impl DashboardListsAPI {
     pub async fn delete_dashboard_list_with_http_info(
         &self,
         params: DeleteDashboardListParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::DashboardListDeleteResponse>, Error<DeleteDashboardListError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::DashboardListDeleteResponse>,
+        Error<DeleteDashboardListError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -201,10 +218,14 @@ impl DashboardListsAPI {
             local_configuration.base_path,
             list_id = list_id
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -229,7 +250,8 @@ impl DashboardListsAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<DeleteDashboardListError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<DeleteDashboardListError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -254,7 +276,8 @@ impl DashboardListsAPI {
     pub async fn get_dashboard_list_with_http_info(
         &self,
         params: GetDashboardListParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::DashboardList>, Error<GetDashboardListError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::DashboardList>, Error<GetDashboardListError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -267,10 +290,14 @@ impl DashboardListsAPI {
             local_configuration.base_path,
             list_id = list_id
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -295,7 +322,8 @@ impl DashboardListsAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<GetDashboardListError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetDashboardListError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -308,7 +336,10 @@ impl DashboardListsAPI {
     /// Fetch all of your existing dashboard list definitions.
     pub async fn list_dashboard_lists(
         &self,
-    ) -> Result<Option<crate::datadogV1::model::DashboardListListResponse>, Error<ListDashboardListsError>> {
+    ) -> Result<
+        Option<crate::datadogV1::model::DashboardListListResponse>,
+        Error<ListDashboardListsError>,
+    > {
         match self.list_dashboard_lists_with_http_info().await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -318,19 +349,26 @@ impl DashboardListsAPI {
     /// Fetch all of your existing dashboard list definitions.
     pub async fn list_dashboard_lists_with_http_info(
         &self,
-    ) -> Result<ResponseContent<crate::datadogV1::model::DashboardListListResponse>, Error<ListDashboardListsError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::DashboardListListResponse>,
+        Error<ListDashboardListsError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/dashboard/lists/manual", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v1/dashboard/lists/manual",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -355,7 +393,8 @@ impl DashboardListsAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<ListDashboardListsError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<ListDashboardListsError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -369,7 +408,8 @@ impl DashboardListsAPI {
     pub async fn update_dashboard_list(
         &self,
         params: UpdateDashboardListParams,
-    ) -> Result<Option<crate::datadogV1::model::DashboardList>, Error<UpdateDashboardListError>> {
+    ) -> Result<Option<crate::datadogV1::model::DashboardList>, Error<UpdateDashboardListError>>
+    {
         match self.update_dashboard_list_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -380,7 +420,10 @@ impl DashboardListsAPI {
     pub async fn update_dashboard_list_with_http_info(
         &self,
         params: UpdateDashboardListParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::DashboardList>, Error<UpdateDashboardListError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::DashboardList>,
+        Error<UpdateDashboardListError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -394,10 +437,14 @@ impl DashboardListsAPI {
             local_configuration.base_path,
             list_id = list_id
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -425,7 +472,8 @@ impl DashboardListsAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<UpdateDashboardListError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<UpdateDashboardListError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,

@@ -15,6 +15,8 @@ pub struct GetFindingResponse {
 
 impl GetFindingResponse {
     pub fn new(data: crate::datadogV2::model::DetailedFinding) -> GetFindingResponse {
-        GetFindingResponse { data: Box::new(data) }
+        GetFindingResponse {
+            data: Box::new(data),
+        }
     }
 }

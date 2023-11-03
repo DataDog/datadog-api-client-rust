@@ -15,6 +15,8 @@ pub struct IPAllowlistUpdateRequest {
 
 impl IPAllowlistUpdateRequest {
     pub fn new(data: crate::datadogV2::model::IPAllowlistData) -> IPAllowlistUpdateRequest {
-        IPAllowlistUpdateRequest { data: Box::new(data) }
+        IPAllowlistUpdateRequest {
+            data: Box::new(data),
+        }
     }
 }

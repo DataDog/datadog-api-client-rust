@@ -35,7 +35,11 @@ pub struct Event {
     #[serde(rename = "payload")]
     pub payload: Option<String>,
     /// The priority of the event. For example, `normal` or `low`.
-    #[serde(rename = "priority", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "priority",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub priority: Option<Option<crate::datadogV1::model::EventPriority>>,
     /// The type of event being posted. Option examples include nagios, hudson, jenkins, my_apps, chef, puppet, git, bitbucket, etc.
     /// The list of standard source attribute values [available here](https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value).

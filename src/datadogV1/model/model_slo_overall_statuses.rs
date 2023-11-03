@@ -28,9 +28,14 @@ pub struct SLOOverallStatuses {
         default,
         with = "::serde_with::rust::double_option"
     )]
-    pub raw_error_budget_remaining: Option<Option<Box<crate::datadogV1::model::SLORawErrorBudgetRemaining>>>,
+    pub raw_error_budget_remaining:
+        Option<Option<Box<crate::datadogV1::model::SLORawErrorBudgetRemaining>>>,
     /// The amount of decimal places the SLI value is accurate to.
-    #[serde(rename = "span_precision", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "span_precision",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub span_precision: Option<Option<i64>>,
     /// State of the SLO.
     #[serde(rename = "state")]

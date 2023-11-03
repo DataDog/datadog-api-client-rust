@@ -108,6 +108,40 @@ impl {{ structName }} {
             {%- endif %}
             {% endfor %});
         let mut local_req_builder = local_client.request(reqwest::Method::{{ httpMethod }}, local_uri_str.as_str());
+
+        {% for name, parameter in operation|parameters %}
+        {%- if loop.first %}
+        // build parameters
+        {%- endif %}
+        {%- set schema = parameter | parameter_schema %}
+        {%- if parameter.in == "query" %}
+        {%- if schema.type == "array" %}
+        {%- if not parameter.required %}
+        if let Some(ref local) = {{name|variable_name}} {
+            local_req_builder = local_req_builder.query(&[("{{name}}", &local.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
+        };
+        {%- else %}
+        local_req_builder = local_req_builder.query(&[("{{name}}", &{{name|variable_name}}.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
+        {%- endif %}
+        {%- else %}
+        {%- if not parameter.required %}
+        if let Some(ref local_str) = {{name|variable_name}} {
+            local_req_builder = local_req_builder.query(&[("{{name}}", &local_str.to_string())]);
+        };
+        {%- else %}
+        local_req_builder = local_req_builder.query(&[("{{name}}", &{{name|variable_name}}.to_string())]);
+        {%- endif %}
+        {%- endif %}
+        {%- elif parameter.in == "header" %}
+        {%- if not parameter.required %}
+        if let Some(ref local) = {{name|variable_name}} {
+            local_req_builder = local_req_builder.header("{{name}}", &local.to_string());
+        };
+        {%- else %}
+        local_req_builder = local_req_builder.header("{{name}}", &{{name|variable_name}}.to_string());
+        {%- endif %}
+        {%- endif %}
+        {%- endfor %}
         {#
         {{#queryParams}}
         {{#required}}
@@ -195,6 +229,7 @@ impl {{ structName }} {
         {%- endfor %}
         {%- endfor %}
         {%- endif %}
+
         {% if formParameter %}
         {%- if formParameter.required %}
         let mut local_form = reqwest::multipart::Form::new();

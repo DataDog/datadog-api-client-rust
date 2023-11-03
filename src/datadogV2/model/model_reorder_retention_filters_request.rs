@@ -14,7 +14,9 @@ pub struct ReorderRetentionFiltersRequest {
 }
 
 impl ReorderRetentionFiltersRequest {
-    pub fn new(data: Vec<crate::datadogV2::model::RetentionFilterWithoutAttributes>) -> ReorderRetentionFiltersRequest {
+    pub fn new(
+        data: Vec<crate::datadogV2::model::RetentionFilterWithoutAttributes>,
+    ) -> ReorderRetentionFiltersRequest {
         ReorderRetentionFiltersRequest { data }
     }
 }

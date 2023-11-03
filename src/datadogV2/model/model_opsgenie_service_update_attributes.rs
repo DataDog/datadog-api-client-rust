@@ -9,7 +9,11 @@ use serde_with::skip_serializing_none;
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct OpsgenieServiceUpdateAttributes {
     /// The custom URL for a custom region.
-    #[serde(rename = "custom_url", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "custom_url",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub custom_url: Option<Option<String>>,
     /// The name for the Opsgenie service.
     #[serde(rename = "name")]

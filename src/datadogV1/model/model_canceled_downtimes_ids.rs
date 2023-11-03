@@ -15,6 +15,8 @@ pub struct CanceledDowntimesIds {
 
 impl CanceledDowntimesIds {
     pub fn new() -> CanceledDowntimesIds {
-        CanceledDowntimesIds { cancelled_ids: None }
+        CanceledDowntimesIds {
+            cancelled_ids: None,
+        }
     }
 }

@@ -23,19 +23,30 @@ pub struct SearchSLOThreshold {
     #[serde(rename = "timeframe")]
     pub timeframe: crate::datadogV1::model::SearchSLOTimeframe,
     /// The warning value for the service level objective.
-    #[serde(rename = "warning", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "warning",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub warning: Option<Option<f64>>,
     /// A string representation of the warning target (see the description of
     /// the `target_display` field for details).
     ///
     /// Included in service level objective responses if a warning target exists.
     /// Ignored in create/update requests.
-    #[serde(rename = "warning_display", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "warning_display",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub warning_display: Option<Option<String>>,
 }
 
 impl SearchSLOThreshold {
-    pub fn new(target: f64, timeframe: crate::datadogV1::model::SearchSLOTimeframe) -> SearchSLOThreshold {
+    pub fn new(
+        target: f64,
+        timeframe: crate::datadogV1::model::SearchSLOTimeframe,
+    ) -> SearchSLOThreshold {
         SearchSLOThreshold {
             target,
             target_display: None,

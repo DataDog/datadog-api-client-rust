@@ -9,7 +9,11 @@ use serde_with::skip_serializing_none;
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct UsageProfilingHour {
     /// Contains the total number of profiled Azure app services reporting during a given hour.
-    #[serde(rename = "aas_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "aas_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub aas_count: Option<Option<i64>>,
     /// Get average number of container agents for that hour.
     #[serde(
@@ -19,7 +23,11 @@ pub struct UsageProfilingHour {
     )]
     pub avg_container_agent_count: Option<Option<i64>>,
     /// Contains the total number of profiled hosts reporting during a given hour.
-    #[serde(rename = "host_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "host_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub host_count: Option<Option<i64>>,
     /// The hour for the usage.
     #[serde(rename = "hour")]

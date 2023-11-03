@@ -40,7 +40,8 @@ pub struct IPRanges {
     pub synthetics: Option<Box<crate::datadogV1::model::IPPrefixesSynthetics>>,
     /// Available prefix information for the Synthetics Private Locations endpoints.
     #[serde(rename = "synthetics-private-locations")]
-    pub synthetics_private_locations: Option<Box<crate::datadogV1::model::IPPrefixesSyntheticsPrivateLocations>>,
+    pub synthetics_private_locations:
+        Option<Box<crate::datadogV1::model::IPPrefixesSyntheticsPrivateLocations>>,
     /// Version of the IP list.
     #[serde(rename = "version")]
     pub version: Option<i64>,

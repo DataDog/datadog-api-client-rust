@@ -9,7 +9,11 @@ use serde_with::skip_serializing_none;
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct UsageNetworkHostsHour {
     /// Contains the number of active NPM hosts.
-    #[serde(rename = "host_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "host_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub host_count: Option<Option<i64>>,
     /// The hour for the usage.
     #[serde(rename = "hour")]

@@ -39,7 +39,11 @@ pub struct SLOHistoryMonitor {
     #[serde(rename = "preview")]
     pub preview: Option<bool>,
     /// The current SLI value of the SLO over the history window.
-    #[serde(rename = "sli_value", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "sli_value",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub sli_value: Option<Option<f64>>,
     /// The amount of decimal places the SLI value is accurate to for the given from `&&` to timestamp.
     #[serde(rename = "span_precision")]

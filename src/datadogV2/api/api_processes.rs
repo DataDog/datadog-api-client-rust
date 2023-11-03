@@ -63,7 +63,8 @@ impl ProcessesAPI {
     pub async fn list_processes(
         &self,
         params: ListProcessesParams,
-    ) -> Result<Option<crate::datadogV2::model::ProcessSummariesResponse>, Error<ListProcessesError>> {
+    ) -> Result<Option<crate::datadogV2::model::ProcessSummariesResponse>, Error<ListProcessesError>>
+    {
         match self.list_processes_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -74,7 +75,10 @@ impl ProcessesAPI {
     pub async fn list_processes_with_http_info(
         &self,
         params: ListProcessesParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::ProcessSummariesResponse>, Error<ListProcessesError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::ProcessSummariesResponse>,
+        Error<ListProcessesError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -88,10 +92,33 @@ impl ProcessesAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v2/processes", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        if let Some(ref local_str) = search {
+            local_req_builder = local_req_builder.query(&[("search", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = tags {
+            local_req_builder = local_req_builder.query(&[("tags", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = from {
+            local_req_builder = local_req_builder.query(&[("from", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = to {
+            local_req_builder = local_req_builder.query(&[("to", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = page_limit {
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = page_cursor {
+            local_req_builder =
+                local_req_builder.query(&[("page[cursor]", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -116,7 +143,8 @@ impl ProcessesAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<ListProcessesError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<ListProcessesError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,

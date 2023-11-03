@@ -130,7 +130,8 @@ impl LogsIndexesAPI {
     pub async fn create_logs_index_with_http_info(
         &self,
         params: CreateLogsIndexParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::LogsIndex>, Error<CreateLogsIndexError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::LogsIndex>, Error<CreateLogsIndexError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -138,11 +139,18 @@ impl LogsIndexesAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/logs/config/indexes", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v1/logs/config/indexes",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -162,14 +170,16 @@ impl LogsIndexesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::LogsIndex> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<crate::datadogV1::model::LogsIndex> =
+                serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<CreateLogsIndexError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CreateLogsIndexError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -207,10 +217,14 @@ impl LogsIndexesAPI {
             local_configuration.base_path,
             name = urlencode(name)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -227,7 +241,8 @@ impl LogsIndexesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::LogsIndex> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<crate::datadogV1::model::LogsIndex> =
+                serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -247,7 +262,8 @@ impl LogsIndexesAPI {
     /// Get the current order of your log indexes. This endpoint takes no JSON arguments.
     pub async fn get_logs_index_order(
         &self,
-    ) -> Result<Option<crate::datadogV1::model::LogsIndexesOrder>, Error<GetLogsIndexOrderError>> {
+    ) -> Result<Option<crate::datadogV1::model::LogsIndexesOrder>, Error<GetLogsIndexOrderError>>
+    {
         match self.get_logs_index_order_with_http_info().await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -257,18 +273,26 @@ impl LogsIndexesAPI {
     /// Get the current order of your log indexes. This endpoint takes no JSON arguments.
     pub async fn get_logs_index_order_with_http_info(
         &self,
-    ) -> Result<ResponseContent<crate::datadogV1::model::LogsIndexesOrder>, Error<GetLogsIndexOrderError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::LogsIndexesOrder>,
+        Error<GetLogsIndexOrderError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/logs/config/index-order", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v1/logs/config/index-order",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -293,7 +317,8 @@ impl LogsIndexesAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<GetLogsIndexOrderError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetLogsIndexOrderError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -307,7 +332,8 @@ impl LogsIndexesAPI {
     /// This endpoint returns an array of the `LogIndex` objects of your organization.
     pub async fn list_log_indexes(
         &self,
-    ) -> Result<Option<crate::datadogV1::model::LogsIndexListResponse>, Error<ListLogIndexesError>> {
+    ) -> Result<Option<crate::datadogV1::model::LogsIndexListResponse>, Error<ListLogIndexesError>>
+    {
         match self.list_log_indexes_with_http_info().await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -318,18 +344,26 @@ impl LogsIndexesAPI {
     /// This endpoint returns an array of the `LogIndex` objects of your organization.
     pub async fn list_log_indexes_with_http_info(
         &self,
-    ) -> Result<ResponseContent<crate::datadogV1::model::LogsIndexListResponse>, Error<ListLogIndexesError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::LogsIndexListResponse>,
+        Error<ListLogIndexesError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/logs/config/indexes", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v1/logs/config/indexes",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -354,7 +388,8 @@ impl LogsIndexesAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<ListLogIndexesError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<ListLogIndexesError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -387,7 +422,8 @@ impl LogsIndexesAPI {
     pub async fn update_logs_index_with_http_info(
         &self,
         params: UpdateLogsIndexParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::LogsIndex>, Error<UpdateLogsIndexError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::LogsIndex>, Error<UpdateLogsIndexError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -401,10 +437,14 @@ impl LogsIndexesAPI {
             local_configuration.base_path,
             name = urlencode(name)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -424,14 +464,16 @@ impl LogsIndexesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::LogsIndex> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<crate::datadogV1::model::LogsIndex> =
+                serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<UpdateLogsIndexError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<UpdateLogsIndexError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -446,7 +488,8 @@ impl LogsIndexesAPI {
     pub async fn update_logs_index_order(
         &self,
         params: UpdateLogsIndexOrderParams,
-    ) -> Result<Option<crate::datadogV1::model::LogsIndexesOrder>, Error<UpdateLogsIndexOrderError>> {
+    ) -> Result<Option<crate::datadogV1::model::LogsIndexesOrder>, Error<UpdateLogsIndexOrderError>>
+    {
         match self.update_logs_index_order_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -458,7 +501,10 @@ impl LogsIndexesAPI {
     pub async fn update_logs_index_order_with_http_info(
         &self,
         params: UpdateLogsIndexOrderParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::LogsIndexesOrder>, Error<UpdateLogsIndexOrderError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::LogsIndexesOrder>,
+        Error<UpdateLogsIndexOrderError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -466,11 +512,18 @@ impl LogsIndexesAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/logs/config/index-order", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v1/logs/config/index-order",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -498,7 +551,8 @@ impl LogsIndexesAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<UpdateLogsIndexOrderError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<UpdateLogsIndexOrderError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,

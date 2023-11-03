@@ -15,6 +15,8 @@ pub struct FastlyServiceRequest {
 
 impl FastlyServiceRequest {
     pub fn new(data: crate::datadogV2::model::FastlyServiceData) -> FastlyServiceRequest {
-        FastlyServiceRequest { data: Box::new(data) }
+        FastlyServiceRequest {
+            data: Box::new(data),
+        }
     }
 }

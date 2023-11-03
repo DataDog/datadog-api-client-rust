@@ -13,7 +13,11 @@ pub struct ServiceLevelObjectiveRequest {
     ///
     /// Always included in service level objective responses (but may be `null`).
     /// Optional in create/update requests.
-    #[serde(rename = "description", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "description",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub description: Option<Option<String>>,
     /// A list of (up to 100) monitor groups that narrow the scope of a monitor service level objective.
     ///

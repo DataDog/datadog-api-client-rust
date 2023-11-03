@@ -271,7 +271,9 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
             Self::CLOUD_SIEM_USAGE => String::from("cloud_siem_usage"),
             Self::CLOUD_SIEM_PERCENTAGE => String::from("cloud_siem_percentage"),
             Self::CONTAINER_EXCL_AGENT_USAGE => String::from("container_excl_agent_usage"),
-            Self::CONTAINER_EXCL_AGENT_PERCENTAGE => String::from("container_excl_agent_percentage"),
+            Self::CONTAINER_EXCL_AGENT_PERCENTAGE => {
+                String::from("container_excl_agent_percentage")
+            }
             Self::CONTAINER_USAGE => String::from("container_usage"),
             Self::CONTAINER_PERCENTAGE => String::from("container_percentage"),
             Self::CSPM_CONTAINERS_PERCENTAGE => String::from("cspm_containers_percentage"),
@@ -280,8 +282,12 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
             Self::CSPM_HOSTS_USAGE => String::from("cspm_hosts_usage"),
             Self::CUSTOM_TIMESERIES_USAGE => String::from("custom_timeseries_usage"),
             Self::CUSTOM_TIMESERIES_PERCENTAGE => String::from("custom_timeseries_percentage"),
-            Self::CUSTOM_INGESTED_TIMESERIES_USAGE => String::from("custom_ingested_timeseries_usage"),
-            Self::CUSTOM_INGESTED_TIMESERIES_PERCENTAGE => String::from("custom_ingested_timeseries_percentage"),
+            Self::CUSTOM_INGESTED_TIMESERIES_USAGE => {
+                String::from("custom_ingested_timeseries_usage")
+            }
+            Self::CUSTOM_INGESTED_TIMESERIES_PERCENTAGE => {
+                String::from("custom_ingested_timeseries_percentage")
+            }
             Self::CWS_CONTAINERS_PERCENTAGE => String::from("cws_containers_percentage"),
             Self::CWS_CONTAINERS_USAGE => String::from("cws_containers_usage"),
             Self::CWS_HOSTS_PERCENTAGE => String::from("cws_hosts_percentage"),
@@ -291,13 +297,21 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
             Self::DBM_QUERIES_PERCENTAGE => String::from("dbm_queries_percentage"),
             Self::DBM_QUERIES_USAGE => String::from("dbm_queries_usage"),
             Self::ESTIMATED_INDEXED_LOGS_USAGE => String::from("estimated_indexed_logs_usage"),
-            Self::ESTIMATED_INDEXED_LOGS_PERCENTAGE => String::from("estimated_indexed_logs_percentage"),
+            Self::ESTIMATED_INDEXED_LOGS_PERCENTAGE => {
+                String::from("estimated_indexed_logs_percentage")
+            }
             Self::ESTIMATED_INGESTED_LOGS_USAGE => String::from("estimated_ingested_logs_usage"),
-            Self::ESTIMATED_INGESTED_LOGS_PERCENTAGE => String::from("estimated_ingested_logs_percentage"),
+            Self::ESTIMATED_INGESTED_LOGS_PERCENTAGE => {
+                String::from("estimated_ingested_logs_percentage")
+            }
             Self::ESTIMATED_INDEXED_SPANS_USAGE => String::from("estimated_indexed_spans_usage"),
-            Self::ESTIMATED_INDEXED_SPANS_PERCENTAGE => String::from("estimated_indexed_spans_percentage"),
+            Self::ESTIMATED_INDEXED_SPANS_PERCENTAGE => {
+                String::from("estimated_indexed_spans_percentage")
+            }
             Self::ESTIMATED_INGESTED_SPANS_USAGE => String::from("estimated_ingested_spans_usage"),
-            Self::ESTIMATED_INGESTED_SPANS_PERCENTAGE => String::from("estimated_ingested_spans_percentage"),
+            Self::ESTIMATED_INGESTED_SPANS_PERCENTAGE => {
+                String::from("estimated_ingested_spans_percentage")
+            }
             Self::FARGATE_USAGE => String::from("fargate_usage"),
             Self::FARGATE_PERCENTAGE => String::from("fargate_percentage"),
             Self::FUNCTIONS_USAGE => String::from("functions_usage"),
@@ -306,8 +320,12 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
             Self::INFRA_HOST_PERCENTAGE => String::from("infra_host_percentage"),
             Self::INVOCATIONS_USAGE => String::from("invocations_usage"),
             Self::INVOCATIONS_PERCENTAGE => String::from("invocations_percentage"),
-            Self::LAMBDA_TRACED_INVOCATIONS_USAGE => String::from("lambda_traced_invocations_usage"),
-            Self::LAMBDA_TRACED_INVOCATIONS_PERCENTAGE => String::from("lambda_traced_invocations_percentage"),
+            Self::LAMBDA_TRACED_INVOCATIONS_USAGE => {
+                String::from("lambda_traced_invocations_usage")
+            }
+            Self::LAMBDA_TRACED_INVOCATIONS_PERCENTAGE => {
+                String::from("lambda_traced_invocations_percentage")
+            }
             Self::MOBILE_APP_TESTING_USAGE => String::from("mobile_app_testing_percentage"),
             Self::MOBILE_APP_TESTING_PERCENTAGE => String::from("mobile_app_testing_usage"),
             Self::NDM_NETFLOW_USAGE => String::from("ndm_netflow_usage"),
@@ -327,25 +345,43 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
             Self::SNMP_USAGE => String::from("snmp_usage"),
             Self::SNMP_PERCENTAGE => String::from("snmp_percentage"),
             Self::ESTIMATED_RUM_SESSIONS_USAGE => String::from("estimated_rum_sessions_usage"),
-            Self::ESTIMATED_RUM_SESSIONS_PERCENTAGE => String::from("estimated_rum_sessions_percentage"),
-            Self::UNIVERSAL_SERVICE_MONITORING_USAGE => String::from("universal_service_monitoring_usage"),
-            Self::UNIVERSAL_SERVICE_MONITORING_PERCENTAGE => String::from("universal_service_monitoring_percentage"),
+            Self::ESTIMATED_RUM_SESSIONS_PERCENTAGE => {
+                String::from("estimated_rum_sessions_percentage")
+            }
+            Self::UNIVERSAL_SERVICE_MONITORING_USAGE => {
+                String::from("universal_service_monitoring_usage")
+            }
+            Self::UNIVERSAL_SERVICE_MONITORING_PERCENTAGE => {
+                String::from("universal_service_monitoring_percentage")
+            }
             Self::VULN_MANAGEMENT_HOSTS_USAGE => String::from("vuln_management_hosts_usage"),
-            Self::VULN_MANAGEMENT_HOSTS_PERCENTAGE => String::from("vuln_management_hosts_percentage"),
+            Self::VULN_MANAGEMENT_HOSTS_PERCENTAGE => {
+                String::from("vuln_management_hosts_percentage")
+            }
             Self::SDS_SCANNED_BYTES_USAGE => String::from("sds_scanned_bytes_usage"),
             Self::SDS_SCANNED_BYTES_PERCENTAGE => String::from("sds_scanned_bytes_percentage"),
             Self::CI_TEST_INDEXED_SPANS_USAGE => String::from("ci_test_indexed_spans_usage"),
-            Self::CI_TEST_INDEXED_SPANS_PERCENTAGE => String::from("ci_test_indexed_spans_percentage"),
+            Self::CI_TEST_INDEXED_SPANS_PERCENTAGE => {
+                String::from("ci_test_indexed_spans_percentage")
+            }
             Self::INGESTED_LOGS_BYTES_USAGE => String::from("ingested_logs_bytes_usage"),
             Self::INGESTED_LOGS_BYTES_PERCENTAGE => String::from("ingested_logs_bytes_percentage"),
-            Self::CI_PIPELINE_INDEXED_SPANS_USAGE => String::from("ci_pipeline_indexed_spans_usage"),
-            Self::CI_PIPELINE_INDEXED_SPANS_PERCENTAGE => String::from("ci_pipeline_indexed_spans_percentage"),
+            Self::CI_PIPELINE_INDEXED_SPANS_USAGE => {
+                String::from("ci_pipeline_indexed_spans_usage")
+            }
+            Self::CI_PIPELINE_INDEXED_SPANS_PERCENTAGE => {
+                String::from("ci_pipeline_indexed_spans_percentage")
+            }
             Self::INDEXED_SPANS_USAGE => String::from("indexed_spans_usage"),
             Self::INDEXED_SPANS_PERCENTAGE => String::from("indexed_spans_percentage"),
             Self::CUSTOM_EVENT_USAGE => String::from("custom_event_usage"),
             Self::CUSTOM_EVENT_PERCENTAGE => String::from("custom_event_percentage"),
-            Self::LOGS_INDEXED_CUSTOM_RETENTION_USAGE => String::from("logs_indexed_custom_retention_usage"),
-            Self::LOGS_INDEXED_CUSTOM_RETENTION_PERCENTAGE => String::from("logs_indexed_custom_retention_percentage"),
+            Self::LOGS_INDEXED_CUSTOM_RETENTION_USAGE => {
+                String::from("logs_indexed_custom_retention_usage")
+            }
+            Self::LOGS_INDEXED_CUSTOM_RETENTION_PERCENTAGE => {
+                String::from("logs_indexed_custom_retention_percentage")
+            }
             Self::LOGS_INDEXED_360DAY_USAGE => String::from("logs_indexed_360day_usage"),
             Self::LOGS_INDEXED_360DAY_PERCENTAGE => String::from("logs_indexed_360day_percentage"),
             Self::LOGS_INDEXED_180DAY_USAGE => String::from("logs_indexed_180day_usage"),
@@ -366,10 +402,16 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
             Self::LOGS_INDEXED_3DAY_PERCENTAGE => String::from("logs_indexed_3day_percentage"),
             Self::RUM_REPLAY_SESSIONS_USAGE => String::from("rum_replay_sessions_usage"),
             Self::RUM_REPLAY_SESSIONS_PERCENTAGE => String::from("rum_replay_sessions_percentage"),
-            Self::RUM_BROWSER_MOBILE_SESSIONS_USAGE => String::from("rum_browser_mobile_sessions_usage"),
-            Self::RUM_BROWSER_MOBILE_SESSIONS_PERCENTAGE => String::from("rum_browser_mobile_sessions_percentage"),
+            Self::RUM_BROWSER_MOBILE_SESSIONS_USAGE => {
+                String::from("rum_browser_mobile_sessions_usage")
+            }
+            Self::RUM_BROWSER_MOBILE_SESSIONS_PERCENTAGE => {
+                String::from("rum_browser_mobile_sessions_percentage")
+            }
             Self::INGESTED_SPANS_BYTES_USAGE => String::from("ingested_spans_bytes_usage"),
-            Self::INGESTED_SPANS_BYTES_PERCENTAGE => String::from("ingested_spans_bytes_percentage"),
+            Self::INGESTED_SPANS_BYTES_PERCENTAGE => {
+                String::from("ingested_spans_bytes_percentage")
+            }
             Self::SIEM_INGESTED_BYTES_USAGE => String::from("siem_ingested_bytes_usage"),
             Self::SIEM_INGESTED_BYTES_PERCENTAGE => String::from("siem_ingested_bytes_percentage"),
             Self::ALL => String::from("*"),

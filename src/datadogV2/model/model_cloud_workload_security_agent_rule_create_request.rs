@@ -17,6 +17,8 @@ impl CloudWorkloadSecurityAgentRuleCreateRequest {
     pub fn new(
         data: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateData,
     ) -> CloudWorkloadSecurityAgentRuleCreateRequest {
-        CloudWorkloadSecurityAgentRuleCreateRequest { data: Box::new(data) }
+        CloudWorkloadSecurityAgentRuleCreateRequest {
+            data: Box::new(data),
+        }
     }
 }

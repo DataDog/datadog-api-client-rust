@@ -18,6 +18,9 @@ pub struct AWSLogsListServicesResponse {
 
 impl AWSLogsListServicesResponse {
     pub fn new() -> AWSLogsListServicesResponse {
-        AWSLogsListServicesResponse { id: None, label: None }
+        AWSLogsListServicesResponse {
+            id: None,
+            label: None,
+        }
     }
 }

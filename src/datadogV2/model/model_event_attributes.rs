@@ -32,16 +32,32 @@ pub struct EventAttributes {
     #[serde(rename = "hostname")]
     pub hostname: Option<String>,
     /// Attributes from the monitor that triggered the event.
-    #[serde(rename = "monitor", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "monitor",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub monitor: Option<Option<Box<crate::datadogV2::model::MonitorType>>>,
     /// List of groups referred to in the event.
-    #[serde(rename = "monitor_groups", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "monitor_groups",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub monitor_groups: Option<Option<Vec<String>>>,
     /// ID of the monitor that triggered the event. When an event isn't related to a monitor, this field is empty.
-    #[serde(rename = "monitor_id", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "monitor_id",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub monitor_id: Option<Option<i64>>,
     /// The priority of the event's monitor. For example, `normal` or `low`.
-    #[serde(rename = "priority", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "priority",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub priority: Option<Option<crate::datadogV2::model::EventPriority>>,
     /// Related event ID.
     #[serde(rename = "related_event_id")]

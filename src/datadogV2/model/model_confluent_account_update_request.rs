@@ -14,7 +14,11 @@ pub struct ConfluentAccountUpdateRequest {
 }
 
 impl ConfluentAccountUpdateRequest {
-    pub fn new(data: crate::datadogV2::model::ConfluentAccountUpdateRequestData) -> ConfluentAccountUpdateRequest {
-        ConfluentAccountUpdateRequest { data: Box::new(data) }
+    pub fn new(
+        data: crate::datadogV2::model::ConfluentAccountUpdateRequestData,
+    ) -> ConfluentAccountUpdateRequest {
+        ConfluentAccountUpdateRequest {
+            data: Box::new(data),
+        }
     }
 }

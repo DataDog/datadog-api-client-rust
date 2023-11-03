@@ -14,7 +14,11 @@ pub struct CloudflareAccountCreateRequest {
 }
 
 impl CloudflareAccountCreateRequest {
-    pub fn new(data: crate::datadogV2::model::CloudflareAccountCreateRequestData) -> CloudflareAccountCreateRequest {
-        CloudflareAccountCreateRequest { data: Box::new(data) }
+    pub fn new(
+        data: crate::datadogV2::model::CloudflareAccountCreateRequestData,
+    ) -> CloudflareAccountCreateRequest {
+        CloudflareAccountCreateRequest {
+            data: Box::new(data),
+        }
     }
 }

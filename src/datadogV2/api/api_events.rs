@@ -91,7 +91,8 @@ impl EventsAPI {
     pub async fn list_events_with_http_info(
         &self,
         params: ListEventsParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::EventsListResponse>, Error<ListEventsError>> {
+    ) -> Result<ResponseContent<crate::datadogV2::model::EventsListResponse>, Error<ListEventsError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -105,10 +106,35 @@ impl EventsAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v2/events", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        if let Some(ref local_str) = filter_query {
+            local_req_builder =
+                local_req_builder.query(&[("filter[query]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = filter_from {
+            local_req_builder =
+                local_req_builder.query(&[("filter[from]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = filter_to {
+            local_req_builder = local_req_builder.query(&[("filter[to]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = sort {
+            local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = page_cursor {
+            local_req_builder =
+                local_req_builder.query(&[("page[cursor]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = page_limit {
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -164,7 +190,10 @@ impl EventsAPI {
     pub async fn search_events_with_http_info(
         &self,
         params: SearchEventsParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::EventsListResponse>, Error<SearchEventsError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::EventsListResponse>,
+        Error<SearchEventsError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -173,10 +202,14 @@ impl EventsAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v2/events/search", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

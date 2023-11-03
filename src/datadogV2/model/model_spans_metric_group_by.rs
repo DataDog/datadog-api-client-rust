@@ -18,6 +18,9 @@ pub struct SpansMetricGroupBy {
 
 impl SpansMetricGroupBy {
     pub fn new(path: String) -> SpansMetricGroupBy {
-        SpansMetricGroupBy { path, tag_name: None }
+        SpansMetricGroupBy {
+            path,
+            tag_name: None,
+        }
     }
 }

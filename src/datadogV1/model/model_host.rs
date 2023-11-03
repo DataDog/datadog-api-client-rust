@@ -36,7 +36,11 @@ pub struct Host {
     #[serde(rename = "metrics")]
     pub metrics: Option<Box<crate::datadogV1::model::HostMetrics>>,
     /// Timeout of the mute applied to your host.
-    #[serde(rename = "mute_timeout", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "mute_timeout",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub mute_timeout: Option<Option<i64>>,
     /// The host name.
     #[serde(rename = "name")]

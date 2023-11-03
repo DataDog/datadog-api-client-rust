@@ -15,6 +15,8 @@ pub struct RestrictionPolicyUpdateRequest {
 
 impl RestrictionPolicyUpdateRequest {
     pub fn new(data: crate::datadogV2::model::RestrictionPolicy) -> RestrictionPolicyUpdateRequest {
-        RestrictionPolicyUpdateRequest { data: Box::new(data) }
+        RestrictionPolicyUpdateRequest {
+            data: Box::new(data),
+        }
     }
 }

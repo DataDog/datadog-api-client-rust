@@ -13,7 +13,11 @@ pub struct LogsListResponse {
     pub logs: Option<Vec<crate::datadogV1::model::Log>>,
     /// Hash identifier of the next log to return in the list.
     /// This parameter is used for the pagination feature.
-    #[serde(rename = "nextLogId", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "nextLogId",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub next_log_id: Option<Option<String>>,
     /// Status of the response.
     #[serde(rename = "status")]

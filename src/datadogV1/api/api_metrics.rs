@@ -149,7 +149,8 @@ impl MetricsAPI {
     pub async fn get_metric_metadata(
         &self,
         params: GetMetricMetadataParams,
-    ) -> Result<Option<crate::datadogV1::model::MetricMetadata>, Error<GetMetricMetadataError>> {
+    ) -> Result<Option<crate::datadogV1::model::MetricMetadata>, Error<GetMetricMetadataError>>
+    {
         match self.get_metric_metadata_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -160,7 +161,10 @@ impl MetricsAPI {
     pub async fn get_metric_metadata_with_http_info(
         &self,
         params: GetMetricMetadataParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::MetricMetadata>, Error<GetMetricMetadataError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::MetricMetadata>,
+        Error<GetMetricMetadataError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -173,10 +177,14 @@ impl MetricsAPI {
             local_configuration.base_path,
             metric_name = urlencode(metric_name)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -201,7 +209,8 @@ impl MetricsAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<GetMetricMetadataError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetMetricMetadataError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -215,7 +224,8 @@ impl MetricsAPI {
     pub async fn list_active_metrics(
         &self,
         params: ListActiveMetricsParams,
-    ) -> Result<Option<crate::datadogV1::model::MetricsListResponse>, Error<ListActiveMetricsError>> {
+    ) -> Result<Option<crate::datadogV1::model::MetricsListResponse>, Error<ListActiveMetricsError>>
+    {
         match self.list_active_metrics_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -226,7 +236,10 @@ impl MetricsAPI {
     pub async fn list_active_metrics_with_http_info(
         &self,
         params: ListActiveMetricsParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::MetricsListResponse>, Error<ListActiveMetricsError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::MetricsListResponse>,
+        Error<ListActiveMetricsError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -237,10 +250,21 @@ impl MetricsAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/metrics", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        local_req_builder = local_req_builder.query(&[("from", &from.to_string())]);
+        if let Some(ref local_str) = host {
+            local_req_builder = local_req_builder.query(&[("host", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = tag_filter {
+            local_req_builder = local_req_builder.query(&[("tag_filter", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -265,7 +289,8 @@ impl MetricsAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<ListActiveMetricsError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<ListActiveMetricsError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -279,7 +304,8 @@ impl MetricsAPI {
     pub async fn list_metrics(
         &self,
         params: ListMetricsParams,
-    ) -> Result<Option<crate::datadogV1::model::MetricSearchResponse>, Error<ListMetricsError>> {
+    ) -> Result<Option<crate::datadogV1::model::MetricSearchResponse>, Error<ListMetricsError>>
+    {
         match self.list_metrics_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -290,7 +316,10 @@ impl MetricsAPI {
     pub async fn list_metrics_with_http_info(
         &self,
         params: ListMetricsParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::MetricSearchResponse>, Error<ListMetricsError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::MetricSearchResponse>,
+        Error<ListMetricsError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -299,10 +328,15 @@ impl MetricsAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/search", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        local_req_builder = local_req_builder.query(&[("q", &q.to_string())]);
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -341,7 +375,8 @@ impl MetricsAPI {
     pub async fn query_metrics(
         &self,
         params: QueryMetricsParams,
-    ) -> Result<Option<crate::datadogV1::model::MetricsQueryResponse>, Error<QueryMetricsError>> {
+    ) -> Result<Option<crate::datadogV1::model::MetricsQueryResponse>, Error<QueryMetricsError>>
+    {
         match self.query_metrics_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -352,7 +387,10 @@ impl MetricsAPI {
     pub async fn query_metrics_with_http_info(
         &self,
         params: QueryMetricsParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::MetricsQueryResponse>, Error<QueryMetricsError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::MetricsQueryResponse>,
+        Error<QueryMetricsError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -363,10 +401,17 @@ impl MetricsAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/query", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        local_req_builder = local_req_builder.query(&[("from", &from.to_string())]);
+        local_req_builder = local_req_builder.query(&[("to", &to.to_string())]);
+        local_req_builder = local_req_builder.query(&[("query", &query.to_string())]);
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -415,7 +460,8 @@ impl MetricsAPI {
     pub async fn submit_metrics(
         &self,
         params: SubmitMetricsParams,
-    ) -> Result<Option<crate::datadogV1::model::IntakePayloadAccepted>, Error<SubmitMetricsError>> {
+    ) -> Result<Option<crate::datadogV1::model::IntakePayloadAccepted>, Error<SubmitMetricsError>>
+    {
         match self.submit_metrics_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -436,7 +482,10 @@ impl MetricsAPI {
     pub async fn submit_metrics_with_http_info(
         &self,
         params: SubmitMetricsParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::IntakePayloadAccepted>, Error<SubmitMetricsError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::IntakePayloadAccepted>,
+        Error<SubmitMetricsError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -446,10 +495,17 @@ impl MetricsAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/series", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
+        if let Some(ref local) = content_encoding {
+            local_req_builder = local_req_builder.header("Content-Encoding", &local.to_string());
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -474,7 +530,8 @@ impl MetricsAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<SubmitMetricsError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<SubmitMetricsError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -488,7 +545,8 @@ impl MetricsAPI {
     pub async fn update_metric_metadata(
         &self,
         params: UpdateMetricMetadataParams,
-    ) -> Result<Option<crate::datadogV1::model::MetricMetadata>, Error<UpdateMetricMetadataError>> {
+    ) -> Result<Option<crate::datadogV1::model::MetricMetadata>, Error<UpdateMetricMetadataError>>
+    {
         match self.update_metric_metadata_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -499,7 +557,10 @@ impl MetricsAPI {
     pub async fn update_metric_metadata_with_http_info(
         &self,
         params: UpdateMetricMetadataParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::MetricMetadata>, Error<UpdateMetricMetadataError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::MetricMetadata>,
+        Error<UpdateMetricMetadataError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -513,10 +574,14 @@ impl MetricsAPI {
             local_configuration.base_path,
             metric_name = urlencode(metric_name)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -544,7 +609,8 @@ impl MetricsAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<UpdateMetricMetadataError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<UpdateMetricMetadataError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,

@@ -142,8 +142,14 @@ impl AwsLogsIntegrationAPI {
     pub async fn check_aws_logs_lambda_async(
         &self,
         params: CheckAWSLogsLambdaAsyncParams,
-    ) -> Result<Option<crate::datadogV1::model::AWSLogsAsyncResponse>, Error<CheckAWSLogsLambdaAsyncError>> {
-        match self.check_aws_logs_lambda_async_with_http_info(params).await {
+    ) -> Result<
+        Option<crate::datadogV1::model::AWSLogsAsyncResponse>,
+        Error<CheckAWSLogsLambdaAsyncError>,
+    > {
+        match self
+            .check_aws_logs_lambda_async_with_http_info(params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -160,8 +166,10 @@ impl AwsLogsIntegrationAPI {
     pub async fn check_aws_logs_lambda_async_with_http_info(
         &self,
         params: CheckAWSLogsLambdaAsyncParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::AWSLogsAsyncResponse>, Error<CheckAWSLogsLambdaAsyncError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::AWSLogsAsyncResponse>,
+        Error<CheckAWSLogsLambdaAsyncError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -173,10 +181,14 @@ impl AwsLogsIntegrationAPI {
             "{}/api/v1/integration/aws/logs/check_async",
             local_configuration.base_path
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -204,7 +216,8 @@ impl AwsLogsIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<CheckAWSLogsLambdaAsyncError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CheckAWSLogsLambdaAsyncError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -227,8 +240,14 @@ impl AwsLogsIntegrationAPI {
     pub async fn check_aws_logs_services_async(
         &self,
         params: CheckAWSLogsServicesAsyncParams,
-    ) -> Result<Option<crate::datadogV1::model::AWSLogsAsyncResponse>, Error<CheckAWSLogsServicesAsyncError>> {
-        match self.check_aws_logs_services_async_with_http_info(params).await {
+    ) -> Result<
+        Option<crate::datadogV1::model::AWSLogsAsyncResponse>,
+        Error<CheckAWSLogsServicesAsyncError>,
+    > {
+        match self
+            .check_aws_logs_services_async_with_http_info(params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -247,8 +266,10 @@ impl AwsLogsIntegrationAPI {
     pub async fn check_aws_logs_services_async_with_http_info(
         &self,
         params: CheckAWSLogsServicesAsyncParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::AWSLogsAsyncResponse>, Error<CheckAWSLogsServicesAsyncError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::AWSLogsAsyncResponse>,
+        Error<CheckAWSLogsServicesAsyncError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -260,10 +281,14 @@ impl AwsLogsIntegrationAPI {
             "{}/api/v1/integration/aws/logs/services_async",
             local_configuration.base_path
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -291,7 +316,8 @@ impl AwsLogsIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<CheckAWSLogsServicesAsyncError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CheckAWSLogsServicesAsyncError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -305,7 +331,10 @@ impl AwsLogsIntegrationAPI {
     pub async fn create_aws_lambda_arn(
         &self,
         params: CreateAWSLambdaARNParams,
-    ) -> Result<Option<std::collections::HashMap<String, serde_json::Value>>, Error<CreateAWSLambdaARNError>> {
+    ) -> Result<
+        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Error<CreateAWSLambdaARNError>,
+    > {
         match self.create_aws_lambda_arn_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -316,8 +345,10 @@ impl AwsLogsIntegrationAPI {
     pub async fn create_aws_lambda_arn_with_http_info(
         &self,
         params: CreateAWSLambdaARNParams,
-    ) -> Result<ResponseContent<std::collections::HashMap<String, serde_json::Value>>, Error<CreateAWSLambdaARNError>>
-    {
+    ) -> Result<
+        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        Error<CreateAWSLambdaARNError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -325,11 +356,18 @@ impl AwsLogsIntegrationAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/integration/aws/logs", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v1/integration/aws/logs",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -357,7 +395,8 @@ impl AwsLogsIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<CreateAWSLambdaARNError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CreateAWSLambdaARNError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -371,7 +410,10 @@ impl AwsLogsIntegrationAPI {
     pub async fn delete_aws_lambda_arn(
         &self,
         params: DeleteAWSLambdaARNParams,
-    ) -> Result<Option<std::collections::HashMap<String, serde_json::Value>>, Error<DeleteAWSLambdaARNError>> {
+    ) -> Result<
+        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Error<DeleteAWSLambdaARNError>,
+    > {
         match self.delete_aws_lambda_arn_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -382,8 +424,10 @@ impl AwsLogsIntegrationAPI {
     pub async fn delete_aws_lambda_arn_with_http_info(
         &self,
         params: DeleteAWSLambdaARNParams,
-    ) -> Result<ResponseContent<std::collections::HashMap<String, serde_json::Value>>, Error<DeleteAWSLambdaARNError>>
-    {
+    ) -> Result<
+        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        Error<DeleteAWSLambdaARNError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -391,11 +435,18 @@ impl AwsLogsIntegrationAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/integration/aws/logs", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v1/integration/aws/logs",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -423,7 +474,8 @@ impl AwsLogsIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<DeleteAWSLambdaARNError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<DeleteAWSLambdaARNError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -437,7 +489,10 @@ impl AwsLogsIntegrationAPI {
     pub async fn enable_aws_log_services(
         &self,
         params: EnableAWSLogServicesParams,
-    ) -> Result<Option<std::collections::HashMap<String, serde_json::Value>>, Error<EnableAWSLogServicesError>> {
+    ) -> Result<
+        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Error<EnableAWSLogServicesError>,
+    > {
         match self.enable_aws_log_services_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -448,8 +503,10 @@ impl AwsLogsIntegrationAPI {
     pub async fn enable_aws_log_services_with_http_info(
         &self,
         params: EnableAWSLogServicesParams,
-    ) -> Result<ResponseContent<std::collections::HashMap<String, serde_json::Value>>, Error<EnableAWSLogServicesError>>
-    {
+    ) -> Result<
+        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        Error<EnableAWSLogServicesError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -457,11 +514,18 @@ impl AwsLogsIntegrationAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/integration/aws/logs/services", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v1/integration/aws/logs/services",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -489,7 +553,8 @@ impl AwsLogsIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<EnableAWSLogServicesError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<EnableAWSLogServicesError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -502,7 +567,10 @@ impl AwsLogsIntegrationAPI {
     /// List all Datadog-AWS Logs integrations configured in your Datadog account.
     pub async fn list_aws_logs_integrations(
         &self,
-    ) -> Result<Option<Vec<crate::datadogV1::model::AWSLogsListResponse>>, Error<ListAWSLogsIntegrationsError>> {
+    ) -> Result<
+        Option<Vec<crate::datadogV1::model::AWSLogsListResponse>>,
+        Error<ListAWSLogsIntegrationsError>,
+    > {
         match self.list_aws_logs_integrations_with_http_info().await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -512,19 +580,26 @@ impl AwsLogsIntegrationAPI {
     /// List all Datadog-AWS Logs integrations configured in your Datadog account.
     pub async fn list_aws_logs_integrations_with_http_info(
         &self,
-    ) -> Result<ResponseContent<Vec<crate::datadogV1::model::AWSLogsListResponse>>, Error<ListAWSLogsIntegrationsError>>
-    {
+    ) -> Result<
+        ResponseContent<Vec<crate::datadogV1::model::AWSLogsListResponse>>,
+        Error<ListAWSLogsIntegrationsError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/integration/aws/logs", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v1/integration/aws/logs",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -549,7 +624,8 @@ impl AwsLogsIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<ListAWSLogsIntegrationsError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<ListAWSLogsIntegrationsError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -562,8 +638,10 @@ impl AwsLogsIntegrationAPI {
     /// Get the list of current AWS services that Datadog offers automatic log collection. Use returned service IDs with the services parameter for the Enable an AWS service log collection API endpoint.
     pub async fn list_aws_logs_services(
         &self,
-    ) -> Result<Option<Vec<crate::datadogV1::model::AWSLogsListServicesResponse>>, Error<ListAWSLogsServicesError>>
-    {
+    ) -> Result<
+        Option<Vec<crate::datadogV1::model::AWSLogsListServicesResponse>>,
+        Error<ListAWSLogsServicesError>,
+    > {
         match self.list_aws_logs_services_with_http_info().await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -583,11 +661,16 @@ impl AwsLogsIntegrationAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/integration/aws/logs/services", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v1/integration/aws/logs/services",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -612,7 +695,8 @@ impl AwsLogsIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<ListAWSLogsServicesError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<ListAWSLogsServicesError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,

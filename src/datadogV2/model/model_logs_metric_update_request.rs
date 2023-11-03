@@ -15,6 +15,8 @@ pub struct LogsMetricUpdateRequest {
 
 impl LogsMetricUpdateRequest {
     pub fn new(data: crate::datadogV2::model::LogsMetricUpdateData) -> LogsMetricUpdateRequest {
-        LogsMetricUpdateRequest { data: Box::new(data) }
+        LogsMetricUpdateRequest {
+            data: Box::new(data),
+        }
     }
 }

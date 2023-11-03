@@ -24,7 +24,11 @@ pub struct SLOHistoryMetricsSeriesMetadataUnit {
     #[serde(rename = "scale_factor")]
     pub scale_factor: Option<f64>,
     /// A shorter and abbreviated version of the metric unit, for instance `B`.
-    #[serde(rename = "short_name", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "short_name",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub short_name: Option<Option<String>>,
 }
 

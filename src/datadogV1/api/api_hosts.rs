@@ -128,7 +128,8 @@ impl HostsAPI {
     pub async fn get_host_totals_with_http_info(
         &self,
         params: GetHostTotalsParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::HostTotals>, Error<GetHostTotalsError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::HostTotals>, Error<GetHostTotalsError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -137,10 +138,17 @@ impl HostsAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/hosts/totals", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        if let Some(ref local_str) = from {
+            local_req_builder = local_req_builder.query(&[("from", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -157,14 +165,16 @@ impl HostsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::HostTotals> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<crate::datadogV1::model::HostTotals> =
+                serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<GetHostTotalsError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetHostTotalsError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -195,7 +205,8 @@ impl HostsAPI {
     pub async fn list_hosts_with_http_info(
         &self,
         params: ListHostsParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::HostListResponse>, Error<ListHostsError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::HostListResponse>, Error<ListHostsError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -211,10 +222,40 @@ impl HostsAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/hosts", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        if let Some(ref local_str) = filter {
+            local_req_builder = local_req_builder.query(&[("filter", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = sort_field {
+            local_req_builder = local_req_builder.query(&[("sort_field", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = sort_dir {
+            local_req_builder = local_req_builder.query(&[("sort_dir", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = start {
+            local_req_builder = local_req_builder.query(&[("start", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = count {
+            local_req_builder = local_req_builder.query(&[("count", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = from {
+            local_req_builder = local_req_builder.query(&[("from", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = include_muted_hosts_data {
+            local_req_builder =
+                local_req_builder.query(&[("include_muted_hosts_data", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = include_hosts_metadata {
+            local_req_builder =
+                local_req_builder.query(&[("include_hosts_metadata", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -264,7 +305,8 @@ impl HostsAPI {
     pub async fn mute_host_with_http_info(
         &self,
         params: MuteHostParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::HostMuteResponse>, Error<MuteHostError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::HostMuteResponse>, Error<MuteHostError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -278,10 +320,14 @@ impl HostsAPI {
             local_configuration.base_path,
             host_name = urlencode(host_name)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -334,7 +380,8 @@ impl HostsAPI {
     pub async fn unmute_host_with_http_info(
         &self,
         params: UnmuteHostParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::HostMuteResponse>, Error<UnmuteHostError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::HostMuteResponse>, Error<UnmuteHostError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -347,10 +394,14 @@ impl HostsAPI {
             local_configuration.base_path,
             host_name = urlencode(host_name)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

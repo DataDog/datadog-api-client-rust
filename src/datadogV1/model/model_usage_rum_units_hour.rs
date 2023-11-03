@@ -9,10 +9,18 @@ use serde_with::skip_serializing_none;
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct UsageRumUnitsHour {
     /// The number of browser RUM units.
-    #[serde(rename = "browser_rum_units", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "browser_rum_units",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub browser_rum_units: Option<Option<i64>>,
     /// The number of mobile RUM units.
-    #[serde(rename = "mobile_rum_units", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "mobile_rum_units",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub mobile_rum_units: Option<Option<i64>>,
     /// The organization name.
     #[serde(rename = "org_name")]
@@ -21,7 +29,11 @@ pub struct UsageRumUnitsHour {
     #[serde(rename = "public_id")]
     pub public_id: Option<String>,
     /// Total RUM units across mobile and browser RUM.
-    #[serde(rename = "rum_units", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "rum_units",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub rum_units: Option<Option<i64>>,
 }
 

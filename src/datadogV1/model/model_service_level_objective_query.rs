@@ -20,6 +20,9 @@ pub struct ServiceLevelObjectiveQuery {
 
 impl ServiceLevelObjectiveQuery {
     pub fn new(denominator: String, numerator: String) -> ServiceLevelObjectiveQuery {
-        ServiceLevelObjectiveQuery { denominator, numerator }
+        ServiceLevelObjectiveQuery {
+            denominator,
+            numerator,
+        }
     }
 }

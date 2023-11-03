@@ -19,7 +19,11 @@ pub struct UsageLogsHour {
     #[serde(rename = "hour")]
     pub hour: Option<String>,
     /// Contains the number of log events indexed.
-    #[serde(rename = "indexed_events_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "indexed_events_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub indexed_events_count: Option<Option<i64>>,
     /// Contains the number of log bytes ingested.
     #[serde(

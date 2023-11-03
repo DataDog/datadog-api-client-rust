@@ -154,10 +154,14 @@ impl CloudWorkloadSecurityAPI {
             "{}/api/v2/security_monitoring/cloud_workload_security/agent_rules",
             local_configuration.base_path
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -177,8 +181,9 @@ impl CloudWorkloadSecurityAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse> =
-                serde_json::from_str(&local_content).ok();
+            let local_entity: Option<
+                crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse,
+            > = serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -227,10 +232,14 @@ impl CloudWorkloadSecurityAPI {
             local_configuration.base_path,
             agent_rule_id = urlencode(agent_rule_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -270,7 +279,10 @@ impl CloudWorkloadSecurityAPI {
     pub async fn download_cloud_workload_policy_file(
         &self,
     ) -> Result<Option<Vec<u8>>, Error<DownloadCloudWorkloadPolicyFileError>> {
-        match self.download_cloud_workload_policy_file_with_http_info().await {
+        match self
+            .download_cloud_workload_policy_file_with_http_info()
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -292,10 +304,12 @@ impl CloudWorkloadSecurityAPI {
             "{}/api/v2/security/cloud_workload/policy/download",
             local_configuration.base_path
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -319,7 +333,8 @@ impl CloudWorkloadSecurityAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<DownloadCloudWorkloadPolicyFileError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<DownloadCloudWorkloadPolicyFileError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -337,7 +352,10 @@ impl CloudWorkloadSecurityAPI {
         Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse>,
         Error<GetCloudWorkloadSecurityAgentRuleError>,
     > {
-        match self.get_cloud_workload_security_agent_rule_with_http_info(params).await {
+        match self
+            .get_cloud_workload_security_agent_rule_with_http_info(params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -363,10 +381,14 @@ impl CloudWorkloadSecurityAPI {
             local_configuration.base_path,
             agent_rule_id = urlencode(agent_rule_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -383,8 +405,9 @@ impl CloudWorkloadSecurityAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse> =
-                serde_json::from_str(&local_content).ok();
+            let local_entity: Option<
+                crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse,
+            > = serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -409,7 +432,10 @@ impl CloudWorkloadSecurityAPI {
         Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRulesListResponse>,
         Error<ListCloudWorkloadSecurityAgentRulesError>,
     > {
-        match self.list_cloud_workload_security_agent_rules_with_http_info().await {
+        match self
+            .list_cloud_workload_security_agent_rules_with_http_info()
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -432,10 +458,12 @@ impl CloudWorkloadSecurityAPI {
             "{}/api/v2/security_monitoring/cloud_workload_security/agent_rules",
             local_configuration.base_path
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -452,8 +480,9 @@ impl CloudWorkloadSecurityAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRulesListResponse> =
-                serde_json::from_str(&local_content).ok();
+            let local_entity: Option<
+                crate::datadogV2::model::CloudWorkloadSecurityAgentRulesListResponse,
+            > = serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -511,10 +540,14 @@ impl CloudWorkloadSecurityAPI {
             local_configuration.base_path,
             agent_rule_id = urlencode(agent_rule_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -534,8 +567,9 @@ impl CloudWorkloadSecurityAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse> =
-                serde_json::from_str(&local_content).ok();
+            let local_entity: Option<
+                crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse,
+            > = serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
                 content: local_content,

@@ -175,8 +175,14 @@ impl WebhooksIntegrationAPI {
     pub async fn create_webhooks_integration(
         &self,
         params: CreateWebhooksIntegrationParams,
-    ) -> Result<Option<crate::datadogV1::model::WebhooksIntegration>, Error<CreateWebhooksIntegrationError>> {
-        match self.create_webhooks_integration_with_http_info(params).await {
+    ) -> Result<
+        Option<crate::datadogV1::model::WebhooksIntegration>,
+        Error<CreateWebhooksIntegrationError>,
+    > {
+        match self
+            .create_webhooks_integration_with_http_info(params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -186,8 +192,10 @@ impl WebhooksIntegrationAPI {
     pub async fn create_webhooks_integration_with_http_info(
         &self,
         params: CreateWebhooksIntegrationParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::WebhooksIntegration>, Error<CreateWebhooksIntegrationError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::WebhooksIntegration>,
+        Error<CreateWebhooksIntegrationError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -199,10 +207,14 @@ impl WebhooksIntegrationAPI {
             "{}/api/v1/integration/webhooks/configuration/webhooks",
             local_configuration.base_path
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -230,7 +242,8 @@ impl WebhooksIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<CreateWebhooksIntegrationError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CreateWebhooksIntegrationError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -276,10 +289,14 @@ impl WebhooksIntegrationAPI {
             "{}/api/v1/integration/webhooks/configuration/custom-variables",
             local_configuration.base_path
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -299,8 +316,9 @@ impl WebhooksIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse> =
-                serde_json::from_str(&local_content).ok();
+            let local_entity: Option<
+                crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse,
+            > = serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -323,7 +341,10 @@ impl WebhooksIntegrationAPI {
         &self,
         params: DeleteWebhooksIntegrationParams,
     ) -> Result<Option<()>, Error<DeleteWebhooksIntegrationError>> {
-        match self.delete_webhooks_integration_with_http_info(params).await {
+        match self
+            .delete_webhooks_integration_with_http_info(params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -346,10 +367,14 @@ impl WebhooksIntegrationAPI {
             local_configuration.base_path,
             webhook_name = urlencode(webhook_name)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -372,7 +397,8 @@ impl WebhooksIntegrationAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteWebhooksIntegrationError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<DeleteWebhooksIntegrationError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -413,10 +439,14 @@ impl WebhooksIntegrationAPI {
             local_configuration.base_path,
             custom_variable_name = urlencode(custom_variable_name)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -454,7 +484,10 @@ impl WebhooksIntegrationAPI {
     pub async fn get_webhooks_integration(
         &self,
         params: GetWebhooksIntegrationParams,
-    ) -> Result<Option<crate::datadogV1::model::WebhooksIntegration>, Error<GetWebhooksIntegrationError>> {
+    ) -> Result<
+        Option<crate::datadogV1::model::WebhooksIntegration>,
+        Error<GetWebhooksIntegrationError>,
+    > {
         match self.get_webhooks_integration_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -465,7 +498,10 @@ impl WebhooksIntegrationAPI {
     pub async fn get_webhooks_integration_with_http_info(
         &self,
         params: GetWebhooksIntegrationParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::WebhooksIntegration>, Error<GetWebhooksIntegrationError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::WebhooksIntegration>,
+        Error<GetWebhooksIntegrationError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -478,10 +514,14 @@ impl WebhooksIntegrationAPI {
             local_configuration.base_path,
             webhook_name = urlencode(webhook_name)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -506,7 +546,8 @@ impl WebhooksIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<GetWebhooksIntegrationError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetWebhooksIntegrationError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -559,10 +600,14 @@ impl WebhooksIntegrationAPI {
             local_configuration.base_path,
             custom_variable_name = urlencode(custom_variable_name)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -579,8 +624,9 @@ impl WebhooksIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse> =
-                serde_json::from_str(&local_content).ok();
+            let local_entity: Option<
+                crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse,
+            > = serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -602,8 +648,14 @@ impl WebhooksIntegrationAPI {
     pub async fn update_webhooks_integration(
         &self,
         params: UpdateWebhooksIntegrationParams,
-    ) -> Result<Option<crate::datadogV1::model::WebhooksIntegration>, Error<UpdateWebhooksIntegrationError>> {
-        match self.update_webhooks_integration_with_http_info(params).await {
+    ) -> Result<
+        Option<crate::datadogV1::model::WebhooksIntegration>,
+        Error<UpdateWebhooksIntegrationError>,
+    > {
+        match self
+            .update_webhooks_integration_with_http_info(params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -613,8 +665,10 @@ impl WebhooksIntegrationAPI {
     pub async fn update_webhooks_integration_with_http_info(
         &self,
         params: UpdateWebhooksIntegrationParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::WebhooksIntegration>, Error<UpdateWebhooksIntegrationError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::WebhooksIntegration>,
+        Error<UpdateWebhooksIntegrationError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -628,10 +682,14 @@ impl WebhooksIntegrationAPI {
             local_configuration.base_path,
             webhook_name = urlencode(webhook_name)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -659,7 +717,8 @@ impl WebhooksIntegrationAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<UpdateWebhooksIntegrationError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<UpdateWebhooksIntegrationError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -707,10 +766,14 @@ impl WebhooksIntegrationAPI {
             local_configuration.base_path,
             custom_variable_name = urlencode(custom_variable_name)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -730,8 +793,9 @@ impl WebhooksIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse> =
-                serde_json::from_str(&local_content).ok();
+            let local_entity: Option<
+                crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse,
+            > = serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
                 content: local_content,

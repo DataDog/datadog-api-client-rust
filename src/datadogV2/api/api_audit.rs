@@ -79,7 +79,8 @@ impl AuditAPI {
     pub async fn list_audit_logs(
         &self,
         params: ListAuditLogsParams,
-    ) -> Result<Option<crate::datadogV2::model::AuditLogsEventsResponse>, Error<ListAuditLogsError>> {
+    ) -> Result<Option<crate::datadogV2::model::AuditLogsEventsResponse>, Error<ListAuditLogsError>>
+    {
         match self.list_audit_logs_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -95,7 +96,10 @@ impl AuditAPI {
     pub async fn list_audit_logs_with_http_info(
         &self,
         params: ListAuditLogsParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::AuditLogsEventsResponse>, Error<ListAuditLogsError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::AuditLogsEventsResponse>,
+        Error<ListAuditLogsError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -109,10 +113,35 @@ impl AuditAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v2/audit/events", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        if let Some(ref local_str) = filter_query {
+            local_req_builder =
+                local_req_builder.query(&[("filter[query]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = filter_from {
+            local_req_builder =
+                local_req_builder.query(&[("filter[from]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = filter_to {
+            local_req_builder = local_req_builder.query(&[("filter[to]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = sort {
+            local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = page_cursor {
+            local_req_builder =
+                local_req_builder.query(&[("page[cursor]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = page_limit {
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -137,7 +166,8 @@ impl AuditAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<ListAuditLogsError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<ListAuditLogsError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -156,7 +186,8 @@ impl AuditAPI {
     pub async fn search_audit_logs(
         &self,
         params: SearchAuditLogsParams,
-    ) -> Result<Option<crate::datadogV2::model::AuditLogsEventsResponse>, Error<SearchAuditLogsError>> {
+    ) -> Result<Option<crate::datadogV2::model::AuditLogsEventsResponse>, Error<SearchAuditLogsError>>
+    {
         match self.search_audit_logs_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -172,7 +203,10 @@ impl AuditAPI {
     pub async fn search_audit_logs_with_http_info(
         &self,
         params: SearchAuditLogsParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::AuditLogsEventsResponse>, Error<SearchAuditLogsError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::AuditLogsEventsResponse>,
+        Error<SearchAuditLogsError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -180,11 +214,18 @@ impl AuditAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/audit/events/search", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v2/audit/events/search",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -214,7 +255,8 @@ impl AuditAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<SearchAuditLogsError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<SearchAuditLogsError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,

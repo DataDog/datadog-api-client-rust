@@ -9,7 +9,11 @@ use serde_with::skip_serializing_none;
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct UsageLogsByRetentionHour {
     /// Total logs indexed with this retention period during a given hour.
-    #[serde(rename = "indexed_events_count", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "indexed_events_count",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub indexed_events_count: Option<Option<i64>>,
     /// Live logs indexed with this retention period during a given hour.
     #[serde(
@@ -32,7 +36,11 @@ pub struct UsageLogsByRetentionHour {
     )]
     pub rehydrated_indexed_events_count: Option<Option<i64>>,
     /// The retention period in days or "custom" for all custom retention usage.
-    #[serde(rename = "retention", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "retention",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub retention: Option<Option<String>>,
 }
 

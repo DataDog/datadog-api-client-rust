@@ -19,13 +19,21 @@ pub struct SearchServiceLevelObjectiveAttributes {
     #[serde(rename = "created_at")]
     pub created_at: Option<i64>,
     /// The creator of the SLO
-    #[serde(rename = "creator", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "creator",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub creator: Option<Option<Box<crate::datadogV1::model::SLOCreator>>>,
     /// A user-defined description of the service level objective.
     ///
     /// Always included in service level objective responses (but may be `null`).
     /// Optional in create/update requests.
-    #[serde(rename = "description", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "description",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub description: Option<Option<String>>,
     /// Tags with the `env` tag key.
     #[serde(rename = "env_tags")]
@@ -41,7 +49,11 @@ pub struct SearchServiceLevelObjectiveAttributes {
     pub modified_at: Option<i64>,
     /// A list of monitor ids that defines the scope of a monitor service level
     /// objective.
-    #[serde(rename = "monitor_ids", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "monitor_ids",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub monitor_ids: Option<Option<Vec<i64>>>,
     /// The name of the service level objective object.
     #[serde(rename = "name")]

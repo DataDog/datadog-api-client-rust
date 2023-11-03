@@ -21,7 +21,11 @@ pub struct DashboardListItem {
     #[serde(rename = "id")]
     pub id: String,
     /// The short name of the integration.
-    #[serde(rename = "integration_id", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "integration_id",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub integration_id: Option<Option<String>>,
     /// Whether or not the dashboard is in the favorites.
     #[serde(rename = "is_favorite")]

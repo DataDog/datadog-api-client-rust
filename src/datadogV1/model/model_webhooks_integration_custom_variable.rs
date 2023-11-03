@@ -22,6 +22,10 @@ pub struct WebhooksIntegrationCustomVariable {
 
 impl WebhooksIntegrationCustomVariable {
     pub fn new(is_secret: bool, name: String, value: String) -> WebhooksIntegrationCustomVariable {
-        WebhooksIntegrationCustomVariable { is_secret, name, value }
+        WebhooksIntegrationCustomVariable {
+            is_secret,
+            name,
+            value,
+        }
     }
 }

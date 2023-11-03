@@ -127,7 +127,8 @@ impl SecurityMonitoringAPI {
     pub async fn get_finding_with_http_info(
         &self,
         params: GetFindingParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::GetFindingResponse>, Error<GetFindingError>> {
+    ) -> Result<ResponseContent<crate::datadogV2::model::GetFindingResponse>, Error<GetFindingError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -141,10 +142,18 @@ impl SecurityMonitoringAPI {
             local_configuration.base_path,
             finding_id = urlencode(finding_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        if let Some(ref local_str) = snapshot_timestamp {
+            local_req_builder =
+                local_req_builder.query(&[("snapshot_timestamp", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -213,7 +222,8 @@ impl SecurityMonitoringAPI {
     pub async fn list_findings(
         &self,
         params: ListFindingsParams,
-    ) -> Result<Option<crate::datadogV2::model::ListFindingsResponse>, Error<ListFindingsError>> {
+    ) -> Result<Option<crate::datadogV2::model::ListFindingsResponse>, Error<ListFindingsError>>
+    {
         match self.list_findings_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -254,7 +264,10 @@ impl SecurityMonitoringAPI {
     pub async fn list_findings_with_http_info(
         &self,
         params: ListFindingsParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::ListFindingsResponse>, Error<ListFindingsError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::ListFindingsResponse>,
+        Error<ListFindingsError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -273,11 +286,65 @@ impl SecurityMonitoringAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/posture_management/findings", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let local_uri_str = format!(
+            "{}/api/v2/posture_management/findings",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        if let Some(ref local_str) = page_limit {
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = snapshot_timestamp {
+            local_req_builder =
+                local_req_builder.query(&[("snapshot_timestamp", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = page_cursor {
+            local_req_builder =
+                local_req_builder.query(&[("page[cursor]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = filter_tags {
+            local_req_builder =
+                local_req_builder.query(&[("filter[tags]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = filter_evaluation_changed_at {
+            local_req_builder = local_req_builder
+                .query(&[("filter[evaluation_changed_at]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = filter_muted {
+            local_req_builder =
+                local_req_builder.query(&[("filter[muted]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = filter_rule_id {
+            local_req_builder =
+                local_req_builder.query(&[("filter[rule_id]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = filter_rule_name {
+            local_req_builder =
+                local_req_builder.query(&[("filter[rule_name]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = filter_resource_type {
+            local_req_builder =
+                local_req_builder.query(&[("filter[resource_type]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = filter_discovery_timestamp {
+            local_req_builder =
+                local_req_builder.query(&[("filter[discovery_timestamp]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = filter_evaluation {
+            local_req_builder =
+                local_req_builder.query(&[("filter[evaluation]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = filter_status {
+            local_req_builder =
+                local_req_builder.query(&[("filter[status]", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -317,7 +384,8 @@ impl SecurityMonitoringAPI {
     pub async fn update_finding(
         &self,
         params: UpdateFindingParams,
-    ) -> Result<Option<crate::datadogV2::model::MuteFindingResponse>, Error<UpdateFindingError>> {
+    ) -> Result<Option<crate::datadogV2::model::MuteFindingResponse>, Error<UpdateFindingError>>
+    {
         match self.update_finding_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -329,7 +397,10 @@ impl SecurityMonitoringAPI {
     pub async fn update_finding_with_http_info(
         &self,
         params: UpdateFindingParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::MuteFindingResponse>, Error<UpdateFindingError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::MuteFindingResponse>,
+        Error<UpdateFindingError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -343,10 +414,14 @@ impl SecurityMonitoringAPI {
             local_configuration.base_path,
             finding_id = urlencode(finding_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -374,7 +449,8 @@ impl SecurityMonitoringAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<UpdateFindingError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<UpdateFindingError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,

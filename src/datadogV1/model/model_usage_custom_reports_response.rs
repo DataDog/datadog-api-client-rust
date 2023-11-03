@@ -18,6 +18,9 @@ pub struct UsageCustomReportsResponse {
 
 impl UsageCustomReportsResponse {
     pub fn new() -> UsageCustomReportsResponse {
-        UsageCustomReportsResponse { data: None, meta: None }
+        UsageCustomReportsResponse {
+            data: None,
+            meta: None,
+        }
     }
 }

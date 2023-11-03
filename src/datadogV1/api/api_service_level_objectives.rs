@@ -241,7 +241,10 @@ impl ServiceLevelObjectivesAPI {
     pub async fn check_can_delete_slo(
         &self,
         params: CheckCanDeleteSLOParams,
-    ) -> Result<Option<crate::datadogV1::model::CheckCanDeleteSLOResponse>, Error<CheckCanDeleteSLOError>> {
+    ) -> Result<
+        Option<crate::datadogV1::model::CheckCanDeleteSLOResponse>,
+        Error<CheckCanDeleteSLOError>,
+    > {
         match self.check_can_delete_slo_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -253,8 +256,10 @@ impl ServiceLevelObjectivesAPI {
     pub async fn check_can_delete_slo_with_http_info(
         &self,
         params: CheckCanDeleteSLOParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::CheckCanDeleteSLOResponse>, Error<CheckCanDeleteSLOError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::CheckCanDeleteSLOResponse>,
+        Error<CheckCanDeleteSLOError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -263,10 +268,15 @@ impl ServiceLevelObjectivesAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/slo/can_delete", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        local_req_builder = local_req_builder.query(&[("ids", &ids.to_string())]);
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -291,7 +301,8 @@ impl ServiceLevelObjectivesAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<CheckCanDeleteSLOError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<CheckCanDeleteSLOError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -316,7 +327,8 @@ impl ServiceLevelObjectivesAPI {
     pub async fn create_slo_with_http_info(
         &self,
         params: CreateSLOParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::SLOListResponse>, Error<CreateSLOError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::SLOListResponse>, Error<CreateSLOError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -325,10 +337,14 @@ impl ServiceLevelObjectivesAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/slo", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -387,7 +403,8 @@ impl ServiceLevelObjectivesAPI {
     pub async fn delete_slo_with_http_info(
         &self,
         params: DeleteSLOParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::SLODeleteResponse>, Error<DeleteSLOError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::SLODeleteResponse>, Error<DeleteSLOError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -401,10 +418,17 @@ impl ServiceLevelObjectivesAPI {
             local_configuration.base_path,
             slo_id = urlencode(slo_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build parameters
+        if let Some(ref local_str) = force {
+            local_req_builder = local_req_builder.query(&[("force", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -447,8 +471,14 @@ impl ServiceLevelObjectivesAPI {
     pub async fn delete_slo_timeframe_in_bulk(
         &self,
         params: DeleteSLOTimeframeInBulkParams,
-    ) -> Result<Option<crate::datadogV1::model::SLOBulkDeleteResponse>, Error<DeleteSLOTimeframeInBulkError>> {
-        match self.delete_slo_timeframe_in_bulk_with_http_info(params).await {
+    ) -> Result<
+        Option<crate::datadogV1::model::SLOBulkDeleteResponse>,
+        Error<DeleteSLOTimeframeInBulkError>,
+    > {
+        match self
+            .delete_slo_timeframe_in_bulk_with_http_info(params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -462,8 +492,10 @@ impl ServiceLevelObjectivesAPI {
     pub async fn delete_slo_timeframe_in_bulk_with_http_info(
         &self,
         params: DeleteSLOTimeframeInBulkParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::SLOBulkDeleteResponse>, Error<DeleteSLOTimeframeInBulkError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::SLOBulkDeleteResponse>,
+        Error<DeleteSLOTimeframeInBulkError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -472,10 +504,14 @@ impl ServiceLevelObjectivesAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/slo/bulk_delete", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -503,7 +539,8 @@ impl ServiceLevelObjectivesAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<DeleteSLOTimeframeInBulkError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<DeleteSLOTimeframeInBulkError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -542,10 +579,18 @@ impl ServiceLevelObjectivesAPI {
             local_configuration.base_path,
             slo_id = urlencode(slo_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        if let Some(ref local_str) = with_configured_alert_ids {
+            local_req_builder =
+                local_req_builder.query(&[("with_configured_alert_ids", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -562,7 +607,8 @@ impl ServiceLevelObjectivesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SLOResponse> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<crate::datadogV1::model::SLOResponse> =
+                serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -583,7 +629,10 @@ impl ServiceLevelObjectivesAPI {
     pub async fn get_slo_corrections(
         &self,
         params: GetSLOCorrectionsParams,
-    ) -> Result<Option<crate::datadogV1::model::SLOCorrectionListResponse>, Error<GetSLOCorrectionsError>> {
+    ) -> Result<
+        Option<crate::datadogV1::model::SLOCorrectionListResponse>,
+        Error<GetSLOCorrectionsError>,
+    > {
         match self.get_slo_corrections_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -594,8 +643,10 @@ impl ServiceLevelObjectivesAPI {
     pub async fn get_slo_corrections_with_http_info(
         &self,
         params: GetSLOCorrectionsParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::SLOCorrectionListResponse>, Error<GetSLOCorrectionsError>>
-    {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::SLOCorrectionListResponse>,
+        Error<GetSLOCorrectionsError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -608,10 +659,14 @@ impl ServiceLevelObjectivesAPI {
             local_configuration.base_path,
             slo_id = urlencode(slo_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -636,7 +691,8 @@ impl ServiceLevelObjectivesAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<GetSLOCorrectionsError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetSLOCorrectionsError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -657,7 +713,8 @@ impl ServiceLevelObjectivesAPI {
     pub async fn get_slo_history(
         &self,
         params: GetSLOHistoryParams,
-    ) -> Result<Option<crate::datadogV1::model::SLOHistoryResponse>, Error<GetSLOHistoryError>> {
+    ) -> Result<Option<crate::datadogV1::model::SLOHistoryResponse>, Error<GetSLOHistoryError>>
+    {
         match self.get_slo_history_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
@@ -675,7 +732,10 @@ impl ServiceLevelObjectivesAPI {
     pub async fn get_slo_history_with_http_info(
         &self,
         params: GetSLOHistoryParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::SLOHistoryResponse>, Error<GetSLOHistoryError>> {
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::SLOHistoryResponse>,
+        Error<GetSLOHistoryError>,
+    > {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -692,10 +752,23 @@ impl ServiceLevelObjectivesAPI {
             local_configuration.base_path,
             slo_id = urlencode(slo_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        local_req_builder = local_req_builder.query(&[("from_ts", &from_ts.to_string())]);
+        local_req_builder = local_req_builder.query(&[("to_ts", &to_ts.to_string())]);
+        if let Some(ref local_str) = target {
+            local_req_builder = local_req_builder.query(&[("target", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = apply_correction {
+            local_req_builder =
+                local_req_builder.query(&[("apply_correction", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -720,7 +793,8 @@ impl ServiceLevelObjectivesAPI {
                 entity: local_entity,
             })
         } else {
-            let local_entity: Option<GetSLOHistoryError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetSLOHistoryError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -745,7 +819,8 @@ impl ServiceLevelObjectivesAPI {
     pub async fn list_sl_os_with_http_info(
         &self,
         params: ListSLOsParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::SLOListResponse>, Error<ListSLOsError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::SLOListResponse>, Error<ListSLOsError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -759,10 +834,33 @@ impl ServiceLevelObjectivesAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/slo", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        if let Some(ref local_str) = ids {
+            local_req_builder = local_req_builder.query(&[("ids", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = query {
+            local_req_builder = local_req_builder.query(&[("query", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = tags_query {
+            local_req_builder = local_req_builder.query(&[("tags_query", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = metrics_query {
+            local_req_builder =
+                local_req_builder.query(&[("metrics_query", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = limit {
+            local_req_builder = local_req_builder.query(&[("limit", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = offset {
+            local_req_builder = local_req_builder.query(&[("offset", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -812,7 +910,8 @@ impl ServiceLevelObjectivesAPI {
     pub async fn search_slo_with_http_info(
         &self,
         params: SearchSLOParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::SearchSLOResponse>, Error<SearchSLOError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::SearchSLOResponse>, Error<SearchSLOError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -824,10 +923,28 @@ impl ServiceLevelObjectivesAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/slo/search", local_configuration.base_path);
-        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build parameters
+        if let Some(ref local_str) = query {
+            local_req_builder = local_req_builder.query(&[("query", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = page_size {
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = include_facets {
+            local_req_builder =
+                local_req_builder.query(&[("include_facets", &local_str.to_string())]);
+        };
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -877,7 +994,8 @@ impl ServiceLevelObjectivesAPI {
     pub async fn update_slo_with_http_info(
         &self,
         params: UpdateSLOParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::SLOListResponse>, Error<UpdateSLOError>> {
+    ) -> Result<ResponseContent<crate::datadogV1::model::SLOListResponse>, Error<UpdateSLOError>>
+    {
         let local_configuration = &self.config;
 
         // unbox the parameters
@@ -891,10 +1009,14 @@ impl ServiceLevelObjectivesAPI {
             local_configuration.base_path,
             slo_id = urlencode(slo_id)
         );
-        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build parameters
 
         if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

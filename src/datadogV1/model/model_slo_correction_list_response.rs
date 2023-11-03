@@ -18,6 +18,9 @@ pub struct SLOCorrectionListResponse {
 
 impl SLOCorrectionListResponse {
     pub fn new() -> SLOCorrectionListResponse {
-        SLOCorrectionListResponse { data: None, meta: None }
+        SLOCorrectionListResponse {
+            data: None,
+            meta: None,
+        }
     }
 }
