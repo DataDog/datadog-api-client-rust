@@ -136,7 +136,7 @@ impl OpsgenieIntegrationAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let body = params.body;
 
         let local_client = &local_configuration.client;
@@ -148,13 +148,13 @@ impl OpsgenieIntegrationAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
-        // build parameters
-
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -162,7 +162,7 @@ impl OpsgenieIntegrationAPI {
             local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
         };
 
-        // body params
+        // build body parameters
         local_req_builder = local_req_builder.json(&body);
 
         let local_req = local_req_builder.build()?;
@@ -209,7 +209,7 @@ impl OpsgenieIntegrationAPI {
     ) -> Result<ResponseContent<()>, Error<DeleteOpsgenieServiceError>> {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let integration_service_id = params.integration_service_id;
 
         let local_client = &local_configuration.client;
@@ -222,13 +222,13 @@ impl OpsgenieIntegrationAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
-        // build parameters
-
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -284,7 +284,7 @@ impl OpsgenieIntegrationAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let integration_service_id = params.integration_service_id;
 
         let local_client = &local_configuration.client;
@@ -297,13 +297,13 @@ impl OpsgenieIntegrationAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
-
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -359,7 +359,7 @@ impl OpsgenieIntegrationAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
 
         let local_client = &local_configuration.client;
 
@@ -370,11 +370,13 @@ impl OpsgenieIntegrationAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -432,7 +434,7 @@ impl OpsgenieIntegrationAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let integration_service_id = params.integration_service_id;
         let body = params.body;
 
@@ -446,13 +448,13 @@ impl OpsgenieIntegrationAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
-        // build parameters
-
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -460,7 +462,7 @@ impl OpsgenieIntegrationAPI {
             local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
         };
 
-        // body params
+        // build body parameters
         local_req_builder = local_req_builder.json(&body);
 
         let local_req = local_req_builder.build()?;

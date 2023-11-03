@@ -842,7 +842,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
         let sort_dir = params.sort_dir;
@@ -857,7 +857,6 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         if let Some(ref local_str) = page_size {
             local_req_builder = local_req_builder.query(&[("page[size]", &local_str.to_string())]);
         };
@@ -872,11 +871,13 @@ impl UsageMeteringAPI {
             local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -965,7 +966,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let usage_type = params.usage_type;
         let end_hr = params.end_hr;
@@ -982,7 +983,6 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         local_req_builder = local_req_builder.query(&[("usage_type", &usage_type.to_string())]);
         if let Some(ref local_str) = end_hr {
@@ -1001,11 +1001,13 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("include_descendants", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -1065,7 +1067,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let end_hr = params.end_hr;
 
@@ -1078,17 +1080,18 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         if let Some(ref local_str) = end_hr {
             local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -1148,7 +1151,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let end_hr = params.end_hr;
 
@@ -1161,17 +1164,18 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         if let Some(ref local_str) = end_hr {
             local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -1233,7 +1237,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
         let sort_dir = params.sort_dir;
@@ -1248,7 +1252,6 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         if let Some(ref local_str) = page_size {
             local_req_builder = local_req_builder.query(&[("page[size]", &local_str.to_string())]);
         };
@@ -1263,11 +1266,13 @@ impl UsageMeteringAPI {
             local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -1356,7 +1361,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_month = params.start_month;
         let fields = params.fields;
         let end_month = params.end_month;
@@ -1375,7 +1380,6 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_month", &start_month.to_string())]);
         local_req_builder = local_req_builder.query(&[("fields", &fields.to_string())]);
         if let Some(ref local_str) = end_month {
@@ -1401,11 +1405,13 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("include_descendants", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -1470,7 +1476,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let report_id = params.report_id;
 
         let local_client = &local_configuration.client;
@@ -1483,13 +1489,13 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
-
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -1554,7 +1560,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let report_id = params.report_id;
 
         let local_client = &local_configuration.client;
@@ -1567,13 +1573,13 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
-
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -1633,7 +1639,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let end_hr = params.end_hr;
 
@@ -1646,17 +1652,18 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         if let Some(ref local_str) = end_hr {
             local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -1718,7 +1725,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_month = params.start_month;
         let fields = params.fields;
         let end_month = params.end_month;
@@ -1734,7 +1741,6 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_month", &start_month.to_string())]);
         local_req_builder = local_req_builder.query(&[("fields", &fields.to_string())]);
         if let Some(ref local_str) = end_month {
@@ -1758,11 +1764,13 @@ impl UsageMeteringAPI {
             local_req_builder = local_req_builder.query(&[("limit", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -1822,7 +1830,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let end_hr = params.end_hr;
 
@@ -1832,17 +1840,18 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         if let Some(ref local_str) = end_hr {
             local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -1900,7 +1909,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let month = params.month;
 
         let local_client = &local_configuration.client;
@@ -1912,16 +1921,17 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         if let Some(ref local_str) = month {
             local_req_builder = local_req_builder.query(&[("month", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -1979,7 +1989,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let end_hr = params.end_hr;
 
@@ -1989,17 +1999,18 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         if let Some(ref local_str) = end_hr {
             local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -2054,7 +2065,7 @@ impl UsageMeteringAPI {
     {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let end_hr = params.end_hr;
 
@@ -2064,17 +2075,18 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         if let Some(ref local_str) = end_hr {
             local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -2136,7 +2148,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let end_hr = params.end_hr;
 
@@ -2146,17 +2158,18 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         if let Some(ref local_str) = end_hr {
             local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -2212,7 +2225,7 @@ impl UsageMeteringAPI {
     {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let end_hr = params.end_hr;
 
@@ -2222,17 +2235,18 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         if let Some(ref local_str) = end_hr {
             local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -2289,7 +2303,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let end_hr = params.end_hr;
 
@@ -2299,17 +2313,18 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         if let Some(ref local_str) = end_hr {
             local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -2367,7 +2382,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let end_hr = params.end_hr;
 
@@ -2377,17 +2392,18 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         if let Some(ref local_str) = end_hr {
             local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -2447,7 +2463,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let end_hr = params.end_hr;
 
@@ -2460,17 +2476,18 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         if let Some(ref local_str) = end_hr {
             local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -2533,7 +2550,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let end_hr = params.end_hr;
 
@@ -2543,17 +2560,18 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         if let Some(ref local_str) = end_hr {
             local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -2611,7 +2629,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let end_hr = params.end_hr;
 
@@ -2621,17 +2639,18 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         if let Some(ref local_str) = end_hr {
             local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -2686,7 +2705,7 @@ impl UsageMeteringAPI {
     {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let end_hr = params.end_hr;
 
@@ -2696,17 +2715,18 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         if let Some(ref local_str) = end_hr {
             local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -2763,7 +2783,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let end_hr = params.end_hr;
         let index_name = params.index_name;
@@ -2777,7 +2797,6 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         if let Some(ref local_str) = end_hr {
             local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
@@ -2794,11 +2813,13 @@ impl UsageMeteringAPI {
             )]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -2861,7 +2882,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let end_hr = params.end_hr;
 
@@ -2874,17 +2895,18 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         if let Some(ref local_str) = end_hr {
             local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -2944,7 +2966,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let end_hr = params.end_hr;
 
@@ -2957,17 +2979,18 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         if let Some(ref local_str) = end_hr {
             local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -3027,7 +3050,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let end_hr = params.end_hr;
 
@@ -3040,17 +3063,18 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         if let Some(ref local_str) = end_hr {
             local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -3110,7 +3134,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let end_hr = params.end_hr;
 
@@ -3123,17 +3147,18 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         if let Some(ref local_str) = end_hr {
             local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -3193,7 +3218,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let end_hr = params.end_hr;
 
@@ -3203,17 +3228,18 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         if let Some(ref local_str) = end_hr {
             local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -3273,7 +3299,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let end_hr = params.end_hr;
         let type_ = params.type_;
@@ -3287,7 +3313,6 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         if let Some(ref local_str) = end_hr {
             local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
@@ -3296,11 +3321,13 @@ impl UsageMeteringAPI {
             local_req_builder = local_req_builder.query(&[("type", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -3358,7 +3385,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let end_hr = params.end_hr;
 
@@ -3368,17 +3395,18 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         if let Some(ref local_str) = end_hr {
             local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -3433,7 +3461,7 @@ impl UsageMeteringAPI {
     {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let end_hr = params.end_hr;
 
@@ -3443,17 +3471,18 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         if let Some(ref local_str) = end_hr {
             local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -3507,7 +3536,7 @@ impl UsageMeteringAPI {
     {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let end_hr = params.end_hr;
 
@@ -3517,17 +3546,18 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         if let Some(ref local_str) = end_hr {
             local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -3582,7 +3612,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_month = params.start_month;
         let end_month = params.end_month;
         let include_org_details = params.include_org_details;
@@ -3593,7 +3623,6 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_month", &start_month.to_string())]);
         if let Some(ref local_str) = end_month {
             local_req_builder = local_req_builder.query(&[("end_month", &local_str.to_string())]);
@@ -3603,11 +3632,13 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("include_org_details", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -3667,7 +3698,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let end_hr = params.end_hr;
 
@@ -3677,17 +3708,18 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         if let Some(ref local_str) = end_hr {
             local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -3747,7 +3779,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let end_hr = params.end_hr;
 
@@ -3760,17 +3792,18 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         if let Some(ref local_str) = end_hr {
             local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -3833,7 +3866,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let end_hr = params.end_hr;
 
@@ -3846,17 +3879,18 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         if let Some(ref local_str) = end_hr {
             local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -3916,7 +3950,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start_hr = params.start_hr;
         let end_hr = params.end_hr;
 
@@ -3926,17 +3960,18 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         if let Some(ref local_str) = end_hr {
             local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -3994,7 +4029,7 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let month = params.month;
         let day = params.day;
         let names = params.names;
@@ -4010,7 +4045,6 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         if let Some(ref local_str) = month {
             local_req_builder = local_req_builder.query(&[("month", &local_str.to_string())]);
         };
@@ -4036,11 +4070,13 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("next_record_id", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };

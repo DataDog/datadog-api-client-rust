@@ -167,7 +167,7 @@ impl MetricsAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let metric_name = params.metric_name;
 
         let local_client = &local_configuration.client;
@@ -180,13 +180,13 @@ impl MetricsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
-
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -242,7 +242,7 @@ impl MetricsAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let from = params.from;
         let host = params.host;
         let tag_filter = params.tag_filter;
@@ -253,7 +253,6 @@ impl MetricsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("from", &from.to_string())]);
         if let Some(ref local_str) = host {
             local_req_builder = local_req_builder.query(&[("host", &local_str.to_string())]);
@@ -262,11 +261,13 @@ impl MetricsAPI {
             local_req_builder = local_req_builder.query(&[("tag_filter", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -322,7 +323,7 @@ impl MetricsAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let q = params.q;
 
         let local_client = &local_configuration.client;
@@ -331,14 +332,15 @@ impl MetricsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("q", &q.to_string())]);
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -393,7 +395,7 @@ impl MetricsAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let from = params.from;
         let to = params.to;
         let query = params.query;
@@ -404,16 +406,17 @@ impl MetricsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("from", &from.to_string())]);
         local_req_builder = local_req_builder.query(&[("to", &to.to_string())]);
         local_req_builder = local_req_builder.query(&[("query", &query.to_string())]);
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -488,7 +491,7 @@ impl MetricsAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let body = params.body;
         let content_encoding = params.content_encoding;
 
@@ -498,21 +501,22 @@ impl MetricsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
-        // build parameters
         if let Some(ref local) = content_encoding {
             local_req_builder = local_req_builder.header("Content-Encoding", &local.to_string());
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
 
-        // body params
+        // build body parameters
         local_req_builder = local_req_builder.json(&body);
 
         let local_req = local_req_builder.build()?;
@@ -563,7 +567,7 @@ impl MetricsAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let metric_name = params.metric_name;
         let body = params.body;
 
@@ -577,13 +581,13 @@ impl MetricsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
-        // build parameters
-
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -591,7 +595,7 @@ impl MetricsAPI {
             local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
         };
 
-        // body params
+        // build body parameters
         local_req_builder = local_req_builder.json(&body);
 
         let local_req = local_req_builder.build()?;

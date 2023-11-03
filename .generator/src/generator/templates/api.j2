@@ -90,7 +90,7 @@ impl {{ structName }} {
     pub async fn {{operation.operationId | snake_case}}_with_http_info(&self{% for name, parameter in operation|parameters %}{% if loop.first %}, params: {{operation.operationId}}Params{% endif %}{% endfor %}) -> Result<ResponseContent<{% if returnType %}{{returnType}}{% else %}(){% endif %}>, Error<{{operation.operationId}}Error>> {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         {%- for name, parameter in operation|parameters %}
         let {{name|variable_name}} = params.{{name|variable_name}};
         {%- endfor %}
@@ -110,9 +110,6 @@ impl {{ structName }} {
         let mut local_req_builder = local_client.request(reqwest::Method::{{ httpMethod }}, local_uri_str.as_str());
 
         {% for name, parameter in operation|parameters %}
-        {%- if loop.first %}
-        // build parameters
-        {%- endif %}
         {%- set schema = parameter | parameter_schema %}
         {%- if parameter.in == "query" %}
         {%- if schema.type == "array" %}
@@ -142,80 +139,13 @@ impl {{ structName }} {
         {%- endif %}
         {%- endif %}
         {%- endfor %}
-        {#
-        {{#queryParams}}
-        {{#required}}
-        {{#isArray}}
-        local_req_builder = match "{{collectionFormat}}" {
-            "multi" => local_req_builder.query(&{{{paramName}}}.into_iter().map(|p| ("{{{baseName}}}".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_req_builder.query(&[("{{{baseName}}}", &{{{paramName}}}.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
-        };
-        {{/isArray}}
-        {{^isArray}}
-        {{^isNullable}}
-        local_req_builder = local_req_builder.query(&[("{{{baseName}}}", &{{{paramName}}}.to_string())]);
-        {{/isNullable}}
-        {{#isNullable}}
-        {{#isDeepObject}}
-        if let Some(ref local_str) = {{{paramName}}} {
-            let params = crate::apis::parse_deep_object("{{{baseName}}}", local_str);
-            local_req_builder = local_req_builder.query(&params);
-        };
-        {{/isDeepObject}}
-        {{^isDeepObject}}
-        if let Some(ref local_str) = {{{paramName}}} {
-            local_req_builder = local_req_builder.query(&[("{{{baseName}}}", &local_str.to_string())]);
-        };
-        {{/isDeepObject}}
-        {{/isNullable}}
-        {{/isArray}}
-        {{/required}}
-        {{^required}}
-        if let Some(ref local_str) = {{{paramName}}} {
-            {{#isArray}}
-            local_req_builder = match "{{collectionFormat}}" {
-                "multi" => local_req_builder.query(&local_str.into_iter().map(|p| ("{{{baseName}}}".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-                _ => local_req_builder.query(&[("{{{baseName}}}", &local_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
-            };
-            {{/isArray}}
-            {{^isArray}}
-            {{#isDeepObject}}
-            let params = crate::apis::parse_deep_object("{{{baseName}}}", local_str);
-            local_req_builder = local_req_builder.query(&params);
-            {{/isDeepObject}}
-            {{^isDeepObject}}
-            local_req_builder = local_req_builder.query(&[("{{{baseName}}}", &local_str.to_string())]);
-            {{/isDeepObject}}
-            {{/isArray}}
-        }
-        {{/required}}
-        {{/queryParams}}
-        #}
+
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
-        {#
-        {{#hasHeaderParams}}
-        {{#headerParams}}
-        {{#required}}
-        {{^isNullable}}
-        local_req_builder = local_req_builder.header("{{{baseName}}}", {{{paramName}}}{{#isArray}}.join(","){{/isArray}}.to_string());
-        {{/isNullable}}
-        {{#isNullable}}
-        match {{{paramName}}} {
-            Some(local_param_value) => { local_req_builder = local_req_builder.header("{{{baseName}}}", local_param_value{{#isArray}}.join(","){{/isArray}}.to_string()); },
-            None => { local_req_builder = local_req_builder.header("{{{baseName}}}", ""); },
-        }
-        {{/isNullable}}
-        {{/required}}
-        {{^required}}
-        if let Some(local_param_value) = {{{paramName}}} {
-            local_req_builder = local_req_builder.header("{{{baseName}}}", local_param_value{{#isArray}}.join(","){{/isArray}}.to_string());
-        }
-        {{/required}}
-        {{/headerParams}}
-        {{/hasHeaderParams}}
-        #}
+        
+        // build auth
         {%- set authMethods = operation.security if "security" in operation else openapi.security %}
         {%- if authMethods %}
         {%- for authMethod in authMethods %}
@@ -231,6 +161,7 @@ impl {{ structName }} {
         {%- endif %}
 
         {% if formParameter %}
+        // build form parameters
         {%- if formParameter.required %}
         let mut local_form = reqwest::multipart::Form::new();
         local_form = local_form.part("{{formParameter.name}}", reqwest::multipart::Part::bytes({{formParameter.name}}).file_name("{{formParameter.name}}"));
@@ -244,102 +175,9 @@ impl {{ structName }} {
         {%- endif %}
         {%- endif %}
 
-        {#
-        {{#isMultipart}}
-        {{#hasFormParams}}
-        let mut local_form = reqwest::multipart::Form::new();
-        {{#formParams}}
-        {{#isFile}}
-        {{^supportAsync}}
-        {{#required}}
-        {{^isNullable}}
-        local_form = local_form.file("{{{baseName}}}", {{{paramName}}})?;
-        {{/isNullable}}
-        {{#isNullable}}
-        match {{{paramName}}} {
-            Some(local_param_value) => { local_form = local_form.file("{{{baseName}}}", local_param_value)?; },
-            None => { unimplemented!("Required nullable form file param not supported"); },
-        }
-        {{/isNullable}}
-        {{/required}}
-        {{^required}}
-        if let Some(local_param_value) = {{{paramName}}} {
-            local_form = local_form.file("{{{baseName}}}", local_param_value)?;
-        }
-        {{/required}}
-        // TODO: support file upload for '{{{baseName}}}' parameter
-        
-        {{/isFile}}
-        {{^isFile}}
-        {{#required}}
-        {{^isNullable}}
-        local_form = local_form.text("{{{baseName}}}", {{{paramName}}}{{#isArray}}.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(","){{/isArray}}.to_string());
-        {{/isNullable}}
-        {{#isNullable}}
-        match {{{paramName}}} {
-            Some(local_param_value) => { local_form = local_form.text("{{{baseName}}}", local_param_value{{#isArray}}.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(","){{/isArray}}.to_string()); },
-            None => { local_form = local_form.text("{{{baseName}}}", ""); },
-        }
-        {{/isNullable}}
-        {{/required}}
-        {{^required}}
-        if let Some(local_param_value) = {{{paramName}}} {
-            local_form = local_form.text("{{{baseName}}}", local_param_value{{#isArray}}.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(","){{/isArray}}.to_string());
-        }
-        {{/required}}
-        {{/isFile}}
-        {{/formParams}}
-        local_req_builder = local_req_builder.multipart(local_form);
-        {{/hasFormParams}}
-        {{/isMultipart}}
-        {{^isMultipart}}
-        {{#hasFormParams}}
-        let mut local_form_params = std::collections::HashMap::new();
-        {{#formParams}}
-        {{#isFile}}
-        {{#required}}
-        {{^isNullable}}
-        local_form_params.insert("{{{baseName}}}", unimplemented!("File form param not supported with x-www-form-urlencoded content"));
-        {{/isNullable}}
-        {{#isNullable}}
-        match {{{paramName}}} {
-            Some(local_param_value) => { local_form_params.insert("{{{baseName}}}", unimplemented!("File form param not supported with x-www-form-urlencoded content")); },
-            None => { unimplemented!("Required nullable file form param not supported with x-www-form-urlencoded content"); },
-        }
-        {{/isNullable}}
-        {{/required}}
-        {{^required}}
-        if let Some(local_param_value) = {{{paramName}}} {
-            local_form_params.insert("{{{baseName}}}", unimplemented!("File form param not supported with x-www-form-urlencoded content"));
-        }
-        {{/required}}
-        {{/isFile}}
-        {{^isFile}}
-        {{#required}}
-        {{^isNullable}}
-        local_form_params.insert("{{{baseName}}}", {{{paramName}}}{{#isArray}}.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(","){{/isArray}}.to_string());
-        {{/isNullable}}
-        {{#isNullable}}
-        match {{{paramName}}} {
-            Some(local_param_value) => { local_form_params.insert("{{{baseName}}}", local_param_value{{#isArray}}.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(","){{/isArray}}.to_string()); },
-            None => { local_form_params.insert("{{{baseName}}}", ""); },
-        }
-        {{/isNullable}}
-        {{/required}}
-        {{^required}}
-        if let Some(local_param_value) = {{{paramName}}} {
-            local_form_params.insert("{{{baseName}}}", local_param_value{{#isArray}}.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(","){{/isArray}}.to_string());
-        }
-        {{/required}}
-        {{/isFile}}
-        {{/formParams}}
-        local_req_builder = local_req_builder.form(&local_form_params);
-        {{/hasFormParams}}
-        {{/isMultipart}}
-        #}
         {%- if operation.requestBody is defined and not formParameter %}
         {%- set isBodyOptional = False if "required" in operation.requestBody and operation.requestBody.required else True %}
-        // body params
+        // build body parameters
         {%- if isBodyOptional %}
         if {{operation.get("x-codegen-request-body-name", "body")|variable_name}}.is_some() {
             local_req_builder = local_req_builder.json(&{{operation.get("x-codegen-request-body-name", "body")|variable_name}}.unwrap());

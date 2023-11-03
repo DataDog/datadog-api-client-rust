@@ -114,7 +114,7 @@ impl SecurityMonitoringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let signal_id = params.signal_id;
         let body = params.body;
 
@@ -128,13 +128,13 @@ impl SecurityMonitoringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
-        // build parameters
-
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -142,7 +142,7 @@ impl SecurityMonitoringAPI {
             local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
         };
 
-        // body params
+        // build body parameters
         local_req_builder = local_req_builder.json(&body);
 
         let local_req = local_req_builder.build()?;
@@ -198,7 +198,7 @@ impl SecurityMonitoringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let signal_id = params.signal_id;
         let body = params.body;
 
@@ -212,13 +212,13 @@ impl SecurityMonitoringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
-        // build parameters
-
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -226,7 +226,7 @@ impl SecurityMonitoringAPI {
             local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
         };
 
-        // body params
+        // build body parameters
         local_req_builder = local_req_builder.json(&body);
 
         let local_req = local_req_builder.build()?;
@@ -282,7 +282,7 @@ impl SecurityMonitoringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let signal_id = params.signal_id;
         let body = params.body;
 
@@ -296,13 +296,13 @@ impl SecurityMonitoringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
-        // build parameters
-
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -310,7 +310,7 @@ impl SecurityMonitoringAPI {
             local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
         };
 
-        // body params
+        // build body parameters
         local_req_builder = local_req_builder.json(&body);
 
         let local_req = local_req_builder.build()?;

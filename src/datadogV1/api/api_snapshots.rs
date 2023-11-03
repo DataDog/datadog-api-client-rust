@@ -81,7 +81,7 @@ impl SnapshotsAPI {
     {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let start = params.start;
         let end = params.end;
         let metric_query = params.metric_query;
@@ -97,7 +97,6 @@ impl SnapshotsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("start", &start.to_string())]);
         local_req_builder = local_req_builder.query(&[("end", &end.to_string())]);
         if let Some(ref local_str) = metric_query {
@@ -120,11 +119,13 @@ impl SnapshotsAPI {
             local_req_builder = local_req_builder.query(&[("width", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };

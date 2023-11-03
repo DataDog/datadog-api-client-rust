@@ -102,7 +102,7 @@ impl AuditAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let filter_query = params.filter_query;
         let filter_from = params.filter_from;
         let filter_to = params.filter_to;
@@ -116,7 +116,6 @@ impl AuditAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         if let Some(ref local_str) = filter_query {
             local_req_builder =
                 local_req_builder.query(&[("filter[query]", &local_str.to_string())]);
@@ -139,11 +138,13 @@ impl AuditAPI {
             local_req_builder = local_req_builder.query(&[("page[limit]", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -209,7 +210,7 @@ impl AuditAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let body = params.body;
 
         let local_client = &local_configuration.client;
@@ -221,13 +222,13 @@ impl AuditAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
-        // build parameters
-
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -235,7 +236,7 @@ impl AuditAPI {
             local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
         };
 
-        // body params
+        // build body parameters
         if body.is_some() {
             local_req_builder = local_req_builder.json(&body.unwrap());
         }

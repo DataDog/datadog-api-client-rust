@@ -148,7 +148,7 @@ impl TagsAPI {
     {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let host_name = params.host_name;
         let body = params.body;
         let source = params.source;
@@ -163,16 +163,17 @@ impl TagsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
-        // build parameters
         if let Some(ref local_str) = source {
             local_req_builder = local_req_builder.query(&[("source", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -180,7 +181,7 @@ impl TagsAPI {
             local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
         };
 
-        // body params
+        // build body parameters
         local_req_builder = local_req_builder.json(&body);
 
         let local_req = local_req_builder.build()?;
@@ -229,7 +230,7 @@ impl TagsAPI {
     ) -> Result<ResponseContent<()>, Error<DeleteHostTagsError>> {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let host_name = params.host_name;
         let source = params.source;
 
@@ -243,16 +244,17 @@ impl TagsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
-        // build parameters
         if let Some(ref local_str) = source {
             local_req_builder = local_req_builder.query(&[("source", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -302,7 +304,7 @@ impl TagsAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::HostTags>, Error<GetHostTagsError>> {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let host_name = params.host_name;
         let source = params.source;
 
@@ -316,16 +318,17 @@ impl TagsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         if let Some(ref local_str) = source {
             local_req_builder = local_req_builder.query(&[("source", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -377,7 +380,7 @@ impl TagsAPI {
     {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let source = params.source;
 
         let local_client = &local_configuration.client;
@@ -386,16 +389,17 @@ impl TagsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         if let Some(ref local_str) = source {
             local_req_builder = local_req_builder.query(&[("source", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -449,7 +453,7 @@ impl TagsAPI {
     {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let host_name = params.host_name;
         let body = params.body;
         let source = params.source;
@@ -464,16 +468,17 @@ impl TagsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
-        // build parameters
         if let Some(ref local_str) = source {
             local_req_builder = local_req_builder.query(&[("source", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -481,7 +486,7 @@ impl TagsAPI {
             local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
         };
 
-        // body params
+        // build body parameters
         local_req_builder = local_req_builder.json(&body);
 
         let local_req = local_req_builder.build()?;

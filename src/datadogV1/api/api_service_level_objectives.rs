@@ -262,7 +262,7 @@ impl ServiceLevelObjectivesAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let ids = params.ids;
 
         let local_client = &local_configuration.client;
@@ -271,14 +271,15 @@ impl ServiceLevelObjectivesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("ids", &ids.to_string())]);
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -331,7 +332,7 @@ impl ServiceLevelObjectivesAPI {
     {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let body = params.body;
 
         let local_client = &local_configuration.client;
@@ -340,13 +341,13 @@ impl ServiceLevelObjectivesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
-        // build parameters
-
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -354,7 +355,7 @@ impl ServiceLevelObjectivesAPI {
             local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
         };
 
-        // body params
+        // build body parameters
         local_req_builder = local_req_builder.json(&body);
 
         let local_req = local_req_builder.build()?;
@@ -407,7 +408,7 @@ impl ServiceLevelObjectivesAPI {
     {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let slo_id = params.slo_id;
         let force = params.force;
 
@@ -421,16 +422,17 @@ impl ServiceLevelObjectivesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
-        // build parameters
         if let Some(ref local_str) = force {
             local_req_builder = local_req_builder.query(&[("force", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -498,7 +500,7 @@ impl ServiceLevelObjectivesAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let body = params.body;
 
         let local_client = &local_configuration.client;
@@ -507,13 +509,13 @@ impl ServiceLevelObjectivesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
-        // build parameters
-
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -521,7 +523,7 @@ impl ServiceLevelObjectivesAPI {
             local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
         };
 
-        // body params
+        // build body parameters
         local_req_builder = local_req_builder.json(&body);
 
         let local_req = local_req_builder.build()?;
@@ -568,7 +570,7 @@ impl ServiceLevelObjectivesAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::SLOResponse>, Error<GetSLOError>> {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let slo_id = params.slo_id;
         let with_configured_alert_ids = params.with_configured_alert_ids;
 
@@ -582,17 +584,18 @@ impl ServiceLevelObjectivesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         if let Some(ref local_str) = with_configured_alert_ids {
             local_req_builder =
                 local_req_builder.query(&[("with_configured_alert_ids", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -649,7 +652,7 @@ impl ServiceLevelObjectivesAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let slo_id = params.slo_id;
 
         let local_client = &local_configuration.client;
@@ -662,13 +665,13 @@ impl ServiceLevelObjectivesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
-
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -738,7 +741,7 @@ impl ServiceLevelObjectivesAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let slo_id = params.slo_id;
         let from_ts = params.from_ts;
         let to_ts = params.to_ts;
@@ -755,7 +758,6 @@ impl ServiceLevelObjectivesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         local_req_builder = local_req_builder.query(&[("from_ts", &from_ts.to_string())]);
         local_req_builder = local_req_builder.query(&[("to_ts", &to_ts.to_string())]);
         if let Some(ref local_str) = target {
@@ -766,11 +768,13 @@ impl ServiceLevelObjectivesAPI {
                 local_req_builder.query(&[("apply_correction", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -823,7 +827,7 @@ impl ServiceLevelObjectivesAPI {
     {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let ids = params.ids;
         let query = params.query;
         let tags_query = params.tags_query;
@@ -837,7 +841,6 @@ impl ServiceLevelObjectivesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         if let Some(ref local_str) = ids {
             local_req_builder = local_req_builder.query(&[("ids", &local_str.to_string())]);
         };
@@ -858,11 +861,13 @@ impl ServiceLevelObjectivesAPI {
             local_req_builder = local_req_builder.query(&[("offset", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -914,7 +919,7 @@ impl ServiceLevelObjectivesAPI {
     {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let query = params.query;
         let page_size = params.page_size;
         let page_number = params.page_number;
@@ -926,7 +931,6 @@ impl ServiceLevelObjectivesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         if let Some(ref local_str) = query {
             local_req_builder = local_req_builder.query(&[("query", &local_str.to_string())]);
         };
@@ -942,11 +946,13 @@ impl ServiceLevelObjectivesAPI {
                 local_req_builder.query(&[("include_facets", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -998,7 +1004,7 @@ impl ServiceLevelObjectivesAPI {
     {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let slo_id = params.slo_id;
         let body = params.body;
 
@@ -1012,13 +1018,13 @@ impl ServiceLevelObjectivesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
-        // build parameters
-
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -1026,7 +1032,7 @@ impl ServiceLevelObjectivesAPI {
             local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
         };
 
-        // body params
+        // build body parameters
         local_req_builder = local_req_builder.json(&body);
 
         let local_req = local_req_builder.build()?;

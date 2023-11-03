@@ -169,7 +169,7 @@ impl DowntimesAPI {
     ) -> Result<ResponseContent<()>, Error<CancelDowntimeError>> {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let downtime_id = params.downtime_id;
 
         let local_client = &local_configuration.client;
@@ -182,13 +182,13 @@ impl DowntimesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
-        // build parameters
-
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -244,7 +244,7 @@ impl DowntimesAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let body = params.body;
 
         let local_client = &local_configuration.client;
@@ -256,13 +256,13 @@ impl DowntimesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
-        // build parameters
-
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -270,7 +270,7 @@ impl DowntimesAPI {
             local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
         };
 
-        // body params
+        // build body parameters
         local_req_builder = local_req_builder.json(&body);
 
         let local_req = local_req_builder.build()?;
@@ -318,7 +318,7 @@ impl DowntimesAPI {
     {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let body = params.body;
 
         let local_client = &local_configuration.client;
@@ -327,13 +327,13 @@ impl DowntimesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
-        // build parameters
-
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -341,7 +341,7 @@ impl DowntimesAPI {
             local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
         };
 
-        // body params
+        // build body parameters
         local_req_builder = local_req_builder.json(&body);
 
         let local_req = local_req_builder.build()?;
@@ -388,7 +388,7 @@ impl DowntimesAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::Downtime>, Error<GetDowntimeError>> {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let downtime_id = params.downtime_id;
 
         let local_client = &local_configuration.client;
@@ -401,13 +401,13 @@ impl DowntimesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
-
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -459,7 +459,7 @@ impl DowntimesAPI {
     {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let current_only = params.current_only;
         let with_creator = params.with_creator;
 
@@ -469,7 +469,6 @@ impl DowntimesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
         if let Some(ref local_str) = current_only {
             local_req_builder =
                 local_req_builder.query(&[("current_only", &local_str.to_string())]);
@@ -479,11 +478,13 @@ impl DowntimesAPI {
                 local_req_builder.query(&[("with_creator", &local_str.to_string())]);
         };
 
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -539,7 +540,7 @@ impl DowntimesAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let monitor_id = params.monitor_id;
 
         let local_client = &local_configuration.client;
@@ -552,13 +553,13 @@ impl DowntimesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build parameters
-
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -611,7 +612,7 @@ impl DowntimesAPI {
     {
         let local_configuration = &self.config;
 
-        // unbox the parameters
+        // unbox and build parameters
         let downtime_id = params.downtime_id;
         let body = params.body;
 
@@ -625,13 +626,13 @@ impl DowntimesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
-        // build parameters
-
+        // build user agent
         if let Some(ref local_user_agent) = local_configuration.user_agent {
             local_req_builder =
                 local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
         }
 
+        // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
             local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
         };
@@ -639,7 +640,7 @@ impl DowntimesAPI {
             local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
         };
 
-        // body params
+        // build body parameters
         local_req_builder = local_req_builder.json(&body);
 
         let local_req = local_req_builder.build()?;
