@@ -1,14 +1,14 @@
 use crate::scenarios::function_mappings::{
     collect_function_calls, initialize_api_instance, ApiInstances,
 };
-use chrono::DateTime;
+use chrono::{DateTime, Duration};
 use cucumber::{
     event::ScenarioFinished,
     gherkin::{Feature, Rule, Scenario},
     given, then, when, World,
 };
 use datadog_api_client::datadog::configuration::Configuration;
-use handlebars::Handlebars;
+use handlebars::{Context, Handlebars, Helper, Output, RenderContext, RenderError};
 use log::debug;
 use regex::Regex;
 use reqwest_middleware::ClientBuilder;
@@ -20,6 +20,7 @@ use std::{
     env,
     fs::{create_dir_all, read_to_string, File},
     io::BufReader,
+    ops::Add,
     path::PathBuf,
     time::SystemTime,
 };
@@ -39,7 +40,7 @@ struct UndoOperation {
     parameters: HashMap<String, Value>,
 }
 
-#[derive(Debug, Default, World)]
+#[derive(Default, World)]
 pub struct DatadogWorld {
     pub api_version: i32,
     pub config: Configuration,
@@ -52,6 +53,14 @@ pub struct DatadogWorld {
     given_map: Value,
     undo_map: Value,
     undo_operations: Vec<UndoOperation>,
+}
+
+// Workaround to suppress cucumber's debug output - the DatadogWorld
+// struct debug output is overly verbose and not useful
+impl std::fmt::Debug for DatadogWorld {
+    fn fmt(&self, _: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        Ok(())
+    }
 }
 
 pub async fn before_scenario(
@@ -144,7 +153,7 @@ pub async fn before_scenario(
             //         res.headers.remove_entry("content-security-policy");
             //     });
             // vcr_client_builder.with(middleware).build()
-            panic!("sdk's shouldn't be recording, that's the spec repo's job.");
+            panic!("Use the cassette transform in datadog-api-spec instead. This recording mode is only here for completeness.");
         }
         _ => {
             frozen_time = DateTime::parse_from_rfc3339(
@@ -387,9 +396,79 @@ fn lookup(path: &String, object: &Value) -> Option<Value> {
     return object.pointer(&json_pointer).cloned();
 }
 
+fn relative_time_helper(h: &Helper, c: &Context) -> DateTime<chrono::Utc> {
+    // get parameter from helper or throw an error
+    let v = h.param(0).unwrap().render();
+    let time_helper_re = Regex::new(r"now(?: *([+-]) *(\d+)([smhdMy]))?").unwrap();
+    let caps = time_helper_re
+        .captures(&v)
+        .expect("failed to parse timeISO template function");
+    let time = chrono::DateTime::from_timestamp(c.data().get("now").unwrap().as_i64().unwrap(), 0)
+        .unwrap();
+    if caps.get(1).is_some() {
+        let diff = str::parse::<i64>(
+            &(caps.get(1).unwrap().as_str().to_string() + caps.get(2).unwrap().as_str()),
+        )
+        .unwrap();
+        match caps.get(3).unwrap().as_str() {
+            "s" => time.add(Duration::seconds(diff)),
+            "m" => time.add(Duration::minutes(diff)),
+            "h" => time.add(Duration::hours(diff)),
+            "d" => time.add(Duration::days(diff)),
+            "M" => time.add(Duration::weeks(diff * 4)),
+            "y" => time.add(Duration::weeks(diff * 52)),
+            _ => panic!("invalid time unit"),
+        }
+    } else {
+        time
+    }
+}
+
+fn timeISO_helper(
+    h: &Helper,
+    _: &Handlebars,
+    c: &Context,
+    _: &mut RenderContext,
+    out: &mut dyn Output,
+) -> Result<(), RenderError> {
+    write!(out, "{}", relative_time_helper(h, c).to_rfc3339())?;
+    Ok(())
+}
+
+fn timestamp_helper(
+    h: &Helper,
+    _: &Handlebars,
+    c: &Context,
+    _: &mut RenderContext,
+    out: &mut dyn Output,
+) -> Result<(), RenderError> {
+    write!(
+        out,
+        "{}",
+        relative_time_helper(h, c)
+            .signed_duration_since(DateTime::UNIX_EPOCH)
+            .num_seconds()
+    )?;
+    Ok(())
+}
+
 fn template(string: String, fixtures: &Value) -> String {
-    Handlebars::new()
-        .render_template(string.as_str(), &fixtures)
+    let time_helper_re = Regex::new(r"(?:timestamp|timeISO)\([^{}]*\)").unwrap();
+    let helper_parsed_string = time_helper_re
+        .replace_all(&string, |caps: &regex::Captures| {
+            caps.get(0)
+                .unwrap()
+                .as_str()
+                .replace('(', " ")
+                .replace(')', "")
+        })
+        .to_string();
+
+    let mut handlebars = Handlebars::new();
+    handlebars.register_helper("timeISO", Box::new(timeISO_helper));
+    handlebars.register_helper("timestamp", Box::new(timestamp_helper));
+    handlebars
+        .render_template(helper_parsed_string.as_str(), &fixtures)
         .expect("failed to apply template")
 }
 

@@ -1389,9 +1389,8 @@ fn test_v1_create_api_key(world: &mut DatadogWorld, _parameters: &HashMap<String
         .v1_api_key_management
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_key_management::CreateAPIKeyParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_key_management::CreateAPIKeyParams { body };
     let response = match block_on(api.create_api_key_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -1411,9 +1410,8 @@ fn test_v1_delete_api_key(world: &mut DatadogWorld, _parameters: &HashMap<String
         .v1_api_key_management
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_key_management::DeleteAPIKeyParams {
-        key: serde_json::from_value(_parameters.get("key").unwrap().clone()).unwrap(),
-    };
+    let key = serde_json::from_value(_parameters.get("key").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_key_management::DeleteAPIKeyParams { key };
     let response = match block_on(api.delete_api_key_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -1433,9 +1431,8 @@ fn test_v1_get_api_key(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         .v1_api_key_management
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_key_management::GetAPIKeyParams {
-        key: serde_json::from_value(_parameters.get("key").unwrap().clone()).unwrap(),
-    };
+    let key = serde_json::from_value(_parameters.get("key").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_key_management::GetAPIKeyParams { key };
     let response = match block_on(api.get_api_key_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -1455,10 +1452,9 @@ fn test_v1_update_api_key(world: &mut DatadogWorld, _parameters: &HashMap<String
         .v1_api_key_management
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_key_management::UpdateAPIKeyParams {
-        key: serde_json::from_value(_parameters.get("key").unwrap().clone()).unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let key = serde_json::from_value(_parameters.get("key").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_key_management::UpdateAPIKeyParams { key, body };
     let response = match block_on(api.update_api_key_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -1497,9 +1493,8 @@ fn test_v1_create_application_key(world: &mut DatadogWorld, _parameters: &HashMa
         .v1_api_key_management
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_key_management::CreateApplicationKeyParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_key_management::CreateApplicationKeyParams { body };
     let response = match block_on(api.create_application_key_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -1519,9 +1514,8 @@ fn test_v1_delete_application_key(world: &mut DatadogWorld, _parameters: &HashMa
         .v1_api_key_management
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_key_management::DeleteApplicationKeyParams {
-        key: serde_json::from_value(_parameters.get("key").unwrap().clone()).unwrap(),
-    };
+    let key = serde_json::from_value(_parameters.get("key").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_key_management::DeleteApplicationKeyParams { key };
     let response = match block_on(api.delete_application_key_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -1541,9 +1535,8 @@ fn test_v1_get_application_key(world: &mut DatadogWorld, _parameters: &HashMap<S
         .v1_api_key_management
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_key_management::GetApplicationKeyParams {
-        key: serde_json::from_value(_parameters.get("key").unwrap().clone()).unwrap(),
-    };
+    let key = serde_json::from_value(_parameters.get("key").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_key_management::GetApplicationKeyParams { key };
     let response = match block_on(api.get_application_key_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -1563,10 +1556,9 @@ fn test_v1_update_application_key(world: &mut DatadogWorld, _parameters: &HashMa
         .v1_api_key_management
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_key_management::UpdateApplicationKeyParams {
-        key: serde_json::from_value(_parameters.get("key").unwrap().clone()).unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let key = serde_json::from_value(_parameters.get("key").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_key_management::UpdateApplicationKeyParams { key, body };
     let response = match block_on(api.update_application_key_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -1586,9 +1578,8 @@ fn test_v1_submit_service_check(world: &mut DatadogWorld, _parameters: &HashMap<
         .v1_api_service_checks
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_service_checks::SubmitServiceCheckParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_service_checks::SubmitServiceCheckParams { body };
     let response = match block_on(api.submit_service_check_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -1611,12 +1602,27 @@ fn test_v1_get_daily_custom_reports(
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
+    let page_size = match _parameters.get("page[size]").is_some() {
+        true => serde_json::from_value(_parameters.get("page[size]").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let page_number = match _parameters.get("page[number]").is_some() {
+        true => serde_json::from_value(_parameters.get("page[number]").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let sort_dir = match _parameters.get("sort_dir").is_some() {
+        true => serde_json::from_value(_parameters.get("sort_dir").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let sort = match _parameters.get("sort").is_some() {
+        true => serde_json::from_value(_parameters.get("sort").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV1::api::api_usage_metering::GetDailyCustomReportsParams {
-        page_size: serde_json::from_value(_parameters.get("page[size]").unwrap().clone()).unwrap(),
-        page_number: serde_json::from_value(_parameters.get("page[number]").unwrap().clone())
-            .unwrap(),
-        sort_dir: serde_json::from_value(_parameters.get("sort_dir").unwrap().clone()).unwrap(),
-        sort: serde_json::from_value(_parameters.get("sort").unwrap().clone()).unwrap(),
+        page_size,
+        page_number,
+        sort_dir,
+        sort,
     };
     let response = match block_on(api.get_daily_custom_reports_with_http_info(params)) {
         Ok(response) => response,
@@ -1640,9 +1646,9 @@ fn test_v1_get_specified_daily_custom_reports(
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_usage_metering::GetSpecifiedDailyCustomReportsParams {
-        report_id: serde_json::from_value(_parameters.get("report_id").unwrap().clone()).unwrap(),
-    };
+    let report_id = serde_json::from_value(_parameters.get("report_id").unwrap().clone()).unwrap();
+    let params =
+        datadogV1::api::api_usage_metering::GetSpecifiedDailyCustomReportsParams { report_id };
     let response = match block_on(api.get_specified_daily_custom_reports_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -1665,12 +1671,27 @@ fn test_v1_get_monthly_custom_reports(
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
+    let page_size = match _parameters.get("page[size]").is_some() {
+        true => serde_json::from_value(_parameters.get("page[size]").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let page_number = match _parameters.get("page[number]").is_some() {
+        true => serde_json::from_value(_parameters.get("page[number]").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let sort_dir = match _parameters.get("sort_dir").is_some() {
+        true => serde_json::from_value(_parameters.get("sort_dir").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let sort = match _parameters.get("sort").is_some() {
+        true => serde_json::from_value(_parameters.get("sort").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV1::api::api_usage_metering::GetMonthlyCustomReportsParams {
-        page_size: serde_json::from_value(_parameters.get("page[size]").unwrap().clone()).unwrap(),
-        page_number: serde_json::from_value(_parameters.get("page[number]").unwrap().clone())
-            .unwrap(),
-        sort_dir: serde_json::from_value(_parameters.get("sort_dir").unwrap().clone()).unwrap(),
-        sort: serde_json::from_value(_parameters.get("sort").unwrap().clone()).unwrap(),
+        page_size,
+        page_number,
+        sort_dir,
+        sort,
     };
     let response = match block_on(api.get_monthly_custom_reports_with_http_info(params)) {
         Ok(response) => response,
@@ -1694,9 +1715,9 @@ fn test_v1_get_specified_monthly_custom_reports(
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_usage_metering::GetSpecifiedMonthlyCustomReportsParams {
-        report_id: serde_json::from_value(_parameters.get("report_id").unwrap().clone()).unwrap(),
-    };
+    let report_id = serde_json::from_value(_parameters.get("report_id").unwrap().clone()).unwrap();
+    let params =
+        datadogV1::api::api_usage_metering::GetSpecifiedMonthlyCustomReportsParams { report_id };
     let response = match block_on(api.get_specified_monthly_custom_reports_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -1716,10 +1737,13 @@ fn test_v1_get_usage_analyzed_logs(world: &mut DatadogWorld, _parameters: &HashM
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_usage_metering::GetUsageAnalyzedLogsParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params =
+        datadogV1::api::api_usage_metering::GetUsageAnalyzedLogsParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_analyzed_logs_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -1739,20 +1763,44 @@ fn test_v1_get_usage_attribution(world: &mut DatadogWorld, _parameters: &HashMap
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
+    let start_month =
+        serde_json::from_value(_parameters.get("start_month").unwrap().clone()).unwrap();
+    let fields = serde_json::from_value(_parameters.get("fields").unwrap().clone()).unwrap();
+    let end_month = match _parameters.get("end_month").is_some() {
+        true => serde_json::from_value(_parameters.get("end_month").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let sort_direction = match _parameters.get("sort_direction").is_some() {
+        true => serde_json::from_value(_parameters.get("sort_direction").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let sort_name = match _parameters.get("sort_name").is_some() {
+        true => serde_json::from_value(_parameters.get("sort_name").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let include_descendants = match _parameters.get("include_descendants").is_some() {
+        true => {
+            serde_json::from_value(_parameters.get("include_descendants").unwrap().clone()).unwrap()
+        }
+        false => None,
+    };
+    let offset = match _parameters.get("offset").is_some() {
+        true => serde_json::from_value(_parameters.get("offset").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let limit = match _parameters.get("limit").is_some() {
+        true => serde_json::from_value(_parameters.get("limit").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV1::api::api_usage_metering::GetUsageAttributionParams {
-        start_month: serde_json::from_value(_parameters.get("start_month").unwrap().clone())
-            .unwrap(),
-        fields: serde_json::from_value(_parameters.get("fields").unwrap().clone()).unwrap(),
-        end_month: serde_json::from_value(_parameters.get("end_month").unwrap().clone()).unwrap(),
-        sort_direction: serde_json::from_value(_parameters.get("sort_direction").unwrap().clone())
-            .unwrap(),
-        sort_name: serde_json::from_value(_parameters.get("sort_name").unwrap().clone()).unwrap(),
-        include_descendants: serde_json::from_value(
-            _parameters.get("include_descendants").unwrap().clone(),
-        )
-        .unwrap(),
-        offset: serde_json::from_value(_parameters.get("offset").unwrap().clone()).unwrap(),
-        limit: serde_json::from_value(_parameters.get("limit").unwrap().clone()).unwrap(),
+        start_month,
+        fields,
+        end_month,
+        sort_direction,
+        sort_name,
+        include_descendants,
+        offset,
+        limit,
     };
     let response = match block_on(api.get_usage_attribution_with_http_info(params)) {
         Ok(response) => response,
@@ -1773,10 +1821,12 @@ fn test_v1_get_usage_audit_logs(world: &mut DatadogWorld, _parameters: &HashMap<
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_usage_metering::GetUsageAuditLogsParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params = datadogV1::api::api_usage_metering::GetUsageAuditLogsParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_audit_logs_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -1796,10 +1846,12 @@ fn test_v1_get_usage_lambda(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_usage_metering::GetUsageLambdaParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params = datadogV1::api::api_usage_metering::GetUsageLambdaParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_lambda_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -1822,9 +1874,11 @@ fn test_v1_get_usage_billable_summary(
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_usage_metering::GetUsageBillableSummaryParams {
-        month: serde_json::from_value(_parameters.get("month").unwrap().clone()).unwrap(),
+    let month = match _parameters.get("month").is_some() {
+        true => serde_json::from_value(_parameters.get("month").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params = datadogV1::api::api_usage_metering::GetUsageBillableSummaryParams { month };
     let response = match block_on(api.get_usage_billable_summary_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -1844,10 +1898,12 @@ fn test_v1_get_usage_ci_app(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_usage_metering::GetUsageCIAppParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params = datadogV1::api::api_usage_metering::GetUsageCIAppParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_ci_app_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -1870,9 +1926,14 @@ fn test_v1_get_usage_cloud_security_posture_management(
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV1::api::api_usage_metering::GetUsageCloudSecurityPostureManagementParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        start_hr,
+        end_hr,
     };
     let response =
         match block_on(api.get_usage_cloud_security_posture_management_with_http_info(params)) {
@@ -1894,10 +1955,12 @@ fn test_v1_get_usage_cws(world: &mut DatadogWorld, _parameters: &HashMap<String,
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_usage_metering::GetUsageCWSParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params = datadogV1::api::api_usage_metering::GetUsageCWSParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_cws_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -1917,10 +1980,12 @@ fn test_v1_get_usage_dbm(world: &mut DatadogWorld, _parameters: &HashMap<String,
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_usage_metering::GetUsageDBMParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params = datadogV1::api::api_usage_metering::GetUsageDBMParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_dbm_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -1940,10 +2005,12 @@ fn test_v1_get_usage_fargate(world: &mut DatadogWorld, _parameters: &HashMap<Str
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_usage_metering::GetUsageFargateParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params = datadogV1::api::api_usage_metering::GetUsageFargateParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_fargate_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -1963,10 +2030,12 @@ fn test_v1_get_usage_hosts(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_usage_metering::GetUsageHostsParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params = datadogV1::api::api_usage_metering::GetUsageHostsParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_hosts_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -1989,20 +2058,36 @@ fn test_v1_get_hourly_usage_attribution(
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let usage_type =
+        serde_json::from_value(_parameters.get("usage_type").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let next_record_id = match _parameters.get("next_record_id").is_some() {
+        true => serde_json::from_value(_parameters.get("next_record_id").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let tag_breakdown_keys = match _parameters.get("tag_breakdown_keys").is_some() {
+        true => {
+            serde_json::from_value(_parameters.get("tag_breakdown_keys").unwrap().clone()).unwrap()
+        }
+        false => None,
+    };
+    let include_descendants = match _parameters.get("include_descendants").is_some() {
+        true => {
+            serde_json::from_value(_parameters.get("include_descendants").unwrap().clone()).unwrap()
+        }
+        false => None,
+    };
     let params = datadogV1::api::api_usage_metering::GetHourlyUsageAttributionParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        usage_type: serde_json::from_value(_parameters.get("usage_type").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        next_record_id: serde_json::from_value(_parameters.get("next_record_id").unwrap().clone())
-            .unwrap(),
-        tag_breakdown_keys: serde_json::from_value(
-            _parameters.get("tag_breakdown_keys").unwrap().clone(),
-        )
-        .unwrap(),
-        include_descendants: serde_json::from_value(
-            _parameters.get("include_descendants").unwrap().clone(),
-        )
-        .unwrap(),
+        start_hr,
+        usage_type,
+        end_hr,
+        next_record_id,
+        tag_breakdown_keys,
+        include_descendants,
     };
     let response = match block_on(api.get_hourly_usage_attribution_with_http_info(params)) {
         Ok(response) => response,
@@ -2023,10 +2108,13 @@ fn test_v1_get_incident_management(world: &mut DatadogWorld, _parameters: &HashM
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_usage_metering::GetIncidentManagementParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params =
+        datadogV1::api::api_usage_metering::GetIncidentManagementParams { start_hr, end_hr };
     let response = match block_on(api.get_incident_management_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2046,10 +2134,13 @@ fn test_v1_get_usage_indexed_spans(world: &mut DatadogWorld, _parameters: &HashM
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_usage_metering::GetUsageIndexedSpansParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params =
+        datadogV1::api::api_usage_metering::GetUsageIndexedSpansParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_indexed_spans_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2069,10 +2160,12 @@ fn test_v1_get_ingested_spans(world: &mut DatadogWorld, _parameters: &HashMap<St
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_usage_metering::GetIngestedSpansParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params = datadogV1::api::api_usage_metering::GetIngestedSpansParams { start_hr, end_hr };
     let response = match block_on(api.get_ingested_spans_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2095,10 +2188,13 @@ fn test_v1_get_usage_internet_of_things(
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_usage_metering::GetUsageInternetOfThingsParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params =
+        datadogV1::api::api_usage_metering::GetUsageInternetOfThingsParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_internet_of_things_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2118,10 +2214,12 @@ fn test_v1_get_usage_logs(world: &mut DatadogWorld, _parameters: &HashMap<String
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_usage_metering::GetUsageLogsParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params = datadogV1::api::api_usage_metering::GetUsageLogsParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_logs_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2144,10 +2242,13 @@ fn test_v1_get_usage_logs_by_retention(
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_usage_metering::GetUsageLogsByRetentionParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params =
+        datadogV1::api::api_usage_metering::GetUsageLogsByRetentionParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_logs_by_retention_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2167,10 +2268,19 @@ fn test_v1_get_usage_logs_by_index(world: &mut DatadogWorld, _parameters: &HashM
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let index_name = match _parameters.get("index_name").is_some() {
+        true => serde_json::from_value(_parameters.get("index_name").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV1::api::api_usage_metering::GetUsageLogsByIndexParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        index_name: serde_json::from_value(_parameters.get("index_name").unwrap().clone()).unwrap(),
+        start_hr,
+        end_hr,
+        index_name,
     };
     let response = match block_on(api.get_usage_logs_by_index_with_http_info(params)) {
         Ok(response) => response,
@@ -2194,24 +2304,46 @@ fn test_v1_get_monthly_usage_attribution(
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
+    let start_month =
+        serde_json::from_value(_parameters.get("start_month").unwrap().clone()).unwrap();
+    let fields = serde_json::from_value(_parameters.get("fields").unwrap().clone()).unwrap();
+    let end_month = match _parameters.get("end_month").is_some() {
+        true => serde_json::from_value(_parameters.get("end_month").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let sort_direction = match _parameters.get("sort_direction").is_some() {
+        true => serde_json::from_value(_parameters.get("sort_direction").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let sort_name = match _parameters.get("sort_name").is_some() {
+        true => serde_json::from_value(_parameters.get("sort_name").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let tag_breakdown_keys = match _parameters.get("tag_breakdown_keys").is_some() {
+        true => {
+            serde_json::from_value(_parameters.get("tag_breakdown_keys").unwrap().clone()).unwrap()
+        }
+        false => None,
+    };
+    let next_record_id = match _parameters.get("next_record_id").is_some() {
+        true => serde_json::from_value(_parameters.get("next_record_id").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let include_descendants = match _parameters.get("include_descendants").is_some() {
+        true => {
+            serde_json::from_value(_parameters.get("include_descendants").unwrap().clone()).unwrap()
+        }
+        false => None,
+    };
     let params = datadogV1::api::api_usage_metering::GetMonthlyUsageAttributionParams {
-        start_month: serde_json::from_value(_parameters.get("start_month").unwrap().clone())
-            .unwrap(),
-        fields: serde_json::from_value(_parameters.get("fields").unwrap().clone()).unwrap(),
-        end_month: serde_json::from_value(_parameters.get("end_month").unwrap().clone()).unwrap(),
-        sort_direction: serde_json::from_value(_parameters.get("sort_direction").unwrap().clone())
-            .unwrap(),
-        sort_name: serde_json::from_value(_parameters.get("sort_name").unwrap().clone()).unwrap(),
-        tag_breakdown_keys: serde_json::from_value(
-            _parameters.get("tag_breakdown_keys").unwrap().clone(),
-        )
-        .unwrap(),
-        next_record_id: serde_json::from_value(_parameters.get("next_record_id").unwrap().clone())
-            .unwrap(),
-        include_descendants: serde_json::from_value(
-            _parameters.get("include_descendants").unwrap().clone(),
-        )
-        .unwrap(),
+        start_month,
+        fields,
+        end_month,
+        sort_direction,
+        sort_name,
+        tag_breakdown_keys,
+        next_record_id,
+        include_descendants,
     };
     let response = match block_on(api.get_monthly_usage_attribution_with_http_info(params)) {
         Ok(response) => response,
@@ -2232,10 +2364,13 @@ fn test_v1_get_usage_network_flows(world: &mut DatadogWorld, _parameters: &HashM
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_usage_metering::GetUsageNetworkFlowsParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params =
+        datadogV1::api::api_usage_metering::GetUsageNetworkFlowsParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_network_flows_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2255,10 +2390,13 @@ fn test_v1_get_usage_network_hosts(world: &mut DatadogWorld, _parameters: &HashM
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_usage_metering::GetUsageNetworkHostsParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params =
+        datadogV1::api::api_usage_metering::GetUsageNetworkHostsParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_network_hosts_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2281,10 +2419,13 @@ fn test_v1_get_usage_online_archive(
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_usage_metering::GetUsageOnlineArchiveParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params =
+        datadogV1::api::api_usage_metering::GetUsageOnlineArchiveParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_online_archive_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2304,10 +2445,12 @@ fn test_v1_get_usage_profiling(world: &mut DatadogWorld, _parameters: &HashMap<S
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_usage_metering::GetUsageProfilingParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params = datadogV1::api::api_usage_metering::GetUsageProfilingParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_profiling_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2327,10 +2470,12 @@ fn test_v1_get_usage_rum_units(world: &mut DatadogWorld, _parameters: &HashMap<S
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_usage_metering::GetUsageRumUnitsParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params = datadogV1::api::api_usage_metering::GetUsageRumUnitsParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_rum_units_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2350,10 +2495,19 @@ fn test_v1_get_usage_rum_sessions(world: &mut DatadogWorld, _parameters: &HashMa
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let type_ = match _parameters.get("type").is_some() {
+        true => serde_json::from_value(_parameters.get("type").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV1::api::api_usage_metering::GetUsageRumSessionsParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        type_: serde_json::from_value(_parameters.get("type").unwrap().clone()).unwrap(),
+        start_hr,
+        end_hr,
+        type_,
     };
     let response = match block_on(api.get_usage_rum_sessions_with_http_info(params)) {
         Ok(response) => response,
@@ -2374,10 +2528,12 @@ fn test_v1_get_usage_sds(world: &mut DatadogWorld, _parameters: &HashMap<String,
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_usage_metering::GetUsageSDSParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params = datadogV1::api::api_usage_metering::GetUsageSDSParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_sds_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2397,10 +2553,12 @@ fn test_v1_get_usage_snmp(world: &mut DatadogWorld, _parameters: &HashMap<String
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_usage_metering::GetUsageSNMPParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params = datadogV1::api::api_usage_metering::GetUsageSNMPParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_snmp_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2420,14 +2578,22 @@ fn test_v1_get_usage_summary(world: &mut DatadogWorld, _parameters: &HashMap<Str
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
+    let start_month =
+        serde_json::from_value(_parameters.get("start_month").unwrap().clone()).unwrap();
+    let end_month = match _parameters.get("end_month").is_some() {
+        true => serde_json::from_value(_parameters.get("end_month").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let include_org_details = match _parameters.get("include_org_details").is_some() {
+        true => {
+            serde_json::from_value(_parameters.get("include_org_details").unwrap().clone()).unwrap()
+        }
+        false => None,
+    };
     let params = datadogV1::api::api_usage_metering::GetUsageSummaryParams {
-        start_month: serde_json::from_value(_parameters.get("start_month").unwrap().clone())
-            .unwrap(),
-        end_month: serde_json::from_value(_parameters.get("end_month").unwrap().clone()).unwrap(),
-        include_org_details: serde_json::from_value(
-            _parameters.get("include_org_details").unwrap().clone(),
-        )
-        .unwrap(),
+        start_month,
+        end_month,
+        include_org_details,
     };
     let response = match block_on(api.get_usage_summary_with_http_info(params)) {
         Ok(response) => response,
@@ -2448,10 +2614,12 @@ fn test_v1_get_usage_synthetics(world: &mut DatadogWorld, _parameters: &HashMap<
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_usage_metering::GetUsageSyntheticsParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params = datadogV1::api::api_usage_metering::GetUsageSyntheticsParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_synthetics_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2474,10 +2642,13 @@ fn test_v1_get_usage_synthetics_api(
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_usage_metering::GetUsageSyntheticsAPIParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params =
+        datadogV1::api::api_usage_metering::GetUsageSyntheticsAPIParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_synthetics_api_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2500,10 +2671,13 @@ fn test_v1_get_usage_synthetics_browser(
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_usage_metering::GetUsageSyntheticsBrowserParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params =
+        datadogV1::api::api_usage_metering::GetUsageSyntheticsBrowserParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_synthetics_browser_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2523,10 +2697,12 @@ fn test_v1_get_usage_timeseries(world: &mut DatadogWorld, _parameters: &HashMap<
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_usage_metering::GetUsageTimeseriesParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params = datadogV1::api::api_usage_metering::GetUsageTimeseriesParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_timeseries_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2549,13 +2725,32 @@ fn test_v1_get_usage_top_avg_metrics(
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
+    let month = match _parameters.get("month").is_some() {
+        true => serde_json::from_value(_parameters.get("month").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let day = match _parameters.get("day").is_some() {
+        true => serde_json::from_value(_parameters.get("day").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let names = match _parameters.get("names").is_some() {
+        true => serde_json::from_value(_parameters.get("names").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let limit = match _parameters.get("limit").is_some() {
+        true => serde_json::from_value(_parameters.get("limit").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let next_record_id = match _parameters.get("next_record_id").is_some() {
+        true => serde_json::from_value(_parameters.get("next_record_id").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV1::api::api_usage_metering::GetUsageTopAvgMetricsParams {
-        month: serde_json::from_value(_parameters.get("month").unwrap().clone()).unwrap(),
-        day: serde_json::from_value(_parameters.get("day").unwrap().clone()).unwrap(),
-        names: serde_json::from_value(_parameters.get("names").unwrap().clone()).unwrap(),
-        limit: serde_json::from_value(_parameters.get("limit").unwrap().clone()).unwrap(),
-        next_record_id: serde_json::from_value(_parameters.get("next_record_id").unwrap().clone())
-            .unwrap(),
+        month,
+        day,
+        names,
+        limit,
+        next_record_id,
     };
     let response = match block_on(api.get_usage_top_avg_metrics_with_http_info(params)) {
         Ok(response) => response,
@@ -2595,9 +2790,8 @@ fn test_v1_create_dashboard_list(world: &mut DatadogWorld, _parameters: &HashMap
         .v1_api_dashboard_lists
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_dashboard_lists::CreateDashboardListParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_dashboard_lists::CreateDashboardListParams { body };
     let response = match block_on(api.create_dashboard_list_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2617,9 +2811,8 @@ fn test_v1_delete_dashboard_list(world: &mut DatadogWorld, _parameters: &HashMap
         .v1_api_dashboard_lists
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_dashboard_lists::DeleteDashboardListParams {
-        list_id: serde_json::from_value(_parameters.get("list_id").unwrap().clone()).unwrap(),
-    };
+    let list_id = serde_json::from_value(_parameters.get("list_id").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_dashboard_lists::DeleteDashboardListParams { list_id };
     let response = match block_on(api.delete_dashboard_list_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2639,9 +2832,8 @@ fn test_v1_get_dashboard_list(world: &mut DatadogWorld, _parameters: &HashMap<St
         .v1_api_dashboard_lists
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_dashboard_lists::GetDashboardListParams {
-        list_id: serde_json::from_value(_parameters.get("list_id").unwrap().clone()).unwrap(),
-    };
+    let list_id = serde_json::from_value(_parameters.get("list_id").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_dashboard_lists::GetDashboardListParams { list_id };
     let response = match block_on(api.get_dashboard_list_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2661,10 +2853,9 @@ fn test_v1_update_dashboard_list(world: &mut DatadogWorld, _parameters: &HashMap
         .v1_api_dashboard_lists
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_dashboard_lists::UpdateDashboardListParams {
-        list_id: serde_json::from_value(_parameters.get("list_id").unwrap().clone()).unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let list_id = serde_json::from_value(_parameters.get("list_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_dashboard_lists::UpdateDashboardListParams { list_id, body };
     let response = match block_on(api.update_dashboard_list_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2684,11 +2875,17 @@ fn test_v1_list_downtimes(world: &mut DatadogWorld, _parameters: &HashMap<String
         .v1_api_downtimes
         .as_ref()
         .expect("api instance not found");
+    let current_only = match _parameters.get("current_only").is_some() {
+        true => serde_json::from_value(_parameters.get("current_only").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let with_creator = match _parameters.get("with_creator").is_some() {
+        true => serde_json::from_value(_parameters.get("with_creator").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV1::api::api_downtimes::ListDowntimesParams {
-        current_only: serde_json::from_value(_parameters.get("current_only").unwrap().clone())
-            .unwrap(),
-        with_creator: serde_json::from_value(_parameters.get("with_creator").unwrap().clone())
-            .unwrap(),
+        current_only,
+        with_creator,
     };
     let response = match block_on(api.list_downtimes_with_http_info(params)) {
         Ok(response) => response,
@@ -2709,9 +2906,8 @@ fn test_v1_create_downtime(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         .v1_api_downtimes
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_downtimes::CreateDowntimeParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_downtimes::CreateDowntimeParams { body };
     let response = match block_on(api.create_downtime_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2734,9 +2930,8 @@ fn test_v1_cancel_downtimes_by_scope(
         .v1_api_downtimes
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_downtimes::CancelDowntimesByScopeParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_downtimes::CancelDowntimesByScopeParams { body };
     let response = match block_on(api.cancel_downtimes_by_scope_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2756,10 +2951,9 @@ fn test_v1_cancel_downtime(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         .v1_api_downtimes
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_downtimes::CancelDowntimeParams {
-        downtime_id: serde_json::from_value(_parameters.get("downtime_id").unwrap().clone())
-            .unwrap(),
-    };
+    let downtime_id =
+        serde_json::from_value(_parameters.get("downtime_id").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_downtimes::CancelDowntimeParams { downtime_id };
     let response = match block_on(api.cancel_downtime_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2779,10 +2973,9 @@ fn test_v1_get_downtime(world: &mut DatadogWorld, _parameters: &HashMap<String, 
         .v1_api_downtimes
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_downtimes::GetDowntimeParams {
-        downtime_id: serde_json::from_value(_parameters.get("downtime_id").unwrap().clone())
-            .unwrap(),
-    };
+    let downtime_id =
+        serde_json::from_value(_parameters.get("downtime_id").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_downtimes::GetDowntimeParams { downtime_id };
     let response = match block_on(api.get_downtime_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2802,11 +2995,10 @@ fn test_v1_update_downtime(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         .v1_api_downtimes
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_downtimes::UpdateDowntimeParams {
-        downtime_id: serde_json::from_value(_parameters.get("downtime_id").unwrap().clone())
-            .unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let downtime_id =
+        serde_json::from_value(_parameters.get("downtime_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_downtimes::UpdateDowntimeParams { downtime_id, body };
     let response = match block_on(api.update_downtime_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2826,9 +3018,9 @@ fn test_v1_list_monitor_downtimes(world: &mut DatadogWorld, _parameters: &HashMa
         .v1_api_downtimes
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_downtimes::ListMonitorDowntimesParams {
-        monitor_id: serde_json::from_value(_parameters.get("monitor_id").unwrap().clone()).unwrap(),
-    };
+    let monitor_id =
+        serde_json::from_value(_parameters.get("monitor_id").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_downtimes::ListMonitorDowntimesParams { monitor_id };
     let response = match block_on(api.list_monitor_downtimes_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2848,19 +3040,43 @@ fn test_v1_list_events(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         .v1_api_events
         .as_ref()
         .expect("api instance not found");
+    let start = serde_json::from_value(_parameters.get("start").unwrap().clone()).unwrap();
+    let end = serde_json::from_value(_parameters.get("end").unwrap().clone()).unwrap();
+    let priority = match _parameters.get("priority").is_some() {
+        true => serde_json::from_value(_parameters.get("priority").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let sources = match _parameters.get("sources").is_some() {
+        true => serde_json::from_value(_parameters.get("sources").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let tags = match _parameters.get("tags").is_some() {
+        true => serde_json::from_value(_parameters.get("tags").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let unaggregated = match _parameters.get("unaggregated").is_some() {
+        true => serde_json::from_value(_parameters.get("unaggregated").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let exclude_aggregate = match _parameters.get("exclude_aggregate").is_some() {
+        true => {
+            serde_json::from_value(_parameters.get("exclude_aggregate").unwrap().clone()).unwrap()
+        }
+        false => None,
+    };
+    let page = match _parameters.get("page").is_some() {
+        true => serde_json::from_value(_parameters.get("page").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV1::api::api_events::ListEventsParams {
-        start: serde_json::from_value(_parameters.get("start").unwrap().clone()).unwrap(),
-        end: serde_json::from_value(_parameters.get("end").unwrap().clone()).unwrap(),
-        priority: serde_json::from_value(_parameters.get("priority").unwrap().clone()).unwrap(),
-        sources: serde_json::from_value(_parameters.get("sources").unwrap().clone()).unwrap(),
-        tags: serde_json::from_value(_parameters.get("tags").unwrap().clone()).unwrap(),
-        unaggregated: serde_json::from_value(_parameters.get("unaggregated").unwrap().clone())
-            .unwrap(),
-        exclude_aggregate: serde_json::from_value(
-            _parameters.get("exclude_aggregate").unwrap().clone(),
-        )
-        .unwrap(),
-        page: serde_json::from_value(_parameters.get("page").unwrap().clone()).unwrap(),
+        start,
+        end,
+        priority,
+        sources,
+        tags,
+        unaggregated,
+        exclude_aggregate,
+        page,
     };
     let response = match block_on(api.list_events_with_http_info(params)) {
         Ok(response) => response,
@@ -2881,9 +3097,8 @@ fn test_v1_create_event(world: &mut DatadogWorld, _parameters: &HashMap<String, 
         .v1_api_events
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_events::CreateEventParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_events::CreateEventParams { body };
     let response = match block_on(api.create_event_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2903,9 +3118,8 @@ fn test_v1_get_event(world: &mut DatadogWorld, _parameters: &HashMap<String, Val
         .v1_api_events
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_events::GetEventParams {
-        event_id: serde_json::from_value(_parameters.get("event_id").unwrap().clone()).unwrap(),
-    };
+    let event_id = serde_json::from_value(_parameters.get("event_id").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_events::GetEventParams { event_id };
     let response = match block_on(api.get_event_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2925,17 +3139,41 @@ fn test_v1_get_graph_snapshot(world: &mut DatadogWorld, _parameters: &HashMap<St
         .v1_api_snapshots
         .as_ref()
         .expect("api instance not found");
+    let start = serde_json::from_value(_parameters.get("start").unwrap().clone()).unwrap();
+    let end = serde_json::from_value(_parameters.get("end").unwrap().clone()).unwrap();
+    let metric_query = match _parameters.get("metric_query").is_some() {
+        true => serde_json::from_value(_parameters.get("metric_query").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let event_query = match _parameters.get("event_query").is_some() {
+        true => serde_json::from_value(_parameters.get("event_query").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let graph_def = match _parameters.get("graph_def").is_some() {
+        true => serde_json::from_value(_parameters.get("graph_def").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let title = match _parameters.get("title").is_some() {
+        true => serde_json::from_value(_parameters.get("title").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let height = match _parameters.get("height").is_some() {
+        true => serde_json::from_value(_parameters.get("height").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let width = match _parameters.get("width").is_some() {
+        true => serde_json::from_value(_parameters.get("width").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV1::api::api_snapshots::GetGraphSnapshotParams {
-        start: serde_json::from_value(_parameters.get("start").unwrap().clone()).unwrap(),
-        end: serde_json::from_value(_parameters.get("end").unwrap().clone()).unwrap(),
-        metric_query: serde_json::from_value(_parameters.get("metric_query").unwrap().clone())
-            .unwrap(),
-        event_query: serde_json::from_value(_parameters.get("event_query").unwrap().clone())
-            .unwrap(),
-        graph_def: serde_json::from_value(_parameters.get("graph_def").unwrap().clone()).unwrap(),
-        title: serde_json::from_value(_parameters.get("title").unwrap().clone()).unwrap(),
-        height: serde_json::from_value(_parameters.get("height").unwrap().clone()).unwrap(),
-        width: serde_json::from_value(_parameters.get("width").unwrap().clone()).unwrap(),
+        start,
+        end,
+        metric_query,
+        event_query,
+        graph_def,
+        title,
+        height,
+        width,
     };
     let response = match block_on(api.get_graph_snapshot_with_http_info(params)) {
         Ok(response) => response,
@@ -2956,10 +3194,9 @@ fn test_v1_mute_host(world: &mut DatadogWorld, _parameters: &HashMap<String, Val
         .v1_api_hosts
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_hosts::MuteHostParams {
-        host_name: serde_json::from_value(_parameters.get("host_name").unwrap().clone()).unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let host_name = serde_json::from_value(_parameters.get("host_name").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_hosts::MuteHostParams { host_name, body };
     let response = match block_on(api.mute_host_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2979,9 +3216,8 @@ fn test_v1_unmute_host(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         .v1_api_hosts
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_hosts::UnmuteHostParams {
-        host_name: serde_json::from_value(_parameters.get("host_name").unwrap().clone()).unwrap(),
-    };
+    let host_name = serde_json::from_value(_parameters.get("host_name").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_hosts::UnmuteHostParams { host_name };
     let response = match block_on(api.unmute_host_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3001,21 +3237,51 @@ fn test_v1_list_hosts(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         .v1_api_hosts
         .as_ref()
         .expect("api instance not found");
+    let filter = match _parameters.get("filter").is_some() {
+        true => serde_json::from_value(_parameters.get("filter").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let sort_field = match _parameters.get("sort_field").is_some() {
+        true => serde_json::from_value(_parameters.get("sort_field").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let sort_dir = match _parameters.get("sort_dir").is_some() {
+        true => serde_json::from_value(_parameters.get("sort_dir").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let start = match _parameters.get("start").is_some() {
+        true => serde_json::from_value(_parameters.get("start").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let count = match _parameters.get("count").is_some() {
+        true => serde_json::from_value(_parameters.get("count").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let from = match _parameters.get("from").is_some() {
+        true => serde_json::from_value(_parameters.get("from").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let include_muted_hosts_data = match _parameters.get("include_muted_hosts_data").is_some() {
+        true => {
+            serde_json::from_value(_parameters.get("include_muted_hosts_data").unwrap().clone())
+                .unwrap()
+        }
+        false => None,
+    };
+    let include_hosts_metadata = match _parameters.get("include_hosts_metadata").is_some() {
+        true => serde_json::from_value(_parameters.get("include_hosts_metadata").unwrap().clone())
+            .unwrap(),
+        false => None,
+    };
     let params = datadogV1::api::api_hosts::ListHostsParams {
-        filter: serde_json::from_value(_parameters.get("filter").unwrap().clone()).unwrap(),
-        sort_field: serde_json::from_value(_parameters.get("sort_field").unwrap().clone()).unwrap(),
-        sort_dir: serde_json::from_value(_parameters.get("sort_dir").unwrap().clone()).unwrap(),
-        start: serde_json::from_value(_parameters.get("start").unwrap().clone()).unwrap(),
-        count: serde_json::from_value(_parameters.get("count").unwrap().clone()).unwrap(),
-        from: serde_json::from_value(_parameters.get("from").unwrap().clone()).unwrap(),
-        include_muted_hosts_data: serde_json::from_value(
-            _parameters.get("include_muted_hosts_data").unwrap().clone(),
-        )
-        .unwrap(),
-        include_hosts_metadata: serde_json::from_value(
-            _parameters.get("include_hosts_metadata").unwrap().clone(),
-        )
-        .unwrap(),
+        filter,
+        sort_field,
+        sort_dir,
+        start,
+        count,
+        from,
+        include_muted_hosts_data,
+        include_hosts_metadata,
     };
     let response = match block_on(api.list_hosts_with_http_info(params)) {
         Ok(response) => response,
@@ -3036,9 +3302,11 @@ fn test_v1_get_host_totals(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         .v1_api_hosts
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_hosts::GetHostTotalsParams {
-        from: serde_json::from_value(_parameters.get("from").unwrap().clone()).unwrap(),
+    let from = match _parameters.get("from").is_some() {
+        true => serde_json::from_value(_parameters.get("from").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params = datadogV1::api::api_hosts::GetHostTotalsParams { from };
     let response = match block_on(api.get_host_totals_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3058,9 +3326,8 @@ fn test_v1_delete_aws_account(world: &mut DatadogWorld, _parameters: &HashMap<St
         .v1_api_aws_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_aws_integration::DeleteAWSAccountParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_aws_integration::DeleteAWSAccountParams { body };
     let response = match block_on(api.delete_aws_account_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3080,11 +3347,22 @@ fn test_v1_list_aws_accounts(world: &mut DatadogWorld, _parameters: &HashMap<Str
         .v1_api_aws_integration
         .as_ref()
         .expect("api instance not found");
+    let account_id = match _parameters.get("account_id").is_some() {
+        true => serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let role_name = match _parameters.get("role_name").is_some() {
+        true => serde_json::from_value(_parameters.get("role_name").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let access_key_id = match _parameters.get("access_key_id").is_some() {
+        true => serde_json::from_value(_parameters.get("access_key_id").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV1::api::api_aws_integration::ListAWSAccountsParams {
-        account_id: serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap(),
-        role_name: serde_json::from_value(_parameters.get("role_name").unwrap().clone()).unwrap(),
-        access_key_id: serde_json::from_value(_parameters.get("access_key_id").unwrap().clone())
-            .unwrap(),
+        account_id,
+        role_name,
+        access_key_id,
     };
     let response = match block_on(api.list_aws_accounts_with_http_info(params)) {
         Ok(response) => response,
@@ -3105,9 +3383,8 @@ fn test_v1_create_aws_account(world: &mut DatadogWorld, _parameters: &HashMap<St
         .v1_api_aws_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_aws_integration::CreateAWSAccountParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_aws_integration::CreateAWSAccountParams { body };
     let response = match block_on(api.create_aws_account_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3127,12 +3404,24 @@ fn test_v1_update_aws_account(world: &mut DatadogWorld, _parameters: &HashMap<St
         .v1_api_aws_integration
         .as_ref()
         .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let account_id = match _parameters.get("account_id").is_some() {
+        true => serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let role_name = match _parameters.get("role_name").is_some() {
+        true => serde_json::from_value(_parameters.get("role_name").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let access_key_id = match _parameters.get("access_key_id").is_some() {
+        true => serde_json::from_value(_parameters.get("access_key_id").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV1::api::api_aws_integration::UpdateAWSAccountParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-        account_id: serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap(),
-        role_name: serde_json::from_value(_parameters.get("role_name").unwrap().clone()).unwrap(),
-        access_key_id: serde_json::from_value(_parameters.get("access_key_id").unwrap().clone())
-            .unwrap(),
+        body,
+        account_id,
+        role_name,
+        access_key_id,
     };
     let response = match block_on(api.update_aws_account_with_http_info(params)) {
         Ok(response) => response,
@@ -3178,9 +3467,8 @@ fn test_v1_delete_aws_event_bridge_source(
         .v1_api_aws_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_aws_integration::DeleteAWSEventBridgeSourceParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_aws_integration::DeleteAWSEventBridgeSourceParams { body };
     let response = match block_on(api.delete_aws_event_bridge_source_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3225,9 +3513,8 @@ fn test_v1_create_aws_event_bridge_source(
         .v1_api_aws_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_aws_integration::CreateAWSEventBridgeSourceParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_aws_integration::CreateAWSEventBridgeSourceParams { body };
     let response = match block_on(api.create_aws_event_bridge_source_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3247,9 +3534,8 @@ fn test_v1_delete_aws_tag_filter(world: &mut DatadogWorld, _parameters: &HashMap
         .v1_api_aws_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_aws_integration::DeleteAWSTagFilterParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_aws_integration::DeleteAWSTagFilterParams { body };
     let response = match block_on(api.delete_aws_tag_filter_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3269,9 +3555,9 @@ fn test_v1_list_aws_tag_filters(world: &mut DatadogWorld, _parameters: &HashMap<
         .v1_api_aws_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_aws_integration::ListAWSTagFiltersParams {
-        account_id: serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap(),
-    };
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_aws_integration::ListAWSTagFiltersParams { account_id };
     let response = match block_on(api.list_aws_tag_filters_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3291,9 +3577,8 @@ fn test_v1_create_aws_tag_filter(world: &mut DatadogWorld, _parameters: &HashMap
         .v1_api_aws_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_aws_integration::CreateAWSTagFilterParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_aws_integration::CreateAWSTagFilterParams { body };
     let response = match block_on(api.create_aws_tag_filter_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3316,9 +3601,8 @@ fn test_v1_create_new_aws_external_id(
         .v1_api_aws_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_aws_integration::CreateNewAWSExternalIDParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_aws_integration::CreateNewAWSExternalIDParams { body };
     let response = match block_on(api.create_new_aws_external_id_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3338,9 +3622,8 @@ fn test_v1_delete_aws_lambda_arn(world: &mut DatadogWorld, _parameters: &HashMap
         .v1_api_aws_logs_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_aws_logs_integration::DeleteAWSLambdaARNParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_aws_logs_integration::DeleteAWSLambdaARNParams { body };
     let response = match block_on(api.delete_aws_lambda_arn_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3382,9 +3665,8 @@ fn test_v1_create_aws_lambda_arn(world: &mut DatadogWorld, _parameters: &HashMap
         .v1_api_aws_logs_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_aws_logs_integration::CreateAWSLambdaARNParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_aws_logs_integration::CreateAWSLambdaARNParams { body };
     let response = match block_on(api.create_aws_lambda_arn_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3407,9 +3689,8 @@ fn test_v1_check_aws_logs_lambda_async(
         .v1_api_aws_logs_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_aws_logs_integration::CheckAWSLogsLambdaAsyncParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_aws_logs_integration::CheckAWSLogsLambdaAsyncParams { body };
     let response = match block_on(api.check_aws_logs_lambda_async_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3448,9 +3729,8 @@ fn test_v1_enable_aws_log_services(world: &mut DatadogWorld, _parameters: &HashM
         .v1_api_aws_logs_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_aws_logs_integration::EnableAWSLogServicesParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_aws_logs_integration::EnableAWSLogServicesParams { body };
     let response = match block_on(api.enable_aws_log_services_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3473,9 +3753,8 @@ fn test_v1_check_aws_logs_services_async(
         .v1_api_aws_logs_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_aws_logs_integration::CheckAWSLogsServicesAsyncParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_aws_logs_integration::CheckAWSLogsServicesAsyncParams { body };
     let response = match block_on(api.check_aws_logs_services_async_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3498,9 +3777,8 @@ fn test_v1_delete_azure_integration(
         .v1_api_azure_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_azure_integration::DeleteAzureIntegrationParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_azure_integration::DeleteAzureIntegrationParams { body };
     let response = match block_on(api.delete_azure_integration_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3542,9 +3820,8 @@ fn test_v1_create_azure_integration(
         .v1_api_azure_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_azure_integration::CreateAzureIntegrationParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_azure_integration::CreateAzureIntegrationParams { body };
     let response = match block_on(api.create_azure_integration_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3567,9 +3844,8 @@ fn test_v1_update_azure_integration(
         .v1_api_azure_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_azure_integration::UpdateAzureIntegrationParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_azure_integration::UpdateAzureIntegrationParams { body };
     let response = match block_on(api.update_azure_integration_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3592,9 +3868,8 @@ fn test_v1_update_azure_host_filters(
         .v1_api_azure_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_azure_integration::UpdateAzureHostFiltersParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_azure_integration::UpdateAzureHostFiltersParams { body };
     let response = match block_on(api.update_azure_host_filters_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3614,9 +3889,8 @@ fn test_v1_delete_gcp_integration(world: &mut DatadogWorld, _parameters: &HashMa
         .v1_api_gcp_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_gcp_integration::DeleteGCPIntegrationParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_gcp_integration::DeleteGCPIntegrationParams { body };
     let response = match block_on(api.delete_gcp_integration_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3655,9 +3929,8 @@ fn test_v1_create_gcp_integration(world: &mut DatadogWorld, _parameters: &HashMa
         .v1_api_gcp_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_gcp_integration::CreateGCPIntegrationParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_gcp_integration::CreateGCPIntegrationParams { body };
     let response = match block_on(api.create_gcp_integration_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3677,9 +3950,8 @@ fn test_v1_update_gcp_integration(world: &mut DatadogWorld, _parameters: &HashMa
         .v1_api_gcp_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_gcp_integration::UpdateGCPIntegrationParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_gcp_integration::UpdateGCPIntegrationParams { body };
     let response = match block_on(api.update_gcp_integration_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3702,9 +3974,10 @@ fn test_v1_create_pager_duty_integration_service(
         .v1_api_pager_duty_integration
         .as_ref()
         .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let params =
         datadogV1::api::api_pager_duty_integration::CreatePagerDutyIntegrationServiceParams {
-            body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
+            body,
         };
     let response = match block_on(api.create_pager_duty_integration_service_with_http_info(params))
     {
@@ -3729,10 +4002,11 @@ fn test_v1_delete_pager_duty_integration_service(
         .v1_api_pager_duty_integration
         .as_ref()
         .expect("api instance not found");
+    let service_name =
+        serde_json::from_value(_parameters.get("service_name").unwrap().clone()).unwrap();
     let params =
         datadogV1::api::api_pager_duty_integration::DeletePagerDutyIntegrationServiceParams {
-            service_name: serde_json::from_value(_parameters.get("service_name").unwrap().clone())
-                .unwrap(),
+            service_name,
         };
     let response = match block_on(api.delete_pager_duty_integration_service_with_http_info(params))
     {
@@ -3757,9 +4031,10 @@ fn test_v1_get_pager_duty_integration_service(
         .v1_api_pager_duty_integration
         .as_ref()
         .expect("api instance not found");
+    let service_name =
+        serde_json::from_value(_parameters.get("service_name").unwrap().clone()).unwrap();
     let params = datadogV1::api::api_pager_duty_integration::GetPagerDutyIntegrationServiceParams {
-        service_name: serde_json::from_value(_parameters.get("service_name").unwrap().clone())
-            .unwrap(),
+        service_name,
     };
     let response = match block_on(api.get_pager_duty_integration_service_with_http_info(params)) {
         Ok(response) => response,
@@ -3783,11 +4058,13 @@ fn test_v1_update_pager_duty_integration_service(
         .v1_api_pager_duty_integration
         .as_ref()
         .expect("api instance not found");
+    let service_name =
+        serde_json::from_value(_parameters.get("service_name").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let params =
         datadogV1::api::api_pager_duty_integration::UpdatePagerDutyIntegrationServiceParams {
-            service_name: serde_json::from_value(_parameters.get("service_name").unwrap().clone())
-                .unwrap(),
-            body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
+            service_name,
+            body,
         };
     let response = match block_on(api.update_pager_duty_integration_service_with_http_info(params))
     {
@@ -3812,10 +4089,10 @@ fn test_v1_get_slack_integration_channels(
         .v1_api_slack_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_slack_integration::GetSlackIntegrationChannelsParams {
-        account_name: serde_json::from_value(_parameters.get("account_name").unwrap().clone())
-            .unwrap(),
-    };
+    let account_name =
+        serde_json::from_value(_parameters.get("account_name").unwrap().clone()).unwrap();
+    let params =
+        datadogV1::api::api_slack_integration::GetSlackIntegrationChannelsParams { account_name };
     let response = match block_on(api.get_slack_integration_channels_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3838,10 +4115,12 @@ fn test_v1_create_slack_integration_channel(
         .v1_api_slack_integration
         .as_ref()
         .expect("api instance not found");
+    let account_name =
+        serde_json::from_value(_parameters.get("account_name").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let params = datadogV1::api::api_slack_integration::CreateSlackIntegrationChannelParams {
-        account_name: serde_json::from_value(_parameters.get("account_name").unwrap().clone())
-            .unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
+        account_name,
+        body,
     };
     let response = match block_on(api.create_slack_integration_channel_with_http_info(params)) {
         Ok(response) => response,
@@ -3865,11 +4144,13 @@ fn test_v1_remove_slack_integration_channel(
         .v1_api_slack_integration
         .as_ref()
         .expect("api instance not found");
+    let account_name =
+        serde_json::from_value(_parameters.get("account_name").unwrap().clone()).unwrap();
+    let channel_name =
+        serde_json::from_value(_parameters.get("channel_name").unwrap().clone()).unwrap();
     let params = datadogV1::api::api_slack_integration::RemoveSlackIntegrationChannelParams {
-        account_name: serde_json::from_value(_parameters.get("account_name").unwrap().clone())
-            .unwrap(),
-        channel_name: serde_json::from_value(_parameters.get("channel_name").unwrap().clone())
-            .unwrap(),
+        account_name,
+        channel_name,
     };
     let response = match block_on(api.remove_slack_integration_channel_with_http_info(params)) {
         Ok(response) => response,
@@ -3893,11 +4174,13 @@ fn test_v1_get_slack_integration_channel(
         .v1_api_slack_integration
         .as_ref()
         .expect("api instance not found");
+    let account_name =
+        serde_json::from_value(_parameters.get("account_name").unwrap().clone()).unwrap();
+    let channel_name =
+        serde_json::from_value(_parameters.get("channel_name").unwrap().clone()).unwrap();
     let params = datadogV1::api::api_slack_integration::GetSlackIntegrationChannelParams {
-        account_name: serde_json::from_value(_parameters.get("account_name").unwrap().clone())
-            .unwrap(),
-        channel_name: serde_json::from_value(_parameters.get("channel_name").unwrap().clone())
-            .unwrap(),
+        account_name,
+        channel_name,
     };
     let response = match block_on(api.get_slack_integration_channel_with_http_info(params)) {
         Ok(response) => response,
@@ -3921,12 +4204,15 @@ fn test_v1_update_slack_integration_channel(
         .v1_api_slack_integration
         .as_ref()
         .expect("api instance not found");
+    let account_name =
+        serde_json::from_value(_parameters.get("account_name").unwrap().clone()).unwrap();
+    let channel_name =
+        serde_json::from_value(_parameters.get("channel_name").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let params = datadogV1::api::api_slack_integration::UpdateSlackIntegrationChannelParams {
-        account_name: serde_json::from_value(_parameters.get("account_name").unwrap().clone())
-            .unwrap(),
-        channel_name: serde_json::from_value(_parameters.get("channel_name").unwrap().clone())
-            .unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
+        account_name,
+        channel_name,
+        body,
     };
     let response = match block_on(api.update_slack_integration_channel_with_http_info(params)) {
         Ok(response) => response,
@@ -3950,9 +4236,10 @@ fn test_v1_create_webhooks_integration_custom_variable(
         .v1_api_webhooks_integration
         .as_ref()
         .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let params =
         datadogV1::api::api_webhooks_integration::CreateWebhooksIntegrationCustomVariableParams {
-            body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
+            body,
         };
     let response =
         match block_on(api.create_webhooks_integration_custom_variable_with_http_info(params)) {
@@ -3977,12 +4264,11 @@ fn test_v1_delete_webhooks_integration_custom_variable(
         .v1_api_webhooks_integration
         .as_ref()
         .expect("api instance not found");
+    let custom_variable_name =
+        serde_json::from_value(_parameters.get("custom_variable_name").unwrap().clone()).unwrap();
     let params =
         datadogV1::api::api_webhooks_integration::DeleteWebhooksIntegrationCustomVariableParams {
-            custom_variable_name: serde_json::from_value(
-                _parameters.get("custom_variable_name").unwrap().clone(),
-            )
-            .unwrap(),
+            custom_variable_name,
         };
     let response =
         match block_on(api.delete_webhooks_integration_custom_variable_with_http_info(params)) {
@@ -4007,12 +4293,11 @@ fn test_v1_get_webhooks_integration_custom_variable(
         .v1_api_webhooks_integration
         .as_ref()
         .expect("api instance not found");
+    let custom_variable_name =
+        serde_json::from_value(_parameters.get("custom_variable_name").unwrap().clone()).unwrap();
     let params =
         datadogV1::api::api_webhooks_integration::GetWebhooksIntegrationCustomVariableParams {
-            custom_variable_name: serde_json::from_value(
-                _parameters.get("custom_variable_name").unwrap().clone(),
-            )
-            .unwrap(),
+            custom_variable_name,
         };
     let response =
         match block_on(api.get_webhooks_integration_custom_variable_with_http_info(params)) {
@@ -4037,13 +4322,13 @@ fn test_v1_update_webhooks_integration_custom_variable(
         .v1_api_webhooks_integration
         .as_ref()
         .expect("api instance not found");
+    let custom_variable_name =
+        serde_json::from_value(_parameters.get("custom_variable_name").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let params =
         datadogV1::api::api_webhooks_integration::UpdateWebhooksIntegrationCustomVariableParams {
-            custom_variable_name: serde_json::from_value(
-                _parameters.get("custom_variable_name").unwrap().clone(),
-            )
-            .unwrap(),
-            body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
+            custom_variable_name,
+            body,
         };
     let response =
         match block_on(api.update_webhooks_integration_custom_variable_with_http_info(params)) {
@@ -4068,9 +4353,8 @@ fn test_v1_create_webhooks_integration(
         .v1_api_webhooks_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_webhooks_integration::CreateWebhooksIntegrationParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_webhooks_integration::CreateWebhooksIntegrationParams { body };
     let response = match block_on(api.create_webhooks_integration_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4093,10 +4377,10 @@ fn test_v1_delete_webhooks_integration(
         .v1_api_webhooks_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_webhooks_integration::DeleteWebhooksIntegrationParams {
-        webhook_name: serde_json::from_value(_parameters.get("webhook_name").unwrap().clone())
-            .unwrap(),
-    };
+    let webhook_name =
+        serde_json::from_value(_parameters.get("webhook_name").unwrap().clone()).unwrap();
+    let params =
+        datadogV1::api::api_webhooks_integration::DeleteWebhooksIntegrationParams { webhook_name };
     let response = match block_on(api.delete_webhooks_integration_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4119,10 +4403,10 @@ fn test_v1_get_webhooks_integration(
         .v1_api_webhooks_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_webhooks_integration::GetWebhooksIntegrationParams {
-        webhook_name: serde_json::from_value(_parameters.get("webhook_name").unwrap().clone())
-            .unwrap(),
-    };
+    let webhook_name =
+        serde_json::from_value(_parameters.get("webhook_name").unwrap().clone()).unwrap();
+    let params =
+        datadogV1::api::api_webhooks_integration::GetWebhooksIntegrationParams { webhook_name };
     let response = match block_on(api.get_webhooks_integration_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4145,10 +4429,12 @@ fn test_v1_update_webhooks_integration(
         .v1_api_webhooks_integration
         .as_ref()
         .expect("api instance not found");
+    let webhook_name =
+        serde_json::from_value(_parameters.get("webhook_name").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let params = datadogV1::api::api_webhooks_integration::UpdateWebhooksIntegrationParams {
-        webhook_name: serde_json::from_value(_parameters.get("webhook_name").unwrap().clone())
-            .unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
+        webhook_name,
+        body,
     };
     let response = match block_on(api.update_webhooks_integration_with_http_info(params)) {
         Ok(response) => response,
@@ -4169,9 +4455,8 @@ fn test_v1_list_logs(world: &mut DatadogWorld, _parameters: &HashMap<String, Val
         .v1_api_logs
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_logs::ListLogsParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_logs::ListLogsParams { body };
     let response = match block_on(api.list_logs_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4191,13 +4476,21 @@ fn test_v1_submit_log(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         .v1_api_logs
         .as_ref()
         .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let content_encoding = match _parameters.get("Content-Encoding").is_some() {
+        true => {
+            serde_json::from_value(_parameters.get("Content-Encoding").unwrap().clone()).unwrap()
+        }
+        false => None,
+    };
+    let ddtags = match _parameters.get("ddtags").is_some() {
+        true => serde_json::from_value(_parameters.get("ddtags").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV1::api::api_logs::SubmitLogParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-        content_encoding: serde_json::from_value(
-            _parameters.get("Content-Encoding").unwrap().clone(),
-        )
-        .unwrap(),
-        ddtags: serde_json::from_value(_parameters.get("ddtags").unwrap().clone()).unwrap(),
+        body,
+        content_encoding,
+        ddtags,
     };
     let response = match block_on(api.submit_log_with_http_info(params)) {
         Ok(response) => response,
@@ -4237,9 +4530,8 @@ fn test_v1_update_logs_index_order(world: &mut DatadogWorld, _parameters: &HashM
         .v1_api_logs_indexes
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_logs_indexes::UpdateLogsIndexOrderParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_logs_indexes::UpdateLogsIndexOrderParams { body };
     let response = match block_on(api.update_logs_index_order_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4278,9 +4570,8 @@ fn test_v1_create_logs_index(world: &mut DatadogWorld, _parameters: &HashMap<Str
         .v1_api_logs_indexes
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_logs_indexes::CreateLogsIndexParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_logs_indexes::CreateLogsIndexParams { body };
     let response = match block_on(api.create_logs_index_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4300,9 +4591,8 @@ fn test_v1_get_logs_index(world: &mut DatadogWorld, _parameters: &HashMap<String
         .v1_api_logs_indexes
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_logs_indexes::GetLogsIndexParams {
-        name: serde_json::from_value(_parameters.get("name").unwrap().clone()).unwrap(),
-    };
+    let name = serde_json::from_value(_parameters.get("name").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_logs_indexes::GetLogsIndexParams { name };
     let response = match block_on(api.get_logs_index_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4322,10 +4612,9 @@ fn test_v1_update_logs_index(world: &mut DatadogWorld, _parameters: &HashMap<Str
         .v1_api_logs_indexes
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_logs_indexes::UpdateLogsIndexParams {
-        name: serde_json::from_value(_parameters.get("name").unwrap().clone()).unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let name = serde_json::from_value(_parameters.get("name").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_logs_indexes::UpdateLogsIndexParams { name, body };
     let response = match block_on(api.update_logs_index_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4345,10 +4634,19 @@ fn test_v1_list_active_metrics(world: &mut DatadogWorld, _parameters: &HashMap<S
         .v1_api_metrics
         .as_ref()
         .expect("api instance not found");
+    let from = serde_json::from_value(_parameters.get("from").unwrap().clone()).unwrap();
+    let host = match _parameters.get("host").is_some() {
+        true => serde_json::from_value(_parameters.get("host").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let tag_filter = match _parameters.get("tag_filter").is_some() {
+        true => serde_json::from_value(_parameters.get("tag_filter").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV1::api::api_metrics::ListActiveMetricsParams {
-        from: serde_json::from_value(_parameters.get("from").unwrap().clone()).unwrap(),
-        host: serde_json::from_value(_parameters.get("host").unwrap().clone()).unwrap(),
-        tag_filter: serde_json::from_value(_parameters.get("tag_filter").unwrap().clone()).unwrap(),
+        from,
+        host,
+        tag_filter,
     };
     let response = match block_on(api.list_active_metrics_with_http_info(params)) {
         Ok(response) => response,
@@ -4369,10 +4667,9 @@ fn test_v1_get_metric_metadata(world: &mut DatadogWorld, _parameters: &HashMap<S
         .v1_api_metrics
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_metrics::GetMetricMetadataParams {
-        metric_name: serde_json::from_value(_parameters.get("metric_name").unwrap().clone())
-            .unwrap(),
-    };
+    let metric_name =
+        serde_json::from_value(_parameters.get("metric_name").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_metrics::GetMetricMetadataParams { metric_name };
     let response = match block_on(api.get_metric_metadata_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4392,11 +4689,10 @@ fn test_v1_update_metric_metadata(world: &mut DatadogWorld, _parameters: &HashMa
         .v1_api_metrics
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_metrics::UpdateMetricMetadataParams {
-        metric_name: serde_json::from_value(_parameters.get("metric_name").unwrap().clone())
-            .unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let metric_name =
+        serde_json::from_value(_parameters.get("metric_name").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_metrics::UpdateMetricMetadataParams { metric_name, body };
     let response = match block_on(api.update_metric_metadata_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4416,11 +4712,10 @@ fn test_v1_query_metrics(world: &mut DatadogWorld, _parameters: &HashMap<String,
         .v1_api_metrics
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_metrics::QueryMetricsParams {
-        from: serde_json::from_value(_parameters.get("from").unwrap().clone()).unwrap(),
-        to: serde_json::from_value(_parameters.get("to").unwrap().clone()).unwrap(),
-        query: serde_json::from_value(_parameters.get("query").unwrap().clone()).unwrap(),
-    };
+    let from = serde_json::from_value(_parameters.get("from").unwrap().clone()).unwrap();
+    let to = serde_json::from_value(_parameters.get("to").unwrap().clone()).unwrap();
+    let query = serde_json::from_value(_parameters.get("query").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_metrics::QueryMetricsParams { from, to, query };
     let response = match block_on(api.query_metrics_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4440,9 +4735,8 @@ fn test_v1_list_metrics(world: &mut DatadogWorld, _parameters: &HashMap<String, 
         .v1_api_metrics
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_metrics::ListMetricsParams {
-        q: serde_json::from_value(_parameters.get("q").unwrap().clone()).unwrap(),
-    };
+    let q = serde_json::from_value(_parameters.get("q").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_metrics::ListMetricsParams { q };
     let response = match block_on(api.list_metrics_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4462,12 +4756,16 @@ fn test_v1_submit_metrics(world: &mut DatadogWorld, _parameters: &HashMap<String
         .v1_api_metrics
         .as_ref()
         .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let content_encoding = match _parameters.get("Content-Encoding").is_some() {
+        true => {
+            serde_json::from_value(_parameters.get("Content-Encoding").unwrap().clone()).unwrap()
+        }
+        false => None,
+    };
     let params = datadogV1::api::api_metrics::SubmitMetricsParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-        content_encoding: serde_json::from_value(
-            _parameters.get("Content-Encoding").unwrap().clone(),
-        )
-        .unwrap(),
+        body,
+        content_encoding,
     };
     let response = match block_on(api.submit_metrics_with_http_info(params)) {
         Ok(response) => response,
@@ -4507,9 +4805,8 @@ fn test_v1_create_child_org(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         .v1_api_organizations
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_organizations::CreateChildOrgParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_organizations::CreateChildOrgParams { body };
     let response = match block_on(api.create_child_org_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4529,9 +4826,8 @@ fn test_v1_get_org(world: &mut DatadogWorld, _parameters: &HashMap<String, Value
         .v1_api_organizations
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_organizations::GetOrgParams {
-        public_id: serde_json::from_value(_parameters.get("public_id").unwrap().clone()).unwrap(),
-    };
+    let public_id = serde_json::from_value(_parameters.get("public_id").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_organizations::GetOrgParams { public_id };
     let response = match block_on(api.get_org_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4551,10 +4847,9 @@ fn test_v1_update_org(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         .v1_api_organizations
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_organizations::UpdateOrgParams {
-        public_id: serde_json::from_value(_parameters.get("public_id").unwrap().clone()).unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let public_id = serde_json::from_value(_parameters.get("public_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_organizations::UpdateOrgParams { public_id, body };
     let response = match block_on(api.update_org_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4574,9 +4869,8 @@ fn test_v1_downgrade_org(world: &mut DatadogWorld, _parameters: &HashMap<String,
         .v1_api_organizations
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_organizations::DowngradeOrgParams {
-        public_id: serde_json::from_value(_parameters.get("public_id").unwrap().clone()).unwrap(),
-    };
+    let public_id = serde_json::from_value(_parameters.get("public_id").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_organizations::DowngradeOrgParams { public_id };
     let response = match block_on(api.downgrade_org_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4596,9 +4890,11 @@ fn test_v1_upload_id_p_for_org(world: &mut DatadogWorld, _parameters: &HashMap<S
         .v1_api_organizations
         .as_ref()
         .expect("api instance not found");
+    let public_id = serde_json::from_value(_parameters.get("public_id").unwrap().clone()).unwrap();
+    let idp_file = serde_json::from_value(_parameters.get("idp_file").unwrap().clone()).unwrap();
     let params = datadogV1::api::api_organizations::UploadIdPForOrgParams {
-        public_id: serde_json::from_value(_parameters.get("public_id").unwrap().clone()).unwrap(),
-        idp_file: serde_json::from_value(_parameters.get("idp_file").unwrap().clone()).unwrap(),
+        public_id,
+        idp_file,
     };
     let response = match block_on(api.upload_id_p_for_org_with_http_info(params)) {
         Ok(response) => response,
@@ -4622,11 +4918,12 @@ fn test_v1_add_security_monitoring_signal_to_incident(
         .v1_api_security_monitoring
         .as_ref()
         .expect("api instance not found");
+    let signal_id = serde_json::from_value(_parameters.get("signal_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let params =
         datadogV1::api::api_security_monitoring::AddSecurityMonitoringSignalToIncidentParams {
-            signal_id: serde_json::from_value(_parameters.get("signal_id").unwrap().clone())
-                .unwrap(),
-            body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
+            signal_id,
+            body,
         };
     let response =
         match block_on(api.add_security_monitoring_signal_to_incident_with_http_info(params)) {
@@ -4651,11 +4948,12 @@ fn test_v1_edit_security_monitoring_signal_assignee(
         .v1_api_security_monitoring
         .as_ref()
         .expect("api instance not found");
+    let signal_id = serde_json::from_value(_parameters.get("signal_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let params =
         datadogV1::api::api_security_monitoring::EditSecurityMonitoringSignalAssigneeParams {
-            signal_id: serde_json::from_value(_parameters.get("signal_id").unwrap().clone())
-                .unwrap(),
-            body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
+            signal_id,
+            body,
         };
     let response =
         match block_on(api.edit_security_monitoring_signal_assignee_with_http_info(params)) {
@@ -4680,9 +4978,11 @@ fn test_v1_edit_security_monitoring_signal_state(
         .v1_api_security_monitoring
         .as_ref()
         .expect("api instance not found");
+    let signal_id = serde_json::from_value(_parameters.get("signal_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let params = datadogV1::api::api_security_monitoring::EditSecurityMonitoringSignalStateParams {
-        signal_id: serde_json::from_value(_parameters.get("signal_id").unwrap().clone()).unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
+        signal_id,
+        body,
     };
     let response = match block_on(api.edit_security_monitoring_signal_state_with_http_info(params))
     {
@@ -4704,14 +5004,37 @@ fn test_v1_list_sl_os(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         .v1_api_service_level_objectives
         .as_ref()
         .expect("api instance not found");
+    let ids = match _parameters.get("ids").is_some() {
+        true => serde_json::from_value(_parameters.get("ids").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let query = match _parameters.get("query").is_some() {
+        true => serde_json::from_value(_parameters.get("query").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let tags_query = match _parameters.get("tags_query").is_some() {
+        true => serde_json::from_value(_parameters.get("tags_query").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let metrics_query = match _parameters.get("metrics_query").is_some() {
+        true => serde_json::from_value(_parameters.get("metrics_query").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let limit = match _parameters.get("limit").is_some() {
+        true => serde_json::from_value(_parameters.get("limit").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let offset = match _parameters.get("offset").is_some() {
+        true => serde_json::from_value(_parameters.get("offset").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV1::api::api_service_level_objectives::ListSLOsParams {
-        ids: serde_json::from_value(_parameters.get("ids").unwrap().clone()).unwrap(),
-        query: serde_json::from_value(_parameters.get("query").unwrap().clone()).unwrap(),
-        tags_query: serde_json::from_value(_parameters.get("tags_query").unwrap().clone()).unwrap(),
-        metrics_query: serde_json::from_value(_parameters.get("metrics_query").unwrap().clone())
-            .unwrap(),
-        limit: serde_json::from_value(_parameters.get("limit").unwrap().clone()).unwrap(),
-        offset: serde_json::from_value(_parameters.get("offset").unwrap().clone()).unwrap(),
+        ids,
+        query,
+        tags_query,
+        metrics_query,
+        limit,
+        offset,
     };
     let response = match block_on(api.list_sl_os_with_http_info(params)) {
         Ok(response) => response,
@@ -4732,9 +5055,8 @@ fn test_v1_create_slo(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         .v1_api_service_level_objectives
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_service_level_objectives::CreateSLOParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_service_level_objectives::CreateSLOParams { body };
     let response = match block_on(api.create_slo_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4757,9 +5079,9 @@ fn test_v1_delete_slo_timeframe_in_bulk(
         .v1_api_service_level_objectives
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_service_level_objectives::DeleteSLOTimeframeInBulkParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params =
+        datadogV1::api::api_service_level_objectives::DeleteSLOTimeframeInBulkParams { body };
     let response = match block_on(api.delete_slo_timeframe_in_bulk_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4779,9 +5101,8 @@ fn test_v1_check_can_delete_slo(world: &mut DatadogWorld, _parameters: &HashMap<
         .v1_api_service_level_objectives
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_service_level_objectives::CheckCanDeleteSLOParams {
-        ids: serde_json::from_value(_parameters.get("ids").unwrap().clone()).unwrap(),
-    };
+    let ids = serde_json::from_value(_parameters.get("ids").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_service_level_objectives::CheckCanDeleteSLOParams { ids };
     let response = match block_on(api.check_can_delete_slo_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4801,13 +5122,27 @@ fn test_v1_search_slo(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         .v1_api_service_level_objectives
         .as_ref()
         .expect("api instance not found");
+    let query = match _parameters.get("query").is_some() {
+        true => serde_json::from_value(_parameters.get("query").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let page_size = match _parameters.get("page[size]").is_some() {
+        true => serde_json::from_value(_parameters.get("page[size]").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let page_number = match _parameters.get("page[number]").is_some() {
+        true => serde_json::from_value(_parameters.get("page[number]").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let include_facets = match _parameters.get("include_facets").is_some() {
+        true => serde_json::from_value(_parameters.get("include_facets").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV1::api::api_service_level_objectives::SearchSLOParams {
-        query: serde_json::from_value(_parameters.get("query").unwrap().clone()).unwrap(),
-        page_size: serde_json::from_value(_parameters.get("page[size]").unwrap().clone()).unwrap(),
-        page_number: serde_json::from_value(_parameters.get("page[number]").unwrap().clone())
-            .unwrap(),
-        include_facets: serde_json::from_value(_parameters.get("include_facets").unwrap().clone())
-            .unwrap(),
+        query,
+        page_size,
+        page_number,
+        include_facets,
     };
     let response = match block_on(api.search_slo_with_http_info(params)) {
         Ok(response) => response,
@@ -4828,10 +5163,12 @@ fn test_v1_delete_slo(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         .v1_api_service_level_objectives
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_service_level_objectives::DeleteSLOParams {
-        slo_id: serde_json::from_value(_parameters.get("slo_id").unwrap().clone()).unwrap(),
-        force: serde_json::from_value(_parameters.get("force").unwrap().clone()).unwrap(),
+    let slo_id = serde_json::from_value(_parameters.get("slo_id").unwrap().clone()).unwrap();
+    let force = match _parameters.get("force").is_some() {
+        true => serde_json::from_value(_parameters.get("force").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params = datadogV1::api::api_service_level_objectives::DeleteSLOParams { slo_id, force };
     let response = match block_on(api.delete_slo_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4851,15 +5188,20 @@ fn test_v1_get_slo(world: &mut DatadogWorld, _parameters: &HashMap<String, Value
         .v1_api_service_level_objectives
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_service_level_objectives::GetSLOParams {
-        slo_id: serde_json::from_value(_parameters.get("slo_id").unwrap().clone()).unwrap(),
-        with_configured_alert_ids: serde_json::from_value(
+    let slo_id = serde_json::from_value(_parameters.get("slo_id").unwrap().clone()).unwrap();
+    let with_configured_alert_ids = match _parameters.get("with_configured_alert_ids").is_some() {
+        true => serde_json::from_value(
             _parameters
                 .get("with_configured_alert_ids")
                 .unwrap()
                 .clone(),
         )
         .unwrap(),
+        false => None,
+    };
+    let params = datadogV1::api::api_service_level_objectives::GetSLOParams {
+        slo_id,
+        with_configured_alert_ids,
     };
     let response = match block_on(api.get_slo_with_http_info(params)) {
         Ok(response) => response,
@@ -4880,10 +5222,9 @@ fn test_v1_update_slo(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         .v1_api_service_level_objectives
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_service_level_objectives::UpdateSLOParams {
-        slo_id: serde_json::from_value(_parameters.get("slo_id").unwrap().clone()).unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let slo_id = serde_json::from_value(_parameters.get("slo_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_service_level_objectives::UpdateSLOParams { slo_id, body };
     let response = match block_on(api.update_slo_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4903,9 +5244,8 @@ fn test_v1_get_slo_corrections(world: &mut DatadogWorld, _parameters: &HashMap<S
         .v1_api_service_level_objectives
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_service_level_objectives::GetSLOCorrectionsParams {
-        slo_id: serde_json::from_value(_parameters.get("slo_id").unwrap().clone()).unwrap(),
-    };
+    let slo_id = serde_json::from_value(_parameters.get("slo_id").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_service_level_objectives::GetSLOCorrectionsParams { slo_id };
     let response = match block_on(api.get_slo_corrections_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4925,15 +5265,25 @@ fn test_v1_get_slo_history(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         .v1_api_service_level_objectives
         .as_ref()
         .expect("api instance not found");
+    let slo_id = serde_json::from_value(_parameters.get("slo_id").unwrap().clone()).unwrap();
+    let from_ts = serde_json::from_value(_parameters.get("from_ts").unwrap().clone()).unwrap();
+    let to_ts = serde_json::from_value(_parameters.get("to_ts").unwrap().clone()).unwrap();
+    let target = match _parameters.get("target").is_some() {
+        true => serde_json::from_value(_parameters.get("target").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let apply_correction = match _parameters.get("apply_correction").is_some() {
+        true => {
+            serde_json::from_value(_parameters.get("apply_correction").unwrap().clone()).unwrap()
+        }
+        false => None,
+    };
     let params = datadogV1::api::api_service_level_objectives::GetSLOHistoryParams {
-        slo_id: serde_json::from_value(_parameters.get("slo_id").unwrap().clone()).unwrap(),
-        from_ts: serde_json::from_value(_parameters.get("from_ts").unwrap().clone()).unwrap(),
-        to_ts: serde_json::from_value(_parameters.get("to_ts").unwrap().clone()).unwrap(),
-        target: serde_json::from_value(_parameters.get("target").unwrap().clone()).unwrap(),
-        apply_correction: serde_json::from_value(
-            _parameters.get("apply_correction").unwrap().clone(),
-        )
-        .unwrap(),
+        slo_id,
+        from_ts,
+        to_ts,
+        target,
+        apply_correction,
     };
     let response = match block_on(api.get_slo_history_with_http_info(params)) {
         Ok(response) => response,
@@ -4954,9 +5304,17 @@ fn test_v1_list_slo_correction(world: &mut DatadogWorld, _parameters: &HashMap<S
         .v1_api_service_level_objective_corrections
         .as_ref()
         .expect("api instance not found");
+    let offset = match _parameters.get("offset").is_some() {
+        true => serde_json::from_value(_parameters.get("offset").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let limit = match _parameters.get("limit").is_some() {
+        true => serde_json::from_value(_parameters.get("limit").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV1::api::api_service_level_objective_corrections::ListSLOCorrectionParams {
-        offset: serde_json::from_value(_parameters.get("offset").unwrap().clone()).unwrap(),
-        limit: serde_json::from_value(_parameters.get("limit").unwrap().clone()).unwrap(),
+        offset,
+        limit,
     };
     let response = match block_on(api.list_slo_correction_with_http_info(params)) {
         Ok(response) => response,
@@ -4977,10 +5335,9 @@ fn test_v1_create_slo_correction(world: &mut DatadogWorld, _parameters: &HashMap
         .v1_api_service_level_objective_corrections
         .as_ref()
         .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let params =
-        datadogV1::api::api_service_level_objective_corrections::CreateSLOCorrectionParams {
-            body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-        };
+        datadogV1::api::api_service_level_objective_corrections::CreateSLOCorrectionParams { body };
     let response = match block_on(api.create_slo_correction_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5000,12 +5357,11 @@ fn test_v1_delete_slo_correction(world: &mut DatadogWorld, _parameters: &HashMap
         .v1_api_service_level_objective_corrections
         .as_ref()
         .expect("api instance not found");
+    let slo_correction_id =
+        serde_json::from_value(_parameters.get("slo_correction_id").unwrap().clone()).unwrap();
     let params =
         datadogV1::api::api_service_level_objective_corrections::DeleteSLOCorrectionParams {
-            slo_correction_id: serde_json::from_value(
-                _parameters.get("slo_correction_id").unwrap().clone(),
-            )
-            .unwrap(),
+            slo_correction_id,
         };
     let response = match block_on(api.delete_slo_correction_with_http_info(params)) {
         Ok(response) => response,
@@ -5026,11 +5382,10 @@ fn test_v1_get_slo_correction(world: &mut DatadogWorld, _parameters: &HashMap<St
         .v1_api_service_level_objective_corrections
         .as_ref()
         .expect("api instance not found");
+    let slo_correction_id =
+        serde_json::from_value(_parameters.get("slo_correction_id").unwrap().clone()).unwrap();
     let params = datadogV1::api::api_service_level_objective_corrections::GetSLOCorrectionParams {
-        slo_correction_id: serde_json::from_value(
-            _parameters.get("slo_correction_id").unwrap().clone(),
-        )
-        .unwrap(),
+        slo_correction_id,
     };
     let response = match block_on(api.get_slo_correction_with_http_info(params)) {
         Ok(response) => response,
@@ -5051,13 +5406,13 @@ fn test_v1_update_slo_correction(world: &mut DatadogWorld, _parameters: &HashMap
         .v1_api_service_level_objective_corrections
         .as_ref()
         .expect("api instance not found");
+    let slo_correction_id =
+        serde_json::from_value(_parameters.get("slo_correction_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let params =
         datadogV1::api::api_service_level_objective_corrections::UpdateSLOCorrectionParams {
-            slo_correction_id: serde_json::from_value(
-                _parameters.get("slo_correction_id").unwrap().clone(),
-            )
-            .unwrap(),
-            body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
+            slo_correction_id,
+            body,
         };
     let response = match block_on(api.update_slo_correction_with_http_info(params)) {
         Ok(response) => response,
@@ -5078,9 +5433,11 @@ fn test_v1_list_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<String
         .v1_api_tags
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_tags::ListHostTagsParams {
-        source: serde_json::from_value(_parameters.get("source").unwrap().clone()).unwrap(),
+    let source = match _parameters.get("source").is_some() {
+        true => serde_json::from_value(_parameters.get("source").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params = datadogV1::api::api_tags::ListHostTagsParams { source };
     let response = match block_on(api.list_host_tags_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5100,10 +5457,12 @@ fn test_v1_delete_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         .v1_api_tags
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_tags::DeleteHostTagsParams {
-        host_name: serde_json::from_value(_parameters.get("host_name").unwrap().clone()).unwrap(),
-        source: serde_json::from_value(_parameters.get("source").unwrap().clone()).unwrap(),
+    let host_name = serde_json::from_value(_parameters.get("host_name").unwrap().clone()).unwrap();
+    let source = match _parameters.get("source").is_some() {
+        true => serde_json::from_value(_parameters.get("source").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params = datadogV1::api::api_tags::DeleteHostTagsParams { host_name, source };
     let response = match block_on(api.delete_host_tags_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5123,10 +5482,12 @@ fn test_v1_get_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<String,
         .v1_api_tags
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_tags::GetHostTagsParams {
-        host_name: serde_json::from_value(_parameters.get("host_name").unwrap().clone()).unwrap(),
-        source: serde_json::from_value(_parameters.get("source").unwrap().clone()).unwrap(),
+    let host_name = serde_json::from_value(_parameters.get("host_name").unwrap().clone()).unwrap();
+    let source = match _parameters.get("source").is_some() {
+        true => serde_json::from_value(_parameters.get("source").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params = datadogV1::api::api_tags::GetHostTagsParams { host_name, source };
     let response = match block_on(api.get_host_tags_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5146,10 +5507,16 @@ fn test_v1_create_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         .v1_api_tags
         .as_ref()
         .expect("api instance not found");
+    let host_name = serde_json::from_value(_parameters.get("host_name").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let source = match _parameters.get("source").is_some() {
+        true => serde_json::from_value(_parameters.get("source").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV1::api::api_tags::CreateHostTagsParams {
-        host_name: serde_json::from_value(_parameters.get("host_name").unwrap().clone()).unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-        source: serde_json::from_value(_parameters.get("source").unwrap().clone()).unwrap(),
+        host_name,
+        body,
+        source,
     };
     let response = match block_on(api.create_host_tags_with_http_info(params)) {
         Ok(response) => response,
@@ -5170,10 +5537,16 @@ fn test_v1_update_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         .v1_api_tags
         .as_ref()
         .expect("api instance not found");
+    let host_name = serde_json::from_value(_parameters.get("host_name").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let source = match _parameters.get("source").is_some() {
+        true => serde_json::from_value(_parameters.get("source").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV1::api::api_tags::UpdateHostTagsParams {
-        host_name: serde_json::from_value(_parameters.get("host_name").unwrap().clone()).unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-        source: serde_json::from_value(_parameters.get("source").unwrap().clone()).unwrap(),
+        host_name,
+        body,
+        source,
     };
     let response = match block_on(api.update_host_tags_with_http_info(params)) {
         Ok(response) => response,
@@ -5213,9 +5586,8 @@ fn test_v1_create_user(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         .v1_api_users
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_users::CreateUserParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_users::CreateUserParams { body };
     let response = match block_on(api.create_user_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5235,10 +5607,9 @@ fn test_v1_disable_user(world: &mut DatadogWorld, _parameters: &HashMap<String, 
         .v1_api_users
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_users::DisableUserParams {
-        user_handle: serde_json::from_value(_parameters.get("user_handle").unwrap().clone())
-            .unwrap(),
-    };
+    let user_handle =
+        serde_json::from_value(_parameters.get("user_handle").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_users::DisableUserParams { user_handle };
     let response = match block_on(api.disable_user_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5258,10 +5629,9 @@ fn test_v1_get_user(world: &mut DatadogWorld, _parameters: &HashMap<String, Valu
         .v1_api_users
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_users::GetUserParams {
-        user_handle: serde_json::from_value(_parameters.get("user_handle").unwrap().clone())
-            .unwrap(),
-    };
+    let user_handle =
+        serde_json::from_value(_parameters.get("user_handle").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_users::GetUserParams { user_handle };
     let response = match block_on(api.get_user_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5281,11 +5651,10 @@ fn test_v1_update_user(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         .v1_api_users
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV1::api::api_users::UpdateUserParams {
-        user_handle: serde_json::from_value(_parameters.get("user_handle").unwrap().clone())
-            .unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let user_handle =
+        serde_json::from_value(_parameters.get("user_handle").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV1::api::api_users::UpdateUserParams { user_handle, body };
     let response = match block_on(api.update_user_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5343,9 +5712,8 @@ fn test_v2_create_spans_metric(world: &mut DatadogWorld, _parameters: &HashMap<S
         .v2_api_spans_metrics
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_spans_metrics::CreateSpansMetricParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV2::api::api_spans_metrics::CreateSpansMetricParams { body };
     let response = match block_on(api.create_spans_metric_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5365,9 +5733,8 @@ fn test_v2_delete_spans_metric(world: &mut DatadogWorld, _parameters: &HashMap<S
         .v2_api_spans_metrics
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_spans_metrics::DeleteSpansMetricParams {
-        metric_id: serde_json::from_value(_parameters.get("metric_id").unwrap().clone()).unwrap(),
-    };
+    let metric_id = serde_json::from_value(_parameters.get("metric_id").unwrap().clone()).unwrap();
+    let params = datadogV2::api::api_spans_metrics::DeleteSpansMetricParams { metric_id };
     let response = match block_on(api.delete_spans_metric_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5387,9 +5754,8 @@ fn test_v2_get_spans_metric(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         .v2_api_spans_metrics
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_spans_metrics::GetSpansMetricParams {
-        metric_id: serde_json::from_value(_parameters.get("metric_id").unwrap().clone()).unwrap(),
-    };
+    let metric_id = serde_json::from_value(_parameters.get("metric_id").unwrap().clone()).unwrap();
+    let params = datadogV2::api::api_spans_metrics::GetSpansMetricParams { metric_id };
     let response = match block_on(api.get_spans_metric_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5409,10 +5775,9 @@ fn test_v2_update_spans_metric(world: &mut DatadogWorld, _parameters: &HashMap<S
         .v2_api_spans_metrics
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_spans_metrics::UpdateSpansMetricParams {
-        metric_id: serde_json::from_value(_parameters.get("metric_id").unwrap().clone()).unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let metric_id = serde_json::from_value(_parameters.get("metric_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV2::api::api_spans_metrics::UpdateSpansMetricParams { metric_id, body };
     let response = match block_on(api.update_spans_metric_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5457,9 +5822,8 @@ fn test_v2_create_apm_retention_filter(
         .v2_api_apm_retention_filters
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_apm_retention_filters::CreateApmRetentionFilterParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV2::api::api_apm_retention_filters::CreateApmRetentionFilterParams { body };
     let response = match block_on(api.create_apm_retention_filter_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5482,9 +5846,9 @@ fn test_v2_reorder_apm_retention_filters(
         .v2_api_apm_retention_filters
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_apm_retention_filters::ReorderApmRetentionFiltersParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params =
+        datadogV2::api::api_apm_retention_filters::ReorderApmRetentionFiltersParams { body };
     let response = match block_on(api.reorder_apm_retention_filters_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5507,9 +5871,9 @@ fn test_v2_delete_apm_retention_filter(
         .v2_api_apm_retention_filters
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_apm_retention_filters::DeleteApmRetentionFilterParams {
-        filter_id: serde_json::from_value(_parameters.get("filter_id").unwrap().clone()).unwrap(),
-    };
+    let filter_id = serde_json::from_value(_parameters.get("filter_id").unwrap().clone()).unwrap();
+    let params =
+        datadogV2::api::api_apm_retention_filters::DeleteApmRetentionFilterParams { filter_id };
     let response = match block_on(api.delete_apm_retention_filter_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5532,9 +5896,9 @@ fn test_v2_get_apm_retention_filter(
         .v2_api_apm_retention_filters
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_apm_retention_filters::GetApmRetentionFilterParams {
-        filter_id: serde_json::from_value(_parameters.get("filter_id").unwrap().clone()).unwrap(),
-    };
+    let filter_id = serde_json::from_value(_parameters.get("filter_id").unwrap().clone()).unwrap();
+    let params =
+        datadogV2::api::api_apm_retention_filters::GetApmRetentionFilterParams { filter_id };
     let response = match block_on(api.get_apm_retention_filter_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5557,9 +5921,11 @@ fn test_v2_update_apm_retention_filter(
         .v2_api_apm_retention_filters
         .as_ref()
         .expect("api instance not found");
+    let filter_id = serde_json::from_value(_parameters.get("filter_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let params = datadogV2::api::api_apm_retention_filters::UpdateApmRetentionFilterParams {
-        filter_id: serde_json::from_value(_parameters.get("filter_id").unwrap().clone()).unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
+        filter_id,
+        body,
     };
     let response = match block_on(api.update_apm_retention_filter_with_http_info(params)) {
         Ok(response) => response,
@@ -5580,17 +5946,37 @@ fn test_v2_list_audit_logs(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         .v2_api_audit
         .as_ref()
         .expect("api instance not found");
+    let filter_query = match _parameters.get("filter[query]").is_some() {
+        true => serde_json::from_value(_parameters.get("filter[query]").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let filter_from = match _parameters.get("filter[from]").is_some() {
+        true => serde_json::from_value(_parameters.get("filter[from]").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let filter_to = match _parameters.get("filter[to]").is_some() {
+        true => serde_json::from_value(_parameters.get("filter[to]").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let sort = match _parameters.get("sort").is_some() {
+        true => serde_json::from_value(_parameters.get("sort").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let page_cursor = match _parameters.get("page[cursor]").is_some() {
+        true => serde_json::from_value(_parameters.get("page[cursor]").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let page_limit = match _parameters.get("page[limit]").is_some() {
+        true => serde_json::from_value(_parameters.get("page[limit]").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV2::api::api_audit::ListAuditLogsParams {
-        filter_query: serde_json::from_value(_parameters.get("filter[query]").unwrap().clone())
-            .unwrap(),
-        filter_from: serde_json::from_value(_parameters.get("filter[from]").unwrap().clone())
-            .unwrap(),
-        filter_to: serde_json::from_value(_parameters.get("filter[to]").unwrap().clone()).unwrap(),
-        sort: serde_json::from_value(_parameters.get("sort").unwrap().clone()).unwrap(),
-        page_cursor: serde_json::from_value(_parameters.get("page[cursor]").unwrap().clone())
-            .unwrap(),
-        page_limit: serde_json::from_value(_parameters.get("page[limit]").unwrap().clone())
-            .unwrap(),
+        filter_query,
+        filter_from,
+        filter_to,
+        sort,
+        page_cursor,
+        page_limit,
     };
     let response = match block_on(api.list_audit_logs_with_http_info(params)) {
         Ok(response) => response,
@@ -5611,9 +5997,11 @@ fn test_v2_search_audit_logs(world: &mut DatadogWorld, _parameters: &HashMap<Str
         .v2_api_audit
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_audit::SearchAuditLogsParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
+    let body = match _parameters.get("body").is_some() {
+        true => serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params = datadogV2::api::api_audit::SearchAuditLogsParams { body };
     let response = match block_on(api.search_audit_logs_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5636,12 +6024,12 @@ fn test_v2_delete_dashboard_list_items(
         .v2_api_dashboard_lists
         .as_ref()
         .expect("api instance not found");
+    let dashboard_list_id =
+        serde_json::from_value(_parameters.get("dashboard_list_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let params = datadogV2::api::api_dashboard_lists::DeleteDashboardListItemsParams {
-        dashboard_list_id: serde_json::from_value(
-            _parameters.get("dashboard_list_id").unwrap().clone(),
-        )
-        .unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
+        dashboard_list_id,
+        body,
     };
     let response = match block_on(api.delete_dashboard_list_items_with_http_info(params)) {
         Ok(response) => response,
@@ -5665,12 +6053,10 @@ fn test_v2_get_dashboard_list_items(
         .v2_api_dashboard_lists
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_dashboard_lists::GetDashboardListItemsParams {
-        dashboard_list_id: serde_json::from_value(
-            _parameters.get("dashboard_list_id").unwrap().clone(),
-        )
-        .unwrap(),
-    };
+    let dashboard_list_id =
+        serde_json::from_value(_parameters.get("dashboard_list_id").unwrap().clone()).unwrap();
+    let params =
+        datadogV2::api::api_dashboard_lists::GetDashboardListItemsParams { dashboard_list_id };
     let response = match block_on(api.get_dashboard_list_items_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5693,12 +6079,12 @@ fn test_v2_create_dashboard_list_items(
         .v2_api_dashboard_lists
         .as_ref()
         .expect("api instance not found");
+    let dashboard_list_id =
+        serde_json::from_value(_parameters.get("dashboard_list_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let params = datadogV2::api::api_dashboard_lists::CreateDashboardListItemsParams {
-        dashboard_list_id: serde_json::from_value(
-            _parameters.get("dashboard_list_id").unwrap().clone(),
-        )
-        .unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
+        dashboard_list_id,
+        body,
     };
     let response = match block_on(api.create_dashboard_list_items_with_http_info(params)) {
         Ok(response) => response,
@@ -5722,12 +6108,12 @@ fn test_v2_update_dashboard_list_items(
         .v2_api_dashboard_lists
         .as_ref()
         .expect("api instance not found");
+    let dashboard_list_id =
+        serde_json::from_value(_parameters.get("dashboard_list_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let params = datadogV2::api::api_dashboard_lists::UpdateDashboardListItemsParams {
-        dashboard_list_id: serde_json::from_value(
-            _parameters.get("dashboard_list_id").unwrap().clone(),
-        )
-        .unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
+        dashboard_list_id,
+        body,
     };
     let response = match block_on(api.update_dashboard_list_items_with_http_info(params)) {
         Ok(response) => response,
@@ -5748,17 +6134,37 @@ fn test_v2_list_events(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         .v2_api_events
         .as_ref()
         .expect("api instance not found");
+    let filter_query = match _parameters.get("filter[query]").is_some() {
+        true => serde_json::from_value(_parameters.get("filter[query]").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let filter_from = match _parameters.get("filter[from]").is_some() {
+        true => serde_json::from_value(_parameters.get("filter[from]").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let filter_to = match _parameters.get("filter[to]").is_some() {
+        true => serde_json::from_value(_parameters.get("filter[to]").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let sort = match _parameters.get("sort").is_some() {
+        true => serde_json::from_value(_parameters.get("sort").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let page_cursor = match _parameters.get("page[cursor]").is_some() {
+        true => serde_json::from_value(_parameters.get("page[cursor]").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let page_limit = match _parameters.get("page[limit]").is_some() {
+        true => serde_json::from_value(_parameters.get("page[limit]").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV2::api::api_events::ListEventsParams {
-        filter_query: serde_json::from_value(_parameters.get("filter[query]").unwrap().clone())
-            .unwrap(),
-        filter_from: serde_json::from_value(_parameters.get("filter[from]").unwrap().clone())
-            .unwrap(),
-        filter_to: serde_json::from_value(_parameters.get("filter[to]").unwrap().clone()).unwrap(),
-        sort: serde_json::from_value(_parameters.get("sort").unwrap().clone()).unwrap(),
-        page_cursor: serde_json::from_value(_parameters.get("page[cursor]").unwrap().clone())
-            .unwrap(),
-        page_limit: serde_json::from_value(_parameters.get("page[limit]").unwrap().clone())
-            .unwrap(),
+        filter_query,
+        filter_from,
+        filter_to,
+        sort,
+        page_cursor,
+        page_limit,
     };
     let response = match block_on(api.list_events_with_http_info(params)) {
         Ok(response) => response,
@@ -5779,9 +6185,11 @@ fn test_v2_search_events(world: &mut DatadogWorld, _parameters: &HashMap<String,
         .v2_api_events
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_events::SearchEventsParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
+    let body = match _parameters.get("body").is_some() {
+        true => serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params = datadogV2::api::api_events::SearchEventsParams { body };
     let response = match block_on(api.search_events_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5820,9 +6228,8 @@ fn test_v2_create_gcpsts_account(world: &mut DatadogWorld, _parameters: &HashMap
         .v2_api_gcp_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_gcp_integration::CreateGCPSTSAccountParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV2::api::api_gcp_integration::CreateGCPSTSAccountParams { body };
     let response = match block_on(api.create_gcpsts_account_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5842,9 +6249,9 @@ fn test_v2_delete_gcpsts_account(world: &mut DatadogWorld, _parameters: &HashMap
         .v2_api_gcp_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_gcp_integration::DeleteGCPSTSAccountParams {
-        account_id: serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap(),
-    };
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let params = datadogV2::api::api_gcp_integration::DeleteGCPSTSAccountParams { account_id };
     let response = match block_on(api.delete_gcpsts_account_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5864,10 +6271,11 @@ fn test_v2_update_gcpsts_account(world: &mut DatadogWorld, _parameters: &HashMap
         .v2_api_gcp_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_gcp_integration::UpdateGCPSTSAccountParams {
-        account_id: serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params =
+        datadogV2::api::api_gcp_integration::UpdateGCPSTSAccountParams { account_id, body };
     let response = match block_on(api.update_gcpsts_account_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5906,9 +6314,11 @@ fn test_v2_make_gcpsts_delegate(world: &mut DatadogWorld, _parameters: &HashMap<
         .v2_api_gcp_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_gcp_integration::MakeGCPSTSDelegateParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
+    let body = match _parameters.get("body").is_some() {
+        true => serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params = datadogV2::api::api_gcp_integration::MakeGCPSTSDelegateParams { body };
     let response = match block_on(api.make_gcpsts_delegate_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5947,9 +6357,8 @@ fn test_v2_create_opsgenie_service(world: &mut DatadogWorld, _parameters: &HashM
         .v2_api_opsgenie_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_opsgenie_integration::CreateOpsgenieServiceParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV2::api::api_opsgenie_integration::CreateOpsgenieServiceParams { body };
     let response = match block_on(api.create_opsgenie_service_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5969,11 +6378,10 @@ fn test_v2_delete_opsgenie_service(world: &mut DatadogWorld, _parameters: &HashM
         .v2_api_opsgenie_integration
         .as_ref()
         .expect("api instance not found");
+    let integration_service_id =
+        serde_json::from_value(_parameters.get("integration_service_id").unwrap().clone()).unwrap();
     let params = datadogV2::api::api_opsgenie_integration::DeleteOpsgenieServiceParams {
-        integration_service_id: serde_json::from_value(
-            _parameters.get("integration_service_id").unwrap().clone(),
-        )
-        .unwrap(),
+        integration_service_id,
     };
     let response = match block_on(api.delete_opsgenie_service_with_http_info(params)) {
         Ok(response) => response,
@@ -5994,11 +6402,10 @@ fn test_v2_get_opsgenie_service(world: &mut DatadogWorld, _parameters: &HashMap<
         .v2_api_opsgenie_integration
         .as_ref()
         .expect("api instance not found");
+    let integration_service_id =
+        serde_json::from_value(_parameters.get("integration_service_id").unwrap().clone()).unwrap();
     let params = datadogV2::api::api_opsgenie_integration::GetOpsgenieServiceParams {
-        integration_service_id: serde_json::from_value(
-            _parameters.get("integration_service_id").unwrap().clone(),
-        )
-        .unwrap(),
+        integration_service_id,
     };
     let response = match block_on(api.get_opsgenie_service_with_http_info(params)) {
         Ok(response) => response,
@@ -6019,12 +6426,12 @@ fn test_v2_update_opsgenie_service(world: &mut DatadogWorld, _parameters: &HashM
         .v2_api_opsgenie_integration
         .as_ref()
         .expect("api instance not found");
+    let integration_service_id =
+        serde_json::from_value(_parameters.get("integration_service_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let params = datadogV2::api::api_opsgenie_integration::UpdateOpsgenieServiceParams {
-        integration_service_id: serde_json::from_value(
-            _parameters.get("integration_service_id").unwrap().clone(),
-        )
-        .unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
+        integration_service_id,
+        body,
     };
     let response = match block_on(api.update_opsgenie_service_with_http_info(params)) {
         Ok(response) => response,
@@ -6070,9 +6477,8 @@ fn test_v2_create_cloudflare_account(
         .v2_api_cloudflare_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_cloudflare_integration::CreateCloudflareAccountParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV2::api::api_cloudflare_integration::CreateCloudflareAccountParams { body };
     let response = match block_on(api.create_cloudflare_account_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -6095,9 +6501,10 @@ fn test_v2_delete_cloudflare_account(
         .v2_api_cloudflare_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_cloudflare_integration::DeleteCloudflareAccountParams {
-        account_id: serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap(),
-    };
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let params =
+        datadogV2::api::api_cloudflare_integration::DeleteCloudflareAccountParams { account_id };
     let response = match block_on(api.delete_cloudflare_account_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -6117,9 +6524,10 @@ fn test_v2_get_cloudflare_account(world: &mut DatadogWorld, _parameters: &HashMa
         .v2_api_cloudflare_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_cloudflare_integration::GetCloudflareAccountParams {
-        account_id: serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap(),
-    };
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let params =
+        datadogV2::api::api_cloudflare_integration::GetCloudflareAccountParams { account_id };
     let response = match block_on(api.get_cloudflare_account_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -6142,9 +6550,12 @@ fn test_v2_update_cloudflare_account(
         .v2_api_cloudflare_integration
         .as_ref()
         .expect("api instance not found");
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let params = datadogV2::api::api_cloudflare_integration::UpdateCloudflareAccountParams {
-        account_id: serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
+        account_id,
+        body,
     };
     let response = match block_on(api.update_cloudflare_account_with_http_info(params)) {
         Ok(response) => response,
@@ -6187,9 +6598,8 @@ fn test_v2_create_confluent_account(
         .v2_api_confluent_cloud
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_confluent_cloud::CreateConfluentAccountParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV2::api::api_confluent_cloud::CreateConfluentAccountParams { body };
     let response = match block_on(api.create_confluent_account_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -6212,9 +6622,9 @@ fn test_v2_delete_confluent_account(
         .v2_api_confluent_cloud
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_confluent_cloud::DeleteConfluentAccountParams {
-        account_id: serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap(),
-    };
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let params = datadogV2::api::api_confluent_cloud::DeleteConfluentAccountParams { account_id };
     let response = match block_on(api.delete_confluent_account_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -6234,9 +6644,9 @@ fn test_v2_get_confluent_account(world: &mut DatadogWorld, _parameters: &HashMap
         .v2_api_confluent_cloud
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_confluent_cloud::GetConfluentAccountParams {
-        account_id: serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap(),
-    };
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let params = datadogV2::api::api_confluent_cloud::GetConfluentAccountParams { account_id };
     let response = match block_on(api.get_confluent_account_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -6259,10 +6669,11 @@ fn test_v2_update_confluent_account(
         .v2_api_confluent_cloud
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_confluent_cloud::UpdateConfluentAccountParams {
-        account_id: serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params =
+        datadogV2::api::api_confluent_cloud::UpdateConfluentAccountParams { account_id, body };
     let response = match block_on(api.update_confluent_account_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -6282,9 +6693,9 @@ fn test_v2_list_confluent_resource(world: &mut DatadogWorld, _parameters: &HashM
         .v2_api_confluent_cloud
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_confluent_cloud::ListConfluentResourceParams {
-        account_id: serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap(),
-    };
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let params = datadogV2::api::api_confluent_cloud::ListConfluentResourceParams { account_id };
     let response = match block_on(api.list_confluent_resource_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -6307,10 +6718,11 @@ fn test_v2_create_confluent_resource(
         .v2_api_confluent_cloud
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_confluent_cloud::CreateConfluentResourceParams {
-        account_id: serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params =
+        datadogV2::api::api_confluent_cloud::CreateConfluentResourceParams { account_id, body };
     let response = match block_on(api.create_confluent_resource_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -6333,10 +6745,13 @@ fn test_v2_delete_confluent_resource(
         .v2_api_confluent_cloud
         .as_ref()
         .expect("api instance not found");
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let resource_id =
+        serde_json::from_value(_parameters.get("resource_id").unwrap().clone()).unwrap();
     let params = datadogV2::api::api_confluent_cloud::DeleteConfluentResourceParams {
-        account_id: serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap(),
-        resource_id: serde_json::from_value(_parameters.get("resource_id").unwrap().clone())
-            .unwrap(),
+        account_id,
+        resource_id,
     };
     let response = match block_on(api.delete_confluent_resource_with_http_info(params)) {
         Ok(response) => response,
@@ -6357,10 +6772,13 @@ fn test_v2_get_confluent_resource(world: &mut DatadogWorld, _parameters: &HashMa
         .v2_api_confluent_cloud
         .as_ref()
         .expect("api instance not found");
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let resource_id =
+        serde_json::from_value(_parameters.get("resource_id").unwrap().clone()).unwrap();
     let params = datadogV2::api::api_confluent_cloud::GetConfluentResourceParams {
-        account_id: serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap(),
-        resource_id: serde_json::from_value(_parameters.get("resource_id").unwrap().clone())
-            .unwrap(),
+        account_id,
+        resource_id,
     };
     let response = match block_on(api.get_confluent_resource_with_http_info(params)) {
         Ok(response) => response,
@@ -6384,11 +6802,15 @@ fn test_v2_update_confluent_resource(
         .v2_api_confluent_cloud
         .as_ref()
         .expect("api instance not found");
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let resource_id =
+        serde_json::from_value(_parameters.get("resource_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let params = datadogV2::api::api_confluent_cloud::UpdateConfluentResourceParams {
-        account_id: serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap(),
-        resource_id: serde_json::from_value(_parameters.get("resource_id").unwrap().clone())
-            .unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
+        account_id,
+        resource_id,
+        body,
     };
     let response = match block_on(api.update_confluent_resource_with_http_info(params)) {
         Ok(response) => response,
@@ -6428,9 +6850,8 @@ fn test_v2_create_fastly_account(world: &mut DatadogWorld, _parameters: &HashMap
         .v2_api_fastly_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_fastly_integration::CreateFastlyAccountParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV2::api::api_fastly_integration::CreateFastlyAccountParams { body };
     let response = match block_on(api.create_fastly_account_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -6450,9 +6871,9 @@ fn test_v2_delete_fastly_account(world: &mut DatadogWorld, _parameters: &HashMap
         .v2_api_fastly_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_fastly_integration::DeleteFastlyAccountParams {
-        account_id: serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap(),
-    };
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let params = datadogV2::api::api_fastly_integration::DeleteFastlyAccountParams { account_id };
     let response = match block_on(api.delete_fastly_account_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -6472,9 +6893,9 @@ fn test_v2_get_fastly_account(world: &mut DatadogWorld, _parameters: &HashMap<St
         .v2_api_fastly_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_fastly_integration::GetFastlyAccountParams {
-        account_id: serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap(),
-    };
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let params = datadogV2::api::api_fastly_integration::GetFastlyAccountParams { account_id };
     let response = match block_on(api.get_fastly_account_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -6494,10 +6915,11 @@ fn test_v2_update_fastly_account(world: &mut DatadogWorld, _parameters: &HashMap
         .v2_api_fastly_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_fastly_integration::UpdateFastlyAccountParams {
-        account_id: serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params =
+        datadogV2::api::api_fastly_integration::UpdateFastlyAccountParams { account_id, body };
     let response = match block_on(api.update_fastly_account_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -6517,9 +6939,9 @@ fn test_v2_list_fastly_services(world: &mut DatadogWorld, _parameters: &HashMap<
         .v2_api_fastly_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_fastly_integration::ListFastlyServicesParams {
-        account_id: serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap(),
-    };
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let params = datadogV2::api::api_fastly_integration::ListFastlyServicesParams { account_id };
     let response = match block_on(api.list_fastly_services_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -6539,10 +6961,11 @@ fn test_v2_create_fastly_service(world: &mut DatadogWorld, _parameters: &HashMap
         .v2_api_fastly_integration
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_fastly_integration::CreateFastlyServiceParams {
-        account_id: serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params =
+        datadogV2::api::api_fastly_integration::CreateFastlyServiceParams { account_id, body };
     let response = match block_on(api.create_fastly_service_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -6562,9 +6985,13 @@ fn test_v2_delete_fastly_service(world: &mut DatadogWorld, _parameters: &HashMap
         .v2_api_fastly_integration
         .as_ref()
         .expect("api instance not found");
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let service_id =
+        serde_json::from_value(_parameters.get("service_id").unwrap().clone()).unwrap();
     let params = datadogV2::api::api_fastly_integration::DeleteFastlyServiceParams {
-        account_id: serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap(),
-        service_id: serde_json::from_value(_parameters.get("service_id").unwrap().clone()).unwrap(),
+        account_id,
+        service_id,
     };
     let response = match block_on(api.delete_fastly_service_with_http_info(params)) {
         Ok(response) => response,
@@ -6585,9 +7012,13 @@ fn test_v2_get_fastly_service(world: &mut DatadogWorld, _parameters: &HashMap<St
         .v2_api_fastly_integration
         .as_ref()
         .expect("api instance not found");
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let service_id =
+        serde_json::from_value(_parameters.get("service_id").unwrap().clone()).unwrap();
     let params = datadogV2::api::api_fastly_integration::GetFastlyServiceParams {
-        account_id: serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap(),
-        service_id: serde_json::from_value(_parameters.get("service_id").unwrap().clone()).unwrap(),
+        account_id,
+        service_id,
     };
     let response = match block_on(api.get_fastly_service_with_http_info(params)) {
         Ok(response) => response,
@@ -6608,10 +7039,15 @@ fn test_v2_update_fastly_service(world: &mut DatadogWorld, _parameters: &HashMap
         .v2_api_fastly_integration
         .as_ref()
         .expect("api instance not found");
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let service_id =
+        serde_json::from_value(_parameters.get("service_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let params = datadogV2::api::api_fastly_integration::UpdateFastlyServiceParams {
-        account_id: serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap(),
-        service_id: serde_json::from_value(_parameters.get("service_id").unwrap().clone()).unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
+        account_id,
+        service_id,
+        body,
     };
     let response = match block_on(api.update_fastly_service_with_http_info(params)) {
         Ok(response) => response,
@@ -6651,9 +7087,8 @@ fn test_v2_update_ip_allowlist(world: &mut DatadogWorld, _parameters: &HashMap<S
         .v2_api_ip_allowlist
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_ip_allowlist::UpdateIPAllowlistParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV2::api::api_ip_allowlist::UpdateIPAllowlistParams { body };
     let response = match block_on(api.update_ip_allowlist_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -6673,13 +7108,21 @@ fn test_v2_submit_log(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         .v2_api_logs
         .as_ref()
         .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let content_encoding = match _parameters.get("Content-Encoding").is_some() {
+        true => {
+            serde_json::from_value(_parameters.get("Content-Encoding").unwrap().clone()).unwrap()
+        }
+        false => None,
+    };
+    let ddtags = match _parameters.get("ddtags").is_some() {
+        true => serde_json::from_value(_parameters.get("ddtags").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV2::api::api_logs::SubmitLogParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-        content_encoding: serde_json::from_value(
-            _parameters.get("Content-Encoding").unwrap().clone(),
-        )
-        .unwrap(),
-        ddtags: serde_json::from_value(_parameters.get("ddtags").unwrap().clone()).unwrap(),
+        body,
+        content_encoding,
+        ddtags,
     };
     let response = match block_on(api.submit_log_with_http_info(params)) {
         Ok(response) => response,
@@ -6719,9 +7162,8 @@ fn test_v2_create_logs_metric(world: &mut DatadogWorld, _parameters: &HashMap<St
         .v2_api_logs_metrics
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_logs_metrics::CreateLogsMetricParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV2::api::api_logs_metrics::CreateLogsMetricParams { body };
     let response = match block_on(api.create_logs_metric_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -6741,9 +7183,8 @@ fn test_v2_delete_logs_metric(world: &mut DatadogWorld, _parameters: &HashMap<St
         .v2_api_logs_metrics
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_logs_metrics::DeleteLogsMetricParams {
-        metric_id: serde_json::from_value(_parameters.get("metric_id").unwrap().clone()).unwrap(),
-    };
+    let metric_id = serde_json::from_value(_parameters.get("metric_id").unwrap().clone()).unwrap();
+    let params = datadogV2::api::api_logs_metrics::DeleteLogsMetricParams { metric_id };
     let response = match block_on(api.delete_logs_metric_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -6763,9 +7204,8 @@ fn test_v2_get_logs_metric(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         .v2_api_logs_metrics
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_logs_metrics::GetLogsMetricParams {
-        metric_id: serde_json::from_value(_parameters.get("metric_id").unwrap().clone()).unwrap(),
-    };
+    let metric_id = serde_json::from_value(_parameters.get("metric_id").unwrap().clone()).unwrap();
+    let params = datadogV2::api::api_logs_metrics::GetLogsMetricParams { metric_id };
     let response = match block_on(api.get_logs_metric_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -6785,10 +7225,9 @@ fn test_v2_update_logs_metric(world: &mut DatadogWorld, _parameters: &HashMap<St
         .v2_api_logs_metrics
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_logs_metrics::UpdateLogsMetricParams {
-        metric_id: serde_json::from_value(_parameters.get("metric_id").unwrap().clone()).unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let metric_id = serde_json::from_value(_parameters.get("metric_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV2::api::api_logs_metrics::UpdateLogsMetricParams { metric_id, body };
     let response = match block_on(api.update_logs_metric_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -6827,49 +7266,90 @@ fn test_v2_list_findings(world: &mut DatadogWorld, _parameters: &HashMap<String,
         .v2_api_security_monitoring
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_security_monitoring::ListFindingsParams {
-        page_limit: serde_json::from_value(_parameters.get("page[limit]").unwrap().clone())
+    let page_limit = match _parameters.get("page[limit]").is_some() {
+        true => serde_json::from_value(_parameters.get("page[limit]").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let snapshot_timestamp = match _parameters.get("snapshot_timestamp").is_some() {
+        true => {
+            serde_json::from_value(_parameters.get("snapshot_timestamp").unwrap().clone()).unwrap()
+        }
+        false => None,
+    };
+    let page_cursor = match _parameters.get("page[cursor]").is_some() {
+        true => serde_json::from_value(_parameters.get("page[cursor]").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let filter_tags = match _parameters.get("filter[tags]").is_some() {
+        true => serde_json::from_value(_parameters.get("filter[tags]").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let filter_evaluation_changed_at =
+        match _parameters.get("filter[evaluation_changed_at]").is_some() {
+            true => serde_json::from_value(
+                _parameters
+                    .get("filter[evaluation_changed_at]")
+                    .unwrap()
+                    .clone(),
+            )
             .unwrap(),
-        snapshot_timestamp: serde_json::from_value(
-            _parameters.get("snapshot_timestamp").unwrap().clone(),
-        )
-        .unwrap(),
-        page_cursor: serde_json::from_value(_parameters.get("page[cursor]").unwrap().clone())
+            false => None,
+        };
+    let filter_muted = match _parameters.get("filter[muted]").is_some() {
+        true => serde_json::from_value(_parameters.get("filter[muted]").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let filter_rule_id = match _parameters.get("filter[rule_id]").is_some() {
+        true => {
+            serde_json::from_value(_parameters.get("filter[rule_id]").unwrap().clone()).unwrap()
+        }
+        false => None,
+    };
+    let filter_rule_name = match _parameters.get("filter[rule_name]").is_some() {
+        true => {
+            serde_json::from_value(_parameters.get("filter[rule_name]").unwrap().clone()).unwrap()
+        }
+        false => None,
+    };
+    let filter_resource_type = match _parameters.get("filter[resource_type]").is_some() {
+        true => serde_json::from_value(_parameters.get("filter[resource_type]").unwrap().clone())
             .unwrap(),
-        filter_tags: serde_json::from_value(_parameters.get("filter[tags]").unwrap().clone())
-            .unwrap(),
-        filter_evaluation_changed_at: serde_json::from_value(
-            _parameters
-                .get("filter[evaluation_changed_at]")
-                .unwrap()
-                .clone(),
-        )
-        .unwrap(),
-        filter_muted: serde_json::from_value(_parameters.get("filter[muted]").unwrap().clone())
-            .unwrap(),
-        filter_rule_id: serde_json::from_value(_parameters.get("filter[rule_id]").unwrap().clone())
-            .unwrap(),
-        filter_rule_name: serde_json::from_value(
-            _parameters.get("filter[rule_name]").unwrap().clone(),
-        )
-        .unwrap(),
-        filter_resource_type: serde_json::from_value(
-            _parameters.get("filter[resource_type]").unwrap().clone(),
-        )
-        .unwrap(),
-        filter_discovery_timestamp: serde_json::from_value(
+        false => None,
+    };
+    let filter_discovery_timestamp = match _parameters.get("filter[discovery_timestamp]").is_some()
+    {
+        true => serde_json::from_value(
             _parameters
                 .get("filter[discovery_timestamp]")
                 .unwrap()
                 .clone(),
         )
         .unwrap(),
-        filter_evaluation: serde_json::from_value(
-            _parameters.get("filter[evaluation]").unwrap().clone(),
-        )
-        .unwrap(),
-        filter_status: serde_json::from_value(_parameters.get("filter[status]").unwrap().clone())
-            .unwrap(),
+        false => None,
+    };
+    let filter_evaluation = match _parameters.get("filter[evaluation]").is_some() {
+        true => {
+            serde_json::from_value(_parameters.get("filter[evaluation]").unwrap().clone()).unwrap()
+        }
+        false => None,
+    };
+    let filter_status = match _parameters.get("filter[status]").is_some() {
+        true => serde_json::from_value(_parameters.get("filter[status]").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let params = datadogV2::api::api_security_monitoring::ListFindingsParams {
+        page_limit,
+        snapshot_timestamp,
+        page_cursor,
+        filter_tags,
+        filter_evaluation_changed_at,
+        filter_muted,
+        filter_rule_id,
+        filter_rule_name,
+        filter_resource_type,
+        filter_discovery_timestamp,
+        filter_evaluation,
+        filter_status,
     };
     let response = match block_on(api.list_findings_with_http_info(params)) {
         Ok(response) => response,
@@ -6890,12 +7370,17 @@ fn test_v2_get_finding(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         .v2_api_security_monitoring
         .as_ref()
         .expect("api instance not found");
+    let finding_id =
+        serde_json::from_value(_parameters.get("finding_id").unwrap().clone()).unwrap();
+    let snapshot_timestamp = match _parameters.get("snapshot_timestamp").is_some() {
+        true => {
+            serde_json::from_value(_parameters.get("snapshot_timestamp").unwrap().clone()).unwrap()
+        }
+        false => None,
+    };
     let params = datadogV2::api::api_security_monitoring::GetFindingParams {
-        finding_id: serde_json::from_value(_parameters.get("finding_id").unwrap().clone()).unwrap(),
-        snapshot_timestamp: serde_json::from_value(
-            _parameters.get("snapshot_timestamp").unwrap().clone(),
-        )
-        .unwrap(),
+        finding_id,
+        snapshot_timestamp,
     };
     let response = match block_on(api.get_finding_with_http_info(params)) {
         Ok(response) => response,
@@ -6916,10 +7401,10 @@ fn test_v2_update_finding(world: &mut DatadogWorld, _parameters: &HashMap<String
         .v2_api_security_monitoring
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_security_monitoring::UpdateFindingParams {
-        finding_id: serde_json::from_value(_parameters.get("finding_id").unwrap().clone()).unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let finding_id =
+        serde_json::from_value(_parameters.get("finding_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV2::api::api_security_monitoring::UpdateFindingParams { finding_id, body };
     let response = match block_on(api.update_finding_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -6939,15 +7424,37 @@ fn test_v2_list_processes(world: &mut DatadogWorld, _parameters: &HashMap<String
         .v2_api_processes
         .as_ref()
         .expect("api instance not found");
+    let search = match _parameters.get("search").is_some() {
+        true => serde_json::from_value(_parameters.get("search").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let tags = match _parameters.get("tags").is_some() {
+        true => serde_json::from_value(_parameters.get("tags").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let from = match _parameters.get("from").is_some() {
+        true => serde_json::from_value(_parameters.get("from").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let to = match _parameters.get("to").is_some() {
+        true => serde_json::from_value(_parameters.get("to").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let page_limit = match _parameters.get("page[limit]").is_some() {
+        true => serde_json::from_value(_parameters.get("page[limit]").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let page_cursor = match _parameters.get("page[cursor]").is_some() {
+        true => serde_json::from_value(_parameters.get("page[cursor]").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV2::api::api_processes::ListProcessesParams {
-        search: serde_json::from_value(_parameters.get("search").unwrap().clone()).unwrap(),
-        tags: serde_json::from_value(_parameters.get("tags").unwrap().clone()).unwrap(),
-        from: serde_json::from_value(_parameters.get("from").unwrap().clone()).unwrap(),
-        to: serde_json::from_value(_parameters.get("to").unwrap().clone()).unwrap(),
-        page_limit: serde_json::from_value(_parameters.get("page[limit]").unwrap().clone())
-            .unwrap(),
-        page_cursor: serde_json::from_value(_parameters.get("page[cursor]").unwrap().clone())
-            .unwrap(),
+        search,
+        tags,
+        from,
+        to,
+        page_limit,
+        page_cursor,
     };
     let response = match block_on(api.list_processes_with_http_info(params)) {
         Ok(response) => response,
@@ -6971,10 +7478,10 @@ fn test_v2_delete_restriction_policy(
         .v2_api_restriction_policies
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_restriction_policies::DeleteRestrictionPolicyParams {
-        resource_id: serde_json::from_value(_parameters.get("resource_id").unwrap().clone())
-            .unwrap(),
-    };
+    let resource_id =
+        serde_json::from_value(_parameters.get("resource_id").unwrap().clone()).unwrap();
+    let params =
+        datadogV2::api::api_restriction_policies::DeleteRestrictionPolicyParams { resource_id };
     let response = match block_on(api.delete_restriction_policy_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -6994,10 +7501,10 @@ fn test_v2_get_restriction_policy(world: &mut DatadogWorld, _parameters: &HashMa
         .v2_api_restriction_policies
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_restriction_policies::GetRestrictionPolicyParams {
-        resource_id: serde_json::from_value(_parameters.get("resource_id").unwrap().clone())
-            .unwrap(),
-    };
+    let resource_id =
+        serde_json::from_value(_parameters.get("resource_id").unwrap().clone()).unwrap();
+    let params =
+        datadogV2::api::api_restriction_policies::GetRestrictionPolicyParams { resource_id };
     let response = match block_on(api.get_restriction_policy_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -7020,10 +7527,12 @@ fn test_v2_update_restriction_policy(
         .v2_api_restriction_policies
         .as_ref()
         .expect("api instance not found");
+    let resource_id =
+        serde_json::from_value(_parameters.get("resource_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let params = datadogV2::api::api_restriction_policies::UpdateRestrictionPolicyParams {
-        resource_id: serde_json::from_value(_parameters.get("resource_id").unwrap().clone())
-            .unwrap(),
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
+        resource_id,
+        body,
     };
     let response = match block_on(api.update_restriction_policy_with_http_info(params)) {
         Ok(response) => response,
@@ -7044,9 +7553,11 @@ fn test_v2_upload_id_p_metadata(world: &mut DatadogWorld, _parameters: &HashMap<
         .v2_api_organizations
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_organizations::UploadIdPMetadataParams {
-        idp_file: serde_json::from_value(_parameters.get("idp_file").unwrap().clone()).unwrap(),
+    let idp_file = match _parameters.get("idp_file").is_some() {
+        true => serde_json::from_value(_parameters.get("idp_file").unwrap().clone()).unwrap(),
+        false => None,
     };
+    let params = datadogV2::api::api_organizations::UploadIdPMetadataParams { idp_file };
     let response = match block_on(api.upload_id_p_metadata_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -7113,9 +7624,10 @@ fn test_v2_create_cloud_workload_security_agent_rule(
         .v2_api_cloud_workload_security
         .as_ref()
         .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let params =
         datadogV2::api::api_cloud_workload_security::CreateCloudWorkloadSecurityAgentRuleParams {
-            body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
+            body,
         };
     let response =
         match block_on(api.create_cloud_workload_security_agent_rule_with_http_info(params)) {
@@ -7140,12 +7652,11 @@ fn test_v2_delete_cloud_workload_security_agent_rule(
         .v2_api_cloud_workload_security
         .as_ref()
         .expect("api instance not found");
+    let agent_rule_id =
+        serde_json::from_value(_parameters.get("agent_rule_id").unwrap().clone()).unwrap();
     let params =
         datadogV2::api::api_cloud_workload_security::DeleteCloudWorkloadSecurityAgentRuleParams {
-            agent_rule_id: serde_json::from_value(
-                _parameters.get("agent_rule_id").unwrap().clone(),
-            )
-            .unwrap(),
+            agent_rule_id,
         };
     let response =
         match block_on(api.delete_cloud_workload_security_agent_rule_with_http_info(params)) {
@@ -7170,12 +7681,11 @@ fn test_v2_get_cloud_workload_security_agent_rule(
         .v2_api_cloud_workload_security
         .as_ref()
         .expect("api instance not found");
+    let agent_rule_id =
+        serde_json::from_value(_parameters.get("agent_rule_id").unwrap().clone()).unwrap();
     let params =
         datadogV2::api::api_cloud_workload_security::GetCloudWorkloadSecurityAgentRuleParams {
-            agent_rule_id: serde_json::from_value(
-                _parameters.get("agent_rule_id").unwrap().clone(),
-            )
-            .unwrap(),
+            agent_rule_id,
         };
     let response = match block_on(api.get_cloud_workload_security_agent_rule_with_http_info(params))
     {
@@ -7200,13 +7710,13 @@ fn test_v2_update_cloud_workload_security_agent_rule(
         .v2_api_cloud_workload_security
         .as_ref()
         .expect("api instance not found");
+    let agent_rule_id =
+        serde_json::from_value(_parameters.get("agent_rule_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let params =
         datadogV2::api::api_cloud_workload_security::UpdateCloudWorkloadSecurityAgentRuleParams {
-            agent_rule_id: serde_json::from_value(
-                _parameters.get("agent_rule_id").unwrap().clone(),
-            )
-            .unwrap(),
-            body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
+            agent_rule_id,
+            body,
         };
     let response =
         match block_on(api.update_cloud_workload_security_agent_rule_with_http_info(params)) {
@@ -7228,12 +7738,16 @@ fn test_v2_submit_metrics(world: &mut DatadogWorld, _parameters: &HashMap<String
         .v2_api_metrics
         .as_ref()
         .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let content_encoding = match _parameters.get("Content-Encoding").is_some() {
+        true => {
+            serde_json::from_value(_parameters.get("Content-Encoding").unwrap().clone()).unwrap()
+        }
+        false => None,
+    };
     let params = datadogV2::api::api_metrics::SubmitMetricsParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-        content_encoding: serde_json::from_value(
-            _parameters.get("Content-Encoding").unwrap().clone(),
-        )
-        .unwrap(),
+        body,
+        content_encoding,
     };
     let response = match block_on(api.submit_metrics_with_http_info(params)) {
         Ok(response) => response,
@@ -7279,9 +7793,8 @@ fn test_v2_set_on_demand_concurrency_cap(
         .v2_api_synthetics
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_synthetics::SetOnDemandConcurrencyCapParams {
-        body: serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-    };
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let params = datadogV2::api::api_synthetics::SetOnDemandConcurrencyCapParams { body };
     let response = match block_on(api.set_on_demand_concurrency_cap_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -7304,9 +7817,14 @@ fn test_v2_get_usage_application_security_monitoring(
         .v2_api_usage_metering
         .as_ref()
         .expect("api instance not found");
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV2::api::api_usage_metering::GetUsageApplicationSecurityMonitoringParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        start_hr,
+        end_hr,
     };
     let response =
         match block_on(api.get_usage_application_security_monitoring_with_http_info(params)) {
@@ -7328,10 +7846,15 @@ fn test_v2_get_cost_by_org(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         .v2_api_usage_metering
         .as_ref()
         .expect("api instance not found");
+    let start_month =
+        serde_json::from_value(_parameters.get("start_month").unwrap().clone()).unwrap();
+    let end_month = match _parameters.get("end_month").is_some() {
+        true => serde_json::from_value(_parameters.get("end_month").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV2::api::api_usage_metering::GetCostByOrgParams {
-        start_month: serde_json::from_value(_parameters.get("start_month").unwrap().clone())
-            .unwrap(),
-        end_month: serde_json::from_value(_parameters.get("end_month").unwrap().clone()).unwrap(),
+        start_month,
+        end_month,
     };
     let response = match block_on(api.get_cost_by_org_with_http_info(params)) {
         Ok(response) => response,
@@ -7355,13 +7878,32 @@ fn test_v2_get_estimated_cost_by_org(
         .v2_api_usage_metering
         .as_ref()
         .expect("api instance not found");
+    let view = match _parameters.get("view").is_some() {
+        true => serde_json::from_value(_parameters.get("view").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let start_month = match _parameters.get("start_month").is_some() {
+        true => serde_json::from_value(_parameters.get("start_month").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let end_month = match _parameters.get("end_month").is_some() {
+        true => serde_json::from_value(_parameters.get("end_month").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let start_date = match _parameters.get("start_date").is_some() {
+        true => serde_json::from_value(_parameters.get("start_date").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let end_date = match _parameters.get("end_date").is_some() {
+        true => serde_json::from_value(_parameters.get("end_date").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV2::api::api_usage_metering::GetEstimatedCostByOrgParams {
-        view: serde_json::from_value(_parameters.get("view").unwrap().clone()).unwrap(),
-        start_month: serde_json::from_value(_parameters.get("start_month").unwrap().clone())
-            .unwrap(),
-        end_month: serde_json::from_value(_parameters.get("end_month").unwrap().clone()).unwrap(),
-        start_date: serde_json::from_value(_parameters.get("start_date").unwrap().clone()).unwrap(),
-        end_date: serde_json::from_value(_parameters.get("end_date").unwrap().clone()).unwrap(),
+        view,
+        start_month,
+        end_month,
+        start_date,
+        end_date,
     };
     let response = match block_on(api.get_estimated_cost_by_org_with_http_info(params)) {
         Ok(response) => response,
@@ -7385,11 +7927,20 @@ fn test_v2_get_historical_cost_by_org(
         .v2_api_usage_metering
         .as_ref()
         .expect("api instance not found");
+    let start_month =
+        serde_json::from_value(_parameters.get("start_month").unwrap().clone()).unwrap();
+    let view = match _parameters.get("view").is_some() {
+        true => serde_json::from_value(_parameters.get("view").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let end_month = match _parameters.get("end_month").is_some() {
+        true => serde_json::from_value(_parameters.get("end_month").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV2::api::api_usage_metering::GetHistoricalCostByOrgParams {
-        start_month: serde_json::from_value(_parameters.get("start_month").unwrap().clone())
-            .unwrap(),
-        view: serde_json::from_value(_parameters.get("view").unwrap().clone()).unwrap(),
-        end_month: serde_json::from_value(_parameters.get("end_month").unwrap().clone()).unwrap(),
+        start_month,
+        view,
+        end_month,
     };
     let response = match block_on(api.get_historical_cost_by_org_with_http_info(params)) {
         Ok(response) => response,
@@ -7410,43 +7961,62 @@ fn test_v2_get_hourly_usage(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         .v2_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let params = datadogV2::api::api_usage_metering::GetHourlyUsageParams {
-        filter_timestamp_start: serde_json::from_value(
-            _parameters.get("filter[timestamp][start]").unwrap().clone(),
-        )
-        .unwrap(),
-        filter_product_families: serde_json::from_value(
-            _parameters.get("filter[product_families]").unwrap().clone(),
-        )
-        .unwrap(),
-        filter_timestamp_end: serde_json::from_value(
-            _parameters.get("filter[timestamp][end]").unwrap().clone(),
-        )
-        .unwrap(),
-        filter_include_descendants: serde_json::from_value(
+    let filter_timestamp_start =
+        serde_json::from_value(_parameters.get("filter[timestamp][start]").unwrap().clone())
+            .unwrap();
+    let filter_product_families =
+        serde_json::from_value(_parameters.get("filter[product_families]").unwrap().clone())
+            .unwrap();
+    let filter_timestamp_end = match _parameters.get("filter[timestamp][end]").is_some() {
+        true => serde_json::from_value(_parameters.get("filter[timestamp][end]").unwrap().clone())
+            .unwrap(),
+        false => None,
+    };
+    let filter_include_descendants = match _parameters.get("filter[include_descendants]").is_some()
+    {
+        true => serde_json::from_value(
             _parameters
                 .get("filter[include_descendants]")
                 .unwrap()
                 .clone(),
         )
         .unwrap(),
-        filter_include_breakdown: serde_json::from_value(
+        false => None,
+    };
+    let filter_include_breakdown = match _parameters.get("filter[include_breakdown]").is_some() {
+        true => serde_json::from_value(
             _parameters
                 .get("filter[include_breakdown]")
                 .unwrap()
                 .clone(),
         )
         .unwrap(),
-        filter_versions: serde_json::from_value(
-            _parameters.get("filter[versions]").unwrap().clone(),
-        )
-        .unwrap(),
-        page_limit: serde_json::from_value(_parameters.get("page[limit]").unwrap().clone())
+        false => None,
+    };
+    let filter_versions = match _parameters.get("filter[versions]").is_some() {
+        true => {
+            serde_json::from_value(_parameters.get("filter[versions]").unwrap().clone()).unwrap()
+        }
+        false => None,
+    };
+    let page_limit = match _parameters.get("page[limit]").is_some() {
+        true => serde_json::from_value(_parameters.get("page[limit]").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    let page_next_record_id = match _parameters.get("page[next_record_id]").is_some() {
+        true => serde_json::from_value(_parameters.get("page[next_record_id]").unwrap().clone())
             .unwrap(),
-        page_next_record_id: serde_json::from_value(
-            _parameters.get("page[next_record_id]").unwrap().clone(),
-        )
-        .unwrap(),
+        false => None,
+    };
+    let params = datadogV2::api::api_usage_metering::GetHourlyUsageParams {
+        filter_timestamp_start,
+        filter_product_families,
+        filter_timestamp_end,
+        filter_include_descendants,
+        filter_include_breakdown,
+        filter_versions,
+        page_limit,
+        page_next_record_id,
     };
     let response = match block_on(api.get_hourly_usage_with_http_info(params)) {
         Ok(response) => response,
@@ -7470,9 +8040,14 @@ fn test_v2_get_usage_lambda_traced_invocations(
         .v2_api_usage_metering
         .as_ref()
         .expect("api instance not found");
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV2::api::api_usage_metering::GetUsageLambdaTracedInvocationsParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        start_hr,
+        end_hr,
     };
     let response = match block_on(api.get_usage_lambda_traced_invocations_with_http_info(params)) {
         Ok(response) => response,
@@ -7496,9 +8071,14 @@ fn test_v2_get_usage_observability_pipelines(
         .v2_api_usage_metering
         .as_ref()
         .expect("api instance not found");
+    let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
+    let end_hr = match _parameters.get("end_hr").is_some() {
+        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        false => None,
+    };
     let params = datadogV2::api::api_usage_metering::GetUsageObservabilityPipelinesParams {
-        start_hr: serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap(),
-        end_hr: serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
+        start_hr,
+        end_hr,
     };
     let response = match block_on(api.get_usage_observability_pipelines_with_http_info(params)) {
         Ok(response) => response,

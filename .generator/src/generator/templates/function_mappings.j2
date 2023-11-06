@@ -54,9 +54,19 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
 fn test_{{version}}_{{ operation['operationId'] | snake_case }}(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world.api_instances.{{version}}_{{ apiName }}.as_ref().expect("api instance not found");
     {%- if operationParams|length > 0 -%}
+    {%- for parameter in operationParams %}
+    {%- if parameter[1].required %}
+    let {{ parameter[0] | variable_name }} = serde_json::from_value(_parameters.get("{{ parameter[0] }}").unwrap().clone()).unwrap();
+    {%- else %}
+    let {{ parameter[0] | variable_name }} = match _parameters.get("{{ parameter[0] }}").is_some() {
+        true => serde_json::from_value(_parameters.get("{{ parameter[0] }}").unwrap().clone()).unwrap(),
+        false => None,
+    };
+    {%- endif %}
+    {%- endfor %}
     let params = datadog{{ version.upper() }}::api::{{ apiName }}::{{ operation['operationId'] }}Params {
         {%- for param in operationParams %}
-        {{ param[0] | variable_name }}: serde_json::from_value(_parameters.get("{{ param[0] }}").unwrap().clone()).unwrap(),
+        {{ param[0] | variable_name }},
         {%- endfor %}
     };
     let response = match block_on(api.{{ operation['operationId'] | snake_case}}_with_http_info(params)) {
