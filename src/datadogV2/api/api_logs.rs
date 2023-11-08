@@ -132,11 +132,12 @@ impl LogsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
-        if let Some(ref local) = content_encoding {
-            local_req_builder = local_req_builder.header("Content-Encoding", &local.to_string());
-        };
         if let Some(ref local_str) = ddtags {
             local_req_builder = local_req_builder.query(&[("ddtags", &local_str.to_string())]);
+        };
+
+        if let Some(ref local) = content_encoding {
+            local_req_builder = local_req_builder.header("Content-Encoding", &local.to_string());
         };
 
         // build user agent

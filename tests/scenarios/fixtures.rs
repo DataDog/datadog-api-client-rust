@@ -1,7 +1,7 @@
 use crate::scenarios::function_mappings::{
     collect_function_calls, initialize_api_instance, ApiInstances,
 };
-use chrono::{DateTime, Duration};
+use chrono::{DateTime, Duration, Months, SecondsFormat};
 use cucumber::{
     event::ScenarioFinished,
     gherkin::{Feature, Rule, Scenario},
@@ -16,13 +16,12 @@ use rvcr::{VCRMiddleware, VCRMode};
 use serde_json::{json, Value};
 use sha256::digest;
 use std::{
-    collections::HashMap,
+    collections::{HashMap, HashSet},
     env,
     fs::{create_dir_all, read_to_string, File},
     io::BufReader,
     ops::Add,
     path::PathBuf,
-    time::SystemTime,
 };
 
 pub type TestCall = fn(&mut DatadogWorld, &HashMap<String, Value>);
@@ -118,10 +117,7 @@ pub async fn before_scenario(
     let mut freeze = cassette_dir.clone();
     freeze.push(format!("{}.frozen", filename));
     let mut config = Configuration::new();
-    let mut frozen_time = SystemTime::now()
-        .duration_since(SystemTime::UNIX_EPOCH)
-        .unwrap()
-        .as_secs();
+    let mut frozen_time = chrono::Utc::now().signed_duration_since(DateTime::UNIX_EPOCH);
 
     let vcr_client_builder = ClientBuilder::new(reqwest::Client::new());
     config.client = match env::var("RECORD").unwrap_or("false".to_string()).as_str() {
@@ -162,9 +158,8 @@ pub async fn before_scenario(
                     .as_str(),
             )
             .expect("Failed to parse freeze file time")
-            .signed_duration_since(DateTime::UNIX_EPOCH)
-            .num_seconds() as u64;
-            debug!("{}", frozen_time);
+            .signed_duration_since(DateTime::UNIX_EPOCH);
+
             let middleware: VCRMiddleware = VCRMiddleware::try_from(cassette)
                 .expect("Failed to initialize rVCR middleware")
                 .with_mode(VCRMode::Replay)
@@ -176,9 +171,9 @@ pub async fn before_scenario(
                     res.headers.remove_entry("content-security-policy");
                 })
                 .with_request_matcher(|vcr_req, req| {
-                    vcr_req.uri.to_string() == req.uri.to_string()
-                        && vcr_req.body.string == req.body.string
-                        && vcr_req.method == req.method
+                    debug!("{:?}", vcr_req.uri);
+                    debug!("{:?}", req.uri);
+                    req_eq(vcr_req, req)
                 });
             vcr_client_builder.with(middleware).build()
         }
@@ -194,17 +189,18 @@ pub async fn before_scenario(
         true => escaped_name[..100].to_string(),
         false => escaped_name,
     };
-    let unique = format!("{}-{}-{}", prefix, name, frozen_time);
+    let unique = format!("{}-{}-{}", prefix, name, frozen_time.num_seconds());
     let unique_alnum = non_alnum_re.replace_all(unique.as_str(), "").to_string();
     world.fixtures = json!({
         "unique": unique,
-        "unique_lowe: Stringr": unique.to_ascii_lowercase(),
+        "unique_lower": unique.to_ascii_lowercase(),
         "unique_upper": unique.to_ascii_uppercase(),
         "unique_alnum": unique_alnum,
         "unique_lower_alnum": unique_alnum.to_ascii_lowercase(),
         "unique_upper_alnum": unique_alnum.to_ascii_uppercase(),
         "unique_hash": digest(unique)[..16],
-        "now": frozen_time,
+        "now": frozen_time.num_seconds(),
+        "now_millis": frozen_time.num_milliseconds(),
     });
 }
 
@@ -340,7 +336,8 @@ fn request_parameter_from_path(world: &mut DatadogWorld, param: String, path: St
 
 #[given(expr = "request contains {string} parameter with value {}")]
 fn request_parameter_with_value(world: &mut DatadogWorld, param: String, value: String) {
-    let rendered = template(value, &world.fixtures);
+    let trimmed_value = value.trim_matches('"').to_string();
+    let rendered = template(trimmed_value, &world.fixtures);
     world.parameters.insert(param, Value::from(rendered));
 }
 
@@ -382,6 +379,30 @@ fn response_has_length(world: &mut DatadogWorld, path: String, expected_len: usi
     assert_eq!(len, expected_len);
 }
 
+fn req_eq(lhs: &vcr_cassette::Request, rhs: &vcr_cassette::Request) -> bool {
+    let lhs_queries: HashSet<_> = lhs
+        .uri
+        .query()
+        .unwrap_or_default()
+        .split("&")
+        .into_iter()
+        .collect();
+    let rhs_queries: HashSet<_> = rhs
+        .uri
+        .query()
+        .unwrap_or_default()
+        .split("&")
+        .into_iter()
+        .collect();
+    lhs.uri.scheme() == rhs.uri.scheme()
+        && lhs.uri.host() == rhs.uri.host()
+        && lhs.uri.port() == rhs.uri.port()
+        && lhs.uri.path() == rhs.uri.path()
+        && lhs_queries == rhs_queries
+        && lhs.body.string == rhs.body.string
+        && lhs.method == rhs.method
+}
+
 fn lookup(path: &String, object: &Value) -> Option<Value> {
     let index_re = Regex::new(r"\[(\d+)\]+").expect("index regex failed");
     let mut json_pointer = format!("/{}", path).replace('.', "/");
@@ -396,15 +417,17 @@ fn lookup(path: &String, object: &Value) -> Option<Value> {
     return object.pointer(&json_pointer).cloned();
 }
 
-fn relative_time_helper(h: &Helper, c: &Context) -> DateTime<chrono::Utc> {
+fn relative_time_helper(v: &String, c: &Context) -> DateTime<chrono::Utc> {
     // get parameter from helper or throw an error
-    let v = h.param(0).unwrap().render();
     let time_helper_re = Regex::new(r"now(?: *([+-]) *(\d+)([smhdMy]))?").unwrap();
     let caps = time_helper_re
         .captures(&v)
         .expect("failed to parse timeISO template function");
-    let time = chrono::DateTime::from_timestamp(c.data().get("now").unwrap().as_i64().unwrap(), 0)
-        .unwrap();
+    let ts = c.data().get("now_millis").unwrap().as_i64().unwrap();
+    let ts_s = ts / 1000;
+    let ts_n =
+        u32::try_from((ts % 1000) * 1_000_000).expect("timestamp could not be converted to ns");
+    let time = chrono::DateTime::from_timestamp(ts_s, ts_n).unwrap();
     if caps.get(1).is_some() {
         let diff = str::parse::<i64>(
             &(caps.get(1).unwrap().as_str().to_string() + caps.get(2).unwrap().as_str()),
@@ -415,8 +438,23 @@ fn relative_time_helper(h: &Helper, c: &Context) -> DateTime<chrono::Utc> {
             "m" => time.add(Duration::minutes(diff)),
             "h" => time.add(Duration::hours(diff)),
             "d" => time.add(Duration::days(diff)),
-            "M" => time.add(Duration::weeks(diff * 4)),
-            "y" => time.add(Duration::weeks(diff * 52)),
+            "M" => {
+                if diff > 0 {
+                    time.checked_add_months(Months::new(diff as u32)).unwrap()
+                } else {
+                    time.checked_sub_months(Months::new(diff.abs() as u32))
+                        .unwrap()
+                }
+            }
+            "y" => {
+                if diff > 0 {
+                    time.checked_add_months(Months::new((diff * 12) as u32))
+                        .unwrap()
+                } else {
+                    time.checked_sub_months(Months::new((diff.abs() * 12) as u32))
+                        .unwrap()
+                }
+            }
             _ => panic!("invalid time unit"),
         }
     } else {
@@ -431,7 +469,9 @@ fn timeISO_helper(
     _: &mut RenderContext,
     out: &mut dyn Output,
 ) -> Result<(), RenderError> {
-    write!(out, "{}", relative_time_helper(h, c).to_rfc3339())?;
+    let v = h.param(0).unwrap().render();
+    let time = relative_time_helper(&v, c).to_rfc3339_opts(SecondsFormat::Millis, true);
+    write!(out, "{}", time)?;
     Ok(())
 }
 
@@ -442,13 +482,11 @@ fn timestamp_helper(
     _: &mut RenderContext,
     out: &mut dyn Output,
 ) -> Result<(), RenderError> {
-    write!(
-        out,
-        "{}",
-        relative_time_helper(h, c)
-            .signed_duration_since(DateTime::UNIX_EPOCH)
-            .num_seconds()
-    )?;
+    let v = h.param(0).unwrap().render();
+    let time = relative_time_helper(&v, c)
+        .signed_duration_since(DateTime::UNIX_EPOCH)
+        .num_seconds();
+    write!(out, "{}", time)?;
     Ok(())
 }
 

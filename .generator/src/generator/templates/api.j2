@@ -109,34 +109,30 @@ impl {{ structName }} {
             {% endfor %});
         let mut local_req_builder = local_client.request(reqwest::Method::{{ httpMethod }}, local_uri_str.as_str());
 
-        {% for name, parameter in operation|parameters %}
+        {% for name, parameter in operation|parameters if parameter.in == "query" %}
         {%- set schema = parameter | parameter_schema %}
-        {%- if parameter.in == "query" %}
-        {%- if schema.type == "array" %}
-        {%- if not parameter.required %}
+        {%- if parameter.required and schema.type == "array" %}
+        local_req_builder = local_req_builder.query(&[("{{name}}", &{{name|variable_name}}.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
+        {%- elif not parameter.required and schema.type == "array" %}
         if let Some(ref local) = {{name|variable_name}} {
             local_req_builder = local_req_builder.query(&[("{{name}}", &local.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
         };
+        {%- elif parameter.required %}
+        local_req_builder = local_req_builder.query(&[("{{name}}", &{{name|variable_name}}.to_string())]);
         {%- else %}
-        local_req_builder = local_req_builder.query(&[("{{name}}", &{{name|variable_name}}.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
-        {%- endif %}
-        {%- else %}
-        {%- if not parameter.required %}
         if let Some(ref local_str) = {{name|variable_name}} {
             local_req_builder = local_req_builder.query(&[("{{name}}", &local_str.to_string())]);
         };
-        {%- else %}
-        local_req_builder = local_req_builder.query(&[("{{name}}", &{{name|variable_name}}.to_string())]);
         {%- endif %}
-        {%- endif %}
-        {%- elif parameter.in == "header" %}
+        {%- endfor %}
+
+        {% for name, parameter in operation|parameters if parameter.in == "header" %}
         {%- if not parameter.required %}
         if let Some(ref local) = {{name|variable_name}} {
             local_req_builder = local_req_builder.header("{{name}}", &local.to_string());
         };
         {%- else %}
         local_req_builder = local_req_builder.header("{{name}}", &{{name|variable_name}}.to_string());
-        {%- endif %}
         {%- endif %}
         {%- endfor %}
 
