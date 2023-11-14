@@ -99,4 +99,15 @@ pub fn parse_deep_object(prefix: &str, value: &serde_json::Value) -> Vec<(String
     unimplemented!("Only objects are supported with style=deepObject")
 }
 
+pub struct DDFormatter;
+
+impl serde_json::ser::Formatter for DDFormatter {
+    fn write_f64<W>(&mut self, writer: &mut W, value: f64) -> std::io::Result<()>
+    where
+        W: ?Sized + std::io::Write,
+    {
+        write!(writer, "{}", value.to_string())
+    }
+}
+
 pub mod configuration;

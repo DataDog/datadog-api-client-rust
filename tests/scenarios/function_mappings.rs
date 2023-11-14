@@ -1602,21 +1602,25 @@ fn test_v1_get_daily_custom_reports(
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let page_size = match _parameters.get("page[size]").is_some() {
-        true => serde_json::from_value(_parameters.get("page[size]").unwrap().clone()).unwrap(),
-        false => None,
+    let page_size = if let Some(param) = _parameters.get("page[size]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let page_number = match _parameters.get("page[number]").is_some() {
-        true => serde_json::from_value(_parameters.get("page[number]").unwrap().clone()).unwrap(),
-        false => None,
+    let page_number = if let Some(param) = _parameters.get("page[number]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let sort_dir = match _parameters.get("sort_dir").is_some() {
-        true => serde_json::from_value(_parameters.get("sort_dir").unwrap().clone()).unwrap(),
-        false => None,
+    let sort_dir = if let Some(param) = _parameters.get("sort_dir") {
+        serde_json::from_value(param.clone()).unwrap()
+    } else {
+        None
     };
-    let sort = match _parameters.get("sort").is_some() {
-        true => serde_json::from_value(_parameters.get("sort").unwrap().clone()).unwrap(),
-        false => None,
+    let sort = if let Some(param) = _parameters.get("sort") {
+        serde_json::from_value(param.clone()).unwrap()
+    } else {
+        None
     };
     let params = datadogV1::api::api_usage_metering::GetDailyCustomReportsParams {
         page_size,
@@ -1671,21 +1675,25 @@ fn test_v1_get_monthly_custom_reports(
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let page_size = match _parameters.get("page[size]").is_some() {
-        true => serde_json::from_value(_parameters.get("page[size]").unwrap().clone()).unwrap(),
-        false => None,
+    let page_size = if let Some(param) = _parameters.get("page[size]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let page_number = match _parameters.get("page[number]").is_some() {
-        true => serde_json::from_value(_parameters.get("page[number]").unwrap().clone()).unwrap(),
-        false => None,
+    let page_number = if let Some(param) = _parameters.get("page[number]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let sort_dir = match _parameters.get("sort_dir").is_some() {
-        true => serde_json::from_value(_parameters.get("sort_dir").unwrap().clone()).unwrap(),
-        false => None,
+    let sort_dir = if let Some(param) = _parameters.get("sort_dir") {
+        serde_json::from_value(param.clone()).unwrap()
+    } else {
+        None
     };
-    let sort = match _parameters.get("sort").is_some() {
-        true => serde_json::from_value(_parameters.get("sort").unwrap().clone()).unwrap(),
-        false => None,
+    let sort = if let Some(param) = _parameters.get("sort") {
+        serde_json::from_value(param.clone()).unwrap()
+    } else {
+        None
     };
     let params = datadogV1::api::api_usage_metering::GetMonthlyCustomReportsParams {
         page_size,
@@ -1738,9 +1746,10 @@ fn test_v1_get_usage_analyzed_logs(world: &mut DatadogWorld, _parameters: &HashM
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params =
         datadogV1::api::api_usage_metering::GetUsageAnalyzedLogsParams { start_hr, end_hr };
@@ -1766,31 +1775,35 @@ fn test_v1_get_usage_attribution(world: &mut DatadogWorld, _parameters: &HashMap
     let start_month =
         serde_json::from_value(_parameters.get("start_month").unwrap().clone()).unwrap();
     let fields = serde_json::from_value(_parameters.get("fields").unwrap().clone()).unwrap();
-    let end_month = match _parameters.get("end_month").is_some() {
-        true => serde_json::from_value(_parameters.get("end_month").unwrap().clone()).unwrap(),
-        false => None,
+    let end_month = if let Some(param) = _parameters.get("end_month") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let sort_direction = match _parameters.get("sort_direction").is_some() {
-        true => serde_json::from_value(_parameters.get("sort_direction").unwrap().clone()).unwrap(),
-        false => None,
+    let sort_direction = if let Some(param) = _parameters.get("sort_direction") {
+        serde_json::from_value(param.clone()).unwrap()
+    } else {
+        None
     };
-    let sort_name = match _parameters.get("sort_name").is_some() {
-        true => serde_json::from_value(_parameters.get("sort_name").unwrap().clone()).unwrap(),
-        false => None,
+    let sort_name = if let Some(param) = _parameters.get("sort_name") {
+        serde_json::from_value(param.clone()).unwrap()
+    } else {
+        None
     };
-    let include_descendants = match _parameters.get("include_descendants").is_some() {
-        true => {
-            serde_json::from_value(_parameters.get("include_descendants").unwrap().clone()).unwrap()
-        }
-        false => None,
+    let include_descendants = if let Some(param) = _parameters.get("include_descendants") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let offset = match _parameters.get("offset").is_some() {
-        true => serde_json::from_value(_parameters.get("offset").unwrap().clone()).unwrap(),
-        false => None,
+    let offset = if let Some(param) = _parameters.get("offset") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let limit = match _parameters.get("limit").is_some() {
-        true => serde_json::from_value(_parameters.get("limit").unwrap().clone()).unwrap(),
-        false => None,
+    let limit = if let Some(param) = _parameters.get("limit") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_usage_metering::GetUsageAttributionParams {
         start_month,
@@ -1822,9 +1835,10 @@ fn test_v1_get_usage_audit_logs(world: &mut DatadogWorld, _parameters: &HashMap<
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_usage_metering::GetUsageAuditLogsParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_audit_logs_with_http_info(params)) {
@@ -1847,9 +1861,10 @@ fn test_v1_get_usage_lambda(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_usage_metering::GetUsageLambdaParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_lambda_with_http_info(params)) {
@@ -1874,9 +1889,10 @@ fn test_v1_get_usage_billable_summary(
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let month = match _parameters.get("month").is_some() {
-        true => serde_json::from_value(_parameters.get("month").unwrap().clone()).unwrap(),
-        false => None,
+    let month = if let Some(param) = _parameters.get("month") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_usage_metering::GetUsageBillableSummaryParams { month };
     let response = match block_on(api.get_usage_billable_summary_with_http_info(params)) {
@@ -1899,9 +1915,10 @@ fn test_v1_get_usage_ci_app(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_usage_metering::GetUsageCIAppParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_ci_app_with_http_info(params)) {
@@ -1927,9 +1944,10 @@ fn test_v1_get_usage_cloud_security_posture_management(
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_usage_metering::GetUsageCloudSecurityPostureManagementParams {
         start_hr,
@@ -1956,9 +1974,10 @@ fn test_v1_get_usage_cws(world: &mut DatadogWorld, _parameters: &HashMap<String,
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_usage_metering::GetUsageCWSParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_cws_with_http_info(params)) {
@@ -1981,9 +2000,10 @@ fn test_v1_get_usage_dbm(world: &mut DatadogWorld, _parameters: &HashMap<String,
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_usage_metering::GetUsageDBMParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_dbm_with_http_info(params)) {
@@ -2006,9 +2026,10 @@ fn test_v1_get_usage_fargate(world: &mut DatadogWorld, _parameters: &HashMap<Str
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_usage_metering::GetUsageFargateParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_fargate_with_http_info(params)) {
@@ -2031,9 +2052,10 @@ fn test_v1_get_usage_hosts(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_usage_metering::GetUsageHostsParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_hosts_with_http_info(params)) {
@@ -2061,25 +2083,25 @@ fn test_v1_get_hourly_usage_attribution(
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let usage_type =
         serde_json::from_value(_parameters.get("usage_type").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let next_record_id = match _parameters.get("next_record_id").is_some() {
-        true => serde_json::from_value(_parameters.get("next_record_id").unwrap().clone()).unwrap(),
-        false => None,
+    let next_record_id = if let Some(param) = _parameters.get("next_record_id") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let tag_breakdown_keys = match _parameters.get("tag_breakdown_keys").is_some() {
-        true => {
-            serde_json::from_value(_parameters.get("tag_breakdown_keys").unwrap().clone()).unwrap()
-        }
-        false => None,
+    let tag_breakdown_keys = if let Some(param) = _parameters.get("tag_breakdown_keys") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let include_descendants = match _parameters.get("include_descendants").is_some() {
-        true => {
-            serde_json::from_value(_parameters.get("include_descendants").unwrap().clone()).unwrap()
-        }
-        false => None,
+    let include_descendants = if let Some(param) = _parameters.get("include_descendants") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_usage_metering::GetHourlyUsageAttributionParams {
         start_hr,
@@ -2109,9 +2131,10 @@ fn test_v1_get_incident_management(world: &mut DatadogWorld, _parameters: &HashM
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params =
         datadogV1::api::api_usage_metering::GetIncidentManagementParams { start_hr, end_hr };
@@ -2135,9 +2158,10 @@ fn test_v1_get_usage_indexed_spans(world: &mut DatadogWorld, _parameters: &HashM
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params =
         datadogV1::api::api_usage_metering::GetUsageIndexedSpansParams { start_hr, end_hr };
@@ -2161,9 +2185,10 @@ fn test_v1_get_ingested_spans(world: &mut DatadogWorld, _parameters: &HashMap<St
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_usage_metering::GetIngestedSpansParams { start_hr, end_hr };
     let response = match block_on(api.get_ingested_spans_with_http_info(params)) {
@@ -2189,9 +2214,10 @@ fn test_v1_get_usage_internet_of_things(
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params =
         datadogV1::api::api_usage_metering::GetUsageInternetOfThingsParams { start_hr, end_hr };
@@ -2215,9 +2241,10 @@ fn test_v1_get_usage_logs(world: &mut DatadogWorld, _parameters: &HashMap<String
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_usage_metering::GetUsageLogsParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_logs_with_http_info(params)) {
@@ -2243,9 +2270,10 @@ fn test_v1_get_usage_logs_by_retention(
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params =
         datadogV1::api::api_usage_metering::GetUsageLogsByRetentionParams { start_hr, end_hr };
@@ -2269,13 +2297,15 @@ fn test_v1_get_usage_logs_by_index(world: &mut DatadogWorld, _parameters: &HashM
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let index_name = match _parameters.get("index_name").is_some() {
-        true => serde_json::from_value(_parameters.get("index_name").unwrap().clone()).unwrap(),
-        false => None,
+    let index_name = if let Some(param) = _parameters.get("index_name") {
+        serde_json::from_value(param.clone()).unwrap()
+    } else {
+        None
     };
     let params = datadogV1::api::api_usage_metering::GetUsageLogsByIndexParams {
         start_hr,
@@ -2307,33 +2337,35 @@ fn test_v1_get_monthly_usage_attribution(
     let start_month =
         serde_json::from_value(_parameters.get("start_month").unwrap().clone()).unwrap();
     let fields = serde_json::from_value(_parameters.get("fields").unwrap().clone()).unwrap();
-    let end_month = match _parameters.get("end_month").is_some() {
-        true => serde_json::from_value(_parameters.get("end_month").unwrap().clone()).unwrap(),
-        false => None,
+    let end_month = if let Some(param) = _parameters.get("end_month") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let sort_direction = match _parameters.get("sort_direction").is_some() {
-        true => serde_json::from_value(_parameters.get("sort_direction").unwrap().clone()).unwrap(),
-        false => None,
+    let sort_direction = if let Some(param) = _parameters.get("sort_direction") {
+        serde_json::from_value(param.clone()).unwrap()
+    } else {
+        None
     };
-    let sort_name = match _parameters.get("sort_name").is_some() {
-        true => serde_json::from_value(_parameters.get("sort_name").unwrap().clone()).unwrap(),
-        false => None,
+    let sort_name = if let Some(param) = _parameters.get("sort_name") {
+        serde_json::from_value(param.clone()).unwrap()
+    } else {
+        None
     };
-    let tag_breakdown_keys = match _parameters.get("tag_breakdown_keys").is_some() {
-        true => {
-            serde_json::from_value(_parameters.get("tag_breakdown_keys").unwrap().clone()).unwrap()
-        }
-        false => None,
+    let tag_breakdown_keys = if let Some(param) = _parameters.get("tag_breakdown_keys") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let next_record_id = match _parameters.get("next_record_id").is_some() {
-        true => serde_json::from_value(_parameters.get("next_record_id").unwrap().clone()).unwrap(),
-        false => None,
+    let next_record_id = if let Some(param) = _parameters.get("next_record_id") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let include_descendants = match _parameters.get("include_descendants").is_some() {
-        true => {
-            serde_json::from_value(_parameters.get("include_descendants").unwrap().clone()).unwrap()
-        }
-        false => None,
+    let include_descendants = if let Some(param) = _parameters.get("include_descendants") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_usage_metering::GetMonthlyUsageAttributionParams {
         start_month,
@@ -2365,9 +2397,10 @@ fn test_v1_get_usage_network_flows(world: &mut DatadogWorld, _parameters: &HashM
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params =
         datadogV1::api::api_usage_metering::GetUsageNetworkFlowsParams { start_hr, end_hr };
@@ -2391,9 +2424,10 @@ fn test_v1_get_usage_network_hosts(world: &mut DatadogWorld, _parameters: &HashM
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params =
         datadogV1::api::api_usage_metering::GetUsageNetworkHostsParams { start_hr, end_hr };
@@ -2420,9 +2454,10 @@ fn test_v1_get_usage_online_archive(
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params =
         datadogV1::api::api_usage_metering::GetUsageOnlineArchiveParams { start_hr, end_hr };
@@ -2446,9 +2481,10 @@ fn test_v1_get_usage_profiling(world: &mut DatadogWorld, _parameters: &HashMap<S
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_usage_metering::GetUsageProfilingParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_profiling_with_http_info(params)) {
@@ -2471,9 +2507,10 @@ fn test_v1_get_usage_rum_units(world: &mut DatadogWorld, _parameters: &HashMap<S
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_usage_metering::GetUsageRumUnitsParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_rum_units_with_http_info(params)) {
@@ -2496,13 +2533,15 @@ fn test_v1_get_usage_rum_sessions(world: &mut DatadogWorld, _parameters: &HashMa
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let type_ = match _parameters.get("type").is_some() {
-        true => serde_json::from_value(_parameters.get("type").unwrap().clone()).unwrap(),
-        false => None,
+    let type_ = if let Some(param) = _parameters.get("type") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_usage_metering::GetUsageRumSessionsParams {
         start_hr,
@@ -2529,9 +2568,10 @@ fn test_v1_get_usage_sds(world: &mut DatadogWorld, _parameters: &HashMap<String,
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_usage_metering::GetUsageSDSParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_sds_with_http_info(params)) {
@@ -2554,9 +2594,10 @@ fn test_v1_get_usage_snmp(world: &mut DatadogWorld, _parameters: &HashMap<String
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_usage_metering::GetUsageSNMPParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_snmp_with_http_info(params)) {
@@ -2580,15 +2621,15 @@ fn test_v1_get_usage_summary(world: &mut DatadogWorld, _parameters: &HashMap<Str
         .expect("api instance not found");
     let start_month =
         serde_json::from_value(_parameters.get("start_month").unwrap().clone()).unwrap();
-    let end_month = match _parameters.get("end_month").is_some() {
-        true => serde_json::from_value(_parameters.get("end_month").unwrap().clone()).unwrap(),
-        false => None,
+    let end_month = if let Some(param) = _parameters.get("end_month") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let include_org_details = match _parameters.get("include_org_details").is_some() {
-        true => {
-            serde_json::from_value(_parameters.get("include_org_details").unwrap().clone()).unwrap()
-        }
-        false => None,
+    let include_org_details = if let Some(param) = _parameters.get("include_org_details") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_usage_metering::GetUsageSummaryParams {
         start_month,
@@ -2615,9 +2656,10 @@ fn test_v1_get_usage_synthetics(world: &mut DatadogWorld, _parameters: &HashMap<
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_usage_metering::GetUsageSyntheticsParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_synthetics_with_http_info(params)) {
@@ -2643,9 +2685,10 @@ fn test_v1_get_usage_synthetics_api(
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params =
         datadogV1::api::api_usage_metering::GetUsageSyntheticsAPIParams { start_hr, end_hr };
@@ -2672,9 +2715,10 @@ fn test_v1_get_usage_synthetics_browser(
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params =
         datadogV1::api::api_usage_metering::GetUsageSyntheticsBrowserParams { start_hr, end_hr };
@@ -2698,9 +2742,10 @@ fn test_v1_get_usage_timeseries(world: &mut DatadogWorld, _parameters: &HashMap<
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_usage_metering::GetUsageTimeseriesParams { start_hr, end_hr };
     let response = match block_on(api.get_usage_timeseries_with_http_info(params)) {
@@ -2725,25 +2770,30 @@ fn test_v1_get_usage_top_avg_metrics(
         .v1_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let month = match _parameters.get("month").is_some() {
-        true => serde_json::from_value(_parameters.get("month").unwrap().clone()).unwrap(),
-        false => None,
+    let month = if let Some(param) = _parameters.get("month") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let day = match _parameters.get("day").is_some() {
-        true => serde_json::from_value(_parameters.get("day").unwrap().clone()).unwrap(),
-        false => None,
+    let day = if let Some(param) = _parameters.get("day") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let names = match _parameters.get("names").is_some() {
-        true => serde_json::from_value(_parameters.get("names").unwrap().clone()).unwrap(),
-        false => None,
+    let names = if let Some(param) = _parameters.get("names") {
+        serde_json::from_value(param.clone()).unwrap()
+    } else {
+        None
     };
-    let limit = match _parameters.get("limit").is_some() {
-        true => serde_json::from_value(_parameters.get("limit").unwrap().clone()).unwrap(),
-        false => None,
+    let limit = if let Some(param) = _parameters.get("limit") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let next_record_id = match _parameters.get("next_record_id").is_some() {
-        true => serde_json::from_value(_parameters.get("next_record_id").unwrap().clone()).unwrap(),
-        false => None,
+    let next_record_id = if let Some(param) = _parameters.get("next_record_id") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_usage_metering::GetUsageTopAvgMetricsParams {
         month,
@@ -2875,13 +2925,15 @@ fn test_v1_list_downtimes(world: &mut DatadogWorld, _parameters: &HashMap<String
         .v1_api_downtimes
         .as_ref()
         .expect("api instance not found");
-    let current_only = match _parameters.get("current_only").is_some() {
-        true => serde_json::from_value(_parameters.get("current_only").unwrap().clone()).unwrap(),
-        false => None,
+    let current_only = if let Some(param) = _parameters.get("current_only") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let with_creator = match _parameters.get("with_creator").is_some() {
-        true => serde_json::from_value(_parameters.get("with_creator").unwrap().clone()).unwrap(),
-        false => None,
+    let with_creator = if let Some(param) = _parameters.get("with_creator") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_downtimes::ListDowntimesParams {
         current_only,
@@ -3042,31 +3094,35 @@ fn test_v1_list_events(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         .expect("api instance not found");
     let start = serde_json::from_value(_parameters.get("start").unwrap().clone()).unwrap();
     let end = serde_json::from_value(_parameters.get("end").unwrap().clone()).unwrap();
-    let priority = match _parameters.get("priority").is_some() {
-        true => serde_json::from_value(_parameters.get("priority").unwrap().clone()).unwrap(),
-        false => None,
+    let priority = if let Some(param) = _parameters.get("priority") {
+        serde_json::from_value(param.clone()).unwrap()
+    } else {
+        None
     };
-    let sources = match _parameters.get("sources").is_some() {
-        true => serde_json::from_value(_parameters.get("sources").unwrap().clone()).unwrap(),
-        false => None,
+    let sources = if let Some(param) = _parameters.get("sources") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let tags = match _parameters.get("tags").is_some() {
-        true => serde_json::from_value(_parameters.get("tags").unwrap().clone()).unwrap(),
-        false => None,
+    let tags = if let Some(param) = _parameters.get("tags") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let unaggregated = match _parameters.get("unaggregated").is_some() {
-        true => serde_json::from_value(_parameters.get("unaggregated").unwrap().clone()).unwrap(),
-        false => None,
+    let unaggregated = if let Some(param) = _parameters.get("unaggregated") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let exclude_aggregate = match _parameters.get("exclude_aggregate").is_some() {
-        true => {
-            serde_json::from_value(_parameters.get("exclude_aggregate").unwrap().clone()).unwrap()
-        }
-        false => None,
+    let exclude_aggregate = if let Some(param) = _parameters.get("exclude_aggregate") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let page = match _parameters.get("page").is_some() {
-        true => serde_json::from_value(_parameters.get("page").unwrap().clone()).unwrap(),
-        false => None,
+    let page = if let Some(param) = _parameters.get("page") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_events::ListEventsParams {
         start,
@@ -3141,29 +3197,35 @@ fn test_v1_get_graph_snapshot(world: &mut DatadogWorld, _parameters: &HashMap<St
         .expect("api instance not found");
     let start = serde_json::from_value(_parameters.get("start").unwrap().clone()).unwrap();
     let end = serde_json::from_value(_parameters.get("end").unwrap().clone()).unwrap();
-    let metric_query = match _parameters.get("metric_query").is_some() {
-        true => serde_json::from_value(_parameters.get("metric_query").unwrap().clone()).unwrap(),
-        false => None,
+    let metric_query = if let Some(param) = _parameters.get("metric_query") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let event_query = match _parameters.get("event_query").is_some() {
-        true => serde_json::from_value(_parameters.get("event_query").unwrap().clone()).unwrap(),
-        false => None,
+    let event_query = if let Some(param) = _parameters.get("event_query") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let graph_def = match _parameters.get("graph_def").is_some() {
-        true => serde_json::from_value(_parameters.get("graph_def").unwrap().clone()).unwrap(),
-        false => None,
+    let graph_def = if let Some(param) = _parameters.get("graph_def") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let title = match _parameters.get("title").is_some() {
-        true => serde_json::from_value(_parameters.get("title").unwrap().clone()).unwrap(),
-        false => None,
+    let title = if let Some(param) = _parameters.get("title") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let height = match _parameters.get("height").is_some() {
-        true => serde_json::from_value(_parameters.get("height").unwrap().clone()).unwrap(),
-        false => None,
+    let height = if let Some(param) = _parameters.get("height") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let width = match _parameters.get("width").is_some() {
-        true => serde_json::from_value(_parameters.get("width").unwrap().clone()).unwrap(),
-        false => None,
+    let width = if let Some(param) = _parameters.get("width") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_snapshots::GetGraphSnapshotParams {
         start,
@@ -3237,41 +3299,46 @@ fn test_v1_list_hosts(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         .v1_api_hosts
         .as_ref()
         .expect("api instance not found");
-    let filter = match _parameters.get("filter").is_some() {
-        true => serde_json::from_value(_parameters.get("filter").unwrap().clone()).unwrap(),
-        false => None,
+    let filter = if let Some(param) = _parameters.get("filter") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let sort_field = match _parameters.get("sort_field").is_some() {
-        true => serde_json::from_value(_parameters.get("sort_field").unwrap().clone()).unwrap(),
-        false => None,
+    let sort_field = if let Some(param) = _parameters.get("sort_field") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let sort_dir = match _parameters.get("sort_dir").is_some() {
-        true => serde_json::from_value(_parameters.get("sort_dir").unwrap().clone()).unwrap(),
-        false => None,
+    let sort_dir = if let Some(param) = _parameters.get("sort_dir") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let start = match _parameters.get("start").is_some() {
-        true => serde_json::from_value(_parameters.get("start").unwrap().clone()).unwrap(),
-        false => None,
+    let start = if let Some(param) = _parameters.get("start") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let count = match _parameters.get("count").is_some() {
-        true => serde_json::from_value(_parameters.get("count").unwrap().clone()).unwrap(),
-        false => None,
+    let count = if let Some(param) = _parameters.get("count") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let from = match _parameters.get("from").is_some() {
-        true => serde_json::from_value(_parameters.get("from").unwrap().clone()).unwrap(),
-        false => None,
+    let from = if let Some(param) = _parameters.get("from") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let include_muted_hosts_data = match _parameters.get("include_muted_hosts_data").is_some() {
-        true => {
-            serde_json::from_value(_parameters.get("include_muted_hosts_data").unwrap().clone())
-                .unwrap()
-        }
-        false => None,
+    let include_muted_hosts_data = if let Some(param) = _parameters.get("include_muted_hosts_data")
+    {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let include_hosts_metadata = match _parameters.get("include_hosts_metadata").is_some() {
-        true => serde_json::from_value(_parameters.get("include_hosts_metadata").unwrap().clone())
-            .unwrap(),
-        false => None,
+    let include_hosts_metadata = if let Some(param) = _parameters.get("include_hosts_metadata") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_hosts::ListHostsParams {
         filter,
@@ -3302,9 +3369,10 @@ fn test_v1_get_host_totals(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         .v1_api_hosts
         .as_ref()
         .expect("api instance not found");
-    let from = match _parameters.get("from").is_some() {
-        true => serde_json::from_value(_parameters.get("from").unwrap().clone()).unwrap(),
-        false => None,
+    let from = if let Some(param) = _parameters.get("from") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_hosts::GetHostTotalsParams { from };
     let response = match block_on(api.get_host_totals_with_http_info(params)) {
@@ -3347,17 +3415,20 @@ fn test_v1_list_aws_accounts(world: &mut DatadogWorld, _parameters: &HashMap<Str
         .v1_api_aws_integration
         .as_ref()
         .expect("api instance not found");
-    let account_id = match _parameters.get("account_id").is_some() {
-        true => serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap(),
-        false => None,
+    let account_id = if let Some(param) = _parameters.get("account_id") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let role_name = match _parameters.get("role_name").is_some() {
-        true => serde_json::from_value(_parameters.get("role_name").unwrap().clone()).unwrap(),
-        false => None,
+    let role_name = if let Some(param) = _parameters.get("role_name") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let access_key_id = match _parameters.get("access_key_id").is_some() {
-        true => serde_json::from_value(_parameters.get("access_key_id").unwrap().clone()).unwrap(),
-        false => None,
+    let access_key_id = if let Some(param) = _parameters.get("access_key_id") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_aws_integration::ListAWSAccountsParams {
         account_id,
@@ -3405,17 +3476,20 @@ fn test_v1_update_aws_account(world: &mut DatadogWorld, _parameters: &HashMap<St
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let account_id = match _parameters.get("account_id").is_some() {
-        true => serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap(),
-        false => None,
+    let account_id = if let Some(param) = _parameters.get("account_id") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let role_name = match _parameters.get("role_name").is_some() {
-        true => serde_json::from_value(_parameters.get("role_name").unwrap().clone()).unwrap(),
-        false => None,
+    let role_name = if let Some(param) = _parameters.get("role_name") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let access_key_id = match _parameters.get("access_key_id").is_some() {
-        true => serde_json::from_value(_parameters.get("access_key_id").unwrap().clone()).unwrap(),
-        false => None,
+    let access_key_id = if let Some(param) = _parameters.get("access_key_id") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_aws_integration::UpdateAWSAccountParams {
         body,
@@ -4477,15 +4551,15 @@ fn test_v1_submit_log(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let content_encoding = match _parameters.get("Content-Encoding").is_some() {
-        true => {
-            serde_json::from_value(_parameters.get("Content-Encoding").unwrap().clone()).unwrap()
-        }
-        false => None,
+    let content_encoding = if let Some(param) = _parameters.get("Content-Encoding") {
+        serde_json::from_value(param.clone()).unwrap()
+    } else {
+        None
     };
-    let ddtags = match _parameters.get("ddtags").is_some() {
-        true => serde_json::from_value(_parameters.get("ddtags").unwrap().clone()).unwrap(),
-        false => None,
+    let ddtags = if let Some(param) = _parameters.get("ddtags") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_logs::SubmitLogParams {
         body,
@@ -4635,13 +4709,15 @@ fn test_v1_list_active_metrics(world: &mut DatadogWorld, _parameters: &HashMap<S
         .as_ref()
         .expect("api instance not found");
     let from = serde_json::from_value(_parameters.get("from").unwrap().clone()).unwrap();
-    let host = match _parameters.get("host").is_some() {
-        true => serde_json::from_value(_parameters.get("host").unwrap().clone()).unwrap(),
-        false => None,
+    let host = if let Some(param) = _parameters.get("host") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let tag_filter = match _parameters.get("tag_filter").is_some() {
-        true => serde_json::from_value(_parameters.get("tag_filter").unwrap().clone()).unwrap(),
-        false => None,
+    let tag_filter = if let Some(param) = _parameters.get("tag_filter") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_metrics::ListActiveMetricsParams {
         from,
@@ -4757,11 +4833,10 @@ fn test_v1_submit_metrics(world: &mut DatadogWorld, _parameters: &HashMap<String
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let content_encoding = match _parameters.get("Content-Encoding").is_some() {
-        true => {
-            serde_json::from_value(_parameters.get("Content-Encoding").unwrap().clone()).unwrap()
-        }
-        false => None,
+    let content_encoding = if let Some(param) = _parameters.get("Content-Encoding") {
+        serde_json::from_value(param.clone()).unwrap()
+    } else {
+        None
     };
     let params = datadogV1::api::api_metrics::SubmitMetricsParams {
         body,
@@ -5004,29 +5079,35 @@ fn test_v1_list_sl_os(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         .v1_api_service_level_objectives
         .as_ref()
         .expect("api instance not found");
-    let ids = match _parameters.get("ids").is_some() {
-        true => serde_json::from_value(_parameters.get("ids").unwrap().clone()).unwrap(),
-        false => None,
+    let ids = if let Some(param) = _parameters.get("ids") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let query = match _parameters.get("query").is_some() {
-        true => serde_json::from_value(_parameters.get("query").unwrap().clone()).unwrap(),
-        false => None,
+    let query = if let Some(param) = _parameters.get("query") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let tags_query = match _parameters.get("tags_query").is_some() {
-        true => serde_json::from_value(_parameters.get("tags_query").unwrap().clone()).unwrap(),
-        false => None,
+    let tags_query = if let Some(param) = _parameters.get("tags_query") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let metrics_query = match _parameters.get("metrics_query").is_some() {
-        true => serde_json::from_value(_parameters.get("metrics_query").unwrap().clone()).unwrap(),
-        false => None,
+    let metrics_query = if let Some(param) = _parameters.get("metrics_query") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let limit = match _parameters.get("limit").is_some() {
-        true => serde_json::from_value(_parameters.get("limit").unwrap().clone()).unwrap(),
-        false => None,
+    let limit = if let Some(param) = _parameters.get("limit") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let offset = match _parameters.get("offset").is_some() {
-        true => serde_json::from_value(_parameters.get("offset").unwrap().clone()).unwrap(),
-        false => None,
+    let offset = if let Some(param) = _parameters.get("offset") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_service_level_objectives::ListSLOsParams {
         ids,
@@ -5122,21 +5203,25 @@ fn test_v1_search_slo(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         .v1_api_service_level_objectives
         .as_ref()
         .expect("api instance not found");
-    let query = match _parameters.get("query").is_some() {
-        true => serde_json::from_value(_parameters.get("query").unwrap().clone()).unwrap(),
-        false => None,
+    let query = if let Some(param) = _parameters.get("query") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let page_size = match _parameters.get("page[size]").is_some() {
-        true => serde_json::from_value(_parameters.get("page[size]").unwrap().clone()).unwrap(),
-        false => None,
+    let page_size = if let Some(param) = _parameters.get("page[size]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let page_number = match _parameters.get("page[number]").is_some() {
-        true => serde_json::from_value(_parameters.get("page[number]").unwrap().clone()).unwrap(),
-        false => None,
+    let page_number = if let Some(param) = _parameters.get("page[number]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let include_facets = match _parameters.get("include_facets").is_some() {
-        true => serde_json::from_value(_parameters.get("include_facets").unwrap().clone()).unwrap(),
-        false => None,
+    let include_facets = if let Some(param) = _parameters.get("include_facets") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_service_level_objectives::SearchSLOParams {
         query,
@@ -5164,9 +5249,10 @@ fn test_v1_delete_slo(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         .as_ref()
         .expect("api instance not found");
     let slo_id = serde_json::from_value(_parameters.get("slo_id").unwrap().clone()).unwrap();
-    let force = match _parameters.get("force").is_some() {
-        true => serde_json::from_value(_parameters.get("force").unwrap().clone()).unwrap(),
-        false => None,
+    let force = if let Some(param) = _parameters.get("force") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_service_level_objectives::DeleteSLOParams { slo_id, force };
     let response = match block_on(api.delete_slo_with_http_info(params)) {
@@ -5189,16 +5275,12 @@ fn test_v1_get_slo(world: &mut DatadogWorld, _parameters: &HashMap<String, Value
         .as_ref()
         .expect("api instance not found");
     let slo_id = serde_json::from_value(_parameters.get("slo_id").unwrap().clone()).unwrap();
-    let with_configured_alert_ids = match _parameters.get("with_configured_alert_ids").is_some() {
-        true => serde_json::from_value(
-            _parameters
-                .get("with_configured_alert_ids")
-                .unwrap()
-                .clone(),
-        )
-        .unwrap(),
-        false => None,
-    };
+    let with_configured_alert_ids =
+        if let Some(param) = _parameters.get("with_configured_alert_ids") {
+            Some(param.as_str().unwrap().parse().unwrap())
+        } else {
+            None
+        };
     let params = datadogV1::api::api_service_level_objectives::GetSLOParams {
         slo_id,
         with_configured_alert_ids,
@@ -5268,15 +5350,15 @@ fn test_v1_get_slo_history(world: &mut DatadogWorld, _parameters: &HashMap<Strin
     let slo_id = serde_json::from_value(_parameters.get("slo_id").unwrap().clone()).unwrap();
     let from_ts = serde_json::from_value(_parameters.get("from_ts").unwrap().clone()).unwrap();
     let to_ts = serde_json::from_value(_parameters.get("to_ts").unwrap().clone()).unwrap();
-    let target = match _parameters.get("target").is_some() {
-        true => serde_json::from_value(_parameters.get("target").unwrap().clone()).unwrap(),
-        false => None,
+    let target = if let Some(param) = _parameters.get("target") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let apply_correction = match _parameters.get("apply_correction").is_some() {
-        true => {
-            serde_json::from_value(_parameters.get("apply_correction").unwrap().clone()).unwrap()
-        }
-        false => None,
+    let apply_correction = if let Some(param) = _parameters.get("apply_correction") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_service_level_objectives::GetSLOHistoryParams {
         slo_id,
@@ -5304,13 +5386,15 @@ fn test_v1_list_slo_correction(world: &mut DatadogWorld, _parameters: &HashMap<S
         .v1_api_service_level_objective_corrections
         .as_ref()
         .expect("api instance not found");
-    let offset = match _parameters.get("offset").is_some() {
-        true => serde_json::from_value(_parameters.get("offset").unwrap().clone()).unwrap(),
-        false => None,
+    let offset = if let Some(param) = _parameters.get("offset") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let limit = match _parameters.get("limit").is_some() {
-        true => serde_json::from_value(_parameters.get("limit").unwrap().clone()).unwrap(),
-        false => None,
+    let limit = if let Some(param) = _parameters.get("limit") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_service_level_objective_corrections::ListSLOCorrectionParams {
         offset,
@@ -5433,9 +5517,10 @@ fn test_v1_list_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<String
         .v1_api_tags
         .as_ref()
         .expect("api instance not found");
-    let source = match _parameters.get("source").is_some() {
-        true => serde_json::from_value(_parameters.get("source").unwrap().clone()).unwrap(),
-        false => None,
+    let source = if let Some(param) = _parameters.get("source") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_tags::ListHostTagsParams { source };
     let response = match block_on(api.list_host_tags_with_http_info(params)) {
@@ -5458,9 +5543,10 @@ fn test_v1_delete_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         .as_ref()
         .expect("api instance not found");
     let host_name = serde_json::from_value(_parameters.get("host_name").unwrap().clone()).unwrap();
-    let source = match _parameters.get("source").is_some() {
-        true => serde_json::from_value(_parameters.get("source").unwrap().clone()).unwrap(),
-        false => None,
+    let source = if let Some(param) = _parameters.get("source") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_tags::DeleteHostTagsParams { host_name, source };
     let response = match block_on(api.delete_host_tags_with_http_info(params)) {
@@ -5483,9 +5569,10 @@ fn test_v1_get_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<String,
         .as_ref()
         .expect("api instance not found");
     let host_name = serde_json::from_value(_parameters.get("host_name").unwrap().clone()).unwrap();
-    let source = match _parameters.get("source").is_some() {
-        true => serde_json::from_value(_parameters.get("source").unwrap().clone()).unwrap(),
-        false => None,
+    let source = if let Some(param) = _parameters.get("source") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_tags::GetHostTagsParams { host_name, source };
     let response = match block_on(api.get_host_tags_with_http_info(params)) {
@@ -5509,9 +5596,10 @@ fn test_v1_create_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         .expect("api instance not found");
     let host_name = serde_json::from_value(_parameters.get("host_name").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let source = match _parameters.get("source").is_some() {
-        true => serde_json::from_value(_parameters.get("source").unwrap().clone()).unwrap(),
-        false => None,
+    let source = if let Some(param) = _parameters.get("source") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_tags::CreateHostTagsParams {
         host_name,
@@ -5539,9 +5627,10 @@ fn test_v1_update_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         .expect("api instance not found");
     let host_name = serde_json::from_value(_parameters.get("host_name").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let source = match _parameters.get("source").is_some() {
-        true => serde_json::from_value(_parameters.get("source").unwrap().clone()).unwrap(),
-        false => None,
+    let source = if let Some(param) = _parameters.get("source") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV1::api::api_tags::UpdateHostTagsParams {
         host_name,
@@ -5946,29 +6035,35 @@ fn test_v2_list_audit_logs(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         .v2_api_audit
         .as_ref()
         .expect("api instance not found");
-    let filter_query = match _parameters.get("filter[query]").is_some() {
-        true => serde_json::from_value(_parameters.get("filter[query]").unwrap().clone()).unwrap(),
-        false => None,
+    let filter_query = if let Some(param) = _parameters.get("filter[query]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let filter_from = match _parameters.get("filter[from]").is_some() {
-        true => serde_json::from_value(_parameters.get("filter[from]").unwrap().clone()).unwrap(),
-        false => None,
+    let filter_from = if let Some(param) = _parameters.get("filter[from]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let filter_to = match _parameters.get("filter[to]").is_some() {
-        true => serde_json::from_value(_parameters.get("filter[to]").unwrap().clone()).unwrap(),
-        false => None,
+    let filter_to = if let Some(param) = _parameters.get("filter[to]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let sort = match _parameters.get("sort").is_some() {
-        true => serde_json::from_value(_parameters.get("sort").unwrap().clone()).unwrap(),
-        false => None,
+    let sort = if let Some(param) = _parameters.get("sort") {
+        serde_json::from_value(param.clone()).unwrap()
+    } else {
+        None
     };
-    let page_cursor = match _parameters.get("page[cursor]").is_some() {
-        true => serde_json::from_value(_parameters.get("page[cursor]").unwrap().clone()).unwrap(),
-        false => None,
+    let page_cursor = if let Some(param) = _parameters.get("page[cursor]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let page_limit = match _parameters.get("page[limit]").is_some() {
-        true => serde_json::from_value(_parameters.get("page[limit]").unwrap().clone()).unwrap(),
-        false => None,
+    let page_limit = if let Some(param) = _parameters.get("page[limit]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV2::api::api_audit::ListAuditLogsParams {
         filter_query,
@@ -5997,9 +6092,10 @@ fn test_v2_search_audit_logs(world: &mut DatadogWorld, _parameters: &HashMap<Str
         .v2_api_audit
         .as_ref()
         .expect("api instance not found");
-    let body = match _parameters.get("body").is_some() {
-        true => serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-        false => None,
+    let body = if let Some(param) = _parameters.get("body") {
+        serde_json::from_value(param.clone()).unwrap()
+    } else {
+        None
     };
     let params = datadogV2::api::api_audit::SearchAuditLogsParams { body };
     let response = match block_on(api.search_audit_logs_with_http_info(params)) {
@@ -6134,29 +6230,35 @@ fn test_v2_list_events(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         .v2_api_events
         .as_ref()
         .expect("api instance not found");
-    let filter_query = match _parameters.get("filter[query]").is_some() {
-        true => serde_json::from_value(_parameters.get("filter[query]").unwrap().clone()).unwrap(),
-        false => None,
+    let filter_query = if let Some(param) = _parameters.get("filter[query]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let filter_from = match _parameters.get("filter[from]").is_some() {
-        true => serde_json::from_value(_parameters.get("filter[from]").unwrap().clone()).unwrap(),
-        false => None,
+    let filter_from = if let Some(param) = _parameters.get("filter[from]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let filter_to = match _parameters.get("filter[to]").is_some() {
-        true => serde_json::from_value(_parameters.get("filter[to]").unwrap().clone()).unwrap(),
-        false => None,
+    let filter_to = if let Some(param) = _parameters.get("filter[to]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let sort = match _parameters.get("sort").is_some() {
-        true => serde_json::from_value(_parameters.get("sort").unwrap().clone()).unwrap(),
-        false => None,
+    let sort = if let Some(param) = _parameters.get("sort") {
+        serde_json::from_value(param.clone()).unwrap()
+    } else {
+        None
     };
-    let page_cursor = match _parameters.get("page[cursor]").is_some() {
-        true => serde_json::from_value(_parameters.get("page[cursor]").unwrap().clone()).unwrap(),
-        false => None,
+    let page_cursor = if let Some(param) = _parameters.get("page[cursor]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let page_limit = match _parameters.get("page[limit]").is_some() {
-        true => serde_json::from_value(_parameters.get("page[limit]").unwrap().clone()).unwrap(),
-        false => None,
+    let page_limit = if let Some(param) = _parameters.get("page[limit]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV2::api::api_events::ListEventsParams {
         filter_query,
@@ -6185,9 +6287,10 @@ fn test_v2_search_events(world: &mut DatadogWorld, _parameters: &HashMap<String,
         .v2_api_events
         .as_ref()
         .expect("api instance not found");
-    let body = match _parameters.get("body").is_some() {
-        true => serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-        false => None,
+    let body = if let Some(param) = _parameters.get("body") {
+        serde_json::from_value(param.clone()).unwrap()
+    } else {
+        None
     };
     let params = datadogV2::api::api_events::SearchEventsParams { body };
     let response = match block_on(api.search_events_with_http_info(params)) {
@@ -6314,9 +6417,10 @@ fn test_v2_make_gcpsts_delegate(world: &mut DatadogWorld, _parameters: &HashMap<
         .v2_api_gcp_integration
         .as_ref()
         .expect("api instance not found");
-    let body = match _parameters.get("body").is_some() {
-        true => serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap(),
-        false => None,
+    let body = if let Some(param) = _parameters.get("body") {
+        serde_json::from_value(param.clone()).unwrap()
+    } else {
+        None
     };
     let params = datadogV2::api::api_gcp_integration::MakeGCPSTSDelegateParams { body };
     let response = match block_on(api.make_gcpsts_delegate_with_http_info(params)) {
@@ -7109,15 +7213,15 @@ fn test_v2_submit_log(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let content_encoding = match _parameters.get("Content-Encoding").is_some() {
-        true => {
-            serde_json::from_value(_parameters.get("Content-Encoding").unwrap().clone()).unwrap()
-        }
-        false => None,
+    let content_encoding = if let Some(param) = _parameters.get("Content-Encoding") {
+        serde_json::from_value(param.clone()).unwrap()
+    } else {
+        None
     };
-    let ddtags = match _parameters.get("ddtags").is_some() {
-        true => serde_json::from_value(_parameters.get("ddtags").unwrap().clone()).unwrap(),
-        false => None,
+    let ddtags = if let Some(param) = _parameters.get("ddtags") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV2::api::api_logs::SubmitLogParams {
         body,
@@ -7266,76 +7370,67 @@ fn test_v2_list_findings(world: &mut DatadogWorld, _parameters: &HashMap<String,
         .v2_api_security_monitoring
         .as_ref()
         .expect("api instance not found");
-    let page_limit = match _parameters.get("page[limit]").is_some() {
-        true => serde_json::from_value(_parameters.get("page[limit]").unwrap().clone()).unwrap(),
-        false => None,
+    let page_limit = if let Some(param) = _parameters.get("page[limit]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let snapshot_timestamp = match _parameters.get("snapshot_timestamp").is_some() {
-        true => {
-            serde_json::from_value(_parameters.get("snapshot_timestamp").unwrap().clone()).unwrap()
-        }
-        false => None,
+    let snapshot_timestamp = if let Some(param) = _parameters.get("snapshot_timestamp") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let page_cursor = match _parameters.get("page[cursor]").is_some() {
-        true => serde_json::from_value(_parameters.get("page[cursor]").unwrap().clone()).unwrap(),
-        false => None,
+    let page_cursor = if let Some(param) = _parameters.get("page[cursor]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let filter_tags = match _parameters.get("filter[tags]").is_some() {
-        true => serde_json::from_value(_parameters.get("filter[tags]").unwrap().clone()).unwrap(),
-        false => None,
+    let filter_tags = if let Some(param) = _parameters.get("filter[tags]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let filter_evaluation_changed_at =
-        match _parameters.get("filter[evaluation_changed_at]").is_some() {
-            true => serde_json::from_value(
-                _parameters
-                    .get("filter[evaluation_changed_at]")
-                    .unwrap()
-                    .clone(),
-            )
-            .unwrap(),
-            false => None,
+        if let Some(param) = _parameters.get("filter[evaluation_changed_at]") {
+            Some(param.as_str().unwrap().parse().unwrap())
+        } else {
+            None
         };
-    let filter_muted = match _parameters.get("filter[muted]").is_some() {
-        true => serde_json::from_value(_parameters.get("filter[muted]").unwrap().clone()).unwrap(),
-        false => None,
+    let filter_muted = if let Some(param) = _parameters.get("filter[muted]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let filter_rule_id = match _parameters.get("filter[rule_id]").is_some() {
-        true => {
-            serde_json::from_value(_parameters.get("filter[rule_id]").unwrap().clone()).unwrap()
-        }
-        false => None,
+    let filter_rule_id = if let Some(param) = _parameters.get("filter[rule_id]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let filter_rule_name = match _parameters.get("filter[rule_name]").is_some() {
-        true => {
-            serde_json::from_value(_parameters.get("filter[rule_name]").unwrap().clone()).unwrap()
-        }
-        false => None,
+    let filter_rule_name = if let Some(param) = _parameters.get("filter[rule_name]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let filter_resource_type = match _parameters.get("filter[resource_type]").is_some() {
-        true => serde_json::from_value(_parameters.get("filter[resource_type]").unwrap().clone())
-            .unwrap(),
-        false => None,
+    let filter_resource_type = if let Some(param) = _parameters.get("filter[resource_type]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let filter_discovery_timestamp = match _parameters.get("filter[discovery_timestamp]").is_some()
-    {
-        true => serde_json::from_value(
-            _parameters
-                .get("filter[discovery_timestamp]")
-                .unwrap()
-                .clone(),
-        )
-        .unwrap(),
-        false => None,
+    let filter_discovery_timestamp =
+        if let Some(param) = _parameters.get("filter[discovery_timestamp]") {
+            Some(param.as_str().unwrap().parse().unwrap())
+        } else {
+            None
+        };
+    let filter_evaluation = if let Some(param) = _parameters.get("filter[evaluation]") {
+        serde_json::from_value(param.clone()).unwrap()
+    } else {
+        None
     };
-    let filter_evaluation = match _parameters.get("filter[evaluation]").is_some() {
-        true => {
-            serde_json::from_value(_parameters.get("filter[evaluation]").unwrap().clone()).unwrap()
-        }
-        false => None,
-    };
-    let filter_status = match _parameters.get("filter[status]").is_some() {
-        true => serde_json::from_value(_parameters.get("filter[status]").unwrap().clone()).unwrap(),
-        false => None,
+    let filter_status = if let Some(param) = _parameters.get("filter[status]") {
+        serde_json::from_value(param.clone()).unwrap()
+    } else {
+        None
     };
     let params = datadogV2::api::api_security_monitoring::ListFindingsParams {
         page_limit,
@@ -7372,11 +7467,10 @@ fn test_v2_get_finding(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         .expect("api instance not found");
     let finding_id =
         serde_json::from_value(_parameters.get("finding_id").unwrap().clone()).unwrap();
-    let snapshot_timestamp = match _parameters.get("snapshot_timestamp").is_some() {
-        true => {
-            serde_json::from_value(_parameters.get("snapshot_timestamp").unwrap().clone()).unwrap()
-        }
-        false => None,
+    let snapshot_timestamp = if let Some(param) = _parameters.get("snapshot_timestamp") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV2::api::api_security_monitoring::GetFindingParams {
         finding_id,
@@ -7424,29 +7518,35 @@ fn test_v2_list_processes(world: &mut DatadogWorld, _parameters: &HashMap<String
         .v2_api_processes
         .as_ref()
         .expect("api instance not found");
-    let search = match _parameters.get("search").is_some() {
-        true => serde_json::from_value(_parameters.get("search").unwrap().clone()).unwrap(),
-        false => None,
+    let search = if let Some(param) = _parameters.get("search") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let tags = match _parameters.get("tags").is_some() {
-        true => serde_json::from_value(_parameters.get("tags").unwrap().clone()).unwrap(),
-        false => None,
+    let tags = if let Some(param) = _parameters.get("tags") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let from = match _parameters.get("from").is_some() {
-        true => serde_json::from_value(_parameters.get("from").unwrap().clone()).unwrap(),
-        false => None,
+    let from = if let Some(param) = _parameters.get("from") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let to = match _parameters.get("to").is_some() {
-        true => serde_json::from_value(_parameters.get("to").unwrap().clone()).unwrap(),
-        false => None,
+    let to = if let Some(param) = _parameters.get("to") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let page_limit = match _parameters.get("page[limit]").is_some() {
-        true => serde_json::from_value(_parameters.get("page[limit]").unwrap().clone()).unwrap(),
-        false => None,
+    let page_limit = if let Some(param) = _parameters.get("page[limit]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let page_cursor = match _parameters.get("page[cursor]").is_some() {
-        true => serde_json::from_value(_parameters.get("page[cursor]").unwrap().clone()).unwrap(),
-        false => None,
+    let page_cursor = if let Some(param) = _parameters.get("page[cursor]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV2::api::api_processes::ListProcessesParams {
         search,
@@ -7553,9 +7653,10 @@ fn test_v2_upload_id_p_metadata(world: &mut DatadogWorld, _parameters: &HashMap<
         .v2_api_organizations
         .as_ref()
         .expect("api instance not found");
-    let idp_file = match _parameters.get("idp_file").is_some() {
-        true => serde_json::from_value(_parameters.get("idp_file").unwrap().clone()).unwrap(),
-        false => None,
+    let idp_file = if let Some(param) = _parameters.get("idp_file") {
+        Some(param.as_str().unwrap().as_bytes().to_vec())
+    } else {
+        None
     };
     let params = datadogV2::api::api_organizations::UploadIdPMetadataParams { idp_file };
     let response = match block_on(api.upload_id_p_metadata_with_http_info(params)) {
@@ -7739,11 +7840,10 @@ fn test_v2_submit_metrics(world: &mut DatadogWorld, _parameters: &HashMap<String
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let content_encoding = match _parameters.get("Content-Encoding").is_some() {
-        true => {
-            serde_json::from_value(_parameters.get("Content-Encoding").unwrap().clone()).unwrap()
-        }
-        false => None,
+    let content_encoding = if let Some(param) = _parameters.get("Content-Encoding") {
+        serde_json::from_value(param.clone()).unwrap()
+    } else {
+        None
     };
     let params = datadogV2::api::api_metrics::SubmitMetricsParams {
         body,
@@ -7818,9 +7918,10 @@ fn test_v2_get_usage_application_security_monitoring(
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV2::api::api_usage_metering::GetUsageApplicationSecurityMonitoringParams {
         start_hr,
@@ -7848,9 +7949,10 @@ fn test_v2_get_cost_by_org(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         .expect("api instance not found");
     let start_month =
         serde_json::from_value(_parameters.get("start_month").unwrap().clone()).unwrap();
-    let end_month = match _parameters.get("end_month").is_some() {
-        true => serde_json::from_value(_parameters.get("end_month").unwrap().clone()).unwrap(),
-        false => None,
+    let end_month = if let Some(param) = _parameters.get("end_month") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV2::api::api_usage_metering::GetCostByOrgParams {
         start_month,
@@ -7878,25 +7980,30 @@ fn test_v2_get_estimated_cost_by_org(
         .v2_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let view = match _parameters.get("view").is_some() {
-        true => serde_json::from_value(_parameters.get("view").unwrap().clone()).unwrap(),
-        false => None,
+    let view = if let Some(param) = _parameters.get("view") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let start_month = match _parameters.get("start_month").is_some() {
-        true => serde_json::from_value(_parameters.get("start_month").unwrap().clone()).unwrap(),
-        false => None,
+    let start_month = if let Some(param) = _parameters.get("start_month") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let end_month = match _parameters.get("end_month").is_some() {
-        true => serde_json::from_value(_parameters.get("end_month").unwrap().clone()).unwrap(),
-        false => None,
+    let end_month = if let Some(param) = _parameters.get("end_month") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let start_date = match _parameters.get("start_date").is_some() {
-        true => serde_json::from_value(_parameters.get("start_date").unwrap().clone()).unwrap(),
-        false => None,
+    let start_date = if let Some(param) = _parameters.get("start_date") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let end_date = match _parameters.get("end_date").is_some() {
-        true => serde_json::from_value(_parameters.get("end_date").unwrap().clone()).unwrap(),
-        false => None,
+    let end_date = if let Some(param) = _parameters.get("end_date") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV2::api::api_usage_metering::GetEstimatedCostByOrgParams {
         view,
@@ -7929,13 +8036,15 @@ fn test_v2_get_historical_cost_by_org(
         .expect("api instance not found");
     let start_month =
         serde_json::from_value(_parameters.get("start_month").unwrap().clone()).unwrap();
-    let view = match _parameters.get("view").is_some() {
-        true => serde_json::from_value(_parameters.get("view").unwrap().clone()).unwrap(),
-        false => None,
+    let view = if let Some(param) = _parameters.get("view") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let end_month = match _parameters.get("end_month").is_some() {
-        true => serde_json::from_value(_parameters.get("end_month").unwrap().clone()).unwrap(),
-        false => None,
+    let end_month = if let Some(param) = _parameters.get("end_month") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV2::api::api_usage_metering::GetHistoricalCostByOrgParams {
         start_month,
@@ -7967,46 +8076,37 @@ fn test_v2_get_hourly_usage(world: &mut DatadogWorld, _parameters: &HashMap<Stri
     let filter_product_families =
         serde_json::from_value(_parameters.get("filter[product_families]").unwrap().clone())
             .unwrap();
-    let filter_timestamp_end = match _parameters.get("filter[timestamp][end]").is_some() {
-        true => serde_json::from_value(_parameters.get("filter[timestamp][end]").unwrap().clone())
-            .unwrap(),
-        false => None,
+    let filter_timestamp_end = if let Some(param) = _parameters.get("filter[timestamp][end]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let filter_include_descendants = match _parameters.get("filter[include_descendants]").is_some()
+    let filter_include_descendants =
+        if let Some(param) = _parameters.get("filter[include_descendants]") {
+            Some(param.as_str().unwrap().parse().unwrap())
+        } else {
+            None
+        };
+    let filter_include_breakdown = if let Some(param) = _parameters.get("filter[include_breakdown]")
     {
-        true => serde_json::from_value(
-            _parameters
-                .get("filter[include_descendants]")
-                .unwrap()
-                .clone(),
-        )
-        .unwrap(),
-        false => None,
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let filter_include_breakdown = match _parameters.get("filter[include_breakdown]").is_some() {
-        true => serde_json::from_value(
-            _parameters
-                .get("filter[include_breakdown]")
-                .unwrap()
-                .clone(),
-        )
-        .unwrap(),
-        false => None,
+    let filter_versions = if let Some(param) = _parameters.get("filter[versions]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let filter_versions = match _parameters.get("filter[versions]").is_some() {
-        true => {
-            serde_json::from_value(_parameters.get("filter[versions]").unwrap().clone()).unwrap()
-        }
-        false => None,
+    let page_limit = if let Some(param) = _parameters.get("page[limit]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
-    let page_limit = match _parameters.get("page[limit]").is_some() {
-        true => serde_json::from_value(_parameters.get("page[limit]").unwrap().clone()).unwrap(),
-        false => None,
-    };
-    let page_next_record_id = match _parameters.get("page[next_record_id]").is_some() {
-        true => serde_json::from_value(_parameters.get("page[next_record_id]").unwrap().clone())
-            .unwrap(),
-        false => None,
+    let page_next_record_id = if let Some(param) = _parameters.get("page[next_record_id]") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV2::api::api_usage_metering::GetHourlyUsageParams {
         filter_timestamp_start,
@@ -8041,9 +8141,10 @@ fn test_v2_get_usage_lambda_traced_invocations(
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV2::api::api_usage_metering::GetUsageLambdaTracedInvocationsParams {
         start_hr,
@@ -8072,9 +8173,10 @@ fn test_v2_get_usage_observability_pipelines(
         .as_ref()
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
-    let end_hr = match _parameters.get("end_hr").is_some() {
-        true => serde_json::from_value(_parameters.get("end_hr").unwrap().clone()).unwrap(),
-        false => None,
+    let end_hr = if let Some(param) = _parameters.get("end_hr") {
+        Some(param.as_str().unwrap().parse().unwrap())
+    } else {
+        None
     };
     let params = datadogV2::api::api_usage_metering::GetUsageObservabilityPipelinesParams {
         start_hr,

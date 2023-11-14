@@ -172,15 +172,12 @@ impl {{ structName }} {
         {%- endif %}
 
         {%- if operation.requestBody is defined and not formParameter %}
-        {%- set isBodyOptional = False if "required" in operation.requestBody and operation.requestBody.required else True %}
         // build body parameters
-        {%- if isBodyOptional %}
-        if {{operation.get("x-codegen-request-body-name", "body")|variable_name}}.is_some() {
-            local_req_builder = local_req_builder.json(&{{operation.get("x-codegen-request-body-name", "body")|variable_name}}.unwrap());
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        if {{operation.get("x-codegen-request-body-name", "body")|variable_name}}.serialize(&mut ser).is_ok() {
+            local_req_builder = local_req_builder.body(ser.into_inner());
         }
-        {%- else %}
-        local_req_builder = local_req_builder.json(&{{operation.get("x-codegen-request-body-name", "body")|variable_name}});
-        {%- endif %}
         {%- endif %}
 
         let local_req = local_req_builder.build()?;

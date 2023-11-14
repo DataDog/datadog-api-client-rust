@@ -152,7 +152,11 @@ impl PagerDutyIntegrationAPI {
         };
 
         // build body parameters
-        local_req_builder = local_req_builder.json(&body);
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            local_req_builder = local_req_builder.body(ser.into_inner());
+        }
 
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
@@ -382,7 +386,11 @@ impl PagerDutyIntegrationAPI {
         };
 
         // build body parameters
-        local_req_builder = local_req_builder.json(&body);
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            local_req_builder = local_req_builder.body(ser.into_inner());
+        }
 
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;

@@ -9,7 +9,6 @@ use cucumber::{
 };
 use datadog_api_client::datadog::configuration::Configuration;
 use handlebars::{Context, Handlebars, Helper, Output, RenderContext, RenderError};
-use log::debug;
 use regex::Regex;
 use reqwest_middleware::ClientBuilder;
 use rvcr::{VCRMiddleware, VCRMode};
@@ -170,11 +169,7 @@ pub async fn before_scenario(
                 .with_modify_response(|res| {
                     res.headers.remove_entry("content-security-policy");
                 })
-                .with_request_matcher(|vcr_req, req| {
-                    debug!("{:?}", vcr_req.uri);
-                    debug!("{:?}", req.uri);
-                    req_eq(vcr_req, req)
-                });
+                .with_request_matcher(|vcr_req, req| req_eq(vcr_req, req));
             vcr_client_builder.with(middleware).build()
         }
     };
@@ -346,7 +341,10 @@ fn request_sent(world: &mut DatadogWorld) {
     world
         .function_mappings
         .get(&world.operation_id)
-        .expect("request operation not found")(world, &world.parameters.clone());
+        .expect(&format!(
+            "{:?} request operation id not found",
+            world.operation_id
+        ))(world, &world.parameters.clone());
     match build_undo(world, &world.operation_id.clone()) {
         Ok(Some(undo)) => {
             world.undo_operations.push(undo);
@@ -366,7 +364,11 @@ fn response_equal_to(world: &mut DatadogWorld, path: String, value: String) {
     let lookup = lookup(&path, &world.response.object).expect("value not found in response");
     let rendered_value = template(value, &world.fixtures);
     let expected: Value = serde_json::from_str(rendered_value.as_str()).unwrap();
-    assert_eq!(lookup, expected);
+    if lookup.is_number() && expected.is_number() {
+        assert_eq!(lookup.as_f64().unwrap(), expected.as_f64().unwrap());
+    } else {
+        assert_eq!(lookup, expected);
+    }
 }
 
 #[then(expr = "the response {string} has length {int}")]
