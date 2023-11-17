@@ -441,906 +441,932 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
 pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
-        .insert("GetIPRanges".to_string(), test_v1_get_ip_ranges);
+        .insert("v1.GetIPRanges".to_string(), test_v1_get_ip_ranges);
     world
         .function_mappings
-        .insert("ListAPIKeys".to_string(), test_v1_list_api_keys);
+        .insert("v1.ListAPIKeys".to_string(), test_v1_list_api_keys);
     world
         .function_mappings
-        .insert("CreateAPIKey".to_string(), test_v1_create_api_key);
+        .insert("v1.CreateAPIKey".to_string(), test_v1_create_api_key);
     world
         .function_mappings
-        .insert("DeleteAPIKey".to_string(), test_v1_delete_api_key);
+        .insert("v1.DeleteAPIKey".to_string(), test_v1_delete_api_key);
     world
         .function_mappings
-        .insert("GetAPIKey".to_string(), test_v1_get_api_key);
+        .insert("v1.GetAPIKey".to_string(), test_v1_get_api_key);
     world
         .function_mappings
-        .insert("UpdateAPIKey".to_string(), test_v1_update_api_key);
+        .insert("v1.UpdateAPIKey".to_string(), test_v1_update_api_key);
     world.function_mappings.insert(
-        "ListApplicationKeys".to_string(),
+        "v1.ListApplicationKeys".to_string(),
         test_v1_list_application_keys,
     );
     world.function_mappings.insert(
-        "CreateApplicationKey".to_string(),
+        "v1.CreateApplicationKey".to_string(),
         test_v1_create_application_key,
     );
     world.function_mappings.insert(
-        "DeleteApplicationKey".to_string(),
+        "v1.DeleteApplicationKey".to_string(),
         test_v1_delete_application_key,
     );
-    world
-        .function_mappings
-        .insert("GetApplicationKey".to_string(), test_v1_get_application_key);
     world.function_mappings.insert(
-        "UpdateApplicationKey".to_string(),
+        "v1.GetApplicationKey".to_string(),
+        test_v1_get_application_key,
+    );
+    world.function_mappings.insert(
+        "v1.UpdateApplicationKey".to_string(),
         test_v1_update_application_key,
     );
     world.function_mappings.insert(
-        "SubmitServiceCheck".to_string(),
+        "v1.SubmitServiceCheck".to_string(),
         test_v1_submit_service_check,
     );
     world.function_mappings.insert(
-        "GetDailyCustomReports".to_string(),
+        "v1.GetDailyCustomReports".to_string(),
         test_v1_get_daily_custom_reports,
     );
     world.function_mappings.insert(
-        "GetSpecifiedDailyCustomReports".to_string(),
+        "v1.GetSpecifiedDailyCustomReports".to_string(),
         test_v1_get_specified_daily_custom_reports,
     );
     world.function_mappings.insert(
-        "GetMonthlyCustomReports".to_string(),
+        "v1.GetMonthlyCustomReports".to_string(),
         test_v1_get_monthly_custom_reports,
     );
     world.function_mappings.insert(
-        "GetSpecifiedMonthlyCustomReports".to_string(),
+        "v1.GetSpecifiedMonthlyCustomReports".to_string(),
         test_v1_get_specified_monthly_custom_reports,
     );
     world.function_mappings.insert(
-        "GetUsageAnalyzedLogs".to_string(),
+        "v1.GetUsageAnalyzedLogs".to_string(),
         test_v1_get_usage_analyzed_logs,
     );
     world.function_mappings.insert(
-        "GetUsageAttribution".to_string(),
+        "v1.GetUsageAttribution".to_string(),
         test_v1_get_usage_attribution,
     );
     world.function_mappings.insert(
-        "GetUsageAuditLogs".to_string(),
+        "v1.GetUsageAuditLogs".to_string(),
         test_v1_get_usage_audit_logs,
     );
     world
         .function_mappings
-        .insert("GetUsageLambda".to_string(), test_v1_get_usage_lambda);
+        .insert("v1.GetUsageLambda".to_string(), test_v1_get_usage_lambda);
     world.function_mappings.insert(
-        "GetUsageBillableSummary".to_string(),
+        "v1.GetUsageBillableSummary".to_string(),
         test_v1_get_usage_billable_summary,
     );
     world
         .function_mappings
-        .insert("GetUsageCIApp".to_string(), test_v1_get_usage_ci_app);
+        .insert("v1.GetUsageCIApp".to_string(), test_v1_get_usage_ci_app);
     world.function_mappings.insert(
-        "GetUsageCloudSecurityPostureManagement".to_string(),
+        "v1.GetUsageCloudSecurityPostureManagement".to_string(),
         test_v1_get_usage_cloud_security_posture_management,
     );
     world
         .function_mappings
-        .insert("GetUsageCWS".to_string(), test_v1_get_usage_cws);
+        .insert("v1.GetUsageCWS".to_string(), test_v1_get_usage_cws);
     world
         .function_mappings
-        .insert("GetUsageDBM".to_string(), test_v1_get_usage_dbm);
+        .insert("v1.GetUsageDBM".to_string(), test_v1_get_usage_dbm);
     world
         .function_mappings
-        .insert("GetUsageFargate".to_string(), test_v1_get_usage_fargate);
+        .insert("v1.GetUsageFargate".to_string(), test_v1_get_usage_fargate);
     world
         .function_mappings
-        .insert("GetUsageHosts".to_string(), test_v1_get_usage_hosts);
+        .insert("v1.GetUsageHosts".to_string(), test_v1_get_usage_hosts);
     world.function_mappings.insert(
-        "GetHourlyUsageAttribution".to_string(),
+        "v1.GetHourlyUsageAttribution".to_string(),
         test_v1_get_hourly_usage_attribution,
     );
     world.function_mappings.insert(
-        "GetIncidentManagement".to_string(),
+        "v1.GetIncidentManagement".to_string(),
         test_v1_get_incident_management,
     );
     world.function_mappings.insert(
-        "GetUsageIndexedSpans".to_string(),
+        "v1.GetUsageIndexedSpans".to_string(),
         test_v1_get_usage_indexed_spans,
     );
-    world
-        .function_mappings
-        .insert("GetIngestedSpans".to_string(), test_v1_get_ingested_spans);
     world.function_mappings.insert(
-        "GetUsageInternetOfThings".to_string(),
+        "v1.GetIngestedSpans".to_string(),
+        test_v1_get_ingested_spans,
+    );
+    world.function_mappings.insert(
+        "v1.GetUsageInternetOfThings".to_string(),
         test_v1_get_usage_internet_of_things,
     );
     world
         .function_mappings
-        .insert("GetUsageLogs".to_string(), test_v1_get_usage_logs);
+        .insert("v1.GetUsageLogs".to_string(), test_v1_get_usage_logs);
     world.function_mappings.insert(
-        "GetUsageLogsByRetention".to_string(),
+        "v1.GetUsageLogsByRetention".to_string(),
         test_v1_get_usage_logs_by_retention,
     );
     world.function_mappings.insert(
-        "GetUsageLogsByIndex".to_string(),
+        "v1.GetUsageLogsByIndex".to_string(),
         test_v1_get_usage_logs_by_index,
     );
     world.function_mappings.insert(
-        "GetMonthlyUsageAttribution".to_string(),
+        "v1.GetMonthlyUsageAttribution".to_string(),
         test_v1_get_monthly_usage_attribution,
     );
     world.function_mappings.insert(
-        "GetUsageNetworkFlows".to_string(),
+        "v1.GetUsageNetworkFlows".to_string(),
         test_v1_get_usage_network_flows,
     );
     world.function_mappings.insert(
-        "GetUsageNetworkHosts".to_string(),
+        "v1.GetUsageNetworkHosts".to_string(),
         test_v1_get_usage_network_hosts,
     );
     world.function_mappings.insert(
-        "GetUsageOnlineArchive".to_string(),
+        "v1.GetUsageOnlineArchive".to_string(),
         test_v1_get_usage_online_archive,
     );
-    world
-        .function_mappings
-        .insert("GetUsageProfiling".to_string(), test_v1_get_usage_profiling);
-    world
-        .function_mappings
-        .insert("GetUsageRumUnits".to_string(), test_v1_get_usage_rum_units);
     world.function_mappings.insert(
-        "GetUsageRumSessions".to_string(),
+        "v1.GetUsageProfiling".to_string(),
+        test_v1_get_usage_profiling,
+    );
+    world.function_mappings.insert(
+        "v1.GetUsageRumUnits".to_string(),
+        test_v1_get_usage_rum_units,
+    );
+    world.function_mappings.insert(
+        "v1.GetUsageRumSessions".to_string(),
         test_v1_get_usage_rum_sessions,
     );
     world
         .function_mappings
-        .insert("GetUsageSDS".to_string(), test_v1_get_usage_sds);
+        .insert("v1.GetUsageSDS".to_string(), test_v1_get_usage_sds);
     world
         .function_mappings
-        .insert("GetUsageSNMP".to_string(), test_v1_get_usage_snmp);
+        .insert("v1.GetUsageSNMP".to_string(), test_v1_get_usage_snmp);
     world
         .function_mappings
-        .insert("GetUsageSummary".to_string(), test_v1_get_usage_summary);
+        .insert("v1.GetUsageSummary".to_string(), test_v1_get_usage_summary);
     world.function_mappings.insert(
-        "GetUsageSynthetics".to_string(),
+        "v1.GetUsageSynthetics".to_string(),
         test_v1_get_usage_synthetics,
     );
     world.function_mappings.insert(
-        "GetUsageSyntheticsAPI".to_string(),
+        "v1.GetUsageSyntheticsAPI".to_string(),
         test_v1_get_usage_synthetics_api,
     );
     world.function_mappings.insert(
-        "GetUsageSyntheticsBrowser".to_string(),
+        "v1.GetUsageSyntheticsBrowser".to_string(),
         test_v1_get_usage_synthetics_browser,
     );
     world.function_mappings.insert(
-        "GetUsageTimeseries".to_string(),
+        "v1.GetUsageTimeseries".to_string(),
         test_v1_get_usage_timeseries,
     );
     world.function_mappings.insert(
-        "GetUsageTopAvgMetrics".to_string(),
+        "v1.GetUsageTopAvgMetrics".to_string(),
         test_v1_get_usage_top_avg_metrics,
     );
     world.function_mappings.insert(
-        "ListDashboardLists".to_string(),
+        "v1.ListDashboardLists".to_string(),
         test_v1_list_dashboard_lists,
     );
     world.function_mappings.insert(
-        "CreateDashboardList".to_string(),
+        "v1.CreateDashboardList".to_string(),
         test_v1_create_dashboard_list,
     );
     world.function_mappings.insert(
-        "DeleteDashboardList".to_string(),
+        "v1.DeleteDashboardList".to_string(),
         test_v1_delete_dashboard_list,
     );
-    world
-        .function_mappings
-        .insert("GetDashboardList".to_string(), test_v1_get_dashboard_list);
     world.function_mappings.insert(
-        "UpdateDashboardList".to_string(),
+        "v1.GetDashboardList".to_string(),
+        test_v1_get_dashboard_list,
+    );
+    world.function_mappings.insert(
+        "v1.UpdateDashboardList".to_string(),
         test_v1_update_dashboard_list,
     );
     world
         .function_mappings
-        .insert("ListDowntimes".to_string(), test_v1_list_downtimes);
+        .insert("v1.ListDowntimes".to_string(), test_v1_list_downtimes);
     world
         .function_mappings
-        .insert("CreateDowntime".to_string(), test_v1_create_downtime);
+        .insert("v1.CreateDowntime".to_string(), test_v1_create_downtime);
     world.function_mappings.insert(
-        "CancelDowntimesByScope".to_string(),
+        "v1.CancelDowntimesByScope".to_string(),
         test_v1_cancel_downtimes_by_scope,
     );
     world
         .function_mappings
-        .insert("CancelDowntime".to_string(), test_v1_cancel_downtime);
+        .insert("v1.CancelDowntime".to_string(), test_v1_cancel_downtime);
     world
         .function_mappings
-        .insert("GetDowntime".to_string(), test_v1_get_downtime);
+        .insert("v1.GetDowntime".to_string(), test_v1_get_downtime);
     world
         .function_mappings
-        .insert("UpdateDowntime".to_string(), test_v1_update_downtime);
+        .insert("v1.UpdateDowntime".to_string(), test_v1_update_downtime);
     world.function_mappings.insert(
-        "ListMonitorDowntimes".to_string(),
+        "v1.ListMonitorDowntimes".to_string(),
         test_v1_list_monitor_downtimes,
     );
     world
         .function_mappings
-        .insert("ListEvents".to_string(), test_v1_list_events);
+        .insert("v1.ListEvents".to_string(), test_v1_list_events);
     world
         .function_mappings
-        .insert("CreateEvent".to_string(), test_v1_create_event);
+        .insert("v1.CreateEvent".to_string(), test_v1_create_event);
     world
         .function_mappings
-        .insert("GetEvent".to_string(), test_v1_get_event);
-    world
-        .function_mappings
-        .insert("GetGraphSnapshot".to_string(), test_v1_get_graph_snapshot);
-    world
-        .function_mappings
-        .insert("MuteHost".to_string(), test_v1_mute_host);
-    world
-        .function_mappings
-        .insert("UnmuteHost".to_string(), test_v1_unmute_host);
-    world
-        .function_mappings
-        .insert("ListHosts".to_string(), test_v1_list_hosts);
-    world
-        .function_mappings
-        .insert("GetHostTotals".to_string(), test_v1_get_host_totals);
-    world
-        .function_mappings
-        .insert("DeleteAWSAccount".to_string(), test_v1_delete_aws_account);
-    world
-        .function_mappings
-        .insert("ListAWSAccounts".to_string(), test_v1_list_aws_accounts);
-    world
-        .function_mappings
-        .insert("CreateAWSAccount".to_string(), test_v1_create_aws_account);
-    world
-        .function_mappings
-        .insert("UpdateAWSAccount".to_string(), test_v1_update_aws_account);
+        .insert("v1.GetEvent".to_string(), test_v1_get_event);
     world.function_mappings.insert(
-        "ListAvailableAWSNamespaces".to_string(),
+        "v1.GetGraphSnapshot".to_string(),
+        test_v1_get_graph_snapshot,
+    );
+    world
+        .function_mappings
+        .insert("v1.MuteHost".to_string(), test_v1_mute_host);
+    world
+        .function_mappings
+        .insert("v1.UnmuteHost".to_string(), test_v1_unmute_host);
+    world
+        .function_mappings
+        .insert("v1.ListHosts".to_string(), test_v1_list_hosts);
+    world
+        .function_mappings
+        .insert("v1.GetHostTotals".to_string(), test_v1_get_host_totals);
+    world.function_mappings.insert(
+        "v1.DeleteAWSAccount".to_string(),
+        test_v1_delete_aws_account,
+    );
+    world
+        .function_mappings
+        .insert("v1.ListAWSAccounts".to_string(), test_v1_list_aws_accounts);
+    world.function_mappings.insert(
+        "v1.CreateAWSAccount".to_string(),
+        test_v1_create_aws_account,
+    );
+    world.function_mappings.insert(
+        "v1.UpdateAWSAccount".to_string(),
+        test_v1_update_aws_account,
+    );
+    world.function_mappings.insert(
+        "v1.ListAvailableAWSNamespaces".to_string(),
         test_v1_list_available_aws_namespaces,
     );
     world.function_mappings.insert(
-        "DeleteAWSEventBridgeSource".to_string(),
+        "v1.DeleteAWSEventBridgeSource".to_string(),
         test_v1_delete_aws_event_bridge_source,
     );
     world.function_mappings.insert(
-        "ListAWSEventBridgeSources".to_string(),
+        "v1.ListAWSEventBridgeSources".to_string(),
         test_v1_list_aws_event_bridge_sources,
     );
     world.function_mappings.insert(
-        "CreateAWSEventBridgeSource".to_string(),
+        "v1.CreateAWSEventBridgeSource".to_string(),
         test_v1_create_aws_event_bridge_source,
     );
     world.function_mappings.insert(
-        "DeleteAWSTagFilter".to_string(),
+        "v1.DeleteAWSTagFilter".to_string(),
         test_v1_delete_aws_tag_filter,
     );
     world.function_mappings.insert(
-        "ListAWSTagFilters".to_string(),
+        "v1.ListAWSTagFilters".to_string(),
         test_v1_list_aws_tag_filters,
     );
     world.function_mappings.insert(
-        "CreateAWSTagFilter".to_string(),
+        "v1.CreateAWSTagFilter".to_string(),
         test_v1_create_aws_tag_filter,
     );
     world.function_mappings.insert(
-        "CreateNewAWSExternalID".to_string(),
+        "v1.CreateNewAWSExternalID".to_string(),
         test_v1_create_new_aws_external_id,
     );
     world.function_mappings.insert(
-        "DeleteAWSLambdaARN".to_string(),
+        "v1.DeleteAWSLambdaARN".to_string(),
         test_v1_delete_aws_lambda_arn,
     );
     world.function_mappings.insert(
-        "ListAWSLogsIntegrations".to_string(),
+        "v1.ListAWSLogsIntegrations".to_string(),
         test_v1_list_aws_logs_integrations,
     );
     world.function_mappings.insert(
-        "CreateAWSLambdaARN".to_string(),
+        "v1.CreateAWSLambdaARN".to_string(),
         test_v1_create_aws_lambda_arn,
     );
     world.function_mappings.insert(
-        "CheckAWSLogsLambdaAsync".to_string(),
+        "v1.CheckAWSLogsLambdaAsync".to_string(),
         test_v1_check_aws_logs_lambda_async,
     );
     world.function_mappings.insert(
-        "ListAWSLogsServices".to_string(),
+        "v1.ListAWSLogsServices".to_string(),
         test_v1_list_aws_logs_services,
     );
     world.function_mappings.insert(
-        "EnableAWSLogServices".to_string(),
+        "v1.EnableAWSLogServices".to_string(),
         test_v1_enable_aws_log_services,
     );
     world.function_mappings.insert(
-        "CheckAWSLogsServicesAsync".to_string(),
+        "v1.CheckAWSLogsServicesAsync".to_string(),
         test_v1_check_aws_logs_services_async,
     );
     world.function_mappings.insert(
-        "DeleteAzureIntegration".to_string(),
+        "v1.DeleteAzureIntegration".to_string(),
         test_v1_delete_azure_integration,
     );
     world.function_mappings.insert(
-        "ListAzureIntegration".to_string(),
+        "v1.ListAzureIntegration".to_string(),
         test_v1_list_azure_integration,
     );
     world.function_mappings.insert(
-        "CreateAzureIntegration".to_string(),
+        "v1.CreateAzureIntegration".to_string(),
         test_v1_create_azure_integration,
     );
     world.function_mappings.insert(
-        "UpdateAzureIntegration".to_string(),
+        "v1.UpdateAzureIntegration".to_string(),
         test_v1_update_azure_integration,
     );
     world.function_mappings.insert(
-        "UpdateAzureHostFilters".to_string(),
+        "v1.UpdateAzureHostFilters".to_string(),
         test_v1_update_azure_host_filters,
     );
     world.function_mappings.insert(
-        "DeleteGCPIntegration".to_string(),
+        "v1.DeleteGCPIntegration".to_string(),
         test_v1_delete_gcp_integration,
     );
     world.function_mappings.insert(
-        "ListGCPIntegration".to_string(),
+        "v1.ListGCPIntegration".to_string(),
         test_v1_list_gcp_integration,
     );
     world.function_mappings.insert(
-        "CreateGCPIntegration".to_string(),
+        "v1.CreateGCPIntegration".to_string(),
         test_v1_create_gcp_integration,
     );
     world.function_mappings.insert(
-        "UpdateGCPIntegration".to_string(),
+        "v1.UpdateGCPIntegration".to_string(),
         test_v1_update_gcp_integration,
     );
     world.function_mappings.insert(
-        "CreatePagerDutyIntegrationService".to_string(),
+        "v1.CreatePagerDutyIntegrationService".to_string(),
         test_v1_create_pager_duty_integration_service,
     );
     world.function_mappings.insert(
-        "DeletePagerDutyIntegrationService".to_string(),
+        "v1.DeletePagerDutyIntegrationService".to_string(),
         test_v1_delete_pager_duty_integration_service,
     );
     world.function_mappings.insert(
-        "GetPagerDutyIntegrationService".to_string(),
+        "v1.GetPagerDutyIntegrationService".to_string(),
         test_v1_get_pager_duty_integration_service,
     );
     world.function_mappings.insert(
-        "UpdatePagerDutyIntegrationService".to_string(),
+        "v1.UpdatePagerDutyIntegrationService".to_string(),
         test_v1_update_pager_duty_integration_service,
     );
     world.function_mappings.insert(
-        "GetSlackIntegrationChannels".to_string(),
+        "v1.GetSlackIntegrationChannels".to_string(),
         test_v1_get_slack_integration_channels,
     );
     world.function_mappings.insert(
-        "CreateSlackIntegrationChannel".to_string(),
+        "v1.CreateSlackIntegrationChannel".to_string(),
         test_v1_create_slack_integration_channel,
     );
     world.function_mappings.insert(
-        "RemoveSlackIntegrationChannel".to_string(),
+        "v1.RemoveSlackIntegrationChannel".to_string(),
         test_v1_remove_slack_integration_channel,
     );
     world.function_mappings.insert(
-        "GetSlackIntegrationChannel".to_string(),
+        "v1.GetSlackIntegrationChannel".to_string(),
         test_v1_get_slack_integration_channel,
     );
     world.function_mappings.insert(
-        "UpdateSlackIntegrationChannel".to_string(),
+        "v1.UpdateSlackIntegrationChannel".to_string(),
         test_v1_update_slack_integration_channel,
     );
     world.function_mappings.insert(
-        "CreateWebhooksIntegrationCustomVariable".to_string(),
+        "v1.CreateWebhooksIntegrationCustomVariable".to_string(),
         test_v1_create_webhooks_integration_custom_variable,
     );
     world.function_mappings.insert(
-        "DeleteWebhooksIntegrationCustomVariable".to_string(),
+        "v1.DeleteWebhooksIntegrationCustomVariable".to_string(),
         test_v1_delete_webhooks_integration_custom_variable,
     );
     world.function_mappings.insert(
-        "GetWebhooksIntegrationCustomVariable".to_string(),
+        "v1.GetWebhooksIntegrationCustomVariable".to_string(),
         test_v1_get_webhooks_integration_custom_variable,
     );
     world.function_mappings.insert(
-        "UpdateWebhooksIntegrationCustomVariable".to_string(),
+        "v1.UpdateWebhooksIntegrationCustomVariable".to_string(),
         test_v1_update_webhooks_integration_custom_variable,
     );
     world.function_mappings.insert(
-        "CreateWebhooksIntegration".to_string(),
+        "v1.CreateWebhooksIntegration".to_string(),
         test_v1_create_webhooks_integration,
     );
     world.function_mappings.insert(
-        "DeleteWebhooksIntegration".to_string(),
+        "v1.DeleteWebhooksIntegration".to_string(),
         test_v1_delete_webhooks_integration,
     );
     world.function_mappings.insert(
-        "GetWebhooksIntegration".to_string(),
+        "v1.GetWebhooksIntegration".to_string(),
         test_v1_get_webhooks_integration,
     );
     world.function_mappings.insert(
-        "UpdateWebhooksIntegration".to_string(),
+        "v1.UpdateWebhooksIntegration".to_string(),
         test_v1_update_webhooks_integration,
     );
     world
         .function_mappings
-        .insert("ListLogs".to_string(), test_v1_list_logs);
+        .insert("v1.ListLogs".to_string(), test_v1_list_logs);
     world
         .function_mappings
-        .insert("SubmitLog".to_string(), test_v1_submit_log);
+        .insert("v1.SubmitLog".to_string(), test_v1_submit_log);
     world.function_mappings.insert(
-        "GetLogsIndexOrder".to_string(),
+        "v1.GetLogsIndexOrder".to_string(),
         test_v1_get_logs_index_order,
     );
     world.function_mappings.insert(
-        "UpdateLogsIndexOrder".to_string(),
+        "v1.UpdateLogsIndexOrder".to_string(),
         test_v1_update_logs_index_order,
     );
     world
         .function_mappings
-        .insert("ListLogIndexes".to_string(), test_v1_list_log_indexes);
+        .insert("v1.ListLogIndexes".to_string(), test_v1_list_log_indexes);
     world
         .function_mappings
-        .insert("CreateLogsIndex".to_string(), test_v1_create_logs_index);
+        .insert("v1.CreateLogsIndex".to_string(), test_v1_create_logs_index);
     world
         .function_mappings
-        .insert("GetLogsIndex".to_string(), test_v1_get_logs_index);
+        .insert("v1.GetLogsIndex".to_string(), test_v1_get_logs_index);
     world
         .function_mappings
-        .insert("UpdateLogsIndex".to_string(), test_v1_update_logs_index);
-    world
-        .function_mappings
-        .insert("ListActiveMetrics".to_string(), test_v1_list_active_metrics);
-    world
-        .function_mappings
-        .insert("GetMetricMetadata".to_string(), test_v1_get_metric_metadata);
+        .insert("v1.UpdateLogsIndex".to_string(), test_v1_update_logs_index);
     world.function_mappings.insert(
-        "UpdateMetricMetadata".to_string(),
+        "v1.ListActiveMetrics".to_string(),
+        test_v1_list_active_metrics,
+    );
+    world.function_mappings.insert(
+        "v1.GetMetricMetadata".to_string(),
+        test_v1_get_metric_metadata,
+    );
+    world.function_mappings.insert(
+        "v1.UpdateMetricMetadata".to_string(),
         test_v1_update_metric_metadata,
     );
     world
         .function_mappings
-        .insert("QueryMetrics".to_string(), test_v1_query_metrics);
+        .insert("v1.QueryMetrics".to_string(), test_v1_query_metrics);
     world
         .function_mappings
-        .insert("ListMetrics".to_string(), test_v1_list_metrics);
+        .insert("v1.ListMetrics".to_string(), test_v1_list_metrics);
     world
         .function_mappings
-        .insert("SubmitMetrics".to_string(), test_v1_submit_metrics);
+        .insert("v1.SubmitMetrics".to_string(), test_v1_submit_metrics);
     world
         .function_mappings
-        .insert("ListOrgs".to_string(), test_v1_list_orgs);
+        .insert("v1.ListOrgs".to_string(), test_v1_list_orgs);
     world
         .function_mappings
-        .insert("CreateChildOrg".to_string(), test_v1_create_child_org);
+        .insert("v1.CreateChildOrg".to_string(), test_v1_create_child_org);
     world
         .function_mappings
-        .insert("GetOrg".to_string(), test_v1_get_org);
+        .insert("v1.GetOrg".to_string(), test_v1_get_org);
     world
         .function_mappings
-        .insert("UpdateOrg".to_string(), test_v1_update_org);
+        .insert("v1.UpdateOrg".to_string(), test_v1_update_org);
     world
         .function_mappings
-        .insert("DowngradeOrg".to_string(), test_v1_downgrade_org);
-    world
-        .function_mappings
-        .insert("UploadIdPForOrg".to_string(), test_v1_upload_id_p_for_org);
+        .insert("v1.DowngradeOrg".to_string(), test_v1_downgrade_org);
     world.function_mappings.insert(
-        "AddSecurityMonitoringSignalToIncident".to_string(),
+        "v1.UploadIdPForOrg".to_string(),
+        test_v1_upload_id_p_for_org,
+    );
+    world.function_mappings.insert(
+        "v1.AddSecurityMonitoringSignalToIncident".to_string(),
         test_v1_add_security_monitoring_signal_to_incident,
     );
     world.function_mappings.insert(
-        "EditSecurityMonitoringSignalAssignee".to_string(),
+        "v1.EditSecurityMonitoringSignalAssignee".to_string(),
         test_v1_edit_security_monitoring_signal_assignee,
     );
     world.function_mappings.insert(
-        "EditSecurityMonitoringSignalState".to_string(),
+        "v1.EditSecurityMonitoringSignalState".to_string(),
         test_v1_edit_security_monitoring_signal_state,
     );
     world
         .function_mappings
-        .insert("ListSLOs".to_string(), test_v1_list_sl_os);
+        .insert("v1.ListSLOs".to_string(), test_v1_list_sl_os);
     world
         .function_mappings
-        .insert("CreateSLO".to_string(), test_v1_create_slo);
+        .insert("v1.CreateSLO".to_string(), test_v1_create_slo);
     world.function_mappings.insert(
-        "DeleteSLOTimeframeInBulk".to_string(),
+        "v1.DeleteSLOTimeframeInBulk".to_string(),
         test_v1_delete_slo_timeframe_in_bulk,
     );
     world.function_mappings.insert(
-        "CheckCanDeleteSLO".to_string(),
+        "v1.CheckCanDeleteSLO".to_string(),
         test_v1_check_can_delete_slo,
     );
     world
         .function_mappings
-        .insert("SearchSLO".to_string(), test_v1_search_slo);
+        .insert("v1.SearchSLO".to_string(), test_v1_search_slo);
     world
         .function_mappings
-        .insert("DeleteSLO".to_string(), test_v1_delete_slo);
+        .insert("v1.DeleteSLO".to_string(), test_v1_delete_slo);
     world
         .function_mappings
-        .insert("GetSLO".to_string(), test_v1_get_slo);
+        .insert("v1.GetSLO".to_string(), test_v1_get_slo);
     world
         .function_mappings
-        .insert("UpdateSLO".to_string(), test_v1_update_slo);
-    world
-        .function_mappings
-        .insert("GetSLOCorrections".to_string(), test_v1_get_slo_corrections);
-    world
-        .function_mappings
-        .insert("GetSLOHistory".to_string(), test_v1_get_slo_history);
-    world
-        .function_mappings
-        .insert("ListSLOCorrection".to_string(), test_v1_list_slo_correction);
+        .insert("v1.UpdateSLO".to_string(), test_v1_update_slo);
     world.function_mappings.insert(
-        "CreateSLOCorrection".to_string(),
+        "v1.GetSLOCorrections".to_string(),
+        test_v1_get_slo_corrections,
+    );
+    world
+        .function_mappings
+        .insert("v1.GetSLOHistory".to_string(), test_v1_get_slo_history);
+    world.function_mappings.insert(
+        "v1.ListSLOCorrection".to_string(),
+        test_v1_list_slo_correction,
+    );
+    world.function_mappings.insert(
+        "v1.CreateSLOCorrection".to_string(),
         test_v1_create_slo_correction,
     );
     world.function_mappings.insert(
-        "DeleteSLOCorrection".to_string(),
+        "v1.DeleteSLOCorrection".to_string(),
         test_v1_delete_slo_correction,
     );
-    world
-        .function_mappings
-        .insert("GetSLOCorrection".to_string(), test_v1_get_slo_correction);
     world.function_mappings.insert(
-        "UpdateSLOCorrection".to_string(),
+        "v1.GetSLOCorrection".to_string(),
+        test_v1_get_slo_correction,
+    );
+    world.function_mappings.insert(
+        "v1.UpdateSLOCorrection".to_string(),
         test_v1_update_slo_correction,
     );
     world
         .function_mappings
-        .insert("ListHostTags".to_string(), test_v1_list_host_tags);
+        .insert("v1.ListHostTags".to_string(), test_v1_list_host_tags);
     world
         .function_mappings
-        .insert("DeleteHostTags".to_string(), test_v1_delete_host_tags);
+        .insert("v1.DeleteHostTags".to_string(), test_v1_delete_host_tags);
     world
         .function_mappings
-        .insert("GetHostTags".to_string(), test_v1_get_host_tags);
+        .insert("v1.GetHostTags".to_string(), test_v1_get_host_tags);
     world
         .function_mappings
-        .insert("CreateHostTags".to_string(), test_v1_create_host_tags);
+        .insert("v1.CreateHostTags".to_string(), test_v1_create_host_tags);
     world
         .function_mappings
-        .insert("UpdateHostTags".to_string(), test_v1_update_host_tags);
+        .insert("v1.UpdateHostTags".to_string(), test_v1_update_host_tags);
     world
         .function_mappings
-        .insert("ListUsers".to_string(), test_v1_list_users);
+        .insert("v1.ListUsers".to_string(), test_v1_list_users);
     world
         .function_mappings
-        .insert("CreateUser".to_string(), test_v1_create_user);
+        .insert("v1.CreateUser".to_string(), test_v1_create_user);
     world
         .function_mappings
-        .insert("DisableUser".to_string(), test_v1_disable_user);
+        .insert("v1.DisableUser".to_string(), test_v1_disable_user);
     world
         .function_mappings
-        .insert("GetUser".to_string(), test_v1_get_user);
+        .insert("v1.GetUser".to_string(), test_v1_get_user);
     world
         .function_mappings
-        .insert("UpdateUser".to_string(), test_v1_update_user);
+        .insert("v1.UpdateUser".to_string(), test_v1_update_user);
     world
         .function_mappings
-        .insert("Validate".to_string(), test_v1_validate);
-    world
-        .function_mappings
-        .insert("ListSpansMetrics".to_string(), test_v2_list_spans_metrics);
-    world
-        .function_mappings
-        .insert("CreateSpansMetric".to_string(), test_v2_create_spans_metric);
-    world
-        .function_mappings
-        .insert("DeleteSpansMetric".to_string(), test_v2_delete_spans_metric);
-    world
-        .function_mappings
-        .insert("GetSpansMetric".to_string(), test_v2_get_spans_metric);
-    world
-        .function_mappings
-        .insert("UpdateSpansMetric".to_string(), test_v2_update_spans_metric);
+        .insert("v1.Validate".to_string(), test_v1_validate);
     world.function_mappings.insert(
-        "ListApmRetentionFilters".to_string(),
+        "v2.ListSpansMetrics".to_string(),
+        test_v2_list_spans_metrics,
+    );
+    world.function_mappings.insert(
+        "v2.CreateSpansMetric".to_string(),
+        test_v2_create_spans_metric,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteSpansMetric".to_string(),
+        test_v2_delete_spans_metric,
+    );
+    world
+        .function_mappings
+        .insert("v2.GetSpansMetric".to_string(), test_v2_get_spans_metric);
+    world.function_mappings.insert(
+        "v2.UpdateSpansMetric".to_string(),
+        test_v2_update_spans_metric,
+    );
+    world.function_mappings.insert(
+        "v2.ListApmRetentionFilters".to_string(),
         test_v2_list_apm_retention_filters,
     );
     world.function_mappings.insert(
-        "CreateApmRetentionFilter".to_string(),
+        "v2.CreateApmRetentionFilter".to_string(),
         test_v2_create_apm_retention_filter,
     );
     world.function_mappings.insert(
-        "ReorderApmRetentionFilters".to_string(),
+        "v2.ReorderApmRetentionFilters".to_string(),
         test_v2_reorder_apm_retention_filters,
     );
     world.function_mappings.insert(
-        "DeleteApmRetentionFilter".to_string(),
+        "v2.DeleteApmRetentionFilter".to_string(),
         test_v2_delete_apm_retention_filter,
     );
     world.function_mappings.insert(
-        "GetApmRetentionFilter".to_string(),
+        "v2.GetApmRetentionFilter".to_string(),
         test_v2_get_apm_retention_filter,
     );
     world.function_mappings.insert(
-        "UpdateApmRetentionFilter".to_string(),
+        "v2.UpdateApmRetentionFilter".to_string(),
         test_v2_update_apm_retention_filter,
     );
     world
         .function_mappings
-        .insert("ListAuditLogs".to_string(), test_v2_list_audit_logs);
+        .insert("v2.ListAuditLogs".to_string(), test_v2_list_audit_logs);
     world
         .function_mappings
-        .insert("SearchAuditLogs".to_string(), test_v2_search_audit_logs);
+        .insert("v2.SearchAuditLogs".to_string(), test_v2_search_audit_logs);
     world.function_mappings.insert(
-        "DeleteDashboardListItems".to_string(),
+        "v2.DeleteDashboardListItems".to_string(),
         test_v2_delete_dashboard_list_items,
     );
     world.function_mappings.insert(
-        "GetDashboardListItems".to_string(),
+        "v2.GetDashboardListItems".to_string(),
         test_v2_get_dashboard_list_items,
     );
     world.function_mappings.insert(
-        "CreateDashboardListItems".to_string(),
+        "v2.CreateDashboardListItems".to_string(),
         test_v2_create_dashboard_list_items,
     );
     world.function_mappings.insert(
-        "UpdateDashboardListItems".to_string(),
+        "v2.UpdateDashboardListItems".to_string(),
         test_v2_update_dashboard_list_items,
     );
     world
         .function_mappings
-        .insert("ListEvents".to_string(), test_v2_list_events);
+        .insert("v2.ListEvents".to_string(), test_v2_list_events);
     world
         .function_mappings
-        .insert("SearchEvents".to_string(), test_v2_search_events);
+        .insert("v2.SearchEvents".to_string(), test_v2_search_events);
     world.function_mappings.insert(
-        "ListGCPSTSAccounts".to_string(),
+        "v2.ListGCPSTSAccounts".to_string(),
         test_v2_list_gcpsts_accounts,
     );
     world.function_mappings.insert(
-        "CreateGCPSTSAccount".to_string(),
+        "v2.CreateGCPSTSAccount".to_string(),
         test_v2_create_gcpsts_account,
     );
     world.function_mappings.insert(
-        "DeleteGCPSTSAccount".to_string(),
+        "v2.DeleteGCPSTSAccount".to_string(),
         test_v2_delete_gcpsts_account,
     );
     world.function_mappings.insert(
-        "UpdateGCPSTSAccount".to_string(),
+        "v2.UpdateGCPSTSAccount".to_string(),
         test_v2_update_gcpsts_account,
     );
-    world
-        .function_mappings
-        .insert("GetGCPSTSDelegate".to_string(), test_v2_get_gcpsts_delegate);
     world.function_mappings.insert(
-        "MakeGCPSTSDelegate".to_string(),
+        "v2.GetGCPSTSDelegate".to_string(),
+        test_v2_get_gcpsts_delegate,
+    );
+    world.function_mappings.insert(
+        "v2.MakeGCPSTSDelegate".to_string(),
         test_v2_make_gcpsts_delegate,
     );
     world.function_mappings.insert(
-        "ListOpsgenieServices".to_string(),
+        "v2.ListOpsgenieServices".to_string(),
         test_v2_list_opsgenie_services,
     );
     world.function_mappings.insert(
-        "CreateOpsgenieService".to_string(),
+        "v2.CreateOpsgenieService".to_string(),
         test_v2_create_opsgenie_service,
     );
     world.function_mappings.insert(
-        "DeleteOpsgenieService".to_string(),
+        "v2.DeleteOpsgenieService".to_string(),
         test_v2_delete_opsgenie_service,
     );
     world.function_mappings.insert(
-        "GetOpsgenieService".to_string(),
+        "v2.GetOpsgenieService".to_string(),
         test_v2_get_opsgenie_service,
     );
     world.function_mappings.insert(
-        "UpdateOpsgenieService".to_string(),
+        "v2.UpdateOpsgenieService".to_string(),
         test_v2_update_opsgenie_service,
     );
     world.function_mappings.insert(
-        "ListCloudflareAccounts".to_string(),
+        "v2.ListCloudflareAccounts".to_string(),
         test_v2_list_cloudflare_accounts,
     );
     world.function_mappings.insert(
-        "CreateCloudflareAccount".to_string(),
+        "v2.CreateCloudflareAccount".to_string(),
         test_v2_create_cloudflare_account,
     );
     world.function_mappings.insert(
-        "DeleteCloudflareAccount".to_string(),
+        "v2.DeleteCloudflareAccount".to_string(),
         test_v2_delete_cloudflare_account,
     );
     world.function_mappings.insert(
-        "GetCloudflareAccount".to_string(),
+        "v2.GetCloudflareAccount".to_string(),
         test_v2_get_cloudflare_account,
     );
     world.function_mappings.insert(
-        "UpdateCloudflareAccount".to_string(),
+        "v2.UpdateCloudflareAccount".to_string(),
         test_v2_update_cloudflare_account,
     );
     world.function_mappings.insert(
-        "ListConfluentAccount".to_string(),
+        "v2.ListConfluentAccount".to_string(),
         test_v2_list_confluent_account,
     );
     world.function_mappings.insert(
-        "CreateConfluentAccount".to_string(),
+        "v2.CreateConfluentAccount".to_string(),
         test_v2_create_confluent_account,
     );
     world.function_mappings.insert(
-        "DeleteConfluentAccount".to_string(),
+        "v2.DeleteConfluentAccount".to_string(),
         test_v2_delete_confluent_account,
     );
     world.function_mappings.insert(
-        "GetConfluentAccount".to_string(),
+        "v2.GetConfluentAccount".to_string(),
         test_v2_get_confluent_account,
     );
     world.function_mappings.insert(
-        "UpdateConfluentAccount".to_string(),
+        "v2.UpdateConfluentAccount".to_string(),
         test_v2_update_confluent_account,
     );
     world.function_mappings.insert(
-        "ListConfluentResource".to_string(),
+        "v2.ListConfluentResource".to_string(),
         test_v2_list_confluent_resource,
     );
     world.function_mappings.insert(
-        "CreateConfluentResource".to_string(),
+        "v2.CreateConfluentResource".to_string(),
         test_v2_create_confluent_resource,
     );
     world.function_mappings.insert(
-        "DeleteConfluentResource".to_string(),
+        "v2.DeleteConfluentResource".to_string(),
         test_v2_delete_confluent_resource,
     );
     world.function_mappings.insert(
-        "GetConfluentResource".to_string(),
+        "v2.GetConfluentResource".to_string(),
         test_v2_get_confluent_resource,
     );
     world.function_mappings.insert(
-        "UpdateConfluentResource".to_string(),
+        "v2.UpdateConfluentResource".to_string(),
         test_v2_update_confluent_resource,
     );
     world.function_mappings.insert(
-        "ListFastlyAccounts".to_string(),
+        "v2.ListFastlyAccounts".to_string(),
         test_v2_list_fastly_accounts,
     );
     world.function_mappings.insert(
-        "CreateFastlyAccount".to_string(),
+        "v2.CreateFastlyAccount".to_string(),
         test_v2_create_fastly_account,
     );
     world.function_mappings.insert(
-        "DeleteFastlyAccount".to_string(),
+        "v2.DeleteFastlyAccount".to_string(),
         test_v2_delete_fastly_account,
     );
-    world
-        .function_mappings
-        .insert("GetFastlyAccount".to_string(), test_v2_get_fastly_account);
     world.function_mappings.insert(
-        "UpdateFastlyAccount".to_string(),
+        "v2.GetFastlyAccount".to_string(),
+        test_v2_get_fastly_account,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateFastlyAccount".to_string(),
         test_v2_update_fastly_account,
     );
     world.function_mappings.insert(
-        "ListFastlyServices".to_string(),
+        "v2.ListFastlyServices".to_string(),
         test_v2_list_fastly_services,
     );
     world.function_mappings.insert(
-        "CreateFastlyService".to_string(),
+        "v2.CreateFastlyService".to_string(),
         test_v2_create_fastly_service,
     );
     world.function_mappings.insert(
-        "DeleteFastlyService".to_string(),
+        "v2.DeleteFastlyService".to_string(),
         test_v2_delete_fastly_service,
     );
-    world
-        .function_mappings
-        .insert("GetFastlyService".to_string(), test_v2_get_fastly_service);
     world.function_mappings.insert(
-        "UpdateFastlyService".to_string(),
+        "v2.GetFastlyService".to_string(),
+        test_v2_get_fastly_service,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateFastlyService".to_string(),
         test_v2_update_fastly_service,
     );
     world
         .function_mappings
-        .insert("GetIPAllowlist".to_string(), test_v2_get_ip_allowlist);
-    world
-        .function_mappings
-        .insert("UpdateIPAllowlist".to_string(), test_v2_update_ip_allowlist);
-    world
-        .function_mappings
-        .insert("SubmitLog".to_string(), test_v2_submit_log);
-    world
-        .function_mappings
-        .insert("ListLogsMetrics".to_string(), test_v2_list_logs_metrics);
-    world
-        .function_mappings
-        .insert("CreateLogsMetric".to_string(), test_v2_create_logs_metric);
-    world
-        .function_mappings
-        .insert("DeleteLogsMetric".to_string(), test_v2_delete_logs_metric);
-    world
-        .function_mappings
-        .insert("GetLogsMetric".to_string(), test_v2_get_logs_metric);
-    world
-        .function_mappings
-        .insert("UpdateLogsMetric".to_string(), test_v2_update_logs_metric);
-    world
-        .function_mappings
-        .insert("ListPermissions".to_string(), test_v2_list_permissions);
-    world
-        .function_mappings
-        .insert("ListFindings".to_string(), test_v2_list_findings);
-    world
-        .function_mappings
-        .insert("GetFinding".to_string(), test_v2_get_finding);
-    world
-        .function_mappings
-        .insert("UpdateFinding".to_string(), test_v2_update_finding);
-    world
-        .function_mappings
-        .insert("ListProcesses".to_string(), test_v2_list_processes);
+        .insert("v2.GetIPAllowlist".to_string(), test_v2_get_ip_allowlist);
     world.function_mappings.insert(
-        "DeleteRestrictionPolicy".to_string(),
+        "v2.UpdateIPAllowlist".to_string(),
+        test_v2_update_ip_allowlist,
+    );
+    world
+        .function_mappings
+        .insert("v2.SubmitLog".to_string(), test_v2_submit_log);
+    world
+        .function_mappings
+        .insert("v2.ListLogsMetrics".to_string(), test_v2_list_logs_metrics);
+    world.function_mappings.insert(
+        "v2.CreateLogsMetric".to_string(),
+        test_v2_create_logs_metric,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteLogsMetric".to_string(),
+        test_v2_delete_logs_metric,
+    );
+    world
+        .function_mappings
+        .insert("v2.GetLogsMetric".to_string(), test_v2_get_logs_metric);
+    world.function_mappings.insert(
+        "v2.UpdateLogsMetric".to_string(),
+        test_v2_update_logs_metric,
+    );
+    world
+        .function_mappings
+        .insert("v2.ListPermissions".to_string(), test_v2_list_permissions);
+    world
+        .function_mappings
+        .insert("v2.ListFindings".to_string(), test_v2_list_findings);
+    world
+        .function_mappings
+        .insert("v2.GetFinding".to_string(), test_v2_get_finding);
+    world
+        .function_mappings
+        .insert("v2.UpdateFinding".to_string(), test_v2_update_finding);
+    world
+        .function_mappings
+        .insert("v2.ListProcesses".to_string(), test_v2_list_processes);
+    world.function_mappings.insert(
+        "v2.DeleteRestrictionPolicy".to_string(),
         test_v2_delete_restriction_policy,
     );
     world.function_mappings.insert(
-        "GetRestrictionPolicy".to_string(),
+        "v2.GetRestrictionPolicy".to_string(),
         test_v2_get_restriction_policy,
     );
     world.function_mappings.insert(
-        "UpdateRestrictionPolicy".to_string(),
+        "v2.UpdateRestrictionPolicy".to_string(),
         test_v2_update_restriction_policy,
     );
     world.function_mappings.insert(
-        "UploadIdPMetadata".to_string(),
+        "v2.UploadIdPMetadata".to_string(),
         test_v2_upload_id_p_metadata,
     );
     world.function_mappings.insert(
-        "DownloadCloudWorkloadPolicyFile".to_string(),
+        "v2.DownloadCloudWorkloadPolicyFile".to_string(),
         test_v2_download_cloud_workload_policy_file,
     );
     world.function_mappings.insert(
-        "ListCloudWorkloadSecurityAgentRules".to_string(),
+        "v2.ListCloudWorkloadSecurityAgentRules".to_string(),
         test_v2_list_cloud_workload_security_agent_rules,
     );
     world.function_mappings.insert(
-        "CreateCloudWorkloadSecurityAgentRule".to_string(),
+        "v2.CreateCloudWorkloadSecurityAgentRule".to_string(),
         test_v2_create_cloud_workload_security_agent_rule,
     );
     world.function_mappings.insert(
-        "DeleteCloudWorkloadSecurityAgentRule".to_string(),
+        "v2.DeleteCloudWorkloadSecurityAgentRule".to_string(),
         test_v2_delete_cloud_workload_security_agent_rule,
     );
     world.function_mappings.insert(
-        "GetCloudWorkloadSecurityAgentRule".to_string(),
+        "v2.GetCloudWorkloadSecurityAgentRule".to_string(),
         test_v2_get_cloud_workload_security_agent_rule,
     );
     world.function_mappings.insert(
-        "UpdateCloudWorkloadSecurityAgentRule".to_string(),
+        "v2.UpdateCloudWorkloadSecurityAgentRule".to_string(),
         test_v2_update_cloud_workload_security_agent_rule,
     );
     world
         .function_mappings
-        .insert("SubmitMetrics".to_string(), test_v2_submit_metrics);
+        .insert("v2.SubmitMetrics".to_string(), test_v2_submit_metrics);
     world.function_mappings.insert(
-        "GetOnDemandConcurrencyCap".to_string(),
+        "v2.GetOnDemandConcurrencyCap".to_string(),
         test_v2_get_on_demand_concurrency_cap,
     );
     world.function_mappings.insert(
-        "SetOnDemandConcurrencyCap".to_string(),
+        "v2.SetOnDemandConcurrencyCap".to_string(),
         test_v2_set_on_demand_concurrency_cap,
     );
     world.function_mappings.insert(
-        "GetUsageApplicationSecurityMonitoring".to_string(),
+        "v2.GetUsageApplicationSecurityMonitoring".to_string(),
         test_v2_get_usage_application_security_monitoring,
     );
     world
         .function_mappings
-        .insert("GetCostByOrg".to_string(), test_v2_get_cost_by_org);
+        .insert("v2.GetCostByOrg".to_string(), test_v2_get_cost_by_org);
     world.function_mappings.insert(
-        "GetEstimatedCostByOrg".to_string(),
+        "v2.GetEstimatedCostByOrg".to_string(),
         test_v2_get_estimated_cost_by_org,
     );
     world.function_mappings.insert(
-        "GetHistoricalCostByOrg".to_string(),
+        "v2.GetHistoricalCostByOrg".to_string(),
         test_v2_get_historical_cost_by_org,
     );
     world
         .function_mappings
-        .insert("GetHourlyUsage".to_string(), test_v2_get_hourly_usage);
+        .insert("v2.GetHourlyUsage".to_string(), test_v2_get_hourly_usage);
     world.function_mappings.insert(
-        "GetUsageLambdaTracedInvocations".to_string(),
+        "v2.GetUsageLambdaTracedInvocations".to_string(),
         test_v2_get_usage_lambda_traced_invocations,
     );
     world.function_mappings.insert(
-        "GetUsageObservabilityPipelines".to_string(),
+        "v2.GetUsageObservabilityPipelines".to_string(),
         test_v2_get_usage_observability_pipelines,
     );
 }
@@ -1603,22 +1629,22 @@ fn test_v1_get_daily_custom_reports(
         .as_ref()
         .expect("api instance not found");
     let page_size = if let Some(param) = _parameters.get("page[size]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let page_number = if let Some(param) = _parameters.get("page[number]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let sort_dir = if let Some(param) = _parameters.get("sort_dir") {
-        serde_json::from_value(param.clone()).unwrap()
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let sort = if let Some(param) = _parameters.get("sort") {
-        serde_json::from_value(param.clone()).unwrap()
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -1676,22 +1702,22 @@ fn test_v1_get_monthly_custom_reports(
         .as_ref()
         .expect("api instance not found");
     let page_size = if let Some(param) = _parameters.get("page[size]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let page_number = if let Some(param) = _parameters.get("page[number]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let sort_dir = if let Some(param) = _parameters.get("sort_dir") {
-        serde_json::from_value(param.clone()).unwrap()
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let sort = if let Some(param) = _parameters.get("sort") {
-        serde_json::from_value(param.clone()).unwrap()
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -1747,7 +1773,7 @@ fn test_v1_get_usage_analyzed_logs(world: &mut DatadogWorld, _parameters: &HashM
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -1776,32 +1802,32 @@ fn test_v1_get_usage_attribution(world: &mut DatadogWorld, _parameters: &HashMap
         serde_json::from_value(_parameters.get("start_month").unwrap().clone()).unwrap();
     let fields = serde_json::from_value(_parameters.get("fields").unwrap().clone()).unwrap();
     let end_month = if let Some(param) = _parameters.get("end_month") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let sort_direction = if let Some(param) = _parameters.get("sort_direction") {
-        serde_json::from_value(param.clone()).unwrap()
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let sort_name = if let Some(param) = _parameters.get("sort_name") {
-        serde_json::from_value(param.clone()).unwrap()
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let include_descendants = if let Some(param) = _parameters.get("include_descendants") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let offset = if let Some(param) = _parameters.get("offset") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let limit = if let Some(param) = _parameters.get("limit") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -1836,7 +1862,7 @@ fn test_v1_get_usage_audit_logs(world: &mut DatadogWorld, _parameters: &HashMap<
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -1862,7 +1888,7 @@ fn test_v1_get_usage_lambda(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -1890,7 +1916,7 @@ fn test_v1_get_usage_billable_summary(
         .as_ref()
         .expect("api instance not found");
     let month = if let Some(param) = _parameters.get("month") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -1916,7 +1942,7 @@ fn test_v1_get_usage_ci_app(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -1945,7 +1971,7 @@ fn test_v1_get_usage_cloud_security_posture_management(
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -1975,7 +2001,7 @@ fn test_v1_get_usage_cws(world: &mut DatadogWorld, _parameters: &HashMap<String,
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -2001,7 +2027,7 @@ fn test_v1_get_usage_dbm(world: &mut DatadogWorld, _parameters: &HashMap<String,
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -2027,7 +2053,7 @@ fn test_v1_get_usage_fargate(world: &mut DatadogWorld, _parameters: &HashMap<Str
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -2053,7 +2079,7 @@ fn test_v1_get_usage_hosts(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -2084,22 +2110,22 @@ fn test_v1_get_hourly_usage_attribution(
     let usage_type =
         serde_json::from_value(_parameters.get("usage_type").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let next_record_id = if let Some(param) = _parameters.get("next_record_id") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let tag_breakdown_keys = if let Some(param) = _parameters.get("tag_breakdown_keys") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let include_descendants = if let Some(param) = _parameters.get("include_descendants") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -2132,7 +2158,7 @@ fn test_v1_get_incident_management(world: &mut DatadogWorld, _parameters: &HashM
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -2159,7 +2185,7 @@ fn test_v1_get_usage_indexed_spans(world: &mut DatadogWorld, _parameters: &HashM
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -2186,7 +2212,7 @@ fn test_v1_get_ingested_spans(world: &mut DatadogWorld, _parameters: &HashMap<St
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -2215,7 +2241,7 @@ fn test_v1_get_usage_internet_of_things(
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -2242,7 +2268,7 @@ fn test_v1_get_usage_logs(world: &mut DatadogWorld, _parameters: &HashMap<String
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -2271,7 +2297,7 @@ fn test_v1_get_usage_logs_by_retention(
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -2298,12 +2324,12 @@ fn test_v1_get_usage_logs_by_index(world: &mut DatadogWorld, _parameters: &HashM
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let index_name = if let Some(param) = _parameters.get("index_name") {
-        serde_json::from_value(param.clone()).unwrap()
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -2338,32 +2364,32 @@ fn test_v1_get_monthly_usage_attribution(
         serde_json::from_value(_parameters.get("start_month").unwrap().clone()).unwrap();
     let fields = serde_json::from_value(_parameters.get("fields").unwrap().clone()).unwrap();
     let end_month = if let Some(param) = _parameters.get("end_month") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let sort_direction = if let Some(param) = _parameters.get("sort_direction") {
-        serde_json::from_value(param.clone()).unwrap()
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let sort_name = if let Some(param) = _parameters.get("sort_name") {
-        serde_json::from_value(param.clone()).unwrap()
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let tag_breakdown_keys = if let Some(param) = _parameters.get("tag_breakdown_keys") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let next_record_id = if let Some(param) = _parameters.get("next_record_id") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let include_descendants = if let Some(param) = _parameters.get("include_descendants") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -2398,7 +2424,7 @@ fn test_v1_get_usage_network_flows(world: &mut DatadogWorld, _parameters: &HashM
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -2425,7 +2451,7 @@ fn test_v1_get_usage_network_hosts(world: &mut DatadogWorld, _parameters: &HashM
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -2455,7 +2481,7 @@ fn test_v1_get_usage_online_archive(
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -2482,7 +2508,7 @@ fn test_v1_get_usage_profiling(world: &mut DatadogWorld, _parameters: &HashMap<S
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -2508,7 +2534,7 @@ fn test_v1_get_usage_rum_units(world: &mut DatadogWorld, _parameters: &HashMap<S
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -2534,12 +2560,12 @@ fn test_v1_get_usage_rum_sessions(world: &mut DatadogWorld, _parameters: &HashMa
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let type_ = if let Some(param) = _parameters.get("type") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -2569,7 +2595,7 @@ fn test_v1_get_usage_sds(world: &mut DatadogWorld, _parameters: &HashMap<String,
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -2595,7 +2621,7 @@ fn test_v1_get_usage_snmp(world: &mut DatadogWorld, _parameters: &HashMap<String
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -2622,12 +2648,12 @@ fn test_v1_get_usage_summary(world: &mut DatadogWorld, _parameters: &HashMap<Str
     let start_month =
         serde_json::from_value(_parameters.get("start_month").unwrap().clone()).unwrap();
     let end_month = if let Some(param) = _parameters.get("end_month") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let include_org_details = if let Some(param) = _parameters.get("include_org_details") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -2657,7 +2683,7 @@ fn test_v1_get_usage_synthetics(world: &mut DatadogWorld, _parameters: &HashMap<
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -2686,7 +2712,7 @@ fn test_v1_get_usage_synthetics_api(
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -2716,7 +2742,7 @@ fn test_v1_get_usage_synthetics_browser(
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -2743,7 +2769,7 @@ fn test_v1_get_usage_timeseries(world: &mut DatadogWorld, _parameters: &HashMap<
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -2771,27 +2797,27 @@ fn test_v1_get_usage_top_avg_metrics(
         .as_ref()
         .expect("api instance not found");
     let month = if let Some(param) = _parameters.get("month") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let day = if let Some(param) = _parameters.get("day") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let names = if let Some(param) = _parameters.get("names") {
-        serde_json::from_value(param.clone()).unwrap()
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let limit = if let Some(param) = _parameters.get("limit") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let next_record_id = if let Some(param) = _parameters.get("next_record_id") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -2926,12 +2952,12 @@ fn test_v1_list_downtimes(world: &mut DatadogWorld, _parameters: &HashMap<String
         .as_ref()
         .expect("api instance not found");
     let current_only = if let Some(param) = _parameters.get("current_only") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let with_creator = if let Some(param) = _parameters.get("with_creator") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -3095,32 +3121,32 @@ fn test_v1_list_events(world: &mut DatadogWorld, _parameters: &HashMap<String, V
     let start = serde_json::from_value(_parameters.get("start").unwrap().clone()).unwrap();
     let end = serde_json::from_value(_parameters.get("end").unwrap().clone()).unwrap();
     let priority = if let Some(param) = _parameters.get("priority") {
-        serde_json::from_value(param.clone()).unwrap()
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let sources = if let Some(param) = _parameters.get("sources") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let tags = if let Some(param) = _parameters.get("tags") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let unaggregated = if let Some(param) = _parameters.get("unaggregated") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let exclude_aggregate = if let Some(param) = _parameters.get("exclude_aggregate") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let page = if let Some(param) = _parameters.get("page") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -3198,32 +3224,32 @@ fn test_v1_get_graph_snapshot(world: &mut DatadogWorld, _parameters: &HashMap<St
     let start = serde_json::from_value(_parameters.get("start").unwrap().clone()).unwrap();
     let end = serde_json::from_value(_parameters.get("end").unwrap().clone()).unwrap();
     let metric_query = if let Some(param) = _parameters.get("metric_query") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let event_query = if let Some(param) = _parameters.get("event_query") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let graph_def = if let Some(param) = _parameters.get("graph_def") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let title = if let Some(param) = _parameters.get("title") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let height = if let Some(param) = _parameters.get("height") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let width = if let Some(param) = _parameters.get("width") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -3300,43 +3326,43 @@ fn test_v1_list_hosts(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         .as_ref()
         .expect("api instance not found");
     let filter = if let Some(param) = _parameters.get("filter") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let sort_field = if let Some(param) = _parameters.get("sort_field") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let sort_dir = if let Some(param) = _parameters.get("sort_dir") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let start = if let Some(param) = _parameters.get("start") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let count = if let Some(param) = _parameters.get("count") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let from = if let Some(param) = _parameters.get("from") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let include_muted_hosts_data = if let Some(param) = _parameters.get("include_muted_hosts_data")
     {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let include_hosts_metadata = if let Some(param) = _parameters.get("include_hosts_metadata") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -3370,7 +3396,7 @@ fn test_v1_get_host_totals(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         .as_ref()
         .expect("api instance not found");
     let from = if let Some(param) = _parameters.get("from") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -3416,17 +3442,17 @@ fn test_v1_list_aws_accounts(world: &mut DatadogWorld, _parameters: &HashMap<Str
         .as_ref()
         .expect("api instance not found");
     let account_id = if let Some(param) = _parameters.get("account_id") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let role_name = if let Some(param) = _parameters.get("role_name") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let access_key_id = if let Some(param) = _parameters.get("access_key_id") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -3477,17 +3503,17 @@ fn test_v1_update_aws_account(world: &mut DatadogWorld, _parameters: &HashMap<St
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let account_id = if let Some(param) = _parameters.get("account_id") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let role_name = if let Some(param) = _parameters.get("role_name") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let access_key_id = if let Some(param) = _parameters.get("access_key_id") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -4552,12 +4578,12 @@ fn test_v1_submit_log(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let content_encoding = if let Some(param) = _parameters.get("Content-Encoding") {
-        serde_json::from_value(param.clone()).unwrap()
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let ddtags = if let Some(param) = _parameters.get("ddtags") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -4710,12 +4736,12 @@ fn test_v1_list_active_metrics(world: &mut DatadogWorld, _parameters: &HashMap<S
         .expect("api instance not found");
     let from = serde_json::from_value(_parameters.get("from").unwrap().clone()).unwrap();
     let host = if let Some(param) = _parameters.get("host") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let tag_filter = if let Some(param) = _parameters.get("tag_filter") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -4834,7 +4860,7 @@ fn test_v1_submit_metrics(world: &mut DatadogWorld, _parameters: &HashMap<String
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let content_encoding = if let Some(param) = _parameters.get("Content-Encoding") {
-        serde_json::from_value(param.clone()).unwrap()
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -4966,7 +4992,13 @@ fn test_v1_upload_id_p_for_org(world: &mut DatadogWorld, _parameters: &HashMap<S
         .as_ref()
         .expect("api instance not found");
     let public_id = serde_json::from_value(_parameters.get("public_id").unwrap().clone()).unwrap();
-    let idp_file = serde_json::from_value(_parameters.get("idp_file").unwrap().clone()).unwrap();
+    let idp_file = _parameters
+        .get("idp_file")
+        .unwrap()
+        .as_str()
+        .unwrap()
+        .as_bytes()
+        .to_vec();
     let params = datadogV1::api::api_organizations::UploadIdPForOrgParams {
         public_id,
         idp_file,
@@ -5080,32 +5112,32 @@ fn test_v1_list_sl_os(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         .as_ref()
         .expect("api instance not found");
     let ids = if let Some(param) = _parameters.get("ids") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let query = if let Some(param) = _parameters.get("query") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let tags_query = if let Some(param) = _parameters.get("tags_query") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let metrics_query = if let Some(param) = _parameters.get("metrics_query") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let limit = if let Some(param) = _parameters.get("limit") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let offset = if let Some(param) = _parameters.get("offset") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -5204,22 +5236,22 @@ fn test_v1_search_slo(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         .as_ref()
         .expect("api instance not found");
     let query = if let Some(param) = _parameters.get("query") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let page_size = if let Some(param) = _parameters.get("page[size]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let page_number = if let Some(param) = _parameters.get("page[number]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let include_facets = if let Some(param) = _parameters.get("include_facets") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -5250,7 +5282,7 @@ fn test_v1_delete_slo(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         .expect("api instance not found");
     let slo_id = serde_json::from_value(_parameters.get("slo_id").unwrap().clone()).unwrap();
     let force = if let Some(param) = _parameters.get("force") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -5277,7 +5309,7 @@ fn test_v1_get_slo(world: &mut DatadogWorld, _parameters: &HashMap<String, Value
     let slo_id = serde_json::from_value(_parameters.get("slo_id").unwrap().clone()).unwrap();
     let with_configured_alert_ids =
         if let Some(param) = _parameters.get("with_configured_alert_ids") {
-            Some(param.as_str().unwrap().parse().unwrap())
+            Some(serde_json::from_value(param.clone()).unwrap())
         } else {
             None
         };
@@ -5351,12 +5383,12 @@ fn test_v1_get_slo_history(world: &mut DatadogWorld, _parameters: &HashMap<Strin
     let from_ts = serde_json::from_value(_parameters.get("from_ts").unwrap().clone()).unwrap();
     let to_ts = serde_json::from_value(_parameters.get("to_ts").unwrap().clone()).unwrap();
     let target = if let Some(param) = _parameters.get("target") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let apply_correction = if let Some(param) = _parameters.get("apply_correction") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -5387,12 +5419,12 @@ fn test_v1_list_slo_correction(world: &mut DatadogWorld, _parameters: &HashMap<S
         .as_ref()
         .expect("api instance not found");
     let offset = if let Some(param) = _parameters.get("offset") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let limit = if let Some(param) = _parameters.get("limit") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -5518,7 +5550,7 @@ fn test_v1_list_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<String
         .as_ref()
         .expect("api instance not found");
     let source = if let Some(param) = _parameters.get("source") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -5544,7 +5576,7 @@ fn test_v1_delete_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         .expect("api instance not found");
     let host_name = serde_json::from_value(_parameters.get("host_name").unwrap().clone()).unwrap();
     let source = if let Some(param) = _parameters.get("source") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -5570,7 +5602,7 @@ fn test_v1_get_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<String,
         .expect("api instance not found");
     let host_name = serde_json::from_value(_parameters.get("host_name").unwrap().clone()).unwrap();
     let source = if let Some(param) = _parameters.get("source") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -5597,7 +5629,7 @@ fn test_v1_create_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<Stri
     let host_name = serde_json::from_value(_parameters.get("host_name").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let source = if let Some(param) = _parameters.get("source") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -5628,7 +5660,7 @@ fn test_v1_update_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<Stri
     let host_name = serde_json::from_value(_parameters.get("host_name").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let source = if let Some(param) = _parameters.get("source") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -6036,32 +6068,32 @@ fn test_v2_list_audit_logs(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         .as_ref()
         .expect("api instance not found");
     let filter_query = if let Some(param) = _parameters.get("filter[query]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let filter_from = if let Some(param) = _parameters.get("filter[from]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let filter_to = if let Some(param) = _parameters.get("filter[to]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let sort = if let Some(param) = _parameters.get("sort") {
-        serde_json::from_value(param.clone()).unwrap()
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let page_cursor = if let Some(param) = _parameters.get("page[cursor]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let page_limit = if let Some(param) = _parameters.get("page[limit]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -6093,7 +6125,7 @@ fn test_v2_search_audit_logs(world: &mut DatadogWorld, _parameters: &HashMap<Str
         .as_ref()
         .expect("api instance not found");
     let body = if let Some(param) = _parameters.get("body") {
-        serde_json::from_value(param.clone()).unwrap()
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -6231,32 +6263,32 @@ fn test_v2_list_events(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         .as_ref()
         .expect("api instance not found");
     let filter_query = if let Some(param) = _parameters.get("filter[query]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let filter_from = if let Some(param) = _parameters.get("filter[from]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let filter_to = if let Some(param) = _parameters.get("filter[to]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let sort = if let Some(param) = _parameters.get("sort") {
-        serde_json::from_value(param.clone()).unwrap()
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let page_cursor = if let Some(param) = _parameters.get("page[cursor]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let page_limit = if let Some(param) = _parameters.get("page[limit]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -6288,7 +6320,7 @@ fn test_v2_search_events(world: &mut DatadogWorld, _parameters: &HashMap<String,
         .as_ref()
         .expect("api instance not found");
     let body = if let Some(param) = _parameters.get("body") {
-        serde_json::from_value(param.clone()).unwrap()
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -6418,7 +6450,7 @@ fn test_v2_make_gcpsts_delegate(world: &mut DatadogWorld, _parameters: &HashMap<
         .as_ref()
         .expect("api instance not found");
     let body = if let Some(param) = _parameters.get("body") {
-        serde_json::from_value(param.clone()).unwrap()
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -7214,12 +7246,12 @@ fn test_v2_submit_log(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let content_encoding = if let Some(param) = _parameters.get("Content-Encoding") {
-        serde_json::from_value(param.clone()).unwrap()
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let ddtags = if let Some(param) = _parameters.get("ddtags") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -7371,64 +7403,64 @@ fn test_v2_list_findings(world: &mut DatadogWorld, _parameters: &HashMap<String,
         .as_ref()
         .expect("api instance not found");
     let page_limit = if let Some(param) = _parameters.get("page[limit]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let snapshot_timestamp = if let Some(param) = _parameters.get("snapshot_timestamp") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let page_cursor = if let Some(param) = _parameters.get("page[cursor]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let filter_tags = if let Some(param) = _parameters.get("filter[tags]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let filter_evaluation_changed_at =
         if let Some(param) = _parameters.get("filter[evaluation_changed_at]") {
-            Some(param.as_str().unwrap().parse().unwrap())
+            Some(serde_json::from_value(param.clone()).unwrap())
         } else {
             None
         };
     let filter_muted = if let Some(param) = _parameters.get("filter[muted]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let filter_rule_id = if let Some(param) = _parameters.get("filter[rule_id]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let filter_rule_name = if let Some(param) = _parameters.get("filter[rule_name]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let filter_resource_type = if let Some(param) = _parameters.get("filter[resource_type]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let filter_discovery_timestamp =
         if let Some(param) = _parameters.get("filter[discovery_timestamp]") {
-            Some(param.as_str().unwrap().parse().unwrap())
+            Some(serde_json::from_value(param.clone()).unwrap())
         } else {
             None
         };
     let filter_evaluation = if let Some(param) = _parameters.get("filter[evaluation]") {
-        serde_json::from_value(param.clone()).unwrap()
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let filter_status = if let Some(param) = _parameters.get("filter[status]") {
-        serde_json::from_value(param.clone()).unwrap()
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -7468,7 +7500,7 @@ fn test_v2_get_finding(world: &mut DatadogWorld, _parameters: &HashMap<String, V
     let finding_id =
         serde_json::from_value(_parameters.get("finding_id").unwrap().clone()).unwrap();
     let snapshot_timestamp = if let Some(param) = _parameters.get("snapshot_timestamp") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -7519,32 +7551,32 @@ fn test_v2_list_processes(world: &mut DatadogWorld, _parameters: &HashMap<String
         .as_ref()
         .expect("api instance not found");
     let search = if let Some(param) = _parameters.get("search") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let tags = if let Some(param) = _parameters.get("tags") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let from = if let Some(param) = _parameters.get("from") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let to = if let Some(param) = _parameters.get("to") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let page_limit = if let Some(param) = _parameters.get("page[limit]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let page_cursor = if let Some(param) = _parameters.get("page[cursor]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -7841,7 +7873,7 @@ fn test_v2_submit_metrics(world: &mut DatadogWorld, _parameters: &HashMap<String
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let content_encoding = if let Some(param) = _parameters.get("Content-Encoding") {
-        serde_json::from_value(param.clone()).unwrap()
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -7919,7 +7951,7 @@ fn test_v2_get_usage_application_security_monitoring(
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -7950,7 +7982,7 @@ fn test_v2_get_cost_by_org(world: &mut DatadogWorld, _parameters: &HashMap<Strin
     let start_month =
         serde_json::from_value(_parameters.get("start_month").unwrap().clone()).unwrap();
     let end_month = if let Some(param) = _parameters.get("end_month") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -7981,27 +8013,27 @@ fn test_v2_get_estimated_cost_by_org(
         .as_ref()
         .expect("api instance not found");
     let view = if let Some(param) = _parameters.get("view") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let start_month = if let Some(param) = _parameters.get("start_month") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let end_month = if let Some(param) = _parameters.get("end_month") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let start_date = if let Some(param) = _parameters.get("start_date") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let end_date = if let Some(param) = _parameters.get("end_date") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -8037,12 +8069,12 @@ fn test_v2_get_historical_cost_by_org(
     let start_month =
         serde_json::from_value(_parameters.get("start_month").unwrap().clone()).unwrap();
     let view = if let Some(param) = _parameters.get("view") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let end_month = if let Some(param) = _parameters.get("end_month") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -8077,34 +8109,34 @@ fn test_v2_get_hourly_usage(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         serde_json::from_value(_parameters.get("filter[product_families]").unwrap().clone())
             .unwrap();
     let filter_timestamp_end = if let Some(param) = _parameters.get("filter[timestamp][end]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let filter_include_descendants =
         if let Some(param) = _parameters.get("filter[include_descendants]") {
-            Some(param.as_str().unwrap().parse().unwrap())
+            Some(serde_json::from_value(param.clone()).unwrap())
         } else {
             None
         };
     let filter_include_breakdown = if let Some(param) = _parameters.get("filter[include_breakdown]")
     {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let filter_versions = if let Some(param) = _parameters.get("filter[versions]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let page_limit = if let Some(param) = _parameters.get("page[limit]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
     let page_next_record_id = if let Some(param) = _parameters.get("page[next_record_id]") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -8142,7 +8174,7 @@ fn test_v2_get_usage_lambda_traced_invocations(
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };
@@ -8174,7 +8206,7 @@ fn test_v2_get_usage_observability_pipelines(
         .expect("api instance not found");
     let start_hr = serde_json::from_value(_parameters.get("start_hr").unwrap().clone()).unwrap();
     let end_hr = if let Some(param) = _parameters.get("end_hr") {
-        Some(param.as_str().unwrap().parse().unwrap())
+        Some(serde_json::from_value(param.clone()).unwrap())
     } else {
         None
     };

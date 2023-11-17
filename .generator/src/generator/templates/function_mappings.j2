@@ -40,7 +40,7 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
 {%- for version, apis in all_apis.items() %}
 {%- for _, operations in apis.items() %}
 {%- for _, _, operation in operations %}
-    world.function_mappings.insert("{{ operation['operationId'] }}".to_string(), test_{{version}}_{{ operation['operationId'] | snake_case }});
+    world.function_mappings.insert("{{version}}.{{ operation['operationId'] }}".to_string(), test_{{version}}_{{ operation['operationId'] | snake_case }});
 {%- endfor %}
 {%- endfor %}
 {%- endfor %}
@@ -57,17 +57,17 @@ fn test_{{version}}_{{ operation['operationId'] | snake_case }}(world: &mut Data
     {%- for parameter in operationParams %}
     {%- set schema = parameter[1] | parameter_schema %}
     {%- if parameter[1].required %}
+    {%- if schema | is_primitive and schema.get("format") == "binary" -%}
+    let {{ parameter[0] | variable_name }} = _parameters.get("{{ parameter[0] }}").unwrap().as_str().unwrap().as_bytes().to_vec();
+    {%- else -%}
     let {{ parameter[0] | variable_name }} = serde_json::from_value(_parameters.get("{{ parameter[0] }}").unwrap().clone()).unwrap();
+    {%- endif -%}
     {%- else %}
     let {{ parameter[0] | variable_name }} = if let Some(param) = _parameters.get("{{ parameter[0] }}") {
-        {%- if schema | is_primitive -%}
-        {%- if schema.get("format") == "binary" -%}
+        {%- if schema | is_primitive and schema.get("format") == "binary" -%}
         Some(param.as_str().unwrap().as_bytes().to_vec())
         {%- else -%}
-        Some(param.as_str().unwrap().parse().unwrap())
-        {%- endif -%}
-        {%- else -%}
-        serde_json::from_value(param.clone()).unwrap()
+        Some(serde_json::from_value(param.clone()).unwrap())
         {%- endif -%}
     } else {
         None

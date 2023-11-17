@@ -1,11 +1,26 @@
-{%- if description is defined %}
+{%- if model["type"] == "integer" %}
+use serde_repr::{Deserialize_repr, Serialize_repr};
+{%- else %}
+use serde::{Serialize, Deserialize};
+{%- endif %}
+{% if description is defined %}
 {{ description | block_comment }}
 {%- endif %}
+
+{%- if model["type"] == "integer" %}
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize_repr, Deserialize_repr)]
+#[repr({{model | simple_type(False, False)}})]
+{%- else %}
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+{%- endif %}
 pub enum {{name}} {
 {%- for index, value in enumerate(model.enum) %}
+{%- if model["type"] == "integer" %}
+	{{ model["x-enum-varnames"][index] or value.upper() }} = {{value}},
+{%- else %}
     #[serde(rename = "{{value}}")]
 	{{ model["x-enum-varnames"][index] or value.upper() }},
+{%- endif %}
 {%- endfor %}
 }
 

@@ -9,6 +9,7 @@ use cucumber::{
 };
 use datadog_api_client::datadog::configuration::Configuration;
 use handlebars::{Context, Handlebars, Helper, Output, RenderContext, RenderError};
+use lazy_static::lazy_static;
 use regex::Regex;
 use reqwest_middleware::ClientBuilder;
 use rvcr::{VCRMiddleware, VCRMode};
@@ -21,6 +22,7 @@ use std::{
     io::BufReader,
     ops::Add,
     path::PathBuf,
+    str::FromStr,
 };
 
 pub type TestCall = fn(&mut DatadogWorld, &HashMap<String, Value>);
@@ -61,16 +63,31 @@ impl std::fmt::Debug for DatadogWorld {
     }
 }
 
+lazy_static! {
+    static ref API_VERSION_RE: Regex = Regex::new(r"tests/scenarios/features/v(\d+)/").unwrap();
+    static ref NUMBER_RE: Regex = Regex::new(r"^\d+$").unwrap();
+    static ref BOOL_RE: Regex = Regex::new(r"^(true|false)$").unwrap();
+    static ref INDEX_RE: Regex = Regex::new(r"\[(\d+)\]+").unwrap();
+    static ref NON_ALNUM_RE: Regex = Regex::new(r"[^A-Za-z0-9]+").unwrap();
+    static ref TIME_FMT_HELPER_RE: Regex =
+        Regex::new(r"now(?: *([+-]) *(\d+)([smhdMy]))?").unwrap();
+    static ref TIME_FUNC_HELPER_RE: Regex = Regex::new(r"(?:timestamp|timeISO)\([^{}]*\)").unwrap();
+    static ref HANDLEBARS: Handlebars<'static> = {
+        let mut hb = Handlebars::new();
+        hb.register_helper("timeISO", Box::new(time_iso_helper));
+        hb.register_helper("timestamp", Box::new(timestamp_helper));
+        hb
+    };
+}
+
 pub async fn before_scenario(
     feature: &Feature,
     _rule: Option<&Rule>,
     scenario: &Scenario,
     world: &mut DatadogWorld,
 ) {
-    let api_version_re =
-        Regex::new(r"tests/scenarios/features/v(\d+)/").expect("api version regex failed");
     // TODO: refactor this lol
-    world.api_version = api_version_re
+    world.api_version = API_VERSION_RE
         .captures(feature.path.as_ref().unwrap().to_str().unwrap())
         .unwrap()
         .get(1)
@@ -95,8 +112,7 @@ pub async fn before_scenario(
     world.undo_map = serde_json::from_reader(BufReader::new(undo_file))
         .expect("failed to deserialize undo.json");
 
-    let non_alnum_re = Regex::new(r"[^A-Za-z0-9]+").expect("non alnum regex failed");
-    let escaped_filename = non_alnum_re
+    let escaped_filename = NON_ALNUM_RE
         .replace_all(scenario.name.as_str(), "-")
         .to_string();
     let filename = match escaped_filename.len() > 100 {
@@ -177,7 +193,7 @@ pub async fn before_scenario(
     config.app_key_auth = Some("0000000000000000000000000000000000000000".to_string());
     world.config = config;
 
-    let escaped_name = non_alnum_re
+    let escaped_name = NON_ALNUM_RE
         .replace_all(scenario.name.as_str(), "_")
         .to_string();
     let name = match escaped_name.len() > 100 {
@@ -185,7 +201,7 @@ pub async fn before_scenario(
         false => escaped_name,
     };
     let unique = format!("{}-{}-{}", prefix, name, frozen_time.num_seconds());
-    let unique_alnum = non_alnum_re.replace_all(unique.as_str(), "").to_string();
+    let unique_alnum = NON_ALNUM_RE.replace_all(unique.as_str(), "").to_string();
     world.fixtures = json!({
         "unique": unique,
         "unique_lower": unique.to_ascii_lowercase(),
@@ -210,7 +226,7 @@ pub async fn after_scenario(
         for undo in world.undo_operations.clone().iter().rev() {
             world
                 .function_mappings
-                .get(&undo.operation_id)
+                .get(&format!("v{}.{}", world.api_version, &undo.operation_id))
                 .expect("undo operation not found")(world, &undo.parameters);
         }
     }
@@ -252,8 +268,10 @@ fn given_resource_in_system(world: &mut DatadogWorld, given_key: String) {
                 }
             };
             if let Some(template_value) = param.get("value") {
-                let mut rendered = template(template_value.to_string(), &world.fixtures);
-                rendered = serde_json::from_str(rendered.as_str()).unwrap();
+                let rendered = template(
+                    template_value.as_str().unwrap().to_string(),
+                    &world.fixtures,
+                );
                 given_parameters.insert(
                     param_name.clone(),
                     serde_json::from_str(rendered.as_str()).unwrap(),
@@ -280,7 +298,7 @@ fn given_resource_in_system(world: &mut DatadogWorld, given_key: String) {
 
     world
         .function_mappings
-        .get(&operation_id)
+        .get(&format!("v{}.{}", world.api_version, &operation_id))
         .expect("given operation not found")(world, &given_parameters);
     match build_undo(world, &operation_id) {
         Ok(Some(undo)) => world.undo_operations.push(undo),
@@ -325,7 +343,7 @@ fn body_from_file(world: &mut DatadogWorld, path: String) {
 
 #[given(expr = "request contains {string} parameter from {string}")]
 fn request_parameter_from_path(world: &mut DatadogWorld, param: String, path: String) {
-    let lookup = lookup(&path, &world.fixtures).unwrap();
+    let lookup = lookup(&path, &world.fixtures).expect("failed to lookup parameter");
     world.parameters.insert(param, lookup);
 }
 
@@ -333,14 +351,23 @@ fn request_parameter_from_path(world: &mut DatadogWorld, param: String, path: St
 fn request_parameter_with_value(world: &mut DatadogWorld, param: String, value: String) {
     let trimmed_value = value.trim_matches('"').to_string();
     let rendered = template(trimmed_value, &world.fixtures);
-    world.parameters.insert(param, Value::from(rendered));
+    if NUMBER_RE.is_match(&rendered) {
+        let number =
+            serde_json::Number::from_str(&rendered).expect("couldn't parse param as number");
+        world.parameters.insert(param, Value::Number(number));
+    } else if BOOL_RE.is_match(&rendered) {
+        let boolean = Value::Bool(rendered == "true");
+        world.parameters.insert(param, boolean);
+    } else {
+        world.parameters.insert(param, Value::from(rendered));
+    }
 }
 
 #[when(regex = r"^the request is sent$")]
 fn request_sent(world: &mut DatadogWorld) {
     world
         .function_mappings
-        .get(&world.operation_id)
+        .get(&format!("v{}.{}", world.api_version, &world.operation_id))
         .expect(&format!(
             "{:?} request operation id not found",
             world.operation_id
@@ -406,13 +433,12 @@ fn req_eq(lhs: &vcr_cassette::Request, rhs: &vcr_cassette::Request) -> bool {
 }
 
 fn lookup(path: &String, object: &Value) -> Option<Value> {
-    let index_re = Regex::new(r"\[(\d+)\]+").expect("index regex failed");
     let mut json_pointer = format!("/{}", path).replace('.', "/");
-    for (_, [idx]) in index_re
+    for (_, [idx]) in INDEX_RE
         .captures_iter(&json_pointer.clone())
         .map(|c| c.extract())
     {
-        json_pointer = index_re
+        json_pointer = INDEX_RE
             .replace(&json_pointer, format!("/{idx}"))
             .to_string();
     }
@@ -421,8 +447,7 @@ fn lookup(path: &String, object: &Value) -> Option<Value> {
 
 fn relative_time_helper(v: &String, c: &Context) -> DateTime<chrono::Utc> {
     // get parameter from helper or throw an error
-    let time_helper_re = Regex::new(r"now(?: *([+-]) *(\d+)([smhdMy]))?").unwrap();
-    let caps = time_helper_re
+    let caps = TIME_FMT_HELPER_RE
         .captures(&v)
         .expect("failed to parse timeISO template function");
     let ts = c.data().get("now_millis").unwrap().as_i64().unwrap();
@@ -464,7 +489,7 @@ fn relative_time_helper(v: &String, c: &Context) -> DateTime<chrono::Utc> {
     }
 }
 
-fn timeISO_helper(
+fn time_iso_helper(
     h: &Helper,
     _: &Handlebars,
     c: &Context,
@@ -493,8 +518,7 @@ fn timestamp_helper(
 }
 
 fn template(string: String, fixtures: &Value) -> String {
-    let time_helper_re = Regex::new(r"(?:timestamp|timeISO)\([^{}]*\)").unwrap();
-    let helper_parsed_string = time_helper_re
+    let helper_parsed_string = TIME_FUNC_HELPER_RE
         .replace_all(&string, |caps: &regex::Captures| {
             caps.get(0)
                 .unwrap()
@@ -503,11 +527,7 @@ fn template(string: String, fixtures: &Value) -> String {
                 .replace(')', "")
         })
         .to_string();
-
-    let mut handlebars = Handlebars::new();
-    handlebars.register_helper("timeISO", Box::new(timeISO_helper));
-    handlebars.register_helper("timestamp", Box::new(timestamp_helper));
-    handlebars
+    HANDLEBARS
         .render_template(helper_parsed_string.as_str(), &fixtures)
         .expect("failed to apply template")
 }
@@ -516,6 +536,9 @@ fn build_undo(
     world: &mut DatadogWorld,
     operation_id: &String,
 ) -> Result<Option<UndoOperation>, Value> {
+    if world.response.code < 200 || world.response.code >= 300 {
+        return Ok(None);
+    }
     let undo = world
         .undo_map
         .get(operation_id)
