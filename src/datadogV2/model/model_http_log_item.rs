@@ -29,6 +29,8 @@ pub struct HTTPLogItem {
     /// See [reserved attributes](https://docs.datadoghq.com/logs/log_configuration/attributes_naming_convention/#reserved-attributes).
     #[serde(rename = "service")]
     pub service: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::HashMap<String, String>,
 }
 
 impl HTTPLogItem {
@@ -39,6 +41,7 @@ impl HTTPLogItem {
             hostname: None,
             message,
             service: None,
+            additional_properties: std::collections::HashMap::new(),
         }
     }
 }

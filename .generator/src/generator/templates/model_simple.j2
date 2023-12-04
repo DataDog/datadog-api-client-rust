@@ -17,10 +17,15 @@ pub struct {{ name }} {
     #[serde(rename = "{{ attr }}"{% if not required and nullable%}, default, with = "::serde_with::rust::double_option"{% endif %})]
     pub {{propertyName}}: {{dataType}},
 {%- endfor %}
+{%- if model.additionalProperties is defined and model.additionalProperties != False %}
+{%- set dataType = get_type(model.additionalProperties, alternative_name=None, render_nullable=False, render_option=False, render_box=True, version=version) %}
+    #[serde(flatten)]
+    pub additional_properties: std::collections::HashMap<String, {{ dataType }}>,
+{%- endif %}
 }
 
 impl {{ name }} {
-    pub fn new({% for attr, schema in model.get("properties", {}).items() if attr in model.required %}{%- set nullable = schema.get("nullable", False)%}{%- set propertyName = attr|variable_name %}{%- set dataType = get_type(schema, alternative_name=name + propertyName, render_nullable=nullable, render_option=False, version=version) %}{%- set nullable = schema.get("nullable", False)%}{{propertyName}}: {{ dataType }}{%- if not loop.last %}, {% endif %}{% endfor %}) -> {{ name }} {
+    pub fn new({% for attr, schema in model.get("properties", {}).items() if attr in model.required %}{%- set nullable = schema.get("nullable", False)%}{%- set propertyName = attr|variable_name %}{%- set dataType = get_type(schema, alternative_name=name + propertyName, render_nullable=nullable, render_option=False, version=version) %}{{propertyName}}: {{ dataType }}{%- if not loop.last %}, {% endif %}{% endfor %}) -> {{ name }} {
         {%- if get_deprecated(model) %}
         #[allow(deprecated)]
         {%- endif %}
@@ -40,6 +45,9 @@ impl {{ name }} {
             {{ attr|variable_name }}: None,
             {%- endif %}
             {%- endfor %}
+            {%- if model.additionalProperties is defined and model.additionalProperties != False %}
+            additional_properties: std::collections::HashMap::new(),
+            {%- endif %}
         }
     }
 }

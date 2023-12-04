@@ -68,6 +68,7 @@ lazy_static! {
     static ref NUMBER_RE: Regex = Regex::new(r"^\d+$").unwrap();
     static ref BOOL_RE: Regex = Regex::new(r"^(true|false)$").unwrap();
     static ref INDEX_RE: Regex = Regex::new(r"\[(\d+)\]+").unwrap();
+    static ref TEMPLATE_INDEX_RE: Regex = Regex::new(r"(\w+)\[(\d+)\]").unwrap();
     static ref NON_ALNUM_RE: Regex = Regex::new(r"[^A-Za-z0-9]+").unwrap();
     static ref TIME_FMT_HELPER_RE: Regex =
         Regex::new(r"now(?: *([+-]) *(\d+)([smhdMy]))?").unwrap();
@@ -322,6 +323,9 @@ fn new_request(world: &mut DatadogWorld, operation_id: String) {
     world.operation_id = operation_id
 }
 
+#[given(expr = "operation {string} enabled")]
+fn enable_unstable(_world: &mut DatadogWorld, _operation_id: String) {}
+
 #[given(regex = r"^body with value (.*)$")]
 fn body_with_value(world: &mut DatadogWorld, body: String) {
     let rendered = template(body, &world.fixtures);
@@ -398,6 +402,47 @@ fn response_equal_to(world: &mut DatadogWorld, path: String, value: String) {
     }
 }
 
+#[then(expr = "the response {string} has item with field {string} with value {}")]
+fn response_has_item_with_field(world: &mut DatadogWorld, path: String, field_path: String, value: String) {
+    let found = lookup(&path, &world.response.object).expect("value not found in response");
+    let rendered_value = template(value, &world.fixtures);
+    let expected: Value = serde_json::from_str(rendered_value.as_str()).unwrap();
+    for item in found.as_array().unwrap() {
+        let field = lookup(&field_path, item);
+        if field.is_some() {
+            let field = field.unwrap();
+            if field.is_number() && expected.is_number() && field.as_f64().unwrap() == expected.as_f64().unwrap(){
+                return;
+            } else if field == expected {
+                return;
+            }
+        }
+    }
+    assert!(false);
+}
+
+#[then(expr = "the response {string} array contains value {}")]
+fn response_contains(world: &mut DatadogWorld, path: String, value: String) {
+    let lookup = lookup(&path, &world.response.object).expect("value not found in response");
+    let rendered_value = template(value, &world.fixtures);
+    let expected: Value = serde_json::from_str(rendered_value.as_str()).unwrap();
+    for item in lookup.as_array().unwrap() {
+        if item.is_number() && expected.is_number() && item.as_f64().unwrap() == expected.as_f64().unwrap(){
+            return;
+        } else if item == &expected {
+            return;
+        }
+    }
+    assert!(false);
+}
+
+#[then(expr = "the response {string} has the same value as {string}")]
+fn response_same_value_as(world: &mut DatadogWorld, path: String, value: String) {
+    let lookup_lhs = lookup(&path, &world.response.object).expect("value not found in response");
+    let lookup_rhs = lookup(&value, &world.fixtures).expect("value not found in fixtures");
+    assert_eq!(lookup_lhs, lookup_rhs);
+}
+
 #[then(expr = "the response {string} has length {int}")]
 fn response_has_length(world: &mut DatadogWorld, path: String, expected_len: usize) {
     let len = lookup(&path, &world.response.object)
@@ -406,6 +451,15 @@ fn response_has_length(world: &mut DatadogWorld, path: String, expected_len: usi
         .unwrap()
         .len();
     assert_eq!(len, expected_len);
+}
+
+#[then(expr = "the response {string} is {word}")]
+fn response_is_bool(world: &mut DatadogWorld, path: String, expected: String) {
+    let found = lookup(&path, &world.response.object)
+        .unwrap()
+        .as_bool()
+        .unwrap();
+    assert_eq!(found, expected == "true");
 }
 
 fn req_eq(lhs: &vcr_cassette::Request, rhs: &vcr_cassette::Request) -> bool {
@@ -518,7 +572,7 @@ fn timestamp_helper(
 }
 
 fn template(string: String, fixtures: &Value) -> String {
-    let helper_parsed_string = TIME_FUNC_HELPER_RE
+    let mut parsed_string = TIME_FUNC_HELPER_RE
         .replace_all(&string, |caps: &regex::Captures| {
             caps.get(0)
                 .unwrap()
@@ -527,8 +581,17 @@ fn template(string: String, fixtures: &Value) -> String {
                 .replace(')', "")
         })
         .to_string();
+    parsed_string = TEMPLATE_INDEX_RE
+        .replace_all(&parsed_string, |caps: &regex::Captures| {
+            caps.get(0)
+                .unwrap()
+                .as_str()
+                .replace('[', ".")
+                .replace(']', "")
+        })
+        .to_string();
     HANDLEBARS
-        .render_template(helper_parsed_string.as_str(), &fixtures)
+        .render_template(parsed_string.as_str(), &fixtures)
         .expect("failed to apply template")
 }
 
