@@ -50,4 +50,4 @@ async fn main() {
         })
         .await;
 }
-// right now it repeats failed steps, eventually write customer writer logic for repeating failed scenarios
+// right now it repeats failed steps, eventually write custom writer logic for repeating failed scenarios
