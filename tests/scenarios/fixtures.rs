@@ -403,7 +403,12 @@ fn response_equal_to(world: &mut DatadogWorld, path: String, value: String) {
 }
 
 #[then(expr = "the response {string} has item with field {string} with value {}")]
-fn response_has_item_with_field(world: &mut DatadogWorld, path: String, field_path: String, value: String) {
+fn response_has_item_with_field(
+    world: &mut DatadogWorld,
+    path: String,
+    field_path: String,
+    value: String,
+) {
     let found = lookup(&path, &world.response.object).expect("value not found in response");
     let rendered_value = template(value, &world.fixtures);
     let expected: Value = serde_json::from_str(rendered_value.as_str()).unwrap();
@@ -411,7 +416,10 @@ fn response_has_item_with_field(world: &mut DatadogWorld, path: String, field_pa
         let field = lookup(&field_path, item);
         if field.is_some() {
             let field = field.unwrap();
-            if field.is_number() && expected.is_number() && field.as_f64().unwrap() == expected.as_f64().unwrap(){
+            if field.is_number()
+                && expected.is_number()
+                && field.as_f64().unwrap() == expected.as_f64().unwrap()
+            {
                 return;
             } else if field == expected {
                 return;
@@ -427,7 +435,10 @@ fn response_contains(world: &mut DatadogWorld, path: String, value: String) {
     let rendered_value = template(value, &world.fixtures);
     let expected: Value = serde_json::from_str(rendered_value.as_str()).unwrap();
     for item in lookup.as_array().unwrap() {
-        if item.is_number() && expected.is_number() && item.as_f64().unwrap() == expected.as_f64().unwrap(){
+        if item.is_number()
+            && expected.is_number()
+            && item.as_f64().unwrap() == expected.as_f64().unwrap()
+        {
             return;
         } else if item == &expected {
             return;
