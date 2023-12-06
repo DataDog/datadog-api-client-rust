@@ -40,7 +40,7 @@ struct UndoOperation {
     parameters: HashMap<String, Value>,
 }
 
-#[derive(Default, World)]
+#[derive(Default, Debug, World)]
 pub struct DatadogWorld {
     pub api_version: i32,
     pub config: Configuration,
@@ -53,14 +53,6 @@ pub struct DatadogWorld {
     given_map: Value,
     undo_map: Value,
     undo_operations: Vec<UndoOperation>,
-}
-
-// Workaround to suppress cucumber's debug output - the DatadogWorld
-// struct debug output is overly verbose and not useful
-impl std::fmt::Debug for DatadogWorld {
-    fn fmt(&self, _: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        Ok(())
-    }
 }
 
 lazy_static! {
