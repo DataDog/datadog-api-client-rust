@@ -76,21 +76,38 @@ pub fn parse_deep_object(prefix: &str, value: &serde_json::Value) -> Vec<(String
 
         for (key, value) in object {
             match value {
-                serde_json::Value::Object(_) => {
-                    params.append(&mut parse_deep_object(&format!("{}[{}]", prefix, key), value))
-                }
+                serde_json::Value::Object(_) => params.append(&mut parse_deep_object(
+                    &format!("{}[{}]", prefix, key),
+                    value,
+                )),
                 serde_json::Value::Array(array) => {
                     for (i, value) in array.iter().enumerate() {
-                        params.append(&mut parse_deep_object(&format!("{}[{}][{}]", prefix, key, i), value));
+                        params.append(&mut parse_deep_object(
+                            &format!("{}[{}][{}]", prefix, key, i),
+                            value,
+                        ));
                     }
                 }
-                serde_json::Value::String(s) => params.push((format!("{}[{}]", prefix, key), s.clone())),
+                serde_json::Value::String(s) => {
+                    params.push((format!("{}[{}]", prefix, key), s.clone()))
+                }
                 _ => params.push((format!("{}[{}]", prefix, key), value.to_string())),
             }
         }
         return params;
     }
     unimplemented!("Only objects are supported with style=deepObject")
+}
+
+pub struct DDFormatter;
+
+impl serde_json::ser::Formatter for DDFormatter {
+    fn write_f64<W>(&mut self, writer: &mut W, value: f64) -> std::io::Result<()>
+    where
+        W: ?Sized + std::io::Write,
+    {
+        write!(writer, "{}", value.to_string())
+    }
 }
 
 pub mod configuration;

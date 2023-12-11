@@ -3,8 +3,6 @@
 // Copyright 2019-Present Datadog, Inc.
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
-#[macro_use]
-extern crate serde_derive;
 
 extern crate reqwest;
 extern crate serde;
@@ -12,5 +10,5 @@ extern crate serde_json;
 extern crate url;
 
 pub mod datadog;
-// pub mod datadogV1;
+pub mod datadogV1;
 pub mod datadogV2;

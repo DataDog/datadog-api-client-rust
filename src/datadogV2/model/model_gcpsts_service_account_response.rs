@@ -1,0 +1,20 @@
+// Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
+// This product includes software developed at Datadog (https://www.datadoghq.com/).
+// Copyright 2019-Present Datadog, Inc.
+use serde::{Deserialize, Serialize};
+use serde_with::skip_serializing_none;
+
+/// The account creation response.
+#[skip_serializing_none]
+#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+pub struct GCPSTSServiceAccountResponse {
+    /// Info on your service account.
+    #[serde(rename = "data")]
+    pub data: Option<Box<crate::datadogV2::model::GCPSTSServiceAccount>>,
+}
+
+impl GCPSTSServiceAccountResponse {
+    pub fn new() -> GCPSTSServiceAccountResponse {
+        GCPSTSServiceAccountResponse { data: None }
+    }
+}
