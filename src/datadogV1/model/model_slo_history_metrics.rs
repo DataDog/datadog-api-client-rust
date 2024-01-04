@@ -8,7 +8,7 @@ use serde_with::skip_serializing_none;
 ///
 /// This is not included in responses for `monitor` based SLOs.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SLOHistoryMetrics {
     /// A representation of `metric` based SLO time series for the provided queries.
     /// This is the same response type from `batch_query` endpoint.
@@ -40,19 +40,19 @@ pub struct SLOHistoryMetrics {
 
 impl SLOHistoryMetrics {
     pub fn new(
-        denominator: crate::datadogV1::model::SLOHistoryMetricsSeries,
+        denominator: Box<crate::datadogV1::model::SLOHistoryMetricsSeries>,
         interval: i64,
-        numerator: crate::datadogV1::model::SLOHistoryMetricsSeries,
+        numerator: Box<crate::datadogV1::model::SLOHistoryMetricsSeries>,
         query: String,
         res_type: String,
         resp_version: i64,
         times: Vec<f64>,
     ) -> SLOHistoryMetrics {
         SLOHistoryMetrics {
-            denominator: Box::new(denominator),
+            denominator,
             interval,
             message: None,
-            numerator: Box::new(numerator),
+            numerator,
             query,
             res_type,
             resp_version,

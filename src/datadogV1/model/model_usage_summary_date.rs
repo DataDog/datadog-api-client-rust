@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Response with hourly report of all data billed by Datadog all organizations.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageSummaryDate {
     /// Shows the 99th percentile of all agent hosts over all hours in the current date for all organizations.
     #[serde(rename = "agent_host_top99p")]

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Attributes describing the change of state for a given state.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SignalStateUpdateRequest {
     /// Optional comment to explain why a signal is being archived.
     #[serde(rename = "archiveComment")]

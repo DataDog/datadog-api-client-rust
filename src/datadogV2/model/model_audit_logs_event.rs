@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Object description of an Audit Logs event after it is processed and stored by Datadog.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AuditLogsEvent {
     /// JSON object containing all event attributes and their associated values.
     #[serde(rename = "attributes")]

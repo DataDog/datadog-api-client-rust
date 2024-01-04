@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Lambda Traced Invocations usage response.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageLambdaTracedInvocationsResponse {
     /// Response containing Lambda Traced Invocations usage.
     #[serde(rename = "data")]

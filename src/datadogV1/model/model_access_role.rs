@@ -26,9 +26,3 @@ impl ToString for AccessRole {
         }
     }
 }
-
-impl Default for AccessRole {
-    fn default() -> AccessRole {
-        Self::STANDARD
-    }
-}

@@ -17,9 +17,3 @@ impl ToString for CloudflareAccountType {
         }
     }
 }
-
-impl Default for CloudflareAccountType {
-    fn default() -> CloudflareAccountType {
-        Self::CLOUDFLARE_ACCOUNTS
-    }
-}

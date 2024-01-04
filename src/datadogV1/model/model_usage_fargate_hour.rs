@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Number of Fargate tasks run and hourly usage.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageFargateHour {
     /// The high-water mark of APM ECS Fargate tasks during the given hour.
     #[serde(

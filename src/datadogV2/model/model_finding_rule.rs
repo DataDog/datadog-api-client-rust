@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The rule that triggered this finding.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FindingRule {
     /// The ID of the rule that triggered this finding.
     #[serde(rename = "id")]

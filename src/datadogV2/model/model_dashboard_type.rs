@@ -29,9 +29,3 @@ impl ToString for DashboardType {
         }
     }
 }
-
-impl Default for DashboardType {
-    fn default() -> DashboardType {
-        Self::CUSTOM_TIMEBOARD
-    }
-}

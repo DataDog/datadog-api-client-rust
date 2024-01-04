@@ -38,9 +38,3 @@ impl ToString for EventStatusType {
         }
     }
 }
-
-impl Default for EventStatusType {
-    fn default() -> EventStatusType {
-        Self::FAILURE
-    }
-}

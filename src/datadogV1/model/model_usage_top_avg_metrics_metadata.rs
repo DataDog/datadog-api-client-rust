@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The object containing document metadata.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageTopAvgMetricsMetadata {
     /// The day value from the user request that contains the returned usage data. (If day was used the request)
     #[serde(rename = "day")]

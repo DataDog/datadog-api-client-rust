@@ -7,7 +7,7 @@ use serde_with::skip_serializing_none;
 /// A service level objective object includes a service level indicator, thresholds
 /// for one or more timeframes, and metadata (`name`, `description`, `tags`, etc.).
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ServiceLevelObjective {
     /// Creation timestamp (UNIX time in seconds)
     ///

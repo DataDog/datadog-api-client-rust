@@ -206,9 +206,3 @@ impl ToString for HourlyUsageAttributionUsageType {
         }
     }
 }
-
-impl Default for HourlyUsageAttributionUsageType {
-    fn default() -> HourlyUsageAttributionUsageType {
-        Self::API_USAGE
-    }
-}

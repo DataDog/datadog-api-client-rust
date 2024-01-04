@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Object to send with the request to retrieve a list of logs from your Organization.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LogsListRequest {
     /// The log index on which the request is performed. For multi-index organizations,
     /// the default is all live indexes. Historical indexes of rehydrated logs must be specified.
@@ -34,14 +34,14 @@ pub struct LogsListRequest {
 }
 
 impl LogsListRequest {
-    pub fn new(time: crate::datadogV1::model::LogsListRequestTime) -> LogsListRequest {
+    pub fn new(time: Box<crate::datadogV1::model::LogsListRequestTime>) -> LogsListRequest {
         LogsListRequest {
             index: None,
             limit: None,
             query: None,
             sort: None,
             start_at: None,
-            time: Box::new(time),
+            time,
         }
     }
 }

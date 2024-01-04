@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The search and filter query settings.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct EventsQueryFilter {
     /// The minimum time for the requested events. Supports date math and regular timestamps in milliseconds.
     #[serde(rename = "from")]

@@ -20,9 +20,3 @@ impl ToString for MetricContentEncoding {
         }
     }
 }
-
-impl Default for MetricContentEncoding {
-    fn default() -> MetricContentEncoding {
-        Self::DEFLATE
-    }
-}

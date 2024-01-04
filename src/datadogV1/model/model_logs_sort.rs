@@ -20,9 +20,3 @@ impl ToString for LogsSort {
         }
     }
 }
-
-impl Default for LogsSort {
-    fn default() -> LogsSort {
-        Self::TIME_ASCENDING
-    }
-}

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// IoT usage for a given organization for a given hour.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageIoTHour {
     /// The hour for the usage.
     #[serde(rename = "hour")]

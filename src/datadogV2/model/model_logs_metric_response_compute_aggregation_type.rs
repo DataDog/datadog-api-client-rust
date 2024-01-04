@@ -20,9 +20,3 @@ impl ToString for LogsMetricResponseComputeAggregationType {
         }
     }
 }
-
-impl Default for LogsMetricResponseComputeAggregationType {
-    fn default() -> LogsMetricResponseComputeAggregationType {
-        Self::COUNT
-    }
-}

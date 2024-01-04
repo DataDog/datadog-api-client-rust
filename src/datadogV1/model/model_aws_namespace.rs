@@ -35,9 +35,3 @@ impl ToString for AWSNamespace {
         }
     }
 }
-
-impl Default for AWSNamespace {
-    fn default() -> AWSNamespace {
-        Self::ELB
-    }
-}

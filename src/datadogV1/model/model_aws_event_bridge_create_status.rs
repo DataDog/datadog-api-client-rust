@@ -17,9 +17,3 @@ impl ToString for AWSEventBridgeCreateStatus {
         }
     }
 }
-
-impl Default for AWSEventBridgeCreateStatus {
-    fn default() -> AWSEventBridgeCreateStatus {
-        Self::CREATED
-    }
-}

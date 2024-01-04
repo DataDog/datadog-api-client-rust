@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The Response returned by the AWS Create Account call.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AWSAccountCreateResponse {
     /// AWS external_id.
     #[serde(rename = "external_id")]

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Paging attributes.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ProcessSummariesMetaPage {
     /// The cursor used to get the next results, if any. To make the next request, use the same
     /// parameters with the addition of the `page[cursor]`.

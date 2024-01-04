@@ -7,7 +7,7 @@ use serde_with::skip_serializing_none;
 /// Number of lambda functions and sum of the invocations of all lambda functions
 /// for each hour for a given organization.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageLambdaHour {
     /// Contains the number of different functions for each region and AWS account.
     #[serde(

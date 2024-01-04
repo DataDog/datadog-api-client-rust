@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Number of active NPM hosts for each hour for a given organization.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageNetworkHostsHour {
     /// Contains the number of active NPM hosts.
     #[serde(

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Request object that includes the Agent rule to create.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CloudWorkloadSecurityAgentRuleCreateRequest {
     /// Object for a single Agent rule.
     #[serde(rename = "data")]
@@ -15,10 +15,8 @@ pub struct CloudWorkloadSecurityAgentRuleCreateRequest {
 
 impl CloudWorkloadSecurityAgentRuleCreateRequest {
     pub fn new(
-        data: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateData,
+        data: Box<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateData>,
     ) -> CloudWorkloadSecurityAgentRuleCreateRequest {
-        CloudWorkloadSecurityAgentRuleCreateRequest {
-            data: Box::new(data),
-        }
+        CloudWorkloadSecurityAgentRuleCreateRequest { data }
     }
 }

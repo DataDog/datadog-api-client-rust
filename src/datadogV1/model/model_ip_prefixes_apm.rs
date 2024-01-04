@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Available prefix information for the APM endpoints.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct IPPrefixesAPM {
     /// List of IPv4 prefixes.
     #[serde(rename = "prefixes_ipv4")]

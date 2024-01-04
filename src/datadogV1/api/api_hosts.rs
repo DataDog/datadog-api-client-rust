@@ -7,14 +7,14 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetHostTotalsParams is a struct for passing parameters to the method [`GetHostTotals`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetHostTotalsParams {
     /// Number of seconds from which you want to get total number of active hosts.
     pub from: Option<i64>,
 }
 
 /// ListHostsParams is a struct for passing parameters to the method [`ListHosts`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct ListHostsParams {
     /// String to filter search results.
     pub filter: Option<String>,
@@ -35,7 +35,7 @@ pub struct ListHostsParams {
 }
 
 /// MuteHostParams is a struct for passing parameters to the method [`MuteHost`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct MuteHostParams {
     /// Name of the host to mute.
     pub host_name: String,
@@ -44,7 +44,7 @@ pub struct MuteHostParams {
 }
 
 /// UnmuteHostParams is a struct for passing parameters to the method [`UnmuteHost`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UnmuteHostParams {
     /// Name of the host to unmute.
     pub host_name: String,
@@ -292,7 +292,7 @@ impl HostsAPI {
         }
     }
 
-    /// Mute a host.
+    /// Mute a host. **Note:** This creates a [Downtime V2](https://docs.datadoghq.com/api/latest/downtimes/#schedule-a-downtime) for the host.
     pub async fn mute_host(
         &self,
         params: MuteHostParams,
@@ -303,7 +303,7 @@ impl HostsAPI {
         }
     }
 
-    /// Mute a host.
+    /// Mute a host. **Note:** This creates a [Downtime V2](https://docs.datadoghq.com/api/latest/downtimes/#schedule-a-downtime) for the host.
     pub async fn mute_host_with_http_info(
         &self,
         params: MuteHostParams,

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The attributes of the retention filter.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct RetentionFilterAttributes {
     /// The creation timestamp of the retention filter.
     #[serde(rename = "created_at")]

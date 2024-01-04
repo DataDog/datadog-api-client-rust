@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Object containing the ordered list of log index names.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LogsIndexesOrder {
     /// Array of strings identifying by their name(s) the index(es) of your organization.
     /// Logs are tested against the query filter of each index one by one, following the order of the array.

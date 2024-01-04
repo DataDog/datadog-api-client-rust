@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// A service level objective ID and attributes.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SearchServiceLevelObjectiveData {
     /// A service level objective object includes a service level indicator, thresholds
     /// for one or more timeframes, and metadata (`name`, `description`, and `tags`).

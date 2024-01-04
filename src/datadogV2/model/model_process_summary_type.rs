@@ -17,9 +17,3 @@ impl ToString for ProcessSummaryType {
         }
     }
 }
-
-impl Default for ProcessSummaryType {
-    fn default() -> ProcessSummaryType {
-        Self::PROCESS
-    }
-}

@@ -17,9 +17,3 @@ impl ToString for SpansMetricType {
         }
     }
 }
-
-impl Default for SpansMetricType {
-    fn default() -> SpansMetricType {
-        Self::SPANS_METRICS
-    }
-}

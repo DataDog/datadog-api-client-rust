@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The number of SNMP devices for each hour for a given organization.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageSNMPHour {
     /// The hour for the usage.
     #[serde(rename = "hour")]

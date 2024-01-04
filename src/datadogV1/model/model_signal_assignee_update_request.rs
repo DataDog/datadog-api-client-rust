@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Attributes describing an assignee update operation over a security signal.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SignalAssigneeUpdateRequest {
     /// The UUID of the user being assigned. Use empty string to return signal to unassigned.
     #[serde(rename = "assignee")]

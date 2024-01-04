@@ -7,21 +7,21 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// CreateEventParams is a struct for passing parameters to the method [`CreateEvent`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateEventParams {
     /// Event request object
     pub body: crate::datadogV1::model::EventCreateRequest,
 }
 
 /// GetEventParams is a struct for passing parameters to the method [`GetEvent`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetEventParams {
     /// The ID of the event.
     pub event_id: i64,
 }
 
 /// ListEventsParams is a struct for passing parameters to the method [`ListEvents`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct ListEventsParams {
     /// POSIX timestamp.
     pub start: i64,

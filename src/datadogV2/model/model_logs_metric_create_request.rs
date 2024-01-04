@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The new log-based metric body.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LogsMetricCreateRequest {
     /// The new log-based metric properties.
     #[serde(rename = "data")]
@@ -14,9 +14,9 @@ pub struct LogsMetricCreateRequest {
 }
 
 impl LogsMetricCreateRequest {
-    pub fn new(data: crate::datadogV2::model::LogsMetricCreateData) -> LogsMetricCreateRequest {
-        LogsMetricCreateRequest {
-            data: Box::new(data),
-        }
+    pub fn new(
+        data: Box<crate::datadogV2::model::LogsMetricCreateData>,
+    ) -> LogsMetricCreateRequest {
+        LogsMetricCreateRequest { data }
     }
 }

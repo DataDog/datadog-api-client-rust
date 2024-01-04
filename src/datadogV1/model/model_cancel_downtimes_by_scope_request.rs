@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Cancel downtimes according to scope.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CancelDowntimesByScopeRequest {
     /// The scope(s) to which the downtime applies and must be in `key:value` format. For example, `host:app2`.
     /// Provide multiple scopes as a comma-separated list like `env:dev,env:prod`.

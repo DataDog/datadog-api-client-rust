@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The object containing page total count.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageCustomReportsPage {
     /// Total page count.
     #[serde(rename = "total_count")]

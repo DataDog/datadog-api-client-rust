@@ -7,7 +7,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetCostByOrgParams is a struct for passing parameters to the method [`GetCostByOrg`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetCostByOrgParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost beginning this month.
     pub start_month: String,
@@ -16,7 +16,7 @@ pub struct GetCostByOrgParams {
 }
 
 /// GetEstimatedCostByOrgParams is a struct for passing parameters to the method [`GetEstimatedCostByOrg`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetEstimatedCostByOrgParams {
     /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`. Defaults to `summary`.
     pub view: Option<String>,
@@ -31,7 +31,7 @@ pub struct GetEstimatedCostByOrgParams {
 }
 
 /// GetHistoricalCostByOrgParams is a struct for passing parameters to the method [`GetHistoricalCostByOrg`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetHistoricalCostByOrgParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost beginning this month.
     pub start_month: String,
@@ -42,7 +42,7 @@ pub struct GetHistoricalCostByOrgParams {
 }
 
 /// GetHourlyUsageParams is a struct for passing parameters to the method [`GetHourlyUsage`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetHourlyUsageParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
     pub filter_timestamp_start: String,
@@ -71,8 +71,41 @@ pub struct GetHourlyUsageParams {
     pub page_next_record_id: Option<String>,
 }
 
+/// GetMonthlyCostAttributionParams is a struct for passing parameters to the method [`GetMonthlyCostAttribution`]
+#[derive(Clone, Debug)]
+pub struct GetMonthlyCostAttributionParams {
+    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost beginning in this month.
+    pub start_month: String,
+    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
+    pub end_month: String,
+    /// Comma-separated list specifying cost types (e.g., `<billing_dimension>_on_demand_cost`, `<billing_dimension>_committed_cost`, `<billing_dimension>_total_cost`) and the
+    /// proportions (`<billing_dimension>_percentage_in_org`, `<billing_dimension>_percentage_in_account`). Use `*` to retrieve all fields.
+    /// Example: `infra_host_on_demand_cost,infra_host_percentage_in_account`
+    /// To obtain the complete list of active billing dimensions that can be used to replace
+    /// `<billing_dimension>` in the field names, make a request to the [Get active billing dimensions API](https://docs.datadoghq.com/api/latest/usage-metering/#get-active-billing-dimensions-for-cost-attribution).
+    pub fields: String,
+    /// The direction to sort by: `[desc, asc]`.
+    pub sort_direction: Option<crate::datadogV2::model::SortDirection>,
+    /// The billing dimension to sort by. Always sorted by total cost. Example: `infra_host`.
+    pub sort_name: Option<String>,
+    /// Comma separated list of tag keys used to group cost. If no value is provided the cost will not be broken down by tags.
+    /// To see which tags are available, look for the value of `tag_config_source` in the API response.
+    pub tag_breakdown_keys: Option<String>,
+    /// List following results with a next_record_id provided in the previous query.
+    pub next_record_id: Option<String>,
+    /// Include child org cost in the response. Defaults to `true`.
+    pub include_descendants: Option<bool>,
+}
+
+/// GetProjectedCostParams is a struct for passing parameters to the method [`GetProjectedCost`]
+#[derive(Clone, Debug)]
+pub struct GetProjectedCostParams {
+    /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`. Defaults to `summary`.
+    pub view: Option<String>,
+}
+
 /// GetUsageApplicationSecurityMonitoringParams is a struct for passing parameters to the method [`GetUsageApplicationSecurityMonitoring`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageApplicationSecurityMonitoringParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
     pub start_hr: String,
@@ -82,7 +115,7 @@ pub struct GetUsageApplicationSecurityMonitoringParams {
 }
 
 /// GetUsageLambdaTracedInvocationsParams is a struct for passing parameters to the method [`GetUsageLambdaTracedInvocations`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageLambdaTracedInvocationsParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
     pub start_hr: String,
@@ -92,13 +125,23 @@ pub struct GetUsageLambdaTracedInvocationsParams {
 }
 
 /// GetUsageObservabilityPipelinesParams is a struct for passing parameters to the method [`GetUsageObservabilityPipelines`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageObservabilityPipelinesParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
     pub start_hr: String,
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
+}
+
+/// GetActiveBillingDimensionsError is a struct for typed errors of method [`GetActiveBillingDimensions`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetActiveBillingDimensionsError {
+    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    UnknownValue(serde_json::Value),
 }
 
 /// GetCostByOrgError is a struct for typed errors of method [`GetCostByOrg`]
@@ -135,6 +178,26 @@ pub enum GetHistoricalCostByOrgError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetHourlyUsageError {
+    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetMonthlyCostAttributionError is a struct for typed errors of method [`GetMonthlyCostAttribution`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetMonthlyCostAttributionError {
+    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetProjectedCostError is a struct for typed errors of method [`GetProjectedCost`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetProjectedCostError {
     Status400(Option<crate::datadogV2::model::APIErrorResponse>),
     Status403(Option<crate::datadogV2::model::APIErrorResponse>),
     Status429(Option<crate::datadogV2::model::APIErrorResponse>),
@@ -190,6 +253,79 @@ impl UsageMeteringAPI {
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
         Self { config }
+    }
+
+    /// Get active billing dimensions for cost attribution. Cost data for a given month becomes available no later than the 17th of the following month.
+    pub async fn get_active_billing_dimensions(
+        &self,
+    ) -> Result<
+        Option<crate::datadogV2::model::ActiveBillingDimensionsResponse>,
+        Error<GetActiveBillingDimensionsError>,
+    > {
+        match self.get_active_billing_dimensions_with_http_info().await {
+            Ok(response_content) => Ok(response_content.entity),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get active billing dimensions for cost attribution. Cost data for a given month becomes available no later than the 17th of the following month.
+    pub async fn get_active_billing_dimensions_with_http_info(
+        &self,
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::ActiveBillingDimensionsResponse>,
+        Error<GetActiveBillingDimensionsError>,
+    > {
+        let local_configuration = &self.config;
+
+        // unbox and build parameters
+
+        let local_client = &local_configuration.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cost_by_tag/active_billing_dimensions",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build user agent
+        if let Some(ref local_user_agent) = local_configuration.user_agent {
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+        }
+
+        // build auth
+        if let Some(ref local_apikey) = local_configuration.api_key_auth {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        };
+        if let Some(ref local_apikey) = local_configuration.app_key_auth {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        };
+
+        let local_req = local_req_builder.build()?;
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            let local_entity: Option<crate::datadogV2::model::ActiveBillingDimensionsResponse> =
+                serde_json::from_str(&local_content).ok();
+            Ok(ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            })
+        } else {
+            let local_entity: Option<GetActiveBillingDimensionsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(Error::ResponseError(local_error))
+        }
     }
 
     /// Get cost across multi-org account.
@@ -564,6 +700,223 @@ impl UsageMeteringAPI {
             })
         } else {
             let local_entity: Option<GetHourlyUsageError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get monthly cost attribution by tag across multi-org and single root-org accounts.
+    /// Cost Attribution data for a given month becomes available no later than the 17th of the following month.
+    /// This API endpoint is paginated. To make sure you receive all records, check if the value of `next_record_id` is
+    /// set in the response. If it is, make another request and pass `next_record_id` as a parameter.
+    /// Pseudo code example:
+    /// ```
+    /// response := GetMonthlyCostAttribution(start_month, end_month)
+    /// cursor := response.metadata.pagination.next_record_id
+    /// WHILE cursor != null BEGIN
+    ///   sleep(5 seconds)  # Avoid running into rate limit
+    ///   response := GetMonthlyCostAttribution(start_month, end_month, next_record_id=cursor)
+    ///   cursor := response.metadata.pagination.next_record_id
+    /// END
+    /// ```
+    pub async fn get_monthly_cost_attribution(
+        &self,
+        params: GetMonthlyCostAttributionParams,
+    ) -> Result<
+        Option<crate::datadogV2::model::MonthlyCostAttributionResponse>,
+        Error<GetMonthlyCostAttributionError>,
+    > {
+        match self
+            .get_monthly_cost_attribution_with_http_info(params)
+            .await
+        {
+            Ok(response_content) => Ok(response_content.entity),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get monthly cost attribution by tag across multi-org and single root-org accounts.
+    /// Cost Attribution data for a given month becomes available no later than the 17th of the following month.
+    /// This API endpoint is paginated. To make sure you receive all records, check if the value of `next_record_id` is
+    /// set in the response. If it is, make another request and pass `next_record_id` as a parameter.
+    /// Pseudo code example:
+    /// ```
+    /// response := GetMonthlyCostAttribution(start_month, end_month)
+    /// cursor := response.metadata.pagination.next_record_id
+    /// WHILE cursor != null BEGIN
+    ///   sleep(5 seconds)  # Avoid running into rate limit
+    ///   response := GetMonthlyCostAttribution(start_month, end_month, next_record_id=cursor)
+    ///   cursor := response.metadata.pagination.next_record_id
+    /// END
+    /// ```
+    pub async fn get_monthly_cost_attribution_with_http_info(
+        &self,
+        params: GetMonthlyCostAttributionParams,
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::MonthlyCostAttributionResponse>,
+        Error<GetMonthlyCostAttributionError>,
+    > {
+        let local_configuration = &self.config;
+
+        // unbox and build parameters
+        let start_month = params.start_month;
+        let end_month = params.end_month;
+        let fields = params.fields;
+        let sort_direction = params.sort_direction;
+        let sort_name = params.sort_name;
+        let tag_breakdown_keys = params.tag_breakdown_keys;
+        let next_record_id = params.next_record_id;
+        let include_descendants = params.include_descendants;
+
+        let local_client = &local_configuration.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cost_by_tag/monthly_cost_attribution",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        local_req_builder = local_req_builder.query(&[("start_month", &start_month.to_string())]);
+        local_req_builder = local_req_builder.query(&[("end_month", &end_month.to_string())]);
+        local_req_builder = local_req_builder.query(&[("fields", &fields.to_string())]);
+        if let Some(ref local_str) = sort_direction {
+            local_req_builder =
+                local_req_builder.query(&[("sort_direction", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = sort_name {
+            local_req_builder = local_req_builder.query(&[("sort_name", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = tag_breakdown_keys {
+            local_req_builder =
+                local_req_builder.query(&[("tag_breakdown_keys", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = next_record_id {
+            local_req_builder =
+                local_req_builder.query(&[("next_record_id", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = include_descendants {
+            local_req_builder =
+                local_req_builder.query(&[("include_descendants", &local_str.to_string())]);
+        };
+
+        // build user agent
+        if let Some(ref local_user_agent) = local_configuration.user_agent {
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+        }
+
+        // build auth
+        if let Some(ref local_apikey) = local_configuration.api_key_auth {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        };
+        if let Some(ref local_apikey) = local_configuration.app_key_auth {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        };
+
+        let local_req = local_req_builder.build()?;
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            let local_entity: Option<crate::datadogV2::model::MonthlyCostAttributionResponse> =
+                serde_json::from_str(&local_content).ok();
+            Ok(ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            })
+        } else {
+            let local_entity: Option<GetMonthlyCostAttributionError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get projected cost across multi-org and single root-org accounts.
+    /// Projected cost data is only available for the current month and becomes available around the 12th of the month.
+    /// This endpoint requires the usage_read authorization scope.
+    pub async fn get_projected_cost(
+        &self,
+        params: GetProjectedCostParams,
+    ) -> Result<Option<crate::datadogV2::model::ProjectedCostResponse>, Error<GetProjectedCostError>>
+    {
+        match self.get_projected_cost_with_http_info(params).await {
+            Ok(response_content) => Ok(response_content.entity),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get projected cost across multi-org and single root-org accounts.
+    /// Projected cost data is only available for the current month and becomes available around the 12th of the month.
+    /// This endpoint requires the usage_read authorization scope.
+    pub async fn get_projected_cost_with_http_info(
+        &self,
+        params: GetProjectedCostParams,
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::ProjectedCostResponse>,
+        Error<GetProjectedCostError>,
+    > {
+        let local_configuration = &self.config;
+
+        // unbox and build parameters
+        let view = params.view;
+
+        let local_client = &local_configuration.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/usage/projected_cost",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_str) = view {
+            local_req_builder = local_req_builder.query(&[("view", &local_str.to_string())]);
+        };
+
+        // build user agent
+        if let Some(ref local_user_agent) = local_configuration.user_agent {
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+        }
+
+        // build auth
+        if let Some(ref local_apikey) = local_configuration.api_key_auth {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        };
+        if let Some(ref local_apikey) = local_configuration.app_key_auth {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        };
+
+        let local_req = local_req_builder.build()?;
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            let local_entity: Option<crate::datadogV2::model::ProjectedCostResponse> =
+                serde_json::from_str(&local_content).ok();
+            Ok(ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            })
+        } else {
+            let local_entity: Option<GetProjectedCostError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,

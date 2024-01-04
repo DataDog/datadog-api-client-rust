@@ -17,9 +17,3 @@ impl ToString for DetailedFindingType {
         }
     }
 }
-
-impl Default for DetailedFindingType {
-    fn default() -> DetailedFindingType {
-        Self::DETAILED_FINDING
-    }
-}

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Error response object.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct APIErrorResponse {
     /// Array of errors returned by the API.
     #[serde(rename = "errors")]

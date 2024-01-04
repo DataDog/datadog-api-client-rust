@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Number of indexed logs for each hour and index for a given organization.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageLogsByIndexHour {
     /// The total number of indexed logs for the queried hour.
     #[serde(rename = "event_count")]

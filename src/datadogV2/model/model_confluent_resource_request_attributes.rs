@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Attributes object for updating a Confluent resource.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ConfluentResourceRequestAttributes {
     /// Enable the `custom.consumer_lag_offset` metric, which contains extra metric tags.
     #[serde(rename = "enable_custom_metrics")]

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Restriction policy attributes.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct RestrictionPolicyAttributes {
     /// An array of bindings.
     #[serde(rename = "bindings")]

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The metadata associated with a request.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct EventsResponseMetadata {
     /// The time elapsed in milliseconds.
     #[serde(rename = "elapsed")]

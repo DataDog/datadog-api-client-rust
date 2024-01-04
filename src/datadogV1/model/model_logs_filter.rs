@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Filter for logs.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LogsFilter {
     /// The filter query.
     #[serde(rename = "query")]

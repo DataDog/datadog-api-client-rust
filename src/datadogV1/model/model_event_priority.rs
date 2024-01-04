@@ -20,9 +20,3 @@ impl ToString for EventPriority {
         }
     }
 }
-
-impl Default for EventPriority {
-    fn default() -> EventPriority {
-        Self::NORMAL
-    }
-}

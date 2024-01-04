@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Configuration options for what is shown in an alert event message.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SlackIntegrationChannelDisplay {
     /// Show the main body of the alert event.
     #[serde(rename = "message")]

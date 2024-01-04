@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The response object of an SLO correction.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SLOCorrectionResponse {
     /// The response object of a list of SLO corrections.
     #[serde(rename = "data")]

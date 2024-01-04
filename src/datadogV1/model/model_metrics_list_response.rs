@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Object listing all metric names stored by Datadog since a given time.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct MetricsListResponse {
     /// Time when the metrics were active, seconds since the Unix epoch.
     #[serde(rename = "from")]

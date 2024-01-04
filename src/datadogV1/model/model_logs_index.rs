@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Object describing a Datadog Log index.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LogsIndex {
     /// The number of log events you can send in this index per day before you are rate-limited.
     #[serde(rename = "daily_limit")]
@@ -33,11 +33,11 @@ pub struct LogsIndex {
 }
 
 impl LogsIndex {
-    pub fn new(filter: crate::datadogV1::model::LogsFilter, name: String) -> LogsIndex {
+    pub fn new(filter: Box<crate::datadogV1::model::LogsFilter>, name: String) -> LogsIndex {
         LogsIndex {
             daily_limit: None,
             exclusion_filters: None,
-            filter: Box::new(filter),
+            filter,
             is_rate_limited: None,
             name,
             num_retention_days: None,

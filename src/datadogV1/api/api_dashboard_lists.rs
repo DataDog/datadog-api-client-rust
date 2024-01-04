@@ -7,28 +7,28 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// CreateDashboardListParams is a struct for passing parameters to the method [`CreateDashboardList`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateDashboardListParams {
     /// Create a dashboard list request body.
     pub body: crate::datadogV1::model::DashboardList,
 }
 
 /// DeleteDashboardListParams is a struct for passing parameters to the method [`DeleteDashboardList`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DeleteDashboardListParams {
     /// ID of the dashboard list to delete.
     pub list_id: i64,
 }
 
 /// GetDashboardListParams is a struct for passing parameters to the method [`GetDashboardList`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetDashboardListParams {
     /// ID of the dashboard list to fetch.
     pub list_id: i64,
 }
 
 /// UpdateDashboardListParams is a struct for passing parameters to the method [`UpdateDashboardList`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateDashboardListParams {
     /// ID of the dashboard list to update.
     pub list_id: i64,

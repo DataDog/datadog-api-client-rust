@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The body of the retention filter to be updated.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct RetentionFilterUpdateRequest {
     /// The body of the retention filter to be updated.
     #[serde(rename = "data")]
@@ -15,10 +15,8 @@ pub struct RetentionFilterUpdateRequest {
 
 impl RetentionFilterUpdateRequest {
     pub fn new(
-        data: crate::datadogV2::model::RetentionFilterUpdateData,
+        data: Box<crate::datadogV2::model::RetentionFilterUpdateData>,
     ) -> RetentionFilterUpdateRequest {
-        RetentionFilterUpdateRequest {
-            data: Box::new(data),
-        }
+        RetentionFilterUpdateRequest { data }
     }
 }

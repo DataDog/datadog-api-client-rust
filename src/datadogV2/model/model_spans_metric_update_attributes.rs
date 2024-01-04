@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The span-based metric properties that will be updated.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SpansMetricUpdateAttributes {
     /// The compute rule to compute the span-based metric.
     #[serde(rename = "compute")]

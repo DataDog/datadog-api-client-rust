@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Object representing a graph snapshot.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct GraphSnapshot {
     /// A JSON document defining the graph. `graph_def` can be used instead of `metric_query`.
     /// The JSON document uses the [grammar defined here](https://docs.datadoghq.com/graphing/graphing_json/#grammar)

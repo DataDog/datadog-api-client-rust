@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Usage attributes data.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageAttributesObject {
     /// The organization name.
     #[serde(rename = "org_name")]

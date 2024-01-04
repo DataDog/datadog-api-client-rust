@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Global hourly report of all data billed by Datadog for a given organization.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageSummaryDateOrg {
     /// Shows the 99th percentile of all agent hosts over all hours in the current date for the given org.
     #[serde(rename = "agent_host_top99p")]
@@ -144,6 +144,12 @@ pub struct UsageSummaryDateOrg {
     /// Shows the 99th percentile of all Cloud Security Management Pro hosts over all hours in the current date for the given org.
     #[serde(rename = "cspm_host_top99p")]
     pub cspm_host_top99p: Option<i64>,
+    /// Shows the average number of distinct historical custom metrics over all hours in the current date for the given org.
+    #[serde(rename = "custom_historical_ts_avg")]
+    pub custom_historical_ts_avg: Option<i64>,
+    /// Shows the average number of distinct live custom metrics over all hours in the current date for the given org.
+    #[serde(rename = "custom_live_ts_avg")]
+    pub custom_live_ts_avg: Option<i64>,
     /// Shows the average number of distinct custom metrics over all hours in the current date for the given org.
     #[serde(rename = "custom_ts_avg")]
     pub custom_ts_avg: Option<i64>,
@@ -372,6 +378,8 @@ impl UsageSummaryDateOrg {
             cspm_container_hwm: None,
             cspm_gcp_host_top99p: None,
             cspm_host_top99p: None,
+            custom_historical_ts_avg: None,
+            custom_live_ts_avg: None,
             custom_ts_avg: None,
             cws_container_count_avg: None,
             cws_host_top99p: None,

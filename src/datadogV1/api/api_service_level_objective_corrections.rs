@@ -7,28 +7,28 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// CreateSLOCorrectionParams is a struct for passing parameters to the method [`CreateSLOCorrection`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateSLOCorrectionParams {
     /// Create an SLO Correction
     pub body: crate::datadogV1::model::SLOCorrectionCreateRequest,
 }
 
 /// DeleteSLOCorrectionParams is a struct for passing parameters to the method [`DeleteSLOCorrection`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DeleteSLOCorrectionParams {
     /// The ID of the SLO correction object.
     pub slo_correction_id: String,
 }
 
 /// GetSLOCorrectionParams is a struct for passing parameters to the method [`GetSLOCorrection`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetSLOCorrectionParams {
     /// The ID of the SLO correction object.
     pub slo_correction_id: String,
 }
 
 /// ListSLOCorrectionParams is a struct for passing parameters to the method [`ListSLOCorrection`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct ListSLOCorrectionParams {
     /// The specific offset to use as the beginning of the returned response.
     pub offset: Option<i64>,
@@ -37,7 +37,7 @@ pub struct ListSLOCorrectionParams {
 }
 
 /// UpdateSLOCorrectionParams is a struct for passing parameters to the method [`UpdateSLOCorrection`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateSLOCorrectionParams {
     /// The ID of the SLO correction object.
     pub slo_correction_id: String,

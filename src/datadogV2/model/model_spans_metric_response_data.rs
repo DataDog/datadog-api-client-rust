@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The span-based metric properties.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SpansMetricResponseData {
     /// The object describing a Datadog span-based metric.
     #[serde(rename = "attributes")]

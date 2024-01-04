@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// A list of current AWS services for which Datadog offers automatic log collection.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AWSLogsServicesRequest {
     /// Your AWS Account ID without dashes.
     #[serde(rename = "account_id")]

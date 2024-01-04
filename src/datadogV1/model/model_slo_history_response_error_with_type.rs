@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// An object describing the error with error type and error message.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SLOHistoryResponseErrorWithType {
     /// A message with more details about the error.
     #[serde(rename = "error_message")]

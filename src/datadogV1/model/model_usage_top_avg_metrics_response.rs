@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Response containing the number of hourly recorded custom metrics for a given organization.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageTopAvgMetricsResponse {
     /// The object containing document metadata.
     #[serde(rename = "metadata")]

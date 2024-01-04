@@ -20,9 +20,3 @@ impl ToString for AuditLogsResponseStatus {
         }
     }
 }
-
-impl Default for AuditLogsResponseStatus {
-    fn default() -> AuditLogsResponseStatus {
-        Self::DONE
-    }
-}

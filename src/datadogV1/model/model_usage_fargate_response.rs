@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Response containing the number of Fargate tasks run and hourly usage.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageFargateResponse {
     /// Array with the number of hourly Fargate tasks recorded for a given organization.
     #[serde(rename = "usage")]

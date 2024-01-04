@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Attributes associated with your service account.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct GCPSTSServiceAccountAttributes {
     /// Tags to be associated with GCP metrics and service checks from your account.
     #[serde(rename = "account_tags")]
@@ -20,9 +20,15 @@ pub struct GCPSTSServiceAccountAttributes {
     /// Your Host Filters.
     #[serde(rename = "host_filters")]
     pub host_filters: Option<Vec<String>>,
-    /// When enabled, Datadog performs configuration checks across your Google Cloud environment by continuously scanning every resource.
+    /// When enabled, Datadog will activate the Cloud Security Monitoring product for this service account. Note: This requires resource_collection_enabled to be set to true.
     #[serde(rename = "is_cspm_enabled")]
     pub is_cspm_enabled: Option<bool>,
+    /// When enabled, Datadog will attempt to collect Security Command Center Findings. Note: This requires additional permissions on the service account.
+    #[serde(rename = "is_security_command_center_enabled")]
+    pub is_security_command_center_enabled: Option<bool>,
+    /// When enabled, Datadog scans for all resources in your GCP environment.
+    #[serde(rename = "resource_collection_enabled")]
+    pub resource_collection_enabled: Option<bool>,
 }
 
 impl GCPSTSServiceAccountAttributes {
@@ -33,6 +39,8 @@ impl GCPSTSServiceAccountAttributes {
             client_email: None,
             host_filters: None,
             is_cspm_enabled: None,
+            is_security_command_center_enabled: None,
+            resource_collection_enabled: None,
         }
     }
 }

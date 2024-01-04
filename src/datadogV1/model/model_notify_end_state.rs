@@ -23,9 +23,3 @@ impl ToString for NotifyEndState {
         }
     }
 }
-
-impl Default for NotifyEndState {
-    fn default() -> NotifyEndState {
-        Self::ALERT
-    }
-}

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Object containing the list of metrics matching the search query.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct MetricSearchResponse {
     /// Search result.
     #[serde(rename = "results")]

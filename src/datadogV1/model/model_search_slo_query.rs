@@ -8,7 +8,7 @@ use serde_with::skip_serializing_none;
 /// to be used because this will sum up all request counts instead of averaging them, or taking the max or
 /// min of all of those requests.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SearchSLOQuery {
     /// A Datadog metric query for total (valid) events.
     #[serde(rename = "denominator")]

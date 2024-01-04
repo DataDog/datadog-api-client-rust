@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// An array of tag filter rules by `namespace` and tag filter string.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AWSTagFilterListResponse {
     /// An array of tag filters.
     #[serde(rename = "filters")]

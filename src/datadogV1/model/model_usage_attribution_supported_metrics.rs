@@ -167,9 +167,3 @@ impl ToString for UsageAttributionSupportedMetrics {
         }
     }
 }
-
-impl Default for UsageAttributionSupportedMetrics {
-    fn default() -> UsageAttributionSupportedMetrics {
-        Self::CUSTOM_TIMESERIES_USAGE
-    }
-}

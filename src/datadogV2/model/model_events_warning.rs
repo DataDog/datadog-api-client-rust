@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// A warning message indicating something is wrong with the query.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct EventsWarning {
     /// A unique code for this type of warning.
     #[serde(rename = "code")]

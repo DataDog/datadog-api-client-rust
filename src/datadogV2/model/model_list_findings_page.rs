@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Pagination and findings count information.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ListFindingsPage {
     /// The cursor used to paginate requests.
     #[serde(rename = "cursor")]

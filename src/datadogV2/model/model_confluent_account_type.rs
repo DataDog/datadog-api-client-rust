@@ -17,9 +17,3 @@ impl ToString for ConfluentAccountType {
         }
     }
 }
-
-impl Default for ConfluentAccountType {
-    fn default() -> ConfluentAccountType {
-        Self::CONFLUENT_CLOUD_ACCOUNTS
-    }
-}

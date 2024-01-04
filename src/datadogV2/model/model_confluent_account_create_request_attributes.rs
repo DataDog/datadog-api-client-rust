@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Attributes associated with the account creation request.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ConfluentAccountCreateRequestAttributes {
     /// The API key associated with your Confluent account.
     #[serde(rename = "api_key")]

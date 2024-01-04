@@ -26,9 +26,3 @@ impl ToString for SLOTimeframe {
         }
     }
 }
-
-impl Default for SLOTimeframe {
-    fn default() -> SLOTimeframe {
-        Self::SEVEN_DAYS
-    }
-}

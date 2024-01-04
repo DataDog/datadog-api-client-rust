@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// A service level objective data container.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SearchServiceLevelObjective {
     /// A service level objective ID and attributes.
     #[serde(rename = "data")]

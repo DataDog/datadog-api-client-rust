@@ -7,35 +7,35 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// CancelDowntimeParams is a struct for passing parameters to the method [`CancelDowntime`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CancelDowntimeParams {
     /// ID of the downtime to cancel.
     pub downtime_id: i64,
 }
 
 /// CancelDowntimesByScopeParams is a struct for passing parameters to the method [`CancelDowntimesByScope`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CancelDowntimesByScopeParams {
     /// Scope to cancel downtimes for.
     pub body: crate::datadogV1::model::CancelDowntimesByScopeRequest,
 }
 
 /// CreateDowntimeParams is a struct for passing parameters to the method [`CreateDowntime`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateDowntimeParams {
     /// Schedule a downtime request body.
     pub body: crate::datadogV1::model::Downtime,
 }
 
 /// GetDowntimeParams is a struct for passing parameters to the method [`GetDowntime`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetDowntimeParams {
     /// ID of the downtime to fetch.
     pub downtime_id: i64,
 }
 
 /// ListDowntimesParams is a struct for passing parameters to the method [`ListDowntimes`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct ListDowntimesParams {
     /// Only return downtimes that are active when the request is made.
     pub current_only: Option<bool>,
@@ -44,14 +44,14 @@ pub struct ListDowntimesParams {
 }
 
 /// ListMonitorDowntimesParams is a struct for passing parameters to the method [`ListMonitorDowntimes`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct ListMonitorDowntimesParams {
     /// The id of the monitor
     pub monitor_id: i64,
 }
 
 /// UpdateDowntimeParams is a struct for passing parameters to the method [`UpdateDowntime`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateDowntimeParams {
     /// ID of the downtime to update.
     pub downtime_id: i64,
@@ -151,7 +151,7 @@ impl DowntimesAPI {
         Self { config }
     }
 
-    /// Cancel a downtime.
+    /// Cancel a downtime. **Note:** This endpoint has been deprecated. Please use v2 endpoints.
     pub async fn cancel_downtime(
         &self,
         params: CancelDowntimeParams,
@@ -162,7 +162,7 @@ impl DowntimesAPI {
         }
     }
 
-    /// Cancel a downtime.
+    /// Cancel a downtime. **Note:** This endpoint has been deprecated. Please use v2 endpoints.
     pub async fn cancel_downtime_with_http_info(
         &self,
         params: CancelDowntimeParams,
@@ -220,7 +220,7 @@ impl DowntimesAPI {
         }
     }
 
-    /// Delete all downtimes that match the scope of `X`.
+    /// Delete all downtimes that match the scope of `X`. **Note:** This only interacts with Downtimes created using v1 endpoints. This endpoint has been deprecated and will not be replaced. Please use v2 endpoints to find and cancel downtimes.
     pub async fn cancel_downtimes_by_scope(
         &self,
         params: CancelDowntimesByScopeParams,
@@ -234,7 +234,7 @@ impl DowntimesAPI {
         }
     }
 
-    /// Delete all downtimes that match the scope of `X`.
+    /// Delete all downtimes that match the scope of `X`. **Note:** This only interacts with Downtimes created using v1 endpoints. This endpoint has been deprecated and will not be replaced. Please use v2 endpoints to find and cancel downtimes.
     pub async fn cancel_downtimes_by_scope_with_http_info(
         &self,
         params: CancelDowntimesByScopeParams,
@@ -303,7 +303,7 @@ impl DowntimesAPI {
         }
     }
 
-    /// Schedule a downtime.
+    /// Schedule a downtime. **Note:** This endpoint has been deprecated. Please use v2 endpoints.
     pub async fn create_downtime(
         &self,
         params: CreateDowntimeParams,
@@ -314,7 +314,7 @@ impl DowntimesAPI {
         }
     }
 
-    /// Schedule a downtime.
+    /// Schedule a downtime. **Note:** This endpoint has been deprecated. Please use v2 endpoints.
     pub async fn create_downtime_with_http_info(
         &self,
         params: CreateDowntimeParams,
@@ -378,7 +378,7 @@ impl DowntimesAPI {
         }
     }
 
-    /// Get downtime detail by `downtime_id`.
+    /// Get downtime detail by `downtime_id`. **Note:** This endpoint has been deprecated. Please use v2 endpoints.
     pub async fn get_downtime(
         &self,
         params: GetDowntimeParams,
@@ -389,7 +389,7 @@ impl DowntimesAPI {
         }
     }
 
-    /// Get downtime detail by `downtime_id`.
+    /// Get downtime detail by `downtime_id`. **Note:** This endpoint has been deprecated. Please use v2 endpoints.
     pub async fn get_downtime_with_http_info(
         &self,
         params: GetDowntimeParams,
@@ -448,7 +448,7 @@ impl DowntimesAPI {
         }
     }
 
-    /// Get all scheduled downtimes.
+    /// Get all scheduled downtimes. **Note:** This endpoint has been deprecated. Please use v2 endpoints.
     pub async fn list_downtimes(
         &self,
         params: ListDowntimesParams,
@@ -459,7 +459,7 @@ impl DowntimesAPI {
         }
     }
 
-    /// Get all scheduled downtimes.
+    /// Get all scheduled downtimes. **Note:** This endpoint has been deprecated. Please use v2 endpoints.
     pub async fn list_downtimes_with_http_info(
         &self,
         params: ListDowntimesParams,
@@ -526,7 +526,7 @@ impl DowntimesAPI {
         }
     }
 
-    /// Get all active downtimes for the specified monitor.
+    /// Get all active v1 downtimes for the specified monitor. **Note:** This endpoint has been deprecated. Please use v2 endpoints.
     pub async fn list_monitor_downtimes(
         &self,
         params: ListMonitorDowntimesParams,
@@ -538,7 +538,7 @@ impl DowntimesAPI {
         }
     }
 
-    /// Get all active downtimes for the specified monitor.
+    /// Get all active v1 downtimes for the specified monitor. **Note:** This endpoint has been deprecated. Please use v2 endpoints.
     pub async fn list_monitor_downtimes_with_http_info(
         &self,
         params: ListMonitorDowntimesParams,
@@ -601,7 +601,7 @@ impl DowntimesAPI {
         }
     }
 
-    /// Update a single downtime by `downtime_id`.
+    /// Update a single downtime by `downtime_id`. **Note:** This endpoint has been deprecated. Please use v2 endpoints.
     pub async fn update_downtime(
         &self,
         params: UpdateDowntimeParams,
@@ -612,7 +612,7 @@ impl DowntimesAPI {
         }
     }
 
-    /// Update a single downtime by `downtime_id`.
+    /// Update a single downtime by `downtime_id`. **Note:** This endpoint has been deprecated. Please use v2 endpoints.
     pub async fn update_downtime_with_http_info(
         &self,
         params: UpdateDowntimeParams,

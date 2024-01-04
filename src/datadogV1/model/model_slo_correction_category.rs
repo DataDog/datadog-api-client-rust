@@ -26,9 +26,3 @@ impl ToString for SLOCorrectionCategory {
         }
     }
 }
-
-impl Default for SLOCorrectionCategory {
-    fn default() -> SLOCorrectionCategory {
-        Self::SCHEDULED_MAINTENANCE
-    }
-}

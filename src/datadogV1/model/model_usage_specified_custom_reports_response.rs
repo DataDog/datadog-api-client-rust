@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Returns available specified custom reports.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageSpecifiedCustomReportsResponse {
     /// Response containing date and type for specified custom reports.
     #[serde(rename = "data")]

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The data body for adding a Confluent account.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ConfluentAccountCreateRequestData {
     /// Attributes associated with the account creation request.
     #[serde(rename = "attributes")]
@@ -18,12 +18,9 @@ pub struct ConfluentAccountCreateRequestData {
 
 impl ConfluentAccountCreateRequestData {
     pub fn new(
-        attributes: crate::datadogV2::model::ConfluentAccountCreateRequestAttributes,
+        attributes: Box<crate::datadogV2::model::ConfluentAccountCreateRequestAttributes>,
         type_: crate::datadogV2::model::ConfluentAccountType,
     ) -> ConfluentAccountCreateRequestData {
-        ConfluentAccountCreateRequestData {
-            attributes: Box::new(attributes),
-            type_,
-        }
+        ConfluentAccountCreateRequestData { attributes, type_ }
     }
 }

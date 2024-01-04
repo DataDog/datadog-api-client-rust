@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Object representing an event.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct EventCreateRequest {
     /// An arbitrary string to use for aggregation. Limited to 100 characters.
     /// If you specify a key, all events using that key are grouped together in the Event Stream.

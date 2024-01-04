@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Attributes object for Fastly service requests.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FastlyServiceAttributes {
     /// A list of tags for the Fastly service.
     #[serde(rename = "tags")]

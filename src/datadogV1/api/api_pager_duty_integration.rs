@@ -7,28 +7,28 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// CreatePagerDutyIntegrationServiceParams is a struct for passing parameters to the method [`CreatePagerDutyIntegrationService`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreatePagerDutyIntegrationServiceParams {
     /// Create a new service object request body.
     pub body: crate::datadogV1::model::PagerDutyService,
 }
 
 /// DeletePagerDutyIntegrationServiceParams is a struct for passing parameters to the method [`DeletePagerDutyIntegrationService`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DeletePagerDutyIntegrationServiceParams {
     /// The service name
     pub service_name: String,
 }
 
 /// GetPagerDutyIntegrationServiceParams is a struct for passing parameters to the method [`GetPagerDutyIntegrationService`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetPagerDutyIntegrationServiceParams {
     /// The service name.
     pub service_name: String,
 }
 
 /// UpdatePagerDutyIntegrationServiceParams is a struct for passing parameters to the method [`UpdatePagerDutyIntegrationService`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdatePagerDutyIntegrationServiceParams {
     /// The service name
     pub service_name: String,

@@ -17,9 +17,3 @@ impl ToString for FastlyAccountType {
         }
     }
 }
-
-impl Default for FastlyAccountType {
-    fn default() -> FastlyAccountType {
-        Self::FASTLY_ACCOUNTS
-    }
-}

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// A service level objective response containing the requested object.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CheckCanDeleteSLOResponse {
     /// An array of service level objective objects.
     #[serde(rename = "data")]

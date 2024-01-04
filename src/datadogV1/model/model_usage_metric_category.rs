@@ -20,9 +20,3 @@ impl ToString for UsageMetricCategory {
         }
     }
 }
-
-impl Default for UsageMetricCategory {
-    fn default() -> UsageMetricCategory {
-        Self::STANDARD
-    }
-}

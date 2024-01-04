@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The object description of an event response attribute.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct EventResponseAttributes {
     /// Object description of attributes from your event.
     #[serde(rename = "attributes")]

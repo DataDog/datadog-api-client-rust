@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Object for a single Agent rule.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CloudWorkloadSecurityAgentRuleUpdateData {
     /// Update an existing Cloud Workload Security Agent rule.
     #[serde(rename = "attributes")]
@@ -18,12 +18,9 @@ pub struct CloudWorkloadSecurityAgentRuleUpdateData {
 
 impl CloudWorkloadSecurityAgentRuleUpdateData {
     pub fn new(
-        attributes: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleUpdateAttributes,
+        attributes: Box<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleUpdateAttributes>,
         type_: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleType,
     ) -> CloudWorkloadSecurityAgentRuleUpdateData {
-        CloudWorkloadSecurityAgentRuleUpdateData {
-            attributes: Box::new(attributes),
-            type_,
-        }
+        CloudWorkloadSecurityAgentRuleUpdateData { attributes, type_ }
     }
 }

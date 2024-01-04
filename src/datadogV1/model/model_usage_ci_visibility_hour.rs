@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// CI visibility usage in a given hour.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageCIVisibilityHour {
     /// The number of spans for pipelines in the queried hour.
     #[serde(

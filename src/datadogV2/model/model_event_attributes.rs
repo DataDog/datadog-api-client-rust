@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Object description of attributes from your event.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct EventAttributes {
     /// Aggregation key of the event.
     #[serde(rename = "aggregation_key")]

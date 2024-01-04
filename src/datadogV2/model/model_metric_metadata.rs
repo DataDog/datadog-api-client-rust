@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Metadata for the metric.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct MetricMetadata {
     /// Metric origin information.
     #[serde(rename = "origin")]

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Observability Pipelines usage response.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageObservabilityPipelinesResponse {
     /// Response containing Observability Pipelines usage.
     #[serde(rename = "data")]

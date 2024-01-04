@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Attributes from the monitor that triggered the event.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct MonitorType {
     /// The POSIX timestamp of the monitor's creation in nanoseconds.
     #[serde(rename = "created_at")]

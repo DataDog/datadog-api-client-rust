@@ -17,9 +17,3 @@ impl ToString for GCPSTSDelegateAccountType {
         }
     }
 }
-
-impl Default for GCPSTSDelegateAccountType {
-    fn default() -> GCPSTSDelegateAccountType {
-        Self::GCP_STS_DELEGATE
-    }
-}

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Service account info.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct GCPSTSServiceAccountUpdateRequest {
     /// Data on your service account.
     #[serde(rename = "data")]

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Object representing a host.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Host {
     /// Host aliases collected by Datadog.
     #[serde(rename = "aliases")]

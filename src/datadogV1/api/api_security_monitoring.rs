@@ -7,7 +7,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// AddSecurityMonitoringSignalToIncidentParams is a struct for passing parameters to the method [`AddSecurityMonitoringSignalToIncident`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct AddSecurityMonitoringSignalToIncidentParams {
     /// The ID of the signal.
     pub signal_id: String,
@@ -16,7 +16,7 @@ pub struct AddSecurityMonitoringSignalToIncidentParams {
 }
 
 /// EditSecurityMonitoringSignalAssigneeParams is a struct for passing parameters to the method [`EditSecurityMonitoringSignalAssignee`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct EditSecurityMonitoringSignalAssigneeParams {
     /// The ID of the signal.
     pub signal_id: String,
@@ -25,7 +25,7 @@ pub struct EditSecurityMonitoringSignalAssigneeParams {
 }
 
 /// EditSecurityMonitoringSignalStateParams is a struct for passing parameters to the method [`EditSecurityMonitoringSignalState`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct EditSecurityMonitoringSignalStateParams {
     /// The ID of the signal.
     pub signal_id: String,

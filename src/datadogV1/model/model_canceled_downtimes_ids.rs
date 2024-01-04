@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Object containing array of IDs of canceled downtimes.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CanceledDowntimesIds {
     /// ID of downtimes that were canceled.
     #[serde(rename = "cancelled_ids")]

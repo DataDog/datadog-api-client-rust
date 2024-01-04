@@ -7,7 +7,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetDailyCustomReportsParams is a struct for passing parameters to the method [`GetDailyCustomReports`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetDailyCustomReportsParams {
     /// The number of files to return in the response. `[default=60]`.
     pub page_size: Option<i64>,
@@ -20,7 +20,7 @@ pub struct GetDailyCustomReportsParams {
 }
 
 /// GetHourlyUsageAttributionParams is a struct for passing parameters to the method [`GetHourlyUsageAttribution`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetHourlyUsageAttributionParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
     pub start_hr: String,
@@ -40,7 +40,7 @@ pub struct GetHourlyUsageAttributionParams {
 }
 
 /// GetIncidentManagementParams is a struct for passing parameters to the method [`GetIncidentManagement`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetIncidentManagementParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
     pub start_hr: String,
@@ -50,7 +50,7 @@ pub struct GetIncidentManagementParams {
 }
 
 /// GetIngestedSpansParams is a struct for passing parameters to the method [`GetIngestedSpans`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetIngestedSpansParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
     pub start_hr: String,
@@ -60,7 +60,7 @@ pub struct GetIngestedSpansParams {
 }
 
 /// GetMonthlyCustomReportsParams is a struct for passing parameters to the method [`GetMonthlyCustomReports`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetMonthlyCustomReportsParams {
     /// The number of files to return in the response `[default=60].`
     pub page_size: Option<i64>,
@@ -73,7 +73,7 @@ pub struct GetMonthlyCustomReportsParams {
 }
 
 /// GetMonthlyUsageAttributionParams is a struct for passing parameters to the method [`GetMonthlyUsageAttribution`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetMonthlyUsageAttributionParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage beginning in this month.
     /// Maximum of 15 months ago.
@@ -97,21 +97,21 @@ pub struct GetMonthlyUsageAttributionParams {
 }
 
 /// GetSpecifiedDailyCustomReportsParams is a struct for passing parameters to the method [`GetSpecifiedDailyCustomReports`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetSpecifiedDailyCustomReportsParams {
     /// Date of the report in the format `YYYY-MM-DD`.
     pub report_id: String,
 }
 
 /// GetSpecifiedMonthlyCustomReportsParams is a struct for passing parameters to the method [`GetSpecifiedMonthlyCustomReports`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetSpecifiedMonthlyCustomReportsParams {
     /// Date of the report in the format `YYYY-MM-DD`.
     pub report_id: String,
 }
 
 /// GetUsageAnalyzedLogsParams is a struct for passing parameters to the method [`GetUsageAnalyzedLogs`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageAnalyzedLogsParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
     pub start_hr: String,
@@ -121,7 +121,7 @@ pub struct GetUsageAnalyzedLogsParams {
 }
 
 /// GetUsageAttributionParams is a struct for passing parameters to the method [`GetUsageAttribution`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageAttributionParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage beginning in this month.
     /// Maximum of 15 months ago.
@@ -143,7 +143,7 @@ pub struct GetUsageAttributionParams {
 }
 
 /// GetUsageAuditLogsParams is a struct for passing parameters to the method [`GetUsageAuditLogs`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageAuditLogsParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
     pub start_hr: String,
@@ -153,14 +153,14 @@ pub struct GetUsageAuditLogsParams {
 }
 
 /// GetUsageBillableSummaryParams is a struct for passing parameters to the method [`GetUsageBillableSummary`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageBillableSummaryParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage starting this month.
     pub month: Option<String>,
 }
 
 /// GetUsageCIAppParams is a struct for passing parameters to the method [`GetUsageCIApp`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageCIAppParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
     pub start_hr: String,
@@ -170,7 +170,7 @@ pub struct GetUsageCIAppParams {
 }
 
 /// GetUsageCWSParams is a struct for passing parameters to the method [`GetUsageCWS`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageCWSParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
     pub start_hr: String,
@@ -180,7 +180,7 @@ pub struct GetUsageCWSParams {
 }
 
 /// GetUsageCloudSecurityPostureManagementParams is a struct for passing parameters to the method [`GetUsageCloudSecurityPostureManagement`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageCloudSecurityPostureManagementParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
     pub start_hr: String,
@@ -190,7 +190,7 @@ pub struct GetUsageCloudSecurityPostureManagementParams {
 }
 
 /// GetUsageDBMParams is a struct for passing parameters to the method [`GetUsageDBM`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageDBMParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
     pub start_hr: String,
@@ -200,7 +200,7 @@ pub struct GetUsageDBMParams {
 }
 
 /// GetUsageFargateParams is a struct for passing parameters to the method [`GetUsageFargate`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageFargateParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
     pub start_hr: String,
@@ -209,7 +209,7 @@ pub struct GetUsageFargateParams {
 }
 
 /// GetUsageHostsParams is a struct for passing parameters to the method [`GetUsageHosts`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageHostsParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
     pub start_hr: String,
@@ -218,7 +218,7 @@ pub struct GetUsageHostsParams {
 }
 
 /// GetUsageIndexedSpansParams is a struct for passing parameters to the method [`GetUsageIndexedSpans`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageIndexedSpansParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
     pub start_hr: String,
@@ -227,7 +227,7 @@ pub struct GetUsageIndexedSpansParams {
 }
 
 /// GetUsageInternetOfThingsParams is a struct for passing parameters to the method [`GetUsageInternetOfThings`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageInternetOfThingsParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
     pub start_hr: String,
@@ -237,7 +237,7 @@ pub struct GetUsageInternetOfThingsParams {
 }
 
 /// GetUsageLambdaParams is a struct for passing parameters to the method [`GetUsageLambda`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageLambdaParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
     pub start_hr: String,
@@ -246,7 +246,7 @@ pub struct GetUsageLambdaParams {
 }
 
 /// GetUsageLogsParams is a struct for passing parameters to the method [`GetUsageLogs`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageLogsParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
     pub start_hr: String,
@@ -255,7 +255,7 @@ pub struct GetUsageLogsParams {
 }
 
 /// GetUsageLogsByIndexParams is a struct for passing parameters to the method [`GetUsageLogsByIndex`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageLogsByIndexParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
     pub start_hr: String,
@@ -266,7 +266,7 @@ pub struct GetUsageLogsByIndexParams {
 }
 
 /// GetUsageLogsByRetentionParams is a struct for passing parameters to the method [`GetUsageLogsByRetention`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageLogsByRetentionParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
     pub start_hr: String,
@@ -276,7 +276,7 @@ pub struct GetUsageLogsByRetentionParams {
 }
 
 /// GetUsageNetworkFlowsParams is a struct for passing parameters to the method [`GetUsageNetworkFlows`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageNetworkFlowsParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
     pub start_hr: String,
@@ -286,7 +286,7 @@ pub struct GetUsageNetworkFlowsParams {
 }
 
 /// GetUsageNetworkHostsParams is a struct for passing parameters to the method [`GetUsageNetworkHosts`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageNetworkHostsParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
     pub start_hr: String,
@@ -295,7 +295,7 @@ pub struct GetUsageNetworkHostsParams {
 }
 
 /// GetUsageOnlineArchiveParams is a struct for passing parameters to the method [`GetUsageOnlineArchive`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageOnlineArchiveParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
     pub start_hr: String,
@@ -305,7 +305,7 @@ pub struct GetUsageOnlineArchiveParams {
 }
 
 /// GetUsageProfilingParams is a struct for passing parameters to the method [`GetUsageProfiling`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageProfilingParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
     pub start_hr: String,
@@ -315,7 +315,7 @@ pub struct GetUsageProfilingParams {
 }
 
 /// GetUsageRumSessionsParams is a struct for passing parameters to the method [`GetUsageRumSessions`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageRumSessionsParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
     pub start_hr: String,
@@ -326,7 +326,7 @@ pub struct GetUsageRumSessionsParams {
 }
 
 /// GetUsageRumUnitsParams is a struct for passing parameters to the method [`GetUsageRumUnits`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageRumUnitsParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
     pub start_hr: String,
@@ -335,7 +335,7 @@ pub struct GetUsageRumUnitsParams {
 }
 
 /// GetUsageSDSParams is a struct for passing parameters to the method [`GetUsageSDS`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageSDSParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
     pub start_hr: String,
@@ -345,7 +345,7 @@ pub struct GetUsageSDSParams {
 }
 
 /// GetUsageSNMPParams is a struct for passing parameters to the method [`GetUsageSNMP`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageSNMPParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
     pub start_hr: String,
@@ -355,7 +355,7 @@ pub struct GetUsageSNMPParams {
 }
 
 /// GetUsageSummaryParams is a struct for passing parameters to the method [`GetUsageSummary`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageSummaryParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage beginning in this month.
     /// Maximum of 15 months ago.
@@ -367,7 +367,7 @@ pub struct GetUsageSummaryParams {
 }
 
 /// GetUsageSyntheticsParams is a struct for passing parameters to the method [`GetUsageSynthetics`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageSyntheticsParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
     pub start_hr: String,
@@ -376,7 +376,7 @@ pub struct GetUsageSyntheticsParams {
 }
 
 /// GetUsageSyntheticsAPIParams is a struct for passing parameters to the method [`GetUsageSyntheticsAPI`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageSyntheticsAPIParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
     pub start_hr: String,
@@ -385,7 +385,7 @@ pub struct GetUsageSyntheticsAPIParams {
 }
 
 /// GetUsageSyntheticsBrowserParams is a struct for passing parameters to the method [`GetUsageSyntheticsBrowser`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageSyntheticsBrowserParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
     pub start_hr: String,
@@ -394,7 +394,7 @@ pub struct GetUsageSyntheticsBrowserParams {
 }
 
 /// GetUsageTimeseriesParams is a struct for passing parameters to the method [`GetUsageTimeseries`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageTimeseriesParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
     pub start_hr: String,
@@ -403,7 +403,7 @@ pub struct GetUsageTimeseriesParams {
 }
 
 /// GetUsageTopAvgMetricsParams is a struct for passing parameters to the method [`GetUsageTopAvgMetrics`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUsageTopAvgMetricsParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: [YYYY-MM] for usage beginning at this hour. (Either month or day should be specified, but not both)
     pub month: Option<String>,

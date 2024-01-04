@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The Opsgenie service attributes for a create request.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct OpsgenieServiceCreateAttributes {
     /// The custom URL for a custom region.
     #[serde(rename = "custom_url")]

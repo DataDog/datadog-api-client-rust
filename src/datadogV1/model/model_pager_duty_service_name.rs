@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// PagerDuty service object name.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct PagerDutyServiceName {
     /// Your service name associated service key in PagerDuty.
     #[serde(rename = "service_name")]

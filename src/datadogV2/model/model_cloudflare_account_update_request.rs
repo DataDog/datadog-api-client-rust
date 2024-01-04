@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Payload schema when updating a Cloudflare account.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CloudflareAccountUpdateRequest {
     /// Data object for updating a Cloudflare account.
     #[serde(rename = "data")]
@@ -15,10 +15,8 @@ pub struct CloudflareAccountUpdateRequest {
 
 impl CloudflareAccountUpdateRequest {
     pub fn new(
-        data: crate::datadogV2::model::CloudflareAccountUpdateRequestData,
+        data: Box<crate::datadogV2::model::CloudflareAccountUpdateRequestData>,
     ) -> CloudflareAccountUpdateRequest {
-        CloudflareAccountUpdateRequest {
-            data: Box::new(data),
-        }
+        CloudflareAccountUpdateRequest { data }
     }
 }

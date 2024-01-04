@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Updated signal data following a successfully performed update.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SuccessfulSignalUpdateResponse {
     /// Status of the response.
     #[serde(rename = "status")]

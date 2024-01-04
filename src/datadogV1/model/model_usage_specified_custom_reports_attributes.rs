@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The response containing attributes for specified custom reports.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageSpecifiedCustomReportsAttributes {
     /// The date the specified custom report was computed.
     #[serde(rename = "computed_on")]

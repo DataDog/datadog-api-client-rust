@@ -17,9 +17,3 @@ impl ToString for IPAllowlistEntryType {
         }
     }
 }
-
-impl Default for IPAllowlistEntryType {
-    fn default() -> IPAllowlistEntryType {
-        Self::IP_ALLOWLIST_ENTRY
-    }
-}

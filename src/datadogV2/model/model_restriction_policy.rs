@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Restriction policy object.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct RestrictionPolicy {
     /// Restriction policy attributes.
     #[serde(rename = "attributes")]
@@ -21,12 +21,12 @@ pub struct RestrictionPolicy {
 
 impl RestrictionPolicy {
     pub fn new(
-        attributes: crate::datadogV2::model::RestrictionPolicyAttributes,
+        attributes: Box<crate::datadogV2::model::RestrictionPolicyAttributes>,
         id: String,
         type_: crate::datadogV2::model::RestrictionPolicyType,
     ) -> RestrictionPolicy {
         RestrictionPolicy {
-            attributes: Box::new(attributes),
+            attributes,
             id,
             type_,
         }

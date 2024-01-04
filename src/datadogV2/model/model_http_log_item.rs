@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Logs that are sent over HTTP.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct HTTPLogItem {
     /// The integration name associated with your log: the technology from which the log originated.
     /// When it matches an integration name, Datadog automatically installs the corresponding parsers and facets.

@@ -17,9 +17,3 @@ impl ToString for GCPServiceAccountType {
         }
     }
 }
-
-impl Default for GCPServiceAccountType {
-    fn default() -> GCPServiceAccountType {
-        Self::GCP_SERVICE_ACCOUNT
-    }
-}

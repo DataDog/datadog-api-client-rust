@@ -17,9 +17,3 @@ impl ToString for FastlyServiceType {
         }
     }
 }
-
-impl Default for FastlyServiceType {
-    fn default() -> FastlyServiceType {
-        Self::FASTLY_SERVICES
-    }
-}

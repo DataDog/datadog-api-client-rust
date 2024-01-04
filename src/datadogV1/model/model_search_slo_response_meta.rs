@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Searches metadata returned by the API.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SearchSLOResponseMeta {
     /// Pagination metadata returned by the API.
     #[serde(rename = "pagination")]

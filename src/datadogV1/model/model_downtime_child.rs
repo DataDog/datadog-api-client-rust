@@ -7,7 +7,7 @@ use serde_with::skip_serializing_none;
 /// The downtime object definition of the active child for the original parent recurring downtime. This
 /// field will only exist on recurring downtimes.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct DowntimeChild {
     /// If a scheduled downtime currently exists.
     #[serde(rename = "active")]

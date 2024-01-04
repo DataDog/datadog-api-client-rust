@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Object with all metric related metadata.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct MetricMetadata {
     /// Metric description.
     #[serde(rename = "description")]

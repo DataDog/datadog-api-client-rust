@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The body of the retention filter to be created.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct RetentionFilterCreateData {
     /// The object describing the configuration of the retention filter to create/update.
     #[serde(rename = "attributes")]
@@ -18,12 +18,9 @@ pub struct RetentionFilterCreateData {
 
 impl RetentionFilterCreateData {
     pub fn new(
-        attributes: crate::datadogV2::model::RetentionFilterCreateAttributes,
+        attributes: Box<crate::datadogV2::model::RetentionFilterCreateAttributes>,
         type_: crate::datadogV2::model::ApmRetentionFilterType,
     ) -> RetentionFilterCreateData {
-        RetentionFilterCreateData {
-            attributes: Box::new(attributes),
-            type_,
-        }
+        RetentionFilterCreateData { attributes, type_ }
     }
 }

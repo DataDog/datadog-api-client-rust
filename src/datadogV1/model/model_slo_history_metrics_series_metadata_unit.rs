@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// An Object of metric units.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SLOHistoryMetricsSeriesMetadataUnit {
     /// The family of metric unit, for example `bytes` is the family for `kibibyte`, `byte`, and `bit` units.
     #[serde(rename = "family")]

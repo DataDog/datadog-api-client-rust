@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Attributes object for creating a Fastly account.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FastlyAccountCreateRequestAttributes {
     /// The API key for the Fastly account.
     #[serde(rename = "api_key")]

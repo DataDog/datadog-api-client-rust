@@ -17,9 +17,3 @@ impl ToString for RestrictionPolicyType {
         }
     }
 }
-
-impl Default for RestrictionPolicyType {
-    fn default() -> RestrictionPolicyType {
-        Self::RESTRICTION_POLICY
-    }
-}

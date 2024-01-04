@@ -7,35 +7,35 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// CreateApmRetentionFilterParams is a struct for passing parameters to the method [`CreateApmRetentionFilter`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateApmRetentionFilterParams {
     /// The definition of the new retention filter.
     pub body: crate::datadogV2::model::RetentionFilterCreateRequest,
 }
 
 /// DeleteApmRetentionFilterParams is a struct for passing parameters to the method [`DeleteApmRetentionFilter`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DeleteApmRetentionFilterParams {
     /// The ID of the retention filter.
     pub filter_id: String,
 }
 
 /// GetApmRetentionFilterParams is a struct for passing parameters to the method [`GetApmRetentionFilter`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetApmRetentionFilterParams {
     /// The ID of the retention filter.
     pub filter_id: String,
 }
 
 /// ReorderApmRetentionFiltersParams is a struct for passing parameters to the method [`ReorderApmRetentionFilters`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct ReorderApmRetentionFiltersParams {
     /// The list of retention filters in the new order.
     pub body: crate::datadogV2::model::ReorderRetentionFiltersRequest,
 }
 
 /// UpdateApmRetentionFilterParams is a struct for passing parameters to the method [`UpdateApmRetentionFilter`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateApmRetentionFilterParams {
     /// The ID of the retention filter.
     pub filter_id: String,

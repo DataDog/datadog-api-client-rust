@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// A service level objective history response.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SLOHistoryResponse {
     /// An array of service level objective objects.
     #[serde(rename = "data")]

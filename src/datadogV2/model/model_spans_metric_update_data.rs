@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The new span-based metric properties.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SpansMetricUpdateData {
     /// The span-based metric properties that will be updated.
     #[serde(rename = "attributes")]
@@ -18,12 +18,9 @@ pub struct SpansMetricUpdateData {
 
 impl SpansMetricUpdateData {
     pub fn new(
-        attributes: crate::datadogV2::model::SpansMetricUpdateAttributes,
+        attributes: Box<crate::datadogV2::model::SpansMetricUpdateAttributes>,
         type_: crate::datadogV2::model::SpansMetricType,
     ) -> SpansMetricUpdateData {
-        SpansMetricUpdateData {
-            attributes: Box::new(attributes),
-            type_,
-        }
+        SpansMetricUpdateData { attributes, type_ }
     }
 }

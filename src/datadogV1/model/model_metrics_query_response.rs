@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Response Object that includes your query and the list of metrics retrieved.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct MetricsQueryResponse {
     /// Message indicating the errors if status is not `ok`.
     #[serde(rename = "error")]

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The number of indexed logs for each hour for a given organization broken down by retention period.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageLogsByRetentionHour {
     /// Total logs indexed with this retention period during a given hour.
     #[serde(

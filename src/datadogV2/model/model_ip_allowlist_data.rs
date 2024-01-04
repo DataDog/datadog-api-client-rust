@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// IP allowlist data.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct IPAllowlistData {
     /// Attributes of the IP allowlist.
     #[serde(rename = "attributes")]

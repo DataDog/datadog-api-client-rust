@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The expected response schema when getting Fastly services.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FastlyServicesResponse {
     /// The JSON:API data schema.
     #[serde(rename = "data")]

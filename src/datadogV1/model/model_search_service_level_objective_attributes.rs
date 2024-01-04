@@ -7,7 +7,7 @@ use serde_with::skip_serializing_none;
 /// A service level objective object includes a service level indicator, thresholds
 /// for one or more timeframes, and metadata (`name`, `description`, and `tags`).
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SearchServiceLevelObjectiveAttributes {
     /// A list of tags associated with this service level objective.
     /// Always included in service level objective responses (but may be empty).

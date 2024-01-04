@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The log-based metric object.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LogsMetricResponse {
     /// The log-based metric properties.
     #[serde(rename = "data")]

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Has two properties, `enabled` (boolean) and `domains`, which is a list of domains without the @ symbol.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct OrganizationSettingsSamlAutocreateUsersDomains {
     /// List of domains where the SAML automated user creation is enabled.
     #[serde(rename = "domains")]

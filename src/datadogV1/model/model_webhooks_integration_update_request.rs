@@ -8,7 +8,7 @@ use serde_with::skip_serializing_none;
 ///
 /// *All properties are optional.*
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct WebhooksIntegrationUpdateRequest {
     /// If `null`, uses no header.
     /// If given a JSON payload, these will be headers attached to your webhook.

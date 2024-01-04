@@ -23,9 +23,3 @@ impl ToString for SignalTriageState {
         }
     }
 }
-
-impl Default for SignalTriageState {
-    fn default() -> SignalTriageState {
-        Self::OPEN
-    }
-}

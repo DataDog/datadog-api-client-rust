@@ -7,28 +7,28 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// CreateUserParams is a struct for passing parameters to the method [`CreateUser`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateUserParams {
     /// User object that needs to be created.
     pub body: crate::datadogV1::model::User,
 }
 
 /// DisableUserParams is a struct for passing parameters to the method [`DisableUser`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DisableUserParams {
     /// The handle of the user.
     pub user_handle: String,
 }
 
 /// GetUserParams is a struct for passing parameters to the method [`GetUser`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetUserParams {
     /// The ID of the user.
     pub user_handle: String,
 }
 
 /// UpdateUserParams is a struct for passing parameters to the method [`UpdateUser`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateUserParams {
     /// The ID of the user.
     pub user_handle: String,

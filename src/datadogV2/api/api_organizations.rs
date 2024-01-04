@@ -7,7 +7,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// UploadIdPMetadataParams is a struct for passing parameters to the method [`UploadIdPMetadata`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UploadIdPMetadataParams {
     /// The IdP metadata XML file
     pub idp_file: Option<Vec<u8>>,

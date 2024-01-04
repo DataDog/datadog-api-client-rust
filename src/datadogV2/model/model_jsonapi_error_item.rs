@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// API error response body
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct JSONAPIErrorItem {
     /// A human-readable explanation specific to this occurrence of the error.
     #[serde(rename = "detail")]

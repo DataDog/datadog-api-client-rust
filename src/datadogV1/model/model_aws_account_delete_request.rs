@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// List of AWS accounts to delete.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AWSAccountDeleteRequest {
     /// Your AWS access key ID. Only required if your AWS account is a GovCloud or China account.
     #[serde(rename = "access_key_id")]

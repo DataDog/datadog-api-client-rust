@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The number of profiled hosts for each hour for a given organization.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageProfilingHour {
     /// Contains the total number of profiled Azure app services reporting during a given hour.
     #[serde(

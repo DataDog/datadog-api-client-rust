@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The expected response schema when getting a finding.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct GetFindingResponse {
     /// A single finding with with message and resource configuration.
     #[serde(rename = "data")]
@@ -14,9 +14,7 @@ pub struct GetFindingResponse {
 }
 
 impl GetFindingResponse {
-    pub fn new(data: crate::datadogV2::model::DetailedFinding) -> GetFindingResponse {
-        GetFindingResponse {
-            data: Box::new(data),
-        }
+    pub fn new(data: Box<crate::datadogV2::model::DetailedFinding>) -> GetFindingResponse {
+        GetFindingResponse { data }
     }
 }

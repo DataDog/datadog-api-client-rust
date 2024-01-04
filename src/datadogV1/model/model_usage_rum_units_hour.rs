@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Number of RUM Units used for each hour for a given organization (data available as of November 1, 2021).
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageRumUnitsHour {
     /// The number of browser RUM units.
     #[serde(

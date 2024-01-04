@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Payload schema for Fastly service requests.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FastlyServiceRequest {
     /// Data object for Fastly service requests.
     #[serde(rename = "data")]
@@ -14,9 +14,7 @@ pub struct FastlyServiceRequest {
 }
 
 impl FastlyServiceRequest {
-    pub fn new(data: crate::datadogV2::model::FastlyServiceData) -> FastlyServiceRequest {
-        FastlyServiceRequest {
-            data: Box::new(data),
-        }
+    pub fn new(data: Box<crate::datadogV2::model::FastlyServiceData>) -> FastlyServiceRequest {
+        FastlyServiceRequest { data }
     }
 }

@@ -20,9 +20,3 @@ impl ToString for AuditLogsSort {
         }
     }
 }
-
-impl Default for AuditLogsSort {
-    fn default() -> AuditLogsSort {
-        Self::TIMESTAMP_ASCENDING
-    }
-}

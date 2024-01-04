@@ -7,21 +7,21 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// CreateLogsIndexParams is a struct for passing parameters to the method [`CreateLogsIndex`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateLogsIndexParams {
     /// Object containing the new index.
     pub body: crate::datadogV1::model::LogsIndex,
 }
 
 /// GetLogsIndexParams is a struct for passing parameters to the method [`GetLogsIndex`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetLogsIndexParams {
     /// Name of the log index.
     pub name: String,
 }
 
 /// UpdateLogsIndexParams is a struct for passing parameters to the method [`UpdateLogsIndex`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateLogsIndexParams {
     /// Name of the log index.
     pub name: String,
@@ -30,7 +30,7 @@ pub struct UpdateLogsIndexParams {
 }
 
 /// UpdateLogsIndexOrderParams is a struct for passing parameters to the method [`UpdateLogsIndexOrder`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateLogsIndexOrderParams {
     /// Object containing the new ordered list of index names
     pub body: crate::datadogV1::model::LogsIndexesOrder,

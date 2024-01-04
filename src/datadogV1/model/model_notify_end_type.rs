@@ -20,9 +20,3 @@ impl ToString for NotifyEndType {
         }
     }
 }
-
-impl Default for NotifyEndType {
-    fn default() -> NotifyEndType {
-        Self::CANCELED
-    }
-}

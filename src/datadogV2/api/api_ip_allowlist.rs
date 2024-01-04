@@ -7,7 +7,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// UpdateIPAllowlistParams is a struct for passing parameters to the method [`UpdateIPAllowlist`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateIPAllowlistParams {
     pub body: crate::datadogV2::model::IPAllowlistUpdateRequest,
 }

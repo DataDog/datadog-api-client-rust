@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Datadog-Azure integrations configured for your organization.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AzureAccount {
     /// Limit the Azure app service plans that are pulled into Datadog using tags.
     /// Only app service plans that match one of the defined tags are imported into Datadog.
@@ -25,7 +25,8 @@ pub struct AzureAccount {
     /// Only container apps that match one of the defined tags are imported into Datadog.
     #[serde(rename = "container_app_filters")]
     pub container_app_filters: Option<String>,
-    /// Enable Cloud Security Management Misconfigurations for your organization.
+    /// When enabled, Datadog’s Cloud Security Management product scans resource configurations monitored by this app registration.
+    /// Note: This requires resource_collection_enabled to be set to true.
     #[serde(rename = "cspm_enabled")]
     pub cspm_enabled: Option<bool>,
     /// Enable custom metrics for your organization.
@@ -44,6 +45,9 @@ pub struct AzureAccount {
     /// Your New Azure Active Directory ID.
     #[serde(rename = "new_tenant_name")]
     pub new_tenant_name: Option<String>,
+    /// When enabled, Datadog collects metadata and configuration info from cloud resources (compute instances, databases, load balancers, etc.) monitored by this app registration.
+    #[serde(rename = "resource_collection_enabled")]
+    pub resource_collection_enabled: Option<bool>,
     /// Your Azure Active Directory ID.
     #[serde(rename = "tenant_name")]
     pub tenant_name: Option<String>,
@@ -63,6 +67,7 @@ impl AzureAccount {
             host_filters: None,
             new_client_id: None,
             new_tenant_name: None,
+            resource_collection_enabled: None,
             tenant_name: None,
         }
     }

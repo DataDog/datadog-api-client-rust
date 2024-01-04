@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// A single finding with with message and resource configuration.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct DetailedFinding {
     /// The JSON:API attributes of the detailed finding.
     #[serde(rename = "attributes")]

@@ -8,7 +8,7 @@ use serde_with::skip_serializing_none;
 ///
 /// *All properties are optional.*
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct WebhooksIntegrationCustomVariableUpdateRequest {
     /// Make custom variable is secret or not.
     /// If the custom variable is secret, the value is not returned in the response payload.

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Additional metadata on your generated service account.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct GCPSTSServiceAccountData {
     /// Attributes associated with your service account.
     #[serde(rename = "attributes")]

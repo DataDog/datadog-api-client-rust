@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Response with monthly summary of data billed by Datadog.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageBillableSummaryResponse {
     /// An array of objects regarding usage of billable summary.
     #[serde(rename = "usage")]

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Object containing an event response.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct EventCreateResponse {
     /// Object representing an event.
     #[serde(rename = "event")]

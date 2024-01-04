@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Number of hourly recorded custom metrics for a given organization.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageTopAvgMetricsHour {
     /// Average number of timeseries per hour in which the metric occurs.
     #[serde(rename = "avg_metric_hour")]

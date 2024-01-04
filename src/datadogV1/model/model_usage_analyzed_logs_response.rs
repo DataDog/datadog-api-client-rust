@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// A response containing the number of analyzed logs for each hour for a given organization.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageAnalyzedLogsResponse {
     /// Get hourly usage for analyzed logs.
     #[serde(rename = "usage")]

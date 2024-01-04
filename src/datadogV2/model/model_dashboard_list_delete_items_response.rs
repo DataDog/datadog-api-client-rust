@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Response containing a list of deleted dashboards.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct DashboardListDeleteItemsResponse {
     /// List of dashboards deleted from the dashboard list.
     #[serde(rename = "deleted_dashboards_from_list")]

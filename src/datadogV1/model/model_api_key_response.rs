@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// An API key with its associated metadata.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ApiKeyResponse {
     /// Datadog API key.
     #[serde(rename = "api_key")]

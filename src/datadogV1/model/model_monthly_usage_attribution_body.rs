@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Usage Summary by tag for a given organization.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct MonthlyUsageAttributionBody {
     /// Datetime in ISO-8601 format, UTC, precise to month: [YYYY-MM].
     #[serde(rename = "month")]

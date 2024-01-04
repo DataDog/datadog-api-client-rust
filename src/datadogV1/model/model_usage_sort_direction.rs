@@ -20,9 +20,3 @@ impl ToString for UsageSortDirection {
         }
     }
 }
-
-impl Default for UsageSortDirection {
-    fn default() -> UsageSortDirection {
-        Self::DESC
-    }
-}

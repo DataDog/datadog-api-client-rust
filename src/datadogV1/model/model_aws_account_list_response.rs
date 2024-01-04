@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// List of enabled AWS accounts.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AWSAccountListResponse {
     /// List of enabled AWS accounts.
     #[serde(rename = "accounts")]

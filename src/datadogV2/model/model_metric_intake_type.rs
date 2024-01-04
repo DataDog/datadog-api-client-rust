@@ -25,9 +25,3 @@ impl ToString for MetricIntakeType {
         }
     }
 }
-
-impl Default for MetricIntakeType {
-    fn default() -> MetricIntakeType {
-        Self::UNSPECIFIED
-    }
-}

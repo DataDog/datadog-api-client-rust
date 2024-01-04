@@ -7,7 +7,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetGraphSnapshotParams is a struct for passing parameters to the method [`GetGraphSnapshot`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetGraphSnapshotParams {
     /// The POSIX timestamp of the start of the query in seconds.
     pub start: i64,

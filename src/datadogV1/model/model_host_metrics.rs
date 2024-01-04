@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Host Metrics collected.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct HostMetrics {
     /// The percent of CPU used (everything but idle).
     #[serde(rename = "cpu")]

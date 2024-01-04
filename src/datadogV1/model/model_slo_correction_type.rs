@@ -17,9 +17,3 @@ impl ToString for SLOCorrectionType {
         }
     }
 }
-
-impl Default for SLOCorrectionType {
-    fn default() -> SLOCorrectionType {
-        Self::CORRECTION
-    }
-}

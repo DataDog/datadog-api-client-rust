@@ -7,14 +7,14 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// CreateConfluentAccountParams is a struct for passing parameters to the method [`CreateConfluentAccount`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateConfluentAccountParams {
     /// Confluent payload
     pub body: crate::datadogV2::model::ConfluentAccountCreateRequest,
 }
 
 /// CreateConfluentResourceParams is a struct for passing parameters to the method [`CreateConfluentResource`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateConfluentResourceParams {
     /// Confluent Account id.
     pub account_id: String,
@@ -23,14 +23,14 @@ pub struct CreateConfluentResourceParams {
 }
 
 /// DeleteConfluentAccountParams is a struct for passing parameters to the method [`DeleteConfluentAccount`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DeleteConfluentAccountParams {
     /// Confluent Account id.
     pub account_id: String,
 }
 
 /// DeleteConfluentResourceParams is a struct for passing parameters to the method [`DeleteConfluentResource`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DeleteConfluentResourceParams {
     /// Confluent Account id.
     pub account_id: String,
@@ -39,14 +39,14 @@ pub struct DeleteConfluentResourceParams {
 }
 
 /// GetConfluentAccountParams is a struct for passing parameters to the method [`GetConfluentAccount`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetConfluentAccountParams {
     /// Confluent Account id.
     pub account_id: String,
 }
 
 /// GetConfluentResourceParams is a struct for passing parameters to the method [`GetConfluentResource`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetConfluentResourceParams {
     /// Confluent Account id.
     pub account_id: String,
@@ -55,14 +55,14 @@ pub struct GetConfluentResourceParams {
 }
 
 /// ListConfluentResourceParams is a struct for passing parameters to the method [`ListConfluentResource`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct ListConfluentResourceParams {
     /// Confluent Account id.
     pub account_id: String,
 }
 
 /// UpdateConfluentAccountParams is a struct for passing parameters to the method [`UpdateConfluentAccount`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateConfluentAccountParams {
     /// Confluent Account id.
     pub account_id: String,
@@ -71,7 +71,7 @@ pub struct UpdateConfluentAccountParams {
 }
 
 /// UpdateConfluentResourceParams is a struct for passing parameters to the method [`UpdateConfluentResource`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateConfluentResourceParams {
     /// Confluent Account id.
     pub account_id: String,

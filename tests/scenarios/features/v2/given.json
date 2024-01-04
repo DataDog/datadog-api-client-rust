@@ -227,6 +227,18 @@
     "parameters": [
       {
         "name": "body",
+        "value": "{\n  \"data\": {\n    \"type\": \"okta-accounts\",\n    \"attributes\": {\n      \"auth_method\": \"oauth\",\n      \"name\": \"{{ unique_lower_alnum }}\",\n      \"domain\": \"https://dev-test.okta.com/\",\n      \"client_id\": \"fakeclientid\",\n      \"client_secret\": \"fakeclientsecret\"\n    }\n  }\n}"
+      }
+    ],
+    "step": "there is a valid \"okta_account\" in the system",
+    "key": "okta_account",
+    "tag": "Okta Integration",
+    "operationId": "CreateOktaAccount"
+  },
+  {
+    "parameters": [
+      {
+        "name": "body",
         "value": "{\n  \"data\": {\n    \"attributes\": {\n      \"enabled\": false,\n      \"entries\": []\n    },\n    \"type\": \"ip_allowlist\"\n  }\n}"
       }
     ],
@@ -373,6 +385,18 @@
     "key": "rum_application",
     "tag": "RUM",
     "operationId": "CreateRUMApplication"
+  },
+  {
+    "parameters": [
+      {
+        "name": "body",
+        "value": "{\n  \"data\": {\n    \"type\": \"rule\",\n    \"attributes\": {\n      \"name\": \"{{ unique }}\",\n      \"enabled\": true,\n      \"owner\": \"Datadog\",\n      \"scorecard_name\": \"OpenAPI Spec Test Best Practices\"\n    }\n  }\n}"
+      }
+    ],
+    "step": "there is a valid \"create_scorecard_rule\" in the system",
+    "key": "create_scorecard_rule",
+    "tag": "Service Scorecards",
+    "operationId": "CreateScorecardRule"
   },
   {
     "parameters": [

@@ -7,7 +7,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// CreateDashboardListItemsParams is a struct for passing parameters to the method [`CreateDashboardListItems`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateDashboardListItemsParams {
     /// ID of the dashboard list to add items to.
     pub dashboard_list_id: i64,
@@ -16,7 +16,7 @@ pub struct CreateDashboardListItemsParams {
 }
 
 /// DeleteDashboardListItemsParams is a struct for passing parameters to the method [`DeleteDashboardListItems`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DeleteDashboardListItemsParams {
     /// ID of the dashboard list to delete items from.
     pub dashboard_list_id: i64,
@@ -25,14 +25,14 @@ pub struct DeleteDashboardListItemsParams {
 }
 
 /// GetDashboardListItemsParams is a struct for passing parameters to the method [`GetDashboardListItems`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetDashboardListItemsParams {
     /// ID of the dashboard list to get items from.
     pub dashboard_list_id: i64,
 }
 
 /// UpdateDashboardListItemsParams is a struct for passing parameters to the method [`UpdateDashboardListItems`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateDashboardListItemsParams {
     /// ID of the dashboard list to update items from.
     pub dashboard_list_id: i64,

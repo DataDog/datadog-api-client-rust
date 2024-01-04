@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Response containing the ingested spans usage for each hour for a given organization.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageIngestedSpansResponse {
     /// Get hourly usage for ingested spans.
     #[serde(rename = "usage")]

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// A JSON array of billing type.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct OrganizationBilling {
     /// The type of billing. Only `parent_billing` is supported.
     #[serde(rename = "type")]

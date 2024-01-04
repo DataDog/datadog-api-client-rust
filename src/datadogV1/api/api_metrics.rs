@@ -7,14 +7,14 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetMetricMetadataParams is a struct for passing parameters to the method [`GetMetricMetadata`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetMetricMetadataParams {
     /// Name of the metric for which to get metadata.
     pub metric_name: String,
 }
 
 /// ListActiveMetricsParams is a struct for passing parameters to the method [`ListActiveMetrics`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct ListActiveMetricsParams {
     /// Seconds since the Unix epoch.
     pub from: i64,
@@ -27,14 +27,14 @@ pub struct ListActiveMetricsParams {
 }
 
 /// ListMetricsParams is a struct for passing parameters to the method [`ListMetrics`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct ListMetricsParams {
     /// Query string to search metrics upon. Can optionally be prefixed with `metrics:`.
     pub q: String,
 }
 
 /// QueryMetricsParams is a struct for passing parameters to the method [`QueryMetrics`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct QueryMetricsParams {
     /// Start of the queried time period, seconds since the Unix epoch.
     pub from: i64,
@@ -44,8 +44,16 @@ pub struct QueryMetricsParams {
     pub query: String,
 }
 
+/// SubmitDistributionPointsParams is a struct for passing parameters to the method [`SubmitDistributionPoints`]
+#[derive(Clone, Debug)]
+pub struct SubmitDistributionPointsParams {
+    pub body: crate::datadogV1::model::DistributionPointsPayload,
+    /// HTTP header used to compress the media-type.
+    pub content_encoding: Option<crate::datadogV1::model::DistributionPointsContentEncoding>,
+}
+
 /// SubmitMetricsParams is a struct for passing parameters to the method [`SubmitMetrics`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct SubmitMetricsParams {
     pub body: crate::datadogV1::model::MetricsPayload,
     /// HTTP header used to compress the media-type.
@@ -53,7 +61,7 @@ pub struct SubmitMetricsParams {
 }
 
 /// UpdateMetricMetadataParams is a struct for passing parameters to the method [`UpdateMetricMetadata`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateMetricMetadataParams {
     /// Name of the metric for which to edit metadata.
     pub metric_name: String,
@@ -97,6 +105,18 @@ pub enum ListMetricsError {
 pub enum QueryMetricsError {
     Status400(Option<crate::datadogV1::model::APIErrorResponse>),
     Status403(Option<crate::datadogV1::model::APIErrorResponse>),
+    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    UnknownValue(serde_json::Value),
+}
+
+/// SubmitDistributionPointsError is a struct for typed errors of method [`SubmitDistributionPoints`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum SubmitDistributionPointsError {
+    Status400(Option<crate::datadogV1::model::APIErrorResponse>),
+    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
+    Status408(Option<crate::datadogV1::model::APIErrorResponse>),
+    Status413(Option<crate::datadogV1::model::APIErrorResponse>),
     Status429(Option<crate::datadogV1::model::APIErrorResponse>),
     UnknownValue(serde_json::Value),
 }
@@ -440,6 +460,91 @@ impl MetricsAPI {
             })
         } else {
             let local_entity: Option<QueryMetricsError> = serde_json::from_str(&local_content).ok();
+            let local_error = ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(Error::ResponseError(local_error))
+        }
+    }
+
+    /// The distribution points end-point allows you to post distribution data that can be graphed on Datadog’s dashboards.
+    pub async fn submit_distribution_points(
+        &self,
+        params: SubmitDistributionPointsParams,
+    ) -> Result<
+        Option<crate::datadogV1::model::IntakePayloadAccepted>,
+        Error<SubmitDistributionPointsError>,
+    > {
+        match self.submit_distribution_points_with_http_info(params).await {
+            Ok(response_content) => Ok(response_content.entity),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// The distribution points end-point allows you to post distribution data that can be graphed on Datadog’s dashboards.
+    pub async fn submit_distribution_points_with_http_info(
+        &self,
+        params: SubmitDistributionPointsParams,
+    ) -> Result<
+        ResponseContent<crate::datadogV1::model::IntakePayloadAccepted>,
+        Error<SubmitDistributionPointsError>,
+    > {
+        let local_configuration = &self.config;
+
+        // unbox and build parameters
+        let body = params.body;
+        let content_encoding = params.content_encoding;
+
+        let local_client = &local_configuration.client;
+
+        let local_uri_str = format!(
+            "{}/api/v1/distribution_points",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        if let Some(ref local) = content_encoding {
+            local_req_builder = local_req_builder.header("Content-Encoding", &local.to_string());
+        };
+
+        // build user agent
+        if let Some(ref local_user_agent) = local_configuration.user_agent {
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+        }
+
+        // build auth
+        if let Some(ref local_apikey) = local_configuration.api_key_auth {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            local_req_builder = local_req_builder.body(ser.into_inner());
+        }
+
+        let local_req = local_req_builder.build()?;
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            let local_entity: Option<crate::datadogV1::model::IntakePayloadAccepted> =
+                serde_json::from_str(&local_content).ok();
+            Ok(ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            })
+        } else {
+            let local_entity: Option<SubmitDistributionPointsError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
                 content: local_content,

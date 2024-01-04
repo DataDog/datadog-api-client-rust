@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The object description of an event after being processed and stored by Datadog.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct EventResponse {
     /// The object description of an event response attribute.
     #[serde(rename = "attributes")]
