@@ -266,20 +266,22 @@ fn given_resource_in_system(world: &mut DatadogWorld, given_key: String) {
         .function_mappings
         .get(&format!("v{}.{}", world.api_version, &operation_id))
         .expect("given operation not found")(world, &given_parameters);
-    match build_undo(world, &operation_id) {
-        Ok(Some(undo)) => world.undo_operations.push(undo),
-        Ok(None) => {}
-        Err(err) => panic!("{err}"),
-    }
+
     if let Some(source) = given.get("source") {
         let source_path = source.as_str().unwrap().to_string();
         if let Some(fixture) = lookup(&source_path, &world.response.object) {
             if let Value::Object(ref mut map) = world.fixtures {
-                map.insert(given_key, fixture);
+                map.insert(given_key.clone(), fixture);
             }
         }
     } else if let Value::Object(ref mut map) = world.fixtures {
-        map.insert(given_key, world.response.object.clone());
+        map.insert(given_key.clone(), world.response.object.clone());
+    }
+
+    match build_undo(world, &operation_id, Some(given_key)) {
+        Ok(Some(undo)) => world.undo_operations.push(undo),
+        Ok(None) => {}
+        Err(err) => panic!("{err}"),
     }
 }
 
@@ -320,6 +322,11 @@ fn request_parameter_from_path(world: &mut DatadogWorld, param: String, path: St
 fn request_parameter_with_value(world: &mut DatadogWorld, param: String, value: String) {
     let trimmed_value = value.trim_matches('"').to_string();
     let rendered = template(trimmed_value.clone(), &world.fixtures);
+    // check if the value was an explicit string
+    if trimmed_value != value {
+        world.parameters.insert(param, Value::String(rendered));
+        return;
+    }
     if NUMBER_RE.is_match(&rendered) {
         let number =
             serde_json::Number::from_str(&rendered).expect("couldn't parse param as number");
@@ -344,7 +351,8 @@ fn request_sent(world: &mut DatadogWorld) {
             "{:?} request operation id not found",
             world.operation_id
         ))(world, &world.parameters.clone());
-    match build_undo(world, &world.operation_id.clone()) {
+
+    match build_undo(world, &world.operation_id.clone(), None) {
         Ok(Some(undo)) => {
             world.undo_operations.push(undo);
         }
@@ -550,6 +558,7 @@ fn template(string: String, fixtures: &Value) -> String {
 fn build_undo(
     world: &mut DatadogWorld,
     operation_id: &String,
+    given_key: Option<String>,
 ) -> Result<Option<UndoOperation>, Value> {
     if world.response.code < 200 || world.response.code >= 300 {
         return Ok(None);
@@ -585,9 +594,15 @@ fn build_undo(
                 };
                 if let Some(template_value) = param.get("template") {
                     if let Some(rendered) = template_value.as_str() {
+                        let json_value = match given_key.clone() {
+                            Some(key) => {
+                                template(rendered.to_string(), &world.fixtures.get(key).unwrap())
+                            }
+                            None => template(rendered.to_string(), &world.response.object),
+                        };
                         undo_operation.parameters.insert(
                             param_name.clone(),
-                            template(rendered.to_string(), &world.fixtures).into(),
+                            serde_json::from_str(json_value.as_str()).unwrap(),
                         );
                     };
                 };

@@ -68,11 +68,11 @@ pub enum UpdateGCPIntegrationError {
 }
 
 #[derive(Debug, Clone)]
-pub struct GcpIntegrationAPI {
+pub struct GCPIntegrationAPI {
     config: configuration::Configuration,
 }
 
-impl Default for GcpIntegrationAPI {
+impl Default for GCPIntegrationAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
@@ -80,7 +80,7 @@ impl Default for GcpIntegrationAPI {
     }
 }
 
-impl GcpIntegrationAPI {
+impl GCPIntegrationAPI {
     pub fn new() -> Self {
         Self::default()
     }

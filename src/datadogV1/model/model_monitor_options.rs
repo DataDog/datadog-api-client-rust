@@ -150,8 +150,7 @@ pub struct MonitorOptions {
         default,
         with = "::serde_with::rust::double_option"
     )]
-    pub renotify_statuses:
-        Option<Option<Vec<Option<crate::datadogV1::model::MonitorRenotifyStatusType>>>>,
+    pub renotify_statuses: Option<Option<Vec<crate::datadogV1::model::MonitorRenotifyStatusType>>>,
     /// A Boolean indicating whether this monitor needs a full window of data before it’s evaluated.
     /// We highly recommend you set this to `false` for sparse metrics,
     /// otherwise some evaluations are skipped. Default is false.

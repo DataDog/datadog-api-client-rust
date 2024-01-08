@@ -10,9 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SpansAggregateBucketAttributes {
     /// The key, value pairs for each group by.
     #[serde(rename = "by")]
-    pub by: Option<
-        std::collections::HashMap<String, std::collections::HashMap<String, serde_json::Value>>,
-    >,
+    pub by: Option<std::collections::HashMap<String, serde_json::Value>>,
     /// The compute data.
     #[serde(rename = "compute")]
     pub compute: Option<std::collections::HashMap<String, serde_json::Value>>,

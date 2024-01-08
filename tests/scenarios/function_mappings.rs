@@ -9,7 +9,7 @@ use datadog_api_client::datadogV2;
 
 #[derive(Debug, Default)]
 pub struct ApiInstances {
-    pub v1_api_ip_ranges: Option<datadogV1::api::api_ip_ranges::IpRangesAPI>,
+    pub v1_api_ip_ranges: Option<datadogV1::api::api_ip_ranges::IPRangesAPI>,
     pub v1_api_key_management: Option<datadogV1::api::api_key_management::KeyManagementAPI>,
     pub v1_api_service_checks: Option<datadogV1::api::api_service_checks::ServiceChecksAPI>,
     pub v1_api_usage_metering: Option<datadogV1::api::api_usage_metering::UsageMeteringAPI>,
@@ -20,10 +20,10 @@ pub struct ApiInstances {
     pub v1_api_events: Option<datadogV1::api::api_events::EventsAPI>,
     pub v1_api_snapshots: Option<datadogV1::api::api_snapshots::SnapshotsAPI>,
     pub v1_api_hosts: Option<datadogV1::api::api_hosts::HostsAPI>,
-    pub v1_api_aws_integration: Option<datadogV1::api::api_aws_integration::AwsIntegrationAPI>,
-    pub v1_api_aws_logs_integration: Option<datadogV1::api::api_aws_logs_integration::AwsLogsIntegrationAPI>,
+    pub v1_api_aws_integration: Option<datadogV1::api::api_aws_integration::AWSIntegrationAPI>,
+    pub v1_api_aws_logs_integration: Option<datadogV1::api::api_aws_logs_integration::AWSLogsIntegrationAPI>,
     pub v1_api_azure_integration: Option<datadogV1::api::api_azure_integration::AzureIntegrationAPI>,
-    pub v1_api_gcp_integration: Option<datadogV1::api::api_gcp_integration::GcpIntegrationAPI>,
+    pub v1_api_gcp_integration: Option<datadogV1::api::api_gcp_integration::GCPIntegrationAPI>,
     pub v1_api_pager_duty_integration: Option<datadogV1::api::api_pager_duty_integration::PagerDutyIntegrationAPI>,
     pub v1_api_slack_integration: Option<datadogV1::api::api_slack_integration::SlackIntegrationAPI>,
     pub v1_api_webhooks_integration: Option<datadogV1::api::api_webhooks_integration::WebhooksIntegrationAPI>,
@@ -42,27 +42,27 @@ pub struct ApiInstances {
     pub v1_api_authentication: Option<datadogV1::api::api_authentication::AuthenticationAPI>,
     pub v2_api_key_management: Option<datadogV2::api::api_key_management::KeyManagementAPI>,
     pub v2_api_spans_metrics: Option<datadogV2::api::api_spans_metrics::SpansMetricsAPI>,
-    pub v2_api_apm_retention_filters: Option<datadogV2::api::api_apm_retention_filters::ApmRetentionFiltersAPI>,
+    pub v2_api_apm_retention_filters: Option<datadogV2::api::api_apm_retention_filters::APMRetentionFiltersAPI>,
     pub v2_api_audit: Option<datadogV2::api::api_audit::AuditAPI>,
     pub v2_api_auth_n_mappings: Option<datadogV2::api::api_auth_n_mappings::AuthNMappingsAPI>,
-    pub v2_api_ci_visibility_pipelines: Option<datadogV2::api::api_ci_visibility_pipelines::CiVisibilityPipelinesAPI>,
-    pub v2_api_ci_visibility_tests: Option<datadogV2::api::api_ci_visibility_tests::CiVisibilityTestsAPI>,
+    pub v2_api_ci_visibility_pipelines: Option<datadogV2::api::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI>,
+    pub v2_api_ci_visibility_tests: Option<datadogV2::api::api_ci_visibility_tests::CIVisibilityTestsAPI>,
     pub v2_api_container_images: Option<datadogV2::api::api_container_images::ContainerImagesAPI>,
     pub v2_api_containers: Option<datadogV2::api::api_containers::ContainersAPI>,
     pub v2_api_cloud_cost_management: Option<datadogV2::api::api_cloud_cost_management::CloudCostManagementAPI>,
     pub v2_api_usage_metering: Option<datadogV2::api::api_usage_metering::UsageMeteringAPI>,
     pub v2_api_dashboard_lists: Option<datadogV2::api::api_dashboard_lists::DashboardListsAPI>,
-    pub v2_api_dora_metrics: Option<datadogV2::api::api_dora_metrics::DoraMetricsAPI>,
+    pub v2_api_dora_metrics: Option<datadogV2::api::api_dora_metrics::DORAMetricsAPI>,
     pub v2_api_downtimes: Option<datadogV2::api::api_downtimes::DowntimesAPI>,
     pub v2_api_events: Option<datadogV2::api::api_events::EventsAPI>,
     pub v2_api_incidents: Option<datadogV2::api::api_incidents::IncidentsAPI>,
-    pub v2_api_gcp_integration: Option<datadogV2::api::api_gcp_integration::GcpIntegrationAPI>,
+    pub v2_api_gcp_integration: Option<datadogV2::api::api_gcp_integration::GCPIntegrationAPI>,
     pub v2_api_opsgenie_integration: Option<datadogV2::api::api_opsgenie_integration::OpsgenieIntegrationAPI>,
     pub v2_api_cloudflare_integration: Option<datadogV2::api::api_cloudflare_integration::CloudflareIntegrationAPI>,
     pub v2_api_confluent_cloud: Option<datadogV2::api::api_confluent_cloud::ConfluentCloudAPI>,
     pub v2_api_fastly_integration: Option<datadogV2::api::api_fastly_integration::FastlyIntegrationAPI>,
     pub v2_api_okta_integration: Option<datadogV2::api::api_okta_integration::OktaIntegrationAPI>,
-    pub v2_api_ip_allowlist: Option<datadogV2::api::api_ip_allowlist::IpAllowlistAPI>,
+    pub v2_api_ip_allowlist: Option<datadogV2::api::api_ip_allowlist::IPAllowlistAPI>,
     pub v2_api_logs: Option<datadogV2::api::api_logs::LogsAPI>,
     pub v2_api_logs_archives: Option<datadogV2::api::api_logs_archives::LogsArchivesAPI>,
     pub v2_api_logs_metrics: Option<datadogV2::api::api_logs_metrics::LogsMetricsAPI>,
@@ -73,7 +73,7 @@ pub struct ApiInstances {
     pub v2_api_powerpack: Option<datadogV2::api::api_powerpack::PowerpackAPI>,
     pub v2_api_processes: Option<datadogV2::api::api_processes::ProcessesAPI>,
     pub v2_api_restriction_policies: Option<datadogV2::api::api_restriction_policies::RestrictionPoliciesAPI>,
-    pub v2_api_rum: Option<datadogV2::api::api_rum::RumAPI>,
+    pub v2_api_rum: Option<datadogV2::api::api_rum::RUMAPI>,
     pub v2_api_organizations: Option<datadogV2::api::api_organizations::OrganizationsAPI>,
     pub v2_api_service_scorecards: Option<datadogV2::api::api_service_scorecards::ServiceScorecardsAPI>,
     pub v2_api_cloud_workload_security: Option<datadogV2::api::api_cloud_workload_security::CloudWorkloadSecurityAPI>,
@@ -90,10 +90,10 @@ pub struct ApiInstances {
 
 pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
     match api.as_str() {
-        "IpRanges" => {
+        "IPRanges" => {
             if world.api_instances.v1_api_ip_ranges.is_none() {
                 world.api_instances.v1_api_ip_ranges = Some(
-                    datadogV1::api::api_ip_ranges::IpRangesAPI::with_config(world.config.clone()),
+                    datadogV1::api::api_ip_ranges::IPRangesAPI::with_config(world.config.clone()),
                 );
             }
         }
@@ -212,19 +212,19 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 );
             }
         }
-        "AwsIntegration" => {
+        "AWSIntegration" => {
             if world.api_instances.v1_api_aws_integration.is_none() {
                 world.api_instances.v1_api_aws_integration = Some(
-                    datadogV1::api::api_aws_integration::AwsIntegrationAPI::with_config(
+                    datadogV1::api::api_aws_integration::AWSIntegrationAPI::with_config(
                         world.config.clone(),
                     ),
                 );
             }
         }
-        "AwsLogsIntegration" => {
+        "AWSLogsIntegration" => {
             if world.api_instances.v1_api_aws_logs_integration.is_none() {
                 world.api_instances.v1_api_aws_logs_integration = Some(
-                    datadogV1::api::api_aws_logs_integration::AwsLogsIntegrationAPI::with_config(
+                    datadogV1::api::api_aws_logs_integration::AWSLogsIntegrationAPI::with_config(
                         world.config.clone(),
                     ),
                 );
@@ -239,17 +239,17 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 );
             }
         }
-        "GcpIntegration" => {
+        "GCPIntegration" => {
             if world.api_instances.v1_api_gcp_integration.is_none() {
                 world.api_instances.v1_api_gcp_integration = Some(
-                    datadogV1::api::api_gcp_integration::GcpIntegrationAPI::with_config(
+                    datadogV1::api::api_gcp_integration::GCPIntegrationAPI::with_config(
                         world.config.clone(),
                     ),
                 );
             }
             if world.api_instances.v2_api_gcp_integration.is_none() {
                 world.api_instances.v2_api_gcp_integration = Some(
-                    datadogV2::api::api_gcp_integration::GcpIntegrationAPI::with_config(
+                    datadogV2::api::api_gcp_integration::GCPIntegrationAPI::with_config(
                         world.config.clone(),
                     ),
                 );
@@ -428,10 +428,10 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 );
             }
         }
-        "ApmRetentionFilters" => {
+        "APMRetentionFilters" => {
             if world.api_instances.v2_api_apm_retention_filters.is_none() {
                 world.api_instances.v2_api_apm_retention_filters = Some(
-                    datadogV2::api::api_apm_retention_filters::ApmRetentionFiltersAPI::with_config(
+                    datadogV2::api::api_apm_retention_filters::APMRetentionFiltersAPI::with_config(
                         world.config.clone(),
                     ),
                 );
@@ -453,15 +453,15 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 );
             }
         }
-        "CiVisibilityPipelines" => {
+        "CIVisibilityPipelines" => {
             if world.api_instances.v2_api_ci_visibility_pipelines.is_none() {
-                world.api_instances.v2_api_ci_visibility_pipelines = Some(datadogV2::api::api_ci_visibility_pipelines::CiVisibilityPipelinesAPI::with_config(world.config.clone()));
+                world.api_instances.v2_api_ci_visibility_pipelines = Some(datadogV2::api::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI::with_config(world.config.clone()));
             }
         }
-        "CiVisibilityTests" => {
+        "CIVisibilityTests" => {
             if world.api_instances.v2_api_ci_visibility_tests.is_none() {
                 world.api_instances.v2_api_ci_visibility_tests = Some(
-                    datadogV2::api::api_ci_visibility_tests::CiVisibilityTestsAPI::with_config(
+                    datadogV2::api::api_ci_visibility_tests::CIVisibilityTestsAPI::with_config(
                         world.config.clone(),
                     ),
                 );
@@ -493,10 +493,10 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 );
             }
         }
-        "DoraMetrics" => {
+        "DORAMetrics" => {
             if world.api_instances.v2_api_dora_metrics.is_none() {
                 world.api_instances.v2_api_dora_metrics = Some(
-                    datadogV2::api::api_dora_metrics::DoraMetricsAPI::with_config(
+                    datadogV2::api::api_dora_metrics::DORAMetricsAPI::with_config(
                         world.config.clone(),
                     ),
                 );
@@ -550,10 +550,10 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 );
             }
         }
-        "IpAllowlist" => {
+        "IPAllowlist" => {
             if world.api_instances.v2_api_ip_allowlist.is_none() {
                 world.api_instances.v2_api_ip_allowlist = Some(
-                    datadogV2::api::api_ip_allowlist::IpAllowlistAPI::with_config(
+                    datadogV2::api::api_ip_allowlist::IPAllowlistAPI::with_config(
                         world.config.clone(),
                     ),
                 );
@@ -607,10 +607,10 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 );
             }
         }
-        "Rum" => {
+        "RUM" => {
             if world.api_instances.v2_api_rum.is_none() {
                 world.api_instances.v2_api_rum = Some(
-                    datadogV2::api::api_rum::RumAPI::with_config(world.config.clone()),
+                    datadogV2::api::api_rum::RUMAPI::with_config(world.config.clone()),
                 );
             }
         }
@@ -2632,7 +2632,12 @@ fn test_v1_get_ip_ranges(world: &mut DatadogWorld, _parameters: &HashMap<String,
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -2651,7 +2656,12 @@ fn test_v1_list_api_keys(world: &mut DatadogWorld, _parameters: &HashMap<String,
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -2672,7 +2682,12 @@ fn test_v1_create_api_key(world: &mut DatadogWorld, _parameters: &HashMap<String
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -2693,7 +2708,12 @@ fn test_v1_delete_api_key(world: &mut DatadogWorld, _parameters: &HashMap<String
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -2714,7 +2734,12 @@ fn test_v1_get_api_key(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -2736,7 +2761,12 @@ fn test_v1_update_api_key(world: &mut DatadogWorld, _parameters: &HashMap<String
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -2755,7 +2785,12 @@ fn test_v1_list_application_keys(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -2776,7 +2811,12 @@ fn test_v1_create_application_key(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -2797,7 +2837,12 @@ fn test_v1_delete_application_key(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -2818,7 +2863,12 @@ fn test_v1_get_application_key(world: &mut DatadogWorld, _parameters: &HashMap<S
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -2840,7 +2890,12 @@ fn test_v1_update_application_key(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -2861,7 +2916,12 @@ fn test_v1_submit_service_check(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -2909,7 +2969,12 @@ fn test_v1_get_daily_custom_reports(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -2934,7 +2999,12 @@ fn test_v1_get_specified_daily_custom_reports(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -2982,7 +3052,12 @@ fn test_v1_get_monthly_custom_reports(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3007,7 +3082,12 @@ fn test_v1_get_specified_monthly_custom_reports(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3034,7 +3114,12 @@ fn test_v1_get_usage_analyzed_logs(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3096,7 +3181,12 @@ fn test_v1_get_usage_attribution(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3122,7 +3212,12 @@ fn test_v1_get_usage_audit_logs(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3148,7 +3243,12 @@ fn test_v1_get_usage_lambda(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3176,7 +3276,12 @@ fn test_v1_get_usage_billable_summary(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3202,7 +3307,12 @@ fn test_v1_get_usage_ci_app(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3235,7 +3345,12 @@ fn test_v1_get_usage_cloud_security_posture_management(
             Ok(response) => response,
             Err(error) => {
                 return match error {
-                    Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
                     _ => panic!("error parsing response: {}", error),
                 };
             }
@@ -3261,7 +3376,12 @@ fn test_v1_get_usage_cws(world: &mut DatadogWorld, _parameters: &HashMap<String,
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3287,7 +3407,12 @@ fn test_v1_get_usage_dbm(world: &mut DatadogWorld, _parameters: &HashMap<String,
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3313,7 +3438,12 @@ fn test_v1_get_usage_fargate(world: &mut DatadogWorld, _parameters: &HashMap<Str
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3339,7 +3469,12 @@ fn test_v1_get_usage_hosts(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3392,7 +3527,12 @@ fn test_v1_get_hourly_usage_attribution(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3419,7 +3559,12 @@ fn test_v1_get_incident_management(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3446,7 +3591,12 @@ fn test_v1_get_usage_indexed_spans(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3472,7 +3622,12 @@ fn test_v1_get_ingested_spans(world: &mut DatadogWorld, _parameters: &HashMap<St
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3502,7 +3657,12 @@ fn test_v1_get_usage_internet_of_things(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3528,7 +3688,12 @@ fn test_v1_get_usage_logs(world: &mut DatadogWorld, _parameters: &HashMap<String
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3558,7 +3723,12 @@ fn test_v1_get_usage_logs_by_retention(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3593,7 +3763,12 @@ fn test_v1_get_usage_logs_by_index(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3658,7 +3833,12 @@ fn test_v1_get_monthly_usage_attribution(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3685,7 +3865,12 @@ fn test_v1_get_usage_network_flows(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3712,7 +3897,12 @@ fn test_v1_get_usage_network_hosts(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3742,7 +3932,12 @@ fn test_v1_get_usage_online_archive(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3768,7 +3963,12 @@ fn test_v1_get_usage_profiling(world: &mut DatadogWorld, _parameters: &HashMap<S
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3794,7 +3994,12 @@ fn test_v1_get_usage_rum_units(world: &mut DatadogWorld, _parameters: &HashMap<S
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3829,7 +4034,12 @@ fn test_v1_get_usage_rum_sessions(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3855,7 +4065,12 @@ fn test_v1_get_usage_sds(world: &mut DatadogWorld, _parameters: &HashMap<String,
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3881,7 +4096,12 @@ fn test_v1_get_usage_snmp(world: &mut DatadogWorld, _parameters: &HashMap<String
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3917,7 +4137,12 @@ fn test_v1_get_usage_summary(world: &mut DatadogWorld, _parameters: &HashMap<Str
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3943,7 +4168,12 @@ fn test_v1_get_usage_synthetics(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -3973,7 +4203,12 @@ fn test_v1_get_usage_synthetics_api(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4003,7 +4238,12 @@ fn test_v1_get_usage_synthetics_browser(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4029,7 +4269,12 @@ fn test_v1_get_usage_timeseries(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4083,7 +4328,12 @@ fn test_v1_get_usage_top_avg_metrics(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4104,7 +4354,12 @@ fn test_v1_delete_dashboards(world: &mut DatadogWorld, _parameters: &HashMap<Str
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4149,7 +4404,12 @@ fn test_v1_list_dashboards(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4170,7 +4430,12 @@ fn test_v1_restore_dashboards(world: &mut DatadogWorld, _parameters: &HashMap<St
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4191,7 +4456,12 @@ fn test_v1_create_dashboard(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4212,7 +4482,12 @@ fn test_v1_create_public_dashboard(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4233,7 +4508,12 @@ fn test_v1_delete_public_dashboard(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4254,7 +4534,12 @@ fn test_v1_get_public_dashboard(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4276,7 +4561,12 @@ fn test_v1_update_public_dashboard(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4302,7 +4592,12 @@ fn test_v1_delete_public_dashboard_invitation(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4340,7 +4635,12 @@ fn test_v1_get_public_dashboard_invitations(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4366,7 +4666,12 @@ fn test_v1_send_public_dashboard_invitation(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4388,7 +4693,12 @@ fn test_v1_delete_dashboard(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4410,7 +4720,12 @@ fn test_v1_get_dashboard(world: &mut DatadogWorld, _parameters: &HashMap<String,
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4433,7 +4748,12 @@ fn test_v1_update_dashboard(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4452,7 +4772,12 @@ fn test_v1_list_dashboard_lists(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4473,7 +4798,12 @@ fn test_v1_create_dashboard_list(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4494,7 +4824,12 @@ fn test_v1_delete_dashboard_list(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4515,7 +4850,12 @@ fn test_v1_get_dashboard_list(world: &mut DatadogWorld, _parameters: &HashMap<St
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4537,7 +4877,12 @@ fn test_v1_update_dashboard_list(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4569,7 +4914,12 @@ fn test_v1_submit_distribution_points(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4604,7 +4954,12 @@ fn test_v1_list_active_metrics(world: &mut DatadogWorld, _parameters: &HashMap<S
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4626,7 +4981,12 @@ fn test_v1_get_metric_metadata(world: &mut DatadogWorld, _parameters: &HashMap<S
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4649,7 +5009,12 @@ fn test_v1_update_metric_metadata(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4672,7 +5037,12 @@ fn test_v1_query_metrics(world: &mut DatadogWorld, _parameters: &HashMap<String,
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4693,7 +5063,12 @@ fn test_v1_list_metrics(world: &mut DatadogWorld, _parameters: &HashMap<String, 
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4722,7 +5097,12 @@ fn test_v1_submit_metrics(world: &mut DatadogWorld, _parameters: &HashMap<String
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4755,7 +5135,12 @@ fn test_v1_list_downtimes(world: &mut DatadogWorld, _parameters: &HashMap<String
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4776,7 +5161,12 @@ fn test_v1_create_downtime(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4800,7 +5190,12 @@ fn test_v1_cancel_downtimes_by_scope(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4822,7 +5217,12 @@ fn test_v1_cancel_downtime(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4844,7 +5244,12 @@ fn test_v1_get_downtime(world: &mut DatadogWorld, _parameters: &HashMap<String, 
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4867,7 +5272,12 @@ fn test_v1_update_downtime(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4889,7 +5299,12 @@ fn test_v1_list_monitor_downtimes(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4950,7 +5365,12 @@ fn test_v1_list_events(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4971,7 +5391,12 @@ fn test_v1_create_event(world: &mut DatadogWorld, _parameters: &HashMap<String, 
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -4992,7 +5417,12 @@ fn test_v1_get_event(world: &mut DatadogWorld, _parameters: &HashMap<String, Val
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5053,7 +5483,12 @@ fn test_v1_get_graph_snapshot(world: &mut DatadogWorld, _parameters: &HashMap<St
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5075,7 +5510,12 @@ fn test_v1_mute_host(world: &mut DatadogWorld, _parameters: &HashMap<String, Val
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5096,7 +5536,12 @@ fn test_v1_unmute_host(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5166,7 +5611,12 @@ fn test_v1_list_hosts(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5191,7 +5641,12 @@ fn test_v1_get_host_totals(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5212,7 +5667,12 @@ fn test_v1_delete_aws_account(world: &mut DatadogWorld, _parameters: &HashMap<St
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5251,7 +5711,12 @@ fn test_v1_list_aws_accounts(world: &mut DatadogWorld, _parameters: &HashMap<Str
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5272,7 +5737,12 @@ fn test_v1_create_aws_account(world: &mut DatadogWorld, _parameters: &HashMap<St
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5313,7 +5783,12 @@ fn test_v1_update_aws_account(world: &mut DatadogWorld, _parameters: &HashMap<St
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5335,7 +5810,12 @@ fn test_v1_list_available_aws_namespaces(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5359,7 +5839,12 @@ fn test_v1_delete_aws_event_bridge_source(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5381,7 +5866,12 @@ fn test_v1_list_aws_event_bridge_sources(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5405,7 +5895,12 @@ fn test_v1_create_aws_event_bridge_source(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5426,7 +5921,12 @@ fn test_v1_delete_aws_tag_filter(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5448,7 +5948,12 @@ fn test_v1_list_aws_tag_filters(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5469,7 +5974,12 @@ fn test_v1_create_aws_tag_filter(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5493,7 +6003,12 @@ fn test_v1_create_new_aws_external_id(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5514,7 +6029,12 @@ fn test_v1_delete_aws_lambda_arn(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5536,7 +6056,12 @@ fn test_v1_list_aws_logs_integrations(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5557,7 +6082,12 @@ fn test_v1_create_aws_lambda_arn(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5581,7 +6111,12 @@ fn test_v1_check_aws_logs_lambda_async(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5600,7 +6135,12 @@ fn test_v1_list_aws_logs_services(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5621,7 +6161,12 @@ fn test_v1_enable_aws_log_services(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5645,7 +6190,12 @@ fn test_v1_check_aws_logs_services_async(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5669,7 +6219,12 @@ fn test_v1_delete_azure_integration(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5688,7 +6243,12 @@ fn test_v1_list_azure_integration(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5712,7 +6272,12 @@ fn test_v1_create_azure_integration(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5736,7 +6301,12 @@ fn test_v1_update_azure_integration(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5760,7 +6330,12 @@ fn test_v1_update_azure_host_filters(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5781,7 +6356,12 @@ fn test_v1_delete_gcp_integration(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5800,7 +6380,12 @@ fn test_v1_list_gcp_integration(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5821,7 +6406,12 @@ fn test_v1_create_gcp_integration(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5842,7 +6432,12 @@ fn test_v1_update_gcp_integration(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5870,7 +6465,12 @@ fn test_v1_create_pager_duty_integration_service(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5899,7 +6499,12 @@ fn test_v1_delete_pager_duty_integration_service(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5926,7 +6531,12 @@ fn test_v1_get_pager_duty_integration_service(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5957,7 +6567,12 @@ fn test_v1_update_pager_duty_integration_service(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -5983,7 +6598,12 @@ fn test_v1_get_slack_integration_channels(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6012,7 +6632,12 @@ fn test_v1_create_slack_integration_channel(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6042,7 +6667,12 @@ fn test_v1_remove_slack_integration_channel(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6072,7 +6702,12 @@ fn test_v1_get_slack_integration_channel(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6104,7 +6739,12 @@ fn test_v1_update_slack_integration_channel(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6132,7 +6772,12 @@ fn test_v1_create_webhooks_integration_custom_variable(
             Ok(response) => response,
             Err(error) => {
                 return match error {
-                    Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
                     _ => panic!("error parsing response: {}", error),
                 };
             }
@@ -6161,7 +6806,12 @@ fn test_v1_delete_webhooks_integration_custom_variable(
             Ok(response) => response,
             Err(error) => {
                 return match error {
-                    Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
                     _ => panic!("error parsing response: {}", error),
                 };
             }
@@ -6190,7 +6840,12 @@ fn test_v1_get_webhooks_integration_custom_variable(
             Ok(response) => response,
             Err(error) => {
                 return match error {
-                    Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
                     _ => panic!("error parsing response: {}", error),
                 };
             }
@@ -6221,7 +6876,12 @@ fn test_v1_update_webhooks_integration_custom_variable(
             Ok(response) => response,
             Err(error) => {
                 return match error {
-                    Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
                     _ => panic!("error parsing response: {}", error),
                 };
             }
@@ -6245,7 +6905,12 @@ fn test_v1_create_webhooks_integration(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6271,7 +6936,12 @@ fn test_v1_delete_webhooks_integration(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6297,7 +6967,12 @@ fn test_v1_get_webhooks_integration(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6326,7 +7001,12 @@ fn test_v1_update_webhooks_integration(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6347,7 +7027,12 @@ fn test_v1_list_logs(world: &mut DatadogWorld, _parameters: &HashMap<String, Val
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6382,7 +7067,12 @@ fn test_v1_submit_log(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6401,7 +7091,12 @@ fn test_v1_get_logs_index_order(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6422,7 +7117,12 @@ fn test_v1_update_logs_index_order(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6441,7 +7141,12 @@ fn test_v1_list_log_indexes(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6462,7 +7167,12 @@ fn test_v1_create_logs_index(world: &mut DatadogWorld, _parameters: &HashMap<Str
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6483,7 +7193,12 @@ fn test_v1_get_logs_index(world: &mut DatadogWorld, _parameters: &HashMap<String
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6505,7 +7220,12 @@ fn test_v1_update_logs_index(world: &mut DatadogWorld, _parameters: &HashMap<Str
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6524,7 +7244,12 @@ fn test_v1_get_logs_pipeline_order(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6548,7 +7273,12 @@ fn test_v1_update_logs_pipeline_order(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6567,7 +7297,12 @@ fn test_v1_list_logs_pipelines(world: &mut DatadogWorld, _parameters: &HashMap<S
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6588,7 +7323,12 @@ fn test_v1_create_logs_pipeline(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6610,7 +7350,12 @@ fn test_v1_delete_logs_pipeline(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6632,7 +7377,12 @@ fn test_v1_get_logs_pipeline(world: &mut DatadogWorld, _parameters: &HashMap<Str
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6655,7 +7405,12 @@ fn test_v1_update_logs_pipeline(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6724,7 +7479,12 @@ fn test_v1_list_monitors(world: &mut DatadogWorld, _parameters: &HashMap<String,
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6745,7 +7505,12 @@ fn test_v1_create_monitor(world: &mut DatadogWorld, _parameters: &HashMap<String
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6770,7 +7535,12 @@ fn test_v1_check_can_delete_monitor(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6815,7 +7585,12 @@ fn test_v1_search_monitor_groups(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6860,7 +7635,12 @@ fn test_v1_search_monitors(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6881,7 +7661,12 @@ fn test_v1_validate_monitor(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6908,7 +7693,12 @@ fn test_v1_delete_monitor(world: &mut DatadogWorld, _parameters: &HashMap<String
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6944,7 +7734,12 @@ fn test_v1_get_monitor(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6967,7 +7762,12 @@ fn test_v1_update_monitor(world: &mut DatadogWorld, _parameters: &HashMap<String
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -6993,7 +7793,12 @@ fn test_v1_validate_existing_monitor(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7074,7 +7879,12 @@ fn test_v1_list_notebooks(world: &mut DatadogWorld, _parameters: &HashMap<String
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7095,7 +7905,12 @@ fn test_v1_create_notebook(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7117,7 +7932,12 @@ fn test_v1_delete_notebook(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7139,7 +7959,12 @@ fn test_v1_get_notebook(world: &mut DatadogWorld, _parameters: &HashMap<String, 
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7162,7 +7987,12 @@ fn test_v1_update_notebook(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7181,7 +8011,12 @@ fn test_v1_list_orgs(world: &mut DatadogWorld, _parameters: &HashMap<String, Val
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7202,7 +8037,12 @@ fn test_v1_create_child_org(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7223,7 +8063,12 @@ fn test_v1_get_org(world: &mut DatadogWorld, _parameters: &HashMap<String, Value
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7245,7 +8090,12 @@ fn test_v1_update_org(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7266,7 +8116,12 @@ fn test_v1_downgrade_org(world: &mut DatadogWorld, _parameters: &HashMap<String,
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7297,7 +8152,12 @@ fn test_v1_upload_id_p_for_org(world: &mut DatadogWorld, _parameters: &HashMap<S
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7327,7 +8187,12 @@ fn test_v1_add_security_monitoring_signal_to_incident(
             Ok(response) => response,
             Err(error) => {
                 return match error {
-                    Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
                     _ => panic!("error parsing response: {}", error),
                 };
             }
@@ -7357,7 +8222,12 @@ fn test_v1_edit_security_monitoring_signal_assignee(
             Ok(response) => response,
             Err(error) => {
                 return match error {
-                    Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
                     _ => panic!("error parsing response: {}", error),
                 };
             }
@@ -7386,7 +8256,12 @@ fn test_v1_edit_security_monitoring_signal_state(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7443,7 +8318,12 @@ fn test_v1_list_sl_os(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7464,7 +8344,12 @@ fn test_v1_create_slo(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7489,7 +8374,12 @@ fn test_v1_delete_slo_timeframe_in_bulk(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7510,7 +8400,12 @@ fn test_v1_check_can_delete_slo(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7555,7 +8450,12 @@ fn test_v1_search_slo(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7581,7 +8481,12 @@ fn test_v1_delete_slo(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7611,7 +8516,12 @@ fn test_v1_get_slo(world: &mut DatadogWorld, _parameters: &HashMap<String, Value
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7633,7 +8543,12 @@ fn test_v1_update_slo(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7654,7 +8569,12 @@ fn test_v1_get_slo_corrections(world: &mut DatadogWorld, _parameters: &HashMap<S
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7693,7 +8613,12 @@ fn test_v1_get_slo_history(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7726,7 +8651,12 @@ fn test_v1_list_slo_correction(world: &mut DatadogWorld, _parameters: &HashMap<S
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7748,7 +8678,12 @@ fn test_v1_create_slo_correction(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7773,7 +8708,12 @@ fn test_v1_delete_slo_correction(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7797,7 +8737,12 @@ fn test_v1_get_slo_correction(world: &mut DatadogWorld, _parameters: &HashMap<St
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7824,7 +8769,12 @@ fn test_v1_update_slo_correction(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7845,7 +8795,12 @@ fn test_v1_get_synthetics_ci_batch(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7864,7 +8819,12 @@ fn test_v1_list_locations(world: &mut DatadogWorld, _parameters: &HashMap<String
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7885,7 +8845,12 @@ fn test_v1_create_private_location(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7907,7 +8872,12 @@ fn test_v1_delete_private_location(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7929,7 +8899,12 @@ fn test_v1_get_private_location(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7952,7 +8927,12 @@ fn test_v1_update_private_location(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -7974,7 +8954,12 @@ fn test_v1_get_synthetics_default_locations(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8007,7 +8992,12 @@ fn test_v1_list_tests(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8031,7 +9021,12 @@ fn test_v1_create_synthetics_api_test(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8052,7 +9047,12 @@ fn test_v1_get_api_test(world: &mut DatadogWorld, _parameters: &HashMap<String, 
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8074,7 +9074,12 @@ fn test_v1_update_api_test(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8098,7 +9103,12 @@ fn test_v1_create_synthetics_browser_test(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8119,7 +9129,12 @@ fn test_v1_get_browser_test(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8141,7 +9156,12 @@ fn test_v1_update_browser_test(world: &mut DatadogWorld, _parameters: &HashMap<S
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8185,7 +9205,12 @@ fn test_v1_get_browser_test_latest_results(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8210,7 +9235,12 @@ fn test_v1_get_browser_test_result(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8231,7 +9261,12 @@ fn test_v1_delete_tests(world: &mut DatadogWorld, _parameters: &HashMap<String, 
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8252,7 +9287,12 @@ fn test_v1_trigger_tests(world: &mut DatadogWorld, _parameters: &HashMap<String,
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8273,7 +9313,12 @@ fn test_v1_trigger_ci_tests(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8294,7 +9339,12 @@ fn test_v1_get_test(world: &mut DatadogWorld, _parameters: &HashMap<String, Valu
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8316,7 +9366,12 @@ fn test_v1_patch_test(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8360,7 +9415,12 @@ fn test_v1_get_api_test_latest_results(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8385,7 +9445,12 @@ fn test_v1_get_api_test_result(world: &mut DatadogWorld, _parameters: &HashMap<S
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8410,7 +9475,12 @@ fn test_v1_update_test_pause_status(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8429,7 +9499,12 @@ fn test_v1_list_global_variables(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8450,7 +9525,12 @@ fn test_v1_create_global_variable(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8472,7 +9552,12 @@ fn test_v1_delete_global_variable(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8494,7 +9579,12 @@ fn test_v1_get_global_variable(world: &mut DatadogWorld, _parameters: &HashMap<S
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8517,7 +9607,12 @@ fn test_v1_edit_global_variable(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8542,7 +9637,12 @@ fn test_v1_list_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<String
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8568,7 +9668,12 @@ fn test_v1_delete_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8594,7 +9699,12 @@ fn test_v1_get_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<String,
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8625,7 +9735,12 @@ fn test_v1_create_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8656,7 +9771,12 @@ fn test_v1_update_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8675,7 +9795,12 @@ fn test_v1_list_users(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8696,7 +9821,12 @@ fn test_v1_create_user(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8718,7 +9848,12 @@ fn test_v1_disable_user(world: &mut DatadogWorld, _parameters: &HashMap<String, 
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8740,7 +9875,12 @@ fn test_v1_get_user(world: &mut DatadogWorld, _parameters: &HashMap<String, Valu
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8763,7 +9903,12 @@ fn test_v1_update_user(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8782,7 +9927,12 @@ fn test_v1_validate(world: &mut DatadogWorld, _parameters: &HashMap<String, Valu
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8872,7 +10022,12 @@ fn test_v2_list_api_keys(world: &mut DatadogWorld, _parameters: &HashMap<String,
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8893,7 +10048,12 @@ fn test_v2_create_api_key(world: &mut DatadogWorld, _parameters: &HashMap<String
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8915,7 +10075,12 @@ fn test_v2_delete_api_key(world: &mut DatadogWorld, _parameters: &HashMap<String
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8945,7 +10110,12 @@ fn test_v2_get_api_key(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -8968,7 +10138,12 @@ fn test_v2_update_api_key(world: &mut DatadogWorld, _parameters: &HashMap<String
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9032,7 +10207,12 @@ fn test_v2_list_application_keys(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9054,7 +10234,12 @@ fn test_v2_delete_application_key(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9084,7 +10269,12 @@ fn test_v2_get_application_key(world: &mut DatadogWorld, _parameters: &HashMap<S
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9108,7 +10298,12 @@ fn test_v2_update_application_key(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9175,7 +10370,12 @@ fn test_v2_list_current_user_application_keys(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9199,7 +10399,12 @@ fn test_v2_create_current_user_application_key(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9225,7 +10430,12 @@ fn test_v2_delete_current_user_application_key(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9251,7 +10461,12 @@ fn test_v2_get_current_user_application_key(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9280,7 +10495,12 @@ fn test_v2_update_current_user_application_key(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9299,7 +10519,12 @@ fn test_v2_list_spans_metrics(world: &mut DatadogWorld, _parameters: &HashMap<St
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9320,7 +10545,12 @@ fn test_v2_create_spans_metric(world: &mut DatadogWorld, _parameters: &HashMap<S
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9341,7 +10571,12 @@ fn test_v2_delete_spans_metric(world: &mut DatadogWorld, _parameters: &HashMap<S
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9362,7 +10597,12 @@ fn test_v2_get_spans_metric(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9384,7 +10624,12 @@ fn test_v2_update_spans_metric(world: &mut DatadogWorld, _parameters: &HashMap<S
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9406,7 +10651,12 @@ fn test_v2_list_apm_retention_filters(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9430,7 +10680,12 @@ fn test_v2_create_apm_retention_filter(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9455,7 +10710,12 @@ fn test_v2_reorder_apm_retention_filters(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9480,7 +10740,12 @@ fn test_v2_delete_apm_retention_filter(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9505,7 +10770,12 @@ fn test_v2_get_apm_retention_filter(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9533,7 +10803,12 @@ fn test_v2_update_apm_retention_filter(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9590,7 +10865,12 @@ fn test_v2_list_audit_logs(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9615,7 +10895,12 @@ fn test_v2_search_audit_logs(world: &mut DatadogWorld, _parameters: &HashMap<Str
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9660,7 +10945,12 @@ fn test_v2_list_auth_n_mappings(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9681,7 +10971,12 @@ fn test_v2_create_auth_n_mapping(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9703,7 +10998,12 @@ fn test_v2_delete_auth_n_mapping(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9725,7 +11025,12 @@ fn test_v2_get_auth_n_mapping(world: &mut DatadogWorld, _parameters: &HashMap<St
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9751,7 +11056,12 @@ fn test_v2_update_auth_n_mapping(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9776,7 +11086,12 @@ fn test_v2_create_ci_app_pipeline_event(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9801,7 +11116,12 @@ fn test_v2_aggregate_ci_app_pipeline_events(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9861,7 +11181,12 @@ fn test_v2_list_ci_app_pipeline_events(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9890,7 +11215,12 @@ fn test_v2_search_ci_app_pipeline_events(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9914,7 +11244,12 @@ fn test_v2_aggregate_ci_app_test_events(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9971,7 +11306,12 @@ fn test_v2_list_ci_app_test_events(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -9999,7 +11339,12 @@ fn test_v2_search_ci_app_test_events(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10050,7 +11395,12 @@ fn test_v2_list_container_images(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10101,7 +11451,12 @@ fn test_v2_list_containers(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10123,7 +11478,12 @@ fn test_v2_list_cost_awscur_configs(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10147,7 +11507,12 @@ fn test_v2_create_cost_awscur_config(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10174,7 +11539,12 @@ fn test_v2_delete_cost_awscur_config(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10203,7 +11573,12 @@ fn test_v2_update_cost_awscur_config(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10235,7 +11610,12 @@ fn test_v2_list_aws_related_accounts(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10257,7 +11637,12 @@ fn test_v2_list_cost_azure_uc_configs(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10281,7 +11666,12 @@ fn test_v2_create_cost_azure_uc_configs(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10308,7 +11698,12 @@ fn test_v2_delete_cost_azure_uc_config(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10337,7 +11732,12 @@ fn test_v2_update_cost_azure_uc_configs(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10356,7 +11756,12 @@ fn test_v2_get_cloud_cost_activity(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10378,7 +11783,12 @@ fn test_v2_get_active_billing_dimensions(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10439,7 +11849,12 @@ fn test_v2_get_monthly_cost_attribution(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10472,7 +11887,12 @@ fn test_v2_get_usage_application_security_monitoring(
             Ok(response) => response,
             Err(error) => {
                 return match error {
-                    Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
                     _ => panic!("error parsing response: {}", error),
                 };
             }
@@ -10502,7 +11922,12 @@ fn test_v2_get_cost_by_org(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10556,7 +11981,12 @@ fn test_v2_get_estimated_cost_by_org(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10595,7 +12025,12 @@ fn test_v2_get_historical_cost_by_org(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10662,7 +12097,12 @@ fn test_v2_get_hourly_usage(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10694,7 +12134,12 @@ fn test_v2_get_usage_lambda_traced_invocations(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10726,7 +12171,12 @@ fn test_v2_get_usage_observability_pipelines(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10751,7 +12201,12 @@ fn test_v2_get_projected_cost(world: &mut DatadogWorld, _parameters: &HashMap<St
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10780,7 +12235,12 @@ fn test_v2_delete_dashboard_list_items(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10806,7 +12266,12 @@ fn test_v2_get_dashboard_list_items(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10835,7 +12300,12 @@ fn test_v2_create_dashboard_list_items(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10864,7 +12334,12 @@ fn test_v2_update_dashboard_list_items(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10885,7 +12360,12 @@ fn test_v2_create_dora_deployment(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10906,7 +12386,12 @@ fn test_v2_create_dora_incident(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10951,7 +12436,12 @@ fn test_v2_list_downtimes(world: &mut DatadogWorld, _parameters: &HashMap<String
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10972,7 +12462,12 @@ fn test_v2_create_downtime(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -10994,7 +12489,12 @@ fn test_v2_cancel_downtime(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11024,7 +12524,12 @@ fn test_v2_get_downtime(world: &mut DatadogWorld, _parameters: &HashMap<String, 
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11047,7 +12552,12 @@ fn test_v2_update_downtime(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11083,7 +12593,12 @@ fn test_v2_list_monitor_downtimes(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11140,7 +12655,12 @@ fn test_v2_list_events(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11165,7 +12685,12 @@ fn test_v2_search_events(world: &mut DatadogWorld, _parameters: &HashMap<String,
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11204,7 +12729,12 @@ fn test_v2_list_incidents(world: &mut DatadogWorld, _parameters: &HashMap<String
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11225,7 +12755,12 @@ fn test_v2_create_incident(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11272,7 +12807,12 @@ fn test_v2_search_incidents(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11294,7 +12834,12 @@ fn test_v2_delete_incident(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11324,7 +12869,12 @@ fn test_v2_get_incident(world: &mut DatadogWorld, _parameters: &HashMap<String, 
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11356,7 +12906,12 @@ fn test_v2_update_incident(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11395,7 +12950,12 @@ fn test_v2_list_incident_attachments(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11430,7 +12990,12 @@ fn test_v2_update_incident_attachments(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11455,7 +13020,12 @@ fn test_v2_list_incident_integrations(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11482,7 +13052,12 @@ fn test_v2_create_incident_integration(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11513,7 +13088,12 @@ fn test_v2_delete_incident_integration(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11544,7 +13124,12 @@ fn test_v2_get_incident_integration(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11577,7 +13162,12 @@ fn test_v2_update_incident_integration(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11599,7 +13189,12 @@ fn test_v2_list_incident_todos(world: &mut DatadogWorld, _parameters: &HashMap<S
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11622,7 +13217,12 @@ fn test_v2_create_incident_todo(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11648,7 +13248,12 @@ fn test_v2_delete_incident_todo(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11674,7 +13279,12 @@ fn test_v2_get_incident_todo(world: &mut DatadogWorld, _parameters: &HashMap<Str
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11702,7 +13312,12 @@ fn test_v2_update_incident_todo(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11721,7 +13336,12 @@ fn test_v2_list_gcpsts_accounts(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11742,7 +13362,12 @@ fn test_v2_create_gcpsts_account(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11764,7 +13389,12 @@ fn test_v2_delete_gcpsts_account(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11788,7 +13418,12 @@ fn test_v2_update_gcpsts_account(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11807,7 +13442,12 @@ fn test_v2_get_gcpsts_delegate(world: &mut DatadogWorld, _parameters: &HashMap<S
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11832,7 +13472,12 @@ fn test_v2_make_gcpsts_delegate(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11851,7 +13496,12 @@ fn test_v2_list_opsgenie_services(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11872,7 +13522,12 @@ fn test_v2_create_opsgenie_service(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11896,7 +13551,12 @@ fn test_v2_delete_opsgenie_service(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11920,7 +13580,12 @@ fn test_v2_get_opsgenie_service(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11946,7 +13611,12 @@ fn test_v2_update_opsgenie_service(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11968,7 +13638,12 @@ fn test_v2_list_cloudflare_accounts(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -11992,7 +13667,12 @@ fn test_v2_create_cloudflare_account(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12018,7 +13698,12 @@ fn test_v2_delete_cloudflare_account(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12041,7 +13726,12 @@ fn test_v2_get_cloudflare_account(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12070,7 +13760,12 @@ fn test_v2_update_cloudflare_account(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12089,7 +13784,12 @@ fn test_v2_list_confluent_account(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12113,7 +13813,12 @@ fn test_v2_create_confluent_account(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12138,7 +13843,12 @@ fn test_v2_delete_confluent_account(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12160,7 +13870,12 @@ fn test_v2_get_confluent_account(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12187,7 +13902,12 @@ fn test_v2_update_confluent_account(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12209,7 +13929,12 @@ fn test_v2_list_confluent_resource(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12236,7 +13961,12 @@ fn test_v2_create_confluent_resource(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12266,7 +13996,12 @@ fn test_v2_delete_confluent_resource(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12293,7 +14028,12 @@ fn test_v2_get_confluent_resource(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12325,7 +14065,12 @@ fn test_v2_update_confluent_resource(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12344,7 +14089,12 @@ fn test_v2_list_fastly_accounts(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12365,7 +14115,12 @@ fn test_v2_create_fastly_account(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12387,7 +14142,12 @@ fn test_v2_delete_fastly_account(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12409,7 +14169,12 @@ fn test_v2_get_fastly_account(world: &mut DatadogWorld, _parameters: &HashMap<St
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12433,7 +14198,12 @@ fn test_v2_update_fastly_account(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12455,7 +14225,12 @@ fn test_v2_list_fastly_services(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12479,7 +14254,12 @@ fn test_v2_create_fastly_service(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12506,7 +14286,12 @@ fn test_v2_delete_fastly_service(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12533,7 +14318,12 @@ fn test_v2_get_fastly_service(world: &mut DatadogWorld, _parameters: &HashMap<St
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12562,7 +14352,12 @@ fn test_v2_update_fastly_service(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12581,7 +14376,12 @@ fn test_v2_list_okta_accounts(world: &mut DatadogWorld, _parameters: &HashMap<St
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12602,7 +14402,12 @@ fn test_v2_create_okta_account(world: &mut DatadogWorld, _parameters: &HashMap<S
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12624,7 +14429,12 @@ fn test_v2_delete_okta_account(world: &mut DatadogWorld, _parameters: &HashMap<S
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12646,7 +14456,12 @@ fn test_v2_get_okta_account(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12669,7 +14484,12 @@ fn test_v2_update_okta_account(world: &mut DatadogWorld, _parameters: &HashMap<S
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12688,7 +14508,12 @@ fn test_v2_get_ip_allowlist(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12709,7 +14534,12 @@ fn test_v2_update_ip_allowlist(world: &mut DatadogWorld, _parameters: &HashMap<S
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12744,7 +14574,12 @@ fn test_v2_submit_log(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12765,7 +14600,12 @@ fn test_v2_aggregate_logs(world: &mut DatadogWorld, _parameters: &HashMap<String
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12834,7 +14674,12 @@ fn test_v2_list_logs_get(world: &mut DatadogWorld, _parameters: &HashMap<String,
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12859,7 +14704,12 @@ fn test_v2_list_logs(world: &mut DatadogWorld, _parameters: &HashMap<String, Val
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12878,7 +14728,12 @@ fn test_v2_get_logs_archive_order(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12902,7 +14757,12 @@ fn test_v2_update_logs_archive_order(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12921,7 +14781,12 @@ fn test_v2_list_logs_archives(world: &mut DatadogWorld, _parameters: &HashMap<St
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12942,7 +14807,12 @@ fn test_v2_create_logs_archive(world: &mut DatadogWorld, _parameters: &HashMap<S
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12964,7 +14834,12 @@ fn test_v2_delete_logs_archive(world: &mut DatadogWorld, _parameters: &HashMap<S
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -12986,7 +14861,12 @@ fn test_v2_get_logs_archive(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13009,7 +14889,12 @@ fn test_v2_update_logs_archive(world: &mut DatadogWorld, _parameters: &HashMap<S
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13036,7 +14921,12 @@ fn test_v2_remove_role_from_archive(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13058,7 +14948,12 @@ fn test_v2_list_archive_read_roles(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13084,7 +14979,12 @@ fn test_v2_add_read_role_to_archive(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13103,7 +15003,12 @@ fn test_v2_list_logs_metrics(world: &mut DatadogWorld, _parameters: &HashMap<Str
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13124,7 +15029,12 @@ fn test_v2_create_logs_metric(world: &mut DatadogWorld, _parameters: &HashMap<St
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13145,7 +15055,12 @@ fn test_v2_delete_logs_metric(world: &mut DatadogWorld, _parameters: &HashMap<St
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13166,7 +15081,12 @@ fn test_v2_get_logs_metric(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13188,7 +15108,12 @@ fn test_v2_update_logs_metric(world: &mut DatadogWorld, _parameters: &HashMap<St
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13252,7 +15177,12 @@ fn test_v2_list_tag_configurations(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13277,7 +15207,12 @@ fn test_v2_delete_bulk_tags_metrics_configuration(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13302,7 +15237,12 @@ fn test_v2_create_bulk_tags_metrics_configuration(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13335,7 +15275,12 @@ fn test_v2_list_active_metric_configurations(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13360,7 +15305,12 @@ fn test_v2_list_tags_by_metric_name(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13417,7 +15367,12 @@ fn test_v2_estimate_metrics_output_series(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13442,7 +15397,12 @@ fn test_v2_delete_tag_configuration(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13467,7 +15427,12 @@ fn test_v2_list_tag_configuration_by_name(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13493,7 +15458,12 @@ fn test_v2_update_tag_configuration(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13519,7 +15489,12 @@ fn test_v2_create_tag_configuration(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13544,7 +15519,12 @@ fn test_v2_list_volumes_by_metric_name(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13565,7 +15545,12 @@ fn test_v2_query_scalar_data(world: &mut DatadogWorld, _parameters: &HashMap<Str
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13586,7 +15571,12 @@ fn test_v2_query_timeseries_data(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13615,7 +15605,12 @@ fn test_v2_submit_metrics(world: &mut DatadogWorld, _parameters: &HashMap<String
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13637,7 +15632,12 @@ fn test_v2_list_monitor_config_policies(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13661,7 +15661,12 @@ fn test_v2_create_monitor_config_policy(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13685,7 +15690,12 @@ fn test_v2_delete_monitor_config_policy(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13709,7 +15719,12 @@ fn test_v2_get_monitor_config_policy(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13734,7 +15749,12 @@ fn test_v2_update_monitor_config_policy(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13753,7 +15773,12 @@ fn test_v2_list_permissions(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13804,7 +15829,12 @@ fn test_v2_list_roles(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13825,7 +15855,12 @@ fn test_v2_create_role(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13846,7 +15881,12 @@ fn test_v2_delete_role(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13867,7 +15907,12 @@ fn test_v2_get_role(world: &mut DatadogWorld, _parameters: &HashMap<String, Valu
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13889,7 +15934,12 @@ fn test_v2_update_role(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13911,7 +15961,12 @@ fn test_v2_clone_role(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13936,7 +15991,12 @@ fn test_v2_remove_permission_from_role(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13957,7 +16017,12 @@ fn test_v2_list_role_permissions(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -13979,7 +16044,12 @@ fn test_v2_add_permission_to_role(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14001,7 +16071,12 @@ fn test_v2_remove_user_from_role(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14048,7 +16123,12 @@ fn test_v2_list_role_users(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14070,7 +16150,12 @@ fn test_v2_add_user_to_role(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14165,7 +16250,12 @@ fn test_v2_list_findings(world: &mut DatadogWorld, _parameters: &HashMap<String,
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14186,7 +16276,12 @@ fn test_v2_mute_findings(world: &mut DatadogWorld, _parameters: &HashMap<String,
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14216,7 +16311,12 @@ fn test_v2_get_finding(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14235,7 +16335,12 @@ fn test_v2_list_security_filters(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14256,7 +16361,12 @@ fn test_v2_create_security_filter(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14279,7 +16389,12 @@ fn test_v2_delete_security_filter(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14302,7 +16417,12 @@ fn test_v2_get_security_filter(world: &mut DatadogWorld, _parameters: &HashMap<S
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14328,7 +16448,12 @@ fn test_v2_update_security_filter(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14364,7 +16489,12 @@ fn test_v2_list_security_monitoring_rules(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14389,7 +16519,12 @@ fn test_v2_create_security_monitoring_rule(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14414,7 +16549,12 @@ fn test_v2_delete_security_monitoring_rule(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14439,7 +16579,12 @@ fn test_v2_get_security_monitoring_rule(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14467,7 +16612,12 @@ fn test_v2_update_security_monitoring_rule(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14527,7 +16677,12 @@ fn test_v2_list_security_monitoring_signals(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14556,7 +16711,12 @@ fn test_v2_search_security_monitoring_signals(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14581,7 +16741,12 @@ fn test_v2_get_security_monitoring_signal(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14611,7 +16776,12 @@ fn test_v2_edit_security_monitoring_signal_assignee(
             Ok(response) => response,
             Err(error) => {
                 return match error {
-                    Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
                     _ => panic!("error parsing response: {}", error),
                 };
             }
@@ -14641,7 +16811,12 @@ fn test_v2_edit_security_monitoring_signal_incidents(
             Ok(response) => response,
             Err(error) => {
                 return match error {
-                    Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
                     _ => panic!("error parsing response: {}", error),
                 };
             }
@@ -14670,7 +16845,12 @@ fn test_v2_edit_security_monitoring_signal_state(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14703,7 +16883,12 @@ fn test_v2_list_powerpacks(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14724,7 +16909,12 @@ fn test_v2_create_powerpack(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14746,7 +16936,12 @@ fn test_v2_delete_powerpack(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14768,7 +16963,12 @@ fn test_v2_get_powerpack(world: &mut DatadogWorld, _parameters: &HashMap<String,
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14791,7 +16991,12 @@ fn test_v2_update_powerpack(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14848,7 +17053,12 @@ fn test_v2_list_processes(world: &mut DatadogWorld, _parameters: &HashMap<String
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14874,7 +17084,12 @@ fn test_v2_delete_restriction_policy(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14897,7 +17112,12 @@ fn test_v2_get_restriction_policy(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14926,7 +17146,12 @@ fn test_v2_update_restriction_policy(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14947,7 +17172,12 @@ fn test_v2_aggregate_rum_events(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14966,7 +17196,12 @@ fn test_v2_get_rum_applications(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -14987,7 +17222,12 @@ fn test_v2_create_rum_application(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15008,7 +17248,12 @@ fn test_v2_delete_rum_application(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15029,7 +17274,12 @@ fn test_v2_get_rum_application(world: &mut DatadogWorld, _parameters: &HashMap<S
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15051,7 +17301,12 @@ fn test_v2_update_rum_application(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15108,7 +17363,12 @@ fn test_v2_list_rum_events(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15129,7 +17389,12 @@ fn test_v2_search_rum_events(world: &mut DatadogWorld, _parameters: &HashMap<Str
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15154,7 +17419,12 @@ fn test_v2_upload_id_p_metadata(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15236,7 +17506,12 @@ fn test_v2_list_scorecard_outcomes(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15261,7 +17536,12 @@ fn test_v2_create_scorecard_outcomes_batch(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15343,7 +17623,12 @@ fn test_v2_list_scorecard_rules(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15364,7 +17649,12 @@ fn test_v2_create_scorecard_rule(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15385,7 +17675,12 @@ fn test_v2_delete_scorecard_rule(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15407,7 +17702,12 @@ fn test_v2_download_cloud_workload_policy_file(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15429,7 +17729,12 @@ fn test_v2_list_cloud_workload_security_agent_rules(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15457,7 +17762,12 @@ fn test_v2_create_cloud_workload_security_agent_rule(
             Ok(response) => response,
             Err(error) => {
                 return match error {
-                    Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
                     _ => panic!("error parsing response: {}", error),
                 };
             }
@@ -15486,7 +17796,12 @@ fn test_v2_delete_cloud_workload_security_agent_rule(
             Ok(response) => response,
             Err(error) => {
                 return match error {
-                    Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
                     _ => panic!("error parsing response: {}", error),
                 };
             }
@@ -15515,7 +17830,12 @@ fn test_v2_get_cloud_workload_security_agent_rule(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15546,7 +17866,12 @@ fn test_v2_update_cloud_workload_security_agent_rule(
             Ok(response) => response,
             Err(error) => {
                 return match error {
-                    Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
                     _ => panic!("error parsing response: {}", error),
                 };
             }
@@ -15565,7 +17890,12 @@ fn test_v2_list_scanning_groups(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15586,7 +17916,12 @@ fn test_v2_reorder_scanning_groups(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15607,7 +17942,12 @@ fn test_v2_create_scanning_group(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15630,7 +17970,12 @@ fn test_v2_delete_scanning_group(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15653,7 +17998,12 @@ fn test_v2_update_scanning_group(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15674,7 +18024,12 @@ fn test_v2_create_scanning_rule(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15697,7 +18052,12 @@ fn test_v2_delete_scanning_rule(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15720,7 +18080,12 @@ fn test_v2_update_scanning_rule(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15739,7 +18104,12 @@ fn test_v2_list_standard_patterns(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15760,7 +18130,12 @@ fn test_v2_create_service_account(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15825,7 +18200,12 @@ fn test_v2_list_service_account_application_keys(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15855,7 +18235,12 @@ fn test_v2_create_service_account_application_key(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15886,7 +18271,12 @@ fn test_v2_delete_service_account_application_key(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15916,7 +18306,12 @@ fn test_v2_get_service_account_application_key(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15949,7 +18344,12 @@ fn test_v2_update_service_account_application_key(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -15994,7 +18394,12 @@ fn test_v2_list_incident_services(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16015,7 +18420,12 @@ fn test_v2_create_incident_service(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16037,7 +18447,12 @@ fn test_v2_delete_incident_service(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16067,7 +18482,12 @@ fn test_v2_get_incident_service(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16091,7 +18511,12 @@ fn test_v2_update_incident_service(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16133,7 +18558,12 @@ fn test_v2_list_service_definitions(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16158,7 +18588,12 @@ fn test_v2_create_or_update_service_definitions(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16184,7 +18619,12 @@ fn test_v2_delete_service_definition(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16214,7 +18654,12 @@ fn test_v2_get_service_definition(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16235,7 +18680,12 @@ fn test_v2_aggregate_spans(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16292,7 +18742,12 @@ fn test_v2_list_spans_get(world: &mut DatadogWorld, _parameters: &HashMap<String
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16313,7 +18768,12 @@ fn test_v2_list_spans(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16335,7 +18795,12 @@ fn test_v2_get_on_demand_concurrency_cap(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16359,7 +18824,12 @@ fn test_v2_set_on_demand_concurrency_cap(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16422,7 +18892,12 @@ fn test_v2_list_teams(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16443,7 +18918,12 @@ fn test_v2_create_team(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16464,7 +18944,12 @@ fn test_v2_delete_team(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16485,7 +18970,12 @@ fn test_v2_get_team(world: &mut DatadogWorld, _parameters: &HashMap<String, Valu
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16507,7 +18997,12 @@ fn test_v2_update_team(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16528,7 +19023,12 @@ fn test_v2_get_team_links(world: &mut DatadogWorld, _parameters: &HashMap<String
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16550,7 +19050,12 @@ fn test_v2_create_team_link(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16572,7 +19077,12 @@ fn test_v2_delete_team_link(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16594,7 +19104,12 @@ fn test_v2_get_team_link(world: &mut DatadogWorld, _parameters: &HashMap<String,
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16621,7 +19136,12 @@ fn test_v2_update_team_link(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16668,7 +19188,12 @@ fn test_v2_get_team_memberships(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16690,7 +19215,12 @@ fn test_v2_create_team_membership(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16712,7 +19242,12 @@ fn test_v2_delete_team_membership(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16739,7 +19274,12 @@ fn test_v2_update_team_membership(world: &mut DatadogWorld, _parameters: &HashMa
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16763,7 +19303,12 @@ fn test_v2_get_team_permission_settings(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16793,7 +19338,12 @@ fn test_v2_update_team_permission_setting(
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16814,7 +19364,12 @@ fn test_v2_get_user_memberships(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16859,7 +19414,12 @@ fn test_v2_list_incident_teams(world: &mut DatadogWorld, _parameters: &HashMap<S
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16880,7 +19440,12 @@ fn test_v2_create_incident_team(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16901,7 +19466,12 @@ fn test_v2_delete_incident_team(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16927,7 +19497,12 @@ fn test_v2_get_incident_team(world: &mut DatadogWorld, _parameters: &HashMap<Str
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16949,7 +19524,12 @@ fn test_v2_update_incident_team(world: &mut DatadogWorld, _parameters: &HashMap<
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16970,7 +19550,12 @@ fn test_v2_send_invitations(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -16994,7 +19579,12 @@ fn test_v2_get_invitation(world: &mut DatadogWorld, _parameters: &HashMap<String
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -17051,7 +19641,12 @@ fn test_v2_list_users(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -17072,7 +19667,12 @@ fn test_v2_create_user(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -17093,7 +19693,12 @@ fn test_v2_disable_user(world: &mut DatadogWorld, _parameters: &HashMap<String, 
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -17114,7 +19719,12 @@ fn test_v2_get_user(world: &mut DatadogWorld, _parameters: &HashMap<String, Valu
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -17136,7 +19746,12 @@ fn test_v2_update_user(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -17157,7 +19772,12 @@ fn test_v2_list_user_organizations(world: &mut DatadogWorld, _parameters: &HashM
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }
@@ -17178,7 +19798,12 @@ fn test_v2_list_user_permissions(world: &mut DatadogWorld, _parameters: &HashMap
         Ok(response) => response,
         Err(error) => {
             return match error {
-                Error::ResponseError(e) => world.response.code = e.status.as_u16(),
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
                 _ => panic!("error parsing response: {}", error),
             };
         }

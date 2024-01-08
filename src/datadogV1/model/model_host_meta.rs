@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct HostMeta {
     /// A list of Agent checks running on the host.
     #[serde(rename = "agent_checks")]
-    pub agent_checks: Option<Vec<Vec<std::collections::HashMap<String, serde_json::Value>>>>,
+    pub agent_checks: Option<Vec<Vec<serde_json::Value>>>,
     /// The Datadog Agent version.
     #[serde(rename = "agent_version")]
     pub agent_version: Option<String>,
@@ -19,7 +19,7 @@ pub struct HostMeta {
     pub cpu_cores: Option<i64>,
     /// An array of Mac versions.
     #[serde(rename = "fbsdV")]
-    pub fbsd_v: Option<Vec<std::collections::HashMap<String, serde_json::Value>>>,
+    pub fbsd_v: Option<Vec<serde_json::Value>>,
     /// JSON string containing system information.
     #[serde(rename = "gohai")]
     pub gohai: Option<String>,
@@ -28,13 +28,13 @@ pub struct HostMeta {
     pub install_method: Option<Box<crate::datadogV1::model::HostMetaInstallMethod>>,
     /// An array of Mac versions.
     #[serde(rename = "macV")]
-    pub mac_v: Option<Vec<std::collections::HashMap<String, serde_json::Value>>>,
+    pub mac_v: Option<Vec<serde_json::Value>>,
     /// The machine architecture.
     #[serde(rename = "machine")]
     pub machine: Option<String>,
     /// Array of Unix versions.
     #[serde(rename = "nixV")]
-    pub nix_v: Option<Vec<std::collections::HashMap<String, serde_json::Value>>>,
+    pub nix_v: Option<Vec<serde_json::Value>>,
     /// The OS platform.
     #[serde(rename = "platform")]
     pub platform: Option<String>,
@@ -52,7 +52,7 @@ pub struct HostMeta {
     pub socket_hostname: Option<String>,
     /// An array of Windows versions.
     #[serde(rename = "winV")]
-    pub win_v: Option<Vec<std::collections::HashMap<String, serde_json::Value>>>,
+    pub win_v: Option<Vec<serde_json::Value>>,
 }
 
 impl HostMeta {

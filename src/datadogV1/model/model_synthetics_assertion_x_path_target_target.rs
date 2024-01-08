@@ -13,7 +13,7 @@ pub struct SyntheticsAssertionXPathTargetTarget {
     pub operator: Option<String>,
     /// The path target value to compare to.
     #[serde(rename = "targetValue")]
-    pub target_value: Option<std::collections::HashMap<String, serde_json::Value>>,
+    pub target_value: Option<serde_json::Value>,
     /// The X path to assert.
     #[serde(rename = "xPath")]
     pub x_path: Option<String>,

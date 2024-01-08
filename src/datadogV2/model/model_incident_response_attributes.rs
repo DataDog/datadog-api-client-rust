@@ -82,7 +82,7 @@ pub struct IncidentResponseAttributes {
         with = "::serde_with::rust::double_option"
     )]
     pub notification_handles:
-        Option<Option<Vec<Option<crate::datadogV2::model::IncidentNotificationHandle>>>>,
+        Option<Option<Vec<crate::datadogV2::model::IncidentNotificationHandle>>>,
     /// The monotonically increasing integer ID for the incident.
     #[serde(rename = "public_id")]
     pub public_id: Option<i64>,

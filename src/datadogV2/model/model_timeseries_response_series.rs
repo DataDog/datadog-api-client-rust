@@ -19,7 +19,7 @@ pub struct TimeseriesResponseSeries {
     /// The second element describes the "per unit" (for example, `second` in `bytes per second`).
     /// If the second element is not present, the API returns null.
     #[serde(rename = "unit")]
-    pub unit: Option<Vec<crate::datadogV2::model::Unit>>,
+    pub unit: Option<Vec<Option<crate::datadogV2::model::Unit>>>,
 }
 
 impl TimeseriesResponseSeries {

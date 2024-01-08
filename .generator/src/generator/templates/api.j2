@@ -48,7 +48,7 @@ pub enum {{operation.operationId}}Error {
 }
 {% endfor %}
 
-{%- set structName = name|camel_case +"API" %}
+{%- set structName = name.replace(" ", "")+"API" %}
 #[derive(Debug, Clone)]
 pub struct {{ structName }} {
     config: configuration::Configuration,

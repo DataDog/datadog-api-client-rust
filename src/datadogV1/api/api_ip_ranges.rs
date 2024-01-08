@@ -15,11 +15,11 @@ pub enum GetIPRangesError {
 }
 
 #[derive(Debug, Clone)]
-pub struct IpRangesAPI {
+pub struct IPRangesAPI {
     config: configuration::Configuration,
 }
 
-impl Default for IpRangesAPI {
+impl Default for IPRangesAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
@@ -27,7 +27,7 @@ impl Default for IpRangesAPI {
     }
 }
 
-impl IpRangesAPI {
+impl IPRangesAPI {
     pub fn new() -> Self {
         Self::default()
     }

@@ -105,11 +105,11 @@ pub enum UpdateApmRetentionFilterError {
 }
 
 #[derive(Debug, Clone)]
-pub struct ApmRetentionFiltersAPI {
+pub struct APMRetentionFiltersAPI {
     config: configuration::Configuration,
 }
 
-impl Default for ApmRetentionFiltersAPI {
+impl Default for APMRetentionFiltersAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
@@ -117,7 +117,7 @@ impl Default for ApmRetentionFiltersAPI {
     }
 }
 
-impl ApmRetentionFiltersAPI {
+impl APMRetentionFiltersAPI {
     pub fn new() -> Self {
         Self::default()
     }

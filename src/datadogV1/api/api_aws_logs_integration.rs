@@ -111,11 +111,11 @@ pub enum ListAWSLogsServicesError {
 }
 
 #[derive(Debug, Clone)]
-pub struct AwsLogsIntegrationAPI {
+pub struct AWSLogsIntegrationAPI {
     config: configuration::Configuration,
 }
 
-impl Default for AwsLogsIntegrationAPI {
+impl Default for AWSLogsIntegrationAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
@@ -123,7 +123,7 @@ impl Default for AwsLogsIntegrationAPI {
     }
 }
 
-impl AwsLogsIntegrationAPI {
+impl AWSLogsIntegrationAPI {
     pub fn new() -> Self {
         Self::default()
     }

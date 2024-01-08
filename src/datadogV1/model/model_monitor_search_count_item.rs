@@ -13,7 +13,7 @@ pub struct MonitorSearchCountItem {
     pub count: Option<i64>,
     /// The facet value.
     #[serde(rename = "name")]
-    pub name: Option<std::collections::HashMap<String, serde_json::Value>>,
+    pub name: Option<serde_json::Value>,
 }
 
 impl MonitorSearchCountItem {

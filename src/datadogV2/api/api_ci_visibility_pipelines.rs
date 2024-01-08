@@ -87,11 +87,11 @@ pub enum SearchCIAppPipelineEventsError {
 }
 
 #[derive(Debug, Clone)]
-pub struct CiVisibilityPipelinesAPI {
+pub struct CIVisibilityPipelinesAPI {
     config: configuration::Configuration,
 }
 
-impl Default for CiVisibilityPipelinesAPI {
+impl Default for CIVisibilityPipelinesAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
@@ -99,7 +99,7 @@ impl Default for CiVisibilityPipelinesAPI {
     }
 }
 
-impl CiVisibilityPipelinesAPI {
+impl CIVisibilityPipelinesAPI {
     pub fn new() -> Self {
         Self::default()
     }

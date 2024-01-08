@@ -10,9 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct LogsAggregateBucket {
     /// The key, value pairs for each group by
     #[serde(rename = "by")]
-    pub by: Option<
-        std::collections::HashMap<String, std::collections::HashMap<String, serde_json::Value>>,
-    >,
+    pub by: Option<std::collections::HashMap<String, serde_json::Value>>,
     /// A map of the metric name -> value for regular compute or list of values for a timeseries
     #[serde(rename = "computes")]
     pub computes: Option<

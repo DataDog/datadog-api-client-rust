@@ -53,7 +53,7 @@ pub struct SyntheticsStepDetail {
     pub url: Option<String>,
     /// Value for the step.
     #[serde(rename = "value")]
-    pub value: Option<std::collections::HashMap<String, serde_json::Value>>,
+    pub value: Option<serde_json::Value>,
     /// Array of Core Web Vitals metrics for the step.
     #[serde(rename = "vitalsMetrics")]
     pub vitals_metrics: Option<Vec<crate::datadogV1::model::SyntheticsCoreWebVitals>>,

@@ -39,11 +39,11 @@ pub enum CreateDORAIncidentError {
 }
 
 #[derive(Debug, Clone)]
-pub struct DoraMetricsAPI {
+pub struct DORAMetricsAPI {
     config: configuration::Configuration,
 }
 
-impl Default for DoraMetricsAPI {
+impl Default for DORAMetricsAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
@@ -51,7 +51,7 @@ impl Default for DoraMetricsAPI {
     }
 }
 
-impl DoraMetricsAPI {
+impl DORAMetricsAPI {
     pub fn new() -> Self {
         Self::default()
     }

@@ -214,11 +214,11 @@ pub enum UpdateAWSAccountError {
 }
 
 #[derive(Debug, Clone)]
-pub struct AwsIntegrationAPI {
+pub struct AWSIntegrationAPI {
     config: configuration::Configuration,
 }
 
-impl Default for AwsIntegrationAPI {
+impl Default for AWSIntegrationAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
@@ -226,7 +226,7 @@ impl Default for AwsIntegrationAPI {
     }
 }
 
-impl AwsIntegrationAPI {
+impl AWSIntegrationAPI {
     pub fn new() -> Self {
         Self::default()
     }

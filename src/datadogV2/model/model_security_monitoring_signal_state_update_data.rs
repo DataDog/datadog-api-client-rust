@@ -13,7 +13,7 @@ pub struct SecurityMonitoringSignalStateUpdateData {
     pub attributes: Box<crate::datadogV2::model::SecurityMonitoringSignalStateUpdateAttributes>,
     /// The unique ID of the security signal.
     #[serde(rename = "id")]
-    pub id: Option<std::collections::HashMap<String, serde_json::Value>>,
+    pub id: Option<serde_json::Value>,
     /// The type of event.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::SecurityMonitoringSignalMetadataType>,
