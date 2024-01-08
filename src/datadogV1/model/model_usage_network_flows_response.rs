@@ -18,3 +18,8 @@ impl UsageNetworkFlowsResponse {
         UsageNetworkFlowsResponse { usage: None }
     }
 }
+impl Default for UsageNetworkFlowsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

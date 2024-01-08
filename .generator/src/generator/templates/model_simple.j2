@@ -47,3 +47,11 @@ impl {{ name }} {
         }
     }
 }
+
+{%- if not model.required %}
+impl Default for {{ name }} {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+{%- endif %}

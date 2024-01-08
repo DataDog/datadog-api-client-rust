@@ -32,3 +32,8 @@ impl CreateRuleResponseData {
         }
     }
 }
+impl Default for CreateRuleResponseData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

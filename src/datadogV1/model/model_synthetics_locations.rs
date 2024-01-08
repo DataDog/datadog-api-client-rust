@@ -18,3 +18,8 @@ impl SyntheticsLocations {
         SyntheticsLocations { locations: None }
     }
 }
+impl Default for SyntheticsLocations {
+    fn default() -> Self {
+        Self::new()
+    }
+}

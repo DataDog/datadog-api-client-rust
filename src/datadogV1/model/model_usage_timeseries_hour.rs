@@ -40,3 +40,8 @@ impl UsageTimeseriesHour {
         }
     }
 }
+impl Default for UsageTimeseriesHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

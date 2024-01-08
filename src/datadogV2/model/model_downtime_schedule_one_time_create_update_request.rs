@@ -29,3 +29,8 @@ impl DowntimeScheduleOneTimeCreateUpdateRequest {
         }
     }
 }
+impl Default for DowntimeScheduleOneTimeCreateUpdateRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

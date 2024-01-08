@@ -28,3 +28,8 @@ impl ProcessSummary {
         }
     }
 }
+impl Default for ProcessSummary {
+    fn default() -> Self {
+        Self::new()
+    }
+}

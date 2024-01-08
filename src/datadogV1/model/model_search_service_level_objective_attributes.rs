@@ -106,3 +106,8 @@ impl SearchServiceLevelObjectiveAttributes {
         }
     }
 }
+impl Default for SearchServiceLevelObjectiveAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

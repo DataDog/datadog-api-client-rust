@@ -36,3 +36,8 @@ impl SelectableTemplateVariableItems {
         }
     }
 }
+impl Default for SelectableTemplateVariableItems {
+    fn default() -> Self {
+        Self::new()
+    }
+}

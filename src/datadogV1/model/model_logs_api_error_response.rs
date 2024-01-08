@@ -18,3 +18,8 @@ impl LogsAPIErrorResponse {
         LogsAPIErrorResponse { error: None }
     }
 }
+impl Default for LogsAPIErrorResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -18,3 +18,8 @@ impl UsageNetworkHostsResponse {
         UsageNetworkHostsResponse { usage: None }
     }
 }
+impl Default for UsageNetworkHostsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

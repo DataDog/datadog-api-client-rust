@@ -28,3 +28,8 @@ impl UsageDataObject {
         }
     }
 }
+impl Default for UsageDataObject {
+    fn default() -> Self {
+        Self::new()
+    }
+}

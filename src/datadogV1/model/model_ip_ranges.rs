@@ -69,3 +69,8 @@ impl IPRanges {
         }
     }
 }
+impl Default for IPRanges {
+    fn default() -> Self {
+        Self::new()
+    }
+}

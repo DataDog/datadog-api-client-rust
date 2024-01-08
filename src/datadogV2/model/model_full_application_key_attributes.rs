@@ -36,3 +36,8 @@ impl FullApplicationKeyAttributes {
         }
     }
 }
+impl Default for FullApplicationKeyAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -28,3 +28,8 @@ impl SyntheticsPatchTestOperation {
         }
     }
 }
+impl Default for SyntheticsPatchTestOperation {
+    fn default() -> Self {
+        Self::new()
+    }
+}

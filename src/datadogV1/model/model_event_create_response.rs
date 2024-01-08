@@ -24,3 +24,8 @@ impl EventCreateResponse {
         }
     }
 }
+impl Default for EventCreateResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

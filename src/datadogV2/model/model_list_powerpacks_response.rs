@@ -32,3 +32,8 @@ impl ListPowerpacksResponse {
         }
     }
 }
+impl Default for ListPowerpacksResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

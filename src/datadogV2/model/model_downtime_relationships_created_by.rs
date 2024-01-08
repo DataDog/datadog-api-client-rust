@@ -18,3 +18,8 @@ impl DowntimeRelationshipsCreatedBy {
         DowntimeRelationshipsCreatedBy { data: None }
     }
 }
+impl Default for DowntimeRelationshipsCreatedBy {
+    fn default() -> Self {
+        Self::new()
+    }
+}

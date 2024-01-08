@@ -87,3 +87,8 @@ impl ContainerImageAttributes {
         }
     }
 }
+impl Default for ContainerImageAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

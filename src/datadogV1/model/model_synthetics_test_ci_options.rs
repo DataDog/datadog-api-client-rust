@@ -20,3 +20,8 @@ impl SyntheticsTestCiOptions {
         }
     }
 }
+impl Default for SyntheticsTestCiOptions {
+    fn default() -> Self {
+        Self::new()
+    }
+}

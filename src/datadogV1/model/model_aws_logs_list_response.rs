@@ -28,3 +28,8 @@ impl AWSLogsListResponse {
         }
     }
 }
+impl Default for AWSLogsListResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

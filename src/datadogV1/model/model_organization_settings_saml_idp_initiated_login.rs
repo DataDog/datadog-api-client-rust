@@ -19,3 +19,8 @@ impl OrganizationSettingsSamlIdpInitiatedLogin {
         OrganizationSettingsSamlIdpInitiatedLogin { enabled: None }
     }
 }
+impl Default for OrganizationSettingsSamlIdpInitiatedLogin {
+    fn default() -> Self {
+        Self::new()
+    }
+}

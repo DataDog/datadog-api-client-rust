@@ -56,3 +56,8 @@ impl ScatterPlotRequest {
         }
     }
 }
+impl Default for ScatterPlotRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

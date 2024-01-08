@@ -14,3 +14,8 @@ impl CIAppAggregateBucketValueTimeseries {
         CIAppAggregateBucketValueTimeseries {}
     }
 }
+impl Default for CIAppAggregateBucketValueTimeseries {
+    fn default() -> Self {
+        Self::new()
+    }
+}

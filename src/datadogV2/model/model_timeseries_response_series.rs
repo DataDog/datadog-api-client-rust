@@ -31,3 +31,8 @@ impl TimeseriesResponseSeries {
         }
     }
 }
+impl Default for TimeseriesResponseSeries {
+    fn default() -> Self {
+        Self::new()
+    }
+}

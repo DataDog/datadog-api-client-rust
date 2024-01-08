@@ -24,3 +24,8 @@ impl SecurityFilterExclusionFilterResponse {
         }
     }
 }
+impl Default for SecurityFilterExclusionFilterResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

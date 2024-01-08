@@ -24,3 +24,8 @@ impl IPPrefixesAgents {
         }
     }
 }
+impl Default for IPPrefixesAgents {
+    fn default() -> Self {
+        Self::new()
+    }
+}

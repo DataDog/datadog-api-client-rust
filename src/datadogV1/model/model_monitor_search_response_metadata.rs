@@ -32,3 +32,8 @@ impl MonitorSearchResponseMetadata {
         }
     }
 }
+impl Default for MonitorSearchResponseMetadata {
+    fn default() -> Self {
+        Self::new()
+    }
+}

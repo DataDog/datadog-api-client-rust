@@ -24,3 +24,8 @@ impl IPPrefixesAPI {
         }
     }
 }
+impl Default for IPPrefixesAPI {
+    fn default() -> Self {
+        Self::new()
+    }
+}

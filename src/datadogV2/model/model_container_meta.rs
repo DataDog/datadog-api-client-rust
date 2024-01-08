@@ -18,3 +18,8 @@ impl ContainerMeta {
         ContainerMeta { pagination: None }
     }
 }
+impl Default for ContainerMeta {
+    fn default() -> Self {
+        Self::new()
+    }
+}

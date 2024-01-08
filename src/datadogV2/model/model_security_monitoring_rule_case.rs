@@ -33,3 +33,8 @@ impl SecurityMonitoringRuleCase {
         }
     }
 }
+impl Default for SecurityMonitoringRuleCase {
+    fn default() -> Self {
+        Self::new()
+    }
+}

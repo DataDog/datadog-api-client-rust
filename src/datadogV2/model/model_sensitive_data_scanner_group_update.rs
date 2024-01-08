@@ -32,3 +32,8 @@ impl SensitiveDataScannerGroupUpdate {
         }
     }
 }
+impl Default for SensitiveDataScannerGroupUpdate {
+    fn default() -> Self {
+        Self::new()
+    }
+}

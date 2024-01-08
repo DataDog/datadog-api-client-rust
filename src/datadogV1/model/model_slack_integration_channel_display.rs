@@ -32,3 +32,8 @@ impl SlackIntegrationChannelDisplay {
         }
     }
 }
+impl Default for SlackIntegrationChannelDisplay {
+    fn default() -> Self {
+        Self::new()
+    }
+}

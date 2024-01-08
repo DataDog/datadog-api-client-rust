@@ -20,3 +20,8 @@ impl ApplicationKeyResponseMetaPage {
         }
     }
 }
+impl Default for ApplicationKeyResponseMetaPage {
+    fn default() -> Self {
+        Self::new()
+    }
+}

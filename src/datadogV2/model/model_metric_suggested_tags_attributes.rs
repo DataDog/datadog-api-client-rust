@@ -24,3 +24,8 @@ impl MetricSuggestedTagsAttributes {
         }
     }
 }
+impl Default for MetricSuggestedTagsAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

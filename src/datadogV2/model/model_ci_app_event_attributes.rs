@@ -28,3 +28,8 @@ impl CIAppEventAttributes {
         }
     }
 }
+impl Default for CIAppEventAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

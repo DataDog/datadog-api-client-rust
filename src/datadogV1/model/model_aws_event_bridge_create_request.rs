@@ -34,3 +34,8 @@ impl AWSEventBridgeCreateRequest {
         }
     }
 }
+impl Default for AWSEventBridgeCreateRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

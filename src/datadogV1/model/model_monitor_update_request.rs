@@ -88,3 +88,8 @@ impl MonitorUpdateRequest {
         }
     }
 }
+impl Default for MonitorUpdateRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

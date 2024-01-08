@@ -28,3 +28,8 @@ impl SyntheticsTestOptionsSchedulingTimeframe {
         }
     }
 }
+impl Default for SyntheticsTestOptionsSchedulingTimeframe {
+    fn default() -> Self {
+        Self::new()
+    }
+}

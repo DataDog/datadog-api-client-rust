@@ -18,3 +18,8 @@ impl RuleOutcomeRelationships {
         RuleOutcomeRelationships { rule: None }
     }
 }
+impl Default for RuleOutcomeRelationships {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -36,3 +36,8 @@ impl LogQueryDefinition {
         }
     }
 }
+impl Default for LogQueryDefinition {
+    fn default() -> Self {
+        Self::new()
+    }
+}

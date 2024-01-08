@@ -28,3 +28,8 @@ impl CIAppWarning {
         }
     }
 }
+impl Default for CIAppWarning {
+    fn default() -> Self {
+        Self::new()
+    }
+}

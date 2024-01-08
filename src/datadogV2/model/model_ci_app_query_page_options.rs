@@ -24,3 +24,8 @@ impl CIAppQueryPageOptions {
         }
     }
 }
+impl Default for CIAppQueryPageOptions {
+    fn default() -> Self {
+        Self::new()
+    }
+}

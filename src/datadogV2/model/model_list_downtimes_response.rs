@@ -28,3 +28,8 @@ impl ListDowntimesResponse {
         }
     }
 }
+impl Default for ListDowntimesResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

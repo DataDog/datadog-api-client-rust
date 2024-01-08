@@ -18,3 +18,8 @@ impl RUMApplicationResponse {
         RUMApplicationResponse { data: None }
     }
 }
+impl Default for RUMApplicationResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -24,3 +24,8 @@ impl LogsListRequestPage {
         }
     }
 }
+impl Default for LogsListRequestPage {
+    fn default() -> Self {
+        Self::new()
+    }
+}

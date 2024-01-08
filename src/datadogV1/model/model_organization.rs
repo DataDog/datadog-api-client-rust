@@ -51,3 +51,8 @@ impl Organization {
         }
     }
 }
+impl Default for Organization {
+    fn default() -> Self {
+        Self::new()
+    }
+}

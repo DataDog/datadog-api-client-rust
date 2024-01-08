@@ -24,3 +24,8 @@ impl ContainerGroupAttributes {
         }
     }
 }
+impl Default for ContainerGroupAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

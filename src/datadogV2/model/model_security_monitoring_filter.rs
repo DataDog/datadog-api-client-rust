@@ -24,3 +24,8 @@ impl SecurityMonitoringFilter {
         }
     }
 }
+impl Default for SecurityMonitoringFilter {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -18,3 +18,8 @@ impl CloudflareAccountResponse {
         CloudflareAccountResponse { data: None }
     }
 }
+impl Default for CloudflareAccountResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

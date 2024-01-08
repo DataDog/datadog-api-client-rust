@@ -24,3 +24,8 @@ impl IPPrefixesWebhooks {
         }
     }
 }
+impl Default for IPPrefixesWebhooks {
+    fn default() -> Self {
+        Self::new()
+    }
+}

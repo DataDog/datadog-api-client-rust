@@ -18,3 +18,8 @@ impl AuditLogsResponsePage {
         AuditLogsResponsePage { after: None }
     }
 }
+impl Default for AuditLogsResponsePage {
+    fn default() -> Self {
+        Self::new()
+    }
+}

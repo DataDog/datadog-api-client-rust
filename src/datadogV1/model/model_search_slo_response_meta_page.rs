@@ -48,3 +48,8 @@ impl SearchSLOResponseMetaPage {
         }
     }
 }
+impl Default for SearchSLOResponseMetaPage {
+    fn default() -> Self {
+        Self::new()
+    }
+}

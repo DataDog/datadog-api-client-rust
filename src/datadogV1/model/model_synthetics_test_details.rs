@@ -70,3 +70,8 @@ impl SyntheticsTestDetails {
         }
     }
 }
+impl Default for SyntheticsTestDetails {
+    fn default() -> Self {
+        Self::new()
+    }
+}

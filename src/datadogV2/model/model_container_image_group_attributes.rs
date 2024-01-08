@@ -28,3 +28,8 @@ impl ContainerImageGroupAttributes {
         }
     }
 }
+impl Default for ContainerImageGroupAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

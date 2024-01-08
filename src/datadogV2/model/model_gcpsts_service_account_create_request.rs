@@ -18,3 +18,8 @@ impl GCPSTSServiceAccountCreateRequest {
         GCPSTSServiceAccountCreateRequest { data: None }
     }
 }
+impl Default for GCPSTSServiceAccountCreateRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

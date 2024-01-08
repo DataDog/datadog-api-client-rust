@@ -18,3 +18,8 @@ impl MetricSearchResponse {
         MetricSearchResponse { results: None }
     }
 }
+impl Default for MetricSearchResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

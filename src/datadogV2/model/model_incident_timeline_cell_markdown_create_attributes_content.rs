@@ -18,3 +18,8 @@ impl IncidentTimelineCellMarkdownCreateAttributesContent {
         IncidentTimelineCellMarkdownCreateAttributesContent { content: None }
     }
 }
+impl Default for IncidentTimelineCellMarkdownCreateAttributesContent {
+    fn default() -> Self {
+        Self::new()
+    }
+}

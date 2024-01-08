@@ -18,3 +18,8 @@ impl IPAllowlistResponse {
         IPAllowlistResponse { data: None }
     }
 }
+impl Default for IPAllowlistResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

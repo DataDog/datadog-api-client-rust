@@ -18,3 +18,8 @@ impl RetentionFilterResponse {
         RetentionFilterResponse { data: None }
     }
 }
+impl Default for RetentionFilterResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

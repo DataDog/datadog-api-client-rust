@@ -64,3 +64,8 @@ impl SyntheticsSSLCertificate {
         }
     }
 }
+impl Default for SyntheticsSSLCertificate {
+    fn default() -> Self {
+        Self::new()
+    }
+}

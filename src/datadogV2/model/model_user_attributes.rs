@@ -60,3 +60,8 @@ impl UserAttributes {
         }
     }
 }
+impl Default for UserAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

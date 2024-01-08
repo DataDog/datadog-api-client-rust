@@ -44,3 +44,8 @@ impl MetricMetadata {
         }
     }
 }
+impl Default for MetricMetadata {
+    fn default() -> Self {
+        Self::new()
+    }
+}

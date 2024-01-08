@@ -36,3 +36,8 @@ impl UsageSyntheticsBrowserHour {
         }
     }
 }
+impl Default for UsageSyntheticsBrowserHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

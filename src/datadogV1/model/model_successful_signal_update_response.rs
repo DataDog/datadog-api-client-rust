@@ -18,3 +18,8 @@ impl SuccessfulSignalUpdateResponse {
         SuccessfulSignalUpdateResponse { status: None }
     }
 }
+impl Default for SuccessfulSignalUpdateResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

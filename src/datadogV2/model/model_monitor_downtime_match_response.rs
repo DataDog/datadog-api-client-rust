@@ -24,3 +24,8 @@ impl MonitorDowntimeMatchResponse {
         }
     }
 }
+impl Default for MonitorDowntimeMatchResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

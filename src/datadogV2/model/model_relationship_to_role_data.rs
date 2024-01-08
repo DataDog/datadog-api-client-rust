@@ -24,3 +24,8 @@ impl RelationshipToRoleData {
         }
     }
 }
+impl Default for RelationshipToRoleData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

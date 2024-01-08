@@ -33,3 +33,8 @@ impl SpansAggregateResponseMetadata {
         }
     }
 }
+impl Default for SpansAggregateResponseMetadata {
+    fn default() -> Self {
+        Self::new()
+    }
+}

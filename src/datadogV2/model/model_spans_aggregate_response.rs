@@ -24,3 +24,8 @@ impl SpansAggregateResponse {
         }
     }
 }
+impl Default for SpansAggregateResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

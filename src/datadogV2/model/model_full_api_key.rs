@@ -32,3 +32,8 @@ impl FullAPIKey {
         }
     }
 }
+impl Default for FullAPIKey {
+    fn default() -> Self {
+        Self::new()
+    }
+}

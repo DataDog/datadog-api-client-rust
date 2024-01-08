@@ -24,3 +24,8 @@ impl RUMApplicationUpdateAttributes {
         }
     }
 }
+impl Default for RUMApplicationUpdateAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -18,3 +18,8 @@ impl AWSEventBridgeDeleteResponse {
         AWSEventBridgeDeleteResponse { status: None }
     }
 }
+impl Default for AWSEventBridgeDeleteResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

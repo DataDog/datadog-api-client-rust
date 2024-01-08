@@ -44,3 +44,8 @@ impl LogContent {
         }
     }
 }
+impl Default for LogContent {
+    fn default() -> Self {
+        Self::new()
+    }
+}

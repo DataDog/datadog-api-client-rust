@@ -19,3 +19,8 @@ impl CIAppResponseLinks {
         CIAppResponseLinks { next: None }
     }
 }
+impl Default for CIAppResponseLinks {
+    fn default() -> Self {
+        Self::new()
+    }
+}

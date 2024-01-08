@@ -18,3 +18,8 @@ impl GCPSTSServiceAccountResponse {
         GCPSTSServiceAccountResponse { data: None }
     }
 }
+impl Default for GCPSTSServiceAccountResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

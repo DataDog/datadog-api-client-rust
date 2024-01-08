@@ -18,3 +18,8 @@ impl UsageRumUnitsResponse {
         UsageRumUnitsResponse { usage: None }
     }
 }
+impl Default for UsageRumUnitsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

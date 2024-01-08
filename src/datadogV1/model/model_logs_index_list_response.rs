@@ -18,3 +18,8 @@ impl LogsIndexListResponse {
         LogsIndexListResponse { indexes: None }
     }
 }
+impl Default for LogsIndexListResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

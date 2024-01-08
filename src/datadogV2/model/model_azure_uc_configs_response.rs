@@ -18,3 +18,8 @@ impl AzureUCConfigsResponse {
         AzureUCConfigsResponse { data: None }
     }
 }
+impl Default for AzureUCConfigsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

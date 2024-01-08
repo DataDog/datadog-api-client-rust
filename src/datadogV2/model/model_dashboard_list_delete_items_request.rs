@@ -18,3 +18,8 @@ impl DashboardListDeleteItemsRequest {
         DashboardListDeleteItemsRequest { dashboards: None }
     }
 }
+impl Default for DashboardListDeleteItemsRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

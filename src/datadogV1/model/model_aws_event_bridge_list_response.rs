@@ -24,3 +24,8 @@ impl AWSEventBridgeListResponse {
         }
     }
 }
+impl Default for AWSEventBridgeListResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

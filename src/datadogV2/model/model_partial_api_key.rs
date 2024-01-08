@@ -32,3 +32,8 @@ impl PartialAPIKey {
         }
     }
 }
+impl Default for PartialAPIKey {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -32,3 +32,8 @@ impl PowerpackData {
         }
     }
 }
+impl Default for PowerpackData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

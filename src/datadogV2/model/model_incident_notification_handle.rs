@@ -24,3 +24,8 @@ impl IncidentNotificationHandle {
         }
     }
 }
+impl Default for IncidentNotificationHandle {
+    fn default() -> Self {
+        Self::new()
+    }
+}

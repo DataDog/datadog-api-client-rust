@@ -24,3 +24,8 @@ impl CloudflareAccountUpdateRequestData {
         }
     }
 }
+impl Default for CloudflareAccountUpdateRequestData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

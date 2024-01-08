@@ -32,3 +32,8 @@ impl CIAppAggregateSort {
         }
     }
 }
+impl Default for CIAppAggregateSort {
+    fn default() -> Self {
+        Self::new()
+    }
+}

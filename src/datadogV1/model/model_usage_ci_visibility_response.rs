@@ -18,3 +18,8 @@ impl UsageCIVisibilityResponse {
         UsageCIVisibilityResponse { usage: None }
     }
 }
+impl Default for UsageCIVisibilityResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

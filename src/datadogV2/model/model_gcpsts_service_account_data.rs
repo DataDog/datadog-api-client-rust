@@ -24,3 +24,8 @@ impl GCPSTSServiceAccountData {
         }
     }
 }
+impl Default for GCPSTSServiceAccountData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -18,3 +18,8 @@ impl CIAppPipelinesAggregationBucketsResponse {
         CIAppPipelinesAggregationBucketsResponse { buckets: None }
     }
 }
+impl Default for CIAppPipelinesAggregationBucketsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

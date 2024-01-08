@@ -19,3 +19,8 @@ impl SyntheticsDeleteTestsPayload {
         SyntheticsDeleteTestsPayload { public_ids: None }
     }
 }
+impl Default for SyntheticsDeleteTestsPayload {
+    fn default() -> Self {
+        Self::new()
+    }
+}

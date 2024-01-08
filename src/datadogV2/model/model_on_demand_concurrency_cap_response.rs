@@ -18,3 +18,8 @@ impl OnDemandConcurrencyCapResponse {
         OnDemandConcurrencyCapResponse { data: None }
     }
 }
+impl Default for OnDemandConcurrencyCapResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -18,3 +18,8 @@ impl TeamPermissionSettingResponse {
         TeamPermissionSettingResponse { data: None }
     }
 }
+impl Default for TeamPermissionSettingResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

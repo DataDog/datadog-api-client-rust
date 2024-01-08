@@ -28,3 +28,8 @@ impl SyntheticsCoreWebVitals {
         }
     }
 }
+impl Default for SyntheticsCoreWebVitals {
+    fn default() -> Self {
+        Self::new()
+    }
+}

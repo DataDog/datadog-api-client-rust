@@ -18,3 +18,8 @@ impl AwsCURConfigResponse {
         AwsCURConfigResponse { data: None }
     }
 }
+impl Default for AwsCURConfigResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

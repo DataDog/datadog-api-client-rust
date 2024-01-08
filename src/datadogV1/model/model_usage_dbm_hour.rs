@@ -44,3 +44,8 @@ impl UsageDBMHour {
         }
     }
 }
+impl Default for UsageDBMHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

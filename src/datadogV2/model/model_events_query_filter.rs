@@ -28,3 +28,8 @@ impl EventsQueryFilter {
         }
     }
 }
+impl Default for EventsQueryFilter {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -24,3 +24,8 @@ impl ServiceDefinitionV1Org {
         }
     }
 }
+impl Default for ServiceDefinitionV1Org {
+    fn default() -> Self {
+        Self::new()
+    }
+}

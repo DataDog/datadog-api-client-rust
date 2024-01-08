@@ -28,3 +28,8 @@ impl ProjectedCost {
         }
     }
 }
+impl Default for ProjectedCost {
+    fn default() -> Self {
+        Self::new()
+    }
+}

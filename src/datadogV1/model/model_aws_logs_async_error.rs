@@ -24,3 +24,8 @@ impl AWSLogsAsyncError {
         }
     }
 }
+impl Default for AWSLogsAsyncError {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -24,3 +24,8 @@ impl IPPrefixesProcess {
         }
     }
 }
+impl Default for IPPrefixesProcess {
+    fn default() -> Self {
+        Self::new()
+    }
+}

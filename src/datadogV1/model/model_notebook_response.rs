@@ -18,3 +18,8 @@ impl NotebookResponse {
         NotebookResponse { data: None }
     }
 }
+impl Default for NotebookResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

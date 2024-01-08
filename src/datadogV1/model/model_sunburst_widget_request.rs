@@ -72,3 +72,8 @@ impl SunburstWidgetRequest {
         }
     }
 }
+impl Default for SunburstWidgetRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

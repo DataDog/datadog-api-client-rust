@@ -18,3 +18,8 @@ impl MonitorOptionsCustomSchedule {
         MonitorOptionsCustomSchedule { recurrences: None }
     }
 }
+impl Default for MonitorOptionsCustomSchedule {
+    fn default() -> Self {
+        Self::new()
+    }
+}

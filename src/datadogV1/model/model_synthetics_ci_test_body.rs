@@ -18,3 +18,8 @@ impl SyntheticsCITestBody {
         SyntheticsCITestBody { tests: None }
     }
 }
+impl Default for SyntheticsCITestBody {
+    fn default() -> Self {
+        Self::new()
+    }
+}

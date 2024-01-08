@@ -28,3 +28,8 @@ impl MonitorGroupSearchResponse {
         }
     }
 }
+impl Default for MonitorGroupSearchResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

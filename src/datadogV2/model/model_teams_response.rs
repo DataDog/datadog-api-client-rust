@@ -32,3 +32,8 @@ impl TeamsResponse {
         }
     }
 }
+impl Default for TeamsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

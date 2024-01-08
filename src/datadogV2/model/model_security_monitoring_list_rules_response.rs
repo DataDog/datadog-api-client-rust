@@ -24,3 +24,8 @@ impl SecurityMonitoringListRulesResponse {
         }
     }
 }
+impl Default for SecurityMonitoringListRulesResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

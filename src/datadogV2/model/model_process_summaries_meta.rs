@@ -18,3 +18,8 @@ impl ProcessSummariesMeta {
         ProcessSummariesMeta { page: None }
     }
 }
+impl Default for ProcessSummariesMeta {
+    fn default() -> Self {
+        Self::new()
+    }
+}

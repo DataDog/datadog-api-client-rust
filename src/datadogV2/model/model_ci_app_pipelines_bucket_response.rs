@@ -28,3 +28,8 @@ impl CIAppPipelinesBucketResponse {
         }
     }
 }
+impl Default for CIAppPipelinesBucketResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

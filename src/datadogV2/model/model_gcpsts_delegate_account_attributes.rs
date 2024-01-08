@@ -20,3 +20,8 @@ impl GCPSTSDelegateAccountAttributes {
         }
     }
 }
+impl Default for GCPSTSDelegateAccountAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -18,3 +18,8 @@ impl BulkMuteFindingsRequestMeta {
         BulkMuteFindingsRequestMeta { findings: None }
     }
 }
+impl Default for BulkMuteFindingsRequestMeta {
+    fn default() -> Self {
+        Self::new()
+    }
+}

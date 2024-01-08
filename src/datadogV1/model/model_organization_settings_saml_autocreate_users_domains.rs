@@ -24,3 +24,8 @@ impl OrganizationSettingsSamlAutocreateUsersDomains {
         }
     }
 }
+impl Default for OrganizationSettingsSamlAutocreateUsersDomains {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -18,3 +18,8 @@ impl OktaAccountsResponse {
         OktaAccountsResponse { data: None }
     }
 }
+impl Default for OktaAccountsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -24,3 +24,8 @@ impl IPPrefixesLogs {
         }
     }
 }
+impl Default for IPPrefixesLogs {
+    fn default() -> Self {
+        Self::new()
+    }
+}

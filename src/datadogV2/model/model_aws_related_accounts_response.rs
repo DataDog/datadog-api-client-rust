@@ -18,3 +18,8 @@ impl AWSRelatedAccountsResponse {
         AWSRelatedAccountsResponse { data: None }
     }
 }
+impl Default for AWSRelatedAccountsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -24,3 +24,8 @@ impl CreateRuleRequestData {
         }
     }
 }
+impl Default for CreateRuleRequestData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

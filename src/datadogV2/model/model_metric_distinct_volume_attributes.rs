@@ -20,3 +20,8 @@ impl MetricDistinctVolumeAttributes {
         }
     }
 }
+impl Default for MetricDistinctVolumeAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

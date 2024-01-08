@@ -72,3 +72,8 @@ impl AzureAccount {
         }
     }
 }
+impl Default for AzureAccount {
+    fn default() -> Self {
+        Self::new()
+    }
+}

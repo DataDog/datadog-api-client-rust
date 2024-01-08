@@ -52,3 +52,8 @@ impl MetricsQueryResponse {
         }
     }
 }
+impl Default for MetricsQueryResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

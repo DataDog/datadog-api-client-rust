@@ -24,3 +24,8 @@ impl CheckCanDeleteSLOResponse {
         }
     }
 }
+impl Default for CheckCanDeleteSLOResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

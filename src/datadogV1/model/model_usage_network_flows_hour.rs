@@ -36,3 +36,8 @@ impl UsageNetworkFlowsHour {
         }
     }
 }
+impl Default for UsageNetworkFlowsHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

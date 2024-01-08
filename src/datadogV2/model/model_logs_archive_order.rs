@@ -18,3 +18,8 @@ impl LogsArchiveOrder {
         LogsArchiveOrder { data: None }
     }
 }
+impl Default for LogsArchiveOrder {
+    fn default() -> Self {
+        Self::new()
+    }
+}

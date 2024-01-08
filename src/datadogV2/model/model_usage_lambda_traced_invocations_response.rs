@@ -18,3 +18,8 @@ impl UsageLambdaTracedInvocationsResponse {
         UsageLambdaTracedInvocationsResponse { data: None }
     }
 }
+impl Default for UsageLambdaTracedInvocationsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -26,3 +26,8 @@ impl PowerpackTemplateVariables {
         }
     }
 }
+impl Default for PowerpackTemplateVariables {
+    fn default() -> Self {
+        Self::new()
+    }
+}

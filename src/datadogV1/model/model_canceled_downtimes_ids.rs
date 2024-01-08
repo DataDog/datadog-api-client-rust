@@ -20,3 +20,8 @@ impl CanceledDowntimesIds {
         }
     }
 }
+impl Default for CanceledDowntimesIds {
+    fn default() -> Self {
+        Self::new()
+    }
+}

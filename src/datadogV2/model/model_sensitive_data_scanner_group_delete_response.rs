@@ -18,3 +18,8 @@ impl SensitiveDataScannerGroupDeleteResponse {
         SensitiveDataScannerGroupDeleteResponse { meta: None }
     }
 }
+impl Default for SensitiveDataScannerGroupDeleteResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

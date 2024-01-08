@@ -53,3 +53,8 @@ impl SensitiveDataScannerRuleAttributes {
         }
     }
 }
+impl Default for SensitiveDataScannerRuleAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

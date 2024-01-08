@@ -32,3 +32,8 @@ impl SyntheticsTestConfig {
         }
     }
 }
+impl Default for SyntheticsTestConfig {
+    fn default() -> Self {
+        Self::new()
+    }
+}

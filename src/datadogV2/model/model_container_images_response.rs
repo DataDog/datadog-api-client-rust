@@ -28,3 +28,8 @@ impl ContainerImagesResponse {
         }
     }
 }
+impl Default for ContainerImagesResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -24,3 +24,8 @@ impl Pagination {
         }
     }
 }
+impl Default for Pagination {
+    fn default() -> Self {
+        Self::new()
+    }
+}

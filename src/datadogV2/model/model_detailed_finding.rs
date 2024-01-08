@@ -28,3 +28,8 @@ impl DetailedFinding {
         }
     }
 }
+impl Default for DetailedFinding {
+    fn default() -> Self {
+        Self::new()
+    }
+}

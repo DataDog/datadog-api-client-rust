@@ -33,3 +33,8 @@ impl AuditLogsSearchEventsRequest {
         }
     }
 }
+impl Default for AuditLogsSearchEventsRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

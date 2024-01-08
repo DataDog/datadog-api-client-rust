@@ -32,3 +32,8 @@ impl SecurityMonitoringRuleThirdPartyOptions {
         }
     }
 }
+impl Default for SecurityMonitoringRuleThirdPartyOptions {
+    fn default() -> Self {
+        Self::new()
+    }
+}

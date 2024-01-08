@@ -36,3 +36,8 @@ impl UsageIoTHour {
         }
     }
 }
+impl Default for UsageIoTHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

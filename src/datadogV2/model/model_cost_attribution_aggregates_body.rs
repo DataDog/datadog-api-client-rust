@@ -28,3 +28,8 @@ impl CostAttributionAggregatesBody {
         }
     }
 }
+impl Default for CostAttributionAggregatesBody {
+    fn default() -> Self {
+        Self::new()
+    }
+}

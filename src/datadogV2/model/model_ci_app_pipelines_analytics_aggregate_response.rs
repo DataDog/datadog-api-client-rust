@@ -28,3 +28,8 @@ impl CIAppPipelinesAnalyticsAggregateResponse {
         }
     }
 }
+impl Default for CIAppPipelinesAnalyticsAggregateResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

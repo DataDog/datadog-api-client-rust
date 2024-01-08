@@ -18,3 +18,8 @@ impl UsageAnalyzedLogsResponse {
         UsageAnalyzedLogsResponse { usage: None }
     }
 }
+impl Default for UsageAnalyzedLogsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

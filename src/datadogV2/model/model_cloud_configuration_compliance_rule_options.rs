@@ -36,3 +36,8 @@ impl CloudConfigurationComplianceRuleOptions {
         }
     }
 }
+impl Default for CloudConfigurationComplianceRuleOptions {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -24,3 +24,8 @@ impl BulkMuteFindingsResponseData {
         }
     }
 }
+impl Default for BulkMuteFindingsResponseData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

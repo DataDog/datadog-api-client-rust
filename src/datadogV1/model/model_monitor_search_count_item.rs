@@ -24,3 +24,8 @@ impl MonitorSearchCountItem {
         }
     }
 }
+impl Default for MonitorSearchCountItem {
+    fn default() -> Self {
+        Self::new()
+    }
+}

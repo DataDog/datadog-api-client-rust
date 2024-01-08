@@ -25,3 +25,8 @@ impl RUMBucketResponse {
         }
     }
 }
+impl Default for RUMBucketResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

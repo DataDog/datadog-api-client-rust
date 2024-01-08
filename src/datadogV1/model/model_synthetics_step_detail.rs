@@ -85,3 +85,8 @@ impl SyntheticsStepDetail {
         }
     }
 }
+impl Default for SyntheticsStepDetail {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -72,3 +72,8 @@ impl SLOHistorySLIData {
         }
     }
 }
+impl Default for SLOHistorySLIData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

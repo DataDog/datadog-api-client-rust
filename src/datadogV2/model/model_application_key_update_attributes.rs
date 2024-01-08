@@ -24,3 +24,8 @@ impl ApplicationKeyUpdateAttributes {
         }
     }
 }
+impl Default for ApplicationKeyUpdateAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

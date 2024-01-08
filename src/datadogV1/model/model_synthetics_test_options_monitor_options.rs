@@ -22,3 +22,8 @@ impl SyntheticsTestOptionsMonitorOptions {
         }
     }
 }
+impl Default for SyntheticsTestOptionsMonitorOptions {
+    fn default() -> Self {
+        Self::new()
+    }
+}

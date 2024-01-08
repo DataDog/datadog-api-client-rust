@@ -24,3 +24,8 @@ impl HourlyUsageResponse {
         }
     }
 }
+impl Default for HourlyUsageResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -18,3 +18,8 @@ impl HourlyUsageAttributionMetadata {
         HourlyUsageAttributionMetadata { pagination: None }
     }
 }
+impl Default for HourlyUsageAttributionMetadata {
+    fn default() -> Self {
+        Self::new()
+    }
+}

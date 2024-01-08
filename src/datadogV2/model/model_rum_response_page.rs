@@ -18,3 +18,8 @@ impl RUMResponsePage {
         RUMResponsePage { after: None }
     }
 }
+impl Default for RUMResponsePage {
+    fn default() -> Self {
+        Self::new()
+    }
+}

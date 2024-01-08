@@ -18,3 +18,8 @@ impl UsageObservabilityPipelinesResponse {
         UsageObservabilityPipelinesResponse { data: None }
     }
 }
+impl Default for UsageObservabilityPipelinesResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

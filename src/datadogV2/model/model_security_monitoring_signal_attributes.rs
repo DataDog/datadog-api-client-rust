@@ -36,3 +36,8 @@ impl SecurityMonitoringSignalAttributes {
         }
     }
 }
+impl Default for SecurityMonitoringSignalAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

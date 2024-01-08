@@ -71,3 +71,8 @@ impl MetricsQueryMetadata {
         }
     }
 }
+impl Default for MetricsQueryMetadata {
+    fn default() -> Self {
+        Self::new()
+    }
+}

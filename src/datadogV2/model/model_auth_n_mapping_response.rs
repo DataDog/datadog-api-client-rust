@@ -24,3 +24,8 @@ impl AuthNMappingResponse {
         }
     }
 }
+impl Default for AuthNMappingResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

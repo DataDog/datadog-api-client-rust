@@ -20,3 +20,8 @@ impl DeleteSharedDashboardResponse {
         }
     }
 }
+impl Default for DeleteSharedDashboardResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

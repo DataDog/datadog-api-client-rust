@@ -28,3 +28,8 @@ impl UsageCustomReportsData {
         }
     }
 }
+impl Default for UsageCustomReportsData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

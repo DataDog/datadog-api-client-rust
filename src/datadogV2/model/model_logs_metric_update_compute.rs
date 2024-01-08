@@ -21,3 +21,8 @@ impl LogsMetricUpdateCompute {
         }
     }
 }
+impl Default for LogsMetricUpdateCompute {
+    fn default() -> Self {
+        Self::new()
+    }
+}

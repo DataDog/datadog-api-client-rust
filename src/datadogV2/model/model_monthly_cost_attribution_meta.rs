@@ -24,3 +24,8 @@ impl MonthlyCostAttributionMeta {
         }
     }
 }
+impl Default for MonthlyCostAttributionMeta {
+    fn default() -> Self {
+        Self::new()
+    }
+}

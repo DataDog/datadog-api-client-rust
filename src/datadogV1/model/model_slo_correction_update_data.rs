@@ -24,3 +24,8 @@ impl SLOCorrectionUpdateData {
         }
     }
 }
+impl Default for SLOCorrectionUpdateData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

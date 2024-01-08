@@ -24,3 +24,8 @@ impl MonthlyUsageAttributionMetadata {
         }
     }
 }
+impl Default for MonthlyUsageAttributionMetadata {
+    fn default() -> Self {
+        Self::new()
+    }
+}

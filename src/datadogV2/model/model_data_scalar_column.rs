@@ -32,3 +32,8 @@ impl DataScalarColumn {
         }
     }
 }
+impl Default for DataScalarColumn {
+    fn default() -> Self {
+        Self::new()
+    }
+}

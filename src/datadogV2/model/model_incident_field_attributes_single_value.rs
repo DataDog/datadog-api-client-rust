@@ -24,3 +24,8 @@ impl IncidentFieldAttributesSingleValue {
         }
     }
 }
+impl Default for IncidentFieldAttributesSingleValue {
+    fn default() -> Self {
+        Self::new()
+    }
+}

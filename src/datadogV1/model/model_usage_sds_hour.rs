@@ -68,3 +68,8 @@ impl UsageSDSHour {
         }
     }
 }
+impl Default for UsageSDSHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

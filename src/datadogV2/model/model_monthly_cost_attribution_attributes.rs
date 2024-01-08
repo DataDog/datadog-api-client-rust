@@ -47,3 +47,8 @@ impl MonthlyCostAttributionAttributes {
         }
     }
 }
+impl Default for MonthlyCostAttributionAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

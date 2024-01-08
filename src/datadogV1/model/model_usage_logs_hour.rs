@@ -92,3 +92,8 @@ impl UsageLogsHour {
         }
     }
 }
+impl Default for UsageLogsHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

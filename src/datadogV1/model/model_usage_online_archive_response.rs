@@ -18,3 +18,8 @@ impl UsageOnlineArchiveResponse {
         UsageOnlineArchiveResponse { usage: None }
     }
 }
+impl Default for UsageOnlineArchiveResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

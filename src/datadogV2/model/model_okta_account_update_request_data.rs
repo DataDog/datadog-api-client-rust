@@ -24,3 +24,8 @@ impl OktaAccountUpdateRequestData {
         }
     }
 }
+impl Default for OktaAccountUpdateRequestData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

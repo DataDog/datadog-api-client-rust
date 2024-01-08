@@ -18,3 +18,8 @@ impl ServiceDefinitionV2Dot1Pagerduty {
         ServiceDefinitionV2Dot1Pagerduty { service_url: None }
     }
 }
+impl Default for ServiceDefinitionV2Dot1Pagerduty {
+    fn default() -> Self {
+        Self::new()
+    }
+}

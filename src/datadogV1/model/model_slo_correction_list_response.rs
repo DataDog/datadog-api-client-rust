@@ -24,3 +24,8 @@ impl SLOCorrectionListResponse {
         }
     }
 }
+impl Default for SLOCorrectionListResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -28,3 +28,8 @@ impl ScatterplotTableRequest {
         }
     }
 }
+impl Default for ScatterplotTableRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

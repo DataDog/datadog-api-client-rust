@@ -25,3 +25,8 @@ impl FormulaLimit {
         }
     }
 }
+impl Default for FormulaLimit {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -117,3 +117,8 @@ impl SyntheticsTestOptions {
         }
     }
 }
+impl Default for SyntheticsTestOptions {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -29,3 +29,8 @@ impl SpansMetricResponseCompute {
         }
     }
 }
+impl Default for SpansMetricResponseCompute {
+    fn default() -> Self {
+        Self::new()
+    }
+}

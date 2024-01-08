@@ -32,3 +32,8 @@ impl UsageSyntheticsHour {
         }
     }
 }
+impl Default for UsageSyntheticsHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

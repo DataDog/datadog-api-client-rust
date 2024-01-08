@@ -37,3 +37,8 @@ impl SpansListResponseMetadata {
         }
     }
 }
+impl Default for SpansListResponseMetadata {
+    fn default() -> Self {
+        Self::new()
+    }
+}

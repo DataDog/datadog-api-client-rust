@@ -18,3 +18,8 @@ impl AWSAccountListResponse {
         AWSAccountListResponse { accounts: None }
     }
 }
+impl Default for AWSAccountListResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

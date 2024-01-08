@@ -18,3 +18,8 @@ impl ServiceDefinitionsListResponse {
         ServiceDefinitionsListResponse { data: None }
     }
 }
+impl Default for ServiceDefinitionsListResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

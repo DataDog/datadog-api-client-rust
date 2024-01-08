@@ -18,3 +18,8 @@ impl UsageHostsResponse {
         UsageHostsResponse { usage: None }
     }
 }
+impl Default for UsageHostsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -28,3 +28,8 @@ impl MonitorConfigPolicyResponseData {
         }
     }
 }
+impl Default for MonitorConfigPolicyResponseData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

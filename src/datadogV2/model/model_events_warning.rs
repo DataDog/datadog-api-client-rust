@@ -28,3 +28,8 @@ impl EventsWarning {
         }
     }
 }
+impl Default for EventsWarning {
+    fn default() -> Self {
+        Self::new()
+    }
+}

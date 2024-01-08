@@ -18,3 +18,8 @@ impl MetricTagConfigurationResponse {
         MetricTagConfigurationResponse { data: None }
     }
 }
+impl Default for MetricTagConfigurationResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

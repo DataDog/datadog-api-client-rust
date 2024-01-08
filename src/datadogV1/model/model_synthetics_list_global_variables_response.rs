@@ -18,3 +18,8 @@ impl SyntheticsListGlobalVariablesResponse {
         SyntheticsListGlobalVariablesResponse { variables: None }
     }
 }
+impl Default for SyntheticsListGlobalVariablesResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

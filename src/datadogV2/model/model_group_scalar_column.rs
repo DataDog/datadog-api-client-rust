@@ -28,3 +28,8 @@ impl GroupScalarColumn {
         }
     }
 }
+impl Default for GroupScalarColumn {
+    fn default() -> Self {
+        Self::new()
+    }
+}

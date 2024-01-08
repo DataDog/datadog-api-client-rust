@@ -98,3 +98,8 @@ impl SecurityMonitoringStandardRuleResponse {
         }
     }
 }
+impl Default for SecurityMonitoringStandardRuleResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

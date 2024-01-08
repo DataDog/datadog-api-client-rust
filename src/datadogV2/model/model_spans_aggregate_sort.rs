@@ -32,3 +32,8 @@ impl SpansAggregateSort {
         }
     }
 }
+impl Default for SpansAggregateSort {
+    fn default() -> Self {
+        Self::new()
+    }
+}

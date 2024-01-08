@@ -32,3 +32,8 @@ impl DistributionWidgetXAxis {
         }
     }
 }
+impl Default for DistributionWidgetXAxis {
+    fn default() -> Self {
+        Self::new()
+    }
+}

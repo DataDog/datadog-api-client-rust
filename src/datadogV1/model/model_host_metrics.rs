@@ -28,3 +28,8 @@ impl HostMetrics {
         }
     }
 }
+impl Default for HostMetrics {
+    fn default() -> Self {
+        Self::new()
+    }
+}

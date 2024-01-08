@@ -18,3 +18,8 @@ impl SyntheticsCIBatchMetadataProvider {
         SyntheticsCIBatchMetadataProvider { name: None }
     }
 }
+impl Default for SyntheticsCIBatchMetadataProvider {
+    fn default() -> Self {
+        Self::new()
+    }
+}

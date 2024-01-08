@@ -426,3 +426,8 @@ impl UsageSummaryDate {
         }
     }
 }
+impl Default for UsageSummaryDate {
+    fn default() -> Self {
+        Self::new()
+    }
+}

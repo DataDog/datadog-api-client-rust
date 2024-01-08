@@ -52,3 +52,8 @@ impl UsageProfilingHour {
         }
     }
 }
+impl Default for UsageProfilingHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

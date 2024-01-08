@@ -24,3 +24,8 @@ impl SyntheticsApiTestResultFailure {
         }
     }
 }
+impl Default for SyntheticsApiTestResultFailure {
+    fn default() -> Self {
+        Self::new()
+    }
+}

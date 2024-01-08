@@ -33,3 +33,8 @@ impl EventsListRequest {
         }
     }
 }
+impl Default for EventsListRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

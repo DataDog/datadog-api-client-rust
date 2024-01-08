@@ -18,3 +18,8 @@ impl IdPMetadataFormData {
         IdPMetadataFormData { idp_file: None }
     }
 }
+impl Default for IdPMetadataFormData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

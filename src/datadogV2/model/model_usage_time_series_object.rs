@@ -24,3 +24,8 @@ impl UsageTimeSeriesObject {
         }
     }
 }
+impl Default for UsageTimeSeriesObject {
+    fn default() -> Self {
+        Self::new()
+    }
+}

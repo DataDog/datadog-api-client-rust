@@ -45,3 +45,8 @@ impl UsageLambdaHour {
         }
     }
 }
+impl Default for UsageLambdaHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

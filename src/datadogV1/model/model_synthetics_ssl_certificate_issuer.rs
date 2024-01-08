@@ -40,3 +40,8 @@ impl SyntheticsSSLCertificateIssuer {
         }
     }
 }
+impl Default for SyntheticsSSLCertificateIssuer {
+    fn default() -> Self {
+        Self::new()
+    }
+}

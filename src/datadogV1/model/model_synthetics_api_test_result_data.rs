@@ -57,3 +57,8 @@ impl SyntheticsAPITestResultData {
         }
     }
 }
+impl Default for SyntheticsAPITestResultData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -24,3 +24,8 @@ impl SyntheticsTriggerCITestLocation {
         }
     }
 }
+impl Default for SyntheticsTriggerCITestLocation {
+    fn default() -> Self {
+        Self::new()
+    }
+}

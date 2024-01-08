@@ -24,3 +24,8 @@ impl ActiveBillingDimensionsAttributes {
         }
     }
 }
+impl Default for ActiveBillingDimensionsAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

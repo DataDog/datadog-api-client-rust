@@ -24,3 +24,8 @@ impl SearchSLOResponseDataAttributes {
         }
     }
 }
+impl Default for SearchSLOResponseDataAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

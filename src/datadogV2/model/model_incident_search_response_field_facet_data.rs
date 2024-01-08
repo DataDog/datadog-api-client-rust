@@ -24,3 +24,8 @@ impl IncidentSearchResponseFieldFacetData {
         }
     }
 }
+impl Default for IncidentSearchResponseFieldFacetData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

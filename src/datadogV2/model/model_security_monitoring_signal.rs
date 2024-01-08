@@ -29,3 +29,8 @@ impl SecurityMonitoringSignal {
         }
     }
 }
+impl Default for SecurityMonitoringSignal {
+    fn default() -> Self {
+        Self::new()
+    }
+}

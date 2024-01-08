@@ -48,3 +48,8 @@ impl OrganizationAttributes {
         }
     }
 }
+impl Default for OrganizationAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

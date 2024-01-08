@@ -24,3 +24,8 @@ impl RelationshipToRuleDataObject {
         }
     }
 }
+impl Default for RelationshipToRuleDataObject {
+    fn default() -> Self {
+        Self::new()
+    }
+}

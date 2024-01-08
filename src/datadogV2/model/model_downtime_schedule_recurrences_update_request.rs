@@ -25,3 +25,8 @@ impl DowntimeScheduleRecurrencesUpdateRequest {
         }
     }
 }
+impl Default for DowntimeScheduleRecurrencesUpdateRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -28,3 +28,8 @@ impl SpansQueryFilter {
         }
     }
 }
+impl Default for SpansQueryFilter {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -30,3 +30,8 @@ impl MetricBulkTagConfigCreateAttributes {
         }
     }
 }
+impl Default for MetricBulkTagConfigCreateAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -32,3 +32,8 @@ impl UserInvitationResponseData {
         }
     }
 }
+impl Default for UserInvitationResponseData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

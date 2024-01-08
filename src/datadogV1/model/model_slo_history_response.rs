@@ -24,3 +24,8 @@ impl SLOHistoryResponse {
         }
     }
 }
+impl Default for SLOHistoryResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

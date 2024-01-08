@@ -33,3 +33,8 @@ impl CIAppTestsAggregateRequest {
         }
     }
 }
+impl Default for CIAppTestsAggregateRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -32,3 +32,8 @@ impl FullApplicationKey {
         }
     }
 }
+impl Default for FullApplicationKey {
+    fn default() -> Self {
+        Self::new()
+    }
+}

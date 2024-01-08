@@ -19,3 +19,8 @@ impl EventsListResponseLinks {
         EventsListResponseLinks { next: None }
     }
 }
+impl Default for EventsListResponseLinks {
+    fn default() -> Self {
+        Self::new()
+    }
+}

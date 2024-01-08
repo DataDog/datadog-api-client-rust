@@ -36,3 +36,8 @@ impl ContainerImagesResponseLinks {
         }
     }
 }
+impl Default for ContainerImagesResponseLinks {
+    fn default() -> Self {
+        Self::new()
+    }
+}

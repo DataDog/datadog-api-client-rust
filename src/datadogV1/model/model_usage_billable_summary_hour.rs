@@ -52,3 +52,8 @@ impl UsageBillableSummaryHour {
         }
     }
 }
+impl Default for UsageBillableSummaryHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

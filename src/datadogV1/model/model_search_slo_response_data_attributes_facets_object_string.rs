@@ -24,3 +24,8 @@ impl SearchSLOResponseDataAttributesFacetsObjectString {
         }
     }
 }
+impl Default for SearchSLOResponseDataAttributesFacetsObjectString {
+    fn default() -> Self {
+        Self::new()
+    }
+}

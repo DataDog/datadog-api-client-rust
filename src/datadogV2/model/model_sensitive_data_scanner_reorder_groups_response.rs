@@ -18,3 +18,8 @@ impl SensitiveDataScannerReorderGroupsResponse {
         SensitiveDataScannerReorderGroupsResponse { meta: None }
     }
 }
+impl Default for SensitiveDataScannerReorderGroupsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

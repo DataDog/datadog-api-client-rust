@@ -34,3 +34,8 @@ impl RUMEventAttributes {
         }
     }
 }
+impl Default for RUMEventAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

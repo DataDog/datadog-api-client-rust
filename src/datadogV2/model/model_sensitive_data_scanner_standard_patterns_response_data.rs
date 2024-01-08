@@ -19,3 +19,8 @@ impl SensitiveDataScannerStandardPatternsResponseData {
         SensitiveDataScannerStandardPatternsResponseData { data: None }
     }
 }
+impl Default for SensitiveDataScannerStandardPatternsResponseData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -60,3 +60,8 @@ impl DetailedFindingAttributes {
         }
     }
 }
+impl Default for DetailedFindingAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

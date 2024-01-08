@@ -24,3 +24,8 @@ impl UserTeamRelationships {
         }
     }
 }
+impl Default for UserTeamRelationships {
+    fn default() -> Self {
+        Self::new()
+    }
+}

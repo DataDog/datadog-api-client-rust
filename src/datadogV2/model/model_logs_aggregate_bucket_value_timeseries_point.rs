@@ -24,3 +24,8 @@ impl LogsAggregateBucketValueTimeseriesPoint {
         }
     }
 }
+impl Default for LogsAggregateBucketValueTimeseriesPoint {
+    fn default() -> Self {
+        Self::new()
+    }
+}

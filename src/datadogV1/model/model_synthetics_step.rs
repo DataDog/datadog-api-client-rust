@@ -44,3 +44,8 @@ impl SyntheticsStep {
         }
     }
 }
+impl Default for SyntheticsStep {
+    fn default() -> Self {
+        Self::new()
+    }
+}

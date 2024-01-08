@@ -28,3 +28,8 @@ impl RUMQueryFilter {
         }
     }
 }
+impl Default for RUMQueryFilter {
+    fn default() -> Self {
+        Self::new()
+    }
+}

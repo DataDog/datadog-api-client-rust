@@ -32,3 +32,8 @@ impl UsageTopAvgMetricsHour {
         }
     }
 }
+impl Default for UsageTopAvgMetricsHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

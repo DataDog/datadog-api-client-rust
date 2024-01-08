@@ -36,3 +36,8 @@ impl SyntheticsParsingOptions {
         }
     }
 }
+impl Default for SyntheticsParsingOptions {
+    fn default() -> Self {
+        Self::new()
+    }
+}

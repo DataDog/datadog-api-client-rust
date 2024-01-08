@@ -40,3 +40,8 @@ impl SensitiveDataScannerMeta {
         }
     }
 }
+impl Default for SensitiveDataScannerMeta {
+    fn default() -> Self {
+        Self::new()
+    }
+}

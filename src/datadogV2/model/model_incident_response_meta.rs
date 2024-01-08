@@ -18,3 +18,8 @@ impl IncidentResponseMeta {
         IncidentResponseMeta { pagination: None }
     }
 }
+impl Default for IncidentResponseMeta {
+    fn default() -> Self {
+        Self::new()
+    }
+}

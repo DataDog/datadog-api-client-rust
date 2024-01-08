@@ -24,3 +24,8 @@ impl HostTags {
         }
     }
 }
+impl Default for HostTags {
+    fn default() -> Self {
+        Self::new()
+    }
+}

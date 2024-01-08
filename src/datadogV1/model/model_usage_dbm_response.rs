@@ -18,3 +18,8 @@ impl UsageDBMResponse {
         UsageDBMResponse { usage: None }
     }
 }
+impl Default for UsageDBMResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

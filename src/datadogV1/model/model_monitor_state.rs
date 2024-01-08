@@ -20,3 +20,8 @@ impl MonitorState {
         MonitorState { groups: None }
     }
 }
+impl Default for MonitorState {
+    fn default() -> Self {
+        Self::new()
+    }
+}

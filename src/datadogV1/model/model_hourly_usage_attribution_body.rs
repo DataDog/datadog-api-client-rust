@@ -56,3 +56,8 @@ impl HourlyUsageAttributionBody {
         }
     }
 }
+impl Default for HourlyUsageAttributionBody {
+    fn default() -> Self {
+        Self::new()
+    }
+}

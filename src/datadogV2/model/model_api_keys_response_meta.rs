@@ -24,3 +24,8 @@ impl APIKeysResponseMeta {
         }
     }
 }
+impl Default for APIKeysResponseMeta {
+    fn default() -> Self {
+        Self::new()
+    }
+}

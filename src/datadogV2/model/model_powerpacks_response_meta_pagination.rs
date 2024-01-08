@@ -52,3 +52,8 @@ impl PowerpacksResponseMetaPagination {
         }
     }
 }
+impl Default for PowerpacksResponseMetaPagination {
+    fn default() -> Self {
+        Self::new()
+    }
+}

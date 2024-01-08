@@ -25,3 +25,8 @@ impl SyntheticsLocation {
         }
     }
 }
+impl Default for SyntheticsLocation {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -18,3 +18,8 @@ impl SpansMetricsResponse {
         SpansMetricsResponse { data: None }
     }
 }
+impl Default for SpansMetricsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

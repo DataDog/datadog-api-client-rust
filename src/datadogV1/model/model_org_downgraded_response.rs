@@ -18,3 +18,8 @@ impl OrgDowngradedResponse {
         OrgDowngradedResponse { message: None }
     }
 }
+impl Default for OrgDowngradedResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

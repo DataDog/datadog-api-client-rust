@@ -24,3 +24,8 @@ impl AWSLogsAsyncResponse {
         }
     }
 }
+impl Default for AWSLogsAsyncResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

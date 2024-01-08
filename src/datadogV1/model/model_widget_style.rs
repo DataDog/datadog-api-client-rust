@@ -18,3 +18,8 @@ impl WidgetStyle {
         WidgetStyle { palette: None }
     }
 }
+impl Default for WidgetStyle {
+    fn default() -> Self {
+        Self::new()
+    }
+}

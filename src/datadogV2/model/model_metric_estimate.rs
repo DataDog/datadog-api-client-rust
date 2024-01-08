@@ -28,3 +28,8 @@ impl MetricEstimate {
         }
     }
 }
+impl Default for MetricEstimate {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -18,3 +18,8 @@ impl SyntheticsBatchDetails {
         SyntheticsBatchDetails { data: None }
     }
 }
+impl Default for SyntheticsBatchDetails {
+    fn default() -> Self {
+        Self::new()
+    }
+}

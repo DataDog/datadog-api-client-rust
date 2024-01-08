@@ -32,3 +32,8 @@ impl ListRulesResponseDataItem {
         }
     }
 }
+impl Default for ListRulesResponseDataItem {
+    fn default() -> Self {
+        Self::new()
+    }
+}

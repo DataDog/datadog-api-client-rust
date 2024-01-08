@@ -36,3 +36,8 @@ impl LogsQueryFilter {
         }
     }
 }
+impl Default for LogsQueryFilter {
+    fn default() -> Self {
+        Self::new()
+    }
+}

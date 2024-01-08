@@ -18,3 +18,8 @@ impl TagToHosts {
         TagToHosts { tags: None }
     }
 }
+impl Default for TagToHosts {
+    fn default() -> Self {
+        Self::new()
+    }
+}

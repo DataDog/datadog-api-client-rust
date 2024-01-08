@@ -18,3 +18,8 @@ impl OutcomesResponseLinks {
         OutcomesResponseLinks { next: None }
     }
 }
+impl Default for OutcomesResponseLinks {
+    fn default() -> Self {
+        Self::new()
+    }
+}

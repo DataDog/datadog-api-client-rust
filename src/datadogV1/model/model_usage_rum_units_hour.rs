@@ -48,3 +48,8 @@ impl UsageRumUnitsHour {
         }
     }
 }
+impl Default for UsageRumUnitsHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

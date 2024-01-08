@@ -28,3 +28,8 @@ impl TimeseriesResponseAttributes {
         }
     }
 }
+impl Default for TimeseriesResponseAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

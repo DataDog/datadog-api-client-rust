@@ -19,3 +19,8 @@ impl SpansResponseMetadataPage {
         SpansResponseMetadataPage { after: None }
     }
 }
+impl Default for SpansResponseMetadataPage {
+    fn default() -> Self {
+        Self::new()
+    }
+}

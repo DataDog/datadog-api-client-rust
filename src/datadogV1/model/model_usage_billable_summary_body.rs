@@ -44,3 +44,8 @@ impl UsageBillableSummaryBody {
         }
     }
 }
+impl Default for UsageBillableSummaryBody {
+    fn default() -> Self {
+        Self::new()
+    }
+}

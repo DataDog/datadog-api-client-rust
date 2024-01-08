@@ -36,3 +36,8 @@ impl UsageOnlineArchiveHour {
         }
     }
 }
+impl Default for UsageOnlineArchiveHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

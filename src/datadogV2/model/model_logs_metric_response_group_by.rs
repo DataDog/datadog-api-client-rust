@@ -24,3 +24,8 @@ impl LogsMetricResponseGroupBy {
         }
     }
 }
+impl Default for LogsMetricResponseGroupBy {
+    fn default() -> Self {
+        Self::new()
+    }
+}

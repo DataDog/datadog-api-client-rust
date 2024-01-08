@@ -18,3 +18,8 @@ impl DashboardGlobalTime {
         DashboardGlobalTime { live_span: None }
     }
 }
+impl Default for DashboardGlobalTime {
+    fn default() -> Self {
+        Self::new()
+    }
+}

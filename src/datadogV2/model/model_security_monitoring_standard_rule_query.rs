@@ -51,3 +51,8 @@ impl SecurityMonitoringStandardRuleQuery {
         }
     }
 }
+impl Default for SecurityMonitoringStandardRuleQuery {
+    fn default() -> Self {
+        Self::new()
+    }
+}

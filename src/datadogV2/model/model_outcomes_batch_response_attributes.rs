@@ -36,3 +36,8 @@ impl OutcomesBatchResponseAttributes {
         }
     }
 }
+impl Default for OutcomesBatchResponseAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

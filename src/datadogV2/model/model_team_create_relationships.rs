@@ -18,3 +18,8 @@ impl TeamCreateRelationships {
         TeamCreateRelationships { users: None }
     }
 }
+impl Default for TeamCreateRelationships {
+    fn default() -> Self {
+        Self::new()
+    }
+}

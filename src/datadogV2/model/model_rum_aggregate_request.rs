@@ -37,3 +37,8 @@ impl RUMAggregateRequest {
         }
     }
 }
+impl Default for RUMAggregateRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

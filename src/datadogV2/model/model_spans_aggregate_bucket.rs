@@ -28,3 +28,8 @@ impl SpansAggregateBucket {
         }
     }
 }
+impl Default for SpansAggregateBucket {
+    fn default() -> Self {
+        Self::new()
+    }
+}

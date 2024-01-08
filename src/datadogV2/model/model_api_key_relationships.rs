@@ -24,3 +24,8 @@ impl APIKeyRelationships {
         }
     }
 }
+impl Default for APIKeyRelationships {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -32,3 +32,8 @@ impl AWSEventBridgeCreateResponse {
         }
     }
 }
+impl Default for AWSEventBridgeCreateResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

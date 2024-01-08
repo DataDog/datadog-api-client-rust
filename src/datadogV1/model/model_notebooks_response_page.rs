@@ -24,3 +24,8 @@ impl NotebooksResponsePage {
         }
     }
 }
+impl Default for NotebooksResponsePage {
+    fn default() -> Self {
+        Self::new()
+    }
+}

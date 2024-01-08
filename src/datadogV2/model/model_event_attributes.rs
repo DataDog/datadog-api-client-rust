@@ -114,3 +114,8 @@ impl EventAttributes {
         }
     }
 }
+impl Default for EventAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

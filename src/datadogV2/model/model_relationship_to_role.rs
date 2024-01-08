@@ -18,3 +18,8 @@ impl RelationshipToRole {
         RelationshipToRole { data: None }
     }
 }
+impl Default for RelationshipToRole {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -86,3 +86,8 @@ impl SpansAttributes {
         }
     }
 }
+impl Default for SpansAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

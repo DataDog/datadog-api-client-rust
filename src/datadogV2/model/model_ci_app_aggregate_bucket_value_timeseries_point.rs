@@ -24,3 +24,8 @@ impl CIAppAggregateBucketValueTimeseriesPoint {
         }
     }
 }
+impl Default for CIAppAggregateBucketValueTimeseriesPoint {
+    fn default() -> Self {
+        Self::new()
+    }
+}

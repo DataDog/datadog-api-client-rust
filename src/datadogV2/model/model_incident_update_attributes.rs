@@ -61,3 +61,8 @@ impl IncidentUpdateAttributes {
         }
     }
 }
+impl Default for IncidentUpdateAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

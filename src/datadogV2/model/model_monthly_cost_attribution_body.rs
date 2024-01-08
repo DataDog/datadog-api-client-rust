@@ -28,3 +28,8 @@ impl MonthlyCostAttributionBody {
         }
     }
 }
+impl Default for MonthlyCostAttributionBody {
+    fn default() -> Self {
+        Self::new()
+    }
+}

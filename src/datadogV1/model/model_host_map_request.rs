@@ -52,3 +52,8 @@ impl HostMapRequest {
         }
     }
 }
+impl Default for HostMapRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

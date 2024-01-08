@@ -18,3 +18,8 @@ impl DowntimeRelationshipsMonitor {
         DowntimeRelationshipsMonitor { data: None }
     }
 }
+impl Default for DowntimeRelationshipsMonitor {
+    fn default() -> Self {
+        Self::new()
+    }
+}

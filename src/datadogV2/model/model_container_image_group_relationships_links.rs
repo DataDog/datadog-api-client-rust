@@ -18,3 +18,8 @@ impl ContainerImageGroupRelationshipsLinks {
         ContainerImageGroupRelationshipsLinks { related: None }
     }
 }
+impl Default for ContainerImageGroupRelationshipsLinks {
+    fn default() -> Self {
+        Self::new()
+    }
+}

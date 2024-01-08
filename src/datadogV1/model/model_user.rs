@@ -48,3 +48,8 @@ impl User {
         }
     }
 }
+impl Default for User {
+    fn default() -> Self {
+        Self::new()
+    }
+}

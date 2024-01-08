@@ -18,3 +18,8 @@ impl Powerpack {
         Powerpack { data: None }
     }
 }
+impl Default for Powerpack {
+    fn default() -> Self {
+        Self::new()
+    }
+}

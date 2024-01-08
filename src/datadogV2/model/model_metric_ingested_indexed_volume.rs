@@ -28,3 +28,8 @@ impl MetricIngestedIndexedVolume {
         }
     }
 }
+impl Default for MetricIngestedIndexedVolume {
+    fn default() -> Self {
+        Self::new()
+    }
+}

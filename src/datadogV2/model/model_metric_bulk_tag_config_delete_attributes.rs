@@ -18,3 +18,8 @@ impl MetricBulkTagConfigDeleteAttributes {
         MetricBulkTagConfigDeleteAttributes { emails: None }
     }
 }
+impl Default for MetricBulkTagConfigDeleteAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

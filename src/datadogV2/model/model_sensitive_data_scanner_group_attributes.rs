@@ -36,3 +36,8 @@ impl SensitiveDataScannerGroupAttributes {
         }
     }
 }
+impl Default for SensitiveDataScannerGroupAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

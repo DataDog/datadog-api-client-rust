@@ -52,3 +52,8 @@ impl MonthlyUsageAttributionBody {
         }
     }
 }
+impl Default for MonthlyUsageAttributionBody {
+    fn default() -> Self {
+        Self::new()
+    }
+}

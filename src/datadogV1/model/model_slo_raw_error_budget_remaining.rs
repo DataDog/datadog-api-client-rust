@@ -24,3 +24,8 @@ impl SLORawErrorBudgetRemaining {
         }
     }
 }
+impl Default for SLORawErrorBudgetRemaining {
+    fn default() -> Self {
+        Self::new()
+    }
+}

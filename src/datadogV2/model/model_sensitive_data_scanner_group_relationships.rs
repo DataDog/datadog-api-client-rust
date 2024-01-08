@@ -24,3 +24,8 @@ impl SensitiveDataScannerGroupRelationships {
         }
     }
 }
+impl Default for SensitiveDataScannerGroupRelationships {
+    fn default() -> Self {
+        Self::new()
+    }
+}

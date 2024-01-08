@@ -28,3 +28,8 @@ impl TopologyQuery {
         }
     }
 }
+impl Default for TopologyQuery {
+    fn default() -> Self {
+        Self::new()
+    }
+}

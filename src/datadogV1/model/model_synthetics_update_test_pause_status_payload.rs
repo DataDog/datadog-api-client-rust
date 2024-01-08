@@ -19,3 +19,8 @@ impl SyntheticsUpdateTestPauseStatusPayload {
         SyntheticsUpdateTestPauseStatusPayload { new_status: None }
     }
 }
+impl Default for SyntheticsUpdateTestPauseStatusPayload {
+    fn default() -> Self {
+        Self::new()
+    }
+}

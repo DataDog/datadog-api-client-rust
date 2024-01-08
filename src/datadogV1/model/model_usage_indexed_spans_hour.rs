@@ -36,3 +36,8 @@ impl UsageIndexedSpansHour {
         }
     }
 }
+impl Default for UsageIndexedSpansHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -32,3 +32,8 @@ impl CIAppHostInfo {
         }
     }
 }
+impl Default for CIAppHostInfo {
+    fn default() -> Self {
+        Self::new()
+    }
+}

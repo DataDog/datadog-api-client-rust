@@ -19,3 +19,8 @@ impl OrganizationSettingsSaml {
         OrganizationSettingsSaml { enabled: None }
     }
 }
+impl Default for OrganizationSettingsSaml {
+    fn default() -> Self {
+        Self::new()
+    }
+}

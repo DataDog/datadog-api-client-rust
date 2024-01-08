@@ -44,3 +44,8 @@ impl FullAPIKeyAttributes {
         }
     }
 }
+impl Default for FullAPIKeyAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

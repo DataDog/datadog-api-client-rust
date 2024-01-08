@@ -37,3 +37,8 @@ impl CIAppResponseMetadataWithPagination {
         }
     }
 }
+impl Default for CIAppResponseMetadataWithPagination {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -24,3 +24,8 @@ impl SyntheticsGetAPITestLatestResultsResponse {
         }
     }
 }
+impl Default for SyntheticsGetAPITestLatestResultsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

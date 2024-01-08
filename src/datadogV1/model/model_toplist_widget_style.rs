@@ -24,3 +24,8 @@ impl ToplistWidgetStyle {
         }
     }
 }
+impl Default for ToplistWidgetStyle {
+    fn default() -> Self {
+        Self::new()
+    }
+}

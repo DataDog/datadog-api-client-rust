@@ -28,3 +28,8 @@ impl CloudWorkloadSecurityAgentRuleData {
         }
     }
 }
+impl Default for CloudWorkloadSecurityAgentRuleData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

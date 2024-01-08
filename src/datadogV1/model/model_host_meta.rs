@@ -76,3 +76,8 @@ impl HostMeta {
         }
     }
 }
+impl Default for HostMeta {
+    fn default() -> Self {
+        Self::new()
+    }
+}

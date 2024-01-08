@@ -18,3 +18,8 @@ impl UsageLogsByIndexResponse {
         UsageLogsByIndexResponse { usage: None }
     }
 }
+impl Default for UsageLogsByIndexResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

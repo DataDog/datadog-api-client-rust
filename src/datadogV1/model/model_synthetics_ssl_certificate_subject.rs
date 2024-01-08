@@ -44,3 +44,8 @@ impl SyntheticsSSLCertificateSubject {
         }
     }
 }
+impl Default for SyntheticsSSLCertificateSubject {
+    fn default() -> Self {
+        Self::new()
+    }
+}

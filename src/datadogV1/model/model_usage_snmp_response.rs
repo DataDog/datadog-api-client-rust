@@ -18,3 +18,8 @@ impl UsageSNMPResponse {
         UsageSNMPResponse { usage: None }
     }
 }
+impl Default for UsageSNMPResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

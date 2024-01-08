@@ -33,3 +33,8 @@ impl CIAppTestEventsRequest {
         }
     }
 }
+impl Default for CIAppTestEventsRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

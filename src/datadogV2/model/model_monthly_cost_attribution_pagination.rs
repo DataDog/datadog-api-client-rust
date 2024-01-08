@@ -24,3 +24,8 @@ impl MonthlyCostAttributionPagination {
         }
     }
 }
+impl Default for MonthlyCostAttributionPagination {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -28,3 +28,8 @@ impl ScatterPlotWidgetDefinitionRequests {
         }
     }
 }
+impl Default for ScatterPlotWidgetDefinitionRequests {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -80,3 +80,8 @@ impl Event {
         }
     }
 }
+impl Default for Event {
+    fn default() -> Self {
+        Self::new()
+    }
+}

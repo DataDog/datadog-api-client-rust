@@ -24,3 +24,8 @@ impl SpansListRequestData {
         }
     }
 }
+impl Default for SpansListRequestData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -18,3 +18,8 @@ impl ResponseMetaAttributes {
         ResponseMetaAttributes { page: None }
     }
 }
+impl Default for ResponseMetaAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

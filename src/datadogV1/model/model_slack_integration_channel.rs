@@ -24,3 +24,8 @@ impl SlackIntegrationChannel {
         }
     }
 }
+impl Default for SlackIntegrationChannel {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -24,3 +24,8 @@ impl MonthlyUsageAttributionResponse {
         }
     }
 }
+impl Default for MonthlyUsageAttributionResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

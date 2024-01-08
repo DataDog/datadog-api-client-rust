@@ -28,3 +28,8 @@ impl AuditLogsEventsResponse {
         }
     }
 }
+impl Default for AuditLogsEventsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

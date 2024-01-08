@@ -24,3 +24,8 @@ impl SLODeleteResponse {
         }
     }
 }
+impl Default for SLODeleteResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

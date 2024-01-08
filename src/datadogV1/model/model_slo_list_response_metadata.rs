@@ -18,3 +18,8 @@ impl SLOListResponseMetadata {
         SLOListResponseMetadata { page: None }
     }
 }
+impl Default for SLOListResponseMetadata {
+    fn default() -> Self {
+        Self::new()
+    }
+}

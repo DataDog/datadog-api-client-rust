@@ -24,3 +24,8 @@ impl SensitiveDataScannerCreateRuleResponse {
         }
     }
 }
+impl Default for SensitiveDataScannerCreateRuleResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

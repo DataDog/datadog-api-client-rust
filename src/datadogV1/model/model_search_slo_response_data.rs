@@ -24,3 +24,8 @@ impl SearchSLOResponseData {
         }
     }
 }
+impl Default for SearchSLOResponseData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

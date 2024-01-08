@@ -24,3 +24,8 @@ impl RoleRelationships {
         }
     }
 }
+impl Default for RoleRelationships {
+    fn default() -> Self {
+        Self::new()
+    }
+}

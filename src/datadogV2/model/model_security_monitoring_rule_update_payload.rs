@@ -66,3 +66,8 @@ impl SecurityMonitoringRuleUpdatePayload {
         }
     }
 }
+impl Default for SecurityMonitoringRuleUpdatePayload {
+    fn default() -> Self {
+        Self::new()
+    }
+}

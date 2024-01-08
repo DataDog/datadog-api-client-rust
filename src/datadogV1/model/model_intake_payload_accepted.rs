@@ -18,3 +18,8 @@ impl IntakePayloadAccepted {
         IntakePayloadAccepted { status: None }
     }
 }
+impl Default for IntakePayloadAccepted {
+    fn default() -> Self {
+        Self::new()
+    }
+}

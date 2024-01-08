@@ -62,3 +62,8 @@ impl SLOStatus {
         }
     }
 }
+impl Default for SLOStatus {
+    fn default() -> Self {
+        Self::new()
+    }
+}

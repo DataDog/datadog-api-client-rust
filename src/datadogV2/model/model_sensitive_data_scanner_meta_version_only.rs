@@ -18,3 +18,8 @@ impl SensitiveDataScannerMetaVersionOnly {
         SensitiveDataScannerMetaVersionOnly { version: None }
     }
 }
+impl Default for SensitiveDataScannerMetaVersionOnly {
+    fn default() -> Self {
+        Self::new()
+    }
+}

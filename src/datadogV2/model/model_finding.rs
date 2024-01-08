@@ -28,3 +28,8 @@ impl Finding {
         }
     }
 }
+impl Default for Finding {
+    fn default() -> Self {
+        Self::new()
+    }
+}

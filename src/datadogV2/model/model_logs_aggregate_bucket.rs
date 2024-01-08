@@ -28,3 +28,8 @@ impl LogsAggregateBucket {
         }
     }
 }
+impl Default for LogsAggregateBucket {
+    fn default() -> Self {
+        Self::new()
+    }
+}

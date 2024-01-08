@@ -28,3 +28,8 @@ impl SyntheticsAssertionJSONPathTargetTarget {
         }
     }
 }
+impl Default for SyntheticsAssertionJSONPathTargetTarget {
+    fn default() -> Self {
+        Self::new()
+    }
+}

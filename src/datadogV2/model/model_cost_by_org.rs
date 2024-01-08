@@ -28,3 +28,8 @@ impl CostByOrg {
         }
     }
 }
+impl Default for CostByOrg {
+    fn default() -> Self {
+        Self::new()
+    }
+}

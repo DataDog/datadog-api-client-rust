@@ -48,3 +48,8 @@ impl LogAttributes {
         }
     }
 }
+impl Default for LogAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

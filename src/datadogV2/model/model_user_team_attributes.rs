@@ -37,3 +37,8 @@ impl UserTeamAttributes {
         }
     }
 }
+impl Default for UserTeamAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

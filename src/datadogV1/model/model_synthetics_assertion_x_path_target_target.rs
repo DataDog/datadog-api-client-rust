@@ -28,3 +28,8 @@ impl SyntheticsAssertionXPathTargetTarget {
         }
     }
 }
+impl Default for SyntheticsAssertionXPathTargetTarget {
+    fn default() -> Self {
+        Self::new()
+    }
+}

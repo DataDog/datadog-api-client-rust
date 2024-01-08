@@ -18,3 +18,8 @@ impl UsageSDSResponse {
         UsageSDSResponse { usage: None }
     }
 }
+impl Default for UsageSDSResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

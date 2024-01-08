@@ -32,3 +32,8 @@ impl SecurityMonitoringThirdPartyRuleCase {
         }
     }
 }
+impl Default for SecurityMonitoringThirdPartyRuleCase {
+    fn default() -> Self {
+        Self::new()
+    }
+}

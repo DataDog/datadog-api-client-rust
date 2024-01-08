@@ -21,3 +21,8 @@ impl DashboardListDeleteItemsResponse {
         }
     }
 }
+impl Default for DashboardListDeleteItemsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

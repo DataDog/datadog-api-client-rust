@@ -69,3 +69,8 @@ impl AWSAccount {
         }
     }
 }
+impl Default for AWSAccount {
+    fn default() -> Self {
+        Self::new()
+    }
+}

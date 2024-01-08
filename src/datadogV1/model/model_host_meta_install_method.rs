@@ -28,3 +28,8 @@ impl HostMetaInstallMethod {
         }
     }
 }
+impl Default for HostMetaInstallMethod {
+    fn default() -> Self {
+        Self::new()
+    }
+}

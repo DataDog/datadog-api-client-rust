@@ -18,3 +18,8 @@ impl UsageFargateResponse {
         UsageFargateResponse { usage: None }
     }
 }
+impl Default for UsageFargateResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

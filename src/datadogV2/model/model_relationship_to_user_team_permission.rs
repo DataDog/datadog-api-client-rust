@@ -24,3 +24,8 @@ impl RelationshipToUserTeamPermission {
         }
     }
 }
+impl Default for RelationshipToUserTeamPermission {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -19,3 +19,8 @@ impl AuditLogsResponseLinks {
         AuditLogsResponseLinks { next: None }
     }
 }
+impl Default for AuditLogsResponseLinks {
+    fn default() -> Self {
+        Self::new()
+    }
+}

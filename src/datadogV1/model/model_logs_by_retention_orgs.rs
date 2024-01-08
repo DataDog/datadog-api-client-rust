@@ -18,3 +18,8 @@ impl LogsByRetentionOrgs {
         LogsByRetentionOrgs { usage: None }
     }
 }
+impl Default for LogsByRetentionOrgs {
+    fn default() -> Self {
+        Self::new()
+    }
+}

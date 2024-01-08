@@ -24,3 +24,8 @@ impl HourlyUsageMeasurement {
         }
     }
 }
+impl Default for HourlyUsageMeasurement {
+    fn default() -> Self {
+        Self::new()
+    }
+}

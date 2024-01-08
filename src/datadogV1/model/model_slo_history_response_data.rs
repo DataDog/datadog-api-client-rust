@@ -68,3 +68,8 @@ impl SLOHistoryResponseData {
         }
     }
 }
+impl Default for SLOHistoryResponseData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

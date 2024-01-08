@@ -18,3 +18,8 @@ impl EventsSearch {
         EventsSearch { query: None }
     }
 }
+impl Default for EventsSearch {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -31,3 +31,8 @@ impl WebhooksIntegrationCustomVariableUpdateRequest {
         }
     }
 }
+impl Default for WebhooksIntegrationCustomVariableUpdateRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

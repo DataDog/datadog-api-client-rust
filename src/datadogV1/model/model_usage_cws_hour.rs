@@ -44,3 +44,8 @@ impl UsageCWSHour {
         }
     }
 }
+impl Default for UsageCWSHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

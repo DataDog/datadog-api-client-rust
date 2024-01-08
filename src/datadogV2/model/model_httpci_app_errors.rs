@@ -18,3 +18,8 @@ impl HTTPCIAppErrors {
         HTTPCIAppErrors { errors: None }
     }
 }
+impl Default for HTTPCIAppErrors {
+    fn default() -> Self {
+        Self::new()
+    }
+}

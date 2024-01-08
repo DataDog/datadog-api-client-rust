@@ -18,3 +18,8 @@ impl NotebooksResponseMeta {
         NotebooksResponseMeta { page: None }
     }
 }
+impl Default for NotebooksResponseMeta {
+    fn default() -> Self {
+        Self::new()
+    }
+}

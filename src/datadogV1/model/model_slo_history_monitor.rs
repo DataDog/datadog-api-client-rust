@@ -73,3 +73,8 @@ impl SLOHistoryMonitor {
         }
     }
 }
+impl Default for SLOHistoryMonitor {
+    fn default() -> Self {
+        Self::new()
+    }
+}

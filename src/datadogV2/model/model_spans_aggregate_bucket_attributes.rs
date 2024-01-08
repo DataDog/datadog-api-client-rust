@@ -32,3 +32,8 @@ impl SpansAggregateBucketAttributes {
         }
     }
 }
+impl Default for SpansAggregateBucketAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

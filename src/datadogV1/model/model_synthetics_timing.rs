@@ -53,3 +53,8 @@ impl SyntheticsTiming {
         }
     }
 }
+impl Default for SyntheticsTiming {
+    fn default() -> Self {
+        Self::new()
+    }
+}

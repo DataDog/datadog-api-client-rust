@@ -496,3 +496,8 @@ impl MonthlyUsageAttributionValues {
         }
     }
 }
+impl Default for MonthlyUsageAttributionValues {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -24,3 +24,8 @@ impl SyntheticsBrowserTestResultFailure {
         }
     }
 }
+impl Default for SyntheticsBrowserTestResultFailure {
+    fn default() -> Self {
+        Self::new()
+    }
+}

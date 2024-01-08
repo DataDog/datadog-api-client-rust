@@ -19,3 +19,8 @@ impl LogsListResponseLinks {
         LogsListResponseLinks { next: None }
     }
 }
+impl Default for LogsListResponseLinks {
+    fn default() -> Self {
+        Self::new()
+    }
+}

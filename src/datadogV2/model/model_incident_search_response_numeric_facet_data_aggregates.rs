@@ -24,3 +24,8 @@ impl IncidentSearchResponseNumericFacetDataAggregates {
         }
     }
 }
+impl Default for IncidentSearchResponseNumericFacetDataAggregates {
+    fn default() -> Self {
+        Self::new()
+    }
+}

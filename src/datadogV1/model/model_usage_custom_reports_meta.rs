@@ -18,3 +18,8 @@ impl UsageCustomReportsMeta {
         UsageCustomReportsMeta { page: None }
     }
 }
+impl Default for UsageCustomReportsMeta {
+    fn default() -> Self {
+        Self::new()
+    }
+}

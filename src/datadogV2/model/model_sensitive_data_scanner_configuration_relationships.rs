@@ -18,3 +18,8 @@ impl SensitiveDataScannerConfigurationRelationships {
         SensitiveDataScannerConfigurationRelationships { groups: None }
     }
 }
+impl Default for SensitiveDataScannerConfigurationRelationships {
+    fn default() -> Self {
+        Self::new()
+    }
+}

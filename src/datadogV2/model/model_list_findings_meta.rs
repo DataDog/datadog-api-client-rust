@@ -24,3 +24,8 @@ impl ListFindingsMeta {
         }
     }
 }
+impl Default for ListFindingsMeta {
+    fn default() -> Self {
+        Self::new()
+    }
+}

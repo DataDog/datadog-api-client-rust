@@ -32,3 +32,8 @@ impl LogsAggregateSort {
         }
     }
 }
+impl Default for LogsAggregateSort {
+    fn default() -> Self {
+        Self::new()
+    }
+}

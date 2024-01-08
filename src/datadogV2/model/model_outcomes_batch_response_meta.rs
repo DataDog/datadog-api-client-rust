@@ -24,3 +24,8 @@ impl OutcomesBatchResponseMeta {
         }
     }
 }
+impl Default for OutcomesBatchResponseMeta {
+    fn default() -> Self {
+        Self::new()
+    }
+}

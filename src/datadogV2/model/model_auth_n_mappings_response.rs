@@ -28,3 +28,8 @@ impl AuthNMappingsResponse {
         }
     }
 }
+impl Default for AuthNMappingsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

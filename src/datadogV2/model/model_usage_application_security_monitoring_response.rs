@@ -18,3 +18,8 @@ impl UsageApplicationSecurityMonitoringResponse {
         UsageApplicationSecurityMonitoringResponse { data: None }
     }
 }
+impl Default for UsageApplicationSecurityMonitoringResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

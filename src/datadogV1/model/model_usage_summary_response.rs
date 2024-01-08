@@ -470,3 +470,8 @@ impl UsageSummaryResponse {
         }
     }
 }
+impl Default for UsageSummaryResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

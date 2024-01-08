@@ -28,3 +28,8 @@ impl ContainersResponse {
         }
     }
 }
+impl Default for ContainersResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

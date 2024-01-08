@@ -18,3 +18,8 @@ impl UsageCWSResponse {
         UsageCWSResponse { usage: None }
     }
 }
+impl Default for UsageCWSResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

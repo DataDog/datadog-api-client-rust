@@ -92,3 +92,8 @@ impl TableWidgetRequest {
         }
     }
 }
+impl Default for TableWidgetRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -44,3 +44,8 @@ impl PermissionAttributes {
         }
     }
 }
+impl Default for PermissionAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

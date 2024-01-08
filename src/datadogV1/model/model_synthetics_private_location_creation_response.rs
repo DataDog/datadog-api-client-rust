@@ -30,3 +30,8 @@ impl SyntheticsPrivateLocationCreationResponse {
         }
     }
 }
+impl Default for SyntheticsPrivateLocationCreationResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

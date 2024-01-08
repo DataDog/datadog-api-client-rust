@@ -25,3 +25,8 @@ impl RUMQueryOptions {
         }
     }
 }
+impl Default for RUMQueryOptions {
+    fn default() -> Self {
+        Self::new()
+    }
+}

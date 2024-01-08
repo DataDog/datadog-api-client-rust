@@ -76,3 +76,8 @@ impl Host {
         }
     }
 }
+impl Default for Host {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -28,3 +28,8 @@ impl RUMEventsResponse {
         }
     }
 }
+impl Default for RUMEventsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

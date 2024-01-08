@@ -126,3 +126,8 @@ impl SyntheticsTestRequest {
         }
     }
 }
+impl Default for SyntheticsTestRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

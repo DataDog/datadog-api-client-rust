@@ -38,3 +38,8 @@ impl AuditLogsEventAttributes {
         }
     }
 }
+impl Default for AuditLogsEventAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

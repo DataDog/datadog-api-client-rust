@@ -28,3 +28,8 @@ impl HostMuteSettings {
         }
     }
 }
+impl Default for HostMuteSettings {
+    fn default() -> Self {
+        Self::new()
+    }
+}

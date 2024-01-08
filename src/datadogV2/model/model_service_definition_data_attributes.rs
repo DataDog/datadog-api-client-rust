@@ -24,3 +24,8 @@ impl ServiceDefinitionDataAttributes {
         }
     }
 }
+impl Default for ServiceDefinitionDataAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

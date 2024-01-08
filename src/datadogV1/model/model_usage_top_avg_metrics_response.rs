@@ -24,3 +24,8 @@ impl UsageTopAvgMetricsResponse {
         }
     }
 }
+impl Default for UsageTopAvgMetricsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

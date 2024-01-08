@@ -28,3 +28,8 @@ impl LogsMetricResponseAttributes {
         }
     }
 }
+impl Default for LogsMetricResponseAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -24,3 +24,8 @@ impl RolesResponse {
         }
     }
 }
+impl Default for RolesResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

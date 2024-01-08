@@ -28,3 +28,8 @@ impl UsageTopAvgMetricsMetadata {
         }
     }
 }
+impl Default for UsageTopAvgMetricsMetadata {
+    fn default() -> Self {
+        Self::new()
+    }
+}

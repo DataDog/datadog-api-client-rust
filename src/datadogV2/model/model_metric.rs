@@ -24,3 +24,8 @@ impl Metric {
         }
     }
 }
+impl Default for Metric {
+    fn default() -> Self {
+        Self::new()
+    }
+}

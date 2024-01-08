@@ -18,3 +18,8 @@ impl SearchServiceLevelObjective {
         SearchServiceLevelObjective { data: None }
     }
 }
+impl Default for SearchServiceLevelObjective {
+    fn default() -> Self {
+        Self::new()
+    }
+}

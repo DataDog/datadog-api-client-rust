@@ -24,3 +24,8 @@ impl SpansAggregateData {
         }
     }
 }
+impl Default for SpansAggregateData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

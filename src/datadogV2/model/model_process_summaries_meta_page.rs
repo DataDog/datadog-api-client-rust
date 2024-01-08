@@ -25,3 +25,8 @@ impl ProcessSummariesMetaPage {
         }
     }
 }
+impl Default for ProcessSummariesMetaPage {
+    fn default() -> Self {
+        Self::new()
+    }
+}

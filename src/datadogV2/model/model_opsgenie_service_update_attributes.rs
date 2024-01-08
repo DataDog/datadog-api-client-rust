@@ -36,3 +36,8 @@ impl OpsgenieServiceUpdateAttributes {
         }
     }
 }
+impl Default for OpsgenieServiceUpdateAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

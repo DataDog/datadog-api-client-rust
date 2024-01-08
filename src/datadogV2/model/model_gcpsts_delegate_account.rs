@@ -28,3 +28,8 @@ impl GCPSTSDelegateAccount {
         }
     }
 }
+impl Default for GCPSTSDelegateAccount {
+    fn default() -> Self {
+        Self::new()
+    }
+}

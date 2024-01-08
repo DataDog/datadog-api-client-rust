@@ -21,3 +21,8 @@ impl ScalarMeta {
         ScalarMeta { unit: None }
     }
 }
+impl Default for ScalarMeta {
+    fn default() -> Self {
+        Self::new()
+    }
+}

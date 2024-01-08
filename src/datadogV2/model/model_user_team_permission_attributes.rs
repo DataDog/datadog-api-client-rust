@@ -18,3 +18,8 @@ impl UserTeamPermissionAttributes {
         UserTeamPermissionAttributes { permissions: None }
     }
 }
+impl Default for UserTeamPermissionAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -32,3 +32,8 @@ impl ContainerGroup {
         }
     }
 }
+impl Default for ContainerGroup {
+    fn default() -> Self {
+        Self::new()
+    }
+}

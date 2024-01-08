@@ -45,3 +45,8 @@ impl SLOCorrectionUpdateRequestAttributes {
         }
     }
 }
+impl Default for SLOCorrectionUpdateRequestAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

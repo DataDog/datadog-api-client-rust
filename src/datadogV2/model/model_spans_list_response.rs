@@ -28,3 +28,8 @@ impl SpansListResponse {
         }
     }
 }
+impl Default for SpansListResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

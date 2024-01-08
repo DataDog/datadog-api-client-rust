@@ -37,3 +37,8 @@ impl LogsAggregateRequest {
         }
     }
 }
+impl Default for LogsAggregateRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

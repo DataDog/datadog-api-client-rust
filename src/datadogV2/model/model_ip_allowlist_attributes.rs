@@ -24,3 +24,8 @@ impl IPAllowlistAttributes {
         }
     }
 }
+impl Default for IPAllowlistAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -32,3 +32,8 @@ impl MonitorSearchResponseCounts {
         }
     }
 }
+impl Default for MonitorSearchResponseCounts {
+    fn default() -> Self {
+        Self::new()
+    }
+}

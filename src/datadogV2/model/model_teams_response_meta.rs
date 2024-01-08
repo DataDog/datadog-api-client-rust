@@ -18,3 +18,8 @@ impl TeamsResponseMeta {
         TeamsResponseMeta { pagination: None }
     }
 }
+impl Default for TeamsResponseMeta {
+    fn default() -> Self {
+        Self::new()
+    }
+}

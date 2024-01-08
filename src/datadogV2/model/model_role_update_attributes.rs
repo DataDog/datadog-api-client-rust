@@ -28,3 +28,8 @@ impl RoleUpdateAttributes {
         }
     }
 }
+impl Default for RoleUpdateAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

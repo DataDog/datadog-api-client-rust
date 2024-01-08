@@ -52,3 +52,8 @@ impl SecurityMonitoringSignalRuleResponseQuery {
         }
     }
 }
+impl Default for SecurityMonitoringSignalRuleResponseQuery {
+    fn default() -> Self {
+        Self::new()
+    }
+}

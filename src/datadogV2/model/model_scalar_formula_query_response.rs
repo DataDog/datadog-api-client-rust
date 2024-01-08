@@ -24,3 +24,8 @@ impl ScalarFormulaQueryResponse {
         }
     }
 }
+impl Default for ScalarFormulaQueryResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

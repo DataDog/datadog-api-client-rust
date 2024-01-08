@@ -8,8 +8,8 @@ use cucumber::{
     given, then, when, World,
 };
 use datadog_api_client::datadog::configuration::Configuration;
-use handlebars::{Context, Handlebars, Helper, Output, RenderContext, RenderError};
 use lazy_static::lazy_static;
+use minijinja::{Environment, State};
 use regex::Regex;
 use reqwest_middleware::ClientBuilder;
 use rvcr::{VCRMiddleware, VCRMode};
@@ -39,7 +39,7 @@ struct UndoOperation {
     parameters: HashMap<String, Value>,
 }
 
-#[derive(Default, Debug, World)]
+#[derive(Debug, Default, World)]
 pub struct DatadogWorld {
     pub api_version: i32,
     pub config: Configuration,
@@ -49,26 +49,24 @@ pub struct DatadogWorld {
     pub parameters: HashMap<String, Value>,
     pub response: Response,
     pub api_instances: ApiInstances,
-    pub given_map: Value,
-    pub undo_map: Value,
+    pub given_map: Option<&'static Value>,
+    pub undo_map: Option<&'static Value>,
     undo_operations: Vec<UndoOperation>,
 }
 
 lazy_static! {
-    pub static ref API_VERSION_RE: Regex = Regex::new(r"tests/scenarios/features/v(\d+)/").unwrap();
     static ref NUMBER_RE: Regex = Regex::new(r"^\d+$").unwrap();
     static ref BOOL_RE: Regex = Regex::new(r"^(true|false)$").unwrap();
+    static ref ARRAY_RE: Regex = Regex::new(r"^\[.*\]$").unwrap();
     static ref INDEX_RE: Regex = Regex::new(r"\[(\d+)\]+").unwrap();
-    static ref TEMPLATE_INDEX_RE: Regex = Regex::new(r"(\w+)\[(\d+)\]").unwrap();
     static ref NON_ALNUM_RE: Regex = Regex::new(r"[^A-Za-z0-9]+").unwrap();
     static ref TIME_FMT_HELPER_RE: Regex =
         Regex::new(r"now(?: *([+-]) *(\d+)([smhdMy]))?").unwrap();
-    static ref TIME_FUNC_HELPER_RE: Regex = Regex::new(r"(?:timestamp|timeISO)\([^{}]*\)").unwrap();
-    static ref HANDLEBARS: Handlebars<'static> = {
-        let mut hb = Handlebars::new();
-        hb.register_helper("timeISO", Box::new(time_iso_helper));
-        hb.register_helper("timestamp", Box::new(timestamp_helper));
-        hb
+    static ref TEMPLATE_ENV: Environment<'static> = {
+        let mut env = Environment::new();
+        env.add_function("timestamp", timestamp_helper);
+        env.add_function("timeISO", time_iso_helper);
+        env
     };
 }
 
@@ -99,11 +97,11 @@ pub async fn before_scenario(
     cassette.push(format!("{}.json", filename));
     let mut freeze = cassette_dir.clone();
     freeze.push(format!("{}.frozen", filename));
-    let mut config = Configuration::new();
+
     let mut frozen_time = chrono::Utc::now().signed_duration_since(DateTime::UNIX_EPOCH);
 
     let vcr_client_builder = ClientBuilder::new(reqwest::Client::new());
-    config.client = match env::var("RECORD").unwrap_or("false".to_string()).as_str() {
+    world.config.client = match env::var("RECORD").unwrap_or("false".to_string()).as_str() {
         "none" => {
             prefix.push_str("-Rust");
             vcr_client_builder.build()
@@ -157,9 +155,8 @@ pub async fn before_scenario(
             vcr_client_builder.with(middleware).build()
         }
     };
-    config.api_key_auth = Some("00000000000000000000000000000000".to_string());
-    config.app_key_auth = Some("0000000000000000000000000000000000000000".to_string());
-    world.config = config;
+    world.config.api_key_auth = Some("00000000000000000000000000000000".to_string());
+    world.config.app_key_auth = Some("0000000000000000000000000000000000000000".to_string());
 
     let escaped_name = NON_ALNUM_RE
         .replace_all(scenario.name.as_str(), "_")
@@ -219,6 +216,7 @@ fn instance_of_api(world: &mut DatadogWorld, api: String) {
 fn given_resource_in_system(world: &mut DatadogWorld, given_key: String) {
     let given = world
         .given_map
+        .unwrap()
         .as_array()
         .unwrap()
         .iter()
@@ -300,7 +298,7 @@ fn body_with_value(world: &mut DatadogWorld, body: String) {
     world.parameters.insert("body".to_string(), body_struct);
 }
 
-#[given(regex = r"^body from file (.*)$")]
+#[given(expr = "body from file {string}")]
 fn body_from_file(world: &mut DatadogWorld, path: String) {
     let body = read_to_string(format!(
         "tests/scenarios/features/v{}/{}",
@@ -321,7 +319,7 @@ fn request_parameter_from_path(world: &mut DatadogWorld, param: String, path: St
 #[given(expr = "request contains {string} parameter with value {}")]
 fn request_parameter_with_value(world: &mut DatadogWorld, param: String, value: String) {
     let trimmed_value = value.trim_matches('"').to_string();
-    let rendered = template(trimmed_value, &world.fixtures);
+    let rendered = template(trimmed_value.clone(), &world.fixtures);
     if NUMBER_RE.is_match(&rendered) {
         let number =
             serde_json::Number::from_str(&rendered).expect("couldn't parse param as number");
@@ -329,6 +327,9 @@ fn request_parameter_with_value(world: &mut DatadogWorld, param: String, value: 
     } else if BOOL_RE.is_match(&rendered) {
         let boolean = Value::Bool(rendered == "true");
         world.parameters.insert(param, boolean);
+    } else if ARRAY_RE.is_match(&rendered) {
+        let vec: Vec<Value> = serde_json::from_str(&rendered).expect("couldn't parse param as vec");
+        world.parameters.insert(param, Value::Array(vec));
     } else {
         world.parameters.insert(param, Value::from(rendered));
     }
@@ -367,6 +368,13 @@ fn response_equal_to(world: &mut DatadogWorld, path: String, value: String) {
     } else {
         assert_eq!(lookup, expected);
     }
+}
+
+#[then(expr = "the response {string} has field {string}")]
+fn response_has_field(world: &mut DatadogWorld, path: String, field_path: String) {
+    let found = lookup(&path, &world.response.object).expect("value not found in response");
+    let field = lookup(&field_path, &found);
+    assert!(field.is_some());
 }
 
 #[then(expr = "the response {string} has item with field {string} with value {}")]
@@ -477,12 +485,11 @@ fn lookup(path: &String, object: &Value) -> Option<Value> {
     return object.pointer(&json_pointer).cloned();
 }
 
-fn relative_time_helper(v: &String, c: &Context) -> DateTime<chrono::Utc> {
+fn relative_time_helper(v: &String, ts: i64) -> DateTime<chrono::Utc> {
     // get parameter from helper or throw an error
     let caps = TIME_FMT_HELPER_RE
         .captures(&v)
         .expect("failed to parse timeISO template function");
-    let ts = c.data().get("now_millis").unwrap().as_i64().unwrap();
     let ts_s = ts / 1000;
     let ts_n =
         u32::try_from((ts % 1000) * 1_000_000).expect("timestamp could not be converted to ns");
@@ -521,55 +528,22 @@ fn relative_time_helper(v: &String, c: &Context) -> DateTime<chrono::Utc> {
     }
 }
 
-fn time_iso_helper(
-    h: &Helper,
-    _: &Handlebars,
-    c: &Context,
-    _: &mut RenderContext,
-    out: &mut dyn Output,
-) -> Result<(), RenderError> {
-    let v = h.param(0).unwrap().render();
-    let time = relative_time_helper(&v, c).to_rfc3339_opts(SecondsFormat::Millis, true);
-    write!(out, "{}", time)?;
-    Ok(())
+fn time_iso_helper(state: &State, time_str: String) -> String {
+    let now: i64 = state.lookup("now_millis").unwrap().try_into().unwrap();
+    relative_time_helper(&time_str, now).to_rfc3339_opts(SecondsFormat::Millis, true)
 }
 
-fn timestamp_helper(
-    h: &Helper,
-    _: &Handlebars,
-    c: &Context,
-    _: &mut RenderContext,
-    out: &mut dyn Output,
-) -> Result<(), RenderError> {
-    let v = h.param(0).unwrap().render();
-    let time = relative_time_helper(&v, c)
+fn timestamp_helper(state: &State, time_str: String) -> String {
+    let now: i64 = state.lookup("now_millis").unwrap().try_into().unwrap();
+    relative_time_helper(&time_str, now)
         .signed_duration_since(DateTime::UNIX_EPOCH)
-        .num_seconds();
-    write!(out, "{}", time)?;
-    Ok(())
+        .num_seconds()
+        .to_string()
 }
 
 fn template(string: String, fixtures: &Value) -> String {
-    let mut parsed_string = TIME_FUNC_HELPER_RE
-        .replace_all(&string, |caps: &regex::Captures| {
-            caps.get(0)
-                .unwrap()
-                .as_str()
-                .replace('(', " ")
-                .replace(')', "")
-        })
-        .to_string();
-    parsed_string = TEMPLATE_INDEX_RE
-        .replace_all(&parsed_string, |caps: &regex::Captures| {
-            caps.get(0)
-                .unwrap()
-                .as_str()
-                .replace('[', ".")
-                .replace(']', "")
-        })
-        .to_string();
-    HANDLEBARS
-        .render_template(parsed_string.as_str(), &fixtures)
+    TEMPLATE_ENV
+        .render_str(string.as_str(), fixtures)
         .expect("failed to apply template")
 }
 
@@ -582,6 +556,7 @@ fn build_undo(
     }
     let undo = world
         .undo_map
+        .unwrap()
         .get(operation_id)
         .unwrap()
         .get("undo")

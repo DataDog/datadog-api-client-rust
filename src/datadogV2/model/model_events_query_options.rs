@@ -25,3 +25,8 @@ impl EventsQueryOptions {
         }
     }
 }
+impl Default for EventsQueryOptions {
+    fn default() -> Self {
+        Self::new()
+    }
+}

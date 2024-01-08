@@ -24,3 +24,8 @@ impl FastlyAccountUpdateRequestData {
         }
     }
 }
+impl Default for FastlyAccountUpdateRequestData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

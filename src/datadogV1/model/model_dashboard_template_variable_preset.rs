@@ -25,3 +25,8 @@ impl DashboardTemplateVariablePreset {
         }
     }
 }
+impl Default for DashboardTemplateVariablePreset {
+    fn default() -> Self {
+        Self::new()
+    }
+}

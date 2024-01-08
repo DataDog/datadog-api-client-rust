@@ -32,3 +32,8 @@ impl SensitiveDataScannerRuleUpdate {
         }
     }
 }
+impl Default for SensitiveDataScannerRuleUpdate {
+    fn default() -> Self {
+        Self::new()
+    }
+}

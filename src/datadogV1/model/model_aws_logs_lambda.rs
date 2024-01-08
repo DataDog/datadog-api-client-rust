@@ -18,3 +18,8 @@ impl AWSLogsLambda {
         AWSLogsLambda { arn: None }
     }
 }
+impl Default for AWSLogsLambda {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -40,3 +40,8 @@ impl SensitiveDataScannerStandardPatternAttributes {
         }
     }
 }
+impl Default for SensitiveDataScannerStandardPatternAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

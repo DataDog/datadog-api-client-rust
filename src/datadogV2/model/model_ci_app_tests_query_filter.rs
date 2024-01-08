@@ -28,3 +28,8 @@ impl CIAppTestsQueryFilter {
         }
     }
 }
+impl Default for CIAppTestsQueryFilter {
+    fn default() -> Self {
+        Self::new()
+    }
+}

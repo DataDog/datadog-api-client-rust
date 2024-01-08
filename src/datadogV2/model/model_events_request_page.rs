@@ -24,3 +24,8 @@ impl EventsRequestPage {
         }
     }
 }
+impl Default for EventsRequestPage {
+    fn default() -> Self {
+        Self::new()
+    }
+}

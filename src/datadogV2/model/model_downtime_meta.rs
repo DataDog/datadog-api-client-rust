@@ -18,3 +18,8 @@ impl DowntimeMeta {
         DowntimeMeta { page: None }
     }
 }
+impl Default for DowntimeMeta {
+    fn default() -> Self {
+        Self::new()
+    }
+}

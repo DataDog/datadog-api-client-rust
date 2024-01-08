@@ -25,3 +25,8 @@ impl MetricPoint {
         }
     }
 }
+impl Default for MetricPoint {
+    fn default() -> Self {
+        Self::new()
+    }
+}

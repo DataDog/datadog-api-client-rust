@@ -117,3 +117,8 @@ impl SLOResponseData {
         }
     }
 }
+impl Default for SLOResponseData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

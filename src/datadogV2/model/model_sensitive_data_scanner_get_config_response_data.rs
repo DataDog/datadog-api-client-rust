@@ -33,3 +33,8 @@ impl SensitiveDataScannerGetConfigResponseData {
         }
     }
 }
+impl Default for SensitiveDataScannerGetConfigResponseData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

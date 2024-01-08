@@ -18,3 +18,8 @@ impl SpansAggregateRequest {
         SpansAggregateRequest { data: None }
     }
 }
+impl Default for SpansAggregateRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

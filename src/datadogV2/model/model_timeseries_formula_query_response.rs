@@ -24,3 +24,8 @@ impl TimeseriesFormulaQueryResponse {
         }
     }
 }
+impl Default for TimeseriesFormulaQueryResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

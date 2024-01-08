@@ -18,3 +18,8 @@ impl MetricSuggestedTagsAndAggregationsResponse {
         MetricSuggestedTagsAndAggregationsResponse { data: None }
     }
 }
+impl Default for MetricSuggestedTagsAndAggregationsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -32,3 +32,8 @@ impl ContainerImageGroup {
         }
     }
 }
+impl Default for ContainerImageGroup {
+    fn default() -> Self {
+        Self::new()
+    }
+}

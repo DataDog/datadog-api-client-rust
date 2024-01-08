@@ -44,3 +44,8 @@ impl ContainerImageVulnerabilities {
         }
     }
 }
+impl Default for ContainerImageVulnerabilities {
+    fn default() -> Self {
+        Self::new()
+    }
+}

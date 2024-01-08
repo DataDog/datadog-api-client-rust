@@ -28,3 +28,8 @@ impl HostListResponse {
         }
     }
 }
+impl Default for HostListResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

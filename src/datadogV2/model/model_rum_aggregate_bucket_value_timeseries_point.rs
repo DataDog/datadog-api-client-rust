@@ -24,3 +24,8 @@ impl RUMAggregateBucketValueTimeseriesPoint {
         }
     }
 }
+impl Default for RUMAggregateBucketValueTimeseriesPoint {
+    fn default() -> Self {
+        Self::new()
+    }
+}

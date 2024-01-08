@@ -56,3 +56,8 @@ impl MonitorThresholds {
         }
     }
 }
+impl Default for MonitorThresholds {
+    fn default() -> Self {
+        Self::new()
+    }
+}

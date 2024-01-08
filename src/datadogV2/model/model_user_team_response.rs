@@ -18,3 +18,8 @@ impl UserTeamResponse {
         UserTeamResponse { data: None }
     }
 }
+impl Default for UserTeamResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -37,3 +37,8 @@ impl EventsResponseMetadata {
         }
     }
 }
+impl Default for EventsResponseMetadata {
+    fn default() -> Self {
+        Self::new()
+    }
+}

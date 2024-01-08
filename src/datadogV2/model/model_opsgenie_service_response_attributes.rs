@@ -32,3 +32,8 @@ impl OpsgenieServiceResponseAttributes {
         }
     }
 }
+impl Default for OpsgenieServiceResponseAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

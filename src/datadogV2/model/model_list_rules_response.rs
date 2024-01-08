@@ -24,3 +24,8 @@ impl ListRulesResponse {
         }
     }
 }
+impl Default for ListRulesResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

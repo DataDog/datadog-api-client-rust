@@ -28,3 +28,8 @@ impl ContainerImage {
         }
     }
 }
+impl Default for ContainerImage {
+    fn default() -> Self {
+        Self::new()
+    }
+}

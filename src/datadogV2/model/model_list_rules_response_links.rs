@@ -18,3 +18,8 @@ impl ListRulesResponseLinks {
         ListRulesResponseLinks { next: None }
     }
 }
+impl Default for ListRulesResponseLinks {
+    fn default() -> Self {
+        Self::new()
+    }
+}

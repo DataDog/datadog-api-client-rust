@@ -18,3 +18,8 @@ impl ProjectedCostResponse {
         ProjectedCostResponse { data: None }
     }
 }
+impl Default for ProjectedCostResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

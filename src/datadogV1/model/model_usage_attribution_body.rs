@@ -48,3 +48,8 @@ impl UsageAttributionBody {
         }
     }
 }
+impl Default for UsageAttributionBody {
+    fn default() -> Self {
+        Self::new()
+    }
+}

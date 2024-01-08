@@ -18,3 +18,8 @@ impl ScalarFormulaResponseAtrributes {
         ScalarFormulaResponseAtrributes { columns: None }
     }
 }
+impl Default for ScalarFormulaResponseAtrributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

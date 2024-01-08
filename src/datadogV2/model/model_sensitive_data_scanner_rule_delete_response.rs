@@ -18,3 +18,8 @@ impl SensitiveDataScannerRuleDeleteResponse {
         SensitiveDataScannerRuleDeleteResponse { meta: None }
     }
 }
+impl Default for SensitiveDataScannerRuleDeleteResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

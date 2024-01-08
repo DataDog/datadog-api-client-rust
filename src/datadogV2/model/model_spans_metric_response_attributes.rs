@@ -28,3 +28,8 @@ impl SpansMetricResponseAttributes {
         }
     }
 }
+impl Default for SpansMetricResponseAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

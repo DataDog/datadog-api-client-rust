@@ -36,3 +36,8 @@ impl UsageSyntheticsAPIHour {
         }
     }
 }
+impl Default for UsageSyntheticsAPIHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -28,3 +28,8 @@ impl HTTPLogError {
         }
     }
 }
+impl Default for HTTPLogError {
+    fn default() -> Self {
+        Self::new()
+    }
+}

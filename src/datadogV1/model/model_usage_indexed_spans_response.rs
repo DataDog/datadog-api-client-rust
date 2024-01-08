@@ -18,3 +18,8 @@ impl UsageIndexedSpansResponse {
         UsageIndexedSpansResponse { usage: None }
     }
 }
+impl Default for UsageIndexedSpansResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

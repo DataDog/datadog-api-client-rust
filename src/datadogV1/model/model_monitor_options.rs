@@ -228,3 +228,8 @@ impl MonitorOptions {
         }
     }
 }
+impl Default for MonitorOptions {
+    fn default() -> Self {
+        Self::new()
+    }
+}

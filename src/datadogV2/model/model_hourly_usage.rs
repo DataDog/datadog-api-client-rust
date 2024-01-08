@@ -28,3 +28,8 @@ impl HourlyUsage {
         }
     }
 }
+impl Default for HourlyUsage {
+    fn default() -> Self {
+        Self::new()
+    }
+}

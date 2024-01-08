@@ -32,3 +32,8 @@ impl IPPrefixesSynthetics {
         }
     }
 }
+impl Default for IPPrefixesSynthetics {
+    fn default() -> Self {
+        Self::new()
+    }
+}

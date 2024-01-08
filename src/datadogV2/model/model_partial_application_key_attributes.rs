@@ -32,3 +32,8 @@ impl PartialApplicationKeyAttributes {
         }
     }
 }
+impl Default for PartialApplicationKeyAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

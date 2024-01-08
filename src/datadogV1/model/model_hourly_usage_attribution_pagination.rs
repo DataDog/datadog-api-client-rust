@@ -24,3 +24,8 @@ impl HourlyUsageAttributionPagination {
         }
     }
 }
+impl Default for HourlyUsageAttributionPagination {
+    fn default() -> Self {
+        Self::new()
+    }
+}

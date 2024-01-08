@@ -28,3 +28,8 @@ impl CIAppTestsBucketResponse {
         }
     }
 }
+impl Default for CIAppTestsBucketResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

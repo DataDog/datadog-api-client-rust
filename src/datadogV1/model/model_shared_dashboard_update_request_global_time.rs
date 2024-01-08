@@ -18,3 +18,8 @@ impl SharedDashboardUpdateRequestGlobalTime {
         SharedDashboardUpdateRequestGlobalTime { live_span: None }
     }
 }
+impl Default for SharedDashboardUpdateRequestGlobalTime {
+    fn default() -> Self {
+        Self::new()
+    }
+}

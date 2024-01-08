@@ -24,3 +24,8 @@ impl IPPrefixesOrchestrator {
         }
     }
 }
+impl Default for IPPrefixesOrchestrator {
+    fn default() -> Self {
+        Self::new()
+    }
+}
