@@ -12,7 +12,7 @@ pub struct MonitorState {
     /// the list of groups your monitor is broken down on.
     #[serde(rename = "groups")]
     pub groups:
-        Option<std::collections::HashMap<String, crate::datadogV1::model::MonitorStateGroup>>,
+        Option<std::collections::BTreeMap<String, crate::datadogV1::model::MonitorStateGroup>>,
 }
 
 impl MonitorState {

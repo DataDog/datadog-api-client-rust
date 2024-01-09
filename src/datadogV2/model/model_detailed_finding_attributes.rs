@@ -25,7 +25,7 @@ pub struct DetailedFindingAttributes {
     pub resource: Option<String>,
     /// The resource configuration for this finding.
     #[serde(rename = "resource_configuration")]
-    pub resource_configuration: Option<std::collections::HashMap<String, serde_json::Value>>,
+    pub resource_configuration: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// The date on which the resource was discovered (Unix ms).
     #[serde(rename = "resource_discovery_date")]
     pub resource_discovery_date: Option<i64>,

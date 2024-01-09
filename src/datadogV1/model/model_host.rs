@@ -50,7 +50,7 @@ pub struct Host {
     pub sources: Option<Vec<String>>,
     /// List of tags for each source (AWS, Datadog Agent, Chef..).
     #[serde(rename = "tags_by_source")]
-    pub tags_by_source: Option<std::collections::HashMap<String, Vec<String>>>,
+    pub tags_by_source: Option<std::collections::BTreeMap<String, Vec<String>>>,
     /// Displays UP when the expected metrics are received and displays `???` if no metrics are received.
     #[serde(rename = "up")]
     pub up: Option<bool>,

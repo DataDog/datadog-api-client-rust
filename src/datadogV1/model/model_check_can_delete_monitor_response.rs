@@ -13,7 +13,7 @@ pub struct CheckCanDeleteMonitorResponse {
     pub data: Box<crate::datadogV1::model::CheckCanDeleteMonitorResponseData>,
     /// A mapping of Monitor ID to strings denoting where it's used.
     #[serde(rename = "errors", default, with = "::serde_with::rust::double_option")]
-    pub errors: Option<Option<std::collections::HashMap<String, Option<Vec<String>>>>>,
+    pub errors: Option<Option<std::collections::BTreeMap<String, Option<Vec<String>>>>>,
 }
 
 impl CheckCanDeleteMonitorResponse {

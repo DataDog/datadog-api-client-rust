@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct AuditLogsEventAttributes {
     /// JSON object of attributes from Audit Logs events.
     #[serde(rename = "attributes")]
-    pub attributes: Option<std::collections::HashMap<String, serde_json::Value>>,
+    pub attributes: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// Message of the event.
     #[serde(rename = "message")]
     pub message: Option<String>,

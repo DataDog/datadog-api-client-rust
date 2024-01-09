@@ -62,8 +62,9 @@ pub struct IncidentResponseAttributes {
     pub detected: Option<Option<String>>,
     /// A condensed view of the user-defined fields attached to incidents.
     #[serde(rename = "fields")]
-    pub fields:
-        Option<std::collections::HashMap<String, crate::datadogV2::model::IncidentFieldAttributes>>,
+    pub fields: Option<
+        std::collections::BTreeMap<String, crate::datadogV2::model::IncidentFieldAttributes>,
+    >,
     /// Timestamp when the incident was last modified.
     #[serde(rename = "modified")]
     pub modified: Option<String>,

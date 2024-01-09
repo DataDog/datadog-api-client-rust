@@ -10,11 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct RUMBucketResponse {
     /// The key-value pairs for each group-by.
     #[serde(rename = "by")]
-    pub by: Option<std::collections::HashMap<String, String>>,
+    pub by: Option<std::collections::BTreeMap<String, String>>,
     /// A map of the metric name to value for regular compute, or a list of values for a timeseries.
     #[serde(rename = "computes")]
-    pub computes:
-        Option<std::collections::HashMap<String, crate::datadogV2::model::RUMAggregateBucketValue>>,
+    pub computes: Option<
+        std::collections::BTreeMap<String, crate::datadogV2::model::RUMAggregateBucketValue>,
+    >,
 }
 
 impl RUMBucketResponse {

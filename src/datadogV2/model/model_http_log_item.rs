@@ -30,7 +30,7 @@ pub struct HTTPLogItem {
     #[serde(rename = "service")]
     pub service: Option<String>,
     #[serde(flatten)]
-    pub additional_properties: std::collections::HashMap<String, String>,
+    pub additional_properties: std::collections::BTreeMap<String, String>,
 }
 
 impl HTTPLogItem {
@@ -41,7 +41,7 @@ impl HTTPLogItem {
             hostname: None,
             message,
             service: None,
-            additional_properties: std::collections::HashMap::new(),
+            additional_properties: std::collections::BTreeMap::new(),
         }
     }
 }

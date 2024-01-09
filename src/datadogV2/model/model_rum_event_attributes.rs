@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct RUMEventAttributes {
     /// JSON object of attributes from RUM events.
     #[serde(rename = "attributes")]
-    pub attributes: Option<std::collections::HashMap<String, serde_json::Value>>,
+    pub attributes: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// The name of the application or service generating RUM events.
     /// It is used to switch from RUM to APM, so make sure you define the same
     /// value when you use both products.

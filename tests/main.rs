@@ -7,27 +7,42 @@ use scenarios::fixtures::{after_scenario, before_scenario, DatadogWorld};
 use serde_json::Value;
 use std::{env, fs::File, io::BufReader};
 
+fn merge(a: &mut Value, b: &Value) {
+    match (a, b) {
+        (Value::Array(ref mut a), Value::Array(ref b)) => {
+            a.extend(b.clone());
+        }
+        (&mut Value::Object(ref mut a), &Value::Object(ref b)) => {
+            for (k, v) in b {
+                merge(a.entry(k.clone()).or_insert(Value::Null), v);
+            }
+        }
+        (a, b) => {
+            *a = b.clone();
+        }
+    }
+}
+
 lazy_static! {
-    static ref GIVEN_V1: Value = {
-        log::debug!("loading given.json");
+    static ref GIVEN_MAP: Value = {
         let given_v1_file = File::open("tests/scenarios/features/v1/given.json").unwrap();
-        serde_json::from_reader(BufReader::new(given_v1_file))
-            .expect("failed to deserialize given.json")
-    };
-    static ref GIVEN_V2: Value = {
+        let mut givens: Value = serde_json::from_reader(BufReader::new(given_v1_file))
+            .expect("failed to deserialize given.json");
         let given_v2_file = File::open("tests/scenarios/features/v2/given.json").unwrap();
-        serde_json::from_reader(BufReader::new(given_v2_file))
-            .expect("failed to deserialize given.json")
+        let given_v2: Value = serde_json::from_reader(BufReader::new(given_v2_file))
+            .expect("failed to deserialize given.json");
+        merge(&mut givens, &given_v2);
+        givens
     };
-    static ref UNDO_V1: Value = {
+    static ref UNDO_MAP: Value = {
         let undo_v1_file = File::open("tests/scenarios/features/v1/undo.json").unwrap();
-        serde_json::from_reader(BufReader::new(undo_v1_file))
-            .expect("failed to deserialize undo.json")
-    };
-    static ref UNDO_V2: Value = {
+        let mut undos: Value = serde_json::from_reader(BufReader::new(undo_v1_file))
+            .expect("failed to deserialize undo.json");
         let undo_v2_file = File::open("tests/scenarios/features/v2/undo.json").unwrap();
-        serde_json::from_reader(BufReader::new(undo_v2_file))
-            .expect("failed to deserialize undo.json")
+        let undo_v2: Value = serde_json::from_reader(BufReader::new(undo_v2_file))
+            .expect("failed to deserialize undo.json");
+        merge(&mut undos, &undo_v2);
+        undos
     };
     static ref API_VERSION_RE: Regex = Regex::new(r"tests/scenarios/features/v(\d+)/").unwrap();
 }
@@ -55,13 +70,8 @@ async fn main() {
                 .as_str()
                 .parse()
                 .unwrap();
-            if world.api_version == 1 {
-                world.given_map = Some(&GIVEN_V1);
-                world.undo_map = Some(&UNDO_V1);
-            } else if world.api_version == 2 {
-                world.given_map = Some(&GIVEN_V2);
-                world.undo_map = Some(&UNDO_V2);
-            }
+            world.given_map = Some(&GIVEN_MAP);
+            world.undo_map = Some(&UNDO_MAP);
             Box::pin(before_scenario(feature, rule, scenario, world))
         })
         .after(|feature, rule, scenario, ev, world| {

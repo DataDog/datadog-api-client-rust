@@ -1309,7 +1309,7 @@ impl MonitorsAPI {
         &self,
         params: ValidateExistingMonitorParams,
     ) -> Result<
-        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<ValidateExistingMonitorError>,
     > {
         match self.validate_existing_monitor_with_http_info(params).await {
@@ -1323,7 +1323,7 @@ impl MonitorsAPI {
         &self,
         params: ValidateExistingMonitorParams,
     ) -> Result<
-        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<ValidateExistingMonitorError>,
     > {
         let local_configuration = &self.config;
@@ -1370,7 +1370,7 @@ impl MonitorsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::HashMap<String, serde_json::Value>> =
+            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                 serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
@@ -1396,7 +1396,7 @@ impl MonitorsAPI {
         &self,
         params: ValidateMonitorParams,
     ) -> Result<
-        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<ValidateMonitorError>,
     > {
         match self.validate_monitor_with_http_info(params).await {
@@ -1412,7 +1412,7 @@ impl MonitorsAPI {
         &self,
         params: ValidateMonitorParams,
     ) -> Result<
-        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<ValidateMonitorError>,
     > {
         let local_configuration = &self.config;
@@ -1454,7 +1454,7 @@ impl MonitorsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::HashMap<String, serde_json::Value>> =
+            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                 serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,

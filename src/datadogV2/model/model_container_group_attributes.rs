@@ -13,7 +13,7 @@ pub struct ContainerGroupAttributes {
     pub count: Option<i64>,
     /// Tags from the group name parsed in key/value format.
     #[serde(rename = "tags")]
-    pub tags: Option<std::collections::HashMap<String, serde_json::Value>>,
+    pub tags: Option<std::collections::BTreeMap<String, serde_json::Value>>,
 }
 
 impl ContainerGroupAttributes {

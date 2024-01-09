@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct PowerpackInnerWidgets {
     /// Information about widget.
     #[serde(rename = "definition")]
-    pub definition: std::collections::HashMap<String, serde_json::Value>,
+    pub definition: std::collections::BTreeMap<String, serde_json::Value>,
     /// Powerpack inner widget layout.
     #[serde(rename = "layout")]
     pub layout: Option<Box<crate::datadogV2::model::PowerpackInnerWidgetLayout>>,
@@ -18,7 +18,7 @@ pub struct PowerpackInnerWidgets {
 
 impl PowerpackInnerWidgets {
     pub fn new(
-        definition: std::collections::HashMap<String, serde_json::Value>,
+        definition: std::collections::BTreeMap<String, serde_json::Value>,
     ) -> PowerpackInnerWidgets {
         PowerpackInnerWidgets {
             definition,

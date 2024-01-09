@@ -340,7 +340,7 @@ impl AWSLogsIntegrationAPI {
         &self,
         params: CreateAWSLambdaARNParams,
     ) -> Result<
-        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<CreateAWSLambdaARNError>,
     > {
         match self.create_aws_lambda_arn_with_http_info(params).await {
@@ -354,7 +354,7 @@ impl AWSLogsIntegrationAPI {
         &self,
         params: CreateAWSLambdaARNParams,
     ) -> Result<
-        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<CreateAWSLambdaARNError>,
     > {
         let local_configuration = &self.config;
@@ -399,7 +399,7 @@ impl AWSLogsIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::HashMap<String, serde_json::Value>> =
+            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                 serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
@@ -423,7 +423,7 @@ impl AWSLogsIntegrationAPI {
         &self,
         params: DeleteAWSLambdaARNParams,
     ) -> Result<
-        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<DeleteAWSLambdaARNError>,
     > {
         match self.delete_aws_lambda_arn_with_http_info(params).await {
@@ -437,7 +437,7 @@ impl AWSLogsIntegrationAPI {
         &self,
         params: DeleteAWSLambdaARNParams,
     ) -> Result<
-        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<DeleteAWSLambdaARNError>,
     > {
         let local_configuration = &self.config;
@@ -482,7 +482,7 @@ impl AWSLogsIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::HashMap<String, serde_json::Value>> =
+            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                 serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
@@ -506,7 +506,7 @@ impl AWSLogsIntegrationAPI {
         &self,
         params: EnableAWSLogServicesParams,
     ) -> Result<
-        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<EnableAWSLogServicesError>,
     > {
         match self.enable_aws_log_services_with_http_info(params).await {
@@ -520,7 +520,7 @@ impl AWSLogsIntegrationAPI {
         &self,
         params: EnableAWSLogServicesParams,
     ) -> Result<
-        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<EnableAWSLogServicesError>,
     > {
         let local_configuration = &self.config;
@@ -565,7 +565,7 @@ impl AWSLogsIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::HashMap<String, serde_json::Value>> =
+            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                 serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,

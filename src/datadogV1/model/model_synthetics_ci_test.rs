@@ -31,7 +31,7 @@ pub struct SyntheticsCITest {
     pub follow_redirects: Option<bool>,
     /// Headers to include when performing the test.
     #[serde(rename = "headers")]
-    pub headers: Option<std::collections::HashMap<String, String>>,
+    pub headers: Option<std::collections::BTreeMap<String, String>>,
     /// Array of locations used to run the test.
     #[serde(rename = "locations")]
     pub locations: Option<Vec<String>>,
@@ -49,7 +49,7 @@ pub struct SyntheticsCITest {
     pub start_url: Option<String>,
     /// Variables to replace in the test.
     #[serde(rename = "variables")]
-    pub variables: Option<std::collections::HashMap<String, String>>,
+    pub variables: Option<std::collections::BTreeMap<String, String>>,
 }
 
 impl SyntheticsCITest {

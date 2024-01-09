@@ -43,7 +43,7 @@ pub struct SyntheticsTestRequest {
     pub follow_redirects: Option<bool>,
     /// Headers to include when performing the test.
     #[serde(rename = "headers")]
-    pub headers: Option<std::collections::HashMap<String, String>>,
+    pub headers: Option<std::collections::BTreeMap<String, String>>,
     /// Host name to perform the test with.
     #[serde(rename = "host")]
     pub host: Option<String>,
@@ -52,7 +52,7 @@ pub struct SyntheticsTestRequest {
     pub message: Option<String>,
     /// Metadata to include when performing the gRPC test.
     #[serde(rename = "metadata")]
-    pub metadata: Option<std::collections::HashMap<String, String>>,
+    pub metadata: Option<std::collections::BTreeMap<String, String>>,
     /// Either the HTTP method/verb to use or a gRPC method available on the service set in the `service` field. Required if `subtype` is `HTTP` or if `subtype` is `grpc` and `callType` is `unary`.
     #[serde(rename = "method")]
     pub method: Option<String>,
@@ -73,7 +73,7 @@ pub struct SyntheticsTestRequest {
     pub proxy: Option<Box<crate::datadogV1::model::SyntheticsTestRequestProxy>>,
     /// Query to use for the test.
     #[serde(rename = "query")]
-    pub query: Option<std::collections::HashMap<String, serde_json::Value>>,
+    pub query: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// For SSL tests, it specifies on which server you want to initiate the TLS handshake,
     /// allowing the server to present one of multiple possible certificates on
     /// the same IP address and TCP port number.

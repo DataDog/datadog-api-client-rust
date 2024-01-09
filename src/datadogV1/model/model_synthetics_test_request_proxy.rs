@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SyntheticsTestRequestProxy {
     /// Headers to include when performing the test.
     #[serde(rename = "headers")]
-    pub headers: Option<std::collections::HashMap<String, String>>,
+    pub headers: Option<std::collections::BTreeMap<String, String>>,
     /// URL of the proxy to perform the test.
     #[serde(rename = "url")]
     pub url: String,

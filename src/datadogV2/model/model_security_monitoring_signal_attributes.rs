@@ -11,7 +11,7 @@ use serde_with::skip_serializing_none;
 pub struct SecurityMonitoringSignalAttributes {
     /// A JSON object of attributes in the security signal.
     #[serde(rename = "custom")]
-    pub custom: Option<std::collections::HashMap<String, serde_json::Value>>,
+    pub custom: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// The message in the security signal defined by the rule that generated the signal.
     #[serde(rename = "message")]
     pub message: Option<String>,
@@ -22,7 +22,7 @@ pub struct SecurityMonitoringSignalAttributes {
     #[serde(rename = "timestamp")]
     pub timestamp: Option<String>,
     #[serde(flatten)]
-    pub additional_properties: std::collections::HashMap<String, serde_json::Value>,
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
 }
 
 impl SecurityMonitoringSignalAttributes {
@@ -32,7 +32,7 @@ impl SecurityMonitoringSignalAttributes {
             message: None,
             tags: None,
             timestamp: None,
-            additional_properties: std::collections::HashMap::new(),
+            additional_properties: std::collections::BTreeMap::new(),
         }
     }
 }

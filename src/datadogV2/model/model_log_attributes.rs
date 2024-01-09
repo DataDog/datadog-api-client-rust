@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct LogAttributes {
     /// JSON object of attributes from your log.
     #[serde(rename = "attributes")]
-    pub attributes: Option<std::collections::HashMap<String, serde_json::Value>>,
+    pub attributes: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// Name of the machine from where the logs are being sent.
     #[serde(rename = "host")]
     pub host: Option<String>,

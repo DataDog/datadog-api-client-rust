@@ -12,14 +12,14 @@ pub struct DowntimeMonitorIdentifierId {
     #[serde(rename = "monitor_id")]
     pub monitor_id: i64,
     #[serde(flatten)]
-    pub additional_properties: std::collections::HashMap<String, serde_json::Value>,
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
 }
 
 impl DowntimeMonitorIdentifierId {
     pub fn new(monitor_id: i64) -> DowntimeMonitorIdentifierId {
         DowntimeMonitorIdentifierId {
             monitor_id,
-            additional_properties: std::collections::HashMap::new(),
+            additional_properties: std::collections::BTreeMap::new(),
         }
     }
 }

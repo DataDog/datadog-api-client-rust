@@ -22,7 +22,7 @@ pub struct SyntheticsStep {
     pub no_screenshot: Option<bool>,
     /// The parameters of the step.
     #[serde(rename = "params")]
-    pub params: Option<std::collections::HashMap<String, serde_json::Value>>,
+    pub params: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// The time before declaring a step failed.
     #[serde(rename = "timeout")]
     pub timeout: Option<i64>,

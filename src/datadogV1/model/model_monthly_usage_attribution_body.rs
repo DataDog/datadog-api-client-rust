@@ -29,7 +29,7 @@ pub struct MonthlyUsageAttributionBody {
     /// configured for usage attribution](https://docs.datadoghq.com/account_management/billing/usage_attribution/#getting-started).
     /// In this scenario the API returns the total usage, not broken down by tags.
     #[serde(rename = "tags", default, with = "::serde_with::rust::double_option")]
-    pub tags: Option<Option<std::collections::HashMap<String, Option<Vec<String>>>>>,
+    pub tags: Option<Option<std::collections::BTreeMap<String, Option<Vec<String>>>>>,
     /// Datetime of the most recent update to the usage values.
     #[serde(rename = "updated_at")]
     pub updated_at: Option<String>,

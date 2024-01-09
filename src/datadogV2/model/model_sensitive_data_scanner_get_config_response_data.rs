@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SensitiveDataScannerGetConfigResponseData {
     /// Attributes of the Sensitive Data configuration.
     #[serde(rename = "attributes")]
-    pub attributes: Option<std::collections::HashMap<String, serde_json::Value>>,
+    pub attributes: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// ID of the configuration.
     #[serde(rename = "id")]
     pub id: Option<String>,

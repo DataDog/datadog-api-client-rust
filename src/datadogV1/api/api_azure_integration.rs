@@ -116,7 +116,7 @@ impl AzureIntegrationAPI {
         &self,
         params: CreateAzureIntegrationParams,
     ) -> Result<
-        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<CreateAzureIntegrationError>,
     > {
         match self.create_azure_integration_with_http_info(params).await {
@@ -136,7 +136,7 @@ impl AzureIntegrationAPI {
         &self,
         params: CreateAzureIntegrationParams,
     ) -> Result<
-        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<CreateAzureIntegrationError>,
     > {
         let local_configuration = &self.config;
@@ -178,7 +178,7 @@ impl AzureIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::HashMap<String, serde_json::Value>> =
+            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                 serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
@@ -202,7 +202,7 @@ impl AzureIntegrationAPI {
         &self,
         params: DeleteAzureIntegrationParams,
     ) -> Result<
-        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<DeleteAzureIntegrationError>,
     > {
         match self.delete_azure_integration_with_http_info(params).await {
@@ -216,7 +216,7 @@ impl AzureIntegrationAPI {
         &self,
         params: DeleteAzureIntegrationParams,
     ) -> Result<
-        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<DeleteAzureIntegrationError>,
     > {
         let local_configuration = &self.config;
@@ -258,7 +258,7 @@ impl AzureIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::HashMap<String, serde_json::Value>> =
+            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                 serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
@@ -350,7 +350,7 @@ impl AzureIntegrationAPI {
         &self,
         params: UpdateAzureHostFiltersParams,
     ) -> Result<
-        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<UpdateAzureHostFiltersError>,
     > {
         match self.update_azure_host_filters_with_http_info(params).await {
@@ -364,7 +364,7 @@ impl AzureIntegrationAPI {
         &self,
         params: UpdateAzureHostFiltersParams,
     ) -> Result<
-        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<UpdateAzureHostFiltersError>,
     > {
         let local_configuration = &self.config;
@@ -409,7 +409,7 @@ impl AzureIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::HashMap<String, serde_json::Value>> =
+            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                 serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
@@ -435,7 +435,7 @@ impl AzureIntegrationAPI {
         &self,
         params: UpdateAzureIntegrationParams,
     ) -> Result<
-        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<UpdateAzureIntegrationError>,
     > {
         match self.update_azure_integration_with_http_info(params).await {
@@ -451,7 +451,7 @@ impl AzureIntegrationAPI {
         &self,
         params: UpdateAzureIntegrationParams,
     ) -> Result<
-        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<UpdateAzureIntegrationError>,
     > {
         let local_configuration = &self.config;
@@ -493,7 +493,7 @@ impl AzureIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::HashMap<String, serde_json::Value>> =
+            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                 serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,

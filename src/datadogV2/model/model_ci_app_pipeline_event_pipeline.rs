@@ -54,7 +54,7 @@ pub struct CIAppPipelineEventPipeline {
         default,
         with = "::serde_with::rust::double_option"
     )]
-    pub parameters: Option<Option<std::collections::HashMap<String, String>>>,
+    pub parameters: Option<Option<std::collections::BTreeMap<String, String>>>,
     /// If the pipeline is triggered as child of another pipeline, this should contain the details of the parent pipeline.
     #[serde(
         rename = "parent_pipeline",

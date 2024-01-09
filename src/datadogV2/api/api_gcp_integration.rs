@@ -23,7 +23,7 @@ pub struct DeleteGCPSTSAccountParams {
 #[derive(Clone, Debug)]
 pub struct MakeGCPSTSDelegateParams {
     /// Create a delegate service account within Datadog.
-    pub body: Option<Option<std::collections::HashMap<String, serde_json::Value>>>,
+    pub body: Option<Option<std::collections::BTreeMap<String, serde_json::Value>>>,
 }
 
 /// UpdateGCPSTSAccountParams is a struct for passing parameters to the method [`UpdateGCPSTSAccount`]

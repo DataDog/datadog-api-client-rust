@@ -189,10 +189,21 @@ pub async fn after_scenario(
 ) {
     if let Some(world) = world {
         for undo in world.undo_operations.clone().iter().rev() {
-            world
+            let test_call = world
                 .function_mappings
                 .get(&format!("v{}.{}", world.api_version, &undo.operation_id))
-                .expect("undo operation not found")(world, &undo.parameters);
+                .unwrap_or_else(|| {
+                    let alt_version = match world.api_version {
+                        1 => 2,
+                        2 => 1,
+                        _ => panic!("invalid api version"),
+                    };
+                    world
+                        .function_mappings
+                        .get(&format!("v{}.{}", alt_version, &undo.operation_id))
+                        .expect("undo operation not found")
+                });
+            test_call(world, &undo.parameters);
         }
     }
 }
@@ -262,10 +273,22 @@ fn given_resource_in_system(world: &mut DatadogWorld, given_key: String) {
         .expect("failed to parse given operation id as str")
         .to_string();
 
-    world
+    let test_call = world
         .function_mappings
         .get(&format!("v{}.{}", world.api_version, &operation_id))
-        .expect("given operation not found")(world, &given_parameters);
+        .unwrap_or_else(|| {
+            let alt_version = match world.api_version {
+                1 => 2,
+                2 => 1,
+                _ => panic!("invalid api version"),
+            };
+            world
+                .function_mappings
+                .get(&format!("v{}.{}", alt_version, &operation_id))
+                .expect("given operation not found")
+        });
+
+    test_call(world, &given_parameters);
 
     if let Some(source) = given.get("source") {
         let source_path = source.as_str().unwrap().to_string();

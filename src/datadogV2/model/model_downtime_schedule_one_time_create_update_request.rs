@@ -17,7 +17,7 @@ pub struct DowntimeScheduleOneTimeCreateUpdateRequest {
     #[serde(rename = "start", default, with = "::serde_with::rust::double_option")]
     pub start: Option<Option<String>>,
     #[serde(flatten)]
-    pub additional_properties: std::collections::HashMap<String, serde_json::Value>,
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
 }
 
 impl DowntimeScheduleOneTimeCreateUpdateRequest {
@@ -25,7 +25,7 @@ impl DowntimeScheduleOneTimeCreateUpdateRequest {
         DowntimeScheduleOneTimeCreateUpdateRequest {
             end: None,
             start: None,
-            additional_properties: std::collections::HashMap::new(),
+            additional_properties: std::collections::BTreeMap::new(),
         }
     }
 }

@@ -162,7 +162,7 @@ pub struct MonitorOptions {
     /// Information about the downtime applied to the monitor. Only shows v1 downtimes.
     #[deprecated]
     #[serde(rename = "silenced")]
-    pub silenced: Option<std::collections::HashMap<String, i64>>,
+    pub silenced: Option<std::collections::BTreeMap<String, i64>>,
     /// ID of the corresponding Synthetic check.
     #[deprecated]
     #[serde(
