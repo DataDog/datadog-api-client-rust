@@ -1,5 +1,6 @@
-use crate::scenarios::function_mappings::{
-    collect_function_calls, initialize_api_instance, ApiInstances,
+use crate::{
+    scenarios::function_mappings::{collect_function_calls, initialize_api_instance, ApiInstances},
+    GIVEN_MAP,
 };
 use chrono::{DateTime, Duration, Months, SecondsFormat};
 use cucumber::{
@@ -223,89 +224,93 @@ fn instance_of_api(world: &mut DatadogWorld, api: String) {
     initialize_api_instance(world, api);
 }
 
-#[given(expr = "there is a valid {string} in the system")]
-fn given_resource_in_system(world: &mut DatadogWorld, given_key: String) {
-    let given = world
-        .given_map
-        .unwrap()
+pub fn given_resource_in_system(
+    world: &mut DatadogWorld,
+    context: cucumber::step::Context,
+) -> std::pin::Pin<Box<dyn futures::Future<Output = ()> + '_>> {
+    let given = GIVEN_MAP
         .as_array()
         .unwrap()
         .iter()
-        .find(|value| value.get("key").unwrap().as_str().unwrap() == given_key)
+        .find(|value| value.get("step").unwrap().as_str().unwrap() == context.step.value)
         .unwrap()
         .clone();
-    let mut given_parameters: HashMap<String, Value> = HashMap::new();
-    if let Some(params) = given.get("parameters") {
-        for param in params.as_array().unwrap() {
-            let param_name = param.get("name").unwrap().as_str().unwrap().to_string();
-            if let Some(source) = param.get("source") {
-                if let Some(value) = lookup(&source.as_str().unwrap().to_string(), &world.fixtures)
-                {
-                    given_parameters.insert(param_name.clone(), value);
-                }
-            };
-            if let Some(template_value) = param.get("value") {
-                let rendered = template(
-                    template_value.as_str().unwrap().to_string(),
-                    &world.fixtures,
-                );
-                given_parameters.insert(
-                    param_name.clone(),
-                    serde_json::from_str(rendered.as_str()).unwrap(),
-                );
-            };
-        }
-    }
-
-    if let Some(tag) = given.get("tag") {
-        let mut api_name = tag
-            .as_str()
-            .expect("failed to parse given tag as str")
-            .to_string();
-        api_name.retain(|c| !c.is_whitespace());
-        initialize_api_instance(world, api_name);
-    }
-
-    let operation_id = given
-        .get("operationId")
-        .expect("operationId missing from given")
-        .as_str()
-        .expect("failed to parse given operation id as str")
-        .to_string();
-
-    let test_call = world
-        .function_mappings
-        .get(&format!("v{}.{}", world.api_version, &operation_id))
-        .unwrap_or_else(|| {
-            let alt_version = match world.api_version {
-                1 => 2,
-                2 => 1,
-                _ => panic!("invalid api version"),
-            };
-            world
-                .function_mappings
-                .get(&format!("v{}.{}", alt_version, &operation_id))
-                .expect("given operation not found")
-        });
-
-    test_call(world, &given_parameters);
-
-    if let Some(source) = given.get("source") {
-        let source_path = source.as_str().unwrap().to_string();
-        if let Some(fixture) = lookup(&source_path, &world.response.object) {
-            if let Value::Object(ref mut map) = world.fixtures {
-                map.insert(given_key.clone(), fixture);
+    let given_key = given.get("key").unwrap().as_str().unwrap().to_string();
+    Box::pin(async move {
+        let mut given_parameters: HashMap<String, Value> = HashMap::new();
+        if let Some(params) = given.get("parameters") {
+            for param in params.as_array().unwrap() {
+                let param_name = param.get("name").unwrap().as_str().unwrap().to_string();
+                if let Some(source) = param.get("source") {
+                    if let Some(value) =
+                        lookup(&source.as_str().unwrap().to_string(), &world.fixtures)
+                    {
+                        given_parameters.insert(param_name.clone(), value);
+                    }
+                };
+                if let Some(template_value) = param.get("value") {
+                    let rendered = template(
+                        template_value.as_str().unwrap().to_string(),
+                        &world.fixtures,
+                    );
+                    given_parameters.insert(
+                        param_name.clone(),
+                        serde_json::from_str(rendered.as_str()).unwrap(),
+                    );
+                };
             }
         }
-    } else if let Value::Object(ref mut map) = world.fixtures {
-        map.insert(given_key.clone(), world.response.object.clone());
-    }
 
-    match build_undo(world, &operation_id, Some(given_key)) {
-        Ok(Some(undo)) => world.undo_operations.push(undo),
-        Ok(None) => {}
-        Err(err) => panic!("{err}"),
-    }
+        if let Some(tag) = given.get("tag") {
+            let mut api_name = tag
+                .as_str()
+                .expect("failed to parse given tag as str")
+                .to_string();
+            api_name.retain(|c| !c.is_whitespace());
+            initialize_api_instance(world, api_name);
+        }
+
+        let operation_id = given
+            .get("operationId")
+            .expect("operationId missing from given")
+            .as_str()
+            .expect("failed to parse given operation id as str")
+            .to_string();
+
+        let test_call = world
+            .function_mappings
+            .get(&format!("v{}.{}", world.api_version, &operation_id))
+            .unwrap_or_else(|| {
+                let alt_version = match world.api_version {
+                    1 => 2,
+                    2 => 1,
+                    _ => panic!("invalid api version"),
+                };
+                world
+                    .function_mappings
+                    .get(&format!("v{}.{}", alt_version, &operation_id))
+                    .expect("given operation not found")
+            });
+
+        test_call(world, &given_parameters);
+
+        if let Some(source) = given.get("source") {
+            let source_path = source.as_str().unwrap().to_string();
+            if let Some(fixture) = lookup(&source_path, &world.response.object) {
+                if let Value::Object(ref mut map) = world.fixtures {
+                    map.insert(given_key.clone(), fixture);
+                }
+            }
+        } else if let Value::Object(ref mut map) = world.fixtures {
+            map.insert(given_key.clone(), world.response.object.clone());
+        }
+
+        match build_undo(world, &operation_id, Some(given_key)) {
+            Ok(Some(undo)) => world.undo_operations.push(undo),
+            Ok(None) => {}
+            Err(err) => panic!("{err}"),
+        }
+    })
 }
 
 #[given(expr = "new {string} request")]

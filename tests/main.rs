@@ -3,7 +3,7 @@ mod scenarios;
 use cucumber::{cli, parser, runner, writer, World};
 use lazy_static::lazy_static;
 use regex::Regex;
-use scenarios::fixtures::{after_scenario, before_scenario, DatadogWorld};
+use scenarios::fixtures::{after_scenario, before_scenario, given_resource_in_system, DatadogWorld};
 use serde_json::Value;
 use std::{env, fs::File, io::BufReader};
 
@@ -24,7 +24,7 @@ fn merge(a: &mut Value, b: &Value) {
 }
 
 lazy_static! {
-    static ref GIVEN_MAP: Value = {
+    pub static ref GIVEN_MAP: Value = {
         let given_v1_file = File::open("tests/scenarios/features/v1/given.json").unwrap();
         let mut givens: Value = serde_json::from_reader(BufReader::new(given_v1_file))
             .expect("failed to deserialize given.json");
@@ -34,7 +34,7 @@ lazy_static! {
         merge(&mut givens, &given_v2);
         givens
     };
-    static ref UNDO_MAP: Value = {
+    pub static ref UNDO_MAP: Value = {
         let undo_v1_file = File::open("tests/scenarios/features/v1/undo.json").unwrap();
         let mut undos: Value = serde_json::from_reader(BufReader::new(undo_v1_file))
             .expect("failed to deserialize undo.json");
@@ -56,8 +56,7 @@ async fn main() {
     let is_replay = !record_mode.eq("true") && !record_mode.eq("none");
     let parsed_cli: cli::Opts<parser::basic::Cli, runner::basic::Cli, writer::basic::Cli> =
         cli::Opts::parsed();
-
-    DatadogWorld::cucumber()
+    let mut cucumber = DatadogWorld::cucumber()
         .with_default_cli()
         .repeat_failed()
         .fail_on_skipped()
@@ -76,7 +75,13 @@ async fn main() {
         })
         .after(|feature, rule, scenario, ev, world| {
             Box::pin(after_scenario(feature, rule, scenario, ev, world))
-        })
+        });
+
+    for value in GIVEN_MAP.as_array().unwrap() {
+        cucumber = cucumber.given(Regex::new(value.get("step").unwrap().as_str().unwrap()).unwrap(), given_resource_in_system);
+    }
+
+    cucumber
         .filter_run("tests/scenarios/features/".to_string(), move |_, _, sc| {
             let name_re = parsed_cli.re_filter.clone();
             let name_match = name_re
