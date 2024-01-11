@@ -37,6 +37,7 @@ pub struct Response {
 #[derive(Debug, Clone)]
 struct UndoOperation {
     operation_id: String,
+    tag: Option<String>,
     parameters: HashMap<String, Value>,
 }
 
@@ -190,6 +191,9 @@ pub async fn after_scenario(
 ) {
     if let Some(world) = world {
         for undo in world.undo_operations.clone().iter().rev() {
+            if undo.tag.is_some() {
+                initialize_api_instance(world, undo.tag.clone().unwrap());
+            }
             let test_call = world
                 .function_mappings
                 .get(&format!("v{}.{}", world.api_version, &undo.operation_id))
@@ -388,6 +392,11 @@ fn request_sent(world: &mut DatadogWorld) {
         Err(err) => panic!("{err}"),
     }
 }
+
+// #[when(regex = r"^the request with pagination is sent$")]
+// fn request_with_pagination_sent(_world: &mut DatadogWorld) {
+
+// }
 
 #[then(expr = "the response status is {int} {}")]
 fn response_status_is(world: &mut DatadogWorld, status_code: u16, _status_message: String) {
@@ -600,6 +609,14 @@ fn build_undo(
         .unwrap();
     match undo.get("type").unwrap().as_str() {
         Some("unsafe") => {
+            let tag = match undo.get("tag") {
+                Some(tag) => {
+                    let mut tag = tag.as_str().unwrap().to_string();
+                    tag.retain(|c| !c.is_whitespace());
+                    Some(tag)
+                }
+                None => None,
+            };
             let mut undo_operation = UndoOperation {
                 operation_id: undo
                     .get("operationId")
@@ -607,6 +624,7 @@ fn build_undo(
                     .as_str()
                     .unwrap()
                     .to_string(),
+                tag,
                 parameters: HashMap::new(),
             };
             let params = undo.get("parameters").unwrap().as_array().unwrap();
