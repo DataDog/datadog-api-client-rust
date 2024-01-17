@@ -20,3 +20,8 @@ impl GCPServiceAccountMeta {
         }
     }
 }
+impl Default for GCPServiceAccountMeta {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -36,3 +36,8 @@ impl UsageIncidentManagementHour {
         }
     }
 }
+impl Default for UsageIncidentManagementHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

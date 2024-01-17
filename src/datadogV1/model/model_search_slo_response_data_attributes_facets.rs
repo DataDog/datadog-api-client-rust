@@ -56,3 +56,8 @@ impl SearchSLOResponseDataAttributesFacets {
         }
     }
 }
+impl Default for SearchSLOResponseDataAttributesFacets {
+    fn default() -> Self {
+        Self::new()
+    }
+}

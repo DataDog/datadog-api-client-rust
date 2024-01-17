@@ -24,3 +24,8 @@ impl IPPrefixesSyntheticsPrivateLocations {
         }
     }
 }
+impl Default for IPPrefixesSyntheticsPrivateLocations {
+    fn default() -> Self {
+        Self::new()
+    }
+}

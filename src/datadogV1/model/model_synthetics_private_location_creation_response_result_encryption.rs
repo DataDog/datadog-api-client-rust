@@ -24,3 +24,8 @@ impl SyntheticsPrivateLocationCreationResponseResultEncryption {
         }
     }
 }
+impl Default for SyntheticsPrivateLocationCreationResponseResultEncryption {
+    fn default() -> Self {
+        Self::new()
+    }
+}

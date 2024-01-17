@@ -28,3 +28,8 @@ impl MonitorOptionsCustomScheduleRecurrence {
         }
     }
 }
+impl Default for MonitorOptionsCustomScheduleRecurrence {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -28,3 +28,8 @@ impl GCPSTSServiceAccountUpdateRequestData {
         }
     }
 }
+impl Default for GCPSTSServiceAccountUpdateRequestData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

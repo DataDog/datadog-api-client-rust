@@ -18,3 +18,8 @@ impl SensitiveDataScannerGroupUpdateResponse {
         SensitiveDataScannerGroupUpdateResponse { meta: None }
     }
 }
+impl Default for SensitiveDataScannerGroupUpdateResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

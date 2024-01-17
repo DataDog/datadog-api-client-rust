@@ -36,3 +36,8 @@ impl UsageIngestedSpansHour {
         }
     }
 }
+impl Default for UsageIngestedSpansHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

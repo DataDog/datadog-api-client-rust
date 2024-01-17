@@ -24,3 +24,8 @@ impl SyntheticsPrivateLocationSecretsAuthentication {
         }
     }
 }
+impl Default for SyntheticsPrivateLocationSecretsAuthentication {
+    fn default() -> Self {
+        Self::new()
+    }
+}

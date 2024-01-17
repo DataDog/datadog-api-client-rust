@@ -18,3 +18,8 @@ impl UsageProfilingResponse {
         UsageProfilingResponse { usage: None }
     }
 }
+impl Default for UsageProfilingResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

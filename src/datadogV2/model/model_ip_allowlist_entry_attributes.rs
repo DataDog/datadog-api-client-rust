@@ -32,3 +32,8 @@ impl IPAllowlistEntryAttributes {
         }
     }
 }
+impl Default for IPAllowlistEntryAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -28,3 +28,8 @@ impl MetricOrigin {
         }
     }
 }
+impl Default for MetricOrigin {
+    fn default() -> Self {
+        Self::new()
+    }
+}

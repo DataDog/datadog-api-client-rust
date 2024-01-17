@@ -24,3 +24,8 @@ impl ContainerGroupRelationshipsLink {
         }
     }
 }
+impl Default for ContainerGroupRelationshipsLink {
+    fn default() -> Self {
+        Self::new()
+    }
+}

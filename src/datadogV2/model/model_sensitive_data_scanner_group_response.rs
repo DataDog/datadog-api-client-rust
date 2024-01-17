@@ -32,3 +32,8 @@ impl SensitiveDataScannerGroupResponse {
         }
     }
 }
+impl Default for SensitiveDataScannerGroupResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

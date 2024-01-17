@@ -52,3 +52,8 @@ impl GeomapWidgetRequest {
         }
     }
 }
+impl Default for GeomapWidgetRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -28,3 +28,8 @@ impl CIAppTestsAnalyticsAggregateResponse {
         }
     }
 }
+impl Default for CIAppTestsAnalyticsAggregateResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

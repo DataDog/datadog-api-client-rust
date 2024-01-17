@@ -25,3 +25,8 @@ impl SyntheticsDeletedTest {
         }
     }
 }
+impl Default for SyntheticsDeletedTest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

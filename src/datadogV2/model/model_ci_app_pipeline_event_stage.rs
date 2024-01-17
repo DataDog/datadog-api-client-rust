@@ -50,7 +50,7 @@ pub struct CIAppPipelineEventStage {
         default,
         with = "::serde_with::rust::double_option"
     )]
-    pub parameters: Option<Option<std::collections::HashMap<String, String>>>,
+    pub parameters: Option<Option<std::collections::BTreeMap<String, String>>>,
     /// The parent pipeline name.
     #[serde(rename = "pipeline_name")]
     pub pipeline_name: String,

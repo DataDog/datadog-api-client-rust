@@ -34,3 +34,8 @@ impl DowntimeScheduleRecurrenceResponse {
         }
     }
 }
+impl Default for DowntimeScheduleRecurrenceResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

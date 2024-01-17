@@ -37,3 +37,8 @@ impl LogsResponseMetadata {
         }
     }
 }
+impl Default for LogsResponseMetadata {
+    fn default() -> Self {
+        Self::new()
+    }
+}

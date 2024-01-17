@@ -24,3 +24,8 @@ impl OutcomesResponseIncludedRuleAttributes {
         }
     }
 }
+impl Default for OutcomesResponseIncludedRuleAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

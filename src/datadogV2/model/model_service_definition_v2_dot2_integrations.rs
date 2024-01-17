@@ -24,3 +24,8 @@ impl ServiceDefinitionV2Dot2Integrations {
         }
     }
 }
+impl Default for ServiceDefinitionV2Dot2Integrations {
+    fn default() -> Self {
+        Self::new()
+    }
+}

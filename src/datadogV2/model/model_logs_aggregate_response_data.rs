@@ -18,3 +18,8 @@ impl LogsAggregateResponseData {
         LogsAggregateResponseData { buckets: None }
     }
 }
+impl Default for LogsAggregateResponseData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

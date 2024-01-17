@@ -24,3 +24,8 @@ impl PowerpackResponse {
         }
     }
 }
+impl Default for PowerpackResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -18,3 +18,8 @@ impl UsageLogsByRetentionResponse {
         UsageLogsByRetentionResponse { usage: None }
     }
 }
+impl Default for UsageLogsByRetentionResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -32,3 +32,8 @@ impl WidgetCustomLink {
         }
     }
 }
+impl Default for WidgetCustomLink {
+    fn default() -> Self {
+        Self::new()
+    }
+}

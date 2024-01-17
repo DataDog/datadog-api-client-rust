@@ -24,3 +24,8 @@ impl FindingRule {
         }
     }
 }
+impl Default for FindingRule {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -24,3 +24,8 @@ impl AWSRelatedAccountAttributes {
         }
     }
 }
+impl Default for AWSRelatedAccountAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

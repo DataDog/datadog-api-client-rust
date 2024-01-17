@@ -32,3 +32,8 @@ impl GCPSTSServiceAccount {
         }
     }
 }
+impl Default for GCPSTSServiceAccount {
+    fn default() -> Self {
+        Self::new()
+    }
+}

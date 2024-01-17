@@ -24,3 +24,8 @@ impl UsageAttributionMetadata {
         }
     }
 }
+impl Default for UsageAttributionMetadata {
+    fn default() -> Self {
+        Self::new()
+    }
+}

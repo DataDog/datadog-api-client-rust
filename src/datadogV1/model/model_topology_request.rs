@@ -24,3 +24,8 @@ impl TopologyRequest {
         }
     }
 }
+impl Default for TopologyRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

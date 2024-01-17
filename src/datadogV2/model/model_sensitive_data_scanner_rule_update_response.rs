@@ -18,3 +18,8 @@ impl SensitiveDataScannerRuleUpdateResponse {
         SensitiveDataScannerRuleUpdateResponse { meta: None }
     }
 }
+impl Default for SensitiveDataScannerRuleUpdateResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

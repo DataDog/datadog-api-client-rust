@@ -48,3 +48,8 @@ impl TeamsResponseMetaPagination {
         }
     }
 }
+impl Default for TeamsResponseMetaPagination {
+    fn default() -> Self {
+        Self::new()
+    }
+}

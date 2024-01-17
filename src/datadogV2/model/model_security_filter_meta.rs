@@ -18,3 +18,8 @@ impl SecurityFilterMeta {
         SecurityFilterMeta { warning: None }
     }
 }
+impl Default for SecurityFilterMeta {
+    fn default() -> Self {
+        Self::new()
+    }
+}

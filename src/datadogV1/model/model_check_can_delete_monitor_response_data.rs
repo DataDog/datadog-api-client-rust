@@ -18,3 +18,8 @@ impl CheckCanDeleteMonitorResponseData {
         CheckCanDeleteMonitorResponseData { ok: None }
     }
 }
+impl Default for CheckCanDeleteMonitorResponseData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

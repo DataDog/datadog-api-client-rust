@@ -25,3 +25,8 @@ impl AuthNMappingRelationships {
         }
     }
 }
+impl Default for AuthNMappingRelationships {
+    fn default() -> Self {
+        Self::new()
+    }
+}

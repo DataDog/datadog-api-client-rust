@@ -48,3 +48,8 @@ impl WebhooksIntegrationUpdateRequest {
         }
     }
 }
+impl Default for WebhooksIntegrationUpdateRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -24,3 +24,8 @@ impl IncidentTodoRelationships {
         }
     }
 }
+impl Default for IncidentTodoRelationships {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -66,11 +66,11 @@ pub enum SearchCIAppTestEventsError {
 }
 
 #[derive(Debug, Clone)]
-pub struct CiVisibilityTestsAPI {
+pub struct CIVisibilityTestsAPI {
     config: configuration::Configuration,
 }
 
-impl Default for CiVisibilityTestsAPI {
+impl Default for CIVisibilityTestsAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
@@ -78,7 +78,7 @@ impl Default for CiVisibilityTestsAPI {
     }
 }
 
-impl CiVisibilityTestsAPI {
+impl CIVisibilityTestsAPI {
     pub fn new() -> Self {
         Self::default()
     }

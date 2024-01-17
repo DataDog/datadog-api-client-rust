@@ -18,3 +18,8 @@ impl RelationshipToRule {
         RelationshipToRule { scorecard: None }
     }
 }
+impl Default for RelationshipToRule {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -21,3 +21,8 @@ impl SpansMetricUpdateCompute {
         }
     }
 }
+impl Default for SpansMetricUpdateCompute {
+    fn default() -> Self {
+        Self::new()
+    }
+}

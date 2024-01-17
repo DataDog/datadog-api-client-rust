@@ -18,3 +18,8 @@ impl MetricAllTagsResponse {
         MetricAllTagsResponse { data: None }
     }
 }
+impl Default for MetricAllTagsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

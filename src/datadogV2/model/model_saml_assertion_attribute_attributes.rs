@@ -24,3 +24,8 @@ impl SAMLAssertionAttributeAttributes {
         }
     }
 }
+impl Default for SAMLAssertionAttributeAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

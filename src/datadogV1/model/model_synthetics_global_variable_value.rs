@@ -29,3 +29,8 @@ impl SyntheticsGlobalVariableValue {
         }
     }
 }
+impl Default for SyntheticsGlobalVariableValue {
+    fn default() -> Self {
+        Self::new()
+    }
+}

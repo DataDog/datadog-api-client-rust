@@ -28,3 +28,8 @@ impl UsersResponse {
         }
     }
 }
+impl Default for UsersResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

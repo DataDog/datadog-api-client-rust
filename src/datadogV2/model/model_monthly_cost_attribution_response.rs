@@ -24,3 +24,8 @@ impl MonthlyCostAttributionResponse {
         }
     }
 }
+impl Default for MonthlyCostAttributionResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

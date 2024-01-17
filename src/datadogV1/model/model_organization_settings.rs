@@ -63,3 +63,8 @@ impl OrganizationSettings {
         }
     }
 }
+impl Default for OrganizationSettings {
+    fn default() -> Self {
+        Self::new()
+    }
+}

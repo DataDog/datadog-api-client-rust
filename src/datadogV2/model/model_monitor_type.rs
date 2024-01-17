@@ -60,3 +60,8 @@ impl MonitorType {
         }
     }
 }
+impl Default for MonitorType {
+    fn default() -> Self {
+        Self::new()
+    }
+}

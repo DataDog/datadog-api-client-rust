@@ -44,3 +44,8 @@ impl GCPSTSServiceAccountAttributes {
         }
     }
 }
+impl Default for GCPSTSServiceAccountAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

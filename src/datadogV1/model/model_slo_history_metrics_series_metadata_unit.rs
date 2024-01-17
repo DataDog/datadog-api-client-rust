@@ -44,3 +44,8 @@ impl SLOHistoryMetricsSeriesMetadataUnit {
         }
     }
 }
+impl Default for SLOHistoryMetricsSeriesMetadataUnit {
+    fn default() -> Self {
+        Self::new()
+    }
+}

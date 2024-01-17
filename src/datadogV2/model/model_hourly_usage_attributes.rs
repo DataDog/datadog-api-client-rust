@@ -40,3 +40,8 @@ impl HourlyUsageAttributes {
         }
     }
 }
+impl Default for HourlyUsageAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

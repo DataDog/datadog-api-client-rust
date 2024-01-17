@@ -33,3 +33,8 @@ impl RUMSearchEventsRequest {
         }
     }
 }
+impl Default for RUMSearchEventsRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

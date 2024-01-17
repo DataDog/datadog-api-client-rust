@@ -28,3 +28,8 @@ impl DowntimeMonitorIncludedItem {
         }
     }
 }
+impl Default for DowntimeMonitorIncludedItem {
+    fn default() -> Self {
+        Self::new()
+    }
+}

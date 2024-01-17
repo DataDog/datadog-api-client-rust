@@ -18,3 +18,8 @@ impl WidgetTime {
         WidgetTime { live_span: None }
     }
 }
+impl Default for WidgetTime {
+    fn default() -> Self {
+        Self::new()
+    }
+}

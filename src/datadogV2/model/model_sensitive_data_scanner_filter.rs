@@ -18,3 +18,8 @@ impl SensitiveDataScannerFilter {
         SensitiveDataScannerFilter { query: None }
     }
 }
+impl Default for SensitiveDataScannerFilter {
+    fn default() -> Self {
+        Self::new()
+    }
+}

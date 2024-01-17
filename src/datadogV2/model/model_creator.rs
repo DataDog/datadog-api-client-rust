@@ -28,3 +28,8 @@ impl Creator {
         }
     }
 }
+impl Default for Creator {
+    fn default() -> Self {
+        Self::new()
+    }
+}

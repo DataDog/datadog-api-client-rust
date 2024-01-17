@@ -19,3 +19,8 @@ impl UsageLambdaResponse {
         UsageLambdaResponse { usage: None }
     }
 }
+impl Default for UsageLambdaResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

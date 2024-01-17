@@ -24,3 +24,8 @@ impl HostMapWidgetDefinitionRequests {
         }
     }
 }
+impl Default for HostMapWidgetDefinitionRequests {
+    fn default() -> Self {
+        Self::new()
+    }
+}

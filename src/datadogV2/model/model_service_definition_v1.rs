@@ -13,7 +13,7 @@ pub struct ServiceDefinitionV1 {
     pub contact: Option<Box<crate::datadogV2::model::ServiceDefinitionV1Contact>>,
     /// Extensions to V1 schema.
     #[serde(rename = "extensions")]
-    pub extensions: Option<std::collections::HashMap<String, serde_json::Value>>,
+    pub extensions: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// A list of external links related to the services.
     #[serde(rename = "external-resources")]
     pub external_resources: Option<Vec<crate::datadogV2::model::ServiceDefinitionV1Resource>>,

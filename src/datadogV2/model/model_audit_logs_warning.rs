@@ -28,3 +28,8 @@ impl AuditLogsWarning {
         }
     }
 }
+impl Default for AuditLogsWarning {
+    fn default() -> Self {
+        Self::new()
+    }
+}

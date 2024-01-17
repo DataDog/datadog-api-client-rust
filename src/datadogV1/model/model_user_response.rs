@@ -18,3 +18,8 @@ impl UserResponse {
         UserResponse { user: None }
     }
 }
+impl Default for UserResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

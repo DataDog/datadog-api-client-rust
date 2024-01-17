@@ -18,3 +18,8 @@ impl LogsArchiveCreateRequest {
         LogsArchiveCreateRequest { data: None }
     }
 }
+impl Default for LogsArchiveCreateRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

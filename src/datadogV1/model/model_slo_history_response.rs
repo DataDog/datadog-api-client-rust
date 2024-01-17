@@ -13,7 +13,7 @@ pub struct SLOHistoryResponse {
     pub data: Option<Box<crate::datadogV1::model::SLOHistoryResponseData>>,
     /// A list of errors while querying the history data for the service level objective.
     #[serde(rename = "errors", default, with = "::serde_with::rust::double_option")]
-    pub errors: Option<Option<Vec<Option<crate::datadogV1::model::SLOHistoryResponseError>>>>,
+    pub errors: Option<Option<Vec<crate::datadogV1::model::SLOHistoryResponseError>>>,
 }
 
 impl SLOHistoryResponse {
@@ -22,5 +22,10 @@ impl SLOHistoryResponse {
             data: None,
             errors: None,
         }
+    }
+}
+impl Default for SLOHistoryResponse {
+    fn default() -> Self {
+        Self::new()
     }
 }

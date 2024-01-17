@@ -28,3 +28,8 @@ impl LogsByRetention {
         }
     }
 }
+impl Default for LogsByRetention {
+    fn default() -> Self {
+        Self::new()
+    }
+}

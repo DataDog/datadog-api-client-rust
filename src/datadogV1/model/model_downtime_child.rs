@@ -131,3 +131,8 @@ impl DowntimeChild {
         }
     }
 }
+impl Default for DowntimeChild {
+    fn default() -> Self {
+        Self::new()
+    }
+}

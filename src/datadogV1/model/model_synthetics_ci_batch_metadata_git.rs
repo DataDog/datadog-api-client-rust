@@ -24,3 +24,8 @@ impl SyntheticsCIBatchMetadataGit {
         }
     }
 }
+impl Default for SyntheticsCIBatchMetadataGit {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -24,3 +24,8 @@ impl CIAppCreatePipelineEventRequestData {
         }
     }
 }
+impl Default for CIAppCreatePipelineEventRequestData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

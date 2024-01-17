@@ -28,3 +28,8 @@ impl AWSEventBridgeDeleteRequest {
         }
     }
 }
+impl Default for AWSEventBridgeDeleteRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

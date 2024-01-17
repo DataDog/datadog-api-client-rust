@@ -18,3 +18,8 @@ impl SecurityMonitoringSignalsListResponseMeta {
         SecurityMonitoringSignalsListResponseMeta { page: None }
     }
 }
+impl Default for SecurityMonitoringSignalsListResponseMeta {
+    fn default() -> Self {
+        Self::new()
+    }
+}

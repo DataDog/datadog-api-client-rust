@@ -24,3 +24,8 @@ impl SensitiveDataScannerRule {
         }
     }
 }
+impl Default for SensitiveDataScannerRule {
+    fn default() -> Self {
+        Self::new()
+    }
+}

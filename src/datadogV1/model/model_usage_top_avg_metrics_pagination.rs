@@ -36,3 +36,8 @@ impl UsageTopAvgMetricsPagination {
         }
     }
 }
+impl Default for UsageTopAvgMetricsPagination {
+    fn default() -> Self {
+        Self::new()
+    }
+}

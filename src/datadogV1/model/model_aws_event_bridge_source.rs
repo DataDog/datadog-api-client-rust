@@ -24,3 +24,8 @@ impl AWSEventBridgeSource {
         }
     }
 }
+impl Default for AWSEventBridgeSource {
+    fn default() -> Self {
+        Self::new()
+    }
+}

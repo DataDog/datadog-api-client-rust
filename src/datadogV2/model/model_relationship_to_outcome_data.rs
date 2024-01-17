@@ -24,3 +24,8 @@ impl RelationshipToOutcomeData {
         }
     }
 }
+impl Default for RelationshipToOutcomeData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

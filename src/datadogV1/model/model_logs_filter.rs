@@ -18,3 +18,8 @@ impl LogsFilter {
         LogsFilter { query: None }
     }
 }
+impl Default for LogsFilter {
+    fn default() -> Self {
+        Self::new()
+    }
+}

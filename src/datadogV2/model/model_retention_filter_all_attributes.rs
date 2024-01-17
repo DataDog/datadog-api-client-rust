@@ -61,3 +61,8 @@ impl RetentionFilterAllAttributes {
         }
     }
 }
+impl Default for RetentionFilterAllAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

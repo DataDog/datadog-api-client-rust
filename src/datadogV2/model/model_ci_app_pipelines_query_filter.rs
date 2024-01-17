@@ -28,3 +28,8 @@ impl CIAppPipelinesQueryFilter {
         }
     }
 }
+impl Default for CIAppPipelinesQueryFilter {
+    fn default() -> Self {
+        Self::new()
+    }
+}

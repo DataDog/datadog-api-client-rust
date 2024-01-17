@@ -28,3 +28,8 @@ impl CIAppTestEventsResponse {
         }
     }
 }
+impl Default for CIAppTestEventsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

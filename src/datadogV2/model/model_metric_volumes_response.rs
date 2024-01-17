@@ -18,3 +18,8 @@ impl MetricVolumesResponse {
         MetricVolumesResponse { data: None }
     }
 }
+impl Default for MetricVolumesResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

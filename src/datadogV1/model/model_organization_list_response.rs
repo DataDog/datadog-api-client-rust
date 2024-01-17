@@ -18,3 +18,8 @@ impl OrganizationListResponse {
         OrganizationListResponse { orgs: None }
     }
 }
+impl Default for OrganizationListResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

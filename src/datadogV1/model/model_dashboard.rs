@@ -67,15 +67,14 @@ pub struct Dashboard {
         with = "::serde_with::rust::double_option"
     )]
     pub template_variable_presets:
-        Option<Option<Vec<Option<crate::datadogV1::model::DashboardTemplateVariablePreset>>>>,
+        Option<Option<Vec<crate::datadogV1::model::DashboardTemplateVariablePreset>>>,
     /// List of template variables for this dashboard.
     #[serde(
         rename = "template_variables",
         default,
         with = "::serde_with::rust::double_option"
     )]
-    pub template_variables:
-        Option<Option<Vec<Option<crate::datadogV1::model::DashboardTemplateVariable>>>>,
+    pub template_variables: Option<Option<Vec<crate::datadogV1::model::DashboardTemplateVariable>>>,
     /// Title of the dashboard.
     #[serde(rename = "title")]
     pub title: String,

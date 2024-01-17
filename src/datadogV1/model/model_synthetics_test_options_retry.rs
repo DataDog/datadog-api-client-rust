@@ -26,3 +26,8 @@ impl SyntheticsTestOptionsRetry {
         }
     }
 }
+impl Default for SyntheticsTestOptionsRetry {
+    fn default() -> Self {
+        Self::new()
+    }
+}

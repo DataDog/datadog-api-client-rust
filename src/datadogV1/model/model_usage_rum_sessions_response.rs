@@ -18,3 +18,8 @@ impl UsageRumSessionsResponse {
         UsageRumSessionsResponse { usage: None }
     }
 }
+impl Default for UsageRumSessionsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

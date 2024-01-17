@@ -15,14 +15,14 @@ pub struct DowntimeMonitorIdentifierTags {
     #[serde(rename = "monitor_tags")]
     pub monitor_tags: Vec<String>,
     #[serde(flatten)]
-    pub additional_properties: std::collections::HashMap<String, serde_json::Value>,
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
 }
 
 impl DowntimeMonitorIdentifierTags {
     pub fn new(monitor_tags: Vec<String>) -> DowntimeMonitorIdentifierTags {
         DowntimeMonitorIdentifierTags {
             monitor_tags,
-            additional_properties: std::collections::HashMap::new(),
+            additional_properties: std::collections::BTreeMap::new(),
         }
     }
 }

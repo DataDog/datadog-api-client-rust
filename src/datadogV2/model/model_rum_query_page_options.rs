@@ -24,3 +24,8 @@ impl RUMQueryPageOptions {
         }
     }
 }
+impl Default for RUMQueryPageOptions {
+    fn default() -> Self {
+        Self::new()
+    }
+}

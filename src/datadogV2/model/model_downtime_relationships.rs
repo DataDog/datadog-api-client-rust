@@ -24,3 +24,8 @@ impl DowntimeRelationships {
         }
     }
 }
+impl Default for DowntimeRelationships {
+    fn default() -> Self {
+        Self::new()
+    }
+}

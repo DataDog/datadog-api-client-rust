@@ -38,7 +38,7 @@ pub struct SLOHistoryResponseData {
     /// mapping of string timeframe to the SLO threshold.
     #[serde(rename = "thresholds")]
     pub thresholds:
-        Option<std::collections::HashMap<String, crate::datadogV1::model::SLOThreshold>>,
+        Option<std::collections::BTreeMap<String, crate::datadogV1::model::SLOThreshold>>,
     /// The `to` timestamp in epoch seconds.
     #[serde(rename = "to_ts")]
     pub to_ts: Option<i64>,
@@ -66,5 +66,10 @@ impl SLOHistoryResponseData {
             type_: None,
             type_id: None,
         }
+    }
+}
+impl Default for SLOHistoryResponseData {
+    fn default() -> Self {
+        Self::new()
     }
 }

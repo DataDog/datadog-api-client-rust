@@ -32,3 +32,8 @@ impl ApiKey {
         }
     }
 }
+impl Default for ApiKey {
+    fn default() -> Self {
+        Self::new()
+    }
+}

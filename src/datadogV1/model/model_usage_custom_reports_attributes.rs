@@ -36,3 +36,8 @@ impl UsageCustomReportsAttributes {
         }
     }
 }
+impl Default for UsageCustomReportsAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -18,3 +18,8 @@ impl RelationshipToPermissions {
         RelationshipToPermissions { data: None }
     }
 }
+impl Default for RelationshipToPermissions {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -28,3 +28,8 @@ impl SyntheticsTestRequestCertificateItem {
         }
     }
 }
+impl Default for SyntheticsTestRequestCertificateItem {
+    fn default() -> Self {
+        Self::new()
+    }
+}

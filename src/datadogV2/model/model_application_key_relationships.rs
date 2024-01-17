@@ -18,3 +18,8 @@ impl ApplicationKeyRelationships {
         ApplicationKeyRelationships { owned_by: None }
     }
 }
+impl Default for ApplicationKeyRelationships {
+    fn default() -> Self {
+        Self::new()
+    }
+}

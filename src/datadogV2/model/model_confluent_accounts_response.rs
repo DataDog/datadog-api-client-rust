@@ -18,3 +18,8 @@ impl ConfluentAccountsResponse {
         ConfluentAccountsResponse { data: None }
     }
 }
+impl Default for ConfluentAccountsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

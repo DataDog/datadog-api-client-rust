@@ -84,3 +84,8 @@ impl TimeseriesWidgetRequest {
         }
     }
 }
+impl Default for TimeseriesWidgetRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

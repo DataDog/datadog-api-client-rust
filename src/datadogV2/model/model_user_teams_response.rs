@@ -28,3 +28,8 @@ impl UserTeamsResponse {
         }
     }
 }
+impl Default for UserTeamsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

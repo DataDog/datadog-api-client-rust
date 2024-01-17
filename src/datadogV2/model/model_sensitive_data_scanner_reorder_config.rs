@@ -29,3 +29,8 @@ impl SensitiveDataScannerReorderConfig {
         }
     }
 }
+impl Default for SensitiveDataScannerReorderConfig {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -28,3 +28,8 @@ impl MonitorOptionsSchedulingOptionsEvaluationWindow {
         }
     }
 }
+impl Default for MonitorOptionsSchedulingOptionsEvaluationWindow {
+    fn default() -> Self {
+        Self::new()
+    }
+}

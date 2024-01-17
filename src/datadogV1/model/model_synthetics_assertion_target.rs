@@ -16,7 +16,7 @@ pub struct SyntheticsAssertionTarget {
     pub property: Option<String>,
     /// Value used by the operator.
     #[serde(rename = "target")]
-    pub target: std::collections::HashMap<String, serde_json::Value>,
+    pub target: serde_json::Value,
     /// Timings scope for response time assertions.
     #[serde(rename = "timingsScope")]
     pub timings_scope: Option<crate::datadogV1::model::SyntheticsAssertionTimingsScope>,
@@ -28,7 +28,7 @@ pub struct SyntheticsAssertionTarget {
 impl SyntheticsAssertionTarget {
     pub fn new(
         operator: crate::datadogV1::model::SyntheticsAssertionOperator,
-        target: std::collections::HashMap<String, serde_json::Value>,
+        target: serde_json::Value,
         type_: crate::datadogV1::model::SyntheticsAssertionType,
     ) -> SyntheticsAssertionTarget {
         SyntheticsAssertionTarget {

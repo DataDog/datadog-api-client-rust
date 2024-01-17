@@ -28,3 +28,8 @@ impl OutcomesResponse {
         }
     }
 }
+impl Default for OutcomesResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -88,3 +88,8 @@ impl ChangeWidgetRequest {
         }
     }
 }
+impl Default for ChangeWidgetRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

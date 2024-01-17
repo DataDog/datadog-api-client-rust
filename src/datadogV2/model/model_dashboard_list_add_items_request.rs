@@ -18,3 +18,8 @@ impl DashboardListAddItemsRequest {
         DashboardListAddItemsRequest { dashboards: None }
     }
 }
+impl Default for DashboardListAddItemsRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

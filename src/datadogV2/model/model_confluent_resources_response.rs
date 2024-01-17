@@ -18,3 +18,8 @@ impl ConfluentResourcesResponse {
         ConfluentResourcesResponse { data: None }
     }
 }
+impl Default for ConfluentResourcesResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

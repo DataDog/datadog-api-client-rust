@@ -32,3 +32,8 @@ impl HostMuteResponse {
         }
     }
 }
+impl Default for HostMuteResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

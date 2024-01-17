@@ -19,3 +19,8 @@ impl SpansListResponseLinks {
         SpansListResponseLinks { next: None }
     }
 }
+impl Default for SpansListResponseLinks {
+    fn default() -> Self {
+        Self::new()
+    }
+}

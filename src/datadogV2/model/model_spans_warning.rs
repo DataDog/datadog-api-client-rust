@@ -28,3 +28,8 @@ impl SpansWarning {
         }
     }
 }
+impl Default for SpansWarning {
+    fn default() -> Self {
+        Self::new()
+    }
+}

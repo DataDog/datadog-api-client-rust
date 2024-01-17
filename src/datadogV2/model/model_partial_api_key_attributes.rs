@@ -40,3 +40,8 @@ impl PartialAPIKeyAttributes {
         }
     }
 }
+impl Default for PartialAPIKeyAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

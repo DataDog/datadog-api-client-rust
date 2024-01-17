@@ -24,3 +24,8 @@ impl LogsByRetentionMonthlyUsage {
         }
     }
 }
+impl Default for LogsByRetentionMonthlyUsage {
+    fn default() -> Self {
+        Self::new()
+    }
+}

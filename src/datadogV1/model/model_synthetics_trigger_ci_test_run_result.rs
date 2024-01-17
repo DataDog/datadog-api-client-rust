@@ -32,3 +32,8 @@ impl SyntheticsTriggerCITestRunResult {
         }
     }
 }
+impl Default for SyntheticsTriggerCITestRunResult {
+    fn default() -> Self {
+        Self::new()
+    }
+}

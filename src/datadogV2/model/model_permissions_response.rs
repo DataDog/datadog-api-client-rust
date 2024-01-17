@@ -18,3 +18,8 @@ impl PermissionsResponse {
         PermissionsResponse { data: None }
     }
 }
+impl Default for PermissionsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

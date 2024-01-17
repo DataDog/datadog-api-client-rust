@@ -24,3 +24,8 @@ impl IPPrefixesRemoteConfiguration {
         }
     }
 }
+impl Default for IPPrefixesRemoteConfiguration {
+    fn default() -> Self {
+        Self::new()
+    }
+}

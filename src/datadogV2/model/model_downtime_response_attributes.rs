@@ -80,3 +80,8 @@ impl DowntimeResponseAttributes {
         }
     }
 }
+impl Default for DowntimeResponseAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -24,3 +24,8 @@ impl MetricsListResponse {
         }
     }
 }
+impl Default for MetricsListResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

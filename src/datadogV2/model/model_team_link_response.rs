@@ -18,3 +18,8 @@ impl TeamLinkResponse {
         TeamLinkResponse { data: None }
     }
 }
+impl Default for TeamLinkResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

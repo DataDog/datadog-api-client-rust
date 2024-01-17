@@ -18,3 +18,8 @@ impl CreateRuleRequest {
         CreateRuleRequest { data: None }
     }
 }
+impl Default for CreateRuleRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

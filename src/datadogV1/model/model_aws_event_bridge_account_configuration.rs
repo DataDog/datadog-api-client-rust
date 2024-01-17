@@ -29,3 +29,8 @@ impl AWSEventBridgeAccountConfiguration {
         }
     }
 }
+impl Default for AWSEventBridgeAccountConfiguration {
+    fn default() -> Self {
+        Self::new()
+    }
+}

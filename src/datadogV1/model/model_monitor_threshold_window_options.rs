@@ -32,3 +32,8 @@ impl MonitorThresholdWindowOptions {
         }
     }
 }
+impl Default for MonitorThresholdWindowOptions {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -28,3 +28,8 @@ impl ActiveBillingDimensionsBody {
         }
     }
 }
+impl Default for ActiveBillingDimensionsBody {
+    fn default() -> Self {
+        Self::new()
+    }
+}

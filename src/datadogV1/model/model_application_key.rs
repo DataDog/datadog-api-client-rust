@@ -28,3 +28,8 @@ impl ApplicationKey {
         }
     }
 }
+impl Default for ApplicationKey {
+    fn default() -> Self {
+        Self::new()
+    }
+}

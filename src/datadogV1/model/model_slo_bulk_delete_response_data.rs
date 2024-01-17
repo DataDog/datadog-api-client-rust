@@ -27,3 +27,8 @@ impl SLOBulkDeleteResponseData {
         }
     }
 }
+impl Default for SLOBulkDeleteResponseData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

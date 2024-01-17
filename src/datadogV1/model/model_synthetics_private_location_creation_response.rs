@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SyntheticsPrivateLocationCreationResponse {
     /// Configuration skeleton for the private location. See installation instructions of the private location on how to use this configuration.
     #[serde(rename = "config")]
-    pub config: Option<std::collections::HashMap<String, serde_json::Value>>,
+    pub config: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// Object containing information about the private location to create.
     #[serde(rename = "private_location")]
     pub private_location: Option<Box<crate::datadogV1::model::SyntheticsPrivateLocation>>,
@@ -28,5 +28,10 @@ impl SyntheticsPrivateLocationCreationResponse {
             private_location: None,
             result_encryption: None,
         }
+    }
+}
+impl Default for SyntheticsPrivateLocationCreationResponse {
+    fn default() -> Self {
+        Self::new()
     }
 }

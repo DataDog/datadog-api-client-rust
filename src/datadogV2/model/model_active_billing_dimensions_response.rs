@@ -18,3 +18,8 @@ impl ActiveBillingDimensionsResponse {
         ActiveBillingDimensionsResponse { data: None }
     }
 }
+impl Default for ActiveBillingDimensionsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

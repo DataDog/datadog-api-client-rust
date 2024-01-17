@@ -28,3 +28,8 @@ impl MetricSuggestedTagsAndAggregations {
         }
     }
 }
+impl Default for MetricSuggestedTagsAndAggregations {
+    fn default() -> Self {
+        Self::new()
+    }
+}

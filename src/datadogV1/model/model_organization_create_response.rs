@@ -32,3 +32,8 @@ impl OrganizationCreateResponse {
         }
     }
 }
+impl Default for OrganizationCreateResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

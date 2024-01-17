@@ -68,11 +68,11 @@ pub enum UpdateGCPIntegrationError {
 }
 
 #[derive(Debug, Clone)]
-pub struct GcpIntegrationAPI {
+pub struct GCPIntegrationAPI {
     config: configuration::Configuration,
 }
 
-impl Default for GcpIntegrationAPI {
+impl Default for GCPIntegrationAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
@@ -80,7 +80,7 @@ impl Default for GcpIntegrationAPI {
     }
 }
 
-impl GcpIntegrationAPI {
+impl GCPIntegrationAPI {
     pub fn new() -> Self {
         Self::default()
     }
@@ -93,7 +93,7 @@ impl GcpIntegrationAPI {
         &self,
         params: CreateGCPIntegrationParams,
     ) -> Result<
-        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<CreateGCPIntegrationError>,
     > {
         match self.create_gcp_integration_with_http_info(params).await {
@@ -107,7 +107,7 @@ impl GcpIntegrationAPI {
         &self,
         params: CreateGCPIntegrationParams,
     ) -> Result<
-        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<CreateGCPIntegrationError>,
     > {
         let local_configuration = &self.config;
@@ -149,7 +149,7 @@ impl GcpIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::HashMap<String, serde_json::Value>> =
+            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                 serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
@@ -173,7 +173,7 @@ impl GcpIntegrationAPI {
         &self,
         params: DeleteGCPIntegrationParams,
     ) -> Result<
-        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<DeleteGCPIntegrationError>,
     > {
         match self.delete_gcp_integration_with_http_info(params).await {
@@ -187,7 +187,7 @@ impl GcpIntegrationAPI {
         &self,
         params: DeleteGCPIntegrationParams,
     ) -> Result<
-        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<DeleteGCPIntegrationError>,
     > {
         let local_configuration = &self.config;
@@ -229,7 +229,7 @@ impl GcpIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::HashMap<String, serde_json::Value>> =
+            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                 serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
@@ -324,7 +324,7 @@ impl GcpIntegrationAPI {
         &self,
         params: UpdateGCPIntegrationParams,
     ) -> Result<
-        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<UpdateGCPIntegrationError>,
     > {
         match self.update_gcp_integration_with_http_info(params).await {
@@ -341,7 +341,7 @@ impl GcpIntegrationAPI {
         &self,
         params: UpdateGCPIntegrationParams,
     ) -> Result<
-        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<UpdateGCPIntegrationError>,
     > {
         let local_configuration = &self.config;
@@ -383,7 +383,7 @@ impl GcpIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::HashMap<String, serde_json::Value>> =
+            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                 serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,

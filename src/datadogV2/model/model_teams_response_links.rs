@@ -36,3 +36,8 @@ impl TeamsResponseLinks {
         }
     }
 }
+impl Default for TeamsResponseLinks {
+    fn default() -> Self {
+        Self::new()
+    }
+}

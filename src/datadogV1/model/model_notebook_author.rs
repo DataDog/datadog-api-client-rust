@@ -52,3 +52,8 @@ impl NotebookAuthor {
         }
     }
 }
+impl Default for NotebookAuthor {
+    fn default() -> Self {
+        Self::new()
+    }
+}

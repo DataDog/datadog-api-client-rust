@@ -19,3 +19,8 @@ impl OrganizationSettingsSamlStrictMode {
         OrganizationSettingsSamlStrictMode { enabled: None }
     }
 }
+impl Default for OrganizationSettingsSamlStrictMode {
+    fn default() -> Self {
+        Self::new()
+    }
+}

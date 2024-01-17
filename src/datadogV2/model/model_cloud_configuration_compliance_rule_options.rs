@@ -23,7 +23,7 @@ pub struct CloudConfigurationComplianceRuleOptions {
     #[serde(rename = "resourceType")]
     pub resource_type: Option<String>,
     #[serde(flatten)]
-    pub additional_properties: std::collections::HashMap<String, serde_json::Value>,
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
 }
 
 impl CloudConfigurationComplianceRuleOptions {
@@ -32,7 +32,12 @@ impl CloudConfigurationComplianceRuleOptions {
             complex_rule: None,
             rego_rule: None,
             resource_type: None,
-            additional_properties: std::collections::HashMap::new(),
+            additional_properties: std::collections::BTreeMap::new(),
         }
+    }
+}
+impl Default for CloudConfigurationComplianceRuleOptions {
+    fn default() -> Self {
+        Self::new()
     }
 }

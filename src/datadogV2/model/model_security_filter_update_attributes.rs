@@ -40,3 +40,8 @@ impl SecurityFilterUpdateAttributes {
         }
     }
 }
+impl Default for SecurityFilterUpdateAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

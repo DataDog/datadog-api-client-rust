@@ -43,3 +43,8 @@ impl SLOHistoryMetricsSeriesMetadata {
         }
     }
 }
+impl Default for SLOHistoryMetricsSeriesMetadata {
+    fn default() -> Self {
+        Self::new()
+    }
+}

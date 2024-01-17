@@ -24,3 +24,8 @@ impl MonitorSearchResultNotification {
         }
     }
 }
+impl Default for MonitorSearchResultNotification {
+    fn default() -> Self {
+        Self::new()
+    }
+}

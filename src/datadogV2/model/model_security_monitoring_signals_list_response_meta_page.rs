@@ -19,3 +19,8 @@ impl SecurityMonitoringSignalsListResponseMetaPage {
         SecurityMonitoringSignalsListResponseMetaPage { after: None }
     }
 }
+impl Default for SecurityMonitoringSignalsListResponseMetaPage {
+    fn default() -> Self {
+        Self::new()
+    }
+}

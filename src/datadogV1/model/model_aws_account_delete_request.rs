@@ -28,3 +28,8 @@ impl AWSAccountDeleteRequest {
         }
     }
 }
+impl Default for AWSAccountDeleteRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -24,3 +24,8 @@ impl AuthNMappingCreateAttributes {
         }
     }
 }
+impl Default for AuthNMappingCreateAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

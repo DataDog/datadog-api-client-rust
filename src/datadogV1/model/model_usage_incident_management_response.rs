@@ -18,3 +18,8 @@ impl UsageIncidentManagementResponse {
         UsageIncidentManagementResponse { usage: None }
     }
 }
+impl Default for UsageIncidentManagementResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -18,3 +18,8 @@ impl UsageSyntheticsResponse {
         UsageSyntheticsResponse { usage: None }
     }
 }
+impl Default for UsageSyntheticsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -56,3 +56,8 @@ impl DashboardSummaryDefinition {
         }
     }
 }
+impl Default for DashboardSummaryDefinition {
+    fn default() -> Self {
+        Self::new()
+    }
+}

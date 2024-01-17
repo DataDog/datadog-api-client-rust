@@ -40,3 +40,8 @@ impl UsageAttributesObject {
         }
     }
 }
+impl Default for UsageAttributesObject {
+    fn default() -> Self {
+        Self::new()
+    }
+}

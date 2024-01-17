@@ -28,3 +28,8 @@ impl AWSTagFilterCreateRequest {
         }
     }
 }
+impl Default for AWSTagFilterCreateRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -48,3 +48,8 @@ impl CloudConfigurationRuleComplianceSignalOptions {
         }
     }
 }
+impl Default for CloudConfigurationRuleComplianceSignalOptions {
+    fn default() -> Self {
+        Self::new()
+    }
+}

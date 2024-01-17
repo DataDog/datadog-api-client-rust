@@ -24,3 +24,8 @@ impl UsageAttributionResponse {
         }
     }
 }
+impl Default for UsageAttributionResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

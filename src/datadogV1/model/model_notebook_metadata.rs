@@ -28,3 +28,8 @@ impl NotebookMetadata {
         }
     }
 }
+impl Default for NotebookMetadata {
+    fn default() -> Self {
+        Self::new()
+    }
+}

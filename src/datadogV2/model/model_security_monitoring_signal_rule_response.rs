@@ -88,3 +88,8 @@ impl SecurityMonitoringSignalRuleResponse {
         }
     }
 }
+impl Default for SecurityMonitoringSignalRuleResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

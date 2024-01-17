@@ -28,3 +28,8 @@ impl MonitorOptionsAggregation {
         }
     }
 }
+impl Default for MonitorOptionsAggregation {
+    fn default() -> Self {
+        Self::new()
+    }
+}

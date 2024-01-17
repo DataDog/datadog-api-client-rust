@@ -28,3 +28,8 @@ impl MonitorConfigPolicyTagPolicy {
         }
     }
 }
+impl Default for MonitorConfigPolicyTagPolicy {
+    fn default() -> Self {
+        Self::new()
+    }
+}

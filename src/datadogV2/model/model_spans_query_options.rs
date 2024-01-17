@@ -25,3 +25,8 @@ impl SpansQueryOptions {
         }
     }
 }
+impl Default for SpansQueryOptions {
+    fn default() -> Self {
+        Self::new()
+    }
+}

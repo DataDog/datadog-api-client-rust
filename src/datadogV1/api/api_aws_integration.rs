@@ -214,11 +214,11 @@ pub enum UpdateAWSAccountError {
 }
 
 #[derive(Debug, Clone)]
-pub struct AwsIntegrationAPI {
+pub struct AWSIntegrationAPI {
     config: configuration::Configuration,
 }
 
-impl Default for AwsIntegrationAPI {
+impl Default for AWSIntegrationAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
@@ -226,7 +226,7 @@ impl Default for AwsIntegrationAPI {
     }
 }
 
-impl AwsIntegrationAPI {
+impl AWSIntegrationAPI {
     pub fn new() -> Self {
         Self::default()
     }
@@ -411,7 +411,7 @@ impl AwsIntegrationAPI {
         &self,
         params: CreateAWSTagFilterParams,
     ) -> Result<
-        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<CreateAWSTagFilterError>,
     > {
         match self.create_aws_tag_filter_with_http_info(params).await {
@@ -425,7 +425,7 @@ impl AwsIntegrationAPI {
         &self,
         params: CreateAWSTagFilterParams,
     ) -> Result<
-        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<CreateAWSTagFilterError>,
     > {
         let local_configuration = &self.config;
@@ -470,7 +470,7 @@ impl AwsIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::HashMap<String, serde_json::Value>> =
+            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                 serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
@@ -577,7 +577,7 @@ impl AwsIntegrationAPI {
         &self,
         params: DeleteAWSAccountParams,
     ) -> Result<
-        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<DeleteAWSAccountError>,
     > {
         match self.delete_aws_account_with_http_info(params).await {
@@ -591,7 +591,7 @@ impl AwsIntegrationAPI {
         &self,
         params: DeleteAWSAccountParams,
     ) -> Result<
-        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<DeleteAWSAccountError>,
     > {
         let local_configuration = &self.config;
@@ -633,7 +633,7 @@ impl AwsIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::HashMap<String, serde_json::Value>> =
+            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                 serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
@@ -743,7 +743,7 @@ impl AwsIntegrationAPI {
         &self,
         params: DeleteAWSTagFilterParams,
     ) -> Result<
-        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<DeleteAWSTagFilterError>,
     > {
         match self.delete_aws_tag_filter_with_http_info(params).await {
@@ -757,7 +757,7 @@ impl AwsIntegrationAPI {
         &self,
         params: DeleteAWSTagFilterParams,
     ) -> Result<
-        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<DeleteAWSTagFilterError>,
     > {
         let local_configuration = &self.config;
@@ -802,7 +802,7 @@ impl AwsIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::HashMap<String, serde_json::Value>> =
+            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                 serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
@@ -1127,7 +1127,7 @@ impl AwsIntegrationAPI {
         &self,
         params: UpdateAWSAccountParams,
     ) -> Result<
-        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<UpdateAWSAccountError>,
     > {
         match self.update_aws_account_with_http_info(params).await {
@@ -1141,7 +1141,7 @@ impl AwsIntegrationAPI {
         &self,
         params: UpdateAWSAccountParams,
     ) -> Result<
-        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<UpdateAWSAccountError>,
     > {
         let local_configuration = &self.config;
@@ -1197,7 +1197,7 @@ impl AwsIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::HashMap<String, serde_json::Value>> =
+            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                 serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,

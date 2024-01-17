@@ -32,3 +32,8 @@ impl OutcomesResponseDataItem {
         }
     }
 }
+impl Default for OutcomesResponseDataItem {
+    fn default() -> Self {
+        Self::new()
+    }
+}

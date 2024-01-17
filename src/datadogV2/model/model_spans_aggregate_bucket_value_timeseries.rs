@@ -14,3 +14,8 @@ impl SpansAggregateBucketValueTimeseries {
         SpansAggregateBucketValueTimeseries {}
     }
 }
+impl Default for SpansAggregateBucketValueTimeseries {
+    fn default() -> Self {
+        Self::new()
+    }
+}

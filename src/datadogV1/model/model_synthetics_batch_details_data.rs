@@ -28,3 +28,8 @@ impl SyntheticsBatchDetailsData {
         }
     }
 }
+impl Default for SyntheticsBatchDetailsData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

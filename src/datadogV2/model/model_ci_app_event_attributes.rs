@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct CIAppEventAttributes {
     /// JSON object of attributes from CI Visibility test events.
     #[serde(rename = "attributes")]
-    pub attributes: Option<std::collections::HashMap<String, serde_json::Value>>,
+    pub attributes: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// Array of tags associated with your event.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
@@ -26,5 +26,10 @@ impl CIAppEventAttributes {
             tags: None,
             test_level: None,
         }
+    }
+}
+impl Default for CIAppEventAttributes {
+    fn default() -> Self {
+        Self::new()
     }
 }

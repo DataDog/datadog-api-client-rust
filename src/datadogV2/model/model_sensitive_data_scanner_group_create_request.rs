@@ -24,3 +24,8 @@ impl SensitiveDataScannerGroupCreateRequest {
         }
     }
 }
+impl Default for SensitiveDataScannerGroupCreateRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

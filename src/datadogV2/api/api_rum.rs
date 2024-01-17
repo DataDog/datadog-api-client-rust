@@ -141,11 +141,11 @@ pub enum UpdateRUMApplicationError {
 }
 
 #[derive(Debug, Clone)]
-pub struct RumAPI {
+pub struct RUMAPI {
     config: configuration::Configuration,
 }
 
-impl Default for RumAPI {
+impl Default for RUMAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
@@ -153,7 +153,7 @@ impl Default for RumAPI {
     }
 }
 
-impl RumAPI {
+impl RUMAPI {
     pub fn new() -> Self {
         Self::default()
     }

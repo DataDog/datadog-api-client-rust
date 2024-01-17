@@ -18,3 +18,8 @@ impl UsageSyntheticsBrowserResponse {
         UsageSyntheticsBrowserResponse { usage: None }
     }
 }
+impl Default for UsageSyntheticsBrowserResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

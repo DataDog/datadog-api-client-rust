@@ -142,3 +142,8 @@ impl Downtime {
         }
     }
 }
+impl Default for Downtime {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -29,7 +29,7 @@ pub struct HourlyUsageAttributionBody {
     /// configured for usage attribution](https://docs.datadoghq.com/account_management/billing/usage_attribution/#getting-started).
     /// In this scenario the API returns the total usage, not broken down by tags.
     #[serde(rename = "tags", default, with = "::serde_with::rust::double_option")]
-    pub tags: Option<Option<std::collections::HashMap<String, Option<Vec<String>>>>>,
+    pub tags: Option<Option<std::collections::BTreeMap<String, Option<Vec<String>>>>>,
     /// Total product usage for the given tags within the hour.
     #[serde(rename = "total_usage_sum")]
     pub total_usage_sum: Option<f64>,
@@ -54,5 +54,10 @@ impl HourlyUsageAttributionBody {
             updated_at: None,
             usage_type: None,
         }
+    }
+}
+impl Default for HourlyUsageAttributionBody {
+    fn default() -> Self {
+        Self::new()
     }
 }

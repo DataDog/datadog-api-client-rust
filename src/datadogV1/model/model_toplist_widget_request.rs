@@ -76,3 +76,8 @@ impl ToplistWidgetRequest {
         }
     }
 }
+impl Default for ToplistWidgetRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -18,3 +18,8 @@ impl FastlyAccountsResponse {
         FastlyAccountsResponse { data: None }
     }
 }
+impl Default for FastlyAccountsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

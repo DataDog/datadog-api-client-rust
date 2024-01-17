@@ -24,3 +24,8 @@ impl HostTotals {
         }
     }
 }
+impl Default for HostTotals {
+    fn default() -> Self {
+        Self::new()
+    }
+}

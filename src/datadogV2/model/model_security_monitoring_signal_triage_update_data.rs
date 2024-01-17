@@ -28,3 +28,8 @@ impl SecurityMonitoringSignalTriageUpdateData {
         }
     }
 }
+impl Default for SecurityMonitoringSignalTriageUpdateData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

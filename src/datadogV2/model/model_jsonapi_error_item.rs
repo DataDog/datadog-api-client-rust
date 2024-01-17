@@ -28,3 +28,8 @@ impl JSONAPIErrorItem {
         }
     }
 }
+impl Default for JSONAPIErrorItem {
+    fn default() -> Self {
+        Self::new()
+    }
+}

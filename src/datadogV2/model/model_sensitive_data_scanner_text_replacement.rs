@@ -34,3 +34,8 @@ impl SensitiveDataScannerTextReplacement {
         }
     }
 }
+impl Default for SensitiveDataScannerTextReplacement {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -28,3 +28,8 @@ impl AuditLogsQueryFilter {
         }
     }
 }
+impl Default for AuditLogsQueryFilter {
+    fn default() -> Self {
+        Self::new()
+    }
+}

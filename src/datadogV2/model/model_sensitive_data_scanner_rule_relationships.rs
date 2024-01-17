@@ -25,3 +25,8 @@ impl SensitiveDataScannerRuleRelationships {
         }
     }
 }
+impl Default for SensitiveDataScannerRuleRelationships {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -24,3 +24,8 @@ impl MonitorConfigPolicyAttributeResponse {
         }
     }
 }
+impl Default for MonitorConfigPolicyAttributeResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

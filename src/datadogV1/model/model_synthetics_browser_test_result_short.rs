@@ -39,3 +39,8 @@ impl SyntheticsBrowserTestResultShort {
         }
     }
 }
+impl Default for SyntheticsBrowserTestResultShort {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -28,3 +28,8 @@ impl SecurityMonitoringSignalListRequest {
         }
     }
 }
+impl Default for SecurityMonitoringSignalListRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

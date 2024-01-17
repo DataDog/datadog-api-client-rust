@@ -54,3 +54,8 @@ impl RuleAttributes {
         }
     }
 }
+impl Default for RuleAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

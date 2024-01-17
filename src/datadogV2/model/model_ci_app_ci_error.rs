@@ -36,3 +36,8 @@ impl CIAppCIError {
         }
     }
 }
+impl Default for CIAppCIError {
+    fn default() -> Self {
+        Self::new()
+    }
+}

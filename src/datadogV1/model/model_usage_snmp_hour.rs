@@ -36,3 +36,8 @@ impl UsageSNMPHour {
         }
     }
 }
+impl Default for UsageSNMPHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

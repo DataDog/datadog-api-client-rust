@@ -18,3 +18,8 @@ impl PowerpackRelationships {
         PowerpackRelationships { author: None }
     }
 }
+impl Default for PowerpackRelationships {
+    fn default() -> Self {
+        Self::new()
+    }
+}

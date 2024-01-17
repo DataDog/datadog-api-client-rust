@@ -20,3 +20,8 @@ impl SyntheticsGlobalVariableAttributes {
         }
     }
 }
+impl Default for SyntheticsGlobalVariableAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -10,11 +10,16 @@ use serde_with::skip_serializing_none;
 pub struct UserTeamPermissionAttributes {
     /// Object of team permission actions and boolean values that a logged in user can perform on this team.
     #[serde(rename = "permissions")]
-    pub permissions: Option<std::collections::HashMap<String, serde_json::Value>>,
+    pub permissions: Option<std::collections::BTreeMap<String, serde_json::Value>>,
 }
 
 impl UserTeamPermissionAttributes {
     pub fn new() -> UserTeamPermissionAttributes {
         UserTeamPermissionAttributes { permissions: None }
+    }
+}
+impl Default for UserTeamPermissionAttributes {
+    fn default() -> Self {
+        Self::new()
     }
 }

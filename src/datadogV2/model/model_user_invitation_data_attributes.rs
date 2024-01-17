@@ -32,3 +32,8 @@ impl UserInvitationDataAttributes {
         }
     }
 }
+impl Default for UserInvitationDataAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

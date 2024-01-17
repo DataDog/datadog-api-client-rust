@@ -18,3 +18,8 @@ impl LogsMetricsResponse {
         LogsMetricsResponse { data: None }
     }
 }
+impl Default for LogsMetricsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -18,3 +18,8 @@ impl SharedDashboardInvitesMeta {
         SharedDashboardInvitesMeta { page: None }
     }
 }
+impl Default for SharedDashboardInvitesMeta {
+    fn default() -> Self {
+        Self::new()
+    }
+}

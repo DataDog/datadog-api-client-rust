@@ -25,3 +25,8 @@ impl MonitorOptionsSchedulingOptions {
         }
     }
 }
+impl Default for MonitorOptionsSchedulingOptions {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -19,3 +19,8 @@ impl LogsResponseMetadataPage {
         LogsResponseMetadataPage { after: None }
     }
 }
+impl Default for LogsResponseMetadataPage {
+    fn default() -> Self {
+        Self::new()
+    }
+}

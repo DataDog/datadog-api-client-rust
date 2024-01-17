@@ -18,3 +18,8 @@ impl BulkMuteFindingsRequestMetaFindings {
         BulkMuteFindingsRequestMetaFindings { finding_id: None }
     }
 }
+impl Default for BulkMuteFindingsRequestMetaFindings {
+    fn default() -> Self {
+        Self::new()
+    }
+}

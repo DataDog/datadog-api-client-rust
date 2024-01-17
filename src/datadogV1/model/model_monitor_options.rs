@@ -150,8 +150,7 @@ pub struct MonitorOptions {
         default,
         with = "::serde_with::rust::double_option"
     )]
-    pub renotify_statuses:
-        Option<Option<Vec<Option<crate::datadogV1::model::MonitorRenotifyStatusType>>>>,
+    pub renotify_statuses: Option<Option<Vec<crate::datadogV1::model::MonitorRenotifyStatusType>>>,
     /// A Boolean indicating whether this monitor needs a full window of data before it’s evaluated.
     /// We highly recommend you set this to `false` for sparse metrics,
     /// otherwise some evaluations are skipped. Default is false.
@@ -163,7 +162,7 @@ pub struct MonitorOptions {
     /// Information about the downtime applied to the monitor. Only shows v1 downtimes.
     #[deprecated]
     #[serde(rename = "silenced")]
-    pub silenced: Option<std::collections::HashMap<String, i64>>,
+    pub silenced: Option<std::collections::BTreeMap<String, i64>>,
     /// ID of the corresponding Synthetic check.
     #[deprecated]
     #[serde(
@@ -226,5 +225,10 @@ impl MonitorOptions {
             timeout_h: None,
             variables: None,
         }
+    }
+}
+impl Default for MonitorOptions {
+    fn default() -> Self {
+        Self::new()
     }
 }

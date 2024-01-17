@@ -40,3 +40,8 @@ impl CostByOrgAttributes {
         }
     }
 }
+impl Default for CostByOrgAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

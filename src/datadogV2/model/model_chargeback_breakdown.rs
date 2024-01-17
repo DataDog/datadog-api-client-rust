@@ -28,3 +28,8 @@ impl ChargebackBreakdown {
         }
     }
 }
+impl Default for ChargebackBreakdown {
+    fn default() -> Self {
+        Self::new()
+    }
+}

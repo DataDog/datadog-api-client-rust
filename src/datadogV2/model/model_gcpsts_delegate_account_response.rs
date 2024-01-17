@@ -18,3 +18,8 @@ impl GCPSTSDelegateAccountResponse {
         GCPSTSDelegateAccountResponse { data: None }
     }
 }
+impl Default for GCPSTSDelegateAccountResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

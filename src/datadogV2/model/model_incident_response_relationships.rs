@@ -54,3 +54,8 @@ impl IncidentResponseRelationships {
         }
     }
 }
+impl Default for IncidentResponseRelationships {
+    fn default() -> Self {
+        Self::new()
+    }
+}

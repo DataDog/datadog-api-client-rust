@@ -18,3 +18,8 @@ impl SyntheticsListTestsResponse {
         SyntheticsListTestsResponse { tests: None }
     }
 }
+impl Default for SyntheticsListTestsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

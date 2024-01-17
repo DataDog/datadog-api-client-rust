@@ -20,3 +20,8 @@ impl DeletedMonitor {
         }
     }
 }
+impl Default for DeletedMonitor {
+    fn default() -> Self {
+        Self::new()
+    }
+}

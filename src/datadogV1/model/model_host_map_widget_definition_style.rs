@@ -32,3 +32,8 @@ impl HostMapWidgetDefinitionStyle {
         }
     }
 }
+impl Default for HostMapWidgetDefinitionStyle {
+    fn default() -> Self {
+        Self::new()
+    }
+}

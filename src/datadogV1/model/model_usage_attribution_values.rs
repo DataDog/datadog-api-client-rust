@@ -224,3 +224,8 @@ impl UsageAttributionValues {
         }
     }
 }
+impl Default for UsageAttributionValues {
+    fn default() -> Self {
+        Self::new()
+    }
+}

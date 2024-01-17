@@ -18,3 +18,8 @@ impl SensitiveDataScannerGroupList {
         SensitiveDataScannerGroupList { data: None }
     }
 }
+impl Default for SensitiveDataScannerGroupList {
+    fn default() -> Self {
+        Self::new()
+    }
+}

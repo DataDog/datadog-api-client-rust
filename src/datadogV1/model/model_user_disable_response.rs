@@ -18,3 +18,8 @@ impl UserDisableResponse {
         UserDisableResponse { message: None }
     }
 }
+impl Default for UserDisableResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

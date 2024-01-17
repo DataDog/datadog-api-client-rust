@@ -18,3 +18,8 @@ impl SearchSLOResponseMeta {
         SearchSLOResponseMeta { pagination: None }
     }
 }
+impl Default for SearchSLOResponseMeta {
+    fn default() -> Self {
+        Self::new()
+    }
+}

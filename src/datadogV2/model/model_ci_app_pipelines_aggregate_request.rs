@@ -33,3 +33,8 @@ impl CIAppPipelinesAggregateRequest {
         }
     }
 }
+impl Default for CIAppPipelinesAggregateRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

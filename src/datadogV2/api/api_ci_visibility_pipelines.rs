@@ -87,11 +87,11 @@ pub enum SearchCIAppPipelineEventsError {
 }
 
 #[derive(Debug, Clone)]
-pub struct CiVisibilityPipelinesAPI {
+pub struct CIVisibilityPipelinesAPI {
     config: configuration::Configuration,
 }
 
-impl Default for CiVisibilityPipelinesAPI {
+impl Default for CIVisibilityPipelinesAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
@@ -99,7 +99,7 @@ impl Default for CiVisibilityPipelinesAPI {
     }
 }
 
-impl CiVisibilityPipelinesAPI {
+impl CIVisibilityPipelinesAPI {
     pub fn new() -> Self {
         Self::default()
     }
@@ -201,7 +201,7 @@ impl CiVisibilityPipelinesAPI {
         &self,
         params: CreateCIAppPipelineEventParams,
     ) -> Result<
-        Option<std::collections::HashMap<String, serde_json::Value>>,
+        Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<CreateCIAppPipelineEventError>,
     > {
         match self
@@ -220,7 +220,7 @@ impl CiVisibilityPipelinesAPI {
         &self,
         params: CreateCIAppPipelineEventParams,
     ) -> Result<
-        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<CreateCIAppPipelineEventError>,
     > {
         let local_configuration = &self.config;
@@ -259,7 +259,7 @@ impl CiVisibilityPipelinesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::HashMap<String, serde_json::Value>> =
+            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                 serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,

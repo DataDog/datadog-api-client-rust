@@ -18,3 +18,8 @@ impl TeamUpdateRelationships {
         TeamUpdateRelationships { team_links: None }
     }
 }
+impl Default for TeamUpdateRelationships {
+    fn default() -> Self {
+        Self::new()
+    }
+}

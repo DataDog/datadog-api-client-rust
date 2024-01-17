@@ -24,3 +24,8 @@ impl SyntheticsGetBrowserTestLatestResultsResponse {
         }
     }
 }
+impl Default for SyntheticsGetBrowserTestLatestResultsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

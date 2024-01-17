@@ -24,3 +24,8 @@ impl ContainerImageGroupImagesRelationshipsLink {
         }
     }
 }
+impl Default for ContainerImageGroupImagesRelationshipsLink {
+    fn default() -> Self {
+        Self::new()
+    }
+}

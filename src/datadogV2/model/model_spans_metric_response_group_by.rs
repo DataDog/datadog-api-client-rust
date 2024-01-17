@@ -24,3 +24,8 @@ impl SpansMetricResponseGroupBy {
         }
     }
 }
+impl Default for SpansMetricResponseGroupBy {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -24,3 +24,8 @@ impl MetricResource {
         }
     }
 }
+impl Default for MetricResource {
+    fn default() -> Self {
+        Self::new()
+    }
+}

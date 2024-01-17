@@ -18,3 +18,8 @@ impl SecurityMonitoringSignalResponse {
         SecurityMonitoringSignalResponse { data: None }
     }
 }
+impl Default for SecurityMonitoringSignalResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

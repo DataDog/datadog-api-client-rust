@@ -36,3 +36,8 @@ impl UsageAuditLogsHour {
         }
     }
 }
+impl Default for UsageAuditLogsHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

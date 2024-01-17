@@ -24,3 +24,8 @@ impl UsageSpecifiedCustomReportsResponse {
         }
     }
 }
+impl Default for UsageSpecifiedCustomReportsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

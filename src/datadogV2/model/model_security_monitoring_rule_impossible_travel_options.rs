@@ -21,3 +21,8 @@ impl SecurityMonitoringRuleImpossibleTravelOptions {
         }
     }
 }
+impl Default for SecurityMonitoringRuleImpossibleTravelOptions {
+    fn default() -> Self {
+        Self::new()
+    }
+}

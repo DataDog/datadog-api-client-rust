@@ -10,10 +10,10 @@ use serde_with::skip_serializing_none;
 pub struct SpansAttributes {
     /// JSON object of attributes from your span.
     #[serde(rename = "attributes")]
-    pub attributes: Option<std::collections::HashMap<String, serde_json::Value>>,
+    pub attributes: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// JSON object of custom spans data.
     #[serde(rename = "custom")]
-    pub custom: Option<std::collections::HashMap<String, serde_json::Value>>,
+    pub custom: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// End timestamp of your span.
     #[serde(rename = "end_timestamp")]
     pub end_timestamp: Option<String>,
@@ -84,5 +84,10 @@ impl SpansAttributes {
             trace_id: None,
             type_: None,
         }
+    }
+}
+impl Default for SpansAttributes {
+    fn default() -> Self {
+        Self::new()
     }
 }

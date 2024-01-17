@@ -33,3 +33,8 @@ impl IncidentUpdateRelationships {
         }
     }
 }
+impl Default for IncidentUpdateRelationships {
+    fn default() -> Self {
+        Self::new()
+    }
+}

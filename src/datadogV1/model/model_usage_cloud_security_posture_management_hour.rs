@@ -84,3 +84,8 @@ impl UsageCloudSecurityPostureManagementHour {
         }
     }
 }
+impl Default for UsageCloudSecurityPostureManagementHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

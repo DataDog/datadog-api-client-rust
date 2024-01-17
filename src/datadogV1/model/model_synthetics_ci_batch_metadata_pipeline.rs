@@ -18,3 +18,8 @@ impl SyntheticsCIBatchMetadataPipeline {
         SyntheticsCIBatchMetadataPipeline { url: None }
     }
 }
+impl Default for SyntheticsCIBatchMetadataPipeline {
+    fn default() -> Self {
+        Self::new()
+    }
+}

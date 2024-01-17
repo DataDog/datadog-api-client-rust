@@ -18,3 +18,8 @@ impl CIAppResponsePage {
         CIAppResponsePage { after: None }
     }
 }
+impl Default for CIAppResponsePage {
+    fn default() -> Self {
+        Self::new()
+    }
+}

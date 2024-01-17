@@ -64,3 +64,8 @@ impl ContainerAttributes {
         }
     }
 }
+impl Default for ContainerAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

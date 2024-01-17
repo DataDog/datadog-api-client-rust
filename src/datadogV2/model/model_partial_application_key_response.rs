@@ -24,3 +24,8 @@ impl PartialApplicationKeyResponse {
         }
     }
 }
+impl Default for PartialApplicationKeyResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

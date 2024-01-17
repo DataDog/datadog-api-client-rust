@@ -28,3 +28,8 @@ impl SpansMetricUpdateAttributes {
         }
     }
 }
+impl Default for SpansMetricUpdateAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

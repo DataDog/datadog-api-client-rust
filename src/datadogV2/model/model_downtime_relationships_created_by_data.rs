@@ -24,3 +24,8 @@ impl DowntimeRelationshipsCreatedByData {
         }
     }
 }
+impl Default for DowntimeRelationshipsCreatedByData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

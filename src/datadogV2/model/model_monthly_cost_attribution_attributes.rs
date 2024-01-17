@@ -25,13 +25,13 @@ pub struct MonthlyCostAttributionAttributes {
     /// configured for usage attribution](https://docs.datadoghq.com/account_management/billing/usage_attribution/#getting-started).
     /// In this scenario the API returns the total cost, not broken down by tags.
     #[serde(rename = "tags", default, with = "::serde_with::rust::double_option")]
-    pub tags: Option<Option<std::collections::HashMap<String, Option<Vec<String>>>>>,
+    pub tags: Option<Option<std::collections::BTreeMap<String, Option<Vec<String>>>>>,
     /// Shows the most recent hour in the current months for all organizations for which all costs were calculated.
     #[serde(rename = "updated_at")]
     pub updated_at: Option<String>,
     /// Fields in Cost Attribution by tag(s). Example: `infra_host_on_demand_cost`, `infra_host_committed_cost`, `infra_host_total_cost`, `infra_host_percentage_in_org`, `infra_host_percentage_in_account`.
     #[serde(rename = "values")]
-    pub values: Option<std::collections::HashMap<String, serde_json::Value>>,
+    pub values: Option<std::collections::BTreeMap<String, serde_json::Value>>,
 }
 
 impl MonthlyCostAttributionAttributes {
@@ -45,5 +45,10 @@ impl MonthlyCostAttributionAttributes {
             updated_at: None,
             values: None,
         }
+    }
+}
+impl Default for MonthlyCostAttributionAttributes {
+    fn default() -> Self {
+        Self::new()
     }
 }

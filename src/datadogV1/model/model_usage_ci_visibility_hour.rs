@@ -64,3 +64,8 @@ impl UsageCIVisibilityHour {
         }
     }
 }
+impl Default for UsageCIVisibilityHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

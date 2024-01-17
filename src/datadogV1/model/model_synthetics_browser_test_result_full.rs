@@ -47,3 +47,8 @@ impl SyntheticsBrowserTestResultFull {
         }
     }
 }
+impl Default for SyntheticsBrowserTestResultFull {
+    fn default() -> Self {
+        Self::new()
+    }
+}

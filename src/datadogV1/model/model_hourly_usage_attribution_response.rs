@@ -24,3 +24,8 @@ impl HourlyUsageAttributionResponse {
         }
     }
 }
+impl Default for HourlyUsageAttributionResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -24,3 +24,8 @@ impl MonthlyUsageAttributionPagination {
         }
     }
 }
+impl Default for MonthlyUsageAttributionPagination {
+    fn default() -> Self {
+        Self::new()
+    }
+}

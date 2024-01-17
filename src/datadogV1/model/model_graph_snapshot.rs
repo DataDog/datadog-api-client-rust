@@ -30,3 +30,8 @@ impl GraphSnapshot {
         }
     }
 }
+impl Default for GraphSnapshot {
+    fn default() -> Self {
+        Self::new()
+    }
+}

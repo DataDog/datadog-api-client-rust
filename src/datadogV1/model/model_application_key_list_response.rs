@@ -20,3 +20,8 @@ impl ApplicationKeyListResponse {
         }
     }
 }
+impl Default for ApplicationKeyListResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -33,3 +33,8 @@ impl CIAppPipelineEventsRequest {
         }
     }
 }
+impl Default for CIAppPipelineEventsRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -28,3 +28,8 @@ impl IncidentTeamResponseAttributes {
         }
     }
 }
+impl Default for IncidentTeamResponseAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

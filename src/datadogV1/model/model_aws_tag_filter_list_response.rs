@@ -18,3 +18,8 @@ impl AWSTagFilterListResponse {
         AWSTagFilterListResponse { filters: None }
     }
 }
+impl Default for AWSTagFilterListResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

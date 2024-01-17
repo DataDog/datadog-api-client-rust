@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum LogsGroupByTotal {
-    LogsGroupByTotalBoolean(Box<bool>),
-    LogsGroupByTotalString(Box<String>),
-    LogsGroupByTotalNumber(Box<f64>),
+    LogsGroupByTotalBoolean(bool),
+    LogsGroupByTotalString(String),
+    LogsGroupByTotalNumber(f64),
 }

@@ -36,3 +36,8 @@ impl UsageNetworkHostsHour {
         }
     }
 }
+impl Default for UsageNetworkHostsHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

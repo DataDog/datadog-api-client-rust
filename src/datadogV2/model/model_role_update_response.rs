@@ -18,3 +18,8 @@ impl RoleUpdateResponse {
         RoleUpdateResponse { data: None }
     }
 }
+impl Default for RoleUpdateResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

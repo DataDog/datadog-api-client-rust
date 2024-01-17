@@ -33,3 +33,8 @@ impl CIAppResponseMetadata {
         }
     }
 }
+impl Default for CIAppResponseMetadata {
+    fn default() -> Self {
+        Self::new()
+    }
+}

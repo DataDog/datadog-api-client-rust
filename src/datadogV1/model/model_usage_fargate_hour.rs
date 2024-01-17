@@ -60,3 +60,8 @@ impl UsageFargateHour {
         }
     }
 }
+impl Default for UsageFargateHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

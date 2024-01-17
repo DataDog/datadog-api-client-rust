@@ -20,3 +20,8 @@ impl OnDemandConcurrencyCapAttributes {
         }
     }
 }
+impl Default for OnDemandConcurrencyCapAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

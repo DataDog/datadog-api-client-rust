@@ -7,6 +7,6 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum IncidentTodoAssignee {
-    IncidentTodoAssigneeHandle(Box<String>),
+    IncidentTodoAssigneeHandle(String),
     IncidentTodoAnonymousAssignee(Box<crate::datadogV2::model::IncidentTodoAnonymousAssignee>),
 }

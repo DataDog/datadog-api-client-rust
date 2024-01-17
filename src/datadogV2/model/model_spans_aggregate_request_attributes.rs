@@ -33,3 +33,8 @@ impl SpansAggregateRequestAttributes {
         }
     }
 }
+impl Default for SpansAggregateRequestAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

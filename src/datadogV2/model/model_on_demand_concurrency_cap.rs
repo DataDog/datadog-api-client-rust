@@ -24,3 +24,8 @@ impl OnDemandConcurrencyCap {
         }
     }
 }
+impl Default for OnDemandConcurrencyCap {
+    fn default() -> Self {
+        Self::new()
+    }
+}

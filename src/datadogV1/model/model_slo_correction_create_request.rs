@@ -18,3 +18,8 @@ impl SLOCorrectionCreateRequest {
         SLOCorrectionCreateRequest { data: None }
     }
 }
+impl Default for SLOCorrectionCreateRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

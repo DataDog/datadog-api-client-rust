@@ -18,3 +18,8 @@ impl HTTPLogErrors {
         HTTPLogErrors { errors: None }
     }
 }
+impl Default for HTTPLogErrors {
+    fn default() -> Self {
+        Self::new()
+    }
+}

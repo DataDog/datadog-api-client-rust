@@ -28,3 +28,8 @@ impl EventResponse {
         }
     }
 }
+impl Default for EventResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -18,3 +18,8 @@ impl AWSAccountCreateResponse {
         AWSAccountCreateResponse { external_id: None }
     }
 }
+impl Default for AWSAccountCreateResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

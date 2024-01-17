@@ -20,3 +20,8 @@ impl DashboardListAddItemsResponse {
         }
     }
 }
+impl Default for DashboardListAddItemsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

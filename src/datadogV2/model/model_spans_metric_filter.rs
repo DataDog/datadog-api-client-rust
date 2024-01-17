@@ -18,3 +18,8 @@ impl SpansMetricFilter {
         SpansMetricFilter { query: None }
     }
 }
+impl Default for SpansMetricFilter {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -20,3 +20,8 @@ impl DashboardDeleteResponse {
         }
     }
 }
+impl Default for DashboardDeleteResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

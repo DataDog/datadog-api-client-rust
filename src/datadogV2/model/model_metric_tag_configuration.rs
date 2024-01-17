@@ -28,3 +28,8 @@ impl MetricTagConfiguration {
         }
     }
 }
+impl Default for MetricTagConfiguration {
+    fn default() -> Self {
+        Self::new()
+    }
+}

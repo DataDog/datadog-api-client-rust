@@ -18,3 +18,8 @@ impl CloudCostActivityResponse {
         CloudCostActivityResponse { data: None }
     }
 }
+impl Default for CloudCostActivityResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

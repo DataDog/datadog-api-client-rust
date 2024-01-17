@@ -10,11 +10,16 @@ use serde_with::skip_serializing_none;
 pub struct TagToHosts {
     /// A list of tags to apply to the host.
     #[serde(rename = "tags")]
-    pub tags: Option<std::collections::HashMap<String, Vec<String>>>,
+    pub tags: Option<std::collections::BTreeMap<String, Vec<String>>>,
 }
 
 impl TagToHosts {
     pub fn new() -> TagToHosts {
         TagToHosts { tags: None }
+    }
+}
+impl Default for TagToHosts {
+    fn default() -> Self {
+        Self::new()
     }
 }

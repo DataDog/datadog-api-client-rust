@@ -31,3 +31,8 @@ impl SearchServiceLevelObjectiveData {
         }
     }
 }
+impl Default for SearchServiceLevelObjectiveData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

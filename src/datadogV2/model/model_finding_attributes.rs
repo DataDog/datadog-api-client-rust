@@ -52,3 +52,8 @@ impl FindingAttributes {
         }
     }
 }
+impl Default for FindingAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

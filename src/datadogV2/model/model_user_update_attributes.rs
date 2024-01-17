@@ -28,3 +28,8 @@ impl UserUpdateAttributes {
         }
     }
 }
+impl Default for UserUpdateAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

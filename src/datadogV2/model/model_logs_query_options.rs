@@ -25,3 +25,8 @@ impl LogsQueryOptions {
         }
     }
 }
+impl Default for LogsQueryOptions {
+    fn default() -> Self {
+        Self::new()
+    }
+}

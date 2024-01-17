@@ -28,3 +28,8 @@ impl LogsMetricUpdateAttributes {
         }
     }
 }
+impl Default for LogsMetricUpdateAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

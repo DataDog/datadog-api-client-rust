@@ -18,3 +18,8 @@ impl MonitorConfigPolicyResponse {
         MonitorConfigPolicyResponse { data: None }
     }
 }
+impl Default for MonitorConfigPolicyResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

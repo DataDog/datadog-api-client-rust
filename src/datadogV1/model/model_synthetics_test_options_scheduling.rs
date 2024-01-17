@@ -24,3 +24,8 @@ impl SyntheticsTestOptionsScheduling {
         }
     }
 }
+impl Default for SyntheticsTestOptionsScheduling {
+    fn default() -> Self {
+        Self::new()
+    }
+}

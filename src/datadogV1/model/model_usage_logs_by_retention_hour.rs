@@ -56,3 +56,8 @@ impl UsageLogsByRetentionHour {
         }
     }
 }
+impl Default for UsageLogsByRetentionHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

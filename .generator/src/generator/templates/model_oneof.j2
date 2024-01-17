@@ -7,6 +7,10 @@ pub enum {{name}} {
     {%- for oneOf in model.oneOf %}
 	{%- set dataType = get_type(oneOf, render_nullable=False, render_option=False, version=version) %}
 	{%- set attributeName = (get_name(oneOf) or dataType)|upperfirst %}
+	{%- if oneOf | is_primitive or oneOf.type == "array" %}
+	{{attributeName}}({{dataType}}),
+	{%- else %}
 	{{attributeName}}(Box<{{dataType}}>),
+	{%- endif %}
     {%- endfor%}
 }

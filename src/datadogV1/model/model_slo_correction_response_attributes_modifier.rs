@@ -28,3 +28,8 @@ impl SLOCorrectionResponseAttributesModifier {
         }
     }
 }
+impl Default for SLOCorrectionResponseAttributesModifier {
+    fn default() -> Self {
+        Self::new()
+    }
+}

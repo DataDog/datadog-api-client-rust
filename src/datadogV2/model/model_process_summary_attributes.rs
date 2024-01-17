@@ -48,3 +48,8 @@ impl ProcessSummaryAttributes {
         }
     }
 }
+impl Default for ProcessSummaryAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

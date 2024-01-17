@@ -18,3 +18,8 @@ impl AuthNMappingCreateRelationships {
         AuthNMappingCreateRelationships { role: None }
     }
 }
+impl Default for AuthNMappingCreateRelationships {
+    fn default() -> Self {
+        Self::new()
+    }
+}

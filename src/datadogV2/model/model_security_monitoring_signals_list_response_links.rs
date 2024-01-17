@@ -19,3 +19,8 @@ impl SecurityMonitoringSignalsListResponseLinks {
         SecurityMonitoringSignalsListResponseLinks { next: None }
     }
 }
+impl Default for SecurityMonitoringSignalsListResponseLinks {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -75,3 +75,8 @@ impl MonitorSearchResult {
         }
     }
 }
+impl Default for MonitorSearchResult {
+    fn default() -> Self {
+        Self::new()
+    }
+}

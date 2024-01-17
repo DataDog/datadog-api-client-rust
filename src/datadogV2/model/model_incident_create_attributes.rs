@@ -16,8 +16,9 @@ pub struct IncidentCreateAttributes {
     pub customer_impacted: bool,
     /// A condensed view of the user-defined fields for which to create initial selections.
     #[serde(rename = "fields")]
-    pub fields:
-        Option<std::collections::HashMap<String, crate::datadogV2::model::IncidentFieldAttributes>>,
+    pub fields: Option<
+        std::collections::BTreeMap<String, crate::datadogV2::model::IncidentFieldAttributes>,
+    >,
     /// An array of initial timeline cells to be placed at the beginning of the incident timeline.
     #[serde(rename = "initial_cells")]
     pub initial_cells: Option<Vec<crate::datadogV2::model::IncidentTimelineCellCreateAttributes>>,

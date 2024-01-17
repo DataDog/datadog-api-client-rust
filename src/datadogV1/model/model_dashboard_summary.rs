@@ -18,3 +18,8 @@ impl DashboardSummary {
         DashboardSummary { dashboards: None }
     }
 }
+impl Default for DashboardSummary {
+    fn default() -> Self {
+        Self::new()
+    }
+}

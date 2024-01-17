@@ -18,3 +18,8 @@ impl OutcomesBatchAttributes {
         OutcomesBatchAttributes { results: None }
     }
 }
+impl Default for OutcomesBatchAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

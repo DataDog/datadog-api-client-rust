@@ -18,3 +18,8 @@ impl LogsArchives {
         LogsArchives { data: None }
     }
 }
+impl Default for LogsArchives {
+    fn default() -> Self {
+        Self::new()
+    }
+}

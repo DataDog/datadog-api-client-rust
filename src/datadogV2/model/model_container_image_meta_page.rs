@@ -44,3 +44,8 @@ impl ContainerImageMetaPage {
         }
     }
 }
+impl Default for ContainerImageMetaPage {
+    fn default() -> Self {
+        Self::new()
+    }
+}

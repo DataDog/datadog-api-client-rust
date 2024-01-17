@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct CIAppPipelineEventAttributes {
     /// JSON object of attributes from CI Visibility pipeline events.
     #[serde(rename = "attributes")]
-    pub attributes: Option<std::collections::HashMap<String, serde_json::Value>>,
+    pub attributes: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// Pipeline execution level.
     #[serde(rename = "ci_level")]
     pub ci_level: Option<crate::datadogV2::model::CIAppPipelineLevel>,
@@ -26,5 +26,10 @@ impl CIAppPipelineEventAttributes {
             ci_level: None,
             tags: None,
         }
+    }
+}
+impl Default for CIAppPipelineEventAttributes {
+    fn default() -> Self {
+        Self::new()
     }
 }

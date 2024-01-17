@@ -28,3 +28,8 @@ impl ServiceDefinitionMetaWarnings {
         }
     }
 }
+impl Default for ServiceDefinitionMetaWarnings {
+    fn default() -> Self {
+        Self::new()
+    }
+}

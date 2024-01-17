@@ -28,3 +28,8 @@ impl IncidentServiceResponseAttributes {
         }
     }
 }
+impl Default for IncidentServiceResponseAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

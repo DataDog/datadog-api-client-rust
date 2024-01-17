@@ -20,3 +20,8 @@ impl IncidentAttachmentRelationships {
         }
     }
 }
+impl Default for IncidentAttachmentRelationships {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -68,3 +68,8 @@ impl HeatMapWidgetRequest {
         }
     }
 }
+impl Default for HeatMapWidgetRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

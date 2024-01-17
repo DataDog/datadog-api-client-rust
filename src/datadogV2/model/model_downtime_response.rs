@@ -27,3 +27,8 @@ impl DowntimeResponse {
         }
     }
 }
+impl Default for DowntimeResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

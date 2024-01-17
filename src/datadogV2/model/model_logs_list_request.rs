@@ -33,3 +33,8 @@ impl LogsListRequest {
         }
     }
 }
+impl Default for LogsListRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

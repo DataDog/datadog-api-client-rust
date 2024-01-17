@@ -32,3 +32,8 @@ impl TreeMapWidgetRequest {
         }
     }
 }
+impl Default for TreeMapWidgetRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

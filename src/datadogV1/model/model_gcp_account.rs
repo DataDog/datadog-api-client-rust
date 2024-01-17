@@ -82,3 +82,8 @@ impl GCPAccount {
         }
     }
 }
+impl Default for GCPAccount {
+    fn default() -> Self {
+        Self::new()
+    }
+}

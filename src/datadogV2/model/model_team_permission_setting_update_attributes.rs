@@ -18,3 +18,8 @@ impl TeamPermissionSettingUpdateAttributes {
         TeamPermissionSettingUpdateAttributes { value: None }
     }
 }
+impl Default for TeamPermissionSettingUpdateAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

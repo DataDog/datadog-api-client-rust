@@ -18,3 +18,8 @@ impl ServiceDefinitionV1Integrations {
         ServiceDefinitionV1Integrations { pagerduty: None }
     }
 }
+impl Default for ServiceDefinitionV1Integrations {
+    fn default() -> Self {
+        Self::new()
+    }
+}

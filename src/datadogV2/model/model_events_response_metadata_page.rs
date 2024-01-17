@@ -19,3 +19,8 @@ impl EventsResponseMetadataPage {
         EventsResponseMetadataPage { after: None }
     }
 }
+impl Default for EventsResponseMetadataPage {
+    fn default() -> Self {
+        Self::new()
+    }
+}

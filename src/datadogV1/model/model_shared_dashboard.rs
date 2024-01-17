@@ -40,7 +40,7 @@ pub struct SharedDashboard {
         with = "::serde_with::rust::double_option"
     )]
     pub selectable_template_vars:
-        Option<Option<Vec<Option<crate::datadogV1::model::SelectableTemplateVariableItems>>>>,
+        Option<Option<Vec<crate::datadogV1::model::SelectableTemplateVariableItems>>>,
     /// List of email addresses that can receive an invitation to access to the shared dashboard.
     #[serde(
         rename = "share_list",

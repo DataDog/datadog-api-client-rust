@@ -44,3 +44,8 @@ impl ServiceDefinitionMeta {
         }
     }
 }
+impl Default for ServiceDefinitionMeta {
+    fn default() -> Self {
+        Self::new()
+    }
+}

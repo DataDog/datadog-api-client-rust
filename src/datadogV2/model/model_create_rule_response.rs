@@ -18,3 +18,8 @@ impl CreateRuleResponse {
         CreateRuleResponse { data: None }
     }
 }
+impl Default for CreateRuleResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

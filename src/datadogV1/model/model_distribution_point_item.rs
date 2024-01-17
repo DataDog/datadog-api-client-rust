@@ -7,6 +7,6 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DistributionPointItem {
-    DistributionPointTimestamp(Box<f64>),
-    DistributionPointData(Box<Vec<f64>>),
+    DistributionPointTimestamp(f64),
+    DistributionPointData(Vec<f64>),
 }

@@ -19,3 +19,8 @@ impl RUMResponseLinks {
         RUMResponseLinks { next: None }
     }
 }
+impl Default for RUMResponseLinks {
+    fn default() -> Self {
+        Self::new()
+    }
+}

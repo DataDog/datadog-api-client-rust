@@ -36,3 +36,8 @@ impl ContainerImageFlavor {
         }
     }
 }
+impl Default for ContainerImageFlavor {
+    fn default() -> Self {
+        Self::new()
+    }
+}

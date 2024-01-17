@@ -32,3 +32,8 @@ impl LogsRetentionSumUsage {
         }
     }
 }
+impl Default for LogsRetentionSumUsage {
+    fn default() -> Self {
+        Self::new()
+    }
+}

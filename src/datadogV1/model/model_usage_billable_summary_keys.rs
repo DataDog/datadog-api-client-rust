@@ -381,3 +381,8 @@ impl UsageBillableSummaryKeys {
         }
     }
 }
+impl Default for UsageBillableSummaryKeys {
+    fn default() -> Self {
+        Self::new()
+    }
+}

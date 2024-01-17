@@ -18,3 +18,8 @@ impl ApiKeyResponse {
         ApiKeyResponse { api_key: None }
     }
 }
+impl Default for ApiKeyResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

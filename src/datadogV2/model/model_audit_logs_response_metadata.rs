@@ -37,3 +37,8 @@ impl AuditLogsResponseMetadata {
         }
     }
 }
+impl Default for AuditLogsResponseMetadata {
+    fn default() -> Self {
+        Self::new()
+    }
+}

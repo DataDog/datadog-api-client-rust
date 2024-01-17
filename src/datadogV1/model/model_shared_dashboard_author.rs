@@ -24,3 +24,8 @@ impl SharedDashboardAuthor {
         }
     }
 }
+impl Default for SharedDashboardAuthor {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -28,3 +28,8 @@ impl SLOCreator {
         }
     }
 }
+impl Default for SLOCreator {
+    fn default() -> Self {
+        Self::new()
+    }
+}

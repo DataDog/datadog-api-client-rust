@@ -58,3 +58,8 @@ impl DowntimeUpdateRequestAttributes {
         }
     }
 }
+impl Default for DowntimeUpdateRequestAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

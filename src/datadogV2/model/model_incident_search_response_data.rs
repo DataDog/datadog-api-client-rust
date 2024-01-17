@@ -24,3 +24,8 @@ impl IncidentSearchResponseData {
         }
     }
 }
+impl Default for IncidentSearchResponseData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

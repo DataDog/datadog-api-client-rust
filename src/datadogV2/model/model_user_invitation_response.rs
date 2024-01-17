@@ -18,3 +18,8 @@ impl UserInvitationResponse {
         UserInvitationResponse { data: None }
     }
 }
+impl Default for UserInvitationResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -18,3 +18,8 @@ impl UsageCustomReportsPage {
         UsageCustomReportsPage { total_count: None }
     }
 }
+impl Default for UsageCustomReportsPage {
+    fn default() -> Self {
+        Self::new()
+    }
+}

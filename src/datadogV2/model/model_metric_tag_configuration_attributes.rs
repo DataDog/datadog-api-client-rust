@@ -62,3 +62,8 @@ impl MetricTagConfigurationAttributes {
         }
     }
 }
+impl Default for MetricTagConfigurationAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -24,3 +24,8 @@ impl SyntheticsCIBatchMetadataCI {
         }
     }
 }
+impl Default for SyntheticsCIBatchMetadataCI {
+    fn default() -> Self {
+        Self::new()
+    }
+}

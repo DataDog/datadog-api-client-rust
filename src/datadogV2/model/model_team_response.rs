@@ -18,3 +18,8 @@ impl TeamResponse {
         TeamResponse { data: None }
     }
 }
+impl Default for TeamResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

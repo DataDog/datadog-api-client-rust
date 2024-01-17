@@ -18,3 +18,8 @@ impl CostByOrgResponse {
         CostByOrgResponse { data: None }
     }
 }
+impl Default for CostByOrgResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

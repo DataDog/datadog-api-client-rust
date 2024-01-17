@@ -18,3 +18,8 @@ impl CIAppCreatePipelineEventRequest {
         CIAppCreatePipelineEventRequest { data: None }
     }
 }
+impl Default for CIAppCreatePipelineEventRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

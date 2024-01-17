@@ -28,3 +28,8 @@ impl ServiceDefinitionData {
         }
     }
 }
+impl Default for ServiceDefinitionData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -24,3 +24,8 @@ impl AWSTagFilterDeleteRequest {
         }
     }
 }
+impl Default for AWSTagFilterDeleteRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

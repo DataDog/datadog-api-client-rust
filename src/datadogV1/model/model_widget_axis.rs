@@ -36,3 +36,8 @@ impl WidgetAxis {
         }
     }
 }
+impl Default for WidgetAxis {
+    fn default() -> Self {
+        Self::new()
+    }
+}

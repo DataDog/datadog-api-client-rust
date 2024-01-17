@@ -24,3 +24,8 @@ impl AWSTagFilter {
         }
     }
 }
+impl Default for AWSTagFilter {
+    fn default() -> Self {
+        Self::new()
+    }
+}

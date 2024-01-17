@@ -18,3 +18,8 @@ impl SensitiveDataScannerStandardPatternData {
         SensitiveDataScannerStandardPatternData { data: None }
     }
 }
+impl Default for SensitiveDataScannerStandardPatternData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

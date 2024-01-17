@@ -10,13 +10,11 @@ use serde_with::skip_serializing_none;
 pub struct CIAppTestsBucketResponse {
     /// The key-value pairs for each group-by.
     #[serde(rename = "by")]
-    pub by: Option<
-        std::collections::HashMap<String, std::collections::HashMap<String, serde_json::Value>>,
-    >,
+    pub by: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// A map of the metric name to value for regular compute, or a list of values for a timeseries.
     #[serde(rename = "computes")]
     pub computes: Option<
-        std::collections::HashMap<String, crate::datadogV2::model::CIAppAggregateBucketValue>,
+        std::collections::BTreeMap<String, crate::datadogV2::model::CIAppAggregateBucketValue>,
     >,
 }
 
@@ -26,5 +24,10 @@ impl CIAppTestsBucketResponse {
             by: None,
             computes: None,
         }
+    }
+}
+impl Default for CIAppTestsBucketResponse {
+    fn default() -> Self {
+        Self::new()
     }
 }

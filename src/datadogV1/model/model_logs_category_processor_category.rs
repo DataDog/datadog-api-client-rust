@@ -24,3 +24,8 @@ impl LogsCategoryProcessorCategory {
         }
     }
 }
+impl Default for LogsCategoryProcessorCategory {
+    fn default() -> Self {
+        Self::new()
+    }
+}

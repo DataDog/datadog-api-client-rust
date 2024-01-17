@@ -44,3 +44,8 @@ impl SharedDashboardInvitesDataObjectAttributes {
         }
     }
 }
+impl Default for SharedDashboardInvitesDataObjectAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

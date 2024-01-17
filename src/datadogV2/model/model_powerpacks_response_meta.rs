@@ -18,3 +18,8 @@ impl PowerpacksResponseMeta {
         PowerpacksResponseMeta { pagination: None }
     }
 }
+impl Default for PowerpacksResponseMeta {
+    fn default() -> Self {
+        Self::new()
+    }
+}

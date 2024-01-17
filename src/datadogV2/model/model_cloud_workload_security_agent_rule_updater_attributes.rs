@@ -24,3 +24,8 @@ impl CloudWorkloadSecurityAgentRuleUpdaterAttributes {
         }
     }
 }
+impl Default for CloudWorkloadSecurityAgentRuleUpdaterAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

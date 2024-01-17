@@ -28,3 +28,8 @@ impl Span {
         }
     }
 }
+impl Default for Span {
+    fn default() -> Self {
+        Self::new()
+    }
+}

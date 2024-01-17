@@ -40,3 +40,8 @@ impl FindingMute {
         }
     }
 }
+impl Default for FindingMute {
+    fn default() -> Self {
+        Self::new()
+    }
+}

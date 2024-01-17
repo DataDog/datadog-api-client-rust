@@ -28,3 +28,8 @@ impl WidgetRequestStyle {
         }
     }
 }
+impl Default for WidgetRequestStyle {
+    fn default() -> Self {
+        Self::new()
+    }
+}

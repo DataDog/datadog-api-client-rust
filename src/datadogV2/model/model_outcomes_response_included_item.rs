@@ -28,3 +28,8 @@ impl OutcomesResponseIncludedItem {
         }
     }
 }
+impl Default for OutcomesResponseIncludedItem {
+    fn default() -> Self {
+        Self::new()
+    }
+}

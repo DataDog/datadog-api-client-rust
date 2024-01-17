@@ -26,3 +26,8 @@ impl DowntimeScheduleCurrentDowntimeResponse {
         }
     }
 }
+impl Default for DowntimeScheduleCurrentDowntimeResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

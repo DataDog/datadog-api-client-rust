@@ -20,3 +20,8 @@ impl APIKeysResponseMetaPage {
         }
     }
 }
+impl Default for APIKeysResponseMetaPage {
+    fn default() -> Self {
+        Self::new()
+    }
+}

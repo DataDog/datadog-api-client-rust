@@ -36,3 +36,8 @@ impl UsageAttributionPagination {
         }
     }
 }
+impl Default for UsageAttributionPagination {
+    fn default() -> Self {
+        Self::new()
+    }
+}

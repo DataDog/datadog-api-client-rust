@@ -18,3 +18,8 @@ impl HourlyUsageMetadata {
         HourlyUsageMetadata { pagination: None }
     }
 }
+impl Default for HourlyUsageMetadata {
+    fn default() -> Self {
+        Self::new()
+    }
+}

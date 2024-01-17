@@ -59,27 +59,26 @@ def type_to_rust(schema, alternative_name=None, render_nullable=False, render_op
             type_ = "array"
         elif "properties" in schema:
             type_ = "object"
+        elif "oneOf" in schema:
+            return alternative_name
         else:
             type_ = "object"
             warnings.warn(f"Unknown type for schema: {schema} ({name or alternative_name})")
+            return option_wrapper(f"serde_json::Value", render_option, render_nullable)
 
     if type_ == "array":
         if name and schema.get("x-generate-alias-as-model", False):
             return name
         if name or alternative_name:
             alternative_name = (name or alternative_name) + "Item"
-        name = type_to_rust(schema["items"], alternative_name=alternative_name, render_nullable=render_nullable, render_option=False, version=version)
-        # handle nullable arrays
-        if formatter.simple_type(schema["items"]) and schema["items"].get("nullable"):
-            name = f"Option<{name}>"
-        if schema.get("nullable") and formatter.is_primitive(schema["items"]):
-            name = formatter.simple_type(schema["items"], render_nullable=render_nullable, render_option=False)
+        nullable_item = schema["items"].get("nullable")
+        name = type_to_rust(schema["items"], alternative_name=alternative_name, render_nullable=nullable_item, render_option=False, version=version)
         return option_wrapper(f"Vec<{name}>", render_option, render_nullable)
     elif type_ == "object":
         name = "serde_json::Value"
         if "additionalProperties" in schema:
             name = type_to_rust(schema["additionalProperties"], render_nullable=render_nullable, render_option=False, version=version)
-        return option_wrapper(f"std::collections::HashMap<String, {name}>", render_option, render_nullable)
+        return option_wrapper(f"std::collections::BTreeMap<String, {name}>", render_option, render_nullable)
 
     raise ValueError(f"Unknown type {type_}")
 

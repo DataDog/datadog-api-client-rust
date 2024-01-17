@@ -21,3 +21,8 @@ impl SyntheticsDeleteTestsResponse {
         }
     }
 }
+impl Default for SyntheticsDeleteTestsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

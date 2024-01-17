@@ -18,3 +18,8 @@ impl OutcomesBatchRequest {
         OutcomesBatchRequest { data: None }
     }
 }
+impl Default for OutcomesBatchRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

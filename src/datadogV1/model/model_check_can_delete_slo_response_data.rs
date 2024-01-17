@@ -18,3 +18,8 @@ impl CheckCanDeleteSLOResponseData {
         CheckCanDeleteSLOResponseData { ok: None }
     }
 }
+impl Default for CheckCanDeleteSLOResponseData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

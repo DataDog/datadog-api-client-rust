@@ -18,3 +18,8 @@ impl FastlyAccountUpdateRequestAttributes {
         FastlyAccountUpdateRequestAttributes { api_key: None }
     }
 }
+impl Default for FastlyAccountUpdateRequestAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -18,3 +18,8 @@ impl MetricEstimateResponse {
         MetricEstimateResponse { data: None }
     }
 }
+impl Default for MetricEstimateResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

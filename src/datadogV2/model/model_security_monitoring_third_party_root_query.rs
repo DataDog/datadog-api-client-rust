@@ -24,3 +24,8 @@ impl SecurityMonitoringThirdPartyRootQuery {
         }
     }
 }
+impl Default for SecurityMonitoringThirdPartyRootQuery {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -24,3 +24,8 @@ impl IncidentFieldAttributesMultipleValue {
         }
     }
 }
+impl Default for IncidentFieldAttributesMultipleValue {
+    fn default() -> Self {
+        Self::new()
+    }
+}

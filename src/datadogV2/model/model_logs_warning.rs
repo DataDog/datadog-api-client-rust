@@ -28,3 +28,8 @@ impl LogsWarning {
         }
     }
 }
+impl Default for LogsWarning {
+    fn default() -> Self {
+        Self::new()
+    }
+}

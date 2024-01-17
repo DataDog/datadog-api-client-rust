@@ -18,3 +18,8 @@ impl RelationshipToRuleData {
         RelationshipToRuleData { data: None }
     }
 }
+impl Default for RelationshipToRuleData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

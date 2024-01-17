@@ -18,3 +18,8 @@ impl TeamRelationshipsLinks {
         TeamRelationshipsLinks { related: None }
     }
 }
+impl Default for TeamRelationshipsLinks {
+    fn default() -> Self {
+        Self::new()
+    }
+}

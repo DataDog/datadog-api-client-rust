@@ -28,3 +28,8 @@ impl RUMAnalyticsAggregateResponse {
         }
     }
 }
+impl Default for RUMAnalyticsAggregateResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

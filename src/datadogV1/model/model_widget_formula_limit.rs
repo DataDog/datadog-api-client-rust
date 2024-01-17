@@ -24,3 +24,8 @@ impl WidgetFormulaLimit {
         }
     }
 }
+impl Default for WidgetFormulaLimit {
+    fn default() -> Self {
+        Self::new()
+    }
+}

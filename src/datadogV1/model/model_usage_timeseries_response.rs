@@ -18,3 +18,8 @@ impl UsageTimeseriesResponse {
         UsageTimeseriesResponse { usage: None }
     }
 }
+impl Default for UsageTimeseriesResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

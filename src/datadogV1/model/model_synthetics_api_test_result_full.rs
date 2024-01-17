@@ -47,3 +47,8 @@ impl SyntheticsAPITestResultFull {
         }
     }
 }
+impl Default for SyntheticsAPITestResultFull {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -28,3 +28,8 @@ impl RUMWarning {
         }
     }
 }
+impl Default for RUMWarning {
+    fn default() -> Self {
+        Self::new()
+    }
+}

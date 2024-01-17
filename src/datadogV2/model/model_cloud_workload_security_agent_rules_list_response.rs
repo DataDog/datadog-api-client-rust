@@ -18,3 +18,8 @@ impl CloudWorkloadSecurityAgentRulesListResponse {
         CloudWorkloadSecurityAgentRulesListResponse { data: None }
     }
 }
+impl Default for CloudWorkloadSecurityAgentRulesListResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

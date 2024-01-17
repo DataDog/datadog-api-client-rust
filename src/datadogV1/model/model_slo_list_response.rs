@@ -29,3 +29,8 @@ impl SLOListResponse {
         }
     }
 }
+impl Default for SLOListResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -56,3 +56,8 @@ impl SyntheticsBatchResult {
         }
     }
 }
+impl Default for SyntheticsBatchResult {
+    fn default() -> Self {
+        Self::new()
+    }
+}

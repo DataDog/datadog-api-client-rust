@@ -24,3 +24,8 @@ impl SpansAggregateBucketValueTimeseriesPoint {
         }
     }
 }
+impl Default for SpansAggregateBucketValueTimeseriesPoint {
+    fn default() -> Self {
+        Self::new()
+    }
+}

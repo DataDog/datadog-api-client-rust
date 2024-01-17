@@ -24,3 +24,8 @@ impl SensitiveDataScannerGroup {
         }
     }
 }
+impl Default for SensitiveDataScannerGroup {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -72,3 +72,8 @@ impl UsageRumSessionsHour {
         }
     }
 }
+impl Default for UsageRumSessionsHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

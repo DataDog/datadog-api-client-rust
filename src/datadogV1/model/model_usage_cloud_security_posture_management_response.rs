@@ -18,3 +18,8 @@ impl UsageCloudSecurityPostureManagementResponse {
         UsageCloudSecurityPostureManagementResponse { usage: None }
     }
 }
+impl Default for UsageCloudSecurityPostureManagementResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

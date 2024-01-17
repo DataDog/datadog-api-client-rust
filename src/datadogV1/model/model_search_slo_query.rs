@@ -35,3 +35,8 @@ impl SearchSLOQuery {
         }
     }
 }
+impl Default for SearchSLOQuery {
+    fn default() -> Self {
+        Self::new()
+    }
+}

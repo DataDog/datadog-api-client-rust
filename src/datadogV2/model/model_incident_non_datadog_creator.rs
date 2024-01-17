@@ -24,3 +24,8 @@ impl IncidentNonDatadogCreator {
         }
     }
 }
+impl Default for IncidentNonDatadogCreator {
+    fn default() -> Self {
+        Self::new()
+    }
+}

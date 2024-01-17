@@ -18,3 +18,8 @@ impl SyntheticsPatchTestBody {
         SyntheticsPatchTestBody { data: None }
     }
 }
+impl Default for SyntheticsPatchTestBody {
+    fn default() -> Self {
+        Self::new()
+    }
+}

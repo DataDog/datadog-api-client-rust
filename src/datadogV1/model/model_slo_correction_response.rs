@@ -18,3 +18,8 @@ impl SLOCorrectionResponse {
         SLOCorrectionResponse { data: None }
     }
 }
+impl Default for SLOCorrectionResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

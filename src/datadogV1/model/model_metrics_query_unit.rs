@@ -36,3 +36,8 @@ impl MetricsQueryUnit {
         }
     }
 }
+impl Default for MetricsQueryUnit {
+    fn default() -> Self {
+        Self::new()
+    }
+}

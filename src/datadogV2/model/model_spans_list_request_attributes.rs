@@ -33,3 +33,8 @@ impl SpansListRequestAttributes {
         }
     }
 }
+impl Default for SpansListRequestAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

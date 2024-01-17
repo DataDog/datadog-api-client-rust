@@ -28,3 +28,8 @@ impl IncidentResponseMetaPagination {
         }
     }
 }
+impl Default for IncidentResponseMetaPagination {
+    fn default() -> Self {
+        Self::new()
+    }
+}

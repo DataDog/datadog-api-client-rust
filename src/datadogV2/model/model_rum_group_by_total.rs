@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum RUMGroupByTotal {
-    RUMGroupByTotalBoolean(Box<bool>),
-    RUMGroupByTotalString(Box<String>),
-    RUMGroupByTotalNumber(Box<f64>),
+    RUMGroupByTotalBoolean(bool),
+    RUMGroupByTotalString(String),
+    RUMGroupByTotalNumber(f64),
 }

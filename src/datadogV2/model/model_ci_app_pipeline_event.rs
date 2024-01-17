@@ -28,3 +28,8 @@ impl CIAppPipelineEvent {
         }
     }
 }
+impl Default for CIAppPipelineEvent {
+    fn default() -> Self {
+        Self::new()
+    }
+}

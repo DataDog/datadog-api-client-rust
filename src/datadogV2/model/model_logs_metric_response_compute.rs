@@ -29,3 +29,8 @@ impl LogsMetricResponseCompute {
         }
     }
 }
+impl Default for LogsMetricResponseCompute {
+    fn default() -> Self {
+        Self::new()
+    }
+}

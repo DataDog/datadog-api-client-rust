@@ -69,3 +69,8 @@ impl SecurityMonitoringRuleOptions {
         }
     }
 }
+impl Default for SecurityMonitoringRuleOptions {
+    fn default() -> Self {
+        Self::new()
+    }
+}

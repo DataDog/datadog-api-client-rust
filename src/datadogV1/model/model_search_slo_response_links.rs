@@ -36,3 +36,8 @@ impl SearchSLOResponseLinks {
         }
     }
 }
+impl Default for SearchSLOResponseLinks {
+    fn default() -> Self {
+        Self::new()
+    }
+}

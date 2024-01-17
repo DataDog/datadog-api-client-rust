@@ -18,3 +18,8 @@ impl FastlyServiceAttributes {
         FastlyServiceAttributes { tags: None }
     }
 }
+impl Default for FastlyServiceAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

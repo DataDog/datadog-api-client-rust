@@ -24,3 +24,8 @@ impl ScalarResponse {
         }
     }
 }
+impl Default for ScalarResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

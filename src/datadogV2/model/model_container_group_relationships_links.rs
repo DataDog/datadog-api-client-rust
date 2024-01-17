@@ -18,3 +18,8 @@ impl ContainerGroupRelationshipsLinks {
         ContainerGroupRelationshipsLinks { related: None }
     }
 }
+impl Default for ContainerGroupRelationshipsLinks {
+    fn default() -> Self {
+        Self::new()
+    }
+}

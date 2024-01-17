@@ -40,3 +40,8 @@ impl MonitorStateGroup {
         }
     }
 }
+impl Default for MonitorStateGroup {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -36,3 +36,8 @@ impl PowerpackResponseLinks {
         }
     }
 }
+impl Default for PowerpackResponseLinks {
+    fn default() -> Self {
+        Self::new()
+    }
+}

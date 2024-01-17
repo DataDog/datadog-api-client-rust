@@ -24,3 +24,8 @@ impl ListFindingsPage {
         }
     }
 }
+impl Default for ListFindingsPage {
+    fn default() -> Self {
+        Self::new()
+    }
+}

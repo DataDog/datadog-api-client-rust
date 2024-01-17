@@ -18,3 +18,8 @@ impl FastlyServiceResponse {
         FastlyServiceResponse { data: None }
     }
 }
+impl Default for FastlyServiceResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

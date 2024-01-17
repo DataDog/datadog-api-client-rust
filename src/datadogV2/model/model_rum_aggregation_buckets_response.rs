@@ -18,3 +18,8 @@ impl RUMAggregationBucketsResponse {
         RUMAggregationBucketsResponse { buckets: None }
     }
 }
+impl Default for RUMAggregationBucketsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

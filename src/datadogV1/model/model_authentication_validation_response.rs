@@ -18,3 +18,8 @@ impl AuthenticationValidationResponse {
         AuthenticationValidationResponse { valid: None }
     }
 }
+impl Default for AuthenticationValidationResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

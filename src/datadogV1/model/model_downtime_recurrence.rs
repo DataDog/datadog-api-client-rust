@@ -61,3 +61,8 @@ impl DowntimeRecurrence {
         }
     }
 }
+impl Default for DowntimeRecurrence {
+    fn default() -> Self {
+        Self::new()
+    }
+}

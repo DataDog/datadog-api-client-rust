@@ -18,3 +18,8 @@ impl SyntheticsPrivateLocationSecretsConfigDecryption {
         SyntheticsPrivateLocationSecretsConfigDecryption { key: None }
     }
 }
+impl Default for SyntheticsPrivateLocationSecretsConfigDecryption {
+    fn default() -> Self {
+        Self::new()
+    }
+}

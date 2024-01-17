@@ -24,3 +24,8 @@ impl OutcomesBatchRequestData {
         }
     }
 }
+impl Default for OutcomesBatchRequestData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -37,3 +37,8 @@ impl RUMResponseMetadata {
         }
     }
 }
+impl Default for RUMResponseMetadata {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -82,3 +82,8 @@ impl SLOCorrectionResponseAttributes {
         }
     }
 }
+impl Default for SLOCorrectionResponseAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

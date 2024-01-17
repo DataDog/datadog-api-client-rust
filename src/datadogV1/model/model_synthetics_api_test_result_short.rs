@@ -39,3 +39,8 @@ impl SyntheticsAPITestResultShort {
         }
     }
 }
+impl Default for SyntheticsAPITestResultShort {
+    fn default() -> Self {
+        Self::new()
+    }
+}

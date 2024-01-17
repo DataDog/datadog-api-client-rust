@@ -66,3 +66,8 @@ impl SLOOverallStatuses {
         }
     }
 }
+impl Default for SLOOverallStatuses {
+    fn default() -> Self {
+        Self::new()
+    }
+}

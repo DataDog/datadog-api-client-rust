@@ -13,7 +13,7 @@ pub struct CheckCanDeleteSLOResponse {
     pub data: Option<Box<crate::datadogV1::model::CheckCanDeleteSLOResponseData>>,
     /// A mapping of SLO id to it's current usages.
     #[serde(rename = "errors")]
-    pub errors: Option<std::collections::HashMap<String, String>>,
+    pub errors: Option<std::collections::BTreeMap<String, String>>,
 }
 
 impl CheckCanDeleteSLOResponse {
@@ -22,5 +22,10 @@ impl CheckCanDeleteSLOResponse {
             data: None,
             errors: None,
         }
+    }
+}
+impl Default for CheckCanDeleteSLOResponse {
+    fn default() -> Self {
+        Self::new()
     }
 }

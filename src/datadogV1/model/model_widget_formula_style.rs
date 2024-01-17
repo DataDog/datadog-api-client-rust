@@ -24,3 +24,8 @@ impl WidgetFormulaStyle {
         }
     }
 }
+impl Default for WidgetFormulaStyle {
+    fn default() -> Self {
+        Self::new()
+    }
+}

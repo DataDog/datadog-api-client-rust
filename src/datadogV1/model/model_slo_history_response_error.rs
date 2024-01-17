@@ -18,3 +18,8 @@ impl SLOHistoryResponseError {
         SLOHistoryResponseError { error: None }
     }
 }
+impl Default for SLOHistoryResponseError {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -28,3 +28,8 @@ impl RUMEvent {
         }
     }
 }
+impl Default for RUMEvent {
+    fn default() -> Self {
+        Self::new()
+    }
+}

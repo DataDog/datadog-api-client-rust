@@ -24,3 +24,8 @@ impl ServiceDefinitionV1Contact {
         }
     }
 }
+impl Default for ServiceDefinitionV1Contact {
+    fn default() -> Self {
+        Self::new()
+    }
+}

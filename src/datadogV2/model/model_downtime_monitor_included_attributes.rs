@@ -18,3 +18,8 @@ impl DowntimeMonitorIncludedAttributes {
         DowntimeMonitorIncludedAttributes { name: None }
     }
 }
+impl Default for DowntimeMonitorIncludedAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

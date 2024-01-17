@@ -18,3 +18,8 @@ impl MetricAllTagsAttributes {
         MetricAllTagsAttributes { tags: None }
     }
 }
+impl Default for MetricAllTagsAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

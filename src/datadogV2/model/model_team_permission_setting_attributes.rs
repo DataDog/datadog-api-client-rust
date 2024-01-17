@@ -36,3 +36,8 @@ impl TeamPermissionSettingAttributes {
         }
     }
 }
+impl Default for TeamPermissionSettingAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

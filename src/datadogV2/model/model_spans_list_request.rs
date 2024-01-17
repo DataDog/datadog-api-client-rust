@@ -18,3 +18,8 @@ impl SpansListRequest {
         SpansListRequest { data: None }
     }
 }
+impl Default for SpansListRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

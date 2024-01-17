@@ -24,3 +24,8 @@ impl SensitiveDataScannerConfiguration {
         }
     }
 }
+impl Default for SensitiveDataScannerConfiguration {
+    fn default() -> Self {
+        Self::new()
+    }
+}

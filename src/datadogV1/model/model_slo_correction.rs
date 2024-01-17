@@ -28,3 +28,8 @@ impl SLOCorrection {
         }
     }
 }
+impl Default for SLOCorrection {
+    fn default() -> Self {
+        Self::new()
+    }
+}

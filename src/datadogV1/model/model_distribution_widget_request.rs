@@ -68,3 +68,8 @@ impl DistributionWidgetRequest {
         }
     }
 }
+impl Default for DistributionWidgetRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

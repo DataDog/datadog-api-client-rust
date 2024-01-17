@@ -18,3 +18,8 @@ impl OrganizationResponse {
         OrganizationResponse { org: None }
     }
 }
+impl Default for OrganizationResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

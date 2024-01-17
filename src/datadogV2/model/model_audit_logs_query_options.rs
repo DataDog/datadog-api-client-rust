@@ -25,3 +25,8 @@ impl AuditLogsQueryOptions {
         }
     }
 }
+impl Default for AuditLogsQueryOptions {
+    fn default() -> Self {
+        Self::new()
+    }
+}

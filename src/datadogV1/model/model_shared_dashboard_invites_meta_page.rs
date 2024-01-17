@@ -18,3 +18,8 @@ impl SharedDashboardInvitesMetaPage {
         SharedDashboardInvitesMetaPage { total_count: None }
     }
 }
+impl Default for SharedDashboardInvitesMetaPage {
+    fn default() -> Self {
+        Self::new()
+    }
+}

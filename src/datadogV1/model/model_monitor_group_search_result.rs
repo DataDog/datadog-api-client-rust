@@ -48,3 +48,8 @@ impl MonitorGroupSearchResult {
         }
     }
 }
+impl Default for MonitorGroupSearchResult {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -22,7 +22,7 @@ pub struct ServiceDefinitionV2 {
     pub docs: Option<Vec<crate::datadogV2::model::ServiceDefinitionV2Doc>>,
     /// Extensions to V2 schema.
     #[serde(rename = "extensions")]
-    pub extensions: Option<std::collections::HashMap<String, serde_json::Value>>,
+    pub extensions: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// Third party integrations that Datadog supports.
     #[serde(rename = "integrations")]
     pub integrations: Option<Box<crate::datadogV2::model::ServiceDefinitionV2Integrations>>,

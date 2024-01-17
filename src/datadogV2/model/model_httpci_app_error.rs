@@ -28,3 +28,8 @@ impl HTTPCIAppError {
         }
     }
 }
+impl Default for HTTPCIAppError {
+    fn default() -> Self {
+        Self::new()
+    }
+}

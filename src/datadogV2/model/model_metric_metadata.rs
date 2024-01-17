@@ -18,3 +18,8 @@ impl MetricMetadata {
         MetricMetadata { origin: None }
     }
 }
+impl Default for MetricMetadata {
+    fn default() -> Self {
+        Self::new()
+    }
+}

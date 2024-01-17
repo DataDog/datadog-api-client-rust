@@ -18,3 +18,8 @@ impl CIAppTestsAggregationBucketsResponse {
         CIAppTestsAggregationBucketsResponse { buckets: None }
     }
 }
+impl Default for CIAppTestsAggregationBucketsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

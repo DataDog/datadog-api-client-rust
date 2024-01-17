@@ -40,3 +40,8 @@ impl ProjectedCostAttributes {
         }
     }
 }
+impl Default for ProjectedCostAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

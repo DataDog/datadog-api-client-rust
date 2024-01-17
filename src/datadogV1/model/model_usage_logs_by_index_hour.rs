@@ -44,3 +44,8 @@ impl UsageLogsByIndexHour {
         }
     }
 }
+impl Default for UsageLogsByIndexHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

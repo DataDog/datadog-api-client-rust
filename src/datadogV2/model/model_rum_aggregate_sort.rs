@@ -32,3 +32,8 @@ impl RUMAggregateSort {
         }
     }
 }
+impl Default for RUMAggregateSort {
+    fn default() -> Self {
+        Self::new()
+    }
+}

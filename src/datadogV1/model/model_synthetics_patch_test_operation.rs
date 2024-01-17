@@ -16,7 +16,7 @@ pub struct SyntheticsPatchTestOperation {
     pub path: Option<String>,
     /// A value to use in a [JSON Patch](https://jsonpatch.com) operation
     #[serde(rename = "value")]
-    pub value: Option<std::collections::HashMap<String, serde_json::Value>>,
+    pub value: Option<serde_json::Value>,
 }
 
 impl SyntheticsPatchTestOperation {
@@ -26,5 +26,10 @@ impl SyntheticsPatchTestOperation {
             path: None,
             value: None,
         }
+    }
+}
+impl Default for SyntheticsPatchTestOperation {
+    fn default() -> Self {
+        Self::new()
     }
 }

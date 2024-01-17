@@ -24,3 +24,8 @@ impl ApplicationKeyResponseMeta {
         }
     }
 }
+impl Default for ApplicationKeyResponseMeta {
+    fn default() -> Self {
+        Self::new()
+    }
+}

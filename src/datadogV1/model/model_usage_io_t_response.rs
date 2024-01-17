@@ -18,3 +18,8 @@ impl UsageIoTResponse {
         UsageIoTResponse { usage: None }
     }
 }
+impl Default for UsageIoTResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

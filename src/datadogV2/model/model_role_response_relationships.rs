@@ -18,3 +18,8 @@ impl RoleResponseRelationships {
         RoleResponseRelationships { permissions: None }
     }
 }
+impl Default for RoleResponseRelationships {
+    fn default() -> Self {
+        Self::new()
+    }
+}

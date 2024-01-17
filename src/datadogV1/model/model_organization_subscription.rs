@@ -18,3 +18,8 @@ impl OrganizationSubscription {
         OrganizationSubscription { type_: None }
     }
 }
+impl Default for OrganizationSubscription {
+    fn default() -> Self {
+        Self::new()
+    }
+}

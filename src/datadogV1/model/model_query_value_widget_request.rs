@@ -76,3 +76,8 @@ impl QueryValueWidgetRequest {
         }
     }
 }
+impl Default for QueryValueWidgetRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}

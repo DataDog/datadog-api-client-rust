@@ -24,3 +24,8 @@ impl ProcessSummariesResponse {
         }
     }
 }
+impl Default for ProcessSummariesResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

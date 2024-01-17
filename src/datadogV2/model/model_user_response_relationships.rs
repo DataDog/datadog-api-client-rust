@@ -32,3 +32,8 @@ impl UserResponseRelationships {
         }
     }
 }
+impl Default for UserResponseRelationships {
+    fn default() -> Self {
+        Self::new()
+    }
+}

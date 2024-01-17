@@ -24,3 +24,8 @@ impl LogsAggregateResponse {
         }
     }
 }
+impl Default for LogsAggregateResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

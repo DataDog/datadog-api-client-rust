@@ -18,3 +18,8 @@ impl UsageBillableSummaryResponse {
         UsageBillableSummaryResponse { usage: None }
     }
 }
+impl Default for UsageBillableSummaryResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -28,3 +28,8 @@ impl UsageAttributionAggregatesBody {
         }
     }
 }
+impl Default for UsageAttributionAggregatesBody {
+    fn default() -> Self {
+        Self::new()
+    }
+}

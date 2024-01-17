@@ -37,8 +37,9 @@ pub struct IncidentUpdateAttributes {
     pub detected: Option<Option<String>>,
     /// A condensed view of the user-defined fields for which to update selections.
     #[serde(rename = "fields")]
-    pub fields:
-        Option<std::collections::HashMap<String, crate::datadogV2::model::IncidentFieldAttributes>>,
+    pub fields: Option<
+        std::collections::BTreeMap<String, crate::datadogV2::model::IncidentFieldAttributes>,
+    >,
     /// Notification handles that will be notified of the incident during update.
     #[serde(rename = "notification_handles")]
     pub notification_handles: Option<Vec<crate::datadogV2::model::IncidentNotificationHandle>>,
@@ -59,5 +60,10 @@ impl IncidentUpdateAttributes {
             notification_handles: None,
             title: None,
         }
+    }
+}
+impl Default for IncidentUpdateAttributes {
+    fn default() -> Self {
+        Self::new()
     }
 }

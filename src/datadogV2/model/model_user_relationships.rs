@@ -18,3 +18,8 @@ impl UserRelationships {
         UserRelationships { roles: None }
     }
 }
+impl Default for UserRelationships {
+    fn default() -> Self {
+        Self::new()
+    }
+}

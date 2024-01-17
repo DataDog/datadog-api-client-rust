@@ -19,3 +19,8 @@ impl MetricBulkTagConfigResponse {
         MetricBulkTagConfigResponse { data: None }
     }
 }
+impl Default for MetricBulkTagConfigResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

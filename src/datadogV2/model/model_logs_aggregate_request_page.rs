@@ -18,3 +18,8 @@ impl LogsAggregateRequestPage {
         LogsAggregateRequestPage { cursor: None }
     }
 }
+impl Default for LogsAggregateRequestPage {
+    fn default() -> Self {
+        Self::new()
+    }
+}

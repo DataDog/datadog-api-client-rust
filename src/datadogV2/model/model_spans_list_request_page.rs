@@ -24,3 +24,8 @@ impl SpansListRequestPage {
         }
     }
 }
+impl Default for SpansListRequestPage {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -49,7 +49,7 @@ pub struct MetricsQueryMetadata {
     /// The second element describes the "per unit" (for example, `second` in `bytes per second`).
     /// If the second element is not present, the API returns null.
     #[serde(rename = "unit")]
-    pub unit: Option<Vec<crate::datadogV1::model::MetricsQueryUnit>>,
+    pub unit: Option<Vec<Option<crate::datadogV1::model::MetricsQueryUnit>>>,
 }
 
 impl MetricsQueryMetadata {
@@ -69,5 +69,10 @@ impl MetricsQueryMetadata {
             tag_set: None,
             unit: None,
         }
+    }
+}
+impl Default for MetricsQueryMetadata {
+    fn default() -> Self {
+        Self::new()
     }
 }

@@ -32,3 +32,8 @@ impl IncidentTeamResponseData {
         }
     }
 }
+impl Default for IncidentTeamResponseData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

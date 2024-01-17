@@ -20,3 +20,8 @@ impl SyntheticsPrivateLocationMetadata {
         }
     }
 }
+impl Default for SyntheticsPrivateLocationMetadata {
+    fn default() -> Self {
+        Self::new()
+    }
+}

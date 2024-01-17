@@ -24,3 +24,8 @@ impl MonitorGroupSearchResponseCounts {
         }
     }
 }
+impl Default for MonitorGroupSearchResponseCounts {
+    fn default() -> Self {
+        Self::new()
+    }
+}

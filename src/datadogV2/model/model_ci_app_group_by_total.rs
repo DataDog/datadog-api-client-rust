@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CIAppGroupByTotal {
-    CIAppGroupByTotalBoolean(Box<bool>),
-    CIAppGroupByTotalString(Box<String>),
-    CIAppGroupByTotalNumber(Box<f64>),
+    CIAppGroupByTotalBoolean(bool),
+    CIAppGroupByTotalString(String),
+    CIAppGroupByTotalNumber(f64),
 }

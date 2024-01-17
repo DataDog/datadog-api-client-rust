@@ -32,3 +32,8 @@ impl SensitiveDataScannerGroupIncludedItem {
         }
     }
 }
+impl Default for SensitiveDataScannerGroupIncludedItem {
+    fn default() -> Self {
+        Self::new()
+    }
+}

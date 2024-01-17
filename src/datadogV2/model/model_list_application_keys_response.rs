@@ -28,3 +28,8 @@ impl ListApplicationKeysResponse {
         }
     }
 }
+impl Default for ListApplicationKeysResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

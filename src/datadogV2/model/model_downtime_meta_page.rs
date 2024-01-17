@@ -20,3 +20,8 @@ impl DowntimeMetaPage {
         }
     }
 }
+impl Default for DowntimeMetaPage {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -442,3 +442,8 @@ impl UsageSummaryDateOrg {
         }
     }
 }
+impl Default for UsageSummaryDateOrg {
+    fn default() -> Self {
+        Self::new()
+    }
+}

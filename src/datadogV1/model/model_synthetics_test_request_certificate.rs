@@ -24,3 +24,8 @@ impl SyntheticsTestRequestCertificate {
         }
     }
 }
+impl Default for SyntheticsTestRequestCertificate {
+    fn default() -> Self {
+        Self::new()
+    }
+}

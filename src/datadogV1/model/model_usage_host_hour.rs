@@ -149,3 +149,8 @@ impl UsageHostHour {
         }
     }
 }
+impl Default for UsageHostHour {
+    fn default() -> Self {
+        Self::new()
+    }
+}

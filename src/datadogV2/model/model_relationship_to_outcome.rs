@@ -18,3 +18,8 @@ impl RelationshipToOutcome {
         RelationshipToOutcome { data: None }
     }
 }
+impl Default for RelationshipToOutcome {
+    fn default() -> Self {
+        Self::new()
+    }
+}

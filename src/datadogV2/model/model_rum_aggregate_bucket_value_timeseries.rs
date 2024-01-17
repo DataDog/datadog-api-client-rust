@@ -14,3 +14,8 @@ impl RUMAggregateBucketValueTimeseries {
         RUMAggregateBucketValueTimeseries {}
     }
 }
+impl Default for RUMAggregateBucketValueTimeseries {
+    fn default() -> Self {
+        Self::new()
+    }
+}

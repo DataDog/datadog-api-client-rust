@@ -36,3 +36,8 @@ impl DistributionWidgetYAxis {
         }
     }
 }
+impl Default for DistributionWidgetYAxis {
+    fn default() -> Self {
+        Self::new()
+    }
+}

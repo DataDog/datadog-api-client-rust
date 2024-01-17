@@ -23,7 +23,7 @@ pub struct DeleteGCPSTSAccountParams {
 #[derive(Clone, Debug)]
 pub struct MakeGCPSTSDelegateParams {
     /// Create a delegate service account within Datadog.
-    pub body: Option<Option<std::collections::HashMap<String, serde_json::Value>>>,
+    pub body: Option<Option<std::collections::BTreeMap<String, serde_json::Value>>>,
 }
 
 /// UpdateGCPSTSAccountParams is a struct for passing parameters to the method [`UpdateGCPSTSAccount`]
@@ -97,11 +97,11 @@ pub enum UpdateGCPSTSAccountError {
 }
 
 #[derive(Debug, Clone)]
-pub struct GcpIntegrationAPI {
+pub struct GCPIntegrationAPI {
     config: configuration::Configuration,
 }
 
-impl Default for GcpIntegrationAPI {
+impl Default for GCPIntegrationAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
@@ -109,7 +109,7 @@ impl Default for GcpIntegrationAPI {
     }
 }
 
-impl GcpIntegrationAPI {
+impl GCPIntegrationAPI {
     pub fn new() -> Self {
         Self::default()
     }

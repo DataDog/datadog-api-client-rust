@@ -7,9 +7,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum RUMAggregateBucketValue {
-    RUMAggregateBucketValueSingleString(Box<String>),
-    RUMAggregateBucketValueSingleNumber(Box<f64>),
-    RUMAggregateBucketValueTimeseries(
-        Box<crate::datadogV2::model::RUMAggregateBucketValueTimeseries>,
-    ),
+    RUMAggregateBucketValueSingleString(String),
+    RUMAggregateBucketValueSingleNumber(f64),
+    RUMAggregateBucketValueTimeseries(crate::datadogV2::model::RUMAggregateBucketValueTimeseries),
 }

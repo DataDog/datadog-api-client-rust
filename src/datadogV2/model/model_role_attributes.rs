@@ -32,3 +32,8 @@ impl RoleAttributes {
         }
     }
 }
+impl Default for RoleAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -29,3 +29,8 @@ impl SensitiveDataScannerStandardPatternsResponseItem {
         }
     }
 }
+impl Default for SensitiveDataScannerStandardPatternsResponseItem {
+    fn default() -> Self {
+        Self::new()
+    }
+}

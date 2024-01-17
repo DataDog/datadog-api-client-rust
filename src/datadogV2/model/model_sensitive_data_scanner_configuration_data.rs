@@ -18,3 +18,8 @@ impl SensitiveDataScannerConfigurationData {
         SensitiveDataScannerConfigurationData { data: None }
     }
 }
+impl Default for SensitiveDataScannerConfigurationData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

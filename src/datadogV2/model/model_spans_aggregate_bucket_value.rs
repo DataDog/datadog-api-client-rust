@@ -7,9 +7,9 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SpansAggregateBucketValue {
-    SpansAggregateBucketValueSingleString(Box<String>),
-    SpansAggregateBucketValueSingleNumber(Box<f64>),
+    SpansAggregateBucketValueSingleString(String),
+    SpansAggregateBucketValueSingleNumber(f64),
     SpansAggregateBucketValueTimeseries(
-        Box<crate::datadogV2::model::SpansAggregateBucketValueTimeseries>,
+        crate::datadogV2::model::SpansAggregateBucketValueTimeseries,
     ),
 }

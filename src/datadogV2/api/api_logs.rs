@@ -453,7 +453,7 @@ impl LogsAPI {
     pub async fn submit_log(
         &self,
         params: SubmitLogParams,
-    ) -> Result<Option<std::collections::HashMap<String, serde_json::Value>>, Error<SubmitLogError>>
+    ) -> Result<Option<std::collections::BTreeMap<String, serde_json::Value>>, Error<SubmitLogError>>
     {
         match self.submit_log_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
@@ -489,7 +489,7 @@ impl LogsAPI {
         &self,
         params: SubmitLogParams,
     ) -> Result<
-        ResponseContent<std::collections::HashMap<String, serde_json::Value>>,
+        ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<SubmitLogError>,
     > {
         let local_configuration = &self.config;
@@ -538,7 +538,7 @@ impl LogsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::HashMap<String, serde_json::Value>> =
+            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                 serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,

@@ -24,3 +24,8 @@ impl SyntheticsGlobalVariableTOTPParameters {
         }
     }
 }
+impl Default for SyntheticsGlobalVariableTOTPParameters {
+    fn default() -> Self {
+        Self::new()
+    }
+}

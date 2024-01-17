@@ -18,3 +18,8 @@ impl OrganizationBilling {
         OrganizationBilling { type_: None }
     }
 }
+impl Default for OrganizationBilling {
+    fn default() -> Self {
+        Self::new()
+    }
+}

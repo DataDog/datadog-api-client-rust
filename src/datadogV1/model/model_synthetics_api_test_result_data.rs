@@ -23,16 +23,14 @@ pub struct SyntheticsAPITestResultData {
     /// Request header object used for the API test.
     #[serde(rename = "requestHeaders")]
     pub request_headers: Option<
-        std::collections::HashMap<String, std::collections::HashMap<String, serde_json::Value>>,
+        std::collections::BTreeMap<String, std::collections::BTreeMap<String, serde_json::Value>>,
     >,
     /// Response body returned for the API test.
     #[serde(rename = "responseBody")]
     pub response_body: Option<String>,
     /// Response headers returned for the API test.
     #[serde(rename = "responseHeaders")]
-    pub response_headers: Option<
-        std::collections::HashMap<String, std::collections::HashMap<String, serde_json::Value>>,
-    >,
+    pub response_headers: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// Global size in byte of the API test response.
     #[serde(rename = "responseSize")]
     pub response_size: Option<i64>,
@@ -55,5 +53,10 @@ impl SyntheticsAPITestResultData {
             response_size: None,
             timings: None,
         }
+    }
+}
+impl Default for SyntheticsAPITestResultData {
+    fn default() -> Self {
+        Self::new()
     }
 }

@@ -24,3 +24,8 @@ impl SLOListResponseMetadataPage {
         }
     }
 }
+impl Default for SLOListResponseMetadataPage {
+    fn default() -> Self {
+        Self::new()
+    }
+}

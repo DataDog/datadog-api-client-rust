@@ -25,3 +25,8 @@ impl CIAppQueryOptions {
         }
     }
 }
+impl Default for CIAppQueryOptions {
+    fn default() -> Self {
+        Self::new()
+    }
+}

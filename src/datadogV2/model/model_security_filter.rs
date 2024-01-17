@@ -28,3 +28,8 @@ impl SecurityFilter {
         }
     }
 }
+impl Default for SecurityFilter {
+    fn default() -> Self {
+        Self::new()
+    }
+}

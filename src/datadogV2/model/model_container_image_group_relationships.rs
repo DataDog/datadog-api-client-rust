@@ -21,3 +21,8 @@ impl ContainerImageGroupRelationships {
         }
     }
 }
+impl Default for ContainerImageGroupRelationships {
+    fn default() -> Self {
+        Self::new()
+    }
+}

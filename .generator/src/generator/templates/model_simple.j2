@@ -20,7 +20,7 @@ pub struct {{ name }} {
 {%- if model.additionalProperties is defined and model.additionalProperties != False %}
 {%- set dataType = get_type(model.additionalProperties, alternative_name=None, render_nullable=False, render_option=False, render_box=True, version=version) %}
     #[serde(flatten)]
-    pub additional_properties: std::collections::HashMap<String, {{ dataType }}>,
+    pub additional_properties: std::collections::BTreeMap<String, {{ dataType }}>,
 {%- endif %}
 }
 
@@ -42,8 +42,16 @@ impl {{ name }} {
             {%- endif %}
             {%- endfor %}
             {%- if model.additionalProperties is defined and model.additionalProperties != False %}
-            additional_properties: std::collections::HashMap::new(),
+            additional_properties: std::collections::BTreeMap::new(),
             {%- endif %}
         }
     }
 }
+
+{%- if not model.required %}
+impl Default for {{ name }} {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+{%- endif %}

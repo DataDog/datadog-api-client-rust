@@ -24,3 +24,8 @@ impl RelationshipToPermissionData {
         }
     }
 }
+impl Default for RelationshipToPermissionData {
+    fn default() -> Self {
+        Self::new()
+    }
+}

@@ -28,3 +28,8 @@ impl LogsAPIError {
         }
     }
 }
+impl Default for LogsAPIError {
+    fn default() -> Self {
+        Self::new()
+    }
+}

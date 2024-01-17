@@ -28,3 +28,8 @@ impl APIKeysResponse {
         }
     }
 }
+impl Default for APIKeysResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}

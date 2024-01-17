@@ -32,3 +32,8 @@ impl EventResponseAttributes {
         }
     }
 }
+impl Default for EventResponseAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}

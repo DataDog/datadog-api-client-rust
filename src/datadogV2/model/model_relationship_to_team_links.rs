@@ -24,3 +24,8 @@ impl RelationshipToTeamLinks {
         }
     }
 }
+impl Default for RelationshipToTeamLinks {
+    fn default() -> Self {
+        Self::new()
+    }
+}
