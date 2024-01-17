@@ -7,9 +7,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum LogsAggregateBucketValue {
-    LogsAggregateBucketValueSingleString(Box<String>),
-    LogsAggregateBucketValueSingleNumber(Box<f64>),
-    LogsAggregateBucketValueTimeseries(
-        Box<crate::datadogV2::model::LogsAggregateBucketValueTimeseries>,
-    ),
+    LogsAggregateBucketValueSingleString(String),
+    LogsAggregateBucketValueSingleNumber(f64),
+    LogsAggregateBucketValueTimeseries(crate::datadogV2::model::LogsAggregateBucketValueTimeseries),
 }

@@ -7,6 +7,6 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum LogsGroupByMissing {
-    LogsGroupByMissingString(Box<String>),
-    LogsGroupByMissingNumber(Box<f64>),
+    LogsGroupByMissingString(String),
+    LogsGroupByMissingNumber(f64),
 }

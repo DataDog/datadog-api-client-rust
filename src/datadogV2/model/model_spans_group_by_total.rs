@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SpansGroupByTotal {
-    SpansGroupByTotalBoolean(Box<bool>),
-    SpansGroupByTotalString(Box<String>),
-    SpansGroupByTotalNumber(Box<f64>),
+    SpansGroupByTotalBoolean(bool),
+    SpansGroupByTotalString(String),
+    SpansGroupByTotalNumber(f64),
 }

@@ -3,7 +3,9 @@ mod scenarios;
 use cucumber::{cli, parser, runner, writer, World};
 use lazy_static::lazy_static;
 use regex::Regex;
-use scenarios::fixtures::{after_scenario, before_scenario, given_resource_in_system, DatadogWorld};
+use scenarios::fixtures::{
+    after_scenario, before_scenario, given_resource_in_system, DatadogWorld,
+};
 use serde_json::Value;
 use std::{env, fs::File, io::BufReader};
 
@@ -78,7 +80,10 @@ async fn main() {
         });
 
     for value in GIVEN_MAP.as_array().unwrap() {
-        cucumber = cucumber.given(Regex::new(value.get("step").unwrap().as_str().unwrap()).unwrap(), given_resource_in_system);
+        cucumber = cucumber.given(
+            Regex::new(value.get("step").unwrap().as_str().unwrap()).unwrap(),
+            given_resource_in_system,
+        );
     }
 
     cucumber

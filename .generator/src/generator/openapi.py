@@ -59,6 +59,8 @@ def type_to_rust(schema, alternative_name=None, render_nullable=False, render_op
             type_ = "array"
         elif "properties" in schema:
             type_ = "object"
+        elif "oneOf" in schema:
+            return alternative_name
         else:
             type_ = "object"
             warnings.warn(f"Unknown type for schema: {schema} ({name or alternative_name})")

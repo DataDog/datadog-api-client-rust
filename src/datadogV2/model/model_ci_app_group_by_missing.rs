@@ -7,6 +7,6 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CIAppGroupByMissing {
-    CIAppGroupByMissingString(Box<String>),
-    CIAppGroupByMissingNumber(Box<f64>),
+    CIAppGroupByMissingString(String),
+    CIAppGroupByMissingNumber(f64),
 }

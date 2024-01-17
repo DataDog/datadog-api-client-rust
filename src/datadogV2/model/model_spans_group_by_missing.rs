@@ -7,6 +7,6 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SpansGroupByMissing {
-    SpansGroupByMissingString(Box<String>),
-    SpansGroupByMissingNumber(Box<f64>),
+    SpansGroupByMissingString(String),
+    SpansGroupByMissingNumber(f64),
 }

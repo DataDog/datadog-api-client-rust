@@ -7,6 +7,6 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum RUMGroupByMissing {
-    RUMGroupByMissingString(Box<String>),
-    RUMGroupByMissingNumber(Box<f64>),
+    RUMGroupByMissingString(String),
+    RUMGroupByMissingNumber(f64),
 }

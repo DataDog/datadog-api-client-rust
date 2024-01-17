@@ -16,7 +16,7 @@ pub struct DistributionPointsSeries {
     pub metric: String,
     /// Points relating to the distribution point metric. All points must be tuples with timestamp and a list of values (cannot be a string). Timestamps should be in POSIX time in seconds.
     #[serde(rename = "points")]
-    pub points: Vec<Vec<serde_json::Value>>,
+    pub points: Vec<Vec<crate::datadogV1::model::DistributionPointItem>>,
     /// A list of tags associated with the distribution point metric.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
@@ -26,7 +26,10 @@ pub struct DistributionPointsSeries {
 }
 
 impl DistributionPointsSeries {
-    pub fn new(metric: String, points: Vec<Vec<serde_json::Value>>) -> DistributionPointsSeries {
+    pub fn new(
+        metric: String,
+        points: Vec<Vec<crate::datadogV1::model::DistributionPointItem>>,
+    ) -> DistributionPointsSeries {
         DistributionPointsSeries {
             host: None,
             metric,

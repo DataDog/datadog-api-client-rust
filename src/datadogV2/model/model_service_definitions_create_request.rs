@@ -10,5 +10,5 @@ pub enum ServiceDefinitionsCreateRequest {
     ServiceDefinitionV2Dot2(Box<crate::datadogV2::model::ServiceDefinitionV2Dot2>),
     ServiceDefinitionV2Dot1(Box<crate::datadogV2::model::ServiceDefinitionV2Dot1>),
     ServiceDefinitionV2(Box<crate::datadogV2::model::ServiceDefinitionV2>),
-    ServiceDefinitionRaw(Box<String>),
+    ServiceDefinitionRaw(String),
 }

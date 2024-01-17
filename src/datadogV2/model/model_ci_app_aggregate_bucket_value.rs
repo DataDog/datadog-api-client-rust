@@ -7,9 +7,9 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CIAppAggregateBucketValue {
-    CIAppAggregateBucketValueSingleString(Box<String>),
-    CIAppAggregateBucketValueSingleNumber(Box<f64>),
+    CIAppAggregateBucketValueSingleString(String),
+    CIAppAggregateBucketValueSingleNumber(f64),
     CIAppAggregateBucketValueTimeseries(
-        Box<crate::datadogV2::model::CIAppAggregateBucketValueTimeseries>,
+        crate::datadogV2::model::CIAppAggregateBucketValueTimeseries,
     ),
 }
