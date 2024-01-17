@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Attributes of the IP allowlist.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct IPAllowlistAttributes {
     /// Whether the IP allowlist logic is enabled or not.
     #[serde(rename = "enabled")]

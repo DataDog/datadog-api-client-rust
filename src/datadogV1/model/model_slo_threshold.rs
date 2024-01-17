@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// SLO thresholds (target and optionally warning) for a single time window.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SLOThreshold {
     /// The target value for the service level indicator within the corresponding
     /// timeframe.

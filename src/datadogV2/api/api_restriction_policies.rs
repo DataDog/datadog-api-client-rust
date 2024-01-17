@@ -7,21 +7,21 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// DeleteRestrictionPolicyParams is a struct for passing parameters to the method [`DeleteRestrictionPolicy`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DeleteRestrictionPolicyParams {
     /// Identifier, formatted as `type:id`. Supported types: `connection`, `dashboard`, `notebook`, `security-rule`, `slo`.
     pub resource_id: String,
 }
 
 /// GetRestrictionPolicyParams is a struct for passing parameters to the method [`GetRestrictionPolicy`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetRestrictionPolicyParams {
     /// Identifier, formatted as `type:id`. Supported types: `connection`, `dashboard`, `notebook`, `security-rule`, `slo`.
     pub resource_id: String,
 }
 
 /// UpdateRestrictionPolicyParams is a struct for passing parameters to the method [`UpdateRestrictionPolicy`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateRestrictionPolicyParams {
     /// Identifier, formatted as `type:id`. Supported types: `connection`, `dashboard`, `notebook`, `security-rule`, `slo`.
     pub resource_id: String,

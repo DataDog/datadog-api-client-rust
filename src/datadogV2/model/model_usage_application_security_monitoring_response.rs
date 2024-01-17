@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Application Security Monitoring usage response.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageApplicationSecurityMonitoringResponse {
     /// Response containing Application Security Monitoring usage.
     #[serde(rename = "data")]

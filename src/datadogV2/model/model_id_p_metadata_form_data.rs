@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The form data submitted to upload IdP metadata
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct IdPMetadataFormData {
     /// The IdP metadata XML file
     #[serde(rename = "idp_file")]

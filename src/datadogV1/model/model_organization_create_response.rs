@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Response object for an organization creation.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct OrganizationCreateResponse {
     /// Datadog API key.
     #[serde(rename = "api_key")]

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// An object defining the recurrence of the downtime.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct DowntimeRecurrence {
     /// How often to repeat as an integer.
     /// For example, to repeat every 3 days, select a type of `days` and a period of `3`.

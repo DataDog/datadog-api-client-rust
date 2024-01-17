@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Create a new Cloud Workload Security Agent rule.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CloudWorkloadSecurityAgentRuleCreateAttributes {
     /// The description of the Agent rule.
     #[serde(rename = "description")]

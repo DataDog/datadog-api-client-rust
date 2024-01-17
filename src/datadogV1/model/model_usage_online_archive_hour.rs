@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Online Archive usage in a given hour.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageOnlineArchiveHour {
     /// The hour for the usage.
     #[serde(rename = "hour")]

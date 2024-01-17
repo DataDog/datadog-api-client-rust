@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Pagination metadata returned by the API.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SearchSLOResponseMetaPage {
     /// The first number.
     #[serde(rename = "first_number")]

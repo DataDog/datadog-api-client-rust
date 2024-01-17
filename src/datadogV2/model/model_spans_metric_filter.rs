@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The span-based metric filter. Spans matching this filter will be aggregated in this metric.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SpansMetricFilter {
     /// The search query - following the span search syntax.
     #[serde(rename = "query")]

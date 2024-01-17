@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Object describing meta attributes of response.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ResponseMetaAttributes {
     /// Pagination object.
     #[serde(rename = "page")]

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Information about the mute status of this finding.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FindingMute {
     /// Additional information about the reason why this finding is muted or unmuted.
     #[serde(rename = "description")]

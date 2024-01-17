@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Data object for updating a Fastly account.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FastlyAccountUpdateRequestData {
     /// Attributes object for updating a Fastly account.
     #[serde(rename = "attributes")]

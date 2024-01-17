@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Your Google Cloud Platform Account.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct GCPAccount {
     /// Should be `https://www.googleapis.com/oauth2/v1/certs`.
     #[serde(rename = "auth_provider_x509_cert_url")]
@@ -34,9 +34,12 @@ pub struct GCPAccount {
     /// Only hosts that match one of the defined tags are imported into Datadog.
     #[serde(rename = "host_filters")]
     pub host_filters: Option<String>,
-    /// When enabled, Datadog performs configuration checks across your Google Cloud environment by continuously scanning every resource.
+    /// When enabled, Datadog will activate the Cloud Security Monitoring product for this service account. Note: This requires resource_collection_enabled to be set to true.
     #[serde(rename = "is_cspm_enabled")]
     pub is_cspm_enabled: Option<bool>,
+    /// When enabled, Datadog will attempt to collect Security Command Center Findings. Note: This requires additional permissions on the service account.
+    #[serde(rename = "is_security_command_center_enabled")]
+    pub is_security_command_center_enabled: Option<bool>,
     /// Your private key name found in your JSON service account key.
     #[serde(rename = "private_key")]
     pub private_key: Option<String>,
@@ -46,6 +49,9 @@ pub struct GCPAccount {
     /// Your Google Cloud project ID found in your JSON service account key.
     #[serde(rename = "project_id")]
     pub project_id: Option<String>,
+    /// When enabled, Datadog scans for all resources in your GCP environment.
+    #[serde(rename = "resource_collection_enabled")]
+    pub resource_collection_enabled: Option<bool>,
     /// Should be `https://accounts.google.com/o/oauth2/token`.
     #[serde(rename = "token_uri")]
     pub token_uri: Option<String>,
@@ -66,9 +72,11 @@ impl GCPAccount {
             errors: None,
             host_filters: None,
             is_cspm_enabled: None,
+            is_security_command_center_enabled: None,
             private_key: None,
             private_key_id: None,
             project_id: None,
+            resource_collection_enabled: None,
             token_uri: None,
             type_: None,
         }

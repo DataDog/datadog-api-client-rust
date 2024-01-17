@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Links attributes.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct EventsListResponseLinks {
     /// Link for the next set of results. Note that the request can also be made using the
     /// POST endpoint.

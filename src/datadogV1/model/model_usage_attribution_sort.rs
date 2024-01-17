@@ -134,9 +134,3 @@ impl ToString for UsageAttributionSort {
         }
     }
 }
-
-impl Default for UsageAttributionSort {
-    fn default() -> UsageAttributionSort {
-        Self::API_PERCENTAGE
-    }
-}

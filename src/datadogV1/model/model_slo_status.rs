@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Status of the SLO's primary timeframe.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SLOStatus {
     /// Error message if SLO status or error budget could not be calculated.
     #[serde(

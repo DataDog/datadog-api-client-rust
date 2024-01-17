@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// A response containing indexed spans usage.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageIndexedSpansResponse {
     /// Array with the number of hourly traces indexed for a given organization.
     #[serde(rename = "usage")]

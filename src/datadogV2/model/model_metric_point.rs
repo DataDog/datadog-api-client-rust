@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// A point object is of the form `{POSIX_timestamp, numeric_value}`.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct MetricPoint {
     /// The timestamp should be in seconds and current.
     /// Current is defined as not more than 10 minutes in the future or more than 1 hour in the past.

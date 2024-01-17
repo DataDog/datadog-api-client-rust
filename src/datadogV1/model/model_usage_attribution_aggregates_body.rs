@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The object containing the aggregates.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageAttributionAggregatesBody {
     /// The aggregate type.
     #[serde(rename = "agg_type")]

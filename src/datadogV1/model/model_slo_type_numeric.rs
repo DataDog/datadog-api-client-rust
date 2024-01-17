@@ -21,9 +21,3 @@ impl ToString for SLOTypeNumeric {
         }
     }
 }
-
-impl Default for SLOTypeNumeric {
-    fn default() -> SLOTypeNumeric {
-        Self::MONITOR
-    }
-}

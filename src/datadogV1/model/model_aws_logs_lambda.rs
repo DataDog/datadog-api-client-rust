@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Description of the Lambdas.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AWSLogsLambda {
     /// Available ARN IDs.
     #[serde(rename = "arn")]

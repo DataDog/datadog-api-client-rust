@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Response with Host information from Datadog.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct HostListResponse {
     /// Array of hosts.
     #[serde(rename = "host_list")]

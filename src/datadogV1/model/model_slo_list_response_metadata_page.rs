@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The object containing information about the pages of the list of SLOs.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SLOListResponseMetadataPage {
     /// The total number of resources that could be retrieved ignoring the parameters and filters in the request.
     #[serde(rename = "total_count")]

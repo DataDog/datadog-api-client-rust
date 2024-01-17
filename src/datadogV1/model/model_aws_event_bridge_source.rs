@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// An EventBridge source.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AWSEventBridgeSource {
     /// The event source name.
     #[serde(rename = "name")]

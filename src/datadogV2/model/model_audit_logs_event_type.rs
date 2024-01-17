@@ -17,9 +17,3 @@ impl ToString for AuditLogsEventType {
         }
     }
 }
-
-impl Default for AuditLogsEventType {
-    fn default() -> AuditLogsEventType {
-        Self::Audit
-    }
-}

@@ -20,9 +20,3 @@ impl ToString for SLOType {
         }
     }
 }
-
-impl Default for SLOType {
-    fn default() -> SLOType {
-        Self::METRIC
-    }
-}

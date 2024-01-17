@@ -7,27 +7,27 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// CreateGCPSTSAccountParams is a struct for passing parameters to the method [`CreateGCPSTSAccount`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateGCPSTSAccountParams {
     pub body: crate::datadogV2::model::GCPSTSServiceAccountCreateRequest,
 }
 
 /// DeleteGCPSTSAccountParams is a struct for passing parameters to the method [`DeleteGCPSTSAccount`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DeleteGCPSTSAccountParams {
     /// Your GCP STS enabled service account's unique ID.
     pub account_id: String,
 }
 
 /// MakeGCPSTSDelegateParams is a struct for passing parameters to the method [`MakeGCPSTSDelegate`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct MakeGCPSTSDelegateParams {
     /// Create a delegate service account within Datadog.
     pub body: Option<Option<std::collections::HashMap<String, serde_json::Value>>>,
 }
 
 /// UpdateGCPSTSAccountParams is a struct for passing parameters to the method [`UpdateGCPSTSAccount`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateGCPSTSAccountParams {
     /// Your GCP STS enabled service account's unique ID.
     pub account_id: String,

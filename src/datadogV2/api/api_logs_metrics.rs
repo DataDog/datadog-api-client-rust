@@ -7,28 +7,28 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// CreateLogsMetricParams is a struct for passing parameters to the method [`CreateLogsMetric`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateLogsMetricParams {
     /// The definition of the new log-based metric.
     pub body: crate::datadogV2::model::LogsMetricCreateRequest,
 }
 
 /// DeleteLogsMetricParams is a struct for passing parameters to the method [`DeleteLogsMetric`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DeleteLogsMetricParams {
     /// The name of the log-based metric.
     pub metric_id: String,
 }
 
 /// GetLogsMetricParams is a struct for passing parameters to the method [`GetLogsMetric`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetLogsMetricParams {
     /// The name of the log-based metric.
     pub metric_id: String,
 }
 
 /// UpdateLogsMetricParams is a struct for passing parameters to the method [`UpdateLogsMetric`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateLogsMetricParams {
     /// The name of the log-based metric.
     pub metric_id: String,

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// AWS account ID and Lambda ARN.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AWSAccountAndLambdaRequest {
     /// Your AWS Account ID without dashes.
     #[serde(rename = "account_id")]

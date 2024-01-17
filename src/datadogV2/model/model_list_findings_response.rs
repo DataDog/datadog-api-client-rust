@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The expected response schema when listing findings.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ListFindingsResponse {
     /// Array of findings.
     #[serde(rename = "data")]
@@ -19,11 +19,8 @@ pub struct ListFindingsResponse {
 impl ListFindingsResponse {
     pub fn new(
         data: Vec<crate::datadogV2::model::Finding>,
-        meta: crate::datadogV2::model::ListFindingsMeta,
+        meta: Box<crate::datadogV2::model::ListFindingsMeta>,
     ) -> ListFindingsResponse {
-        ListFindingsResponse {
-            data,
-            meta: Box::new(meta),
-        }
+        ListFindingsResponse { data, meta }
     }
 }

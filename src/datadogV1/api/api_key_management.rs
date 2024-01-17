@@ -7,47 +7,47 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// CreateAPIKeyParams is a struct for passing parameters to the method [`CreateAPIKey`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateAPIKeyParams {
     pub body: crate::datadogV1::model::ApiKey,
 }
 
 /// CreateApplicationKeyParams is a struct for passing parameters to the method [`CreateApplicationKey`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateApplicationKeyParams {
     pub body: crate::datadogV1::model::ApplicationKey,
 }
 
 /// DeleteAPIKeyParams is a struct for passing parameters to the method [`DeleteAPIKey`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DeleteAPIKeyParams {
     /// The specific API key you are working with.
     pub key: String,
 }
 
 /// DeleteApplicationKeyParams is a struct for passing parameters to the method [`DeleteApplicationKey`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DeleteApplicationKeyParams {
     /// The specific APP key you are working with.
     pub key: String,
 }
 
 /// GetAPIKeyParams is a struct for passing parameters to the method [`GetAPIKey`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetAPIKeyParams {
     /// The specific API key you are working with.
     pub key: String,
 }
 
 /// GetApplicationKeyParams is a struct for passing parameters to the method [`GetApplicationKey`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetApplicationKeyParams {
     /// The specific APP key you are working with.
     pub key: String,
 }
 
 /// UpdateAPIKeyParams is a struct for passing parameters to the method [`UpdateAPIKey`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateAPIKeyParams {
     /// The specific API key you are working with.
     pub key: String,
@@ -55,7 +55,7 @@ pub struct UpdateAPIKeyParams {
 }
 
 /// UpdateApplicationKeyParams is a struct for passing parameters to the method [`UpdateApplicationKey`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateApplicationKeyParams {
     /// The specific APP key you are working with.
     pub key: String,

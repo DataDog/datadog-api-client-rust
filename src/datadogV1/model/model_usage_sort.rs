@@ -26,9 +26,3 @@ impl ToString for UsageSort {
         }
     }
 }
-
-impl Default for UsageSort {
-    fn default() -> UsageSort {
-        Self::COMPUTED_ON
-    }
-}

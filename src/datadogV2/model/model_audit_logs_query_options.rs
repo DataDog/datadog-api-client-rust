@@ -7,7 +7,7 @@ use serde_with::skip_serializing_none;
 /// Global query options that are used during the query.
 /// Note: Specify either timezone or time offset, not both. Otherwise, the query fails.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AuditLogsQueryOptions {
     /// Time offset (in seconds) to apply to the query.
     #[serde(rename = "time_offset")]

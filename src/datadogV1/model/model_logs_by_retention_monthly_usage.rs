@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Object containing a summary of indexed logs usage by retention period for a single month.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LogsByRetentionMonthlyUsage {
     /// The month for the usage.
     #[serde(rename = "date")]

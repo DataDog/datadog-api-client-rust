@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Your delegate account attributes.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct GCPSTSDelegateAccountAttributes {
     /// Your organization's Datadog principal email address.
     #[serde(rename = "delegate_account_email")]

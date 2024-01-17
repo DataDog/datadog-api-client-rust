@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Array of user disabled for a given organization.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UserDisableResponse {
     /// Information pertaining to a user disabled for a given organization.
     #[serde(rename = "message")]

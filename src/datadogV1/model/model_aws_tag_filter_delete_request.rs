@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The objects used to delete an AWS tag filter entry.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AWSTagFilterDeleteRequest {
     /// The unique identifier of your AWS account.
     #[serde(rename = "account_id")]

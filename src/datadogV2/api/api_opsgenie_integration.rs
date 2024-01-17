@@ -7,28 +7,28 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// CreateOpsgenieServiceParams is a struct for passing parameters to the method [`CreateOpsgenieService`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateOpsgenieServiceParams {
     /// Opsgenie service payload
     pub body: crate::datadogV2::model::OpsgenieServiceCreateRequest,
 }
 
 /// DeleteOpsgenieServiceParams is a struct for passing parameters to the method [`DeleteOpsgenieService`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DeleteOpsgenieServiceParams {
     /// The UUID of the service.
     pub integration_service_id: String,
 }
 
 /// GetOpsgenieServiceParams is a struct for passing parameters to the method [`GetOpsgenieService`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetOpsgenieServiceParams {
     /// The UUID of the service.
     pub integration_service_id: String,
 }
 
 /// UpdateOpsgenieServiceParams is a struct for passing parameters to the method [`UpdateOpsgenieService`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateOpsgenieServiceParams {
     /// The UUID of the service.
     pub integration_service_id: String,

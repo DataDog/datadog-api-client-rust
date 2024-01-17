@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Response containing the number of RUM Sessions for each hour for a given organization.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageRumSessionsResponse {
     /// Get hourly usage for RUM Sessions.
     #[serde(rename = "usage")]

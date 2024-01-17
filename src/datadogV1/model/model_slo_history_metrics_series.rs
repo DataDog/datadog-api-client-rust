@@ -7,7 +7,7 @@ use serde_with::skip_serializing_none;
 /// A representation of `metric` based SLO time series for the provided queries.
 /// This is the same response type from `batch_query` endpoint.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SLOHistoryMetricsSeries {
     /// Count of submitted metrics.
     #[serde(rename = "count")]

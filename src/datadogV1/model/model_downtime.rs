@@ -9,7 +9,7 @@ use serde_with::skip_serializing_none;
 /// Downtime settings, which can be scheduled with start and end times,
 /// prevent all alerting related to specified Datadog tags.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Downtime {
     /// If a scheduled downtime currently exists.
     #[serde(rename = "active")]

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Your delegate service account response data.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct GCPSTSDelegateAccountResponse {
     /// Datadog principal service account info.
     #[serde(rename = "data")]

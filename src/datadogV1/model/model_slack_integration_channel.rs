@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The Slack channel configuration.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SlackIntegrationChannel {
     /// Configuration options for what is shown in an alert event message.
     #[serde(rename = "display")]

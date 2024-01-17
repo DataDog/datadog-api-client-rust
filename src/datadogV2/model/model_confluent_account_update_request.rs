@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The JSON:API request for updating a Confluent account.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ConfluentAccountUpdateRequest {
     /// Data object for updating a Confluent account.
     #[serde(rename = "data")]
@@ -15,10 +15,8 @@ pub struct ConfluentAccountUpdateRequest {
 
 impl ConfluentAccountUpdateRequest {
     pub fn new(
-        data: crate::datadogV2::model::ConfluentAccountUpdateRequestData,
+        data: Box<crate::datadogV2::model::ConfluentAccountUpdateRequestData>,
     ) -> ConfluentAccountUpdateRequest {
-        ConfluentAccountUpdateRequest {
-            data: Box::new(data),
-        }
+        ConfluentAccountUpdateRequest { data }
     }
 }

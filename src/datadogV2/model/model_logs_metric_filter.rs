@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The log-based metric filter. Logs matching this filter will be aggregated in this metric.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LogsMetricFilter {
     /// The search query - following the log search syntax.
     #[serde(rename = "query")]

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The hourly usage of timeseries.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageTimeseriesHour {
     /// The hour for the usage.
     #[serde(rename = "hour")]

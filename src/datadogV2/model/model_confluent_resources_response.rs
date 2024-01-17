@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Response schema when interacting with a list of Confluent resources.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ConfluentResourcesResponse {
     /// The JSON:API data attribute.
     #[serde(rename = "data")]

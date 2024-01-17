@@ -18,8 +18,7 @@ use sha256::digest;
 use std::{
     collections::{HashMap, HashSet},
     env,
-    fs::{create_dir_all, read_to_string, File},
-    io::BufReader,
+    fs::{create_dir_all, read_to_string},
     ops::Add,
     path::PathBuf,
     str::FromStr,
@@ -50,13 +49,13 @@ pub struct DatadogWorld {
     pub parameters: HashMap<String, Value>,
     pub response: Response,
     pub api_instances: ApiInstances,
-    given_map: Value,
-    undo_map: Value,
+    pub given_map: Value,
+    pub undo_map: Value,
     undo_operations: Vec<UndoOperation>,
 }
 
 lazy_static! {
-    static ref API_VERSION_RE: Regex = Regex::new(r"tests/scenarios/features/v(\d+)/").unwrap();
+    pub static ref API_VERSION_RE: Regex = Regex::new(r"tests/scenarios/features/v(\d+)/").unwrap();
     static ref NUMBER_RE: Regex = Regex::new(r"^\d+$").unwrap();
     static ref BOOL_RE: Regex = Regex::new(r"^(true|false)$").unwrap();
     static ref INDEX_RE: Regex = Regex::new(r"\[(\d+)\]+").unwrap();
@@ -79,31 +78,7 @@ pub async fn before_scenario(
     scenario: &Scenario,
     world: &mut DatadogWorld,
 ) {
-    // TODO: refactor this lol
-    world.api_version = API_VERSION_RE
-        .captures(feature.path.as_ref().unwrap().to_str().unwrap())
-        .unwrap()
-        .get(1)
-        .unwrap()
-        .as_str()
-        .parse()
-        .unwrap();
-
     collect_function_calls(world);
-    let given_file = File::open(format!(
-        "tests/scenarios/features/v{}/given.json",
-        world.api_version
-    ))
-    .expect("failed to open given.json file");
-    world.given_map = serde_json::from_reader(BufReader::new(given_file))
-        .expect("failed to deserialize given.json");
-    let undo_file = File::open(format!(
-        "tests/scenarios/features/v{}/undo.json",
-        world.api_version
-    ))
-    .expect("failed to open undo.json file");
-    world.undo_map = serde_json::from_reader(BufReader::new(undo_file))
-        .expect("failed to deserialize undo.json");
 
     let escaped_filename = NON_ALNUM_RE
         .replace_all(scenario.name.as_str(), "-")

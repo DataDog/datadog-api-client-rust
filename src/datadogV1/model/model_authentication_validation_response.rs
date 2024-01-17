@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Represent validation endpoint responses.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AuthenticationValidationResponse {
     /// Return `true` if the authentication response is valid.
     #[serde(rename = "valid")]

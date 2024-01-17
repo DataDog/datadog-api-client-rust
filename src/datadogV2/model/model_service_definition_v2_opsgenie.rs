@@ -1,0 +1,26 @@
+// Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
+// This product includes software developed at Datadog (https://www.datadoghq.com/).
+// Copyright 2019-Present Datadog, Inc.
+use serde::{Deserialize, Serialize};
+use serde_with::skip_serializing_none;
+
+/// Opsgenie integration for the service.
+#[skip_serializing_none]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+pub struct ServiceDefinitionV2Opsgenie {
+    /// Opsgenie instance region.
+    #[serde(rename = "region")]
+    pub region: Option<crate::datadogV2::model::ServiceDefinitionV2OpsgenieRegion>,
+    /// Opsgenie service url.
+    #[serde(rename = "service-url")]
+    pub service_url: String,
+}
+
+impl ServiceDefinitionV2Opsgenie {
+    pub fn new(service_url: String) -> ServiceDefinitionV2Opsgenie {
+        ServiceDefinitionV2Opsgenie {
+            region: None,
+            service_url,
+        }
+    }
+}

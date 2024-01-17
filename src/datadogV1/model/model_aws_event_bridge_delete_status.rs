@@ -17,9 +17,3 @@ impl ToString for AWSEventBridgeDeleteStatus {
         }
     }
 }
-
-impl Default for AWSEventBridgeDeleteStatus {
-    fn default() -> AWSEventBridgeDeleteStatus {
-        Self::EMPTY
-    }
-}

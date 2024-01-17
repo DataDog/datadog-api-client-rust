@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Response containing the hourly usage attribution by tag(s).
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct HourlyUsageAttributionResponse {
     /// The object containing document metadata.
     #[serde(rename = "metadata")]

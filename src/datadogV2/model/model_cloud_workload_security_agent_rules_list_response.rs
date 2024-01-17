@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Response object that includes a list of Agent rule.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CloudWorkloadSecurityAgentRulesListResponse {
     /// A list of Agent rules objects.
     #[serde(rename = "data")]

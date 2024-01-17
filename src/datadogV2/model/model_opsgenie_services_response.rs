@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Response with a list of Opsgenie services.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct OpsgenieServicesResponse {
     /// An array of Opsgenie services.
     #[serde(rename = "data")]

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Payload schema when adding a Cloudflare account.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CloudflareAccountCreateRequest {
     /// Data object for creating a Cloudflare account.
     #[serde(rename = "data")]
@@ -15,10 +15,8 @@ pub struct CloudflareAccountCreateRequest {
 
 impl CloudflareAccountCreateRequest {
     pub fn new(
-        data: crate::datadogV2::model::CloudflareAccountCreateRequestData,
+        data: Box<crate::datadogV2::model::CloudflareAccountCreateRequestData>,
     ) -> CloudflareAccountCreateRequest {
-        CloudflareAccountCreateRequest {
-            data: Box::new(data),
-        }
+        CloudflareAccountCreateRequest { data }
     }
 }

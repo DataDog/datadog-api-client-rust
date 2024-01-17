@@ -7,28 +7,28 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// CreateAzureIntegrationParams is a struct for passing parameters to the method [`CreateAzureIntegration`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateAzureIntegrationParams {
     /// Create a Datadog-Azure integration for your Datadog account request body.
     pub body: crate::datadogV1::model::AzureAccount,
 }
 
 /// DeleteAzureIntegrationParams is a struct for passing parameters to the method [`DeleteAzureIntegration`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DeleteAzureIntegrationParams {
     /// Delete a given Datadog-Azure integration request body.
     pub body: crate::datadogV1::model::AzureAccount,
 }
 
 /// UpdateAzureHostFiltersParams is a struct for passing parameters to the method [`UpdateAzureHostFilters`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateAzureHostFiltersParams {
     /// Update a Datadog-Azure integration's host filters request body.
     pub body: crate::datadogV1::model::AzureAccount,
 }
 
 /// UpdateAzureIntegrationParams is a struct for passing parameters to the method [`UpdateAzureIntegration`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateAzureIntegrationParams {
     /// Update a Datadog-Azure integration request body.
     pub body: crate::datadogV1::model::AzureAccount,

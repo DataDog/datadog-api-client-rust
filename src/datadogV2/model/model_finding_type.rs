@@ -17,9 +17,3 @@ impl ToString for FindingType {
         }
     }
 }
-
-impl Default for FindingType {
-    fn default() -> FindingType {
-        Self::FINDING
-    }
-}

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Attributes describing which incident to add the signal to.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AddSignalToIncidentRequest {
     /// Whether to post the signal on the incident timeline.
     #[serde(rename = "add_to_signal_timeline")]

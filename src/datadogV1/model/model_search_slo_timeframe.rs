@@ -23,9 +23,3 @@ impl ToString for SearchSLOTimeframe {
         }
     }
 }
-
-impl Default for SearchSLOTimeframe {
-    fn default() -> SearchSLOTimeframe {
-        Self::SEVEN_DAYS
-    }
-}

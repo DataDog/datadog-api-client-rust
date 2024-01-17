@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Metric origin information.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct MetricOrigin {
     /// The origin metric type code
     #[serde(rename = "metric_type")]

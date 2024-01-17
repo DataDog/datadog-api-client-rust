@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Usage amount for a given usage type.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct HourlyUsageMeasurement {
     /// Type of usage.
     #[serde(rename = "usage_type")]

@@ -7,7 +7,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// CreateHostTagsParams is a struct for passing parameters to the method [`CreateHostTags`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateHostTagsParams {
     /// This endpoint allows you to add new tags to a host, optionally specifying where the tags came from.
     pub host_name: String,
@@ -19,7 +19,7 @@ pub struct CreateHostTagsParams {
 }
 
 /// DeleteHostTagsParams is a struct for passing parameters to the method [`DeleteHostTags`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DeleteHostTagsParams {
     /// This endpoint allows you to remove all user-assigned tags for a single host.
     pub host_name: String,
@@ -29,7 +29,7 @@ pub struct DeleteHostTagsParams {
 }
 
 /// GetHostTagsParams is a struct for passing parameters to the method [`GetHostTags`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetHostTagsParams {
     /// When specified, filters list of tags to those tags with the specified source.
     pub host_name: String,
@@ -38,14 +38,14 @@ pub struct GetHostTagsParams {
 }
 
 /// ListHostTagsParams is a struct for passing parameters to the method [`ListHostTags`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct ListHostTagsParams {
     /// When specified, filters host list to those tags with the specified source.
     pub source: Option<String>,
 }
 
 /// UpdateHostTagsParams is a struct for passing parameters to the method [`UpdateHostTags`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateHostTagsParams {
     /// This endpoint allows you to update/replace all in an integration source with those supplied in the request.
     pub host_name: String,

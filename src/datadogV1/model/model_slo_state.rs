@@ -26,9 +26,3 @@ impl ToString for SLOState {
         }
     }
 }
-
-impl Default for SLOState {
-    fn default() -> SLOState {
-        Self::BREACHED
-    }
-}

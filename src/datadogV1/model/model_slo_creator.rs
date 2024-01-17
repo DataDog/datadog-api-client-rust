@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The creator of the SLO
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SLOCreator {
     /// Email of the creator.
     #[serde(rename = "email")]

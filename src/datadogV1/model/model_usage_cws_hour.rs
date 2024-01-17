@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Cloud Workload Security usage for a given organization for a given hour.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageCWSHour {
     /// The total number of Cloud Workload Security container hours from the start of the given hour’s month until the given hour.
     #[serde(

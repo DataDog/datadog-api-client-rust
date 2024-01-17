@@ -7,27 +7,27 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// CreateCloudflareAccountParams is a struct for passing parameters to the method [`CreateCloudflareAccount`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateCloudflareAccountParams {
     pub body: crate::datadogV2::model::CloudflareAccountCreateRequest,
 }
 
 /// DeleteCloudflareAccountParams is a struct for passing parameters to the method [`DeleteCloudflareAccount`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DeleteCloudflareAccountParams {
     /// None
     pub account_id: String,
 }
 
 /// GetCloudflareAccountParams is a struct for passing parameters to the method [`GetCloudflareAccount`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetCloudflareAccountParams {
     /// None
     pub account_id: String,
 }
 
 /// UpdateCloudflareAccountParams is a struct for passing parameters to the method [`UpdateCloudflareAccount`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateCloudflareAccountParams {
     /// None
     pub account_id: String,

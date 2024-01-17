@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Object for updating a Datadog Log index.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LogsIndexUpdateRequest {
     /// The number of log events you can send in this index per day before you are rate-limited.
     #[serde(rename = "daily_limit")]
@@ -34,12 +34,12 @@ pub struct LogsIndexUpdateRequest {
 }
 
 impl LogsIndexUpdateRequest {
-    pub fn new(filter: crate::datadogV1::model::LogsFilter) -> LogsIndexUpdateRequest {
+    pub fn new(filter: Box<crate::datadogV1::model::LogsFilter>) -> LogsIndexUpdateRequest {
         LogsIndexUpdateRequest {
             daily_limit: None,
             disable_daily_limit: None,
             exclusion_filters: None,
-            filter: Box::new(filter),
+            filter,
             num_retention_days: None,
         }
     }

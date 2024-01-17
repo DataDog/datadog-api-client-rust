@@ -17,9 +17,3 @@ impl ToString for UsageTimeSeriesType {
         }
     }
 }
-
-impl Default for UsageTimeSeriesType {
-    fn default() -> UsageTimeSeriesType {
-        Self::USAGE_TIMESERIES
-    }
-}

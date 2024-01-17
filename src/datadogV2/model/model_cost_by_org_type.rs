@@ -17,9 +17,3 @@ impl ToString for CostByOrgType {
         }
     }
 }
-
-impl Default for CostByOrgType {
-    fn default() -> CostByOrgType {
-        Self::COST_BY_ORG
-    }
-}

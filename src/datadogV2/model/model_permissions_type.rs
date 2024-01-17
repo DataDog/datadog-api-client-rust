@@ -17,9 +17,3 @@ impl ToString for PermissionsType {
         }
     }
 }
-
-impl Default for PermissionsType {
-    fn default() -> PermissionsType {
-        Self::PERMISSIONS
-    }
-}

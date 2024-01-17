@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// A dashboard within a list.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct DashboardListItem {
     /// Creator of the object.
     #[serde(rename = "author")]

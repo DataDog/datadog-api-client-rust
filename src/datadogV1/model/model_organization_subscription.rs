@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Subscription definition.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct OrganizationSubscription {
     /// The subscription type. Types available are `trial`, `free`, and `pro`.
     #[serde(rename = "type")]

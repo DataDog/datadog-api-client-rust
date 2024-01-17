@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Data object of a Cloudflare account.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CloudflareAccountResponseData {
     /// Attributes object of a Cloudflare account.
     #[serde(rename = "attributes")]
@@ -21,12 +21,12 @@ pub struct CloudflareAccountResponseData {
 
 impl CloudflareAccountResponseData {
     pub fn new(
-        attributes: crate::datadogV2::model::CloudflareAccountResponseAttributes,
+        attributes: Box<crate::datadogV2::model::CloudflareAccountResponseAttributes>,
         id: String,
         type_: crate::datadogV2::model::CloudflareAccountType,
     ) -> CloudflareAccountResponseData {
         CloudflareAccountResponseData {
-            attributes: Box::new(attributes),
+            attributes,
             id,
             type_,
         }

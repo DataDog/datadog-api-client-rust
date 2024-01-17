@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Create, edit, and manage organizations.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Organization {
     /// A JSON array of billing type.
     #[deprecated]
@@ -18,7 +18,7 @@ pub struct Organization {
     /// Description of the organization.
     #[serde(rename = "description")]
     pub description: Option<String>,
-    /// The name of the new child-organization, limited to 32 characters.
+    /// The name of the child organization, limited to 32 characters.
     #[serde(rename = "name")]
     pub name: Option<String>,
     /// The `public_id` of the organization you are operating within.

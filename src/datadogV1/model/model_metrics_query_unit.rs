@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Object containing the metric unit family, scale factor, name, and short name.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct MetricsQueryUnit {
     /// Unit family, allows for conversion between units of the same family, for scaling.
     #[serde(rename = "family")]

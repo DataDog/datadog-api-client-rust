@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// A Cloud Workload Security Agent rule returned by the API.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CloudWorkloadSecurityAgentRuleAttributes {
     /// The version of the agent.
     #[serde(rename = "agentConstraint")]
@@ -36,6 +36,9 @@ pub struct CloudWorkloadSecurityAgentRuleAttributes {
     /// The SECL expression of the Agent rule.
     #[serde(rename = "expression")]
     pub expression: Option<String>,
+    /// The platforms the Agent rule is supported on.
+    #[serde(rename = "filters")]
+    pub filters: Option<Vec<String>>,
     /// The name of the Agent rule.
     #[serde(rename = "name")]
     pub name: Option<String>,
@@ -69,6 +72,7 @@ impl CloudWorkloadSecurityAgentRuleAttributes {
             description: None,
             enabled: None,
             expression: None,
+            filters: None,
             name: None,
             update_author_uu_id: None,
             update_date: None,

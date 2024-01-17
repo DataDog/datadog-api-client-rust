@@ -20,9 +20,3 @@ impl ToString for EventsSort {
         }
     }
 }
-
-impl Default for EventsSort {
-    fn default() -> EventsSort {
-        Self::TIMESTAMP_ASCENDING
-    }
-}

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Metadata associated with your host.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct HostMeta {
     /// A list of Agent checks running on the host.
     #[serde(rename = "agent_checks")]

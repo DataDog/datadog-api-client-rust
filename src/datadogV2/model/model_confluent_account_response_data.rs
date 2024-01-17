@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// An API key and API secret pair that represents a Confluent account.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ConfluentAccountResponseData {
     /// The attributes of a Confluent account.
     #[serde(rename = "attributes")]
@@ -21,12 +21,12 @@ pub struct ConfluentAccountResponseData {
 
 impl ConfluentAccountResponseData {
     pub fn new(
-        attributes: crate::datadogV2::model::ConfluentAccountResponseAttributes,
+        attributes: Box<crate::datadogV2::model::ConfluentAccountResponseAttributes>,
         id: String,
         type_: crate::datadogV2::model::ConfluentAccountType,
     ) -> ConfluentAccountResponseData {
         ConfluentAccountResponseData {
-            attributes: Box::new(attributes),
+            attributes,
             id,
             type_,
         }

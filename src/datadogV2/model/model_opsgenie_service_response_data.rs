@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Opsgenie service data from a response.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct OpsgenieServiceResponseData {
     /// The attributes from an Opsgenie service response.
     #[serde(rename = "attributes")]
@@ -21,12 +21,12 @@ pub struct OpsgenieServiceResponseData {
 
 impl OpsgenieServiceResponseData {
     pub fn new(
-        attributes: crate::datadogV2::model::OpsgenieServiceResponseAttributes,
+        attributes: Box<crate::datadogV2::model::OpsgenieServiceResponseAttributes>,
         id: String,
         type_: crate::datadogV2::model::OpsgenieServiceType,
     ) -> OpsgenieServiceResponseData {
         OpsgenieServiceResponseData {
-            attributes: Box::new(attributes),
+            attributes,
             id,
             type_,
         }

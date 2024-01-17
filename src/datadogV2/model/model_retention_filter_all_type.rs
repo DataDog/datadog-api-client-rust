@@ -27,9 +27,3 @@ impl ToString for RetentionFilterAllType {
         }
     }
 }
-
-impl Default for RetentionFilterAllType {
-    fn default() -> RetentionFilterAllType {
-        Self::SPANS_SAMPLING_PROCESSOR
-    }
-}

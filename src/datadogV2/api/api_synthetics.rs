@@ -7,7 +7,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// SetOnDemandConcurrencyCapParams is a struct for passing parameters to the method [`SetOnDemandConcurrencyCap`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct SetOnDemandConcurrencyCapParams {
     /// .
     pub body: crate::datadogV2::model::OnDemandConcurrencyCapAttributes,

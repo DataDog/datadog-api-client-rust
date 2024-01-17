@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// A list of errors while querying the history data for the service level objective.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SLOHistoryResponseError {
     /// Human readable error.
     #[serde(rename = "error")]

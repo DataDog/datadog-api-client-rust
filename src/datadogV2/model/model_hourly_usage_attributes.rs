@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Attributes of hourly usage for a product family for an org for a time period.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct HourlyUsageAttributes {
     /// List of the measured usage values for the product family for the org for the time period.
     #[serde(rename = "measurements")]

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Specifies which principals are associated with a relation.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct RestrictionPolicyBinding {
     /// An array of principals. A principal is a subject or group of subjects.
     /// Each principal is formatted as `type:id`. Supported types: `role`, `team`, `user`, and `org`.

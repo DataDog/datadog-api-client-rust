@@ -7,7 +7,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListProcessesParams is a struct for passing parameters to the method [`ListProcesses`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct ListProcessesParams {
     /// String to search processes by.
     pub search: Option<String>,

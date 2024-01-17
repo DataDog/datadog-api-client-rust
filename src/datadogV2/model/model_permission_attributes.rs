@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Attributes of a permission.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct PermissionAttributes {
     /// Creation time of the permission.
     #[serde(rename = "created")]

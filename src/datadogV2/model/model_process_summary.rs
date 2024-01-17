@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Process summary object.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ProcessSummary {
     /// Attributes for a process summary.
     #[serde(rename = "attributes")]

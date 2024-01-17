@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// List of API and application keys available for a given organization.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ApiKeyListResponse {
     /// Array of API keys.
     #[serde(rename = "api_keys")]

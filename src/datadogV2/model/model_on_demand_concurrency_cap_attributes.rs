@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// On-demand concurrency cap attributes.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct OnDemandConcurrencyCapAttributes {
     /// Value of the on-demand concurrency cap.
     #[serde(rename = "on_demand_concurrency_cap")]

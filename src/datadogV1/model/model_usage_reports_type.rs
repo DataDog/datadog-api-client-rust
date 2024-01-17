@@ -17,9 +17,3 @@ impl ToString for UsageReportsType {
         }
     }
 }
-
-impl Default for UsageReportsType {
-    fn default() -> UsageReportsType {
-        Self::REPORTS
-    }
-}

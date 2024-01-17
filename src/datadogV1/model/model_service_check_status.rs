@@ -25,9 +25,3 @@ impl ToString for ServiceCheckStatus {
         }
     }
 }
-
-impl Default for ServiceCheckStatus {
-    fn default() -> ServiceCheckStatus {
-        Self::OK
-    }
-}

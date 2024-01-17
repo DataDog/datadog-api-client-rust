@@ -17,9 +17,3 @@ impl ToString for LogsMetricType {
         }
     }
 }
-
-impl Default for LogsMetricType {
-    fn default() -> LogsMetricType {
-        Self::LOGS_METRICS
-    }
-}

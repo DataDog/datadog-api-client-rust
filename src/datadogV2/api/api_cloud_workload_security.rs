@@ -7,28 +7,28 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// CreateCloudWorkloadSecurityAgentRuleParams is a struct for passing parameters to the method [`CreateCloudWorkloadSecurityAgentRule`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateCloudWorkloadSecurityAgentRuleParams {
     /// The definition of the new Agent rule.
     pub body: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateRequest,
 }
 
 /// DeleteCloudWorkloadSecurityAgentRuleParams is a struct for passing parameters to the method [`DeleteCloudWorkloadSecurityAgentRule`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DeleteCloudWorkloadSecurityAgentRuleParams {
     /// The ID of the Agent rule.
     pub agent_rule_id: String,
 }
 
 /// GetCloudWorkloadSecurityAgentRuleParams is a struct for passing parameters to the method [`GetCloudWorkloadSecurityAgentRule`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetCloudWorkloadSecurityAgentRuleParams {
     /// The ID of the Agent rule.
     pub agent_rule_id: String,
 }
 
 /// UpdateCloudWorkloadSecurityAgentRuleParams is a struct for passing parameters to the method [`UpdateCloudWorkloadSecurityAgentRule`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateCloudWorkloadSecurityAgentRuleParams {
     /// The ID of the Agent rule.
     pub agent_rule_id: String,

@@ -7,28 +7,28 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// CreateChildOrgParams is a struct for passing parameters to the method [`CreateChildOrg`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateChildOrgParams {
     /// Organization object that needs to be created
     pub body: crate::datadogV1::model::OrganizationCreateBody,
 }
 
 /// DowngradeOrgParams is a struct for passing parameters to the method [`DowngradeOrg`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DowngradeOrgParams {
     /// The `public_id` of the organization you are operating within.
     pub public_id: String,
 }
 
 /// GetOrgParams is a struct for passing parameters to the method [`GetOrg`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetOrgParams {
     /// The `public_id` of the organization you are operating within.
     pub public_id: String,
 }
 
 /// UpdateOrgParams is a struct for passing parameters to the method [`UpdateOrg`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateOrgParams {
     /// The `public_id` of the organization you are operating within.
     pub public_id: String,
@@ -36,7 +36,7 @@ pub struct UpdateOrgParams {
 }
 
 /// UploadIdPForOrgParams is a struct for passing parameters to the method [`UploadIdPForOrg`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UploadIdPForOrgParams {
     /// The `public_id` of the organization you are operating with
     pub public_id: String,

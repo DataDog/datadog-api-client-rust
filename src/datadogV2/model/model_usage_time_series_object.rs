@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Usage timeseries data.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageTimeSeriesObject {
     /// Datetime in ISO-8601 format, UTC. The hour for the usage.
     #[serde(rename = "timestamp")]

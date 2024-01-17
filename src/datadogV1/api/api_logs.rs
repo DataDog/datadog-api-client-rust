@@ -7,14 +7,14 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListLogsParams is a struct for passing parameters to the method [`ListLogs`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct ListLogsParams {
     /// Logs filter
     pub body: crate::datadogV1::model::LogsListRequest,
 }
 
 /// SubmitLogParams is a struct for passing parameters to the method [`SubmitLog`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct SubmitLogParams {
     /// Log to send (JSON format).
     pub body: Vec<crate::datadogV1::model::HTTPLogItem>,

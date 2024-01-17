@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Response with the list of muted host for your organization.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct HostMuteResponse {
     /// Action applied to the hosts.
     #[serde(rename = "action")]

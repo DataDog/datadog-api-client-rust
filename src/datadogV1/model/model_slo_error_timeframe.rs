@@ -26,9 +26,3 @@ impl ToString for SLOErrorTimeframe {
         }
     }
 }
-
-impl Default for SLOErrorTimeframe {
-    fn default() -> SLOErrorTimeframe {
-        Self::SEVEN_DAYS
-    }
-}

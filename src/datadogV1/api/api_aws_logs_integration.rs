@@ -7,35 +7,35 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// CheckAWSLogsLambdaAsyncParams is a struct for passing parameters to the method [`CheckAWSLogsLambdaAsync`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CheckAWSLogsLambdaAsyncParams {
     /// Check AWS Log Lambda Async request body.
     pub body: crate::datadogV1::model::AWSAccountAndLambdaRequest,
 }
 
 /// CheckAWSLogsServicesAsyncParams is a struct for passing parameters to the method [`CheckAWSLogsServicesAsync`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CheckAWSLogsServicesAsyncParams {
     /// Check AWS Logs Async Services request body.
     pub body: crate::datadogV1::model::AWSLogsServicesRequest,
 }
 
 /// CreateAWSLambdaARNParams is a struct for passing parameters to the method [`CreateAWSLambdaARN`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateAWSLambdaARNParams {
     /// AWS Log Lambda Async request body.
     pub body: crate::datadogV1::model::AWSAccountAndLambdaRequest,
 }
 
 /// DeleteAWSLambdaARNParams is a struct for passing parameters to the method [`DeleteAWSLambdaARN`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DeleteAWSLambdaARNParams {
     /// Delete AWS Lambda ARN request body.
     pub body: crate::datadogV1::model::AWSAccountAndLambdaRequest,
 }
 
 /// EnableAWSLogServicesParams is a struct for passing parameters to the method [`EnableAWSLogServices`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct EnableAWSLogServicesParams {
     /// Enable AWS Log Services request body.
     pub body: crate::datadogV1::model::AWSLogsServicesRequest,

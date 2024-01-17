@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Create, edit, and disable users.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct User {
     /// The access role of the user. Options are **st** (standard user), **adm** (admin user), or **ro** (read-only user).
     #[serde(

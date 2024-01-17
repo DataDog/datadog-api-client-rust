@@ -7,7 +7,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// CreateSlackIntegrationChannelParams is a struct for passing parameters to the method [`CreateSlackIntegrationChannel`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateSlackIntegrationChannelParams {
     /// Your Slack account name.
     pub account_name: String,
@@ -16,7 +16,7 @@ pub struct CreateSlackIntegrationChannelParams {
 }
 
 /// GetSlackIntegrationChannelParams is a struct for passing parameters to the method [`GetSlackIntegrationChannel`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetSlackIntegrationChannelParams {
     /// Your Slack account name.
     pub account_name: String,
@@ -25,14 +25,14 @@ pub struct GetSlackIntegrationChannelParams {
 }
 
 /// GetSlackIntegrationChannelsParams is a struct for passing parameters to the method [`GetSlackIntegrationChannels`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetSlackIntegrationChannelsParams {
     /// Your Slack account name.
     pub account_name: String,
 }
 
 /// RemoveSlackIntegrationChannelParams is a struct for passing parameters to the method [`RemoveSlackIntegrationChannel`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct RemoveSlackIntegrationChannelParams {
     /// Your Slack account name.
     pub account_name: String,
@@ -41,7 +41,7 @@ pub struct RemoveSlackIntegrationChannelParams {
 }
 
 /// UpdateSlackIntegrationChannelParams is a struct for passing parameters to the method [`UpdateSlackIntegrationChannel`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateSlackIntegrationChannelParams {
     /// Your Slack account name.
     pub account_name: String,

@@ -20,9 +20,3 @@ impl ToString for FindingEvaluation {
         }
     }
 }
-
-impl Default for FindingEvaluation {
-    fn default() -> FindingEvaluation {
-        Self::PASS
-    }
-}

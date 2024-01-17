@@ -23,9 +23,3 @@ impl ToString for OpsgenieServiceRegionType {
         }
     }
 }
-
-impl Default for OpsgenieServiceRegionType {
-    fn default() -> OpsgenieServiceRegionType {
-        Self::US
-    }
-}

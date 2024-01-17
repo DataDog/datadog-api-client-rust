@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Object containing indexed logs usage grouped by retention period and summed.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LogsRetentionSumUsage {
     /// Total indexed logs for this retention period.
     #[serde(rename = "logs_indexed_logs_usage_sum")]

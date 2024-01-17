@@ -7,28 +7,28 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// CreateSpansMetricParams is a struct for passing parameters to the method [`CreateSpansMetric`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateSpansMetricParams {
     /// The definition of the new span-based metric.
     pub body: crate::datadogV2::model::SpansMetricCreateRequest,
 }
 
 /// DeleteSpansMetricParams is a struct for passing parameters to the method [`DeleteSpansMetric`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DeleteSpansMetricParams {
     /// The name of the span-based metric.
     pub metric_id: String,
 }
 
 /// GetSpansMetricParams is a struct for passing parameters to the method [`GetSpansMetric`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetSpansMetricParams {
     /// The name of the span-based metric.
     pub metric_id: String,
 }
 
 /// UpdateSpansMetricParams is a struct for passing parameters to the method [`UpdateSpansMetric`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateSpansMetricParams {
     /// The name of the span-based metric.
     pub metric_id: String,

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The attributes of the user who last updated the Agent rule.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CloudWorkloadSecurityAgentRuleUpdaterAttributes {
     /// The handle of the user.
     #[serde(rename = "handle")]

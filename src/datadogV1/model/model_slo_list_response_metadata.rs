@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The metadata object containing additional information about the list of SLOs.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SLOListResponseMetadata {
     /// The object containing information about the pages of the list of SLOs.
     #[serde(rename = "page")]

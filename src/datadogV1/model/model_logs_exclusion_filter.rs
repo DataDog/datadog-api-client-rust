@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Exclusion filter is defined by a query, a sampling rule, and a active/inactive toggle.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LogsExclusionFilter {
     /// Default query is `*`, meaning all logs flowing in the index would be excluded.
     /// Scope down exclusion filter to only a subset of logs with a log query.

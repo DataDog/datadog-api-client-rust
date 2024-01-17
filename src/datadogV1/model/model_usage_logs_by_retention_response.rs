@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Response containing the indexed logs usage broken down by retention period for an organization during a given hour.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageLogsByRetentionResponse {
     /// Get hourly usage for indexed logs by retention period.
     #[serde(rename = "usage")]

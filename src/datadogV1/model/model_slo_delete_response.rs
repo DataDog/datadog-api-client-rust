@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// A response list of all service level objective deleted.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SLODeleteResponse {
     /// An array containing the ID of the deleted service level objective object.
     #[serde(rename = "data")]

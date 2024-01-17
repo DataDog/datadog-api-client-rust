@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Response summarizing all usage aggregated across the months in the request for all organizations, and broken down by month and by organization.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageSummaryResponse {
     /// Shows the 99th percentile of all agent hosts over all hours in the current months for all organizations.
     #[serde(rename = "agent_host_top99p_sum")]
@@ -147,6 +147,12 @@ pub struct UsageSummaryResponse {
     /// Shows the 99th percentile of all Cloud Security Management Pro hosts over all hours in the current months for all organizations.
     #[serde(rename = "cspm_host_top99p_sum")]
     pub cspm_host_top99p_sum: Option<i64>,
+    /// Shows the average number of distinct historical custom metrics over all hours in the current months for all organizations.
+    #[serde(rename = "custom_historical_ts_sum")]
+    pub custom_historical_ts_sum: Option<i64>,
+    /// Shows the average number of distinct live custom metrics over all hours in the current months for all organizations.
+    #[serde(rename = "custom_live_ts_sum")]
+    pub custom_live_ts_sum: Option<i64>,
     /// Shows the average number of distinct custom metrics over all hours in the current months for all organizations.
     #[serde(rename = "custom_ts_sum")]
     pub custom_ts_sum: Option<i64>,
@@ -394,6 +400,8 @@ impl UsageSummaryResponse {
             cspm_container_hwm_sum: None,
             cspm_gcp_host_top99p_sum: None,
             cspm_host_top99p_sum: None,
+            custom_historical_ts_sum: None,
+            custom_live_ts_sum: None,
             custom_ts_sum: None,
             cws_containers_avg_sum: None,
             cws_host_top99p_sum: None,

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Facets
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SearchSLOResponseDataAttributesFacets {
     /// All tags associated with an SLO.
     #[serde(rename = "all_tags")]

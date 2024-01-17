@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Response object that includes an Agent rule.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CloudWorkloadSecurityAgentRuleResponse {
     /// Object for a single Agent rule.
     #[serde(rename = "data")]

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Cost data.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CostByOrg {
     /// Cost attributes data.
     #[serde(rename = "attributes")]

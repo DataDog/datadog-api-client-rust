@@ -35,9 +35,3 @@ impl ToString for FindingMuteReason {
         }
     }
 }
-
-impl Default for FindingMuteReason {
-    fn default() -> FindingMuteReason {
-        Self::PENDING_FIX
-    }
-}

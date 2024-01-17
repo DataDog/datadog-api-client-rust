@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Has one property enabled (boolean).
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct OrganizationSettingsSamlStrictMode {
     /// Whether or not the SAML strict mode is enabled. If true, all users must log in with SAML.
     /// Learn more on the [SAML Strict documentation](https://docs.datadoghq.com/account_management/saml/#saml-strict).

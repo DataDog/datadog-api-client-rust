@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// An event list response.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct EventListResponse {
     /// An array of events.
     #[serde(rename = "events")]

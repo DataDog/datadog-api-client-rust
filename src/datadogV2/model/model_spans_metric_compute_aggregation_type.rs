@@ -20,9 +20,3 @@ impl ToString for SpansMetricComputeAggregationType {
         }
     }
 }
-
-impl Default for SpansMetricComputeAggregationType {
-    fn default() -> SpansMetricComputeAggregationType {
-        Self::COUNT
-    }
-}

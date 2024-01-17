@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Total number of host currently monitored by Datadog.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct HostTotals {
     /// Total number of active host (UP and ???) reporting to Datadog.
     #[serde(rename = "total_active")]

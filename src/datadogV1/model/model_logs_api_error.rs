@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Error returned by the Logs API
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LogsAPIError {
     /// Code identifying the error
     #[serde(rename = "code")]

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Indexed logs usage summary for each organization for each retention period with usage.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LogsByRetentionOrgs {
     /// Indexed logs usage summary for each organization.
     #[serde(rename = "usage")]

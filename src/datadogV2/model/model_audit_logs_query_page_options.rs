@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Paging attributes for listing events.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AuditLogsQueryPageOptions {
     /// List following results with a cursor provided in the previous query.
     #[serde(rename = "cursor")]

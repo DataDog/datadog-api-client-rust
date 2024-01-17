@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The retention filter object .
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct RetentionFilterWithoutAttributes {
     /// The ID of the retention filter.
     #[serde(rename = "id")]

@@ -7,21 +7,21 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// CreateAWSAccountParams is a struct for passing parameters to the method [`CreateAWSAccount`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateAWSAccountParams {
     /// AWS Request Object
     pub body: crate::datadogV1::model::AWSAccount,
 }
 
 /// CreateAWSEventBridgeSourceParams is a struct for passing parameters to the method [`CreateAWSEventBridgeSource`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateAWSEventBridgeSourceParams {
     /// Create an Amazon EventBridge source for an AWS account with a given name and region.
     pub body: crate::datadogV1::model::AWSEventBridgeCreateRequest,
 }
 
 /// CreateAWSTagFilterParams is a struct for passing parameters to the method [`CreateAWSTagFilter`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateAWSTagFilterParams {
     /// Set an AWS tag filter using an `aws_account_identifier`, `namespace`, and filtering string.
     /// Namespace options are `application_elb`, `elb`, `lambda`, `network_elb`, `rds`, `sqs`, and `custom`.
@@ -29,7 +29,7 @@ pub struct CreateAWSTagFilterParams {
 }
 
 /// CreateNewAWSExternalIDParams is a struct for passing parameters to the method [`CreateNewAWSExternalID`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateNewAWSExternalIDParams {
     /// Your Datadog role delegation name.
     /// For more information about your AWS account Role name,
@@ -38,28 +38,28 @@ pub struct CreateNewAWSExternalIDParams {
 }
 
 /// DeleteAWSAccountParams is a struct for passing parameters to the method [`DeleteAWSAccount`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DeleteAWSAccountParams {
     /// AWS request object
     pub body: crate::datadogV1::model::AWSAccountDeleteRequest,
 }
 
 /// DeleteAWSEventBridgeSourceParams is a struct for passing parameters to the method [`DeleteAWSEventBridgeSource`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DeleteAWSEventBridgeSourceParams {
     /// Delete the Amazon EventBridge source with the given name, region, and associated AWS account.
     pub body: crate::datadogV1::model::AWSEventBridgeDeleteRequest,
 }
 
 /// DeleteAWSTagFilterParams is a struct for passing parameters to the method [`DeleteAWSTagFilter`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DeleteAWSTagFilterParams {
     /// Delete a tag filtering entry for a given AWS account and `dd-aws` namespace.
     pub body: crate::datadogV1::model::AWSTagFilterDeleteRequest,
 }
 
 /// ListAWSAccountsParams is a struct for passing parameters to the method [`ListAWSAccounts`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct ListAWSAccountsParams {
     /// Only return AWS accounts that matches this `account_id`.
     pub account_id: Option<String>,
@@ -70,14 +70,14 @@ pub struct ListAWSAccountsParams {
 }
 
 /// ListAWSTagFiltersParams is a struct for passing parameters to the method [`ListAWSTagFilters`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct ListAWSTagFiltersParams {
     /// Only return AWS filters that matches this `account_id`.
     pub account_id: String,
 }
 
 /// UpdateAWSAccountParams is a struct for passing parameters to the method [`UpdateAWSAccount`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateAWSAccountParams {
     /// AWS request object
     pub body: crate::datadogV1::model::AWSAccount,

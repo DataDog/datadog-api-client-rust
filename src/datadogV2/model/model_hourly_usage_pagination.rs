@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The metadata for the current pagination.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct HourlyUsagePagination {
     /// The cursor to get the next results (if any). To make the next request, use the same parameters and add `next_record_id`.
     #[serde(

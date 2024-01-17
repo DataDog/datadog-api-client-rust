@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The expected response schema when getting a Fastly account.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FastlyAccountResponse {
     /// Data object of a Fastly account.
     #[serde(rename = "data")]

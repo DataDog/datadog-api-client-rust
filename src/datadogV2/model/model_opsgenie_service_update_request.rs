@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Update request for an Opsgenie service.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct OpsgenieServiceUpdateRequest {
     /// Opsgenie service for an update request.
     #[serde(rename = "data")]
@@ -15,10 +15,8 @@ pub struct OpsgenieServiceUpdateRequest {
 
 impl OpsgenieServiceUpdateRequest {
     pub fn new(
-        data: crate::datadogV2::model::OpsgenieServiceUpdateData,
+        data: Box<crate::datadogV2::model::OpsgenieServiceUpdateData>,
     ) -> OpsgenieServiceUpdateRequest {
-        OpsgenieServiceUpdateRequest {
-            data: Box::new(data),
-        }
+        OpsgenieServiceUpdateRequest { data }
     }
 }

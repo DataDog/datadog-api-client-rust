@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Response with properties for each aggregated usage type.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageBillableSummaryBody {
     /// The total account usage.
     #[serde(rename = "account_billable_usage")]

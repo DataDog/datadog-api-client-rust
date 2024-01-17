@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Custom variable for Webhook integration.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct WebhooksIntegrationCustomVariable {
     /// Make custom variable is secret or not.
     /// If the custom variable is secret, the value is not returned in the response payload.

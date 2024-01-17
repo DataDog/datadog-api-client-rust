@@ -29,9 +29,3 @@ impl ToString for FindingStatus {
         }
     }
 }
-
-impl Default for FindingStatus {
-    fn default() -> FindingStatus {
-        Self::CRITICAL
-    }
-}

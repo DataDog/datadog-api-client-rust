@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Online Archive usage response.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageOnlineArchiveResponse {
     /// Response containing Online Archive usage.
     #[serde(rename = "usage")]

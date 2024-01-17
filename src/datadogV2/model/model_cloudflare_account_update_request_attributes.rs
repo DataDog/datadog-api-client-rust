@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Attributes object for updating a Cloudflare account.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CloudflareAccountUpdateRequestAttributes {
     /// The API key of the Cloudflare account.
     #[serde(rename = "api_key")]

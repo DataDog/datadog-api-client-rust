@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The compute rule to compute the log-based metric.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LogsMetricUpdateCompute {
     /// Toggle to include or exclude percentile aggregations for distribution metrics.
     /// Only present when the `aggregation_type` is `distribution`.

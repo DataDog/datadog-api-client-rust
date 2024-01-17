@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Fields in Usage Summary by tag(s).
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageAttributionValues {
     /// The percentage of synthetic API test usage by tag(s).
     #[serde(rename = "api_percentage")]

@@ -35,9 +35,3 @@ impl ToString for EventAlertType {
         }
     }
 }
-
-impl Default for EventAlertType {
-    fn default() -> EventAlertType {
-        Self::ERROR
-    }
-}

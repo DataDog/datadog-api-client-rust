@@ -7,49 +7,49 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// CreateWebhooksIntegrationParams is a struct for passing parameters to the method [`CreateWebhooksIntegration`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateWebhooksIntegrationParams {
     /// Create a webhooks integration request body.
     pub body: crate::datadogV1::model::WebhooksIntegration,
 }
 
 /// CreateWebhooksIntegrationCustomVariableParams is a struct for passing parameters to the method [`CreateWebhooksIntegrationCustomVariable`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateWebhooksIntegrationCustomVariableParams {
     /// Define a custom variable request body.
     pub body: crate::datadogV1::model::WebhooksIntegrationCustomVariable,
 }
 
 /// DeleteWebhooksIntegrationParams is a struct for passing parameters to the method [`DeleteWebhooksIntegration`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DeleteWebhooksIntegrationParams {
     /// The name of the webhook.
     pub webhook_name: String,
 }
 
 /// DeleteWebhooksIntegrationCustomVariableParams is a struct for passing parameters to the method [`DeleteWebhooksIntegrationCustomVariable`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DeleteWebhooksIntegrationCustomVariableParams {
     /// The name of the custom variable.
     pub custom_variable_name: String,
 }
 
 /// GetWebhooksIntegrationParams is a struct for passing parameters to the method [`GetWebhooksIntegration`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetWebhooksIntegrationParams {
     /// The name of the webhook.
     pub webhook_name: String,
 }
 
 /// GetWebhooksIntegrationCustomVariableParams is a struct for passing parameters to the method [`GetWebhooksIntegrationCustomVariable`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetWebhooksIntegrationCustomVariableParams {
     /// The name of the custom variable.
     pub custom_variable_name: String,
 }
 
 /// UpdateWebhooksIntegrationParams is a struct for passing parameters to the method [`UpdateWebhooksIntegration`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateWebhooksIntegrationParams {
     /// The name of the webhook.
     pub webhook_name: String,
@@ -58,7 +58,7 @@ pub struct UpdateWebhooksIntegrationParams {
 }
 
 /// UpdateWebhooksIntegrationCustomVariableParams is a struct for passing parameters to the method [`UpdateWebhooksIntegrationCustomVariable`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateWebhooksIntegrationCustomVariableParams {
     /// The name of the custom variable.
     pub custom_variable_name: String,

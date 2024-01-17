@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Data object for creating a Cloudflare account.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CloudflareAccountCreateRequestData {
     /// Attributes object for creating a Cloudflare account.
     #[serde(rename = "attributes")]
@@ -18,12 +18,9 @@ pub struct CloudflareAccountCreateRequestData {
 
 impl CloudflareAccountCreateRequestData {
     pub fn new(
-        attributes: crate::datadogV2::model::CloudflareAccountCreateRequestAttributes,
+        attributes: Box<crate::datadogV2::model::CloudflareAccountCreateRequestAttributes>,
         type_: crate::datadogV2::model::CloudflareAccountType,
     ) -> CloudflareAccountCreateRequestData {
-        CloudflareAccountCreateRequestData {
-            attributes: Box::new(attributes),
-            type_,
-        }
+        CloudflareAccountCreateRequestData { attributes, type_ }
     }
 }

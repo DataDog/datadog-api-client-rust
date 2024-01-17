@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The objects used to set an AWS tag filter.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AWSTagFilterCreateRequest {
     /// Your AWS Account ID without dashes.
     #[serde(rename = "account_id")]

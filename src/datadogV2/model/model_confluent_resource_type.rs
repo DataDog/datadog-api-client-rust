@@ -17,9 +17,3 @@ impl ToString for ConfluentResourceType {
         }
     }
 }
-
-impl Default for ConfluentResourceType {
-    fn default() -> ConfluentResourceType {
-        Self::CONFLUENT_CLOUD_RESOURCES
-    }
-}

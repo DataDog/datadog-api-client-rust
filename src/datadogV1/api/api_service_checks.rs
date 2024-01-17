@@ -7,7 +7,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// SubmitServiceCheckParams is a struct for passing parameters to the method [`SubmitServiceCheck`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct SubmitServiceCheckParams {
     /// Service Check request body.
     pub body: Vec<crate::datadogV1::model::ServiceCheck>,

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Response object with all logs matching the request and pagination information.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LogsListResponse {
     /// Array of logs matching the request and the `nextLogId` if sent.
     #[serde(rename = "logs")]

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Response containing the number of Synthetics API tests run for each hour for a given organization.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageSyntheticsResponse {
     /// Array with the number of hourly Synthetics test run for a given organization.
     #[serde(rename = "usage")]

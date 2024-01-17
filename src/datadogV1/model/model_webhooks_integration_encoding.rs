@@ -20,9 +20,3 @@ impl ToString for WebhooksIntegrationEncoding {
         }
     }
 }
-
-impl Default for WebhooksIntegrationEncoding {
-    fn default() -> WebhooksIntegrationEncoding {
-        Self::JSON
-    }
-}

@@ -27,9 +27,3 @@ impl ToString for HourlyUsageType {
         }
     }
 }
-
-impl Default for HourlyUsageType {
-    fn default() -> HourlyUsageType {
-        Self::APP_SEC_HOST_COUNT
-    }
-}

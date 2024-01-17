@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The attribute object associated with the SLO correction to be updated.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SLOCorrectionUpdateRequestAttributes {
     /// Category the SLO correction belongs to.
     #[serde(rename = "category")]

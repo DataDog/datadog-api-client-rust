@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Response containing hourly usage of timeseries.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageTimeseriesResponse {
     /// An array of objects regarding hourly usage of timeseries.
     #[serde(rename = "usage")]

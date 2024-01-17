@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The compute rule to compute the span-based metric.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SpansMetricResponseCompute {
     /// The type of aggregation to use.
     #[serde(rename = "aggregation_type")]

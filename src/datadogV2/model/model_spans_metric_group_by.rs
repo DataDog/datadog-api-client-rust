@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// A group by rule.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SpansMetricGroupBy {
     /// The path to the value the span-based metric will be aggregated over.
     #[serde(rename = "path")]

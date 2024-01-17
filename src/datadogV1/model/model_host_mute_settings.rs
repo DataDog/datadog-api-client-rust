@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Combination of settings to mute a host.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct HostMuteSettings {
     /// POSIX timestamp in seconds when the host is unmuted. If omitted, the host remains muted until explicitly unmuted.
     #[serde(rename = "end")]

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The new log-based metric properties.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LogsMetricCreateData {
     /// The object describing the Datadog log-based metric to create.
     #[serde(rename = "attributes")]
@@ -21,12 +21,12 @@ pub struct LogsMetricCreateData {
 
 impl LogsMetricCreateData {
     pub fn new(
-        attributes: crate::datadogV2::model::LogsMetricCreateAttributes,
+        attributes: Box<crate::datadogV2::model::LogsMetricCreateAttributes>,
         id: String,
         type_: crate::datadogV2::model::LogsMetricType,
     ) -> LogsMetricCreateData {
         LogsMetricCreateData {
-            attributes: Box::new(attributes),
+            attributes,
             id,
             type_,
         }

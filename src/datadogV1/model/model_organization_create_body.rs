@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Object describing an organization to create.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct OrganizationCreateBody {
     /// A JSON array of billing type.
     #[deprecated]

@@ -17,9 +17,3 @@ impl ToString for EventType {
         }
     }
 }
-
-impl Default for EventType {
-    fn default() -> EventType {
-        Self::EVENT
-    }
-}

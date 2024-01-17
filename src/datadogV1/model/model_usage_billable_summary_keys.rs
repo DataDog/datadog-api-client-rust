@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Response with aggregated usage types.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageBillableSummaryKeys {
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "apm_fargate_average")]

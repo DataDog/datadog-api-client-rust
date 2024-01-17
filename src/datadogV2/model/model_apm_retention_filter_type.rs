@@ -17,9 +17,3 @@ impl ToString for ApmRetentionFilterType {
         }
     }
 }
-
-impl Default for ApmRetentionFilterType {
-    fn default() -> ApmRetentionFilterType {
-        Self::apm_retention_filter
-    }
-}

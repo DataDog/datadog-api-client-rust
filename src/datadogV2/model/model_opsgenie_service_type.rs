@@ -17,9 +17,3 @@ impl ToString for OpsgenieServiceType {
         }
     }
 }
-
-impl Default for OpsgenieServiceType {
-    fn default() -> OpsgenieServiceType {
-        Self::OPSGENIE_SERVICE
-    }
-}

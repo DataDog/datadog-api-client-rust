@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Confluent Cloud resource data.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ConfluentResourceResponseData {
     /// Model representation of a Confluent Cloud resource.
     #[serde(rename = "attributes")]
@@ -21,12 +21,12 @@ pub struct ConfluentResourceResponseData {
 
 impl ConfluentResourceResponseData {
     pub fn new(
-        attributes: crate::datadogV2::model::ConfluentResourceResponseAttributes,
+        attributes: Box<crate::datadogV2::model::ConfluentResourceResponseAttributes>,
         id: String,
         type_: crate::datadogV2::model::ConfluentResourceType,
     ) -> ConfluentResourceResponseData {
         ConfluentResourceResponseData {
-            attributes: Box::new(attributes),
+            attributes,
             id,
             type_,
         }

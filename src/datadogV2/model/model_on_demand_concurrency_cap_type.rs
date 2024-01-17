@@ -17,9 +17,3 @@ impl ToString for OnDemandConcurrencyCapType {
         }
     }
 }
-
-impl Default for OnDemandConcurrencyCapType {
-    fn default() -> OnDemandConcurrencyCapType {
-        Self::ON_DEMAND_CONCURRENCY_CAP
-    }
-}

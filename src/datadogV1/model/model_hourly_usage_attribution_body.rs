@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The usage for one set of tags for one hour.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct HourlyUsageAttributionBody {
     /// The hour for the usage.
     #[serde(rename = "hour")]

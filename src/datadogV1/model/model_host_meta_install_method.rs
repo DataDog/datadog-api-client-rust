@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Agent install method.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct HostMetaInstallMethod {
     /// The installer version.
     #[serde(rename = "installer_version")]

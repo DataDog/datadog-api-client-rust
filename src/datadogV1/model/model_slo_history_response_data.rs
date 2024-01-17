@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// An array of service level objective objects.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SLOHistoryResponseData {
     /// The `from` timestamp in epoch seconds.
     #[serde(rename = "from_ts")]

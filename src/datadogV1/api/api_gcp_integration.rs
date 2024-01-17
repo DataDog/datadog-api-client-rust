@@ -7,21 +7,21 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// CreateGCPIntegrationParams is a struct for passing parameters to the method [`CreateGCPIntegration`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateGCPIntegrationParams {
     /// Create a Datadog-GCP integration.
     pub body: crate::datadogV1::model::GCPAccount,
 }
 
 /// DeleteGCPIntegrationParams is a struct for passing parameters to the method [`DeleteGCPIntegration`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DeleteGCPIntegrationParams {
     /// Delete a given Datadog-GCP integration.
     pub body: crate::datadogV1::model::GCPAccount,
 }
 
 /// UpdateGCPIntegrationParams is a struct for passing parameters to the method [`UpdateGCPIntegration`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateGCPIntegrationParams {
     /// Update a Datadog-GCP integration.
     pub body: crate::datadogV1::model::GCPAccount,

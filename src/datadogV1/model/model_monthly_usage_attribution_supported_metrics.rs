@@ -419,9 +419,3 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
         }
     }
 }
-
-impl Default for MonthlyUsageAttributionSupportedMetrics {
-    fn default() -> MonthlyUsageAttributionSupportedMetrics {
-        Self::API_USAGE
-    }
-}

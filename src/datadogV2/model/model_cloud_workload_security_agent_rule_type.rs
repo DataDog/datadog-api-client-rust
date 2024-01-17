@@ -17,9 +17,3 @@ impl ToString for CloudWorkloadSecurityAgentRuleType {
         }
     }
 }
-
-impl Default for CloudWorkloadSecurityAgentRuleType {
-    fn default() -> CloudWorkloadSecurityAgentRuleType {
-        Self::AGENT_RULE
-    }
-}

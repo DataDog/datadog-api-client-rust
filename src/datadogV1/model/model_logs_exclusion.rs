@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Represents the index exclusion filter object from configuration API.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LogsExclusion {
     /// Exclusion filter is defined by a query, a sampling rule, and a active/inactive toggle.
     #[serde(rename = "filter")]

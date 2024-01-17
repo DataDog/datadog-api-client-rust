@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// List of errors.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct HTTPLogError {
     /// Error message.
     #[serde(rename = "detail")]

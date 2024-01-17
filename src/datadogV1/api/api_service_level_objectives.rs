@@ -7,21 +7,21 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// CheckCanDeleteSLOParams is a struct for passing parameters to the method [`CheckCanDeleteSLO`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CheckCanDeleteSLOParams {
     /// A comma separated list of the IDs of the service level objectives objects.
     pub ids: String,
 }
 
 /// CreateSLOParams is a struct for passing parameters to the method [`CreateSLO`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CreateSLOParams {
     /// Service level objective request object.
     pub body: crate::datadogV1::model::ServiceLevelObjectiveRequest,
 }
 
 /// DeleteSLOParams is a struct for passing parameters to the method [`DeleteSLO`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DeleteSLOParams {
     /// The ID of the service level objective.
     pub slo_id: String,
@@ -30,14 +30,14 @@ pub struct DeleteSLOParams {
 }
 
 /// DeleteSLOTimeframeInBulkParams is a struct for passing parameters to the method [`DeleteSLOTimeframeInBulk`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct DeleteSLOTimeframeInBulkParams {
     /// Delete multiple service level objective objects request body.
     pub body: std::collections::HashMap<String, Vec<crate::datadogV1::model::SLOTimeframe>>,
 }
 
 /// GetSLOParams is a struct for passing parameters to the method [`GetSLO`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetSLOParams {
     /// The ID of the service level objective object.
     pub slo_id: String,
@@ -46,14 +46,14 @@ pub struct GetSLOParams {
 }
 
 /// GetSLOCorrectionsParams is a struct for passing parameters to the method [`GetSLOCorrections`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetSLOCorrectionsParams {
     /// The ID of the service level objective object.
     pub slo_id: String,
 }
 
 /// GetSLOHistoryParams is a struct for passing parameters to the method [`GetSLOHistory`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GetSLOHistoryParams {
     /// The ID of the service level objective object.
     pub slo_id: String,
@@ -69,7 +69,7 @@ pub struct GetSLOHistoryParams {
 }
 
 /// ListSLOsParams is a struct for passing parameters to the method [`ListSLOs`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct ListSLOsParams {
     /// A comma separated list of the IDs of the service level objectives objects.
     pub ids: Option<String>,
@@ -86,7 +86,7 @@ pub struct ListSLOsParams {
 }
 
 /// SearchSLOParams is a struct for passing parameters to the method [`SearchSLO`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct SearchSLOParams {
     /// The query string to filter results based on SLO names.
     /// Some examples of queries include `service:<service-name>`
@@ -101,7 +101,7 @@ pub struct SearchSLOParams {
 }
 
 /// UpdateSLOParams is a struct for passing parameters to the method [`UpdateSLO`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct UpdateSLOParams {
     /// The ID of the service level objective object.
     pub slo_id: String,

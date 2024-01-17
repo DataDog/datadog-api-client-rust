@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The schema representation of a Fastly service.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FastlyService {
     /// The id of the Fastly service
     #[serde(rename = "id")]

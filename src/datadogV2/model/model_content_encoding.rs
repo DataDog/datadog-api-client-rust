@@ -23,9 +23,3 @@ impl ToString for ContentEncoding {
         }
     }
 }
-
-impl Default for ContentEncoding {
-    fn default() -> ContentEncoding {
-        Self::IDENTITY
-    }
-}

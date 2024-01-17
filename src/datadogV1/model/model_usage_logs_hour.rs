@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Hour usage for logs.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageLogsHour {
     /// Contains the number of billable log bytes ingested.
     #[serde(

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Status of downgrade
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct OrgDowngradedResponse {
     /// Information pertaining to the downgraded child organization.
     #[serde(rename = "message")]

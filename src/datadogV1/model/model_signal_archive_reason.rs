@@ -29,9 +29,3 @@ impl ToString for SignalArchiveReason {
         }
     }
 }
-
-impl Default for SignalArchiveReason {
-    fn default() -> SignalArchiveReason {
-        Self::NONE
-    }
-}

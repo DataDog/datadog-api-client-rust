@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// A search SLO response containing results from the search query.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SearchSLOResponse {
     /// Data from search SLO response.
     #[serde(rename = "data")]

@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// A JSON array of settings.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct OrganizationSettings {
     /// Whether or not the organization users can share widgets outside of Datadog.
     #[serde(rename = "private_widget_share")]

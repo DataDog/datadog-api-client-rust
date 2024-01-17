@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The expected response schema when getting a Confluent account.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ConfluentAccountResponse {
     /// An API key and API secret pair that represents a Confluent account.
     #[serde(rename = "data")]

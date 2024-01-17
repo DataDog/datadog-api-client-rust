@@ -6,8 +6,42 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
+/// AggregateLogsParams is a struct for passing parameters to the method [`AggregateLogs`]
+#[derive(Clone, Debug)]
+pub struct AggregateLogsParams {
+    pub body: crate::datadogV2::model::LogsAggregateRequest,
+}
+
+/// ListLogsParams is a struct for passing parameters to the method [`ListLogs`]
+#[derive(Clone, Debug)]
+pub struct ListLogsParams {
+    pub body: Option<Option<crate::datadogV2::model::LogsListRequest>>,
+}
+
+/// ListLogsGetParams is a struct for passing parameters to the method [`ListLogsGet`]
+#[derive(Clone, Debug)]
+pub struct ListLogsGetParams {
+    /// Search query following logs syntax.
+    pub filter_query: Option<String>,
+    /// For customers with multiple indexes, the indexes to search.
+    /// Defaults to '*' which means all indexes
+    pub filter_indexes: Option<Vec<String>>,
+    /// Minimum timestamp for requested logs.
+    pub filter_from: Option<String>,
+    /// Maximum timestamp for requested logs.
+    pub filter_to: Option<String>,
+    /// Specifies the storage type to be used
+    pub filter_storage_tier: Option<crate::datadogV2::model::LogsStorageTier>,
+    /// Order of logs in results.
+    pub sort: Option<crate::datadogV2::model::LogsSort>,
+    /// List following results with a cursor provided in the previous query.
+    pub page_cursor: Option<String>,
+    /// Maximum number of logs in the response.
+    pub page_limit: Option<i32>,
+}
+
 /// SubmitLogParams is a struct for passing parameters to the method [`SubmitLog`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct SubmitLogParams {
     /// Log to send (JSON format).
     pub body: Vec<crate::datadogV2::model::HTTPLogItem>,
@@ -15,6 +49,36 @@ pub struct SubmitLogParams {
     pub content_encoding: Option<crate::datadogV2::model::ContentEncoding>,
     /// Log tags can be passed as query parameters with `text/plain` content type.
     pub ddtags: Option<String>,
+}
+
+/// AggregateLogsError is a struct for typed errors of method [`AggregateLogs`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum AggregateLogsError {
+    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListLogsError is a struct for typed errors of method [`ListLogs`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListLogsError {
+    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListLogsGetError is a struct for typed errors of method [`ListLogsGet`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListLogsGetError {
+    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    UnknownValue(serde_json::Value),
 }
 
 /// SubmitLogError is a struct for typed errors of method [`SubmitLog`]
@@ -51,6 +115,315 @@ impl LogsAPI {
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
         Self { config }
+    }
+
+    /// The API endpoint to aggregate events into buckets and compute metrics and timeseries.
+    pub async fn aggregate_logs(
+        &self,
+        params: AggregateLogsParams,
+    ) -> Result<Option<crate::datadogV2::model::LogsAggregateResponse>, Error<AggregateLogsError>>
+    {
+        match self.aggregate_logs_with_http_info(params).await {
+            Ok(response_content) => Ok(response_content.entity),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// The API endpoint to aggregate events into buckets and compute metrics and timeseries.
+    pub async fn aggregate_logs_with_http_info(
+        &self,
+        params: AggregateLogsParams,
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::LogsAggregateResponse>,
+        Error<AggregateLogsError>,
+    > {
+        let local_configuration = &self.config;
+
+        // unbox and build parameters
+        let body = params.body;
+
+        let local_client = &local_configuration.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/logs/analytics/aggregate",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build user agent
+        if let Some(ref local_user_agent) = local_configuration.user_agent {
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+        }
+
+        // build auth
+        if let Some(ref local_apikey) = local_configuration.api_key_auth {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        };
+        if let Some(ref local_apikey) = local_configuration.app_key_auth {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            local_req_builder = local_req_builder.body(ser.into_inner());
+        }
+
+        let local_req = local_req_builder.build()?;
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            let local_entity: Option<crate::datadogV2::model::LogsAggregateResponse> =
+                serde_json::from_str(&local_content).ok();
+            Ok(ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            })
+        } else {
+            let local_entity: Option<AggregateLogsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(Error::ResponseError(local_error))
+        }
+    }
+
+    /// List endpoint returns logs that match a log search query.
+    /// [Results are paginated][1].
+    ///
+    /// Use this endpoint to build complex logs filtering and search.
+    ///
+    /// **If you are considering archiving logs for your organization,
+    /// consider use of the Datadog archive capabilities instead of the log list API.
+    /// See [Datadog Logs Archive documentation][2].**
+    ///
+    /// [1]: /logs/guide/collect-multiple-logs-with-pagination
+    /// [2]: https://docs.datadoghq.com/logs/archives
+    pub async fn list_logs(
+        &self,
+        params: ListLogsParams,
+    ) -> Result<Option<crate::datadogV2::model::LogsListResponse>, Error<ListLogsError>> {
+        match self.list_logs_with_http_info(params).await {
+            Ok(response_content) => Ok(response_content.entity),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// List endpoint returns logs that match a log search query.
+    /// [Results are paginated][1].
+    ///
+    /// Use this endpoint to build complex logs filtering and search.
+    ///
+    /// **If you are considering archiving logs for your organization,
+    /// consider use of the Datadog archive capabilities instead of the log list API.
+    /// See [Datadog Logs Archive documentation][2].**
+    ///
+    /// [1]: /logs/guide/collect-multiple-logs-with-pagination
+    /// [2]: https://docs.datadoghq.com/logs/archives
+    pub async fn list_logs_with_http_info(
+        &self,
+        params: ListLogsParams,
+    ) -> Result<ResponseContent<crate::datadogV2::model::LogsListResponse>, Error<ListLogsError>>
+    {
+        let local_configuration = &self.config;
+
+        // unbox and build parameters
+        let body = params.body;
+
+        let local_client = &local_configuration.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/logs/events/search",
+            local_configuration.base_path
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build user agent
+        if let Some(ref local_user_agent) = local_configuration.user_agent {
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+        }
+
+        // build auth
+        if let Some(ref local_apikey) = local_configuration.api_key_auth {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        };
+        if let Some(ref local_apikey) = local_configuration.app_key_auth {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            local_req_builder = local_req_builder.body(ser.into_inner());
+        }
+
+        let local_req = local_req_builder.build()?;
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            let local_entity: Option<crate::datadogV2::model::LogsListResponse> =
+                serde_json::from_str(&local_content).ok();
+            Ok(ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            })
+        } else {
+            let local_entity: Option<ListLogsError> = serde_json::from_str(&local_content).ok();
+            let local_error = ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(Error::ResponseError(local_error))
+        }
+    }
+
+    /// List endpoint returns logs that match a log search query.
+    /// [Results are paginated][1].
+    ///
+    /// Use this endpoint to see your latest logs.
+    ///
+    /// **If you are considering archiving logs for your organization,
+    /// consider use of the Datadog archive capabilities instead of the log list API.
+    /// See [Datadog Logs Archive documentation][2].**
+    ///
+    /// [1]: /logs/guide/collect-multiple-logs-with-pagination
+    /// [2]: https://docs.datadoghq.com/logs/archives
+    pub async fn list_logs_get(
+        &self,
+        params: ListLogsGetParams,
+    ) -> Result<Option<crate::datadogV2::model::LogsListResponse>, Error<ListLogsGetError>> {
+        match self.list_logs_get_with_http_info(params).await {
+            Ok(response_content) => Ok(response_content.entity),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// List endpoint returns logs that match a log search query.
+    /// [Results are paginated][1].
+    ///
+    /// Use this endpoint to see your latest logs.
+    ///
+    /// **If you are considering archiving logs for your organization,
+    /// consider use of the Datadog archive capabilities instead of the log list API.
+    /// See [Datadog Logs Archive documentation][2].**
+    ///
+    /// [1]: /logs/guide/collect-multiple-logs-with-pagination
+    /// [2]: https://docs.datadoghq.com/logs/archives
+    pub async fn list_logs_get_with_http_info(
+        &self,
+        params: ListLogsGetParams,
+    ) -> Result<ResponseContent<crate::datadogV2::model::LogsListResponse>, Error<ListLogsGetError>>
+    {
+        let local_configuration = &self.config;
+
+        // unbox and build parameters
+        let filter_query = params.filter_query;
+        let filter_indexes = params.filter_indexes;
+        let filter_from = params.filter_from;
+        let filter_to = params.filter_to;
+        let filter_storage_tier = params.filter_storage_tier;
+        let sort = params.sort;
+        let page_cursor = params.page_cursor;
+        let page_limit = params.page_limit;
+
+        let local_client = &local_configuration.client;
+
+        let local_uri_str = format!("{}/api/v2/logs/events", local_configuration.base_path);
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_str) = filter_query {
+            local_req_builder =
+                local_req_builder.query(&[("filter[query]", &local_str.to_string())]);
+        };
+        if let Some(ref local) = filter_indexes {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[indexes]",
+                &local
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]);
+        };
+        if let Some(ref local_str) = filter_from {
+            local_req_builder =
+                local_req_builder.query(&[("filter[from]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = filter_to {
+            local_req_builder = local_req_builder.query(&[("filter[to]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = filter_storage_tier {
+            local_req_builder =
+                local_req_builder.query(&[("filter[storage_tier]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = sort {
+            local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = page_cursor {
+            local_req_builder =
+                local_req_builder.query(&[("page[cursor]", &local_str.to_string())]);
+        };
+        if let Some(ref local_str) = page_limit {
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_str.to_string())]);
+        };
+
+        // build user agent
+        if let Some(ref local_user_agent) = local_configuration.user_agent {
+            local_req_builder =
+                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
+        }
+
+        // build auth
+        if let Some(ref local_apikey) = local_configuration.api_key_auth {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        };
+        if let Some(ref local_apikey) = local_configuration.app_key_auth {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        };
+
+        let local_req = local_req_builder.build()?;
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            let local_entity: Option<crate::datadogV2::model::LogsListResponse> =
+                serde_json::from_str(&local_content).ok();
+            Ok(ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            })
+        } else {
+            let local_entity: Option<ListLogsGetError> = serde_json::from_str(&local_content).ok();
+            let local_error = ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(Error::ResponseError(local_error))
+        }
     }
 
     /// Send your logs to your Datadog platform over HTTP. Limits per HTTP request are:

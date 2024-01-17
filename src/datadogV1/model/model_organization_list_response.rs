@@ -6,7 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Response with the list of organizations.
 #[skip_serializing_none]
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct OrganizationListResponse {
     /// Array of organization objects.
     #[serde(rename = "orgs")]
