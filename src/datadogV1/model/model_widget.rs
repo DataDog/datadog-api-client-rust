@@ -13,7 +13,7 @@ use serde_with::skip_serializing_none;
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Widget {
-    /// [Definition of the widget](https://docs.datadoghq.com/dashboards/widgets/).
+    /// [Definition of the widget](<https://docs.datadoghq.com/dashboards/widgets/>).
     #[serde(rename = "definition")]
     pub definition: Box<crate::datadogV1::model::WidgetDefinition>,
     /// ID of the widget.

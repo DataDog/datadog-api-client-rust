@@ -21,13 +21,13 @@ pub struct WebhooksIntegration {
     pub encode_as: Option<crate::datadogV1::model::WebhooksIntegrationEncoding>,
     /// The name of the webhook. It corresponds with `<WEBHOOK_NAME>`.
     /// Learn more on how to use it in
-    /// [monitor notifications](https://docs.datadoghq.com/monitors/notify).
+    /// [monitor notifications](<https://docs.datadoghq.com/monitors/notify>).
     #[serde(rename = "name")]
     pub name: String,
     /// If `null`, uses the default payload.
     /// If given a JSON payload, the webhook returns the payload
     /// specified by the given payload.
-    /// [Webhooks variable usage](https://docs.datadoghq.com/integrations/webhooks/#usage).
+    /// [Webhooks variable usage](<https://docs.datadoghq.com/integrations/webhooks/#usage>).
     #[serde(
         rename = "payload",
         default,

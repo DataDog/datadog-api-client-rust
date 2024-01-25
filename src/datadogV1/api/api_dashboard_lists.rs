@@ -1,33 +1,32 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateDashboardListParams is a struct for passing parameters to the method [`CreateDashboardList`]
+/// CreateDashboardListParams is a struct for passing parameters to the method [`DashboardListsAPI::create_dashboard_list`]
 #[derive(Clone, Debug)]
 pub struct CreateDashboardListParams {
     /// Create a dashboard list request body.
     pub body: crate::datadogV1::model::DashboardList,
 }
 
-/// DeleteDashboardListParams is a struct for passing parameters to the method [`DeleteDashboardList`]
+/// DeleteDashboardListParams is a struct for passing parameters to the method [`DashboardListsAPI::delete_dashboard_list`]
 #[derive(Clone, Debug)]
 pub struct DeleteDashboardListParams {
     /// ID of the dashboard list to delete.
     pub list_id: i64,
 }
 
-/// GetDashboardListParams is a struct for passing parameters to the method [`GetDashboardList`]
+/// GetDashboardListParams is a struct for passing parameters to the method [`DashboardListsAPI::get_dashboard_list`]
 #[derive(Clone, Debug)]
 pub struct GetDashboardListParams {
     /// ID of the dashboard list to fetch.
     pub list_id: i64,
 }
 
-/// UpdateDashboardListParams is a struct for passing parameters to the method [`UpdateDashboardList`]
+/// UpdateDashboardListParams is a struct for passing parameters to the method [`DashboardListsAPI::update_dashboard_list`]
 #[derive(Clone, Debug)]
 pub struct UpdateDashboardListParams {
     /// ID of the dashboard list to update.
@@ -36,7 +35,7 @@ pub struct UpdateDashboardListParams {
     pub body: crate::datadogV1::model::DashboardList,
 }
 
-/// CreateDashboardListError is a struct for typed errors of method [`CreateDashboardList`]
+/// CreateDashboardListError is a struct for typed errors of method [`DashboardListsAPI::create_dashboard_list`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateDashboardListError {
@@ -46,7 +45,7 @@ pub enum CreateDashboardListError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteDashboardListError is a struct for typed errors of method [`DeleteDashboardList`]
+/// DeleteDashboardListError is a struct for typed errors of method [`DashboardListsAPI::delete_dashboard_list`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteDashboardListError {
@@ -56,7 +55,7 @@ pub enum DeleteDashboardListError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetDashboardListError is a struct for typed errors of method [`GetDashboardList`]
+/// GetDashboardListError is a struct for typed errors of method [`DashboardListsAPI::get_dashboard_list`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetDashboardListError {
@@ -66,7 +65,7 @@ pub enum GetDashboardListError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListDashboardListsError is a struct for typed errors of method [`ListDashboardLists`]
+/// ListDashboardListsError is a struct for typed errors of method [`DashboardListsAPI::list_dashboard_lists`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListDashboardListsError {
@@ -75,7 +74,7 @@ pub enum ListDashboardListsError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateDashboardListError is a struct for typed errors of method [`UpdateDashboardList`]
+/// UpdateDashboardListError is a struct for typed errors of method [`DashboardListsAPI::update_dashboard_list`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateDashboardListError {

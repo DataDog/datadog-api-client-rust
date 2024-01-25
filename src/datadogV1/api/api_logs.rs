@@ -1,19 +1,18 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// ListLogsParams is a struct for passing parameters to the method [`ListLogs`]
+/// ListLogsParams is a struct for passing parameters to the method [`LogsAPI::list_logs`]
 #[derive(Clone, Debug)]
 pub struct ListLogsParams {
     /// Logs filter
     pub body: crate::datadogV1::model::LogsListRequest,
 }
 
-/// SubmitLogParams is a struct for passing parameters to the method [`SubmitLog`]
+/// SubmitLogParams is a struct for passing parameters to the method [`LogsAPI::submit_log`]
 #[derive(Clone, Debug)]
 pub struct SubmitLogParams {
     /// Log to send (JSON format).
@@ -24,7 +23,7 @@ pub struct SubmitLogParams {
     pub ddtags: Option<String>,
 }
 
-/// ListLogsError is a struct for typed errors of method [`ListLogs`]
+/// ListLogsError is a struct for typed errors of method [`LogsAPI::list_logs`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListLogsError {
@@ -34,7 +33,7 @@ pub enum ListLogsError {
     UnknownValue(serde_json::Value),
 }
 
-/// SubmitLogError is a struct for typed errors of method [`SubmitLog`]
+/// SubmitLogError is a struct for typed errors of method [`LogsAPI::submit_log`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SubmitLogError {
@@ -72,7 +71,7 @@ impl LogsAPI {
     /// See [Datadog Logs Archive documentation][2].**
     ///
     /// [1]: /logs/guide/collect-multiple-logs-with-pagination
-    /// [2]: https://docs.datadoghq.com/logs/archives
+    /// [2]: <https://docs.datadoghq.com/logs/archives>
     pub async fn list_logs(
         &self,
         params: ListLogsParams,
@@ -91,7 +90,7 @@ impl LogsAPI {
     /// See [Datadog Logs Archive documentation][2].**
     ///
     /// [1]: /logs/guide/collect-multiple-logs-with-pagination
-    /// [2]: https://docs.datadoghq.com/logs/archives
+    /// [2]: <https://docs.datadoghq.com/logs/archives>
     pub async fn list_logs_with_http_info(
         &self,
         params: ListLogsParams,

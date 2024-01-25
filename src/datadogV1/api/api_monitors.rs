@@ -1,26 +1,25 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CheckCanDeleteMonitorParams is a struct for passing parameters to the method [`CheckCanDeleteMonitor`]
+/// CheckCanDeleteMonitorParams is a struct for passing parameters to the method [`MonitorsAPI::check_can_delete_monitor`]
 #[derive(Clone, Debug)]
 pub struct CheckCanDeleteMonitorParams {
     /// The IDs of the monitor to check.
     pub monitor_ids: Vec<i64>,
 }
 
-/// CreateMonitorParams is a struct for passing parameters to the method [`CreateMonitor`]
+/// CreateMonitorParams is a struct for passing parameters to the method [`MonitorsAPI::create_monitor`]
 #[derive(Clone, Debug)]
 pub struct CreateMonitorParams {
     /// Create a monitor request body.
     pub body: crate::datadogV1::model::Monitor,
 }
 
-/// DeleteMonitorParams is a struct for passing parameters to the method [`DeleteMonitor`]
+/// DeleteMonitorParams is a struct for passing parameters to the method [`MonitorsAPI::delete_monitor`]
 #[derive(Clone, Debug)]
 pub struct DeleteMonitorParams {
     /// The ID of the monitor.
@@ -29,7 +28,7 @@ pub struct DeleteMonitorParams {
     pub force: Option<String>,
 }
 
-/// GetMonitorParams is a struct for passing parameters to the method [`GetMonitor`]
+/// GetMonitorParams is a struct for passing parameters to the method [`MonitorsAPI::get_monitor`]
 #[derive(Clone, Debug)]
 pub struct GetMonitorParams {
     /// The ID of the monitor
@@ -40,7 +39,7 @@ pub struct GetMonitorParams {
     pub with_downtimes: Option<bool>,
 }
 
-/// ListMonitorsParams is a struct for passing parameters to the method [`ListMonitors`]
+/// ListMonitorsParams is a struct for passing parameters to the method [`MonitorsAPI::list_monitors`]
 #[derive(Clone, Debug)]
 pub struct ListMonitorsParams {
     /// When specified, shows additional information about the group states.
@@ -64,7 +63,7 @@ pub struct ListMonitorsParams {
     pub page_size: Option<i32>,
 }
 
-/// SearchMonitorGroupsParams is a struct for passing parameters to the method [`SearchMonitorGroups`]
+/// SearchMonitorGroupsParams is a struct for passing parameters to the method [`MonitorsAPI::search_monitor_groups`]
 #[derive(Clone, Debug)]
 pub struct SearchMonitorGroupsParams {
     /// After entering a search query in your [Manage Monitor page][1] use the query parameter value in the
@@ -73,7 +72,7 @@ pub struct SearchMonitorGroupsParams {
     ///
     /// The query can contain any number of space-separated monitor attributes, for instance `query="type:metric status:alert"`.
     ///
-    /// [1]: https://app.datadoghq.com/monitors/manage
+    /// [1]: <https://app.datadoghq.com/monitors/manage>
     /// [2]: /monitors/manage/#find-the-monitors
     pub query: Option<String>,
     /// Page to start paginating from.
@@ -88,7 +87,7 @@ pub struct SearchMonitorGroupsParams {
     pub sort: Option<String>,
 }
 
-/// SearchMonitorsParams is a struct for passing parameters to the method [`SearchMonitors`]
+/// SearchMonitorsParams is a struct for passing parameters to the method [`MonitorsAPI::search_monitors`]
 #[derive(Clone, Debug)]
 pub struct SearchMonitorsParams {
     /// After entering a search query in your [Manage Monitor page][1] use the query parameter value in the
@@ -97,7 +96,7 @@ pub struct SearchMonitorsParams {
     ///
     /// The query can contain any number of space-separated monitor attributes, for instance `query="type:metric status:alert"`.
     ///
-    /// [1]: https://app.datadoghq.com/monitors/manage
+    /// [1]: <https://app.datadoghq.com/monitors/manage>
     /// [2]: /monitors/manage/#find-the-monitors
     pub query: Option<String>,
     /// Page to start paginating from.
@@ -112,7 +111,7 @@ pub struct SearchMonitorsParams {
     pub sort: Option<String>,
 }
 
-/// UpdateMonitorParams is a struct for passing parameters to the method [`UpdateMonitor`]
+/// UpdateMonitorParams is a struct for passing parameters to the method [`MonitorsAPI::update_monitor`]
 #[derive(Clone, Debug)]
 pub struct UpdateMonitorParams {
     /// The ID of the monitor.
@@ -121,7 +120,7 @@ pub struct UpdateMonitorParams {
     pub body: crate::datadogV1::model::MonitorUpdateRequest,
 }
 
-/// ValidateExistingMonitorParams is a struct for passing parameters to the method [`ValidateExistingMonitor`]
+/// ValidateExistingMonitorParams is a struct for passing parameters to the method [`MonitorsAPI::validate_existing_monitor`]
 #[derive(Clone, Debug)]
 pub struct ValidateExistingMonitorParams {
     /// The ID of the monitor
@@ -130,14 +129,14 @@ pub struct ValidateExistingMonitorParams {
     pub body: crate::datadogV1::model::Monitor,
 }
 
-/// ValidateMonitorParams is a struct for passing parameters to the method [`ValidateMonitor`]
+/// ValidateMonitorParams is a struct for passing parameters to the method [`MonitorsAPI::validate_monitor`]
 #[derive(Clone, Debug)]
 pub struct ValidateMonitorParams {
     /// Monitor request object
     pub body: crate::datadogV1::model::Monitor,
 }
 
-/// CheckCanDeleteMonitorError is a struct for typed errors of method [`CheckCanDeleteMonitor`]
+/// CheckCanDeleteMonitorError is a struct for typed errors of method [`MonitorsAPI::check_can_delete_monitor`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CheckCanDeleteMonitorError {
@@ -148,7 +147,7 @@ pub enum CheckCanDeleteMonitorError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateMonitorError is a struct for typed errors of method [`CreateMonitor`]
+/// CreateMonitorError is a struct for typed errors of method [`MonitorsAPI::create_monitor`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateMonitorError {
@@ -158,7 +157,7 @@ pub enum CreateMonitorError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteMonitorError is a struct for typed errors of method [`DeleteMonitor`]
+/// DeleteMonitorError is a struct for typed errors of method [`MonitorsAPI::delete_monitor`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteMonitorError {
@@ -170,7 +169,7 @@ pub enum DeleteMonitorError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetMonitorError is a struct for typed errors of method [`GetMonitor`]
+/// GetMonitorError is a struct for typed errors of method [`MonitorsAPI::get_monitor`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetMonitorError {
@@ -181,7 +180,7 @@ pub enum GetMonitorError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListMonitorsError is a struct for typed errors of method [`ListMonitors`]
+/// ListMonitorsError is a struct for typed errors of method [`MonitorsAPI::list_monitors`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListMonitorsError {
@@ -191,7 +190,7 @@ pub enum ListMonitorsError {
     UnknownValue(serde_json::Value),
 }
 
-/// SearchMonitorGroupsError is a struct for typed errors of method [`SearchMonitorGroups`]
+/// SearchMonitorGroupsError is a struct for typed errors of method [`MonitorsAPI::search_monitor_groups`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SearchMonitorGroupsError {
@@ -201,7 +200,7 @@ pub enum SearchMonitorGroupsError {
     UnknownValue(serde_json::Value),
 }
 
-/// SearchMonitorsError is a struct for typed errors of method [`SearchMonitors`]
+/// SearchMonitorsError is a struct for typed errors of method [`MonitorsAPI::search_monitors`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SearchMonitorsError {
@@ -211,7 +210,7 @@ pub enum SearchMonitorsError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateMonitorError is a struct for typed errors of method [`UpdateMonitor`]
+/// UpdateMonitorError is a struct for typed errors of method [`MonitorsAPI::update_monitor`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateMonitorError {
@@ -223,7 +222,7 @@ pub enum UpdateMonitorError {
     UnknownValue(serde_json::Value),
 }
 
-/// ValidateExistingMonitorError is a struct for typed errors of method [`ValidateExistingMonitor`]
+/// ValidateExistingMonitorError is a struct for typed errors of method [`MonitorsAPI::validate_existing_monitor`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ValidateExistingMonitorError {
@@ -233,7 +232,7 @@ pub enum ValidateExistingMonitorError {
     UnknownValue(serde_json::Value),
 }
 
-/// ValidateMonitorError is a struct for typed errors of method [`ValidateMonitor`]
+/// ValidateMonitorError is a struct for typed errors of method [`MonitorsAPI::validate_monitor`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ValidateMonitorError {
@@ -379,7 +378,7 @@ impl MonitorsAPI {
     /// - database-monitoring: `database-monitoring alert`
     ///
     /// **Notes**:
-    /// - Synthetic monitors are created through the Synthetics API. See the [Synthetics API] (https://docs.datadoghq.com/api/latest/synthetics/) documentation for more information.
+    /// - Synthetic monitors are created through the Synthetics API. See the [Synthetics API] (<https://docs.datadoghq.com/api/latest/synthetics/>) documentation for more information.
     /// - Log monitors require an unscoped App Key.
     ///
     /// #### Query Types
@@ -400,7 +399,7 @@ impl MonitorsAPI {
     /// timeshift):space_aggr:metric{tags} [by {key}] operator #` with:
     ///
     /// - `change_aggr` change, pct_change
-    /// - `time_aggr` avg, sum, max, min [Learn more](https://docs.datadoghq.com/monitors/create/types/#define-the-conditions)
+    /// - `time_aggr` avg, sum, max, min [Learn more](<https://docs.datadoghq.com/monitors/create/types/#define-the-conditions>)
     /// - `time_window` last\_#m (between 1 and 2880 depending on the monitor type), last\_#h (between 1 and 48 depending on the monitor type), or last_#d (1 or 2)
     /// - `timeshift` #m_ago (5, 10, 15, or 30), #h_ago (1, 2, or 4), or 1d_ago
     ///
@@ -416,17 +415,17 @@ impl MonitorsAPI {
     /// - `count` must be at greater than or equal to your max threshold (defined in the `options`). It is limited to 100.
     /// For example, if you've specified to notify on 1 critical, 3 ok, and 2 warn statuses, `count` should be at least 3.
     /// - `group` must be specified for check monitors. Per-check grouping is already explicitly known for some service checks.
-    /// For example, Postgres integration monitors are tagged by `db`, `host`, and `port`, and Network monitors by `host`, `instance`, and `url`. See [Service Checks](https://docs.datadoghq.com/api/latest/service-checks/) documentation for more information.
+    /// For example, Postgres integration monitors are tagged by `db`, `host`, and `port`, and Network monitors by `host`, `instance`, and `url`. See [Service Checks](<https://docs.datadoghq.com/api/latest/service-checks/>) documentation for more information.
     ///
     /// ##### Event Alert Query
     ///
-    /// **Note:** The Event Alert Query has been replaced by the Event V2 Alert Query. For more information, see the [Event Migration guide](https://docs.datadoghq.com/service_management/events/guides/migrating_to_new_events_features/).
+    /// **Note:** The Event Alert Query has been replaced by the Event V2 Alert Query. For more information, see the [Event Migration guide](<https://docs.datadoghq.com/service_management/events/guides/migrating_to_new_events_features/>).
     ///
     /// ##### Event V2 Alert Query
     ///
     /// Example: `events(query).rollup(rollup_method[, measure]).last(time_window) operator #`
     ///
-    /// - `query` The search query - following the [Log search syntax](https://docs.datadoghq.com/logs/search_syntax/).
+    /// - `query` The search query - following the [Log search syntax](<https://docs.datadoghq.com/logs/search_syntax/>).
     /// - `rollup_method` The stats roll-up method - supports `count`, `avg` and `cardinality`.
     /// - `measure` For `avg` and cardinality `rollup_method` - specify the measure or the facet name you want to use.
     /// - `time_window` #m (between 1 and 2880), #h (between 1 and 48).
@@ -438,7 +437,7 @@ impl MonitorsAPI {
     /// Example: `processes(search).over(tags).rollup('count').last(timeframe) operator #`
     ///
     /// - `search` free text search string for querying processes.
-    /// Matching processes match results on the [Live Processes](https://docs.datadoghq.com/infrastructure/process/?tab=linuxwindows) page.
+    /// Matching processes match results on the [Live Processes](<https://docs.datadoghq.com/infrastructure/process/?tab=linuxwindows>) page.
     /// - `tags` one or more tags (comma-separated)
     /// - `timeframe` the timeframe to roll up the counts. Examples: 10m, 4h. Supported timeframes: s, m, h and d
     /// - `operator` <, <=, >, >=, ==, or !=
@@ -448,7 +447,7 @@ impl MonitorsAPI {
     ///
     /// Example: `logs(query).index(index_name).rollup(rollup_method[, measure]).last(time_window) operator #`
     ///
-    /// - `query` The search query - following the [Log search syntax](https://docs.datadoghq.com/logs/search_syntax/).
+    /// - `query` The search query - following the [Log search syntax](<https://docs.datadoghq.com/logs/search_syntax/>).
     /// - `index_name` For multi-index organizations, the log index in which the request is performed.
     /// - `rollup_method` The stats roll-up method - supports `count`, `avg` and `cardinality`.
     /// - `measure` For `avg` and cardinality `rollup_method` - specify the measure or the facet name you want to use.
@@ -479,7 +478,7 @@ impl MonitorsAPI {
     ///
     /// Example: `audits(query).rollup(rollup_method[, measure]).last(time_window) operator #`
     ///
-    /// - `query` The search query - following the [Log search syntax](https://docs.datadoghq.com/logs/search_syntax/).
+    /// - `query` The search query - following the [Log search syntax](<https://docs.datadoghq.com/logs/search_syntax/>).
     /// - `rollup_method` The stats roll-up method - supports `count`, `avg` and `cardinality`.
     /// - `measure` For `avg` and cardinality `rollup_method` - specify the measure or the facet name you want to use.
     /// - `time_window` #m (between 1 and 2880), #h (between 1 and 48).
@@ -490,7 +489,7 @@ impl MonitorsAPI {
     ///
     /// Example: `ci-pipelines(query).rollup(rollup_method[, measure]).last(time_window) operator #`
     ///
-    /// - `query` The search query - following the [Log search syntax](https://docs.datadoghq.com/logs/search_syntax/).
+    /// - `query` The search query - following the [Log search syntax](<https://docs.datadoghq.com/logs/search_syntax/>).
     /// - `rollup_method` The stats roll-up method - supports `count`, `avg`, and `cardinality`.
     /// - `measure` For `avg` and cardinality `rollup_method` - specify the measure or the facet name you want to use.
     /// - `time_window` #m (between 1 and 2880), #h (between 1 and 48).
@@ -501,7 +500,7 @@ impl MonitorsAPI {
     ///
     /// Example: `ci-tests(query).rollup(rollup_method[, measure]).last(time_window) operator #`
     ///
-    /// - `query` The search query - following the [Log search syntax](https://docs.datadoghq.com/logs/search_syntax/).
+    /// - `query` The search query - following the [Log search syntax](<https://docs.datadoghq.com/logs/search_syntax/>).
     /// - `rollup_method` The stats roll-up method - supports `count`, `avg`, and `cardinality`.
     /// - `measure` For `avg` and cardinality `rollup_method` - specify the measure or the facet name you want to use.
     /// - `time_window` #m (between 1 and 2880), #h (between 1 and 48).
@@ -513,7 +512,7 @@ impl MonitorsAPI {
     /// Example(RUM): `error-tracking-rum(query).rollup(rollup_method[, measure]).last(time_window) operator #`
     /// Example(APM Traces): `error-tracking-traces(query).rollup(rollup_method[, measure]).last(time_window) operator #`
     ///
-    /// - `query` The search query - following the [Log search syntax](https://docs.datadoghq.com/logs/search_syntax/).
+    /// - `query` The search query - following the [Log search syntax](<https://docs.datadoghq.com/logs/search_syntax/>).
     /// - `rollup_method` The stats roll-up method - supports `count`, `avg`, and `cardinality`.
     /// - `measure` For `avg` and cardinality `rollup_method` - specify the measure or the facet name you want to use.
     /// - `time_window` #m (between 1 and 2880), #h (between 1 and 48).
@@ -524,7 +523,7 @@ impl MonitorsAPI {
     ///
     /// Example: `database-monitoring(query).rollup(rollup_method[, measure]).last(time_window) operator #`
     ///
-    /// - `query` The search query - following the [Log search syntax](https://docs.datadoghq.com/logs/search_syntax/).
+    /// - `query` The search query - following the [Log search syntax](<https://docs.datadoghq.com/logs/search_syntax/>).
     /// - `rollup_method` The stats roll-up method - supports `count`, `avg`, and `cardinality`.
     /// - `measure` For `avg` and cardinality `rollup_method` - specify the measure or the facet name you want to use.
     /// - `time_window` #m (between 1 and 2880), #h (between 1 and 48).
@@ -571,7 +570,7 @@ impl MonitorsAPI {
     /// - database-monitoring: `database-monitoring alert`
     ///
     /// **Notes**:
-    /// - Synthetic monitors are created through the Synthetics API. See the [Synthetics API] (https://docs.datadoghq.com/api/latest/synthetics/) documentation for more information.
+    /// - Synthetic monitors are created through the Synthetics API. See the [Synthetics API] (<https://docs.datadoghq.com/api/latest/synthetics/>) documentation for more information.
     /// - Log monitors require an unscoped App Key.
     ///
     /// #### Query Types
@@ -592,7 +591,7 @@ impl MonitorsAPI {
     /// timeshift):space_aggr:metric{tags} [by {key}] operator #` with:
     ///
     /// - `change_aggr` change, pct_change
-    /// - `time_aggr` avg, sum, max, min [Learn more](https://docs.datadoghq.com/monitors/create/types/#define-the-conditions)
+    /// - `time_aggr` avg, sum, max, min [Learn more](<https://docs.datadoghq.com/monitors/create/types/#define-the-conditions>)
     /// - `time_window` last\_#m (between 1 and 2880 depending on the monitor type), last\_#h (between 1 and 48 depending on the monitor type), or last_#d (1 or 2)
     /// - `timeshift` #m_ago (5, 10, 15, or 30), #h_ago (1, 2, or 4), or 1d_ago
     ///
@@ -608,17 +607,17 @@ impl MonitorsAPI {
     /// - `count` must be at greater than or equal to your max threshold (defined in the `options`). It is limited to 100.
     /// For example, if you've specified to notify on 1 critical, 3 ok, and 2 warn statuses, `count` should be at least 3.
     /// - `group` must be specified for check monitors. Per-check grouping is already explicitly known for some service checks.
-    /// For example, Postgres integration monitors are tagged by `db`, `host`, and `port`, and Network monitors by `host`, `instance`, and `url`. See [Service Checks](https://docs.datadoghq.com/api/latest/service-checks/) documentation for more information.
+    /// For example, Postgres integration monitors are tagged by `db`, `host`, and `port`, and Network monitors by `host`, `instance`, and `url`. See [Service Checks](<https://docs.datadoghq.com/api/latest/service-checks/>) documentation for more information.
     ///
     /// ##### Event Alert Query
     ///
-    /// **Note:** The Event Alert Query has been replaced by the Event V2 Alert Query. For more information, see the [Event Migration guide](https://docs.datadoghq.com/service_management/events/guides/migrating_to_new_events_features/).
+    /// **Note:** The Event Alert Query has been replaced by the Event V2 Alert Query. For more information, see the [Event Migration guide](<https://docs.datadoghq.com/service_management/events/guides/migrating_to_new_events_features/>).
     ///
     /// ##### Event V2 Alert Query
     ///
     /// Example: `events(query).rollup(rollup_method[, measure]).last(time_window) operator #`
     ///
-    /// - `query` The search query - following the [Log search syntax](https://docs.datadoghq.com/logs/search_syntax/).
+    /// - `query` The search query - following the [Log search syntax](<https://docs.datadoghq.com/logs/search_syntax/>).
     /// - `rollup_method` The stats roll-up method - supports `count`, `avg` and `cardinality`.
     /// - `measure` For `avg` and cardinality `rollup_method` - specify the measure or the facet name you want to use.
     /// - `time_window` #m (between 1 and 2880), #h (between 1 and 48).
@@ -630,7 +629,7 @@ impl MonitorsAPI {
     /// Example: `processes(search).over(tags).rollup('count').last(timeframe) operator #`
     ///
     /// - `search` free text search string for querying processes.
-    /// Matching processes match results on the [Live Processes](https://docs.datadoghq.com/infrastructure/process/?tab=linuxwindows) page.
+    /// Matching processes match results on the [Live Processes](<https://docs.datadoghq.com/infrastructure/process/?tab=linuxwindows>) page.
     /// - `tags` one or more tags (comma-separated)
     /// - `timeframe` the timeframe to roll up the counts. Examples: 10m, 4h. Supported timeframes: s, m, h and d
     /// - `operator` <, <=, >, >=, ==, or !=
@@ -640,7 +639,7 @@ impl MonitorsAPI {
     ///
     /// Example: `logs(query).index(index_name).rollup(rollup_method[, measure]).last(time_window) operator #`
     ///
-    /// - `query` The search query - following the [Log search syntax](https://docs.datadoghq.com/logs/search_syntax/).
+    /// - `query` The search query - following the [Log search syntax](<https://docs.datadoghq.com/logs/search_syntax/>).
     /// - `index_name` For multi-index organizations, the log index in which the request is performed.
     /// - `rollup_method` The stats roll-up method - supports `count`, `avg` and `cardinality`.
     /// - `measure` For `avg` and cardinality `rollup_method` - specify the measure or the facet name you want to use.
@@ -671,7 +670,7 @@ impl MonitorsAPI {
     ///
     /// Example: `audits(query).rollup(rollup_method[, measure]).last(time_window) operator #`
     ///
-    /// - `query` The search query - following the [Log search syntax](https://docs.datadoghq.com/logs/search_syntax/).
+    /// - `query` The search query - following the [Log search syntax](<https://docs.datadoghq.com/logs/search_syntax/>).
     /// - `rollup_method` The stats roll-up method - supports `count`, `avg` and `cardinality`.
     /// - `measure` For `avg` and cardinality `rollup_method` - specify the measure or the facet name you want to use.
     /// - `time_window` #m (between 1 and 2880), #h (between 1 and 48).
@@ -682,7 +681,7 @@ impl MonitorsAPI {
     ///
     /// Example: `ci-pipelines(query).rollup(rollup_method[, measure]).last(time_window) operator #`
     ///
-    /// - `query` The search query - following the [Log search syntax](https://docs.datadoghq.com/logs/search_syntax/).
+    /// - `query` The search query - following the [Log search syntax](<https://docs.datadoghq.com/logs/search_syntax/>).
     /// - `rollup_method` The stats roll-up method - supports `count`, `avg`, and `cardinality`.
     /// - `measure` For `avg` and cardinality `rollup_method` - specify the measure or the facet name you want to use.
     /// - `time_window` #m (between 1 and 2880), #h (between 1 and 48).
@@ -693,7 +692,7 @@ impl MonitorsAPI {
     ///
     /// Example: `ci-tests(query).rollup(rollup_method[, measure]).last(time_window) operator #`
     ///
-    /// - `query` The search query - following the [Log search syntax](https://docs.datadoghq.com/logs/search_syntax/).
+    /// - `query` The search query - following the [Log search syntax](<https://docs.datadoghq.com/logs/search_syntax/>).
     /// - `rollup_method` The stats roll-up method - supports `count`, `avg`, and `cardinality`.
     /// - `measure` For `avg` and cardinality `rollup_method` - specify the measure or the facet name you want to use.
     /// - `time_window` #m (between 1 and 2880), #h (between 1 and 48).
@@ -705,7 +704,7 @@ impl MonitorsAPI {
     /// Example(RUM): `error-tracking-rum(query).rollup(rollup_method[, measure]).last(time_window) operator #`
     /// Example(APM Traces): `error-tracking-traces(query).rollup(rollup_method[, measure]).last(time_window) operator #`
     ///
-    /// - `query` The search query - following the [Log search syntax](https://docs.datadoghq.com/logs/search_syntax/).
+    /// - `query` The search query - following the [Log search syntax](<https://docs.datadoghq.com/logs/search_syntax/>).
     /// - `rollup_method` The stats roll-up method - supports `count`, `avg`, and `cardinality`.
     /// - `measure` For `avg` and cardinality `rollup_method` - specify the measure or the facet name you want to use.
     /// - `time_window` #m (between 1 and 2880), #h (between 1 and 48).
@@ -716,7 +715,7 @@ impl MonitorsAPI {
     ///
     /// Example: `database-monitoring(query).rollup(rollup_method[, measure]).last(time_window) operator #`
     ///
-    /// - `query` The search query - following the [Log search syntax](https://docs.datadoghq.com/logs/search_syntax/).
+    /// - `query` The search query - following the [Log search syntax](<https://docs.datadoghq.com/logs/search_syntax/>).
     /// - `rollup_method` The stats roll-up method - supports `count`, `avg`, and `cardinality`.
     /// - `measure` For `avg` and cardinality `rollup_method` - specify the measure or the facet name you want to use.
     /// - `time_window` #m (between 1 and 2880), #h (between 1 and 48).

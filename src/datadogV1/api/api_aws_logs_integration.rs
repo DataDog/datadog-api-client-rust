@@ -1,47 +1,46 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CheckAWSLogsLambdaAsyncParams is a struct for passing parameters to the method [`CheckAWSLogsLambdaAsync`]
+/// CheckAWSLogsLambdaAsyncParams is a struct for passing parameters to the method [`AWSLogsIntegrationAPI::check_aws_logs_lambda_async`]
 #[derive(Clone, Debug)]
 pub struct CheckAWSLogsLambdaAsyncParams {
     /// Check AWS Log Lambda Async request body.
     pub body: crate::datadogV1::model::AWSAccountAndLambdaRequest,
 }
 
-/// CheckAWSLogsServicesAsyncParams is a struct for passing parameters to the method [`CheckAWSLogsServicesAsync`]
+/// CheckAWSLogsServicesAsyncParams is a struct for passing parameters to the method [`AWSLogsIntegrationAPI::check_aws_logs_services_async`]
 #[derive(Clone, Debug)]
 pub struct CheckAWSLogsServicesAsyncParams {
     /// Check AWS Logs Async Services request body.
     pub body: crate::datadogV1::model::AWSLogsServicesRequest,
 }
 
-/// CreateAWSLambdaARNParams is a struct for passing parameters to the method [`CreateAWSLambdaARN`]
+/// CreateAWSLambdaARNParams is a struct for passing parameters to the method [`AWSLogsIntegrationAPI::create_aws_lambda_arn`]
 #[derive(Clone, Debug)]
 pub struct CreateAWSLambdaARNParams {
     /// AWS Log Lambda Async request body.
     pub body: crate::datadogV1::model::AWSAccountAndLambdaRequest,
 }
 
-/// DeleteAWSLambdaARNParams is a struct for passing parameters to the method [`DeleteAWSLambdaARN`]
+/// DeleteAWSLambdaARNParams is a struct for passing parameters to the method [`AWSLogsIntegrationAPI::delete_aws_lambda_arn`]
 #[derive(Clone, Debug)]
 pub struct DeleteAWSLambdaARNParams {
     /// Delete AWS Lambda ARN request body.
     pub body: crate::datadogV1::model::AWSAccountAndLambdaRequest,
 }
 
-/// EnableAWSLogServicesParams is a struct for passing parameters to the method [`EnableAWSLogServices`]
+/// EnableAWSLogServicesParams is a struct for passing parameters to the method [`AWSLogsIntegrationAPI::enable_aws_log_services`]
 #[derive(Clone, Debug)]
 pub struct EnableAWSLogServicesParams {
     /// Enable AWS Log Services request body.
     pub body: crate::datadogV1::model::AWSLogsServicesRequest,
 }
 
-/// CheckAWSLogsLambdaAsyncError is a struct for typed errors of method [`CheckAWSLogsLambdaAsync`]
+/// CheckAWSLogsLambdaAsyncError is a struct for typed errors of method [`AWSLogsIntegrationAPI::check_aws_logs_lambda_async`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CheckAWSLogsLambdaAsyncError {
@@ -51,7 +50,7 @@ pub enum CheckAWSLogsLambdaAsyncError {
     UnknownValue(serde_json::Value),
 }
 
-/// CheckAWSLogsServicesAsyncError is a struct for typed errors of method [`CheckAWSLogsServicesAsync`]
+/// CheckAWSLogsServicesAsyncError is a struct for typed errors of method [`AWSLogsIntegrationAPI::check_aws_logs_services_async`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CheckAWSLogsServicesAsyncError {
@@ -61,7 +60,7 @@ pub enum CheckAWSLogsServicesAsyncError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateAWSLambdaARNError is a struct for typed errors of method [`CreateAWSLambdaARN`]
+/// CreateAWSLambdaARNError is a struct for typed errors of method [`AWSLogsIntegrationAPI::create_aws_lambda_arn`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateAWSLambdaARNError {
@@ -71,7 +70,7 @@ pub enum CreateAWSLambdaARNError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteAWSLambdaARNError is a struct for typed errors of method [`DeleteAWSLambdaARN`]
+/// DeleteAWSLambdaARNError is a struct for typed errors of method [`AWSLogsIntegrationAPI::delete_aws_lambda_arn`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteAWSLambdaARNError {
@@ -81,7 +80,7 @@ pub enum DeleteAWSLambdaARNError {
     UnknownValue(serde_json::Value),
 }
 
-/// EnableAWSLogServicesError is a struct for typed errors of method [`EnableAWSLogServices`]
+/// EnableAWSLogServicesError is a struct for typed errors of method [`AWSLogsIntegrationAPI::enable_aws_log_services`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum EnableAWSLogServicesError {
@@ -91,7 +90,7 @@ pub enum EnableAWSLogServicesError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListAWSLogsIntegrationsError is a struct for typed errors of method [`ListAWSLogsIntegrations`]
+/// ListAWSLogsIntegrationsError is a struct for typed errors of method [`AWSLogsIntegrationAPI::list_aws_logs_integrations`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListAWSLogsIntegrationsError {
@@ -101,7 +100,7 @@ pub enum ListAWSLogsIntegrationsError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListAWSLogsServicesError is a struct for typed errors of method [`ListAWSLogsServices`]
+/// ListAWSLogsServicesError is a struct for typed errors of method [`AWSLogsIntegrationAPI::list_aws_logs_services`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListAWSLogsServicesError {

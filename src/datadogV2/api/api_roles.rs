@@ -1,12 +1,11 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// AddPermissionToRoleParams is a struct for passing parameters to the method [`AddPermissionToRole`]
+/// AddPermissionToRoleParams is a struct for passing parameters to the method [`RolesAPI::add_permission_to_role`]
 #[derive(Clone, Debug)]
 pub struct AddPermissionToRoleParams {
     /// The unique identifier of the role.
@@ -14,7 +13,7 @@ pub struct AddPermissionToRoleParams {
     pub body: crate::datadogV2::model::RelationshipToPermission,
 }
 
-/// AddUserToRoleParams is a struct for passing parameters to the method [`AddUserToRole`]
+/// AddUserToRoleParams is a struct for passing parameters to the method [`RolesAPI::add_user_to_role`]
 #[derive(Clone, Debug)]
 pub struct AddUserToRoleParams {
     /// The unique identifier of the role.
@@ -22,7 +21,7 @@ pub struct AddUserToRoleParams {
     pub body: crate::datadogV2::model::RelationshipToUser,
 }
 
-/// CloneRoleParams is a struct for passing parameters to the method [`CloneRole`]
+/// CloneRoleParams is a struct for passing parameters to the method [`RolesAPI::clone_role`]
 #[derive(Clone, Debug)]
 pub struct CloneRoleParams {
     /// The unique identifier of the role.
@@ -30,34 +29,34 @@ pub struct CloneRoleParams {
     pub body: crate::datadogV2::model::RoleCloneRequest,
 }
 
-/// CreateRoleParams is a struct for passing parameters to the method [`CreateRole`]
+/// CreateRoleParams is a struct for passing parameters to the method [`RolesAPI::create_role`]
 #[derive(Clone, Debug)]
 pub struct CreateRoleParams {
     pub body: crate::datadogV2::model::RoleCreateRequest,
 }
 
-/// DeleteRoleParams is a struct for passing parameters to the method [`DeleteRole`]
+/// DeleteRoleParams is a struct for passing parameters to the method [`RolesAPI::delete_role`]
 #[derive(Clone, Debug)]
 pub struct DeleteRoleParams {
     /// The unique identifier of the role.
     pub role_id: String,
 }
 
-/// GetRoleParams is a struct for passing parameters to the method [`GetRole`]
+/// GetRoleParams is a struct for passing parameters to the method [`RolesAPI::get_role`]
 #[derive(Clone, Debug)]
 pub struct GetRoleParams {
     /// The unique identifier of the role.
     pub role_id: String,
 }
 
-/// ListRolePermissionsParams is a struct for passing parameters to the method [`ListRolePermissions`]
+/// ListRolePermissionsParams is a struct for passing parameters to the method [`RolesAPI::list_role_permissions`]
 #[derive(Clone, Debug)]
 pub struct ListRolePermissionsParams {
     /// The unique identifier of the role.
     pub role_id: String,
 }
 
-/// ListRoleUsersParams is a struct for passing parameters to the method [`ListRoleUsers`]
+/// ListRoleUsersParams is a struct for passing parameters to the method [`RolesAPI::list_role_users`]
 #[derive(Clone, Debug)]
 pub struct ListRoleUsersParams {
     /// The unique identifier of the role.
@@ -74,7 +73,7 @@ pub struct ListRoleUsersParams {
     pub filter: Option<String>,
 }
 
-/// ListRolesParams is a struct for passing parameters to the method [`ListRoles`]
+/// ListRolesParams is a struct for passing parameters to the method [`RolesAPI::list_roles`]
 #[derive(Clone, Debug)]
 pub struct ListRolesParams {
     /// Size for a given page. The maximum allowed value is 100.
@@ -91,7 +90,7 @@ pub struct ListRolesParams {
     pub filter_id: Option<String>,
 }
 
-/// RemovePermissionFromRoleParams is a struct for passing parameters to the method [`RemovePermissionFromRole`]
+/// RemovePermissionFromRoleParams is a struct for passing parameters to the method [`RolesAPI::remove_permission_from_role`]
 #[derive(Clone, Debug)]
 pub struct RemovePermissionFromRoleParams {
     /// The unique identifier of the role.
@@ -99,7 +98,7 @@ pub struct RemovePermissionFromRoleParams {
     pub body: crate::datadogV2::model::RelationshipToPermission,
 }
 
-/// RemoveUserFromRoleParams is a struct for passing parameters to the method [`RemoveUserFromRole`]
+/// RemoveUserFromRoleParams is a struct for passing parameters to the method [`RolesAPI::remove_user_from_role`]
 #[derive(Clone, Debug)]
 pub struct RemoveUserFromRoleParams {
     /// The unique identifier of the role.
@@ -107,7 +106,7 @@ pub struct RemoveUserFromRoleParams {
     pub body: crate::datadogV2::model::RelationshipToUser,
 }
 
-/// UpdateRoleParams is a struct for passing parameters to the method [`UpdateRole`]
+/// UpdateRoleParams is a struct for passing parameters to the method [`RolesAPI::update_role`]
 #[derive(Clone, Debug)]
 pub struct UpdateRoleParams {
     /// The unique identifier of the role.
@@ -115,7 +114,7 @@ pub struct UpdateRoleParams {
     pub body: crate::datadogV2::model::RoleUpdateRequest,
 }
 
-/// AddPermissionToRoleError is a struct for typed errors of method [`AddPermissionToRole`]
+/// AddPermissionToRoleError is a struct for typed errors of method [`RolesAPI::add_permission_to_role`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AddPermissionToRoleError {
@@ -126,7 +125,7 @@ pub enum AddPermissionToRoleError {
     UnknownValue(serde_json::Value),
 }
 
-/// AddUserToRoleError is a struct for typed errors of method [`AddUserToRole`]
+/// AddUserToRoleError is a struct for typed errors of method [`RolesAPI::add_user_to_role`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AddUserToRoleError {
@@ -137,7 +136,7 @@ pub enum AddUserToRoleError {
     UnknownValue(serde_json::Value),
 }
 
-/// CloneRoleError is a struct for typed errors of method [`CloneRole`]
+/// CloneRoleError is a struct for typed errors of method [`RolesAPI::clone_role`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CloneRoleError {
@@ -149,7 +148,7 @@ pub enum CloneRoleError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateRoleError is a struct for typed errors of method [`CreateRole`]
+/// CreateRoleError is a struct for typed errors of method [`RolesAPI::create_role`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateRoleError {
@@ -159,7 +158,7 @@ pub enum CreateRoleError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteRoleError is a struct for typed errors of method [`DeleteRole`]
+/// DeleteRoleError is a struct for typed errors of method [`RolesAPI::delete_role`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteRoleError {
@@ -169,7 +168,7 @@ pub enum DeleteRoleError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetRoleError is a struct for typed errors of method [`GetRole`]
+/// GetRoleError is a struct for typed errors of method [`RolesAPI::get_role`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetRoleError {
@@ -179,7 +178,7 @@ pub enum GetRoleError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListPermissionsError is a struct for typed errors of method [`ListPermissions`]
+/// ListPermissionsError is a struct for typed errors of method [`RolesAPI::list_permissions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListPermissionsError {
@@ -189,7 +188,7 @@ pub enum ListPermissionsError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListRolePermissionsError is a struct for typed errors of method [`ListRolePermissions`]
+/// ListRolePermissionsError is a struct for typed errors of method [`RolesAPI::list_role_permissions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListRolePermissionsError {
@@ -199,7 +198,7 @@ pub enum ListRolePermissionsError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListRoleUsersError is a struct for typed errors of method [`ListRoleUsers`]
+/// ListRoleUsersError is a struct for typed errors of method [`RolesAPI::list_role_users`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListRoleUsersError {
@@ -209,7 +208,7 @@ pub enum ListRoleUsersError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListRolesError is a struct for typed errors of method [`ListRoles`]
+/// ListRolesError is a struct for typed errors of method [`RolesAPI::list_roles`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListRolesError {
@@ -218,7 +217,7 @@ pub enum ListRolesError {
     UnknownValue(serde_json::Value),
 }
 
-/// RemovePermissionFromRoleError is a struct for typed errors of method [`RemovePermissionFromRole`]
+/// RemovePermissionFromRoleError is a struct for typed errors of method [`RolesAPI::remove_permission_from_role`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum RemovePermissionFromRoleError {
@@ -229,7 +228,7 @@ pub enum RemovePermissionFromRoleError {
     UnknownValue(serde_json::Value),
 }
 
-/// RemoveUserFromRoleError is a struct for typed errors of method [`RemoveUserFromRole`]
+/// RemoveUserFromRoleError is a struct for typed errors of method [`RolesAPI::remove_user_from_role`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum RemoveUserFromRoleError {
@@ -240,7 +239,7 @@ pub enum RemoveUserFromRoleError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateRoleError is a struct for typed errors of method [`UpdateRole`]
+/// UpdateRoleError is a struct for typed errors of method [`RolesAPI::update_role`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateRoleError {

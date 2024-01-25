@@ -1,12 +1,11 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// GetDailyCustomReportsParams is a struct for passing parameters to the method [`GetDailyCustomReports`]
+/// GetDailyCustomReportsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_daily_custom_reports`]
 #[derive(Clone, Debug)]
 pub struct GetDailyCustomReportsParams {
     /// The number of files to return in the response. `[default=60]`.
@@ -19,7 +18,7 @@ pub struct GetDailyCustomReportsParams {
     pub sort: Option<crate::datadogV1::model::UsageSort>,
 }
 
-/// GetHourlyUsageAttributionParams is a struct for passing parameters to the method [`GetHourlyUsageAttribution`]
+/// GetHourlyUsageAttributionParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_hourly_usage_attribution`]
 #[derive(Clone, Debug)]
 pub struct GetHourlyUsageAttributionParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
@@ -39,7 +38,7 @@ pub struct GetHourlyUsageAttributionParams {
     pub include_descendants: Option<bool>,
 }
 
-/// GetIncidentManagementParams is a struct for passing parameters to the method [`GetIncidentManagement`]
+/// GetIncidentManagementParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_incident_management`]
 #[derive(Clone, Debug)]
 pub struct GetIncidentManagementParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
@@ -49,7 +48,7 @@ pub struct GetIncidentManagementParams {
     pub end_hr: Option<String>,
 }
 
-/// GetIngestedSpansParams is a struct for passing parameters to the method [`GetIngestedSpans`]
+/// GetIngestedSpansParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_ingested_spans`]
 #[derive(Clone, Debug)]
 pub struct GetIngestedSpansParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
@@ -59,7 +58,7 @@ pub struct GetIngestedSpansParams {
     pub end_hr: Option<String>,
 }
 
-/// GetMonthlyCustomReportsParams is a struct for passing parameters to the method [`GetMonthlyCustomReports`]
+/// GetMonthlyCustomReportsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_monthly_custom_reports`]
 #[derive(Clone, Debug)]
 pub struct GetMonthlyCustomReportsParams {
     /// The number of files to return in the response `[default=60].`
@@ -72,7 +71,7 @@ pub struct GetMonthlyCustomReportsParams {
     pub sort: Option<crate::datadogV1::model::UsageSort>,
 }
 
-/// GetMonthlyUsageAttributionParams is a struct for passing parameters to the method [`GetMonthlyUsageAttribution`]
+/// GetMonthlyUsageAttributionParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_monthly_usage_attribution`]
 #[derive(Clone, Debug)]
 pub struct GetMonthlyUsageAttributionParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage beginning in this month.
@@ -96,21 +95,21 @@ pub struct GetMonthlyUsageAttributionParams {
     pub include_descendants: Option<bool>,
 }
 
-/// GetSpecifiedDailyCustomReportsParams is a struct for passing parameters to the method [`GetSpecifiedDailyCustomReports`]
+/// GetSpecifiedDailyCustomReportsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_specified_daily_custom_reports`]
 #[derive(Clone, Debug)]
 pub struct GetSpecifiedDailyCustomReportsParams {
     /// Date of the report in the format `YYYY-MM-DD`.
     pub report_id: String,
 }
 
-/// GetSpecifiedMonthlyCustomReportsParams is a struct for passing parameters to the method [`GetSpecifiedMonthlyCustomReports`]
+/// GetSpecifiedMonthlyCustomReportsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_specified_monthly_custom_reports`]
 #[derive(Clone, Debug)]
 pub struct GetSpecifiedMonthlyCustomReportsParams {
     /// Date of the report in the format `YYYY-MM-DD`.
     pub report_id: String,
 }
 
-/// GetUsageAnalyzedLogsParams is a struct for passing parameters to the method [`GetUsageAnalyzedLogs`]
+/// GetUsageAnalyzedLogsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_analyzed_logs`]
 #[derive(Clone, Debug)]
 pub struct GetUsageAnalyzedLogsParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
@@ -120,7 +119,7 @@ pub struct GetUsageAnalyzedLogsParams {
     pub end_hr: Option<String>,
 }
 
-/// GetUsageAttributionParams is a struct for passing parameters to the method [`GetUsageAttribution`]
+/// GetUsageAttributionParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_attribution`]
 #[derive(Clone, Debug)]
 pub struct GetUsageAttributionParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage beginning in this month.
@@ -142,7 +141,7 @@ pub struct GetUsageAttributionParams {
     pub limit: Option<i64>,
 }
 
-/// GetUsageAuditLogsParams is a struct for passing parameters to the method [`GetUsageAuditLogs`]
+/// GetUsageAuditLogsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_audit_logs`]
 #[derive(Clone, Debug)]
 pub struct GetUsageAuditLogsParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
@@ -152,14 +151,14 @@ pub struct GetUsageAuditLogsParams {
     pub end_hr: Option<String>,
 }
 
-/// GetUsageBillableSummaryParams is a struct for passing parameters to the method [`GetUsageBillableSummary`]
+/// GetUsageBillableSummaryParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_billable_summary`]
 #[derive(Clone, Debug)]
 pub struct GetUsageBillableSummaryParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage starting this month.
     pub month: Option<String>,
 }
 
-/// GetUsageCIAppParams is a struct for passing parameters to the method [`GetUsageCIApp`]
+/// GetUsageCIAppParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_ci_app`]
 #[derive(Clone, Debug)]
 pub struct GetUsageCIAppParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
@@ -169,7 +168,7 @@ pub struct GetUsageCIAppParams {
     pub end_hr: Option<String>,
 }
 
-/// GetUsageCWSParams is a struct for passing parameters to the method [`GetUsageCWS`]
+/// GetUsageCWSParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_cws`]
 #[derive(Clone, Debug)]
 pub struct GetUsageCWSParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
@@ -179,7 +178,7 @@ pub struct GetUsageCWSParams {
     pub end_hr: Option<String>,
 }
 
-/// GetUsageCloudSecurityPostureManagementParams is a struct for passing parameters to the method [`GetUsageCloudSecurityPostureManagement`]
+/// GetUsageCloudSecurityPostureManagementParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_cloud_security_posture_management`]
 #[derive(Clone, Debug)]
 pub struct GetUsageCloudSecurityPostureManagementParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
@@ -189,7 +188,7 @@ pub struct GetUsageCloudSecurityPostureManagementParams {
     pub end_hr: Option<String>,
 }
 
-/// GetUsageDBMParams is a struct for passing parameters to the method [`GetUsageDBM`]
+/// GetUsageDBMParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_dbm`]
 #[derive(Clone, Debug)]
 pub struct GetUsageDBMParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
@@ -199,7 +198,7 @@ pub struct GetUsageDBMParams {
     pub end_hr: Option<String>,
 }
 
-/// GetUsageFargateParams is a struct for passing parameters to the method [`GetUsageFargate`]
+/// GetUsageFargateParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_fargate`]
 #[derive(Clone, Debug)]
 pub struct GetUsageFargateParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
@@ -208,7 +207,7 @@ pub struct GetUsageFargateParams {
     pub end_hr: Option<String>,
 }
 
-/// GetUsageHostsParams is a struct for passing parameters to the method [`GetUsageHosts`]
+/// GetUsageHostsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_hosts`]
 #[derive(Clone, Debug)]
 pub struct GetUsageHostsParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
@@ -217,7 +216,7 @@ pub struct GetUsageHostsParams {
     pub end_hr: Option<String>,
 }
 
-/// GetUsageIndexedSpansParams is a struct for passing parameters to the method [`GetUsageIndexedSpans`]
+/// GetUsageIndexedSpansParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_indexed_spans`]
 #[derive(Clone, Debug)]
 pub struct GetUsageIndexedSpansParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
@@ -226,7 +225,7 @@ pub struct GetUsageIndexedSpansParams {
     pub end_hr: Option<String>,
 }
 
-/// GetUsageInternetOfThingsParams is a struct for passing parameters to the method [`GetUsageInternetOfThings`]
+/// GetUsageInternetOfThingsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_internet_of_things`]
 #[derive(Clone, Debug)]
 pub struct GetUsageInternetOfThingsParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
@@ -236,7 +235,7 @@ pub struct GetUsageInternetOfThingsParams {
     pub end_hr: Option<String>,
 }
 
-/// GetUsageLambdaParams is a struct for passing parameters to the method [`GetUsageLambda`]
+/// GetUsageLambdaParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_lambda`]
 #[derive(Clone, Debug)]
 pub struct GetUsageLambdaParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
@@ -245,7 +244,7 @@ pub struct GetUsageLambdaParams {
     pub end_hr: Option<String>,
 }
 
-/// GetUsageLogsParams is a struct for passing parameters to the method [`GetUsageLogs`]
+/// GetUsageLogsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_logs`]
 #[derive(Clone, Debug)]
 pub struct GetUsageLogsParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
@@ -254,7 +253,7 @@ pub struct GetUsageLogsParams {
     pub end_hr: Option<String>,
 }
 
-/// GetUsageLogsByIndexParams is a struct for passing parameters to the method [`GetUsageLogsByIndex`]
+/// GetUsageLogsByIndexParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_logs_by_index`]
 #[derive(Clone, Debug)]
 pub struct GetUsageLogsByIndexParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
@@ -265,7 +264,7 @@ pub struct GetUsageLogsByIndexParams {
     pub index_name: Option<Vec<String>>,
 }
 
-/// GetUsageLogsByRetentionParams is a struct for passing parameters to the method [`GetUsageLogsByRetention`]
+/// GetUsageLogsByRetentionParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_logs_by_retention`]
 #[derive(Clone, Debug)]
 pub struct GetUsageLogsByRetentionParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
@@ -275,7 +274,7 @@ pub struct GetUsageLogsByRetentionParams {
     pub end_hr: Option<String>,
 }
 
-/// GetUsageNetworkFlowsParams is a struct for passing parameters to the method [`GetUsageNetworkFlows`]
+/// GetUsageNetworkFlowsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_network_flows`]
 #[derive(Clone, Debug)]
 pub struct GetUsageNetworkFlowsParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
@@ -285,7 +284,7 @@ pub struct GetUsageNetworkFlowsParams {
     pub end_hr: Option<String>,
 }
 
-/// GetUsageNetworkHostsParams is a struct for passing parameters to the method [`GetUsageNetworkHosts`]
+/// GetUsageNetworkHostsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_network_hosts`]
 #[derive(Clone, Debug)]
 pub struct GetUsageNetworkHostsParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
@@ -294,7 +293,7 @@ pub struct GetUsageNetworkHostsParams {
     pub end_hr: Option<String>,
 }
 
-/// GetUsageOnlineArchiveParams is a struct for passing parameters to the method [`GetUsageOnlineArchive`]
+/// GetUsageOnlineArchiveParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_online_archive`]
 #[derive(Clone, Debug)]
 pub struct GetUsageOnlineArchiveParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
@@ -304,7 +303,7 @@ pub struct GetUsageOnlineArchiveParams {
     pub end_hr: Option<String>,
 }
 
-/// GetUsageProfilingParams is a struct for passing parameters to the method [`GetUsageProfiling`]
+/// GetUsageProfilingParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_profiling`]
 #[derive(Clone, Debug)]
 pub struct GetUsageProfilingParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
@@ -314,7 +313,7 @@ pub struct GetUsageProfilingParams {
     pub end_hr: Option<String>,
 }
 
-/// GetUsageRumSessionsParams is a struct for passing parameters to the method [`GetUsageRumSessions`]
+/// GetUsageRumSessionsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_rum_sessions`]
 #[derive(Clone, Debug)]
 pub struct GetUsageRumSessionsParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
@@ -325,7 +324,7 @@ pub struct GetUsageRumSessionsParams {
     pub type_: Option<String>,
 }
 
-/// GetUsageRumUnitsParams is a struct for passing parameters to the method [`GetUsageRumUnits`]
+/// GetUsageRumUnitsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_rum_units`]
 #[derive(Clone, Debug)]
 pub struct GetUsageRumUnitsParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
@@ -334,7 +333,7 @@ pub struct GetUsageRumUnitsParams {
     pub end_hr: Option<String>,
 }
 
-/// GetUsageSDSParams is a struct for passing parameters to the method [`GetUsageSDS`]
+/// GetUsageSDSParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_sds`]
 #[derive(Clone, Debug)]
 pub struct GetUsageSDSParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
@@ -344,7 +343,7 @@ pub struct GetUsageSDSParams {
     pub end_hr: Option<String>,
 }
 
-/// GetUsageSNMPParams is a struct for passing parameters to the method [`GetUsageSNMP`]
+/// GetUsageSNMPParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_snmp`]
 #[derive(Clone, Debug)]
 pub struct GetUsageSNMPParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
@@ -354,7 +353,7 @@ pub struct GetUsageSNMPParams {
     pub end_hr: Option<String>,
 }
 
-/// GetUsageSummaryParams is a struct for passing parameters to the method [`GetUsageSummary`]
+/// GetUsageSummaryParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_summary`]
 #[derive(Clone, Debug)]
 pub struct GetUsageSummaryParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage beginning in this month.
@@ -366,7 +365,7 @@ pub struct GetUsageSummaryParams {
     pub include_org_details: Option<bool>,
 }
 
-/// GetUsageSyntheticsParams is a struct for passing parameters to the method [`GetUsageSynthetics`]
+/// GetUsageSyntheticsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_synthetics`]
 #[derive(Clone, Debug)]
 pub struct GetUsageSyntheticsParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
@@ -375,7 +374,7 @@ pub struct GetUsageSyntheticsParams {
     pub end_hr: Option<String>,
 }
 
-/// GetUsageSyntheticsAPIParams is a struct for passing parameters to the method [`GetUsageSyntheticsAPI`]
+/// GetUsageSyntheticsAPIParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_synthetics_api`]
 #[derive(Clone, Debug)]
 pub struct GetUsageSyntheticsAPIParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
@@ -384,7 +383,7 @@ pub struct GetUsageSyntheticsAPIParams {
     pub end_hr: Option<String>,
 }
 
-/// GetUsageSyntheticsBrowserParams is a struct for passing parameters to the method [`GetUsageSyntheticsBrowser`]
+/// GetUsageSyntheticsBrowserParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_synthetics_browser`]
 #[derive(Clone, Debug)]
 pub struct GetUsageSyntheticsBrowserParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
@@ -393,7 +392,7 @@ pub struct GetUsageSyntheticsBrowserParams {
     pub end_hr: Option<String>,
 }
 
-/// GetUsageTimeseriesParams is a struct for passing parameters to the method [`GetUsageTimeseries`]
+/// GetUsageTimeseriesParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_timeseries`]
 #[derive(Clone, Debug)]
 pub struct GetUsageTimeseriesParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
@@ -402,7 +401,7 @@ pub struct GetUsageTimeseriesParams {
     pub end_hr: Option<String>,
 }
 
-/// GetUsageTopAvgMetricsParams is a struct for passing parameters to the method [`GetUsageTopAvgMetrics`]
+/// GetUsageTopAvgMetricsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_top_avg_metrics`]
 #[derive(Clone, Debug)]
 pub struct GetUsageTopAvgMetricsParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: [YYYY-MM] for usage beginning at this hour. (Either month or day should be specified, but not both)
@@ -417,7 +416,7 @@ pub struct GetUsageTopAvgMetricsParams {
     pub next_record_id: Option<String>,
 }
 
-/// GetDailyCustomReportsError is a struct for typed errors of method [`GetDailyCustomReports`]
+/// GetDailyCustomReportsError is a struct for typed errors of method [`UsageMeteringAPI::get_daily_custom_reports`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetDailyCustomReportsError {
@@ -426,7 +425,7 @@ pub enum GetDailyCustomReportsError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetHourlyUsageAttributionError is a struct for typed errors of method [`GetHourlyUsageAttribution`]
+/// GetHourlyUsageAttributionError is a struct for typed errors of method [`UsageMeteringAPI::get_hourly_usage_attribution`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetHourlyUsageAttributionError {
@@ -435,7 +434,7 @@ pub enum GetHourlyUsageAttributionError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetIncidentManagementError is a struct for typed errors of method [`GetIncidentManagement`]
+/// GetIncidentManagementError is a struct for typed errors of method [`UsageMeteringAPI::get_incident_management`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetIncidentManagementError {
@@ -445,7 +444,7 @@ pub enum GetIncidentManagementError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetIngestedSpansError is a struct for typed errors of method [`GetIngestedSpans`]
+/// GetIngestedSpansError is a struct for typed errors of method [`UsageMeteringAPI::get_ingested_spans`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetIngestedSpansError {
@@ -455,7 +454,7 @@ pub enum GetIngestedSpansError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetMonthlyCustomReportsError is a struct for typed errors of method [`GetMonthlyCustomReports`]
+/// GetMonthlyCustomReportsError is a struct for typed errors of method [`UsageMeteringAPI::get_monthly_custom_reports`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetMonthlyCustomReportsError {
@@ -464,7 +463,7 @@ pub enum GetMonthlyCustomReportsError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetMonthlyUsageAttributionError is a struct for typed errors of method [`GetMonthlyUsageAttribution`]
+/// GetMonthlyUsageAttributionError is a struct for typed errors of method [`UsageMeteringAPI::get_monthly_usage_attribution`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetMonthlyUsageAttributionError {
@@ -473,7 +472,7 @@ pub enum GetMonthlyUsageAttributionError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetSpecifiedDailyCustomReportsError is a struct for typed errors of method [`GetSpecifiedDailyCustomReports`]
+/// GetSpecifiedDailyCustomReportsError is a struct for typed errors of method [`UsageMeteringAPI::get_specified_daily_custom_reports`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetSpecifiedDailyCustomReportsError {
@@ -483,7 +482,7 @@ pub enum GetSpecifiedDailyCustomReportsError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetSpecifiedMonthlyCustomReportsError is a struct for typed errors of method [`GetSpecifiedMonthlyCustomReports`]
+/// GetSpecifiedMonthlyCustomReportsError is a struct for typed errors of method [`UsageMeteringAPI::get_specified_monthly_custom_reports`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetSpecifiedMonthlyCustomReportsError {
@@ -494,7 +493,7 @@ pub enum GetSpecifiedMonthlyCustomReportsError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageAnalyzedLogsError is a struct for typed errors of method [`GetUsageAnalyzedLogs`]
+/// GetUsageAnalyzedLogsError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_analyzed_logs`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageAnalyzedLogsError {
@@ -504,7 +503,7 @@ pub enum GetUsageAnalyzedLogsError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageAttributionError is a struct for typed errors of method [`GetUsageAttribution`]
+/// GetUsageAttributionError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_attribution`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageAttributionError {
@@ -513,7 +512,7 @@ pub enum GetUsageAttributionError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageAuditLogsError is a struct for typed errors of method [`GetUsageAuditLogs`]
+/// GetUsageAuditLogsError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_audit_logs`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageAuditLogsError {
@@ -523,7 +522,7 @@ pub enum GetUsageAuditLogsError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageBillableSummaryError is a struct for typed errors of method [`GetUsageBillableSummary`]
+/// GetUsageBillableSummaryError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_billable_summary`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageBillableSummaryError {
@@ -533,7 +532,7 @@ pub enum GetUsageBillableSummaryError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageCIAppError is a struct for typed errors of method [`GetUsageCIApp`]
+/// GetUsageCIAppError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_ci_app`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageCIAppError {
@@ -543,7 +542,7 @@ pub enum GetUsageCIAppError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageCWSError is a struct for typed errors of method [`GetUsageCWS`]
+/// GetUsageCWSError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_cws`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageCWSError {
@@ -553,7 +552,7 @@ pub enum GetUsageCWSError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageCloudSecurityPostureManagementError is a struct for typed errors of method [`GetUsageCloudSecurityPostureManagement`]
+/// GetUsageCloudSecurityPostureManagementError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_cloud_security_posture_management`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageCloudSecurityPostureManagementError {
@@ -563,7 +562,7 @@ pub enum GetUsageCloudSecurityPostureManagementError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageDBMError is a struct for typed errors of method [`GetUsageDBM`]
+/// GetUsageDBMError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_dbm`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageDBMError {
@@ -573,7 +572,7 @@ pub enum GetUsageDBMError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageFargateError is a struct for typed errors of method [`GetUsageFargate`]
+/// GetUsageFargateError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_fargate`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageFargateError {
@@ -583,7 +582,7 @@ pub enum GetUsageFargateError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageHostsError is a struct for typed errors of method [`GetUsageHosts`]
+/// GetUsageHostsError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_hosts`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageHostsError {
@@ -593,7 +592,7 @@ pub enum GetUsageHostsError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageIndexedSpansError is a struct for typed errors of method [`GetUsageIndexedSpans`]
+/// GetUsageIndexedSpansError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_indexed_spans`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageIndexedSpansError {
@@ -603,7 +602,7 @@ pub enum GetUsageIndexedSpansError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageInternetOfThingsError is a struct for typed errors of method [`GetUsageInternetOfThings`]
+/// GetUsageInternetOfThingsError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_internet_of_things`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageInternetOfThingsError {
@@ -613,7 +612,7 @@ pub enum GetUsageInternetOfThingsError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageLambdaError is a struct for typed errors of method [`GetUsageLambda`]
+/// GetUsageLambdaError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_lambda`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageLambdaError {
@@ -623,7 +622,7 @@ pub enum GetUsageLambdaError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageLogsError is a struct for typed errors of method [`GetUsageLogs`]
+/// GetUsageLogsError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_logs`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageLogsError {
@@ -633,7 +632,7 @@ pub enum GetUsageLogsError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageLogsByIndexError is a struct for typed errors of method [`GetUsageLogsByIndex`]
+/// GetUsageLogsByIndexError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_logs_by_index`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageLogsByIndexError {
@@ -643,7 +642,7 @@ pub enum GetUsageLogsByIndexError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageLogsByRetentionError is a struct for typed errors of method [`GetUsageLogsByRetention`]
+/// GetUsageLogsByRetentionError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_logs_by_retention`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageLogsByRetentionError {
@@ -653,7 +652,7 @@ pub enum GetUsageLogsByRetentionError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageNetworkFlowsError is a struct for typed errors of method [`GetUsageNetworkFlows`]
+/// GetUsageNetworkFlowsError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_network_flows`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageNetworkFlowsError {
@@ -663,7 +662,7 @@ pub enum GetUsageNetworkFlowsError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageNetworkHostsError is a struct for typed errors of method [`GetUsageNetworkHosts`]
+/// GetUsageNetworkHostsError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_network_hosts`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageNetworkHostsError {
@@ -673,7 +672,7 @@ pub enum GetUsageNetworkHostsError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageOnlineArchiveError is a struct for typed errors of method [`GetUsageOnlineArchive`]
+/// GetUsageOnlineArchiveError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_online_archive`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageOnlineArchiveError {
@@ -683,7 +682,7 @@ pub enum GetUsageOnlineArchiveError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageProfilingError is a struct for typed errors of method [`GetUsageProfiling`]
+/// GetUsageProfilingError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_profiling`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageProfilingError {
@@ -693,7 +692,7 @@ pub enum GetUsageProfilingError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageRumSessionsError is a struct for typed errors of method [`GetUsageRumSessions`]
+/// GetUsageRumSessionsError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_rum_sessions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageRumSessionsError {
@@ -703,7 +702,7 @@ pub enum GetUsageRumSessionsError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageRumUnitsError is a struct for typed errors of method [`GetUsageRumUnits`]
+/// GetUsageRumUnitsError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_rum_units`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageRumUnitsError {
@@ -713,7 +712,7 @@ pub enum GetUsageRumUnitsError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageSDSError is a struct for typed errors of method [`GetUsageSDS`]
+/// GetUsageSDSError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_sds`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageSDSError {
@@ -723,7 +722,7 @@ pub enum GetUsageSDSError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageSNMPError is a struct for typed errors of method [`GetUsageSNMP`]
+/// GetUsageSNMPError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_snmp`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageSNMPError {
@@ -733,7 +732,7 @@ pub enum GetUsageSNMPError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageSummaryError is a struct for typed errors of method [`GetUsageSummary`]
+/// GetUsageSummaryError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_summary`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageSummaryError {
@@ -743,7 +742,7 @@ pub enum GetUsageSummaryError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageSyntheticsError is a struct for typed errors of method [`GetUsageSynthetics`]
+/// GetUsageSyntheticsError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_synthetics`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageSyntheticsError {
@@ -753,7 +752,7 @@ pub enum GetUsageSyntheticsError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageSyntheticsAPIError is a struct for typed errors of method [`GetUsageSyntheticsAPI`]
+/// GetUsageSyntheticsAPIError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_synthetics_api`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageSyntheticsAPIError {
@@ -763,7 +762,7 @@ pub enum GetUsageSyntheticsAPIError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageSyntheticsBrowserError is a struct for typed errors of method [`GetUsageSyntheticsBrowser`]
+/// GetUsageSyntheticsBrowserError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_synthetics_browser`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageSyntheticsBrowserError {
@@ -773,7 +772,7 @@ pub enum GetUsageSyntheticsBrowserError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageTimeseriesError is a struct for typed errors of method [`GetUsageTimeseries`]
+/// GetUsageTimeseriesError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_timeseries`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageTimeseriesError {
@@ -783,7 +782,7 @@ pub enum GetUsageTimeseriesError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageTopAvgMetricsError is a struct for typed errors of method [`GetUsageTopAvgMetrics`]
+/// GetUsageTopAvgMetricsError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_top_avg_metrics`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageTopAvgMetricsError {
@@ -816,7 +815,7 @@ impl UsageMeteringAPI {
 
     /// Get daily custom reports.
     /// **Note:** This endpoint will be fully deprecated on December 1, 2022.
-    /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/) for the associated migration guide.
+    /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](<https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/>) for the associated migration guide.
     pub async fn get_daily_custom_reports(
         &self,
         params: GetDailyCustomReportsParams,
@@ -832,7 +831,7 @@ impl UsageMeteringAPI {
 
     /// Get daily custom reports.
     /// **Note:** This endpoint will be fully deprecated on December 1, 2022.
-    /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/) for the associated migration guide.
+    /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](<https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/>) for the associated migration guide.
     pub async fn get_daily_custom_reports_with_http_info(
         &self,
         params: GetDailyCustomReportsParams,
@@ -1042,7 +1041,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for incident management.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_incident_management(
         &self,
         params: GetIncidentManagementParams,
@@ -1057,7 +1056,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for incident management.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_incident_management_with_http_info(
         &self,
         params: GetIncidentManagementParams,
@@ -1126,7 +1125,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for ingested spans.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_ingested_spans(
         &self,
         params: GetIngestedSpansParams,
@@ -1141,7 +1140,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for ingested spans.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_ingested_spans_with_http_info(
         &self,
         params: GetIngestedSpansParams,
@@ -1211,7 +1210,7 @@ impl UsageMeteringAPI {
 
     /// Get monthly custom reports.
     /// **Note:** This endpoint will be fully deprecated on December 1, 2022.
-    /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/) for the associated migration guide.
+    /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](<https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/>) for the associated migration guide.
     pub async fn get_monthly_custom_reports(
         &self,
         params: GetMonthlyCustomReportsParams,
@@ -1227,7 +1226,7 @@ impl UsageMeteringAPI {
 
     /// Get monthly custom reports.
     /// **Note:** This endpoint will be fully deprecated on December 1, 2022.
-    /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/) for the associated migration guide.
+    /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](<https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/>) for the associated migration guide.
     pub async fn get_monthly_custom_reports_with_http_info(
         &self,
         params: GetMonthlyCustomReportsParams,
@@ -1447,7 +1446,7 @@ impl UsageMeteringAPI {
 
     /// Get specified daily custom reports.
     /// **Note:** This endpoint will be fully deprecated on December 1, 2022.
-    /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/) for the associated migration guide.
+    /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](<https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/>) for the associated migration guide.
     pub async fn get_specified_daily_custom_reports(
         &self,
         params: GetSpecifiedDailyCustomReportsParams,
@@ -1466,7 +1465,7 @@ impl UsageMeteringAPI {
 
     /// Get specified daily custom reports.
     /// **Note:** This endpoint will be fully deprecated on December 1, 2022.
-    /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/) for the associated migration guide.
+    /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](<https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/>) for the associated migration guide.
     pub async fn get_specified_daily_custom_reports_with_http_info(
         &self,
         params: GetSpecifiedDailyCustomReportsParams,
@@ -1531,7 +1530,7 @@ impl UsageMeteringAPI {
 
     /// Get specified monthly custom reports.
     /// **Note:** This endpoint will be fully deprecated on December 1, 2022.
-    /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/) for the associated migration guide.
+    /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](<https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/>) for the associated migration guide.
     pub async fn get_specified_monthly_custom_reports(
         &self,
         params: GetSpecifiedMonthlyCustomReportsParams,
@@ -1550,7 +1549,7 @@ impl UsageMeteringAPI {
 
     /// Get specified monthly custom reports.
     /// **Note:** This endpoint will be fully deprecated on December 1, 2022.
-    /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/) for the associated migration guide.
+    /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](<https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/>) for the associated migration guide.
     pub async fn get_specified_monthly_custom_reports_with_http_info(
         &self,
         params: GetSpecifiedMonthlyCustomReportsParams,
@@ -1614,7 +1613,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for analyzed logs (Security Monitoring).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_analyzed_logs(
         &self,
         params: GetUsageAnalyzedLogsParams,
@@ -1629,7 +1628,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for analyzed logs (Security Monitoring).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_analyzed_logs_with_http_info(
         &self,
         params: GetUsageAnalyzedLogsParams,
@@ -1699,7 +1698,7 @@ impl UsageMeteringAPI {
 
     /// Get usage attribution.
     /// **Note:** This endpoint will be fully deprecated on December 1, 2022.
-    /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/) for the associated migration guide.
+    /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](<https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/>) for the associated migration guide.
     pub async fn get_usage_attribution(
         &self,
         params: GetUsageAttributionParams,
@@ -1715,7 +1714,7 @@ impl UsageMeteringAPI {
 
     /// Get usage attribution.
     /// **Note:** This endpoint will be fully deprecated on December 1, 2022.
-    /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/) for the associated migration guide.
+    /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](<https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/>) for the associated migration guide.
     pub async fn get_usage_attribution_with_http_info(
         &self,
         params: GetUsageAttributionParams,
@@ -1966,7 +1965,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for CI visibility (tests, pipeline, and spans).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_ci_app(
         &self,
         params: GetUsageCIAppParams,
@@ -1979,7 +1978,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for CI visibility (tests, pipeline, and spans).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_ci_app_with_http_info(
         &self,
         params: GetUsageCIAppParams,
@@ -2045,7 +2044,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for cloud workload security.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_cws(
         &self,
         params: GetUsageCWSParams,
@@ -2057,7 +2056,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for cloud workload security.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_cws_with_http_info(
         &self,
         params: GetUsageCWSParams,
@@ -2120,7 +2119,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for cloud security management (CSM) pro.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_cloud_security_posture_management(
         &self,
         params: GetUsageCloudSecurityPostureManagementParams,
@@ -2138,7 +2137,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for cloud security management (CSM) pro.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_cloud_security_posture_management_with_http_info(
         &self,
         params: GetUsageCloudSecurityPostureManagementParams,
@@ -2205,7 +2204,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for database monitoring
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_dbm(
         &self,
         params: GetUsageDBMParams,
@@ -2217,7 +2216,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for database monitoring
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_dbm_with_http_info(
         &self,
         params: GetUsageDBMParams,
@@ -2279,8 +2278,8 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Get hourly usage for [Fargate](https://docs.datadoghq.com/integrations/ecs_fargate/).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// Get hourly usage for [Fargate](<https://docs.datadoghq.com/integrations/ecs_fargate/>).
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_fargate(
         &self,
         params: GetUsageFargateParams,
@@ -2292,8 +2291,8 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Get hourly usage for [Fargate](https://docs.datadoghq.com/integrations/ecs_fargate/).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// Get hourly usage for [Fargate](<https://docs.datadoghq.com/integrations/ecs_fargate/>).
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_fargate_with_http_info(
         &self,
         params: GetUsageFargateParams,
@@ -2359,7 +2358,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for hosts and containers.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_hosts(
         &self,
         params: GetUsageHostsParams,
@@ -2372,7 +2371,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for hosts and containers.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_hosts_with_http_info(
         &self,
         params: GetUsageHostsParams,
@@ -2438,7 +2437,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for indexed spans.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_indexed_spans(
         &self,
         params: GetUsageIndexedSpansParams,
@@ -2453,7 +2452,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for indexed spans.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_indexed_spans_with_http_info(
         &self,
         params: GetUsageIndexedSpansParams,
@@ -2522,7 +2521,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for IoT.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_internet_of_things(
         &self,
         params: GetUsageInternetOfThingsParams,
@@ -2540,7 +2539,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for IoT.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_internet_of_things_with_http_info(
         &self,
         params: GetUsageInternetOfThingsParams,
@@ -2606,7 +2605,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for lambda.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_lambda(
         &self,
         params: GetUsageLambdaParams,
@@ -2619,7 +2618,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for lambda.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_lambda_with_http_info(
         &self,
         params: GetUsageLambdaParams,
@@ -2685,7 +2684,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for logs.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_logs(
         &self,
         params: GetUsageLogsParams,
@@ -2697,7 +2696,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for logs.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_logs_with_http_info(
         &self,
         params: GetUsageLogsParams,
@@ -2854,7 +2853,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for indexed logs by retention period.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_logs_by_retention(
         &self,
         params: GetUsageLogsByRetentionParams,
@@ -2872,7 +2871,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for indexed logs by retention period.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_logs_by_retention_with_http_info(
         &self,
         params: GetUsageLogsByRetentionParams,
@@ -2941,7 +2940,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for network flows.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_network_flows(
         &self,
         params: GetUsageNetworkFlowsParams,
@@ -2956,7 +2955,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for network flows.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_network_flows_with_http_info(
         &self,
         params: GetUsageNetworkFlowsParams,
@@ -3025,7 +3024,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for network hosts.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_network_hosts(
         &self,
         params: GetUsageNetworkHostsParams,
@@ -3040,7 +3039,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for network hosts.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_network_hosts_with_http_info(
         &self,
         params: GetUsageNetworkHostsParams,
@@ -3109,7 +3108,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for online archive.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_online_archive(
         &self,
         params: GetUsageOnlineArchiveParams,
@@ -3124,7 +3123,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for online archive.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_online_archive_with_http_info(
         &self,
         params: GetUsageOnlineArchiveParams,
@@ -3193,7 +3192,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for profiled hosts.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_profiling(
         &self,
         params: GetUsageProfilingParams,
@@ -3208,7 +3207,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for profiled hosts.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_profiling_with_http_info(
         &self,
         params: GetUsageProfilingParams,
@@ -3273,8 +3272,8 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Get hourly usage for [RUM](https://docs.datadoghq.com/real_user_monitoring/) Sessions.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// Get hourly usage for [RUM](<https://docs.datadoghq.com/real_user_monitoring/>) Sessions.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_rum_sessions(
         &self,
         params: GetUsageRumSessionsParams,
@@ -3288,8 +3287,8 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Get hourly usage for [RUM](https://docs.datadoghq.com/real_user_monitoring/) Sessions.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// Get hourly usage for [RUM](<https://docs.datadoghq.com/real_user_monitoring/>) Sessions.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_rum_sessions_with_http_info(
         &self,
         params: GetUsageRumSessionsParams,
@@ -3361,8 +3360,8 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Get hourly usage for [RUM](https://docs.datadoghq.com/real_user_monitoring/) Units.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// Get hourly usage for [RUM](<https://docs.datadoghq.com/real_user_monitoring/>) Units.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_rum_units(
         &self,
         params: GetUsageRumUnitsParams,
@@ -3374,8 +3373,8 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Get hourly usage for [RUM](https://docs.datadoghq.com/real_user_monitoring/) Units.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// Get hourly usage for [RUM](<https://docs.datadoghq.com/real_user_monitoring/>) Units.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_rum_units_with_http_info(
         &self,
         params: GetUsageRumUnitsParams,
@@ -3441,7 +3440,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for sensitive data scanner.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_sds(
         &self,
         params: GetUsageSDSParams,
@@ -3453,7 +3452,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for sensitive data scanner.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_sds_with_http_info(
         &self,
         params: GetUsageSDSParams,
@@ -3516,7 +3515,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for SNMP devices.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_snmp(
         &self,
         params: GetUsageSNMPParams,
@@ -3528,7 +3527,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for SNMP devices.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_snmp_with_http_info(
         &self,
         params: GetUsageSNMPParams,
@@ -3672,8 +3671,8 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Get hourly usage for [synthetics checks](https://docs.datadoghq.com/synthetics/).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// Get hourly usage for [synthetics checks](<https://docs.datadoghq.com/synthetics/>).
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics(
         &self,
         params: GetUsageSyntheticsParams,
@@ -3687,8 +3686,8 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Get hourly usage for [synthetics checks](https://docs.datadoghq.com/synthetics/).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// Get hourly usage for [synthetics checks](<https://docs.datadoghq.com/synthetics/>).
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_with_http_info(
         &self,
         params: GetUsageSyntheticsParams,
@@ -3753,8 +3752,8 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Get hourly usage for [synthetics API checks](https://docs.datadoghq.com/synthetics/).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// Get hourly usage for [synthetics API checks](<https://docs.datadoghq.com/synthetics/>).
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_api(
         &self,
         params: GetUsageSyntheticsAPIParams,
@@ -3768,8 +3767,8 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Get hourly usage for [synthetics API checks](https://docs.datadoghq.com/synthetics/).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// Get hourly usage for [synthetics API checks](<https://docs.datadoghq.com/synthetics/>).
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_api_with_http_info(
         &self,
         params: GetUsageSyntheticsAPIParams,
@@ -3838,7 +3837,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for synthetics browser checks.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_browser(
         &self,
         params: GetUsageSyntheticsBrowserParams,
@@ -3856,7 +3855,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for synthetics browser checks.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_browser_with_http_info(
         &self,
         params: GetUsageSyntheticsBrowserParams,
@@ -3924,8 +3923,8 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Get hourly usage for [custom metrics](https://docs.datadoghq.com/developers/metrics/custom_metrics/).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// Get hourly usage for [custom metrics](<https://docs.datadoghq.com/developers/metrics/custom_metrics/>).
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_timeseries(
         &self,
         params: GetUsageTimeseriesParams,
@@ -3939,8 +3938,8 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Get hourly usage for [custom metrics](https://docs.datadoghq.com/developers/metrics/custom_metrics/).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family). Refer to [Migrating from the V1 Hourly Usage APIs to V2](https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/) for the associated migration guide.
+    /// Get hourly usage for [custom metrics](<https://docs.datadoghq.com/developers/metrics/custom_metrics/>).
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_timeseries_with_http_info(
         &self,
         params: GetUsageTimeseriesParams,
@@ -4005,7 +4004,7 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Get all [custom metrics](https://docs.datadoghq.com/developers/metrics/custom_metrics/) by hourly average. Use the month parameter to get a month-to-date data resolution or use the day parameter to get a daily resolution. One of the two is required, and only one of the two is allowed.
+    /// Get all [custom metrics](<https://docs.datadoghq.com/developers/metrics/custom_metrics/>) by hourly average. Use the month parameter to get a month-to-date data resolution or use the day parameter to get a daily resolution. One of the two is required, and only one of the two is allowed.
     pub async fn get_usage_top_avg_metrics(
         &self,
         params: GetUsageTopAvgMetricsParams,
@@ -4019,7 +4018,7 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Get all [custom metrics](https://docs.datadoghq.com/developers/metrics/custom_metrics/) by hourly average. Use the month parameter to get a month-to-date data resolution or use the day parameter to get a daily resolution. One of the two is required, and only one of the two is allowed.
+    /// Get all [custom metrics](<https://docs.datadoghq.com/developers/metrics/custom_metrics/>) by hourly average. Use the month parameter to get a month-to-date data resolution or use the day parameter to get a daily resolution. One of the two is required, and only one of the two is allowed.
     pub async fn get_usage_top_avg_metrics_with_http_info(
         &self,
         params: GetUsageTopAvgMetricsParams,

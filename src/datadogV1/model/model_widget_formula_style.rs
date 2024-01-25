@@ -8,7 +8,7 @@ use serde_with::skip_serializing_none;
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct WidgetFormulaStyle {
-    /// The color palette used to display the formula. A guide to the available color palettes can be found at https://docs.datadoghq.com/dashboards/guide/widget_colors
+    /// The color palette used to display the formula. A guide to the available color palettes can be found at <https://docs.datadoghq.com/dashboards/guide/widget_colors>
     #[serde(rename = "palette")]
     pub palette: Option<String>,
     /// Index specifying which color to use within the palette.

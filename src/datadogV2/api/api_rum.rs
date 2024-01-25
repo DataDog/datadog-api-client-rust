@@ -1,38 +1,37 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// AggregateRUMEventsParams is a struct for passing parameters to the method [`AggregateRUMEvents`]
+/// AggregateRUMEventsParams is a struct for passing parameters to the method [`RUMAPI::aggregate_rum_events`]
 #[derive(Clone, Debug)]
 pub struct AggregateRUMEventsParams {
     pub body: crate::datadogV2::model::RUMAggregateRequest,
 }
 
-/// CreateRUMApplicationParams is a struct for passing parameters to the method [`CreateRUMApplication`]
+/// CreateRUMApplicationParams is a struct for passing parameters to the method [`RUMAPI::create_rum_application`]
 #[derive(Clone, Debug)]
 pub struct CreateRUMApplicationParams {
     pub body: crate::datadogV2::model::RUMApplicationCreateRequest,
 }
 
-/// DeleteRUMApplicationParams is a struct for passing parameters to the method [`DeleteRUMApplication`]
+/// DeleteRUMApplicationParams is a struct for passing parameters to the method [`RUMAPI::delete_rum_application`]
 #[derive(Clone, Debug)]
 pub struct DeleteRUMApplicationParams {
     /// RUM application ID.
     pub id: String,
 }
 
-/// GetRUMApplicationParams is a struct for passing parameters to the method [`GetRUMApplication`]
+/// GetRUMApplicationParams is a struct for passing parameters to the method [`RUMAPI::get_rum_application`]
 #[derive(Clone, Debug)]
 pub struct GetRUMApplicationParams {
     /// RUM application ID.
     pub id: String,
 }
 
-/// ListRUMEventsParams is a struct for passing parameters to the method [`ListRUMEvents`]
+/// ListRUMEventsParams is a struct for passing parameters to the method [`RUMAPI::list_rum_events`]
 #[derive(Clone, Debug)]
 pub struct ListRUMEventsParams {
     /// Search query following RUM syntax.
@@ -49,13 +48,13 @@ pub struct ListRUMEventsParams {
     pub page_limit: Option<i32>,
 }
 
-/// SearchRUMEventsParams is a struct for passing parameters to the method [`SearchRUMEvents`]
+/// SearchRUMEventsParams is a struct for passing parameters to the method [`RUMAPI::search_rum_events`]
 #[derive(Clone, Debug)]
 pub struct SearchRUMEventsParams {
     pub body: crate::datadogV2::model::RUMSearchEventsRequest,
 }
 
-/// UpdateRUMApplicationParams is a struct for passing parameters to the method [`UpdateRUMApplication`]
+/// UpdateRUMApplicationParams is a struct for passing parameters to the method [`RUMAPI::update_rum_application`]
 #[derive(Clone, Debug)]
 pub struct UpdateRUMApplicationParams {
     /// RUM application ID.
@@ -63,7 +62,7 @@ pub struct UpdateRUMApplicationParams {
     pub body: crate::datadogV2::model::RUMApplicationUpdateRequest,
 }
 
-/// AggregateRUMEventsError is a struct for typed errors of method [`AggregateRUMEvents`]
+/// AggregateRUMEventsError is a struct for typed errors of method [`RUMAPI::aggregate_rum_events`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AggregateRUMEventsError {
@@ -73,7 +72,7 @@ pub enum AggregateRUMEventsError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateRUMApplicationError is a struct for typed errors of method [`CreateRUMApplication`]
+/// CreateRUMApplicationError is a struct for typed errors of method [`RUMAPI::create_rum_application`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateRUMApplicationError {
@@ -82,7 +81,7 @@ pub enum CreateRUMApplicationError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteRUMApplicationError is a struct for typed errors of method [`DeleteRUMApplication`]
+/// DeleteRUMApplicationError is a struct for typed errors of method [`RUMAPI::delete_rum_application`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteRUMApplicationError {
@@ -91,7 +90,7 @@ pub enum DeleteRUMApplicationError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetRUMApplicationError is a struct for typed errors of method [`GetRUMApplication`]
+/// GetRUMApplicationError is a struct for typed errors of method [`RUMAPI::get_rum_application`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetRUMApplicationError {
@@ -100,7 +99,7 @@ pub enum GetRUMApplicationError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetRUMApplicationsError is a struct for typed errors of method [`GetRUMApplications`]
+/// GetRUMApplicationsError is a struct for typed errors of method [`RUMAPI::get_rum_applications`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetRUMApplicationsError {
@@ -109,7 +108,7 @@ pub enum GetRUMApplicationsError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListRUMEventsError is a struct for typed errors of method [`ListRUMEvents`]
+/// ListRUMEventsError is a struct for typed errors of method [`RUMAPI::list_rum_events`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListRUMEventsError {
@@ -119,7 +118,7 @@ pub enum ListRUMEventsError {
     UnknownValue(serde_json::Value),
 }
 
-/// SearchRUMEventsError is a struct for typed errors of method [`SearchRUMEvents`]
+/// SearchRUMEventsError is a struct for typed errors of method [`RUMAPI::search_rum_events`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SearchRUMEventsError {
@@ -129,7 +128,7 @@ pub enum SearchRUMEventsError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateRUMApplicationError is a struct for typed errors of method [`UpdateRUMApplication`]
+/// UpdateRUMApplicationError is a struct for typed errors of method [`RUMAPI::update_rum_application`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateRUMApplicationError {
@@ -545,7 +544,7 @@ impl RUMAPI {
     ///
     /// Use this endpoint to see your latest RUM events.
     ///
-    /// [1]: https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination
+    /// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
     pub async fn list_rum_events(
         &self,
         params: ListRUMEventsParams,
@@ -561,7 +560,7 @@ impl RUMAPI {
     ///
     /// Use this endpoint to see your latest RUM events.
     ///
-    /// [1]: https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination
+    /// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
     pub async fn list_rum_events_with_http_info(
         &self,
         params: ListRUMEventsParams,
@@ -652,7 +651,7 @@ impl RUMAPI {
     ///
     /// Use this endpoint to build complex RUM events filtering and search.
     ///
-    /// [1]: https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination
+    /// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
     pub async fn search_rum_events(
         &self,
         params: SearchRUMEventsParams,
@@ -669,7 +668,7 @@ impl RUMAPI {
     ///
     /// Use this endpoint to build complex RUM events filtering and search.
     ///
-    /// [1]: https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination
+    /// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
     pub async fn search_rum_events_with_http_info(
         &self,
         params: SearchRUMEventsParams,

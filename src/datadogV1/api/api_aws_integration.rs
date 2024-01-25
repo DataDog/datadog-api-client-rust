@@ -1,26 +1,25 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateAWSAccountParams is a struct for passing parameters to the method [`CreateAWSAccount`]
+/// CreateAWSAccountParams is a struct for passing parameters to the method [`AWSIntegrationAPI::create_aws_account`]
 #[derive(Clone, Debug)]
 pub struct CreateAWSAccountParams {
     /// AWS Request Object
     pub body: crate::datadogV1::model::AWSAccount,
 }
 
-/// CreateAWSEventBridgeSourceParams is a struct for passing parameters to the method [`CreateAWSEventBridgeSource`]
+/// CreateAWSEventBridgeSourceParams is a struct for passing parameters to the method [`AWSIntegrationAPI::create_aws_event_bridge_source`]
 #[derive(Clone, Debug)]
 pub struct CreateAWSEventBridgeSourceParams {
     /// Create an Amazon EventBridge source for an AWS account with a given name and region.
     pub body: crate::datadogV1::model::AWSEventBridgeCreateRequest,
 }
 
-/// CreateAWSTagFilterParams is a struct for passing parameters to the method [`CreateAWSTagFilter`]
+/// CreateAWSTagFilterParams is a struct for passing parameters to the method [`AWSIntegrationAPI::create_aws_tag_filter`]
 #[derive(Clone, Debug)]
 pub struct CreateAWSTagFilterParams {
     /// Set an AWS tag filter using an `aws_account_identifier`, `namespace`, and filtering string.
@@ -28,37 +27,37 @@ pub struct CreateAWSTagFilterParams {
     pub body: crate::datadogV1::model::AWSTagFilterCreateRequest,
 }
 
-/// CreateNewAWSExternalIDParams is a struct for passing parameters to the method [`CreateNewAWSExternalID`]
+/// CreateNewAWSExternalIDParams is a struct for passing parameters to the method [`AWSIntegrationAPI::create_new_aws_external_id`]
 #[derive(Clone, Debug)]
 pub struct CreateNewAWSExternalIDParams {
     /// Your Datadog role delegation name.
     /// For more information about your AWS account Role name,
-    /// see the [Datadog AWS integration configuration info](https://docs.datadoghq.com/integrations/amazon_web_services/#setup).
+    /// see the [Datadog AWS integration configuration info](<https://docs.datadoghq.com/integrations/amazon_web_services/#setup>).
     pub body: crate::datadogV1::model::AWSAccount,
 }
 
-/// DeleteAWSAccountParams is a struct for passing parameters to the method [`DeleteAWSAccount`]
+/// DeleteAWSAccountParams is a struct for passing parameters to the method [`AWSIntegrationAPI::delete_aws_account`]
 #[derive(Clone, Debug)]
 pub struct DeleteAWSAccountParams {
     /// AWS request object
     pub body: crate::datadogV1::model::AWSAccountDeleteRequest,
 }
 
-/// DeleteAWSEventBridgeSourceParams is a struct for passing parameters to the method [`DeleteAWSEventBridgeSource`]
+/// DeleteAWSEventBridgeSourceParams is a struct for passing parameters to the method [`AWSIntegrationAPI::delete_aws_event_bridge_source`]
 #[derive(Clone, Debug)]
 pub struct DeleteAWSEventBridgeSourceParams {
     /// Delete the Amazon EventBridge source with the given name, region, and associated AWS account.
     pub body: crate::datadogV1::model::AWSEventBridgeDeleteRequest,
 }
 
-/// DeleteAWSTagFilterParams is a struct for passing parameters to the method [`DeleteAWSTagFilter`]
+/// DeleteAWSTagFilterParams is a struct for passing parameters to the method [`AWSIntegrationAPI::delete_aws_tag_filter`]
 #[derive(Clone, Debug)]
 pub struct DeleteAWSTagFilterParams {
     /// Delete a tag filtering entry for a given AWS account and `dd-aws` namespace.
     pub body: crate::datadogV1::model::AWSTagFilterDeleteRequest,
 }
 
-/// ListAWSAccountsParams is a struct for passing parameters to the method [`ListAWSAccounts`]
+/// ListAWSAccountsParams is a struct for passing parameters to the method [`AWSIntegrationAPI::list_aws_accounts`]
 #[derive(Clone, Debug)]
 pub struct ListAWSAccountsParams {
     /// Only return AWS accounts that matches this `account_id`.
@@ -69,14 +68,14 @@ pub struct ListAWSAccountsParams {
     pub access_key_id: Option<String>,
 }
 
-/// ListAWSTagFiltersParams is a struct for passing parameters to the method [`ListAWSTagFilters`]
+/// ListAWSTagFiltersParams is a struct for passing parameters to the method [`AWSIntegrationAPI::list_aws_tag_filters`]
 #[derive(Clone, Debug)]
 pub struct ListAWSTagFiltersParams {
     /// Only return AWS filters that matches this `account_id`.
     pub account_id: String,
 }
 
-/// UpdateAWSAccountParams is a struct for passing parameters to the method [`UpdateAWSAccount`]
+/// UpdateAWSAccountParams is a struct for passing parameters to the method [`AWSIntegrationAPI::update_aws_account`]
 #[derive(Clone, Debug)]
 pub struct UpdateAWSAccountParams {
     /// AWS request object
@@ -91,7 +90,7 @@ pub struct UpdateAWSAccountParams {
     pub access_key_id: Option<String>,
 }
 
-/// CreateAWSAccountError is a struct for typed errors of method [`CreateAWSAccount`]
+/// CreateAWSAccountError is a struct for typed errors of method [`AWSIntegrationAPI::create_aws_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateAWSAccountError {
@@ -102,7 +101,7 @@ pub enum CreateAWSAccountError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateAWSEventBridgeSourceError is a struct for typed errors of method [`CreateAWSEventBridgeSource`]
+/// CreateAWSEventBridgeSourceError is a struct for typed errors of method [`AWSIntegrationAPI::create_aws_event_bridge_source`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateAWSEventBridgeSourceError {
@@ -112,7 +111,7 @@ pub enum CreateAWSEventBridgeSourceError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateAWSTagFilterError is a struct for typed errors of method [`CreateAWSTagFilter`]
+/// CreateAWSTagFilterError is a struct for typed errors of method [`AWSIntegrationAPI::create_aws_tag_filter`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateAWSTagFilterError {
@@ -122,7 +121,7 @@ pub enum CreateAWSTagFilterError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateNewAWSExternalIDError is a struct for typed errors of method [`CreateNewAWSExternalID`]
+/// CreateNewAWSExternalIDError is a struct for typed errors of method [`AWSIntegrationAPI::create_new_aws_external_id`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateNewAWSExternalIDError {
@@ -132,7 +131,7 @@ pub enum CreateNewAWSExternalIDError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteAWSAccountError is a struct for typed errors of method [`DeleteAWSAccount`]
+/// DeleteAWSAccountError is a struct for typed errors of method [`AWSIntegrationAPI::delete_aws_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteAWSAccountError {
@@ -143,7 +142,7 @@ pub enum DeleteAWSAccountError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteAWSEventBridgeSourceError is a struct for typed errors of method [`DeleteAWSEventBridgeSource`]
+/// DeleteAWSEventBridgeSourceError is a struct for typed errors of method [`AWSIntegrationAPI::delete_aws_event_bridge_source`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteAWSEventBridgeSourceError {
@@ -153,7 +152,7 @@ pub enum DeleteAWSEventBridgeSourceError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteAWSTagFilterError is a struct for typed errors of method [`DeleteAWSTagFilter`]
+/// DeleteAWSTagFilterError is a struct for typed errors of method [`AWSIntegrationAPI::delete_aws_tag_filter`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteAWSTagFilterError {
@@ -163,7 +162,7 @@ pub enum DeleteAWSTagFilterError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListAWSAccountsError is a struct for typed errors of method [`ListAWSAccounts`]
+/// ListAWSAccountsError is a struct for typed errors of method [`AWSIntegrationAPI::list_aws_accounts`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListAWSAccountsError {
@@ -173,7 +172,7 @@ pub enum ListAWSAccountsError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListAWSEventBridgeSourcesError is a struct for typed errors of method [`ListAWSEventBridgeSources`]
+/// ListAWSEventBridgeSourcesError is a struct for typed errors of method [`AWSIntegrationAPI::list_aws_event_bridge_sources`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListAWSEventBridgeSourcesError {
@@ -183,7 +182,7 @@ pub enum ListAWSEventBridgeSourcesError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListAWSTagFiltersError is a struct for typed errors of method [`ListAWSTagFilters`]
+/// ListAWSTagFiltersError is a struct for typed errors of method [`AWSIntegrationAPI::list_aws_tag_filters`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListAWSTagFiltersError {
@@ -193,7 +192,7 @@ pub enum ListAWSTagFiltersError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListAvailableAWSNamespacesError is a struct for typed errors of method [`ListAvailableAWSNamespaces`]
+/// ListAvailableAWSNamespacesError is a struct for typed errors of method [`AWSIntegrationAPI::list_available_aws_namespaces`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListAvailableAWSNamespacesError {
@@ -202,7 +201,7 @@ pub enum ListAvailableAWSNamespacesError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateAWSAccountError is a struct for typed errors of method [`UpdateAWSAccount`]
+/// UpdateAWSAccountError is a struct for typed errors of method [`AWSIntegrationAPI::update_aws_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateAWSAccountError {

@@ -51,7 +51,7 @@ pub struct MonitorSearchResult {
     /// Tags associated with the monitor.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
-    /// The type of the monitor. For more information about `type`, see the [monitor options](https://docs.datadoghq.com/monitors/guide/monitor_api_options/) docs.
+    /// The type of the monitor. For more information about `type`, see the [monitor options](<https://docs.datadoghq.com/monitors/guide/monitor_api_options/>) docs.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV1::model::MonitorType>,
 }

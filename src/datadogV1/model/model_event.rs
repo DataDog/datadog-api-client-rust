@@ -42,7 +42,7 @@ pub struct Event {
     )]
     pub priority: Option<Option<crate::datadogV1::model::EventPriority>>,
     /// The type of event being posted. Option examples include nagios, hudson, jenkins, my_apps, chef, puppet, git, bitbucket, etc.
-    /// The list of standard source attribute values [available here](https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value).
+    /// The list of standard source attribute values [available here](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>).
     #[serde(rename = "source_type_name")]
     pub source_type_name: Option<String>,
     /// A list of tags to apply to the event.

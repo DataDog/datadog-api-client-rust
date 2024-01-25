@@ -1,33 +1,32 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreatePowerpackParams is a struct for passing parameters to the method [`CreatePowerpack`]
+/// CreatePowerpackParams is a struct for passing parameters to the method [`PowerpackAPI::create_powerpack`]
 #[derive(Clone, Debug)]
 pub struct CreatePowerpackParams {
     /// Create a powerpack request body.
     pub body: crate::datadogV2::model::Powerpack,
 }
 
-/// DeletePowerpackParams is a struct for passing parameters to the method [`DeletePowerpack`]
+/// DeletePowerpackParams is a struct for passing parameters to the method [`PowerpackAPI::delete_powerpack`]
 #[derive(Clone, Debug)]
 pub struct DeletePowerpackParams {
     /// Powerpack id
     pub powerpack_id: String,
 }
 
-/// GetPowerpackParams is a struct for passing parameters to the method [`GetPowerpack`]
+/// GetPowerpackParams is a struct for passing parameters to the method [`PowerpackAPI::get_powerpack`]
 #[derive(Clone, Debug)]
 pub struct GetPowerpackParams {
     /// ID of the powerpack.
     pub powerpack_id: String,
 }
 
-/// ListPowerpacksParams is a struct for passing parameters to the method [`ListPowerpacks`]
+/// ListPowerpacksParams is a struct for passing parameters to the method [`PowerpackAPI::list_powerpacks`]
 #[derive(Clone, Debug)]
 pub struct ListPowerpacksParams {
     /// Maximum number of powerpacks in the response.
@@ -36,7 +35,7 @@ pub struct ListPowerpacksParams {
     pub page_offset: Option<i64>,
 }
 
-/// UpdatePowerpackParams is a struct for passing parameters to the method [`UpdatePowerpack`]
+/// UpdatePowerpackParams is a struct for passing parameters to the method [`PowerpackAPI::update_powerpack`]
 #[derive(Clone, Debug)]
 pub struct UpdatePowerpackParams {
     /// ID of the powerpack.
@@ -45,7 +44,7 @@ pub struct UpdatePowerpackParams {
     pub body: crate::datadogV2::model::Powerpack,
 }
 
-/// CreatePowerpackError is a struct for typed errors of method [`CreatePowerpack`]
+/// CreatePowerpackError is a struct for typed errors of method [`PowerpackAPI::create_powerpack`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreatePowerpackError {
@@ -54,7 +53,7 @@ pub enum CreatePowerpackError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeletePowerpackError is a struct for typed errors of method [`DeletePowerpack`]
+/// DeletePowerpackError is a struct for typed errors of method [`PowerpackAPI::delete_powerpack`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeletePowerpackError {
@@ -63,7 +62,7 @@ pub enum DeletePowerpackError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetPowerpackError is a struct for typed errors of method [`GetPowerpack`]
+/// GetPowerpackError is a struct for typed errors of method [`PowerpackAPI::get_powerpack`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetPowerpackError {
@@ -72,7 +71,7 @@ pub enum GetPowerpackError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListPowerpacksError is a struct for typed errors of method [`ListPowerpacks`]
+/// ListPowerpacksError is a struct for typed errors of method [`PowerpackAPI::list_powerpacks`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListPowerpacksError {
@@ -80,7 +79,7 @@ pub enum ListPowerpacksError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdatePowerpackError is a struct for typed errors of method [`UpdatePowerpack`]
+/// UpdatePowerpackError is a struct for typed errors of method [`PowerpackAPI::update_powerpack`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdatePowerpackError {

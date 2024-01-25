@@ -23,7 +23,7 @@ pub struct FormulaAndFunctionApmResourceStatsQueryDefinition {
     /// Name of operation on service.
     #[serde(rename = "operation_name")]
     pub operation_name: Option<String>,
-    /// Name of the second primary tag used within APM. Required when `primary_tag_value` is specified. See https://docs.datadoghq.com/tracing/guide/setting_primary_tags_to_scope/#add-a-second-primary-tag-in-datadog
+    /// Name of the second primary tag used within APM. Required when `primary_tag_value` is specified. See <https://docs.datadoghq.com/tracing/guide/setting_primary_tags_to_scope/#add-a-second-primary-tag-in-datadog>
     #[serde(rename = "primary_tag_name")]
     pub primary_tag_name: Option<String>,
     /// Value of the second primary tag by which to filter APM data. `primary_tag_name` must also be specified.

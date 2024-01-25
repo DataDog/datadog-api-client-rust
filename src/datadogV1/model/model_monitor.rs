@@ -55,7 +55,7 @@ pub struct Monitor {
     /// The monitor query.
     #[serde(rename = "query")]
     pub query: String,
-    /// A list of unique role identifiers to define which roles are allowed to edit the monitor. The unique identifiers for all roles can be pulled from the [Roles API](https://docs.datadoghq.com/api/latest/roles/#list-roles) and are located in the `data.id` field. Editing a monitor includes any updates to the monitor configuration, monitor deletion, and muting of the monitor for any amount of time. `restricted_roles` is the successor of `locked`. For more information about `locked` and `restricted_roles`, see the [monitor options docs](https://docs.datadoghq.com/monitors/guide/monitor_api_options/#permissions-options).
+    /// A list of unique role identifiers to define which roles are allowed to edit the monitor. The unique identifiers for all roles can be pulled from the [Roles API](<https://docs.datadoghq.com/api/latest/roles/#list-roles>) and are located in the `data.id` field. Editing a monitor includes any updates to the monitor configuration, monitor deletion, and muting of the monitor for any amount of time. `restricted_roles` is the successor of `locked`. For more information about `locked` and `restricted_roles`, see the [monitor options docs](<https://docs.datadoghq.com/monitors/guide/monitor_api_options/#permissions-options>).
     #[serde(
         rename = "restricted_roles",
         default,
@@ -68,7 +68,7 @@ pub struct Monitor {
     /// Tags associated to your monitor.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
-    /// The type of the monitor. For more information about `type`, see the [monitor options](https://docs.datadoghq.com/monitors/guide/monitor_api_options/) docs.
+    /// The type of the monitor. For more information about `type`, see the [monitor options](<https://docs.datadoghq.com/monitors/guide/monitor_api_options/>) docs.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::MonitorType,
 }

@@ -11,7 +11,7 @@ pub struct AWSEventBridgeSource {
     /// The event source name.
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// The event source's [AWS region](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints).
+    /// The event source's [AWS region](<https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints>).
     #[serde(rename = "region")]
     pub region: Option<String>,
 }

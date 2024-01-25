@@ -1,33 +1,32 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateMonitorConfigPolicyParams is a struct for passing parameters to the method [`CreateMonitorConfigPolicy`]
+/// CreateMonitorConfigPolicyParams is a struct for passing parameters to the method [`MonitorsAPI::create_monitor_config_policy`]
 #[derive(Clone, Debug)]
 pub struct CreateMonitorConfigPolicyParams {
     /// Create a monitor configuration policy request body.
     pub body: crate::datadogV2::model::MonitorConfigPolicyCreateRequest,
 }
 
-/// DeleteMonitorConfigPolicyParams is a struct for passing parameters to the method [`DeleteMonitorConfigPolicy`]
+/// DeleteMonitorConfigPolicyParams is a struct for passing parameters to the method [`MonitorsAPI::delete_monitor_config_policy`]
 #[derive(Clone, Debug)]
 pub struct DeleteMonitorConfigPolicyParams {
     /// ID of the monitor configuration policy.
     pub policy_id: String,
 }
 
-/// GetMonitorConfigPolicyParams is a struct for passing parameters to the method [`GetMonitorConfigPolicy`]
+/// GetMonitorConfigPolicyParams is a struct for passing parameters to the method [`MonitorsAPI::get_monitor_config_policy`]
 #[derive(Clone, Debug)]
 pub struct GetMonitorConfigPolicyParams {
     /// ID of the monitor configuration policy.
     pub policy_id: String,
 }
 
-/// UpdateMonitorConfigPolicyParams is a struct for passing parameters to the method [`UpdateMonitorConfigPolicy`]
+/// UpdateMonitorConfigPolicyParams is a struct for passing parameters to the method [`MonitorsAPI::update_monitor_config_policy`]
 #[derive(Clone, Debug)]
 pub struct UpdateMonitorConfigPolicyParams {
     /// ID of the monitor configuration policy.
@@ -36,7 +35,7 @@ pub struct UpdateMonitorConfigPolicyParams {
     pub body: crate::datadogV2::model::MonitorConfigPolicyEditRequest,
 }
 
-/// CreateMonitorConfigPolicyError is a struct for typed errors of method [`CreateMonitorConfigPolicy`]
+/// CreateMonitorConfigPolicyError is a struct for typed errors of method [`MonitorsAPI::create_monitor_config_policy`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateMonitorConfigPolicyError {
@@ -46,7 +45,7 @@ pub enum CreateMonitorConfigPolicyError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteMonitorConfigPolicyError is a struct for typed errors of method [`DeleteMonitorConfigPolicy`]
+/// DeleteMonitorConfigPolicyError is a struct for typed errors of method [`MonitorsAPI::delete_monitor_config_policy`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteMonitorConfigPolicyError {
@@ -57,7 +56,7 @@ pub enum DeleteMonitorConfigPolicyError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetMonitorConfigPolicyError is a struct for typed errors of method [`GetMonitorConfigPolicy`]
+/// GetMonitorConfigPolicyError is a struct for typed errors of method [`MonitorsAPI::get_monitor_config_policy`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetMonitorConfigPolicyError {
@@ -67,7 +66,7 @@ pub enum GetMonitorConfigPolicyError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListMonitorConfigPoliciesError is a struct for typed errors of method [`ListMonitorConfigPolicies`]
+/// ListMonitorConfigPoliciesError is a struct for typed errors of method [`MonitorsAPI::list_monitor_config_policies`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListMonitorConfigPoliciesError {
@@ -76,7 +75,7 @@ pub enum ListMonitorConfigPoliciesError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateMonitorConfigPolicyError is a struct for typed errors of method [`UpdateMonitorConfigPolicy`]
+/// UpdateMonitorConfigPolicyError is a struct for typed errors of method [`MonitorsAPI::update_monitor_config_policy`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateMonitorConfigPolicyError {

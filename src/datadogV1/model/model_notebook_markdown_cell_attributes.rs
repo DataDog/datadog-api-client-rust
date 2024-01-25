@@ -8,7 +8,7 @@ use serde_with::skip_serializing_none;
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct NotebookMarkdownCellAttributes {
-    /// Text in a notebook is formatted with [Markdown](https://daringfireball.net/projects/markdown/), which enables the use of headings, subheadings, links, images, lists, and code blocks.
+    /// Text in a notebook is formatted with [Markdown](<https://daringfireball.net/projects/markdown/>), which enables the use of headings, subheadings, links, images, lists, and code blocks.
     #[serde(rename = "definition")]
     pub definition: Box<crate::datadogV1::model::NotebookMarkdownCellDefinition>,
 }

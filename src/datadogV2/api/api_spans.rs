@@ -1,24 +1,23 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// AggregateSpansParams is a struct for passing parameters to the method [`AggregateSpans`]
+/// AggregateSpansParams is a struct for passing parameters to the method [`SpansAPI::aggregate_spans`]
 #[derive(Clone, Debug)]
 pub struct AggregateSpansParams {
     pub body: crate::datadogV2::model::SpansAggregateRequest,
 }
 
-/// ListSpansParams is a struct for passing parameters to the method [`ListSpans`]
+/// ListSpansParams is a struct for passing parameters to the method [`SpansAPI::list_spans`]
 #[derive(Clone, Debug)]
 pub struct ListSpansParams {
     pub body: crate::datadogV2::model::SpansListRequest,
 }
 
-/// ListSpansGetParams is a struct for passing parameters to the method [`ListSpansGet`]
+/// ListSpansGetParams is a struct for passing parameters to the method [`SpansAPI::list_spans_get`]
 #[derive(Clone, Debug)]
 pub struct ListSpansGetParams {
     /// Search query following spans syntax.
@@ -35,7 +34,7 @@ pub struct ListSpansGetParams {
     pub page_limit: Option<i32>,
 }
 
-/// AggregateSpansError is a struct for typed errors of method [`AggregateSpans`]
+/// AggregateSpansError is a struct for typed errors of method [`SpansAPI::aggregate_spans`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AggregateSpansError {
@@ -45,7 +44,7 @@ pub enum AggregateSpansError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListSpansError is a struct for typed errors of method [`ListSpans`]
+/// ListSpansError is a struct for typed errors of method [`SpansAPI::list_spans`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListSpansError {
@@ -56,7 +55,7 @@ pub enum ListSpansError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListSpansGetError is a struct for typed errors of method [`ListSpansGet`]
+/// ListSpansGetError is a struct for typed errors of method [`SpansAPI::list_spans_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListSpansGetError {

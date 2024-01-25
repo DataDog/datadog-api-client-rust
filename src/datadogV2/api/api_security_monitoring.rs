@@ -1,39 +1,38 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateSecurityFilterParams is a struct for passing parameters to the method [`CreateSecurityFilter`]
+/// CreateSecurityFilterParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::create_security_filter`]
 #[derive(Clone, Debug)]
 pub struct CreateSecurityFilterParams {
     /// The definition of the new security filter.
     pub body: crate::datadogV2::model::SecurityFilterCreateRequest,
 }
 
-/// CreateSecurityMonitoringRuleParams is a struct for passing parameters to the method [`CreateSecurityMonitoringRule`]
+/// CreateSecurityMonitoringRuleParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::create_security_monitoring_rule`]
 #[derive(Clone, Debug)]
 pub struct CreateSecurityMonitoringRuleParams {
     pub body: crate::datadogV2::model::SecurityMonitoringRuleCreatePayload,
 }
 
-/// DeleteSecurityFilterParams is a struct for passing parameters to the method [`DeleteSecurityFilter`]
+/// DeleteSecurityFilterParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::delete_security_filter`]
 #[derive(Clone, Debug)]
 pub struct DeleteSecurityFilterParams {
     /// The ID of the security filter.
     pub security_filter_id: String,
 }
 
-/// DeleteSecurityMonitoringRuleParams is a struct for passing parameters to the method [`DeleteSecurityMonitoringRule`]
+/// DeleteSecurityMonitoringRuleParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::delete_security_monitoring_rule`]
 #[derive(Clone, Debug)]
 pub struct DeleteSecurityMonitoringRuleParams {
     /// The ID of the rule.
     pub rule_id: String,
 }
 
-/// EditSecurityMonitoringSignalAssigneeParams is a struct for passing parameters to the method [`EditSecurityMonitoringSignalAssignee`]
+/// EditSecurityMonitoringSignalAssigneeParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::edit_security_monitoring_signal_assignee`]
 #[derive(Clone, Debug)]
 pub struct EditSecurityMonitoringSignalAssigneeParams {
     /// The ID of the signal.
@@ -42,7 +41,7 @@ pub struct EditSecurityMonitoringSignalAssigneeParams {
     pub body: crate::datadogV2::model::SecurityMonitoringSignalAssigneeUpdateRequest,
 }
 
-/// EditSecurityMonitoringSignalIncidentsParams is a struct for passing parameters to the method [`EditSecurityMonitoringSignalIncidents`]
+/// EditSecurityMonitoringSignalIncidentsParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::edit_security_monitoring_signal_incidents`]
 #[derive(Clone, Debug)]
 pub struct EditSecurityMonitoringSignalIncidentsParams {
     /// The ID of the signal.
@@ -51,7 +50,7 @@ pub struct EditSecurityMonitoringSignalIncidentsParams {
     pub body: crate::datadogV2::model::SecurityMonitoringSignalIncidentsUpdateRequest,
 }
 
-/// EditSecurityMonitoringSignalStateParams is a struct for passing parameters to the method [`EditSecurityMonitoringSignalState`]
+/// EditSecurityMonitoringSignalStateParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::edit_security_monitoring_signal_state`]
 #[derive(Clone, Debug)]
 pub struct EditSecurityMonitoringSignalStateParams {
     /// The ID of the signal.
@@ -60,7 +59,7 @@ pub struct EditSecurityMonitoringSignalStateParams {
     pub body: crate::datadogV2::model::SecurityMonitoringSignalStateUpdateRequest,
 }
 
-/// GetFindingParams is a struct for passing parameters to the method [`GetFinding`]
+/// GetFindingParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::get_finding`]
 #[derive(Clone, Debug)]
 pub struct GetFindingParams {
     /// The ID of the finding.
@@ -69,28 +68,28 @@ pub struct GetFindingParams {
     pub snapshot_timestamp: Option<i64>,
 }
 
-/// GetSecurityFilterParams is a struct for passing parameters to the method [`GetSecurityFilter`]
+/// GetSecurityFilterParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::get_security_filter`]
 #[derive(Clone, Debug)]
 pub struct GetSecurityFilterParams {
     /// The ID of the security filter.
     pub security_filter_id: String,
 }
 
-/// GetSecurityMonitoringRuleParams is a struct for passing parameters to the method [`GetSecurityMonitoringRule`]
+/// GetSecurityMonitoringRuleParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::get_security_monitoring_rule`]
 #[derive(Clone, Debug)]
 pub struct GetSecurityMonitoringRuleParams {
     /// The ID of the rule.
     pub rule_id: String,
 }
 
-/// GetSecurityMonitoringSignalParams is a struct for passing parameters to the method [`GetSecurityMonitoringSignal`]
+/// GetSecurityMonitoringSignalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::get_security_monitoring_signal`]
 #[derive(Clone, Debug)]
 pub struct GetSecurityMonitoringSignalParams {
     /// The ID of the signal.
     pub signal_id: String,
 }
 
-/// ListFindingsParams is a struct for passing parameters to the method [`ListFindings`]
+/// ListFindingsParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_findings`]
 #[derive(Clone, Debug)]
 pub struct ListFindingsParams {
     /// Limit the number of findings returned. Must be <= 1000.
@@ -119,7 +118,7 @@ pub struct ListFindingsParams {
     pub filter_status: Option<crate::datadogV2::model::FindingStatus>,
 }
 
-/// ListSecurityMonitoringRulesParams is a struct for passing parameters to the method [`ListSecurityMonitoringRules`]
+/// ListSecurityMonitoringRulesParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_security_monitoring_rules`]
 #[derive(Clone, Debug)]
 pub struct ListSecurityMonitoringRulesParams {
     /// Size for a given page. The maximum allowed value is 100.
@@ -128,7 +127,7 @@ pub struct ListSecurityMonitoringRulesParams {
     pub page_number: Option<i64>,
 }
 
-/// ListSecurityMonitoringSignalsParams is a struct for passing parameters to the method [`ListSecurityMonitoringSignals`]
+/// ListSecurityMonitoringSignalsParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_security_monitoring_signals`]
 #[derive(Clone, Debug)]
 pub struct ListSecurityMonitoringSignalsParams {
     /// The search query for security signals.
@@ -145,7 +144,7 @@ pub struct ListSecurityMonitoringSignalsParams {
     pub page_limit: Option<i32>,
 }
 
-/// MuteFindingsParams is a struct for passing parameters to the method [`MuteFindings`]
+/// MuteFindingsParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::mute_findings`]
 #[derive(Clone, Debug)]
 pub struct MuteFindingsParams {
     /// ### Attributes
@@ -162,13 +161,13 @@ pub struct MuteFindingsParams {
     pub body: crate::datadogV2::model::BulkMuteFindingsRequest,
 }
 
-/// SearchSecurityMonitoringSignalsParams is a struct for passing parameters to the method [`SearchSecurityMonitoringSignals`]
+/// SearchSecurityMonitoringSignalsParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::search_security_monitoring_signals`]
 #[derive(Clone, Debug)]
 pub struct SearchSecurityMonitoringSignalsParams {
     pub body: Option<Option<crate::datadogV2::model::SecurityMonitoringSignalListRequest>>,
 }
 
-/// UpdateSecurityFilterParams is a struct for passing parameters to the method [`UpdateSecurityFilter`]
+/// UpdateSecurityFilterParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::update_security_filter`]
 #[derive(Clone, Debug)]
 pub struct UpdateSecurityFilterParams {
     /// The ID of the security filter.
@@ -177,7 +176,7 @@ pub struct UpdateSecurityFilterParams {
     pub body: crate::datadogV2::model::SecurityFilterUpdateRequest,
 }
 
-/// UpdateSecurityMonitoringRuleParams is a struct for passing parameters to the method [`UpdateSecurityMonitoringRule`]
+/// UpdateSecurityMonitoringRuleParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::update_security_monitoring_rule`]
 #[derive(Clone, Debug)]
 pub struct UpdateSecurityMonitoringRuleParams {
     /// The ID of the rule.
@@ -185,7 +184,7 @@ pub struct UpdateSecurityMonitoringRuleParams {
     pub body: crate::datadogV2::model::SecurityMonitoringRuleUpdatePayload,
 }
 
-/// CreateSecurityFilterError is a struct for typed errors of method [`CreateSecurityFilter`]
+/// CreateSecurityFilterError is a struct for typed errors of method [`SecurityMonitoringAPI::create_security_filter`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateSecurityFilterError {
@@ -196,7 +195,7 @@ pub enum CreateSecurityFilterError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateSecurityMonitoringRuleError is a struct for typed errors of method [`CreateSecurityMonitoringRule`]
+/// CreateSecurityMonitoringRuleError is a struct for typed errors of method [`SecurityMonitoringAPI::create_security_monitoring_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateSecurityMonitoringRuleError {
@@ -206,7 +205,7 @@ pub enum CreateSecurityMonitoringRuleError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteSecurityFilterError is a struct for typed errors of method [`DeleteSecurityFilter`]
+/// DeleteSecurityFilterError is a struct for typed errors of method [`SecurityMonitoringAPI::delete_security_filter`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteSecurityFilterError {
@@ -216,7 +215,7 @@ pub enum DeleteSecurityFilterError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteSecurityMonitoringRuleError is a struct for typed errors of method [`DeleteSecurityMonitoringRule`]
+/// DeleteSecurityMonitoringRuleError is a struct for typed errors of method [`SecurityMonitoringAPI::delete_security_monitoring_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteSecurityMonitoringRuleError {
@@ -226,7 +225,7 @@ pub enum DeleteSecurityMonitoringRuleError {
     UnknownValue(serde_json::Value),
 }
 
-/// EditSecurityMonitoringSignalAssigneeError is a struct for typed errors of method [`EditSecurityMonitoringSignalAssignee`]
+/// EditSecurityMonitoringSignalAssigneeError is a struct for typed errors of method [`SecurityMonitoringAPI::edit_security_monitoring_signal_assignee`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum EditSecurityMonitoringSignalAssigneeError {
@@ -237,7 +236,7 @@ pub enum EditSecurityMonitoringSignalAssigneeError {
     UnknownValue(serde_json::Value),
 }
 
-/// EditSecurityMonitoringSignalIncidentsError is a struct for typed errors of method [`EditSecurityMonitoringSignalIncidents`]
+/// EditSecurityMonitoringSignalIncidentsError is a struct for typed errors of method [`SecurityMonitoringAPI::edit_security_monitoring_signal_incidents`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum EditSecurityMonitoringSignalIncidentsError {
@@ -248,7 +247,7 @@ pub enum EditSecurityMonitoringSignalIncidentsError {
     UnknownValue(serde_json::Value),
 }
 
-/// EditSecurityMonitoringSignalStateError is a struct for typed errors of method [`EditSecurityMonitoringSignalState`]
+/// EditSecurityMonitoringSignalStateError is a struct for typed errors of method [`SecurityMonitoringAPI::edit_security_monitoring_signal_state`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum EditSecurityMonitoringSignalStateError {
@@ -259,7 +258,7 @@ pub enum EditSecurityMonitoringSignalStateError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetFindingError is a struct for typed errors of method [`GetFinding`]
+/// GetFindingError is a struct for typed errors of method [`SecurityMonitoringAPI::get_finding`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetFindingError {
@@ -270,7 +269,7 @@ pub enum GetFindingError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetSecurityFilterError is a struct for typed errors of method [`GetSecurityFilter`]
+/// GetSecurityFilterError is a struct for typed errors of method [`SecurityMonitoringAPI::get_security_filter`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetSecurityFilterError {
@@ -280,7 +279,7 @@ pub enum GetSecurityFilterError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetSecurityMonitoringRuleError is a struct for typed errors of method [`GetSecurityMonitoringRule`]
+/// GetSecurityMonitoringRuleError is a struct for typed errors of method [`SecurityMonitoringAPI::get_security_monitoring_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetSecurityMonitoringRuleError {
@@ -289,7 +288,7 @@ pub enum GetSecurityMonitoringRuleError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetSecurityMonitoringSignalError is a struct for typed errors of method [`GetSecurityMonitoringSignal`]
+/// GetSecurityMonitoringSignalError is a struct for typed errors of method [`SecurityMonitoringAPI::get_security_monitoring_signal`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetSecurityMonitoringSignalError {
@@ -298,7 +297,7 @@ pub enum GetSecurityMonitoringSignalError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListFindingsError is a struct for typed errors of method [`ListFindings`]
+/// ListFindingsError is a struct for typed errors of method [`SecurityMonitoringAPI::list_findings`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListFindingsError {
@@ -309,7 +308,7 @@ pub enum ListFindingsError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListSecurityFiltersError is a struct for typed errors of method [`ListSecurityFilters`]
+/// ListSecurityFiltersError is a struct for typed errors of method [`SecurityMonitoringAPI::list_security_filters`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListSecurityFiltersError {
@@ -318,7 +317,7 @@ pub enum ListSecurityFiltersError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListSecurityMonitoringRulesError is a struct for typed errors of method [`ListSecurityMonitoringRules`]
+/// ListSecurityMonitoringRulesError is a struct for typed errors of method [`SecurityMonitoringAPI::list_security_monitoring_rules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListSecurityMonitoringRulesError {
@@ -327,7 +326,7 @@ pub enum ListSecurityMonitoringRulesError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListSecurityMonitoringSignalsError is a struct for typed errors of method [`ListSecurityMonitoringSignals`]
+/// ListSecurityMonitoringSignalsError is a struct for typed errors of method [`SecurityMonitoringAPI::list_security_monitoring_signals`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListSecurityMonitoringSignalsError {
@@ -337,7 +336,7 @@ pub enum ListSecurityMonitoringSignalsError {
     UnknownValue(serde_json::Value),
 }
 
-/// MuteFindingsError is a struct for typed errors of method [`MuteFindings`]
+/// MuteFindingsError is a struct for typed errors of method [`SecurityMonitoringAPI::mute_findings`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum MuteFindingsError {
@@ -349,7 +348,7 @@ pub enum MuteFindingsError {
     UnknownValue(serde_json::Value),
 }
 
-/// SearchSecurityMonitoringSignalsError is a struct for typed errors of method [`SearchSecurityMonitoringSignals`]
+/// SearchSecurityMonitoringSignalsError is a struct for typed errors of method [`SecurityMonitoringAPI::search_security_monitoring_signals`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SearchSecurityMonitoringSignalsError {
@@ -359,7 +358,7 @@ pub enum SearchSecurityMonitoringSignalsError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateSecurityFilterError is a struct for typed errors of method [`UpdateSecurityFilter`]
+/// UpdateSecurityFilterError is a struct for typed errors of method [`SecurityMonitoringAPI::update_security_filter`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateSecurityFilterError {
@@ -371,7 +370,7 @@ pub enum UpdateSecurityFilterError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateSecurityMonitoringRuleError is a struct for typed errors of method [`UpdateSecurityMonitoringRule`]
+/// UpdateSecurityMonitoringRuleError is a struct for typed errors of method [`SecurityMonitoringAPI::update_security_monitoring_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateSecurityMonitoringRuleError {
@@ -406,7 +405,7 @@ impl SecurityMonitoringAPI {
 
     /// Create a security filter.
     ///
-    /// See the [security filter guide](https://docs.datadoghq.com/security_platform/guide/how-to-setup-security-filters-using-security-monitoring-api/)
+    /// See the [security filter guide](<https://docs.datadoghq.com/security_platform/guide/how-to-setup-security-filters-using-security-monitoring-api/>)
     /// for more examples.
     pub async fn create_security_filter(
         &self,
@@ -423,7 +422,7 @@ impl SecurityMonitoringAPI {
 
     /// Create a security filter.
     ///
-    /// See the [security filter guide](https://docs.datadoghq.com/security_platform/guide/how-to-setup-security-filters-using-security-monitoring-api/)
+    /// See the [security filter guide](<https://docs.datadoghq.com/security_platform/guide/how-to-setup-security-filters-using-security-monitoring-api/>)
     /// for more examples.
     pub async fn create_security_filter_with_http_info(
         &self,
@@ -1066,7 +1065,7 @@ impl SecurityMonitoringAPI {
 
     /// Get the details of a specific security filter.
     ///
-    /// See the [security filter guide](https://docs.datadoghq.com/security_platform/guide/how-to-setup-security-filters-using-security-monitoring-api/)
+    /// See the [security filter guide](<https://docs.datadoghq.com/security_platform/guide/how-to-setup-security-filters-using-security-monitoring-api/>)
     /// for more examples.
     pub async fn get_security_filter(
         &self,
@@ -1083,7 +1082,7 @@ impl SecurityMonitoringAPI {
 
     /// Get the details of a specific security filter.
     ///
-    /// See the [security filter guide](https://docs.datadoghq.com/security_platform/guide/how-to-setup-security-filters-using-security-monitoring-api/)
+    /// See the [security filter guide](<https://docs.datadoghq.com/security_platform/guide/how-to-setup-security-filters-using-security-monitoring-api/>)
     /// for more examples.
     pub async fn get_security_filter_with_http_info(
         &self,

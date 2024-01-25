@@ -1,40 +1,39 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateApmRetentionFilterParams is a struct for passing parameters to the method [`CreateApmRetentionFilter`]
+/// CreateApmRetentionFilterParams is a struct for passing parameters to the method [`APMRetentionFiltersAPI::create_apm_retention_filter`]
 #[derive(Clone, Debug)]
 pub struct CreateApmRetentionFilterParams {
     /// The definition of the new retention filter.
     pub body: crate::datadogV2::model::RetentionFilterCreateRequest,
 }
 
-/// DeleteApmRetentionFilterParams is a struct for passing parameters to the method [`DeleteApmRetentionFilter`]
+/// DeleteApmRetentionFilterParams is a struct for passing parameters to the method [`APMRetentionFiltersAPI::delete_apm_retention_filter`]
 #[derive(Clone, Debug)]
 pub struct DeleteApmRetentionFilterParams {
     /// The ID of the retention filter.
     pub filter_id: String,
 }
 
-/// GetApmRetentionFilterParams is a struct for passing parameters to the method [`GetApmRetentionFilter`]
+/// GetApmRetentionFilterParams is a struct for passing parameters to the method [`APMRetentionFiltersAPI::get_apm_retention_filter`]
 #[derive(Clone, Debug)]
 pub struct GetApmRetentionFilterParams {
     /// The ID of the retention filter.
     pub filter_id: String,
 }
 
-/// ReorderApmRetentionFiltersParams is a struct for passing parameters to the method [`ReorderApmRetentionFilters`]
+/// ReorderApmRetentionFiltersParams is a struct for passing parameters to the method [`APMRetentionFiltersAPI::reorder_apm_retention_filters`]
 #[derive(Clone, Debug)]
 pub struct ReorderApmRetentionFiltersParams {
     /// The list of retention filters in the new order.
     pub body: crate::datadogV2::model::ReorderRetentionFiltersRequest,
 }
 
-/// UpdateApmRetentionFilterParams is a struct for passing parameters to the method [`UpdateApmRetentionFilter`]
+/// UpdateApmRetentionFilterParams is a struct for passing parameters to the method [`APMRetentionFiltersAPI::update_apm_retention_filter`]
 #[derive(Clone, Debug)]
 pub struct UpdateApmRetentionFilterParams {
     /// The ID of the retention filter.
@@ -43,7 +42,7 @@ pub struct UpdateApmRetentionFilterParams {
     pub body: crate::datadogV2::model::RetentionFilterUpdateRequest,
 }
 
-/// CreateApmRetentionFilterError is a struct for typed errors of method [`CreateApmRetentionFilter`]
+/// CreateApmRetentionFilterError is a struct for typed errors of method [`APMRetentionFiltersAPI::create_apm_retention_filter`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateApmRetentionFilterError {
@@ -54,7 +53,7 @@ pub enum CreateApmRetentionFilterError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteApmRetentionFilterError is a struct for typed errors of method [`DeleteApmRetentionFilter`]
+/// DeleteApmRetentionFilterError is a struct for typed errors of method [`APMRetentionFiltersAPI::delete_apm_retention_filter`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteApmRetentionFilterError {
@@ -64,7 +63,7 @@ pub enum DeleteApmRetentionFilterError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetApmRetentionFilterError is a struct for typed errors of method [`GetApmRetentionFilter`]
+/// GetApmRetentionFilterError is a struct for typed errors of method [`APMRetentionFiltersAPI::get_apm_retention_filter`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetApmRetentionFilterError {
@@ -74,7 +73,7 @@ pub enum GetApmRetentionFilterError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListApmRetentionFiltersError is a struct for typed errors of method [`ListApmRetentionFilters`]
+/// ListApmRetentionFiltersError is a struct for typed errors of method [`APMRetentionFiltersAPI::list_apm_retention_filters`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListApmRetentionFiltersError {
@@ -83,7 +82,7 @@ pub enum ListApmRetentionFiltersError {
     UnknownValue(serde_json::Value),
 }
 
-/// ReorderApmRetentionFiltersError is a struct for typed errors of method [`ReorderApmRetentionFilters`]
+/// ReorderApmRetentionFiltersError is a struct for typed errors of method [`APMRetentionFiltersAPI::reorder_apm_retention_filters`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ReorderApmRetentionFiltersError {
@@ -93,7 +92,7 @@ pub enum ReorderApmRetentionFiltersError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateApmRetentionFilterError is a struct for typed errors of method [`UpdateApmRetentionFilter`]
+/// UpdateApmRetentionFilterError is a struct for typed errors of method [`APMRetentionFiltersAPI::update_apm_retention_filter`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateApmRetentionFilterError {

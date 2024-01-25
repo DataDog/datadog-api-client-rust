@@ -14,7 +14,7 @@ pub struct MonitorDowntimeMatchResponseAttributes {
     /// An array of groups associated with the downtime.
     #[serde(rename = "groups")]
     pub groups: Option<Vec<String>>,
-    /// The scope to which the downtime applies. Must follow the [common search syntax](https://docs.datadoghq.com/logs/explorer/search_syntax/).
+    /// The scope to which the downtime applies. Must follow the [common search syntax](<https://docs.datadoghq.com/logs/explorer/search_syntax/>).
     #[serde(rename = "scope")]
     pub scope: Option<String>,
     /// The start of the downtime.

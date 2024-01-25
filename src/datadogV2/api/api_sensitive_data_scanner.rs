@@ -1,24 +1,23 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateScanningGroupParams is a struct for passing parameters to the method [`CreateScanningGroup`]
+/// CreateScanningGroupParams is a struct for passing parameters to the method [`SensitiveDataScannerAPI::create_scanning_group`]
 #[derive(Clone, Debug)]
 pub struct CreateScanningGroupParams {
     pub body: crate::datadogV2::model::SensitiveDataScannerGroupCreateRequest,
 }
 
-/// CreateScanningRuleParams is a struct for passing parameters to the method [`CreateScanningRule`]
+/// CreateScanningRuleParams is a struct for passing parameters to the method [`SensitiveDataScannerAPI::create_scanning_rule`]
 #[derive(Clone, Debug)]
 pub struct CreateScanningRuleParams {
     pub body: crate::datadogV2::model::SensitiveDataScannerRuleCreateRequest,
 }
 
-/// DeleteScanningGroupParams is a struct for passing parameters to the method [`DeleteScanningGroup`]
+/// DeleteScanningGroupParams is a struct for passing parameters to the method [`SensitiveDataScannerAPI::delete_scanning_group`]
 #[derive(Clone, Debug)]
 pub struct DeleteScanningGroupParams {
     /// The ID of a group of rules.
@@ -26,7 +25,7 @@ pub struct DeleteScanningGroupParams {
     pub body: crate::datadogV2::model::SensitiveDataScannerGroupDeleteRequest,
 }
 
-/// DeleteScanningRuleParams is a struct for passing parameters to the method [`DeleteScanningRule`]
+/// DeleteScanningRuleParams is a struct for passing parameters to the method [`SensitiveDataScannerAPI::delete_scanning_rule`]
 #[derive(Clone, Debug)]
 pub struct DeleteScanningRuleParams {
     /// The ID of the rule.
@@ -34,13 +33,13 @@ pub struct DeleteScanningRuleParams {
     pub body: crate::datadogV2::model::SensitiveDataScannerRuleDeleteRequest,
 }
 
-/// ReorderScanningGroupsParams is a struct for passing parameters to the method [`ReorderScanningGroups`]
+/// ReorderScanningGroupsParams is a struct for passing parameters to the method [`SensitiveDataScannerAPI::reorder_scanning_groups`]
 #[derive(Clone, Debug)]
 pub struct ReorderScanningGroupsParams {
     pub body: crate::datadogV2::model::SensitiveDataScannerConfigRequest,
 }
 
-/// UpdateScanningGroupParams is a struct for passing parameters to the method [`UpdateScanningGroup`]
+/// UpdateScanningGroupParams is a struct for passing parameters to the method [`SensitiveDataScannerAPI::update_scanning_group`]
 #[derive(Clone, Debug)]
 pub struct UpdateScanningGroupParams {
     /// The ID of a group of rules.
@@ -48,7 +47,7 @@ pub struct UpdateScanningGroupParams {
     pub body: crate::datadogV2::model::SensitiveDataScannerGroupUpdateRequest,
 }
 
-/// UpdateScanningRuleParams is a struct for passing parameters to the method [`UpdateScanningRule`]
+/// UpdateScanningRuleParams is a struct for passing parameters to the method [`SensitiveDataScannerAPI::update_scanning_rule`]
 #[derive(Clone, Debug)]
 pub struct UpdateScanningRuleParams {
     /// The ID of the rule.
@@ -56,7 +55,7 @@ pub struct UpdateScanningRuleParams {
     pub body: crate::datadogV2::model::SensitiveDataScannerRuleUpdateRequest,
 }
 
-/// CreateScanningGroupError is a struct for typed errors of method [`CreateScanningGroup`]
+/// CreateScanningGroupError is a struct for typed errors of method [`SensitiveDataScannerAPI::create_scanning_group`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateScanningGroupError {
@@ -66,7 +65,7 @@ pub enum CreateScanningGroupError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateScanningRuleError is a struct for typed errors of method [`CreateScanningRule`]
+/// CreateScanningRuleError is a struct for typed errors of method [`SensitiveDataScannerAPI::create_scanning_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateScanningRuleError {
@@ -76,7 +75,7 @@ pub enum CreateScanningRuleError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteScanningGroupError is a struct for typed errors of method [`DeleteScanningGroup`]
+/// DeleteScanningGroupError is a struct for typed errors of method [`SensitiveDataScannerAPI::delete_scanning_group`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteScanningGroupError {
@@ -87,7 +86,7 @@ pub enum DeleteScanningGroupError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteScanningRuleError is a struct for typed errors of method [`DeleteScanningRule`]
+/// DeleteScanningRuleError is a struct for typed errors of method [`SensitiveDataScannerAPI::delete_scanning_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteScanningRuleError {
@@ -98,7 +97,7 @@ pub enum DeleteScanningRuleError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListScanningGroupsError is a struct for typed errors of method [`ListScanningGroups`]
+/// ListScanningGroupsError is a struct for typed errors of method [`SensitiveDataScannerAPI::list_scanning_groups`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListScanningGroupsError {
@@ -108,7 +107,7 @@ pub enum ListScanningGroupsError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListStandardPatternsError is a struct for typed errors of method [`ListStandardPatterns`]
+/// ListStandardPatternsError is a struct for typed errors of method [`SensitiveDataScannerAPI::list_standard_patterns`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListStandardPatternsError {
@@ -118,7 +117,7 @@ pub enum ListStandardPatternsError {
     UnknownValue(serde_json::Value),
 }
 
-/// ReorderScanningGroupsError is a struct for typed errors of method [`ReorderScanningGroups`]
+/// ReorderScanningGroupsError is a struct for typed errors of method [`SensitiveDataScannerAPI::reorder_scanning_groups`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ReorderScanningGroupsError {
@@ -128,7 +127,7 @@ pub enum ReorderScanningGroupsError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateScanningGroupError is a struct for typed errors of method [`UpdateScanningGroup`]
+/// UpdateScanningGroupError is a struct for typed errors of method [`SensitiveDataScannerAPI::update_scanning_group`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateScanningGroupError {
@@ -139,7 +138,7 @@ pub enum UpdateScanningGroupError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateScanningRuleError is a struct for typed errors of method [`UpdateScanningRule`]
+/// UpdateScanningRuleError is a struct for typed errors of method [`SensitiveDataScannerAPI::update_scanning_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateScanningRuleError {

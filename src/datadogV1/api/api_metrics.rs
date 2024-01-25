@@ -1,19 +1,18 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// GetMetricMetadataParams is a struct for passing parameters to the method [`GetMetricMetadata`]
+/// GetMetricMetadataParams is a struct for passing parameters to the method [`MetricsAPI::get_metric_metadata`]
 #[derive(Clone, Debug)]
 pub struct GetMetricMetadataParams {
     /// Name of the metric for which to get metadata.
     pub metric_name: String,
 }
 
-/// ListActiveMetricsParams is a struct for passing parameters to the method [`ListActiveMetrics`]
+/// ListActiveMetricsParams is a struct for passing parameters to the method [`MetricsAPI::list_active_metrics`]
 #[derive(Clone, Debug)]
 pub struct ListActiveMetricsParams {
     /// Seconds since the Unix epoch.
@@ -26,14 +25,14 @@ pub struct ListActiveMetricsParams {
     pub tag_filter: Option<String>,
 }
 
-/// ListMetricsParams is a struct for passing parameters to the method [`ListMetrics`]
+/// ListMetricsParams is a struct for passing parameters to the method [`MetricsAPI::list_metrics`]
 #[derive(Clone, Debug)]
 pub struct ListMetricsParams {
     /// Query string to search metrics upon. Can optionally be prefixed with `metrics:`.
     pub q: String,
 }
 
-/// QueryMetricsParams is a struct for passing parameters to the method [`QueryMetrics`]
+/// QueryMetricsParams is a struct for passing parameters to the method [`MetricsAPI::query_metrics`]
 #[derive(Clone, Debug)]
 pub struct QueryMetricsParams {
     /// Start of the queried time period, seconds since the Unix epoch.
@@ -44,7 +43,7 @@ pub struct QueryMetricsParams {
     pub query: String,
 }
 
-/// SubmitDistributionPointsParams is a struct for passing parameters to the method [`SubmitDistributionPoints`]
+/// SubmitDistributionPointsParams is a struct for passing parameters to the method [`MetricsAPI::submit_distribution_points`]
 #[derive(Clone, Debug)]
 pub struct SubmitDistributionPointsParams {
     pub body: crate::datadogV1::model::DistributionPointsPayload,
@@ -52,7 +51,7 @@ pub struct SubmitDistributionPointsParams {
     pub content_encoding: Option<crate::datadogV1::model::DistributionPointsContentEncoding>,
 }
 
-/// SubmitMetricsParams is a struct for passing parameters to the method [`SubmitMetrics`]
+/// SubmitMetricsParams is a struct for passing parameters to the method [`MetricsAPI::submit_metrics`]
 #[derive(Clone, Debug)]
 pub struct SubmitMetricsParams {
     pub body: crate::datadogV1::model::MetricsPayload,
@@ -60,7 +59,7 @@ pub struct SubmitMetricsParams {
     pub content_encoding: Option<crate::datadogV1::model::MetricContentEncoding>,
 }
 
-/// UpdateMetricMetadataParams is a struct for passing parameters to the method [`UpdateMetricMetadata`]
+/// UpdateMetricMetadataParams is a struct for passing parameters to the method [`MetricsAPI::update_metric_metadata`]
 #[derive(Clone, Debug)]
 pub struct UpdateMetricMetadataParams {
     /// Name of the metric for which to edit metadata.
@@ -69,7 +68,7 @@ pub struct UpdateMetricMetadataParams {
     pub body: crate::datadogV1::model::MetricMetadata,
 }
 
-/// GetMetricMetadataError is a struct for typed errors of method [`GetMetricMetadata`]
+/// GetMetricMetadataError is a struct for typed errors of method [`MetricsAPI::get_metric_metadata`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetMetricMetadataError {
@@ -79,7 +78,7 @@ pub enum GetMetricMetadataError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListActiveMetricsError is a struct for typed errors of method [`ListActiveMetrics`]
+/// ListActiveMetricsError is a struct for typed errors of method [`MetricsAPI::list_active_metrics`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListActiveMetricsError {
@@ -89,7 +88,7 @@ pub enum ListActiveMetricsError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListMetricsError is a struct for typed errors of method [`ListMetrics`]
+/// ListMetricsError is a struct for typed errors of method [`MetricsAPI::list_metrics`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListMetricsError {
@@ -99,7 +98,7 @@ pub enum ListMetricsError {
     UnknownValue(serde_json::Value),
 }
 
-/// QueryMetricsError is a struct for typed errors of method [`QueryMetrics`]
+/// QueryMetricsError is a struct for typed errors of method [`MetricsAPI::query_metrics`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum QueryMetricsError {
@@ -109,7 +108,7 @@ pub enum QueryMetricsError {
     UnknownValue(serde_json::Value),
 }
 
-/// SubmitDistributionPointsError is a struct for typed errors of method [`SubmitDistributionPoints`]
+/// SubmitDistributionPointsError is a struct for typed errors of method [`MetricsAPI::submit_distribution_points`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SubmitDistributionPointsError {
@@ -121,7 +120,7 @@ pub enum SubmitDistributionPointsError {
     UnknownValue(serde_json::Value),
 }
 
-/// SubmitMetricsError is a struct for typed errors of method [`SubmitMetrics`]
+/// SubmitMetricsError is a struct for typed errors of method [`MetricsAPI::submit_metrics`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SubmitMetricsError {
@@ -133,7 +132,7 @@ pub enum SubmitMetricsError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateMetricMetadataError is a struct for typed errors of method [`UpdateMetricMetadata`]
+/// UpdateMetricMetadataError is a struct for typed errors of method [`MetricsAPI::update_metric_metadata`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateMetricMetadataError {
@@ -654,7 +653,7 @@ impl MetricsAPI {
         }
     }
 
-    /// Edit metadata of a specific metric. Find out more about [supported types](https://docs.datadoghq.com/developers/metrics).
+    /// Edit metadata of a specific metric. Find out more about [supported types](<https://docs.datadoghq.com/developers/metrics>).
     pub async fn update_metric_metadata(
         &self,
         params: UpdateMetricMetadataParams,
@@ -666,7 +665,7 @@ impl MetricsAPI {
         }
     }
 
-    /// Edit metadata of a specific metric. Find out more about [supported types](https://docs.datadoghq.com/developers/metrics).
+    /// Edit metadata of a specific metric. Find out more about [supported types](<https://docs.datadoghq.com/developers/metrics>).
     pub async fn update_metric_metadata_with_http_info(
         &self,
         params: UpdateMetricMetadataParams,

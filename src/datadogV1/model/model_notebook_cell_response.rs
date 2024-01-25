@@ -9,7 +9,7 @@ use serde_with::skip_serializing_none;
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct NotebookCellResponse {
     /// The attributes of a notebook cell response. Valid cell types are `markdown`, `timeseries`, `toplist`, `heatmap`, `distribution`,
-    /// `log_stream`. [More information on each graph visualization type.](https://docs.datadoghq.com/dashboards/widgets/)
+    /// `log_stream`. [More information on each graph visualization type.](<https://docs.datadoghq.com/dashboards/widgets/>)
     #[serde(rename = "attributes")]
     pub attributes: Box<crate::datadogV1::model::NotebookCellResponseAttributes>,
     /// Notebook cell ID.

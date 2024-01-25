@@ -4,11 +4,11 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
-/// Wrapper around an array of [JSON Patch](https://jsonpatch.com) operations to perform on the test
+/// Wrapper around an array of [JSON Patch](<https://jsonpatch.com>) operations to perform on the test
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SyntheticsPatchTestBody {
-    /// Array of [JSON Patch](https://jsonpatch.com) operations to perform on the test
+    /// Array of [JSON Patch](<https://jsonpatch.com>) operations to perform on the test
     #[serde(rename = "data")]
     pub data: Option<Vec<crate::datadogV1::model::SyntheticsPatchTestOperation>>,
 }

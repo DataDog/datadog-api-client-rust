@@ -9,7 +9,7 @@ use serde_with::skip_serializing_none;
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct OrganizationSettingsSamlIdpInitiatedLogin {
     /// Whether SAML IdP initiated login is enabled, learn more
-    /// in the [SAML documentation](https://docs.datadoghq.com/account_management/saml/#idp-initiated-login).
+    /// in the [SAML documentation](<https://docs.datadoghq.com/account_management/saml/#idp-initiated-login>).
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
 }

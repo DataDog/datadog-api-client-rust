@@ -1,53 +1,52 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateUserParams is a struct for passing parameters to the method [`CreateUser`]
+/// CreateUserParams is a struct for passing parameters to the method [`UsersAPI::create_user`]
 #[derive(Clone, Debug)]
 pub struct CreateUserParams {
     pub body: crate::datadogV2::model::UserCreateRequest,
 }
 
-/// DisableUserParams is a struct for passing parameters to the method [`DisableUser`]
+/// DisableUserParams is a struct for passing parameters to the method [`UsersAPI::disable_user`]
 #[derive(Clone, Debug)]
 pub struct DisableUserParams {
     /// The ID of the user.
     pub user_id: String,
 }
 
-/// GetInvitationParams is a struct for passing parameters to the method [`GetInvitation`]
+/// GetInvitationParams is a struct for passing parameters to the method [`UsersAPI::get_invitation`]
 #[derive(Clone, Debug)]
 pub struct GetInvitationParams {
     /// The UUID of the user invitation.
     pub user_invitation_uuid: String,
 }
 
-/// GetUserParams is a struct for passing parameters to the method [`GetUser`]
+/// GetUserParams is a struct for passing parameters to the method [`UsersAPI::get_user`]
 #[derive(Clone, Debug)]
 pub struct GetUserParams {
     /// The ID of the user.
     pub user_id: String,
 }
 
-/// ListUserOrganizationsParams is a struct for passing parameters to the method [`ListUserOrganizations`]
+/// ListUserOrganizationsParams is a struct for passing parameters to the method [`UsersAPI::list_user_organizations`]
 #[derive(Clone, Debug)]
 pub struct ListUserOrganizationsParams {
     /// The ID of the user.
     pub user_id: String,
 }
 
-/// ListUserPermissionsParams is a struct for passing parameters to the method [`ListUserPermissions`]
+/// ListUserPermissionsParams is a struct for passing parameters to the method [`UsersAPI::list_user_permissions`]
 #[derive(Clone, Debug)]
 pub struct ListUserPermissionsParams {
     /// The ID of the user.
     pub user_id: String,
 }
 
-/// ListUsersParams is a struct for passing parameters to the method [`ListUsers`]
+/// ListUsersParams is a struct for passing parameters to the method [`UsersAPI::list_users`]
 #[derive(Clone, Debug)]
 pub struct ListUsersParams {
     /// Size for a given page. The maximum allowed value is 100.
@@ -69,13 +68,13 @@ pub struct ListUsersParams {
     pub filter_status: Option<String>,
 }
 
-/// SendInvitationsParams is a struct for passing parameters to the method [`SendInvitations`]
+/// SendInvitationsParams is a struct for passing parameters to the method [`UsersAPI::send_invitations`]
 #[derive(Clone, Debug)]
 pub struct SendInvitationsParams {
     pub body: crate::datadogV2::model::UserInvitationsRequest,
 }
 
-/// UpdateUserParams is a struct for passing parameters to the method [`UpdateUser`]
+/// UpdateUserParams is a struct for passing parameters to the method [`UsersAPI::update_user`]
 #[derive(Clone, Debug)]
 pub struct UpdateUserParams {
     /// The ID of the user.
@@ -83,7 +82,7 @@ pub struct UpdateUserParams {
     pub body: crate::datadogV2::model::UserUpdateRequest,
 }
 
-/// CreateUserError is a struct for typed errors of method [`CreateUser`]
+/// CreateUserError is a struct for typed errors of method [`UsersAPI::create_user`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateUserError {
@@ -93,7 +92,7 @@ pub enum CreateUserError {
     UnknownValue(serde_json::Value),
 }
 
-/// DisableUserError is a struct for typed errors of method [`DisableUser`]
+/// DisableUserError is a struct for typed errors of method [`UsersAPI::disable_user`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DisableUserError {
@@ -103,7 +102,7 @@ pub enum DisableUserError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetInvitationError is a struct for typed errors of method [`GetInvitation`]
+/// GetInvitationError is a struct for typed errors of method [`UsersAPI::get_invitation`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetInvitationError {
@@ -113,7 +112,7 @@ pub enum GetInvitationError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUserError is a struct for typed errors of method [`GetUser`]
+/// GetUserError is a struct for typed errors of method [`UsersAPI::get_user`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUserError {
@@ -123,7 +122,7 @@ pub enum GetUserError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListUserOrganizationsError is a struct for typed errors of method [`ListUserOrganizations`]
+/// ListUserOrganizationsError is a struct for typed errors of method [`UsersAPI::list_user_organizations`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListUserOrganizationsError {
@@ -133,7 +132,7 @@ pub enum ListUserOrganizationsError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListUserPermissionsError is a struct for typed errors of method [`ListUserPermissions`]
+/// ListUserPermissionsError is a struct for typed errors of method [`UsersAPI::list_user_permissions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListUserPermissionsError {
@@ -143,7 +142,7 @@ pub enum ListUserPermissionsError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListUsersError is a struct for typed errors of method [`ListUsers`]
+/// ListUsersError is a struct for typed errors of method [`UsersAPI::list_users`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListUsersError {
@@ -153,7 +152,7 @@ pub enum ListUsersError {
     UnknownValue(serde_json::Value),
 }
 
-/// SendInvitationsError is a struct for typed errors of method [`SendInvitations`]
+/// SendInvitationsError is a struct for typed errors of method [`UsersAPI::send_invitations`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SendInvitationsError {
@@ -163,7 +162,7 @@ pub enum SendInvitationsError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateUserError is a struct for typed errors of method [`UpdateUser`]
+/// UpdateUserError is a struct for typed errors of method [`UsersAPI::update_user`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateUserError {

@@ -39,7 +39,7 @@ pub struct DowntimeUpdateRequestAttributes {
     /// Schedule for the downtime.
     #[serde(rename = "schedule")]
     pub schedule: Option<Box<crate::datadogV2::model::DowntimeScheduleUpdateRequest>>,
-    /// The scope to which the downtime applies. Must follow the [common search syntax](https://docs.datadoghq.com/logs/explorer/search_syntax/).
+    /// The scope to which the downtime applies. Must follow the [common search syntax](<https://docs.datadoghq.com/logs/explorer/search_syntax/>).
     #[serde(rename = "scope")]
     pub scope: Option<String>,
 }

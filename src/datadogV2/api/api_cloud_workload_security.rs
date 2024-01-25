@@ -1,33 +1,32 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateCloudWorkloadSecurityAgentRuleParams is a struct for passing parameters to the method [`CreateCloudWorkloadSecurityAgentRule`]
+/// CreateCloudWorkloadSecurityAgentRuleParams is a struct for passing parameters to the method [`CloudWorkloadSecurityAPI::create_cloud_workload_security_agent_rule`]
 #[derive(Clone, Debug)]
 pub struct CreateCloudWorkloadSecurityAgentRuleParams {
     /// The definition of the new Agent rule.
     pub body: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateRequest,
 }
 
-/// DeleteCloudWorkloadSecurityAgentRuleParams is a struct for passing parameters to the method [`DeleteCloudWorkloadSecurityAgentRule`]
+/// DeleteCloudWorkloadSecurityAgentRuleParams is a struct for passing parameters to the method [`CloudWorkloadSecurityAPI::delete_cloud_workload_security_agent_rule`]
 #[derive(Clone, Debug)]
 pub struct DeleteCloudWorkloadSecurityAgentRuleParams {
     /// The ID of the Agent rule.
     pub agent_rule_id: String,
 }
 
-/// GetCloudWorkloadSecurityAgentRuleParams is a struct for passing parameters to the method [`GetCloudWorkloadSecurityAgentRule`]
+/// GetCloudWorkloadSecurityAgentRuleParams is a struct for passing parameters to the method [`CloudWorkloadSecurityAPI::get_cloud_workload_security_agent_rule`]
 #[derive(Clone, Debug)]
 pub struct GetCloudWorkloadSecurityAgentRuleParams {
     /// The ID of the Agent rule.
     pub agent_rule_id: String,
 }
 
-/// UpdateCloudWorkloadSecurityAgentRuleParams is a struct for passing parameters to the method [`UpdateCloudWorkloadSecurityAgentRule`]
+/// UpdateCloudWorkloadSecurityAgentRuleParams is a struct for passing parameters to the method [`CloudWorkloadSecurityAPI::update_cloud_workload_security_agent_rule`]
 #[derive(Clone, Debug)]
 pub struct UpdateCloudWorkloadSecurityAgentRuleParams {
     /// The ID of the Agent rule.
@@ -36,7 +35,7 @@ pub struct UpdateCloudWorkloadSecurityAgentRuleParams {
     pub body: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleUpdateRequest,
 }
 
-/// CreateCloudWorkloadSecurityAgentRuleError is a struct for typed errors of method [`CreateCloudWorkloadSecurityAgentRule`]
+/// CreateCloudWorkloadSecurityAgentRuleError is a struct for typed errors of method [`CloudWorkloadSecurityAPI::create_cloud_workload_security_agent_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateCloudWorkloadSecurityAgentRuleError {
@@ -47,7 +46,7 @@ pub enum CreateCloudWorkloadSecurityAgentRuleError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteCloudWorkloadSecurityAgentRuleError is a struct for typed errors of method [`DeleteCloudWorkloadSecurityAgentRule`]
+/// DeleteCloudWorkloadSecurityAgentRuleError is a struct for typed errors of method [`CloudWorkloadSecurityAPI::delete_cloud_workload_security_agent_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteCloudWorkloadSecurityAgentRuleError {
@@ -57,7 +56,7 @@ pub enum DeleteCloudWorkloadSecurityAgentRuleError {
     UnknownValue(serde_json::Value),
 }
 
-/// DownloadCloudWorkloadPolicyFileError is a struct for typed errors of method [`DownloadCloudWorkloadPolicyFile`]
+/// DownloadCloudWorkloadPolicyFileError is a struct for typed errors of method [`CloudWorkloadSecurityAPI::download_cloud_workload_policy_file`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DownloadCloudWorkloadPolicyFileError {
@@ -66,7 +65,7 @@ pub enum DownloadCloudWorkloadPolicyFileError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetCloudWorkloadSecurityAgentRuleError is a struct for typed errors of method [`GetCloudWorkloadSecurityAgentRule`]
+/// GetCloudWorkloadSecurityAgentRuleError is a struct for typed errors of method [`CloudWorkloadSecurityAPI::get_cloud_workload_security_agent_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetCloudWorkloadSecurityAgentRuleError {
@@ -76,7 +75,7 @@ pub enum GetCloudWorkloadSecurityAgentRuleError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListCloudWorkloadSecurityAgentRulesError is a struct for typed errors of method [`ListCloudWorkloadSecurityAgentRules`]
+/// ListCloudWorkloadSecurityAgentRulesError is a struct for typed errors of method [`CloudWorkloadSecurityAPI::list_cloud_workload_security_agent_rules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListCloudWorkloadSecurityAgentRulesError {
@@ -85,7 +84,7 @@ pub enum ListCloudWorkloadSecurityAgentRulesError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateCloudWorkloadSecurityAgentRuleError is a struct for typed errors of method [`UpdateCloudWorkloadSecurityAgentRule`]
+/// UpdateCloudWorkloadSecurityAgentRuleError is a struct for typed errors of method [`CloudWorkloadSecurityAPI::update_cloud_workload_security_agent_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateCloudWorkloadSecurityAgentRuleError {

@@ -8,7 +8,7 @@ use serde_with::skip_serializing_none;
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CloudConfigurationRegoRule {
-    /// The policy written in `rego`, see: https://www.openpolicyagent.org/docs/latest/policy-language/
+    /// The policy written in `rego`, see: <https://www.openpolicyagent.org/docs/latest/policy-language/>
     #[serde(rename = "policy")]
     pub policy: String,
     /// List of resource types that will be evaluated upon. Must have at least one element.

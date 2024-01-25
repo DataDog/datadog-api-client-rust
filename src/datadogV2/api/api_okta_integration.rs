@@ -1,32 +1,31 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateOktaAccountParams is a struct for passing parameters to the method [`CreateOktaAccount`]
+/// CreateOktaAccountParams is a struct for passing parameters to the method [`OktaIntegrationAPI::create_okta_account`]
 #[derive(Clone, Debug)]
 pub struct CreateOktaAccountParams {
     pub body: crate::datadogV2::model::OktaAccountRequest,
 }
 
-/// DeleteOktaAccountParams is a struct for passing parameters to the method [`DeleteOktaAccount`]
+/// DeleteOktaAccountParams is a struct for passing parameters to the method [`OktaIntegrationAPI::delete_okta_account`]
 #[derive(Clone, Debug)]
 pub struct DeleteOktaAccountParams {
     /// None
     pub account_id: String,
 }
 
-/// GetOktaAccountParams is a struct for passing parameters to the method [`GetOktaAccount`]
+/// GetOktaAccountParams is a struct for passing parameters to the method [`OktaIntegrationAPI::get_okta_account`]
 #[derive(Clone, Debug)]
 pub struct GetOktaAccountParams {
     /// None
     pub account_id: String,
 }
 
-/// UpdateOktaAccountParams is a struct for passing parameters to the method [`UpdateOktaAccount`]
+/// UpdateOktaAccountParams is a struct for passing parameters to the method [`OktaIntegrationAPI::update_okta_account`]
 #[derive(Clone, Debug)]
 pub struct UpdateOktaAccountParams {
     /// None
@@ -34,7 +33,7 @@ pub struct UpdateOktaAccountParams {
     pub body: crate::datadogV2::model::OktaAccountUpdateRequest,
 }
 
-/// CreateOktaAccountError is a struct for typed errors of method [`CreateOktaAccount`]
+/// CreateOktaAccountError is a struct for typed errors of method [`OktaIntegrationAPI::create_okta_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateOktaAccountError {
@@ -45,7 +44,7 @@ pub enum CreateOktaAccountError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteOktaAccountError is a struct for typed errors of method [`DeleteOktaAccount`]
+/// DeleteOktaAccountError is a struct for typed errors of method [`OktaIntegrationAPI::delete_okta_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteOktaAccountError {
@@ -56,7 +55,7 @@ pub enum DeleteOktaAccountError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetOktaAccountError is a struct for typed errors of method [`GetOktaAccount`]
+/// GetOktaAccountError is a struct for typed errors of method [`OktaIntegrationAPI::get_okta_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetOktaAccountError {
@@ -67,7 +66,7 @@ pub enum GetOktaAccountError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListOktaAccountsError is a struct for typed errors of method [`ListOktaAccounts`]
+/// ListOktaAccountsError is a struct for typed errors of method [`OktaIntegrationAPI::list_okta_accounts`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListOktaAccountsError {
@@ -78,7 +77,7 @@ pub enum ListOktaAccountsError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateOktaAccountError is a struct for typed errors of method [`UpdateOktaAccount`]
+/// UpdateOktaAccountError is a struct for typed errors of method [`OktaIntegrationAPI::update_okta_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateOktaAccountError {

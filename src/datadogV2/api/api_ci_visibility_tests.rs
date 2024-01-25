@@ -1,18 +1,17 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// AggregateCIAppTestEventsParams is a struct for passing parameters to the method [`AggregateCIAppTestEvents`]
+/// AggregateCIAppTestEventsParams is a struct for passing parameters to the method [`CIVisibilityTestsAPI::aggregate_ci_app_test_events`]
 #[derive(Clone, Debug)]
 pub struct AggregateCIAppTestEventsParams {
     pub body: crate::datadogV2::model::CIAppTestsAggregateRequest,
 }
 
-/// ListCIAppTestEventsParams is a struct for passing parameters to the method [`ListCIAppTestEvents`]
+/// ListCIAppTestEventsParams is a struct for passing parameters to the method [`CIVisibilityTestsAPI::list_ci_app_test_events`]
 #[derive(Clone, Debug)]
 pub struct ListCIAppTestEventsParams {
     /// Search query following log syntax.
@@ -29,13 +28,13 @@ pub struct ListCIAppTestEventsParams {
     pub page_limit: Option<i32>,
 }
 
-/// SearchCIAppTestEventsParams is a struct for passing parameters to the method [`SearchCIAppTestEvents`]
+/// SearchCIAppTestEventsParams is a struct for passing parameters to the method [`CIVisibilityTestsAPI::search_ci_app_test_events`]
 #[derive(Clone, Debug)]
 pub struct SearchCIAppTestEventsParams {
     pub body: Option<Option<crate::datadogV2::model::CIAppTestEventsRequest>>,
 }
 
-/// AggregateCIAppTestEventsError is a struct for typed errors of method [`AggregateCIAppTestEvents`]
+/// AggregateCIAppTestEventsError is a struct for typed errors of method [`CIVisibilityTestsAPI::aggregate_ci_app_test_events`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AggregateCIAppTestEventsError {
@@ -45,7 +44,7 @@ pub enum AggregateCIAppTestEventsError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListCIAppTestEventsError is a struct for typed errors of method [`ListCIAppTestEvents`]
+/// ListCIAppTestEventsError is a struct for typed errors of method [`CIVisibilityTestsAPI::list_ci_app_test_events`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListCIAppTestEventsError {
@@ -55,7 +54,7 @@ pub enum ListCIAppTestEventsError {
     UnknownValue(serde_json::Value),
 }
 
-/// SearchCIAppTestEventsError is a struct for typed errors of method [`SearchCIAppTestEvents`]
+/// SearchCIAppTestEventsError is a struct for typed errors of method [`CIVisibilityTestsAPI::search_ci_app_test_events`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SearchCIAppTestEventsError {
@@ -173,8 +172,8 @@ impl CIVisibilityTestsAPI {
         }
     }
 
-    /// List endpoint returns CI Visibility test events that match a [log search query](https://docs.datadoghq.com/logs/explorer/search_syntax/).
-    /// [Results are paginated similarly to logs](https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination).
+    /// List endpoint returns CI Visibility test events that match a [log search query](<https://docs.datadoghq.com/logs/explorer/search_syntax/>).
+    /// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
     ///
     /// Use this endpoint to see your latest test events.
     pub async fn list_ci_app_test_events(
@@ -190,8 +189,8 @@ impl CIVisibilityTestsAPI {
         }
     }
 
-    /// List endpoint returns CI Visibility test events that match a [log search query](https://docs.datadoghq.com/logs/explorer/search_syntax/).
-    /// [Results are paginated similarly to logs](https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination).
+    /// List endpoint returns CI Visibility test events that match a [log search query](<https://docs.datadoghq.com/logs/explorer/search_syntax/>).
+    /// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
     ///
     /// Use this endpoint to see your latest test events.
     pub async fn list_ci_app_test_events_with_http_info(
@@ -279,8 +278,8 @@ impl CIVisibilityTestsAPI {
         }
     }
 
-    /// List endpoint returns CI Visibility test events that match a [log search query](https://docs.datadoghq.com/logs/explorer/search_syntax/).
-    /// [Results are paginated similarly to logs](https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination).
+    /// List endpoint returns CI Visibility test events that match a [log search query](<https://docs.datadoghq.com/logs/explorer/search_syntax/>).
+    /// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
     ///
     /// Use this endpoint to build complex events filtering and search.
     pub async fn search_ci_app_test_events(
@@ -296,8 +295,8 @@ impl CIVisibilityTestsAPI {
         }
     }
 
-    /// List endpoint returns CI Visibility test events that match a [log search query](https://docs.datadoghq.com/logs/explorer/search_syntax/).
-    /// [Results are paginated similarly to logs](https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination).
+    /// List endpoint returns CI Visibility test events that match a [log search query](<https://docs.datadoghq.com/logs/explorer/search_syntax/>).
+    /// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
     ///
     /// Use this endpoint to build complex events filtering and search.
     pub async fn search_ci_app_test_events_with_http_info(

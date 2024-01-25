@@ -1,61 +1,60 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateGlobalVariableParams is a struct for passing parameters to the method [`CreateGlobalVariable`]
+/// CreateGlobalVariableParams is a struct for passing parameters to the method [`SyntheticsAPI::create_global_variable`]
 #[derive(Clone, Debug)]
 pub struct CreateGlobalVariableParams {
     /// Details of the global variable to create.
     pub body: crate::datadogV1::model::SyntheticsGlobalVariable,
 }
 
-/// CreatePrivateLocationParams is a struct for passing parameters to the method [`CreatePrivateLocation`]
+/// CreatePrivateLocationParams is a struct for passing parameters to the method [`SyntheticsAPI::create_private_location`]
 #[derive(Clone, Debug)]
 pub struct CreatePrivateLocationParams {
     /// Details of the private location to create.
     pub body: crate::datadogV1::model::SyntheticsPrivateLocation,
 }
 
-/// CreateSyntheticsAPITestParams is a struct for passing parameters to the method [`CreateSyntheticsAPITest`]
+/// CreateSyntheticsAPITestParams is a struct for passing parameters to the method [`SyntheticsAPI::create_synthetics_api_test`]
 #[derive(Clone, Debug)]
 pub struct CreateSyntheticsAPITestParams {
     /// Details of the test to create.
     pub body: crate::datadogV1::model::SyntheticsAPITest,
 }
 
-/// CreateSyntheticsBrowserTestParams is a struct for passing parameters to the method [`CreateSyntheticsBrowserTest`]
+/// CreateSyntheticsBrowserTestParams is a struct for passing parameters to the method [`SyntheticsAPI::create_synthetics_browser_test`]
 #[derive(Clone, Debug)]
 pub struct CreateSyntheticsBrowserTestParams {
     /// Details of the test to create.
     pub body: crate::datadogV1::model::SyntheticsBrowserTest,
 }
 
-/// DeleteGlobalVariableParams is a struct for passing parameters to the method [`DeleteGlobalVariable`]
+/// DeleteGlobalVariableParams is a struct for passing parameters to the method [`SyntheticsAPI::delete_global_variable`]
 #[derive(Clone, Debug)]
 pub struct DeleteGlobalVariableParams {
     /// The ID of the global variable.
     pub variable_id: String,
 }
 
-/// DeletePrivateLocationParams is a struct for passing parameters to the method [`DeletePrivateLocation`]
+/// DeletePrivateLocationParams is a struct for passing parameters to the method [`SyntheticsAPI::delete_private_location`]
 #[derive(Clone, Debug)]
 pub struct DeletePrivateLocationParams {
     /// The ID of the private location.
     pub location_id: String,
 }
 
-/// DeleteTestsParams is a struct for passing parameters to the method [`DeleteTests`]
+/// DeleteTestsParams is a struct for passing parameters to the method [`SyntheticsAPI::delete_tests`]
 #[derive(Clone, Debug)]
 pub struct DeleteTestsParams {
     /// Public ID list of the Synthetic tests to be deleted.
     pub body: crate::datadogV1::model::SyntheticsDeleteTestsPayload,
 }
 
-/// EditGlobalVariableParams is a struct for passing parameters to the method [`EditGlobalVariable`]
+/// EditGlobalVariableParams is a struct for passing parameters to the method [`SyntheticsAPI::edit_global_variable`]
 #[derive(Clone, Debug)]
 pub struct EditGlobalVariableParams {
     /// The ID of the global variable.
@@ -64,14 +63,14 @@ pub struct EditGlobalVariableParams {
     pub body: crate::datadogV1::model::SyntheticsGlobalVariable,
 }
 
-/// GetAPITestParams is a struct for passing parameters to the method [`GetAPITest`]
+/// GetAPITestParams is a struct for passing parameters to the method [`SyntheticsAPI::get_api_test`]
 #[derive(Clone, Debug)]
 pub struct GetAPITestParams {
     /// The public ID of the test to get details from.
     pub public_id: String,
 }
 
-/// GetAPITestLatestResultsParams is a struct for passing parameters to the method [`GetAPITestLatestResults`]
+/// GetAPITestLatestResultsParams is a struct for passing parameters to the method [`SyntheticsAPI::get_api_test_latest_results`]
 #[derive(Clone, Debug)]
 pub struct GetAPITestLatestResultsParams {
     /// The public ID of the test for which to search results for.
@@ -84,7 +83,7 @@ pub struct GetAPITestLatestResultsParams {
     pub probe_dc: Option<Vec<String>>,
 }
 
-/// GetAPITestResultParams is a struct for passing parameters to the method [`GetAPITestResult`]
+/// GetAPITestResultParams is a struct for passing parameters to the method [`SyntheticsAPI::get_api_test_result`]
 #[derive(Clone, Debug)]
 pub struct GetAPITestResultParams {
     /// The public ID of the API test to which the target result belongs.
@@ -93,14 +92,14 @@ pub struct GetAPITestResultParams {
     pub result_id: String,
 }
 
-/// GetBrowserTestParams is a struct for passing parameters to the method [`GetBrowserTest`]
+/// GetBrowserTestParams is a struct for passing parameters to the method [`SyntheticsAPI::get_browser_test`]
 #[derive(Clone, Debug)]
 pub struct GetBrowserTestParams {
     /// The public ID of the test to get details from.
     pub public_id: String,
 }
 
-/// GetBrowserTestLatestResultsParams is a struct for passing parameters to the method [`GetBrowserTestLatestResults`]
+/// GetBrowserTestLatestResultsParams is a struct for passing parameters to the method [`SyntheticsAPI::get_browser_test_latest_results`]
 #[derive(Clone, Debug)]
 pub struct GetBrowserTestLatestResultsParams {
     /// The public ID of the browser test for which to search results
@@ -114,7 +113,7 @@ pub struct GetBrowserTestLatestResultsParams {
     pub probe_dc: Option<Vec<String>>,
 }
 
-/// GetBrowserTestResultParams is a struct for passing parameters to the method [`GetBrowserTestResult`]
+/// GetBrowserTestResultParams is a struct for passing parameters to the method [`SyntheticsAPI::get_browser_test_result`]
 #[derive(Clone, Debug)]
 pub struct GetBrowserTestResultParams {
     /// The public ID of the browser test to which the target result
@@ -124,35 +123,35 @@ pub struct GetBrowserTestResultParams {
     pub result_id: String,
 }
 
-/// GetGlobalVariableParams is a struct for passing parameters to the method [`GetGlobalVariable`]
+/// GetGlobalVariableParams is a struct for passing parameters to the method [`SyntheticsAPI::get_global_variable`]
 #[derive(Clone, Debug)]
 pub struct GetGlobalVariableParams {
     /// The ID of the global variable.
     pub variable_id: String,
 }
 
-/// GetPrivateLocationParams is a struct for passing parameters to the method [`GetPrivateLocation`]
+/// GetPrivateLocationParams is a struct for passing parameters to the method [`SyntheticsAPI::get_private_location`]
 #[derive(Clone, Debug)]
 pub struct GetPrivateLocationParams {
     /// The ID of the private location.
     pub location_id: String,
 }
 
-/// GetSyntheticsCIBatchParams is a struct for passing parameters to the method [`GetSyntheticsCIBatch`]
+/// GetSyntheticsCIBatchParams is a struct for passing parameters to the method [`SyntheticsAPI::get_synthetics_ci_batch`]
 #[derive(Clone, Debug)]
 pub struct GetSyntheticsCIBatchParams {
     /// The ID of the batch.
     pub batch_id: String,
 }
 
-/// GetTestParams is a struct for passing parameters to the method [`GetTest`]
+/// GetTestParams is a struct for passing parameters to the method [`SyntheticsAPI::get_test`]
 #[derive(Clone, Debug)]
 pub struct GetTestParams {
     /// The public ID of the test to get details from.
     pub public_id: String,
 }
 
-/// ListTestsParams is a struct for passing parameters to the method [`ListTests`]
+/// ListTestsParams is a struct for passing parameters to the method [`SyntheticsAPI::list_tests`]
 #[derive(Clone, Debug)]
 pub struct ListTestsParams {
     /// Used for pagination. The number of tests returned in the page.
@@ -161,30 +160,30 @@ pub struct ListTestsParams {
     pub page_number: Option<i64>,
 }
 
-/// PatchTestParams is a struct for passing parameters to the method [`PatchTest`]
+/// PatchTestParams is a struct for passing parameters to the method [`SyntheticsAPI::patch_test`]
 #[derive(Clone, Debug)]
 pub struct PatchTestParams {
     /// The public ID of the test to patch.
     pub public_id: String,
-    /// [JSON Patch](https://jsonpatch.com/) compliant list of operations
+    /// [JSON Patch](<https://jsonpatch.com/>) compliant list of operations
     pub body: crate::datadogV1::model::SyntheticsPatchTestBody,
 }
 
-/// TriggerCITestsParams is a struct for passing parameters to the method [`TriggerCITests`]
+/// TriggerCITestsParams is a struct for passing parameters to the method [`SyntheticsAPI::trigger_ci_tests`]
 #[derive(Clone, Debug)]
 pub struct TriggerCITestsParams {
     /// Details of the test to trigger.
     pub body: crate::datadogV1::model::SyntheticsCITestBody,
 }
 
-/// TriggerTestsParams is a struct for passing parameters to the method [`TriggerTests`]
+/// TriggerTestsParams is a struct for passing parameters to the method [`SyntheticsAPI::trigger_tests`]
 #[derive(Clone, Debug)]
 pub struct TriggerTestsParams {
     /// The identifiers of the tests to trigger.
     pub body: crate::datadogV1::model::SyntheticsTriggerBody,
 }
 
-/// UpdateAPITestParams is a struct for passing parameters to the method [`UpdateAPITest`]
+/// UpdateAPITestParams is a struct for passing parameters to the method [`SyntheticsAPI::update_api_test`]
 #[derive(Clone, Debug)]
 pub struct UpdateAPITestParams {
     /// The public ID of the test to get details from.
@@ -193,7 +192,7 @@ pub struct UpdateAPITestParams {
     pub body: crate::datadogV1::model::SyntheticsAPITest,
 }
 
-/// UpdateBrowserTestParams is a struct for passing parameters to the method [`UpdateBrowserTest`]
+/// UpdateBrowserTestParams is a struct for passing parameters to the method [`SyntheticsAPI::update_browser_test`]
 #[derive(Clone, Debug)]
 pub struct UpdateBrowserTestParams {
     /// The public ID of the test to edit.
@@ -202,7 +201,7 @@ pub struct UpdateBrowserTestParams {
     pub body: crate::datadogV1::model::SyntheticsBrowserTest,
 }
 
-/// UpdatePrivateLocationParams is a struct for passing parameters to the method [`UpdatePrivateLocation`]
+/// UpdatePrivateLocationParams is a struct for passing parameters to the method [`SyntheticsAPI::update_private_location`]
 #[derive(Clone, Debug)]
 pub struct UpdatePrivateLocationParams {
     /// The ID of the private location.
@@ -211,7 +210,7 @@ pub struct UpdatePrivateLocationParams {
     pub body: crate::datadogV1::model::SyntheticsPrivateLocation,
 }
 
-/// UpdateTestPauseStatusParams is a struct for passing parameters to the method [`UpdateTestPauseStatus`]
+/// UpdateTestPauseStatusParams is a struct for passing parameters to the method [`SyntheticsAPI::update_test_pause_status`]
 #[derive(Clone, Debug)]
 pub struct UpdateTestPauseStatusParams {
     /// The public ID of the Synthetic test to update.
@@ -220,7 +219,7 @@ pub struct UpdateTestPauseStatusParams {
     pub body: crate::datadogV1::model::SyntheticsUpdateTestPauseStatusPayload,
 }
 
-/// CreateGlobalVariableError is a struct for typed errors of method [`CreateGlobalVariable`]
+/// CreateGlobalVariableError is a struct for typed errors of method [`SyntheticsAPI::create_global_variable`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateGlobalVariableError {
@@ -230,7 +229,7 @@ pub enum CreateGlobalVariableError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreatePrivateLocationError is a struct for typed errors of method [`CreatePrivateLocation`]
+/// CreatePrivateLocationError is a struct for typed errors of method [`SyntheticsAPI::create_private_location`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreatePrivateLocationError {
@@ -240,7 +239,7 @@ pub enum CreatePrivateLocationError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateSyntheticsAPITestError is a struct for typed errors of method [`CreateSyntheticsAPITest`]
+/// CreateSyntheticsAPITestError is a struct for typed errors of method [`SyntheticsAPI::create_synthetics_api_test`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateSyntheticsAPITestError {
@@ -251,7 +250,7 @@ pub enum CreateSyntheticsAPITestError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateSyntheticsBrowserTestError is a struct for typed errors of method [`CreateSyntheticsBrowserTest`]
+/// CreateSyntheticsBrowserTestError is a struct for typed errors of method [`SyntheticsAPI::create_synthetics_browser_test`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateSyntheticsBrowserTestError {
@@ -262,7 +261,7 @@ pub enum CreateSyntheticsBrowserTestError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteGlobalVariableError is a struct for typed errors of method [`DeleteGlobalVariable`]
+/// DeleteGlobalVariableError is a struct for typed errors of method [`SyntheticsAPI::delete_global_variable`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteGlobalVariableError {
@@ -273,7 +272,7 @@ pub enum DeleteGlobalVariableError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeletePrivateLocationError is a struct for typed errors of method [`DeletePrivateLocation`]
+/// DeletePrivateLocationError is a struct for typed errors of method [`SyntheticsAPI::delete_private_location`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeletePrivateLocationError {
@@ -282,7 +281,7 @@ pub enum DeletePrivateLocationError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteTestsError is a struct for typed errors of method [`DeleteTests`]
+/// DeleteTestsError is a struct for typed errors of method [`SyntheticsAPI::delete_tests`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteTestsError {
@@ -293,7 +292,7 @@ pub enum DeleteTestsError {
     UnknownValue(serde_json::Value),
 }
 
-/// EditGlobalVariableError is a struct for typed errors of method [`EditGlobalVariable`]
+/// EditGlobalVariableError is a struct for typed errors of method [`SyntheticsAPI::edit_global_variable`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum EditGlobalVariableError {
@@ -303,7 +302,7 @@ pub enum EditGlobalVariableError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetAPITestError is a struct for typed errors of method [`GetAPITest`]
+/// GetAPITestError is a struct for typed errors of method [`SyntheticsAPI::get_api_test`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetAPITestError {
@@ -313,7 +312,7 @@ pub enum GetAPITestError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetAPITestLatestResultsError is a struct for typed errors of method [`GetAPITestLatestResults`]
+/// GetAPITestLatestResultsError is a struct for typed errors of method [`SyntheticsAPI::get_api_test_latest_results`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetAPITestLatestResultsError {
@@ -323,7 +322,7 @@ pub enum GetAPITestLatestResultsError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetAPITestResultError is a struct for typed errors of method [`GetAPITestResult`]
+/// GetAPITestResultError is a struct for typed errors of method [`SyntheticsAPI::get_api_test_result`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetAPITestResultError {
@@ -333,7 +332,7 @@ pub enum GetAPITestResultError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetBrowserTestError is a struct for typed errors of method [`GetBrowserTest`]
+/// GetBrowserTestError is a struct for typed errors of method [`SyntheticsAPI::get_browser_test`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetBrowserTestError {
@@ -343,7 +342,7 @@ pub enum GetBrowserTestError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetBrowserTestLatestResultsError is a struct for typed errors of method [`GetBrowserTestLatestResults`]
+/// GetBrowserTestLatestResultsError is a struct for typed errors of method [`SyntheticsAPI::get_browser_test_latest_results`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetBrowserTestLatestResultsError {
@@ -353,7 +352,7 @@ pub enum GetBrowserTestLatestResultsError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetBrowserTestResultError is a struct for typed errors of method [`GetBrowserTestResult`]
+/// GetBrowserTestResultError is a struct for typed errors of method [`SyntheticsAPI::get_browser_test_result`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetBrowserTestResultError {
@@ -363,7 +362,7 @@ pub enum GetBrowserTestResultError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetGlobalVariableError is a struct for typed errors of method [`GetGlobalVariable`]
+/// GetGlobalVariableError is a struct for typed errors of method [`SyntheticsAPI::get_global_variable`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetGlobalVariableError {
@@ -373,7 +372,7 @@ pub enum GetGlobalVariableError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetPrivateLocationError is a struct for typed errors of method [`GetPrivateLocation`]
+/// GetPrivateLocationError is a struct for typed errors of method [`SyntheticsAPI::get_private_location`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetPrivateLocationError {
@@ -382,7 +381,7 @@ pub enum GetPrivateLocationError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetSyntheticsCIBatchError is a struct for typed errors of method [`GetSyntheticsCIBatch`]
+/// GetSyntheticsCIBatchError is a struct for typed errors of method [`SyntheticsAPI::get_synthetics_ci_batch`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetSyntheticsCIBatchError {
@@ -391,7 +390,7 @@ pub enum GetSyntheticsCIBatchError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetSyntheticsDefaultLocationsError is a struct for typed errors of method [`GetSyntheticsDefaultLocations`]
+/// GetSyntheticsDefaultLocationsError is a struct for typed errors of method [`SyntheticsAPI::get_synthetics_default_locations`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetSyntheticsDefaultLocationsError {
@@ -399,7 +398,7 @@ pub enum GetSyntheticsDefaultLocationsError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetTestError is a struct for typed errors of method [`GetTest`]
+/// GetTestError is a struct for typed errors of method [`SyntheticsAPI::get_test`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetTestError {
@@ -409,7 +408,7 @@ pub enum GetTestError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListGlobalVariablesError is a struct for typed errors of method [`ListGlobalVariables`]
+/// ListGlobalVariablesError is a struct for typed errors of method [`SyntheticsAPI::list_global_variables`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListGlobalVariablesError {
@@ -418,7 +417,7 @@ pub enum ListGlobalVariablesError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListLocationsError is a struct for typed errors of method [`ListLocations`]
+/// ListLocationsError is a struct for typed errors of method [`SyntheticsAPI::list_locations`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListLocationsError {
@@ -426,7 +425,7 @@ pub enum ListLocationsError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListTestsError is a struct for typed errors of method [`ListTests`]
+/// ListTestsError is a struct for typed errors of method [`SyntheticsAPI::list_tests`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListTestsError {
@@ -436,7 +435,7 @@ pub enum ListTestsError {
     UnknownValue(serde_json::Value),
 }
 
-/// PatchTestError is a struct for typed errors of method [`PatchTest`]
+/// PatchTestError is a struct for typed errors of method [`SyntheticsAPI::patch_test`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchTestError {
@@ -447,7 +446,7 @@ pub enum PatchTestError {
     UnknownValue(serde_json::Value),
 }
 
-/// TriggerCITestsError is a struct for typed errors of method [`TriggerCITests`]
+/// TriggerCITestsError is a struct for typed errors of method [`SyntheticsAPI::trigger_ci_tests`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum TriggerCITestsError {
@@ -456,7 +455,7 @@ pub enum TriggerCITestsError {
     UnknownValue(serde_json::Value),
 }
 
-/// TriggerTestsError is a struct for typed errors of method [`TriggerTests`]
+/// TriggerTestsError is a struct for typed errors of method [`SyntheticsAPI::trigger_tests`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum TriggerTestsError {
@@ -465,7 +464,7 @@ pub enum TriggerTestsError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateAPITestError is a struct for typed errors of method [`UpdateAPITest`]
+/// UpdateAPITestError is a struct for typed errors of method [`SyntheticsAPI::update_api_test`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateAPITestError {
@@ -476,7 +475,7 @@ pub enum UpdateAPITestError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateBrowserTestError is a struct for typed errors of method [`UpdateBrowserTest`]
+/// UpdateBrowserTestError is a struct for typed errors of method [`SyntheticsAPI::update_browser_test`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateBrowserTestError {
@@ -487,7 +486,7 @@ pub enum UpdateBrowserTestError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdatePrivateLocationError is a struct for typed errors of method [`UpdatePrivateLocation`]
+/// UpdatePrivateLocationError is a struct for typed errors of method [`SyntheticsAPI::update_private_location`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdatePrivateLocationError {
@@ -496,7 +495,7 @@ pub enum UpdatePrivateLocationError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateTestPauseStatusError is a struct for typed errors of method [`UpdateTestPauseStatus`]
+/// UpdateTestPauseStatusError is a struct for typed errors of method [`SyntheticsAPI::update_test_pause_status`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateTestPauseStatusError {

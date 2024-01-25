@@ -8,13 +8,13 @@ use serde_with::skip_serializing_none;
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct RUMQueryFilter {
-    /// The minimum time for the requested events; supports date (in [ISO 8601](https://www.w3.org/TR/NOTE-datetime) format with full date, hours, minutes, and the `Z` UTC indicator - seconds and fractional seconds are optional), math, and regular timestamps (in milliseconds).
+    /// The minimum time for the requested events; supports date (in [ISO 8601](<https://www.w3.org/TR/NOTE-datetime>) format with full date, hours, minutes, and the `Z` UTC indicator - seconds and fractional seconds are optional), math, and regular timestamps (in milliseconds).
     #[serde(rename = "from")]
     pub from: Option<String>,
     /// The search query following the RUM search syntax.
     #[serde(rename = "query")]
     pub query: Option<String>,
-    /// The maximum time for the requested events; supports date (in [ISO 8601](https://www.w3.org/TR/NOTE-datetime) format with full date, hours, minutes, and the `Z` UTC indicator - seconds and fractional seconds are optional), math, and regular timestamps (in milliseconds).
+    /// The maximum time for the requested events; supports date (in [ISO 8601](<https://www.w3.org/TR/NOTE-datetime>) format with full date, hours, minutes, and the `Z` UTC indicator - seconds and fractional seconds are optional), math, and regular timestamps (in milliseconds).
     #[serde(rename = "to")]
     pub to: Option<String>,
 }

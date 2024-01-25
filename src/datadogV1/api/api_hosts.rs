@@ -1,19 +1,18 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// GetHostTotalsParams is a struct for passing parameters to the method [`GetHostTotals`]
+/// GetHostTotalsParams is a struct for passing parameters to the method [`HostsAPI::get_host_totals`]
 #[derive(Clone, Debug)]
 pub struct GetHostTotalsParams {
     /// Number of seconds from which you want to get total number of active hosts.
     pub from: Option<i64>,
 }
 
-/// ListHostsParams is a struct for passing parameters to the method [`ListHosts`]
+/// ListHostsParams is a struct for passing parameters to the method [`HostsAPI::list_hosts`]
 #[derive(Clone, Debug)]
 pub struct ListHostsParams {
     /// String to filter search results.
@@ -34,7 +33,7 @@ pub struct ListHostsParams {
     pub include_hosts_metadata: Option<bool>,
 }
 
-/// MuteHostParams is a struct for passing parameters to the method [`MuteHost`]
+/// MuteHostParams is a struct for passing parameters to the method [`HostsAPI::mute_host`]
 #[derive(Clone, Debug)]
 pub struct MuteHostParams {
     /// Name of the host to mute.
@@ -43,14 +42,14 @@ pub struct MuteHostParams {
     pub body: crate::datadogV1::model::HostMuteSettings,
 }
 
-/// UnmuteHostParams is a struct for passing parameters to the method [`UnmuteHost`]
+/// UnmuteHostParams is a struct for passing parameters to the method [`HostsAPI::unmute_host`]
 #[derive(Clone, Debug)]
 pub struct UnmuteHostParams {
     /// Name of the host to unmute.
     pub host_name: String,
 }
 
-/// GetHostTotalsError is a struct for typed errors of method [`GetHostTotals`]
+/// GetHostTotalsError is a struct for typed errors of method [`HostsAPI::get_host_totals`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetHostTotalsError {
@@ -60,7 +59,7 @@ pub enum GetHostTotalsError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListHostsError is a struct for typed errors of method [`ListHosts`]
+/// ListHostsError is a struct for typed errors of method [`HostsAPI::list_hosts`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListHostsError {
@@ -70,7 +69,7 @@ pub enum ListHostsError {
     UnknownValue(serde_json::Value),
 }
 
-/// MuteHostError is a struct for typed errors of method [`MuteHost`]
+/// MuteHostError is a struct for typed errors of method [`HostsAPI::mute_host`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum MuteHostError {
@@ -80,7 +79,7 @@ pub enum MuteHostError {
     UnknownValue(serde_json::Value),
 }
 
-/// UnmuteHostError is a struct for typed errors of method [`UnmuteHost`]
+/// UnmuteHostError is a struct for typed errors of method [`HostsAPI::unmute_host`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UnmuteHostError {
@@ -292,7 +291,7 @@ impl HostsAPI {
         }
     }
 
-    /// Mute a host. **Note:** This creates a [Downtime V2](https://docs.datadoghq.com/api/latest/downtimes/#schedule-a-downtime) for the host.
+    /// Mute a host. **Note:** This creates a [Downtime V2](<https://docs.datadoghq.com/api/latest/downtimes/#schedule-a-downtime>) for the host.
     pub async fn mute_host(
         &self,
         params: MuteHostParams,
@@ -303,7 +302,7 @@ impl HostsAPI {
         }
     }
 
-    /// Mute a host. **Note:** This creates a [Downtime V2](https://docs.datadoghq.com/api/latest/downtimes/#schedule-a-downtime) for the host.
+    /// Mute a host. **Note:** This creates a [Downtime V2](<https://docs.datadoghq.com/api/latest/downtimes/#schedule-a-downtime>) for the host.
     pub async fn mute_host_with_http_info(
         &self,
         params: MuteHostParams,

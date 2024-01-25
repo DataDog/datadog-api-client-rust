@@ -1,12 +1,11 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// AddReadRoleToArchiveParams is a struct for passing parameters to the method [`AddReadRoleToArchive`]
+/// AddReadRoleToArchiveParams is a struct for passing parameters to the method [`LogsArchivesAPI::add_read_role_to_archive`]
 #[derive(Clone, Debug)]
 pub struct AddReadRoleToArchiveParams {
     /// The ID of the archive.
@@ -14,35 +13,35 @@ pub struct AddReadRoleToArchiveParams {
     pub body: crate::datadogV2::model::RelationshipToRole,
 }
 
-/// CreateLogsArchiveParams is a struct for passing parameters to the method [`CreateLogsArchive`]
+/// CreateLogsArchiveParams is a struct for passing parameters to the method [`LogsArchivesAPI::create_logs_archive`]
 #[derive(Clone, Debug)]
 pub struct CreateLogsArchiveParams {
     /// The definition of the new archive.
     pub body: crate::datadogV2::model::LogsArchiveCreateRequest,
 }
 
-/// DeleteLogsArchiveParams is a struct for passing parameters to the method [`DeleteLogsArchive`]
+/// DeleteLogsArchiveParams is a struct for passing parameters to the method [`LogsArchivesAPI::delete_logs_archive`]
 #[derive(Clone, Debug)]
 pub struct DeleteLogsArchiveParams {
     /// The ID of the archive.
     pub archive_id: String,
 }
 
-/// GetLogsArchiveParams is a struct for passing parameters to the method [`GetLogsArchive`]
+/// GetLogsArchiveParams is a struct for passing parameters to the method [`LogsArchivesAPI::get_logs_archive`]
 #[derive(Clone, Debug)]
 pub struct GetLogsArchiveParams {
     /// The ID of the archive.
     pub archive_id: String,
 }
 
-/// ListArchiveReadRolesParams is a struct for passing parameters to the method [`ListArchiveReadRoles`]
+/// ListArchiveReadRolesParams is a struct for passing parameters to the method [`LogsArchivesAPI::list_archive_read_roles`]
 #[derive(Clone, Debug)]
 pub struct ListArchiveReadRolesParams {
     /// The ID of the archive.
     pub archive_id: String,
 }
 
-/// RemoveRoleFromArchiveParams is a struct for passing parameters to the method [`RemoveRoleFromArchive`]
+/// RemoveRoleFromArchiveParams is a struct for passing parameters to the method [`LogsArchivesAPI::remove_role_from_archive`]
 #[derive(Clone, Debug)]
 pub struct RemoveRoleFromArchiveParams {
     /// The ID of the archive.
@@ -50,7 +49,7 @@ pub struct RemoveRoleFromArchiveParams {
     pub body: crate::datadogV2::model::RelationshipToRole,
 }
 
-/// UpdateLogsArchiveParams is a struct for passing parameters to the method [`UpdateLogsArchive`]
+/// UpdateLogsArchiveParams is a struct for passing parameters to the method [`LogsArchivesAPI::update_logs_archive`]
 #[derive(Clone, Debug)]
 pub struct UpdateLogsArchiveParams {
     /// The ID of the archive.
@@ -59,14 +58,14 @@ pub struct UpdateLogsArchiveParams {
     pub body: crate::datadogV2::model::LogsArchiveCreateRequest,
 }
 
-/// UpdateLogsArchiveOrderParams is a struct for passing parameters to the method [`UpdateLogsArchiveOrder`]
+/// UpdateLogsArchiveOrderParams is a struct for passing parameters to the method [`LogsArchivesAPI::update_logs_archive_order`]
 #[derive(Clone, Debug)]
 pub struct UpdateLogsArchiveOrderParams {
     /// An object containing the new ordered list of archive IDs.
     pub body: crate::datadogV2::model::LogsArchiveOrder,
 }
 
-/// AddReadRoleToArchiveError is a struct for typed errors of method [`AddReadRoleToArchive`]
+/// AddReadRoleToArchiveError is a struct for typed errors of method [`LogsArchivesAPI::add_read_role_to_archive`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AddReadRoleToArchiveError {
@@ -77,7 +76,7 @@ pub enum AddReadRoleToArchiveError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateLogsArchiveError is a struct for typed errors of method [`CreateLogsArchive`]
+/// CreateLogsArchiveError is a struct for typed errors of method [`LogsArchivesAPI::create_logs_archive`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateLogsArchiveError {
@@ -87,7 +86,7 @@ pub enum CreateLogsArchiveError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteLogsArchiveError is a struct for typed errors of method [`DeleteLogsArchive`]
+/// DeleteLogsArchiveError is a struct for typed errors of method [`LogsArchivesAPI::delete_logs_archive`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteLogsArchiveError {
@@ -98,7 +97,7 @@ pub enum DeleteLogsArchiveError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetLogsArchiveError is a struct for typed errors of method [`GetLogsArchive`]
+/// GetLogsArchiveError is a struct for typed errors of method [`LogsArchivesAPI::get_logs_archive`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetLogsArchiveError {
@@ -109,7 +108,7 @@ pub enum GetLogsArchiveError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetLogsArchiveOrderError is a struct for typed errors of method [`GetLogsArchiveOrder`]
+/// GetLogsArchiveOrderError is a struct for typed errors of method [`LogsArchivesAPI::get_logs_archive_order`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetLogsArchiveOrderError {
@@ -118,7 +117,7 @@ pub enum GetLogsArchiveOrderError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListArchiveReadRolesError is a struct for typed errors of method [`ListArchiveReadRoles`]
+/// ListArchiveReadRolesError is a struct for typed errors of method [`LogsArchivesAPI::list_archive_read_roles`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListArchiveReadRolesError {
@@ -129,7 +128,7 @@ pub enum ListArchiveReadRolesError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListLogsArchivesError is a struct for typed errors of method [`ListLogsArchives`]
+/// ListLogsArchivesError is a struct for typed errors of method [`LogsArchivesAPI::list_logs_archives`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListLogsArchivesError {
@@ -138,7 +137,7 @@ pub enum ListLogsArchivesError {
     UnknownValue(serde_json::Value),
 }
 
-/// RemoveRoleFromArchiveError is a struct for typed errors of method [`RemoveRoleFromArchive`]
+/// RemoveRoleFromArchiveError is a struct for typed errors of method [`LogsArchivesAPI::remove_role_from_archive`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum RemoveRoleFromArchiveError {
@@ -149,7 +148,7 @@ pub enum RemoveRoleFromArchiveError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateLogsArchiveError is a struct for typed errors of method [`UpdateLogsArchive`]
+/// UpdateLogsArchiveError is a struct for typed errors of method [`LogsArchivesAPI::update_logs_archive`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateLogsArchiveError {
@@ -160,7 +159,7 @@ pub enum UpdateLogsArchiveError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateLogsArchiveOrderError is a struct for typed errors of method [`UpdateLogsArchiveOrder`]
+/// UpdateLogsArchiveOrderError is a struct for typed errors of method [`LogsArchivesAPI::update_logs_archive_order`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateLogsArchiveOrderError {
@@ -192,7 +191,7 @@ impl LogsArchivesAPI {
         Self { config }
     }
 
-    /// Adds a read role to an archive. ([Roles API](https://docs.datadoghq.com/api/v2/roles/))
+    /// Adds a read role to an archive. ([Roles API](<https://docs.datadoghq.com/api/v2/roles/>))
     pub async fn add_read_role_to_archive(
         &self,
         params: AddReadRoleToArchiveParams,
@@ -203,7 +202,7 @@ impl LogsArchivesAPI {
         }
     }
 
-    /// Adds a read role to an archive. ([Roles API](https://docs.datadoghq.com/api/v2/roles/))
+    /// Adds a read role to an archive. ([Roles API](<https://docs.datadoghq.com/api/v2/roles/>))
     pub async fn add_read_role_to_archive_with_http_info(
         &self,
         params: AddReadRoleToArchiveParams,
@@ -704,7 +703,7 @@ impl LogsArchivesAPI {
         }
     }
 
-    /// Removes a role from an archive. ([Roles API](https://docs.datadoghq.com/api/v2/roles/))
+    /// Removes a role from an archive. ([Roles API](<https://docs.datadoghq.com/api/v2/roles/>))
     pub async fn remove_role_from_archive(
         &self,
         params: RemoveRoleFromArchiveParams,
@@ -715,7 +714,7 @@ impl LogsArchivesAPI {
         }
     }
 
-    /// Removes a role from an archive. ([Roles API](https://docs.datadoghq.com/api/v2/roles/))
+    /// Removes a role from an archive. ([Roles API](<https://docs.datadoghq.com/api/v2/roles/>))
     pub async fn remove_role_from_archive_with_http_info(
         &self,
         params: RemoveRoleFromArchiveParams,

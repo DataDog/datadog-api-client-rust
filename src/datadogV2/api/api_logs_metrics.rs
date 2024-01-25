@@ -1,33 +1,32 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateLogsMetricParams is a struct for passing parameters to the method [`CreateLogsMetric`]
+/// CreateLogsMetricParams is a struct for passing parameters to the method [`LogsMetricsAPI::create_logs_metric`]
 #[derive(Clone, Debug)]
 pub struct CreateLogsMetricParams {
     /// The definition of the new log-based metric.
     pub body: crate::datadogV2::model::LogsMetricCreateRequest,
 }
 
-/// DeleteLogsMetricParams is a struct for passing parameters to the method [`DeleteLogsMetric`]
+/// DeleteLogsMetricParams is a struct for passing parameters to the method [`LogsMetricsAPI::delete_logs_metric`]
 #[derive(Clone, Debug)]
 pub struct DeleteLogsMetricParams {
     /// The name of the log-based metric.
     pub metric_id: String,
 }
 
-/// GetLogsMetricParams is a struct for passing parameters to the method [`GetLogsMetric`]
+/// GetLogsMetricParams is a struct for passing parameters to the method [`LogsMetricsAPI::get_logs_metric`]
 #[derive(Clone, Debug)]
 pub struct GetLogsMetricParams {
     /// The name of the log-based metric.
     pub metric_id: String,
 }
 
-/// UpdateLogsMetricParams is a struct for passing parameters to the method [`UpdateLogsMetric`]
+/// UpdateLogsMetricParams is a struct for passing parameters to the method [`LogsMetricsAPI::update_logs_metric`]
 #[derive(Clone, Debug)]
 pub struct UpdateLogsMetricParams {
     /// The name of the log-based metric.
@@ -36,7 +35,7 @@ pub struct UpdateLogsMetricParams {
     pub body: crate::datadogV2::model::LogsMetricUpdateRequest,
 }
 
-/// CreateLogsMetricError is a struct for typed errors of method [`CreateLogsMetric`]
+/// CreateLogsMetricError is a struct for typed errors of method [`LogsMetricsAPI::create_logs_metric`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateLogsMetricError {
@@ -47,7 +46,7 @@ pub enum CreateLogsMetricError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteLogsMetricError is a struct for typed errors of method [`DeleteLogsMetric`]
+/// DeleteLogsMetricError is a struct for typed errors of method [`LogsMetricsAPI::delete_logs_metric`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteLogsMetricError {
@@ -57,7 +56,7 @@ pub enum DeleteLogsMetricError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetLogsMetricError is a struct for typed errors of method [`GetLogsMetric`]
+/// GetLogsMetricError is a struct for typed errors of method [`LogsMetricsAPI::get_logs_metric`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetLogsMetricError {
@@ -67,7 +66,7 @@ pub enum GetLogsMetricError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListLogsMetricsError is a struct for typed errors of method [`ListLogsMetrics`]
+/// ListLogsMetricsError is a struct for typed errors of method [`LogsMetricsAPI::list_logs_metrics`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListLogsMetricsError {
@@ -76,7 +75,7 @@ pub enum ListLogsMetricsError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateLogsMetricError is a struct for typed errors of method [`UpdateLogsMetric`]
+/// UpdateLogsMetricError is a struct for typed errors of method [`LogsMetricsAPI::update_logs_metric`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateLogsMetricError {

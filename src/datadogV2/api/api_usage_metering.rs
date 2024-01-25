@@ -1,12 +1,11 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// GetCostByOrgParams is a struct for passing parameters to the method [`GetCostByOrg`]
+/// GetCostByOrgParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_cost_by_org`]
 #[derive(Clone, Debug)]
 pub struct GetCostByOrgParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost beginning this month.
@@ -15,7 +14,7 @@ pub struct GetCostByOrgParams {
     pub end_month: Option<String>,
 }
 
-/// GetEstimatedCostByOrgParams is a struct for passing parameters to the method [`GetEstimatedCostByOrg`]
+/// GetEstimatedCostByOrgParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_estimated_cost_by_org`]
 #[derive(Clone, Debug)]
 pub struct GetEstimatedCostByOrgParams {
     /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`. Defaults to `summary`.
@@ -30,7 +29,7 @@ pub struct GetEstimatedCostByOrgParams {
     pub end_date: Option<String>,
 }
 
-/// GetHistoricalCostByOrgParams is a struct for passing parameters to the method [`GetHistoricalCostByOrg`]
+/// GetHistoricalCostByOrgParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_historical_cost_by_org`]
 #[derive(Clone, Debug)]
 pub struct GetHistoricalCostByOrgParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost beginning this month.
@@ -41,7 +40,7 @@ pub struct GetHistoricalCostByOrgParams {
     pub end_month: Option<String>,
 }
 
-/// GetHourlyUsageParams is a struct for passing parameters to the method [`GetHourlyUsage`]
+/// GetHourlyUsageParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_hourly_usage`]
 #[derive(Clone, Debug)]
 pub struct GetHourlyUsageParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
@@ -71,7 +70,7 @@ pub struct GetHourlyUsageParams {
     pub page_next_record_id: Option<String>,
 }
 
-/// GetMonthlyCostAttributionParams is a struct for passing parameters to the method [`GetMonthlyCostAttribution`]
+/// GetMonthlyCostAttributionParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_monthly_cost_attribution`]
 #[derive(Clone, Debug)]
 pub struct GetMonthlyCostAttributionParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost beginning in this month.
@@ -82,7 +81,7 @@ pub struct GetMonthlyCostAttributionParams {
     /// proportions (`<billing_dimension>_percentage_in_org`, `<billing_dimension>_percentage_in_account`). Use `*` to retrieve all fields.
     /// Example: `infra_host_on_demand_cost,infra_host_percentage_in_account`
     /// To obtain the complete list of active billing dimensions that can be used to replace
-    /// `<billing_dimension>` in the field names, make a request to the [Get active billing dimensions API](https://docs.datadoghq.com/api/latest/usage-metering/#get-active-billing-dimensions-for-cost-attribution).
+    /// `<billing_dimension>` in the field names, make a request to the [Get active billing dimensions API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-active-billing-dimensions-for-cost-attribution>).
     pub fields: String,
     /// The direction to sort by: `[desc, asc]`.
     pub sort_direction: Option<crate::datadogV2::model::SortDirection>,
@@ -97,14 +96,14 @@ pub struct GetMonthlyCostAttributionParams {
     pub include_descendants: Option<bool>,
 }
 
-/// GetProjectedCostParams is a struct for passing parameters to the method [`GetProjectedCost`]
+/// GetProjectedCostParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_projected_cost`]
 #[derive(Clone, Debug)]
 pub struct GetProjectedCostParams {
     /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`. Defaults to `summary`.
     pub view: Option<String>,
 }
 
-/// GetUsageApplicationSecurityMonitoringParams is a struct for passing parameters to the method [`GetUsageApplicationSecurityMonitoring`]
+/// GetUsageApplicationSecurityMonitoringParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_application_security_monitoring`]
 #[derive(Clone, Debug)]
 pub struct GetUsageApplicationSecurityMonitoringParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
@@ -114,7 +113,7 @@ pub struct GetUsageApplicationSecurityMonitoringParams {
     pub end_hr: Option<String>,
 }
 
-/// GetUsageLambdaTracedInvocationsParams is a struct for passing parameters to the method [`GetUsageLambdaTracedInvocations`]
+/// GetUsageLambdaTracedInvocationsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_lambda_traced_invocations`]
 #[derive(Clone, Debug)]
 pub struct GetUsageLambdaTracedInvocationsParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
@@ -124,7 +123,7 @@ pub struct GetUsageLambdaTracedInvocationsParams {
     pub end_hr: Option<String>,
 }
 
-/// GetUsageObservabilityPipelinesParams is a struct for passing parameters to the method [`GetUsageObservabilityPipelines`]
+/// GetUsageObservabilityPipelinesParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_observability_pipelines`]
 #[derive(Clone, Debug)]
 pub struct GetUsageObservabilityPipelinesParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
@@ -134,7 +133,7 @@ pub struct GetUsageObservabilityPipelinesParams {
     pub end_hr: Option<String>,
 }
 
-/// GetActiveBillingDimensionsError is a struct for typed errors of method [`GetActiveBillingDimensions`]
+/// GetActiveBillingDimensionsError is a struct for typed errors of method [`UsageMeteringAPI::get_active_billing_dimensions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetActiveBillingDimensionsError {
@@ -144,7 +143,7 @@ pub enum GetActiveBillingDimensionsError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetCostByOrgError is a struct for typed errors of method [`GetCostByOrg`]
+/// GetCostByOrgError is a struct for typed errors of method [`UsageMeteringAPI::get_cost_by_org`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetCostByOrgError {
@@ -154,7 +153,7 @@ pub enum GetCostByOrgError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetEstimatedCostByOrgError is a struct for typed errors of method [`GetEstimatedCostByOrg`]
+/// GetEstimatedCostByOrgError is a struct for typed errors of method [`UsageMeteringAPI::get_estimated_cost_by_org`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetEstimatedCostByOrgError {
@@ -164,7 +163,7 @@ pub enum GetEstimatedCostByOrgError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetHistoricalCostByOrgError is a struct for typed errors of method [`GetHistoricalCostByOrg`]
+/// GetHistoricalCostByOrgError is a struct for typed errors of method [`UsageMeteringAPI::get_historical_cost_by_org`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetHistoricalCostByOrgError {
@@ -174,7 +173,7 @@ pub enum GetHistoricalCostByOrgError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetHourlyUsageError is a struct for typed errors of method [`GetHourlyUsage`]
+/// GetHourlyUsageError is a struct for typed errors of method [`UsageMeteringAPI::get_hourly_usage`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetHourlyUsageError {
@@ -184,7 +183,7 @@ pub enum GetHourlyUsageError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetMonthlyCostAttributionError is a struct for typed errors of method [`GetMonthlyCostAttribution`]
+/// GetMonthlyCostAttributionError is a struct for typed errors of method [`UsageMeteringAPI::get_monthly_cost_attribution`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetMonthlyCostAttributionError {
@@ -194,7 +193,7 @@ pub enum GetMonthlyCostAttributionError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetProjectedCostError is a struct for typed errors of method [`GetProjectedCost`]
+/// GetProjectedCostError is a struct for typed errors of method [`UsageMeteringAPI::get_projected_cost`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetProjectedCostError {
@@ -204,7 +203,7 @@ pub enum GetProjectedCostError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageApplicationSecurityMonitoringError is a struct for typed errors of method [`GetUsageApplicationSecurityMonitoring`]
+/// GetUsageApplicationSecurityMonitoringError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_application_security_monitoring`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageApplicationSecurityMonitoringError {
@@ -214,7 +213,7 @@ pub enum GetUsageApplicationSecurityMonitoringError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageLambdaTracedInvocationsError is a struct for typed errors of method [`GetUsageLambdaTracedInvocations`]
+/// GetUsageLambdaTracedInvocationsError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_lambda_traced_invocations`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageLambdaTracedInvocationsError {
@@ -224,7 +223,7 @@ pub enum GetUsageLambdaTracedInvocationsError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageObservabilityPipelinesError is a struct for typed errors of method [`GetUsageObservabilityPipelines`]
+/// GetUsageObservabilityPipelinesError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_observability_pipelines`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageObservabilityPipelinesError {
@@ -331,7 +330,7 @@ impl UsageMeteringAPI {
     /// Get cost across multi-org account.
     /// Cost by org data for a given month becomes available no later than the 16th of the following month.
     /// **Note:** This endpoint has been deprecated. Please use the new endpoint
-    /// [`/historical_cost`](https://docs.datadoghq.com/api/latest/usage-metering/#get-historical-cost-across-your-account)
+    /// [`/historical_cost`](<https://docs.datadoghq.com/api/latest/usage-metering/#get-historical-cost-across-your-account>)
     /// instead.
     pub async fn get_cost_by_org(
         &self,
@@ -346,7 +345,7 @@ impl UsageMeteringAPI {
     /// Get cost across multi-org account.
     /// Cost by org data for a given month becomes available no later than the 16th of the following month.
     /// **Note:** This endpoint has been deprecated. Please use the new endpoint
-    /// [`/historical_cost`](https://docs.datadoghq.com/api/latest/usage-metering/#get-historical-cost-across-your-account)
+    /// [`/historical_cost`](<https://docs.datadoghq.com/api/latest/usage-metering/#get-historical-cost-across-your-account>)
     /// instead.
     pub async fn get_cost_by_org_with_http_info(
         &self,
@@ -928,7 +927,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for application security .
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family)
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_application_security_monitoring(
         &self,
         params: GetUsageApplicationSecurityMonitoringParams,
@@ -946,7 +945,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for application security .
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family)
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_application_security_monitoring_with_http_info(
         &self,
         params: GetUsageApplicationSecurityMonitoringParams,
@@ -1016,7 +1015,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for lambda traced invocations.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family)
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_lambda_traced_invocations(
         &self,
         params: GetUsageLambdaTracedInvocationsParams,
@@ -1034,7 +1033,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for lambda traced invocations.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family)
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_lambda_traced_invocations_with_http_info(
         &self,
         params: GetUsageLambdaTracedInvocationsParams,
@@ -1104,7 +1103,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for observability pipelines.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family)
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_observability_pipelines(
         &self,
         params: GetUsageObservabilityPipelinesParams,
@@ -1122,7 +1121,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for observability pipelines.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family)
+    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_observability_pipelines_with_http_info(
         &self,
         params: GetUsageObservabilityPipelinesParams,

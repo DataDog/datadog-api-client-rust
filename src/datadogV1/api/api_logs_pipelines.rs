@@ -1,33 +1,32 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateLogsPipelineParams is a struct for passing parameters to the method [`CreateLogsPipeline`]
+/// CreateLogsPipelineParams is a struct for passing parameters to the method [`LogsPipelinesAPI::create_logs_pipeline`]
 #[derive(Clone, Debug)]
 pub struct CreateLogsPipelineParams {
     /// Definition of the new pipeline.
     pub body: crate::datadogV1::model::LogsPipeline,
 }
 
-/// DeleteLogsPipelineParams is a struct for passing parameters to the method [`DeleteLogsPipeline`]
+/// DeleteLogsPipelineParams is a struct for passing parameters to the method [`LogsPipelinesAPI::delete_logs_pipeline`]
 #[derive(Clone, Debug)]
 pub struct DeleteLogsPipelineParams {
     /// ID of the pipeline to delete.
     pub pipeline_id: String,
 }
 
-/// GetLogsPipelineParams is a struct for passing parameters to the method [`GetLogsPipeline`]
+/// GetLogsPipelineParams is a struct for passing parameters to the method [`LogsPipelinesAPI::get_logs_pipeline`]
 #[derive(Clone, Debug)]
 pub struct GetLogsPipelineParams {
     /// ID of the pipeline to get.
     pub pipeline_id: String,
 }
 
-/// UpdateLogsPipelineParams is a struct for passing parameters to the method [`UpdateLogsPipeline`]
+/// UpdateLogsPipelineParams is a struct for passing parameters to the method [`LogsPipelinesAPI::update_logs_pipeline`]
 #[derive(Clone, Debug)]
 pub struct UpdateLogsPipelineParams {
     /// ID of the pipeline to delete.
@@ -36,14 +35,14 @@ pub struct UpdateLogsPipelineParams {
     pub body: crate::datadogV1::model::LogsPipeline,
 }
 
-/// UpdateLogsPipelineOrderParams is a struct for passing parameters to the method [`UpdateLogsPipelineOrder`]
+/// UpdateLogsPipelineOrderParams is a struct for passing parameters to the method [`LogsPipelinesAPI::update_logs_pipeline_order`]
 #[derive(Clone, Debug)]
 pub struct UpdateLogsPipelineOrderParams {
     /// Object containing the new ordered list of pipeline IDs.
     pub body: crate::datadogV1::model::LogsPipelinesOrder,
 }
 
-/// CreateLogsPipelineError is a struct for typed errors of method [`CreateLogsPipeline`]
+/// CreateLogsPipelineError is a struct for typed errors of method [`LogsPipelinesAPI::create_logs_pipeline`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateLogsPipelineError {
@@ -53,7 +52,7 @@ pub enum CreateLogsPipelineError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteLogsPipelineError is a struct for typed errors of method [`DeleteLogsPipeline`]
+/// DeleteLogsPipelineError is a struct for typed errors of method [`LogsPipelinesAPI::delete_logs_pipeline`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteLogsPipelineError {
@@ -63,7 +62,7 @@ pub enum DeleteLogsPipelineError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetLogsPipelineError is a struct for typed errors of method [`GetLogsPipeline`]
+/// GetLogsPipelineError is a struct for typed errors of method [`LogsPipelinesAPI::get_logs_pipeline`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetLogsPipelineError {
@@ -73,7 +72,7 @@ pub enum GetLogsPipelineError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetLogsPipelineOrderError is a struct for typed errors of method [`GetLogsPipelineOrder`]
+/// GetLogsPipelineOrderError is a struct for typed errors of method [`LogsPipelinesAPI::get_logs_pipeline_order`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetLogsPipelineOrderError {
@@ -82,7 +81,7 @@ pub enum GetLogsPipelineOrderError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListLogsPipelinesError is a struct for typed errors of method [`ListLogsPipelines`]
+/// ListLogsPipelinesError is a struct for typed errors of method [`LogsPipelinesAPI::list_logs_pipelines`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListLogsPipelinesError {
@@ -91,7 +90,7 @@ pub enum ListLogsPipelinesError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateLogsPipelineError is a struct for typed errors of method [`UpdateLogsPipeline`]
+/// UpdateLogsPipelineError is a struct for typed errors of method [`LogsPipelinesAPI::update_logs_pipeline`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateLogsPipelineError {
@@ -101,7 +100,7 @@ pub enum UpdateLogsPipelineError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateLogsPipelineOrderError is a struct for typed errors of method [`UpdateLogsPipelineOrder`]
+/// UpdateLogsPipelineOrderError is a struct for typed errors of method [`LogsPipelinesAPI::update_logs_pipeline_order`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateLogsPipelineOrderError {

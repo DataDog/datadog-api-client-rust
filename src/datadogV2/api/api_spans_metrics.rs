@@ -1,33 +1,32 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateSpansMetricParams is a struct for passing parameters to the method [`CreateSpansMetric`]
+/// CreateSpansMetricParams is a struct for passing parameters to the method [`SpansMetricsAPI::create_spans_metric`]
 #[derive(Clone, Debug)]
 pub struct CreateSpansMetricParams {
     /// The definition of the new span-based metric.
     pub body: crate::datadogV2::model::SpansMetricCreateRequest,
 }
 
-/// DeleteSpansMetricParams is a struct for passing parameters to the method [`DeleteSpansMetric`]
+/// DeleteSpansMetricParams is a struct for passing parameters to the method [`SpansMetricsAPI::delete_spans_metric`]
 #[derive(Clone, Debug)]
 pub struct DeleteSpansMetricParams {
     /// The name of the span-based metric.
     pub metric_id: String,
 }
 
-/// GetSpansMetricParams is a struct for passing parameters to the method [`GetSpansMetric`]
+/// GetSpansMetricParams is a struct for passing parameters to the method [`SpansMetricsAPI::get_spans_metric`]
 #[derive(Clone, Debug)]
 pub struct GetSpansMetricParams {
     /// The name of the span-based metric.
     pub metric_id: String,
 }
 
-/// UpdateSpansMetricParams is a struct for passing parameters to the method [`UpdateSpansMetric`]
+/// UpdateSpansMetricParams is a struct for passing parameters to the method [`SpansMetricsAPI::update_spans_metric`]
 #[derive(Clone, Debug)]
 pub struct UpdateSpansMetricParams {
     /// The name of the span-based metric.
@@ -36,7 +35,7 @@ pub struct UpdateSpansMetricParams {
     pub body: crate::datadogV2::model::SpansMetricUpdateRequest,
 }
 
-/// CreateSpansMetricError is a struct for typed errors of method [`CreateSpansMetric`]
+/// CreateSpansMetricError is a struct for typed errors of method [`SpansMetricsAPI::create_spans_metric`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateSpansMetricError {
@@ -47,7 +46,7 @@ pub enum CreateSpansMetricError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteSpansMetricError is a struct for typed errors of method [`DeleteSpansMetric`]
+/// DeleteSpansMetricError is a struct for typed errors of method [`SpansMetricsAPI::delete_spans_metric`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteSpansMetricError {
@@ -57,7 +56,7 @@ pub enum DeleteSpansMetricError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetSpansMetricError is a struct for typed errors of method [`GetSpansMetric`]
+/// GetSpansMetricError is a struct for typed errors of method [`SpansMetricsAPI::get_spans_metric`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetSpansMetricError {
@@ -67,7 +66,7 @@ pub enum GetSpansMetricError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListSpansMetricsError is a struct for typed errors of method [`ListSpansMetrics`]
+/// ListSpansMetricsError is a struct for typed errors of method [`SpansMetricsAPI::list_spans_metrics`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListSpansMetricsError {
@@ -76,7 +75,7 @@ pub enum ListSpansMetricsError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateSpansMetricError is a struct for typed errors of method [`UpdateSpansMetric`]
+/// UpdateSpansMetricError is a struct for typed errors of method [`SpansMetricsAPI::update_spans_metric`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateSpansMetricError {

@@ -1,26 +1,25 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateIncidentServiceParams is a struct for passing parameters to the method [`CreateIncidentService`]
+/// CreateIncidentServiceParams is a struct for passing parameters to the method [`IncidentServicesAPI::create_incident_service`]
 #[derive(Clone, Debug)]
 pub struct CreateIncidentServiceParams {
     /// Incident Service Payload.
     pub body: crate::datadogV2::model::IncidentServiceCreateRequest,
 }
 
-/// DeleteIncidentServiceParams is a struct for passing parameters to the method [`DeleteIncidentService`]
+/// DeleteIncidentServiceParams is a struct for passing parameters to the method [`IncidentServicesAPI::delete_incident_service`]
 #[derive(Clone, Debug)]
 pub struct DeleteIncidentServiceParams {
     /// The ID of the incident service.
     pub service_id: String,
 }
 
-/// GetIncidentServiceParams is a struct for passing parameters to the method [`GetIncidentService`]
+/// GetIncidentServiceParams is a struct for passing parameters to the method [`IncidentServicesAPI::get_incident_service`]
 #[derive(Clone, Debug)]
 pub struct GetIncidentServiceParams {
     /// The ID of the incident service.
@@ -29,7 +28,7 @@ pub struct GetIncidentServiceParams {
     pub include: Option<crate::datadogV2::model::IncidentRelatedObject>,
 }
 
-/// ListIncidentServicesParams is a struct for passing parameters to the method [`ListIncidentServices`]
+/// ListIncidentServicesParams is a struct for passing parameters to the method [`IncidentServicesAPI::list_incident_services`]
 #[derive(Clone, Debug)]
 pub struct ListIncidentServicesParams {
     /// Specifies which types of related objects should be included in the response.
@@ -42,7 +41,7 @@ pub struct ListIncidentServicesParams {
     pub filter: Option<String>,
 }
 
-/// UpdateIncidentServiceParams is a struct for passing parameters to the method [`UpdateIncidentService`]
+/// UpdateIncidentServiceParams is a struct for passing parameters to the method [`IncidentServicesAPI::update_incident_service`]
 #[derive(Clone, Debug)]
 pub struct UpdateIncidentServiceParams {
     /// The ID of the incident service.
@@ -51,7 +50,7 @@ pub struct UpdateIncidentServiceParams {
     pub body: crate::datadogV2::model::IncidentServiceUpdateRequest,
 }
 
-/// CreateIncidentServiceError is a struct for typed errors of method [`CreateIncidentService`]
+/// CreateIncidentServiceError is a struct for typed errors of method [`IncidentServicesAPI::create_incident_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateIncidentServiceError {
@@ -63,7 +62,7 @@ pub enum CreateIncidentServiceError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteIncidentServiceError is a struct for typed errors of method [`DeleteIncidentService`]
+/// DeleteIncidentServiceError is a struct for typed errors of method [`IncidentServicesAPI::delete_incident_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteIncidentServiceError {
@@ -75,7 +74,7 @@ pub enum DeleteIncidentServiceError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetIncidentServiceError is a struct for typed errors of method [`GetIncidentService`]
+/// GetIncidentServiceError is a struct for typed errors of method [`IncidentServicesAPI::get_incident_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetIncidentServiceError {
@@ -87,7 +86,7 @@ pub enum GetIncidentServiceError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListIncidentServicesError is a struct for typed errors of method [`ListIncidentServices`]
+/// ListIncidentServicesError is a struct for typed errors of method [`IncidentServicesAPI::list_incident_services`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListIncidentServicesError {
@@ -99,7 +98,7 @@ pub enum ListIncidentServicesError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateIncidentServiceError is a struct for typed errors of method [`UpdateIncidentService`]
+/// UpdateIncidentServiceError is a struct for typed errors of method [`IncidentServicesAPI::update_incident_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateIncidentServiceError {

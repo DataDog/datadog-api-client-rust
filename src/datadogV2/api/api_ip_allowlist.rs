@@ -1,18 +1,17 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// UpdateIPAllowlistParams is a struct for passing parameters to the method [`UpdateIPAllowlist`]
+/// UpdateIPAllowlistParams is a struct for passing parameters to the method [`IPAllowlistAPI::update_ip_allowlist`]
 #[derive(Clone, Debug)]
 pub struct UpdateIPAllowlistParams {
     pub body: crate::datadogV2::model::IPAllowlistUpdateRequest,
 }
 
-/// GetIPAllowlistError is a struct for typed errors of method [`GetIPAllowlist`]
+/// GetIPAllowlistError is a struct for typed errors of method [`IPAllowlistAPI::get_ip_allowlist`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetIPAllowlistError {
@@ -22,7 +21,7 @@ pub enum GetIPAllowlistError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateIPAllowlistError is a struct for typed errors of method [`UpdateIPAllowlist`]
+/// UpdateIPAllowlistError is a struct for typed errors of method [`IPAllowlistAPI::update_ip_allowlist`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateIPAllowlistError {

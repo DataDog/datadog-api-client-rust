@@ -1,18 +1,17 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateFastlyAccountParams is a struct for passing parameters to the method [`CreateFastlyAccount`]
+/// CreateFastlyAccountParams is a struct for passing parameters to the method [`FastlyIntegrationAPI::create_fastly_account`]
 #[derive(Clone, Debug)]
 pub struct CreateFastlyAccountParams {
     pub body: crate::datadogV2::model::FastlyAccountCreateRequest,
 }
 
-/// CreateFastlyServiceParams is a struct for passing parameters to the method [`CreateFastlyService`]
+/// CreateFastlyServiceParams is a struct for passing parameters to the method [`FastlyIntegrationAPI::create_fastly_service`]
 #[derive(Clone, Debug)]
 pub struct CreateFastlyServiceParams {
     /// Fastly Account id.
@@ -20,14 +19,14 @@ pub struct CreateFastlyServiceParams {
     pub body: crate::datadogV2::model::FastlyServiceRequest,
 }
 
-/// DeleteFastlyAccountParams is a struct for passing parameters to the method [`DeleteFastlyAccount`]
+/// DeleteFastlyAccountParams is a struct for passing parameters to the method [`FastlyIntegrationAPI::delete_fastly_account`]
 #[derive(Clone, Debug)]
 pub struct DeleteFastlyAccountParams {
     /// Fastly Account id.
     pub account_id: String,
 }
 
-/// DeleteFastlyServiceParams is a struct for passing parameters to the method [`DeleteFastlyService`]
+/// DeleteFastlyServiceParams is a struct for passing parameters to the method [`FastlyIntegrationAPI::delete_fastly_service`]
 #[derive(Clone, Debug)]
 pub struct DeleteFastlyServiceParams {
     /// Fastly Account id.
@@ -36,14 +35,14 @@ pub struct DeleteFastlyServiceParams {
     pub service_id: String,
 }
 
-/// GetFastlyAccountParams is a struct for passing parameters to the method [`GetFastlyAccount`]
+/// GetFastlyAccountParams is a struct for passing parameters to the method [`FastlyIntegrationAPI::get_fastly_account`]
 #[derive(Clone, Debug)]
 pub struct GetFastlyAccountParams {
     /// Fastly Account id.
     pub account_id: String,
 }
 
-/// GetFastlyServiceParams is a struct for passing parameters to the method [`GetFastlyService`]
+/// GetFastlyServiceParams is a struct for passing parameters to the method [`FastlyIntegrationAPI::get_fastly_service`]
 #[derive(Clone, Debug)]
 pub struct GetFastlyServiceParams {
     /// Fastly Account id.
@@ -52,14 +51,14 @@ pub struct GetFastlyServiceParams {
     pub service_id: String,
 }
 
-/// ListFastlyServicesParams is a struct for passing parameters to the method [`ListFastlyServices`]
+/// ListFastlyServicesParams is a struct for passing parameters to the method [`FastlyIntegrationAPI::list_fastly_services`]
 #[derive(Clone, Debug)]
 pub struct ListFastlyServicesParams {
     /// Fastly Account id.
     pub account_id: String,
 }
 
-/// UpdateFastlyAccountParams is a struct for passing parameters to the method [`UpdateFastlyAccount`]
+/// UpdateFastlyAccountParams is a struct for passing parameters to the method [`FastlyIntegrationAPI::update_fastly_account`]
 #[derive(Clone, Debug)]
 pub struct UpdateFastlyAccountParams {
     /// Fastly Account id.
@@ -67,7 +66,7 @@ pub struct UpdateFastlyAccountParams {
     pub body: crate::datadogV2::model::FastlyAccountUpdateRequest,
 }
 
-/// UpdateFastlyServiceParams is a struct for passing parameters to the method [`UpdateFastlyService`]
+/// UpdateFastlyServiceParams is a struct for passing parameters to the method [`FastlyIntegrationAPI::update_fastly_service`]
 #[derive(Clone, Debug)]
 pub struct UpdateFastlyServiceParams {
     /// Fastly Account id.
@@ -77,7 +76,7 @@ pub struct UpdateFastlyServiceParams {
     pub body: crate::datadogV2::model::FastlyServiceRequest,
 }
 
-/// CreateFastlyAccountError is a struct for typed errors of method [`CreateFastlyAccount`]
+/// CreateFastlyAccountError is a struct for typed errors of method [`FastlyIntegrationAPI::create_fastly_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateFastlyAccountError {
@@ -88,7 +87,7 @@ pub enum CreateFastlyAccountError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateFastlyServiceError is a struct for typed errors of method [`CreateFastlyService`]
+/// CreateFastlyServiceError is a struct for typed errors of method [`FastlyIntegrationAPI::create_fastly_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateFastlyServiceError {
@@ -99,7 +98,7 @@ pub enum CreateFastlyServiceError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteFastlyAccountError is a struct for typed errors of method [`DeleteFastlyAccount`]
+/// DeleteFastlyAccountError is a struct for typed errors of method [`FastlyIntegrationAPI::delete_fastly_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteFastlyAccountError {
@@ -110,7 +109,7 @@ pub enum DeleteFastlyAccountError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteFastlyServiceError is a struct for typed errors of method [`DeleteFastlyService`]
+/// DeleteFastlyServiceError is a struct for typed errors of method [`FastlyIntegrationAPI::delete_fastly_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteFastlyServiceError {
@@ -121,7 +120,7 @@ pub enum DeleteFastlyServiceError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetFastlyAccountError is a struct for typed errors of method [`GetFastlyAccount`]
+/// GetFastlyAccountError is a struct for typed errors of method [`FastlyIntegrationAPI::get_fastly_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetFastlyAccountError {
@@ -132,7 +131,7 @@ pub enum GetFastlyAccountError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetFastlyServiceError is a struct for typed errors of method [`GetFastlyService`]
+/// GetFastlyServiceError is a struct for typed errors of method [`FastlyIntegrationAPI::get_fastly_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetFastlyServiceError {
@@ -143,7 +142,7 @@ pub enum GetFastlyServiceError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListFastlyAccountsError is a struct for typed errors of method [`ListFastlyAccounts`]
+/// ListFastlyAccountsError is a struct for typed errors of method [`FastlyIntegrationAPI::list_fastly_accounts`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListFastlyAccountsError {
@@ -154,7 +153,7 @@ pub enum ListFastlyAccountsError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListFastlyServicesError is a struct for typed errors of method [`ListFastlyServices`]
+/// ListFastlyServicesError is a struct for typed errors of method [`FastlyIntegrationAPI::list_fastly_services`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListFastlyServicesError {
@@ -165,7 +164,7 @@ pub enum ListFastlyServicesError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateFastlyAccountError is a struct for typed errors of method [`UpdateFastlyAccount`]
+/// UpdateFastlyAccountError is a struct for typed errors of method [`FastlyIntegrationAPI::update_fastly_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateFastlyAccountError {
@@ -176,7 +175,7 @@ pub enum UpdateFastlyAccountError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateFastlyServiceError is a struct for typed errors of method [`UpdateFastlyService`]
+/// UpdateFastlyServiceError is a struct for typed errors of method [`FastlyIntegrationAPI::update_fastly_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateFastlyServiceError {

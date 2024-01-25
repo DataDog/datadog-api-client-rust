@@ -22,7 +22,7 @@ pub struct AWSAccount {
     /// Whether Datadog collects cloud security posture management resources from your AWS account. This includes additional resources not covered under the general `resource_collection`.
     #[serde(rename = "cspm_resource_collection_enabled")]
     pub cspm_resource_collection_enabled: Option<bool>,
-    /// An array of [AWS regions](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints)
+    /// An array of [AWS regions](<https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints>)
     /// to exclude from metrics collection.
     #[serde(rename = "excluded_regions")]
     pub excluded_regions: Option<Vec<String>>,

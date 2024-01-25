@@ -1,26 +1,25 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateIncidentTeamParams is a struct for passing parameters to the method [`CreateIncidentTeam`]
+/// CreateIncidentTeamParams is a struct for passing parameters to the method [`IncidentTeamsAPI::create_incident_team`]
 #[derive(Clone, Debug)]
 pub struct CreateIncidentTeamParams {
     /// Incident Team Payload.
     pub body: crate::datadogV2::model::IncidentTeamCreateRequest,
 }
 
-/// DeleteIncidentTeamParams is a struct for passing parameters to the method [`DeleteIncidentTeam`]
+/// DeleteIncidentTeamParams is a struct for passing parameters to the method [`IncidentTeamsAPI::delete_incident_team`]
 #[derive(Clone, Debug)]
 pub struct DeleteIncidentTeamParams {
     /// The ID of the incident team.
     pub team_id: String,
 }
 
-/// GetIncidentTeamParams is a struct for passing parameters to the method [`GetIncidentTeam`]
+/// GetIncidentTeamParams is a struct for passing parameters to the method [`IncidentTeamsAPI::get_incident_team`]
 #[derive(Clone, Debug)]
 pub struct GetIncidentTeamParams {
     /// The ID of the incident team.
@@ -29,7 +28,7 @@ pub struct GetIncidentTeamParams {
     pub include: Option<crate::datadogV2::model::IncidentRelatedObject>,
 }
 
-/// ListIncidentTeamsParams is a struct for passing parameters to the method [`ListIncidentTeams`]
+/// ListIncidentTeamsParams is a struct for passing parameters to the method [`IncidentTeamsAPI::list_incident_teams`]
 #[derive(Clone, Debug)]
 pub struct ListIncidentTeamsParams {
     /// Specifies which types of related objects should be included in the response.
@@ -42,7 +41,7 @@ pub struct ListIncidentTeamsParams {
     pub filter: Option<String>,
 }
 
-/// UpdateIncidentTeamParams is a struct for passing parameters to the method [`UpdateIncidentTeam`]
+/// UpdateIncidentTeamParams is a struct for passing parameters to the method [`IncidentTeamsAPI::update_incident_team`]
 #[derive(Clone, Debug)]
 pub struct UpdateIncidentTeamParams {
     /// The ID of the incident team.
@@ -51,7 +50,7 @@ pub struct UpdateIncidentTeamParams {
     pub body: crate::datadogV2::model::IncidentTeamUpdateRequest,
 }
 
-/// CreateIncidentTeamError is a struct for typed errors of method [`CreateIncidentTeam`]
+/// CreateIncidentTeamError is a struct for typed errors of method [`IncidentTeamsAPI::create_incident_team`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateIncidentTeamError {
@@ -63,7 +62,7 @@ pub enum CreateIncidentTeamError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteIncidentTeamError is a struct for typed errors of method [`DeleteIncidentTeam`]
+/// DeleteIncidentTeamError is a struct for typed errors of method [`IncidentTeamsAPI::delete_incident_team`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteIncidentTeamError {
@@ -75,7 +74,7 @@ pub enum DeleteIncidentTeamError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetIncidentTeamError is a struct for typed errors of method [`GetIncidentTeam`]
+/// GetIncidentTeamError is a struct for typed errors of method [`IncidentTeamsAPI::get_incident_team`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetIncidentTeamError {
@@ -87,7 +86,7 @@ pub enum GetIncidentTeamError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListIncidentTeamsError is a struct for typed errors of method [`ListIncidentTeams`]
+/// ListIncidentTeamsError is a struct for typed errors of method [`IncidentTeamsAPI::list_incident_teams`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListIncidentTeamsError {
@@ -99,7 +98,7 @@ pub enum ListIncidentTeamsError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateIncidentTeamError is a struct for typed errors of method [`UpdateIncidentTeam`]
+/// UpdateIncidentTeamError is a struct for typed errors of method [`IncidentTeamsAPI::update_incident_team`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateIncidentTeamError {

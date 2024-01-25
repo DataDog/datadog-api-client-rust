@@ -1,12 +1,11 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateHostTagsParams is a struct for passing parameters to the method [`CreateHostTags`]
+/// CreateHostTagsParams is a struct for passing parameters to the method [`TagsAPI::create_host_tags`]
 #[derive(Clone, Debug)]
 pub struct CreateHostTagsParams {
     /// This endpoint allows you to add new tags to a host, optionally specifying where the tags came from.
@@ -14,21 +13,21 @@ pub struct CreateHostTagsParams {
     /// Update host tags request body.
     pub body: crate::datadogV1::model::HostTags,
     /// The source of the tags.
-    /// [Complete list of source attribute values](https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value).
+    /// [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>).
     pub source: Option<String>,
 }
 
-/// DeleteHostTagsParams is a struct for passing parameters to the method [`DeleteHostTags`]
+/// DeleteHostTagsParams is a struct for passing parameters to the method [`TagsAPI::delete_host_tags`]
 #[derive(Clone, Debug)]
 pub struct DeleteHostTagsParams {
     /// This endpoint allows you to remove all user-assigned tags for a single host.
     pub host_name: String,
     /// The source of the tags (for example chef, puppet).
-    /// [Complete list of source attribute values](https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value).
+    /// [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>).
     pub source: Option<String>,
 }
 
-/// GetHostTagsParams is a struct for passing parameters to the method [`GetHostTags`]
+/// GetHostTagsParams is a struct for passing parameters to the method [`TagsAPI::get_host_tags`]
 #[derive(Clone, Debug)]
 pub struct GetHostTagsParams {
     /// When specified, filters list of tags to those tags with the specified source.
@@ -37,14 +36,14 @@ pub struct GetHostTagsParams {
     pub source: Option<String>,
 }
 
-/// ListHostTagsParams is a struct for passing parameters to the method [`ListHostTags`]
+/// ListHostTagsParams is a struct for passing parameters to the method [`TagsAPI::list_host_tags`]
 #[derive(Clone, Debug)]
 pub struct ListHostTagsParams {
     /// When specified, filters host list to those tags with the specified source.
     pub source: Option<String>,
 }
 
-/// UpdateHostTagsParams is a struct for passing parameters to the method [`UpdateHostTags`]
+/// UpdateHostTagsParams is a struct for passing parameters to the method [`TagsAPI::update_host_tags`]
 #[derive(Clone, Debug)]
 pub struct UpdateHostTagsParams {
     /// This endpoint allows you to update/replace all in an integration source with those supplied in the request.
@@ -52,11 +51,11 @@ pub struct UpdateHostTagsParams {
     /// Add tags to host
     pub body: crate::datadogV1::model::HostTags,
     /// The source of the tags (for example chef, puppet).
-    /// [Complete list of source attribute values](https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value)
+    /// [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>)
     pub source: Option<String>,
 }
 
-/// CreateHostTagsError is a struct for typed errors of method [`CreateHostTags`]
+/// CreateHostTagsError is a struct for typed errors of method [`TagsAPI::create_host_tags`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateHostTagsError {
@@ -66,7 +65,7 @@ pub enum CreateHostTagsError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteHostTagsError is a struct for typed errors of method [`DeleteHostTags`]
+/// DeleteHostTagsError is a struct for typed errors of method [`TagsAPI::delete_host_tags`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteHostTagsError {
@@ -76,7 +75,7 @@ pub enum DeleteHostTagsError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetHostTagsError is a struct for typed errors of method [`GetHostTags`]
+/// GetHostTagsError is a struct for typed errors of method [`TagsAPI::get_host_tags`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetHostTagsError {
@@ -86,7 +85,7 @@ pub enum GetHostTagsError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListHostTagsError is a struct for typed errors of method [`ListHostTags`]
+/// ListHostTagsError is a struct for typed errors of method [`TagsAPI::list_host_tags`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListHostTagsError {
@@ -96,7 +95,7 @@ pub enum ListHostTagsError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateHostTagsError is a struct for typed errors of method [`UpdateHostTags`]
+/// UpdateHostTagsError is a struct for typed errors of method [`TagsAPI::update_host_tags`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateHostTagsError {

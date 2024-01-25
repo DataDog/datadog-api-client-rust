@@ -1,32 +1,31 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateGCPSTSAccountParams is a struct for passing parameters to the method [`CreateGCPSTSAccount`]
+/// CreateGCPSTSAccountParams is a struct for passing parameters to the method [`GCPIntegrationAPI::create_gcpsts_account`]
 #[derive(Clone, Debug)]
 pub struct CreateGCPSTSAccountParams {
     pub body: crate::datadogV2::model::GCPSTSServiceAccountCreateRequest,
 }
 
-/// DeleteGCPSTSAccountParams is a struct for passing parameters to the method [`DeleteGCPSTSAccount`]
+/// DeleteGCPSTSAccountParams is a struct for passing parameters to the method [`GCPIntegrationAPI::delete_gcpsts_account`]
 #[derive(Clone, Debug)]
 pub struct DeleteGCPSTSAccountParams {
     /// Your GCP STS enabled service account's unique ID.
     pub account_id: String,
 }
 
-/// MakeGCPSTSDelegateParams is a struct for passing parameters to the method [`MakeGCPSTSDelegate`]
+/// MakeGCPSTSDelegateParams is a struct for passing parameters to the method [`GCPIntegrationAPI::make_gcpsts_delegate`]
 #[derive(Clone, Debug)]
 pub struct MakeGCPSTSDelegateParams {
     /// Create a delegate service account within Datadog.
     pub body: Option<Option<std::collections::BTreeMap<String, serde_json::Value>>>,
 }
 
-/// UpdateGCPSTSAccountParams is a struct for passing parameters to the method [`UpdateGCPSTSAccount`]
+/// UpdateGCPSTSAccountParams is a struct for passing parameters to the method [`GCPIntegrationAPI::update_gcpsts_account`]
 #[derive(Clone, Debug)]
 pub struct UpdateGCPSTSAccountParams {
     /// Your GCP STS enabled service account's unique ID.
@@ -34,7 +33,7 @@ pub struct UpdateGCPSTSAccountParams {
     pub body: crate::datadogV2::model::GCPSTSServiceAccountUpdateRequest,
 }
 
-/// CreateGCPSTSAccountError is a struct for typed errors of method [`CreateGCPSTSAccount`]
+/// CreateGCPSTSAccountError is a struct for typed errors of method [`GCPIntegrationAPI::create_gcpsts_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateGCPSTSAccountError {
@@ -46,7 +45,7 @@ pub enum CreateGCPSTSAccountError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteGCPSTSAccountError is a struct for typed errors of method [`DeleteGCPSTSAccount`]
+/// DeleteGCPSTSAccountError is a struct for typed errors of method [`GCPIntegrationAPI::delete_gcpsts_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteGCPSTSAccountError {
@@ -56,7 +55,7 @@ pub enum DeleteGCPSTSAccountError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetGCPSTSDelegateError is a struct for typed errors of method [`GetGCPSTSDelegate`]
+/// GetGCPSTSDelegateError is a struct for typed errors of method [`GCPIntegrationAPI::get_gcpsts_delegate`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetGCPSTSDelegateError {
@@ -65,7 +64,7 @@ pub enum GetGCPSTSDelegateError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListGCPSTSAccountsError is a struct for typed errors of method [`ListGCPSTSAccounts`]
+/// ListGCPSTSAccountsError is a struct for typed errors of method [`GCPIntegrationAPI::list_gcpsts_accounts`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListGCPSTSAccountsError {
@@ -75,7 +74,7 @@ pub enum ListGCPSTSAccountsError {
     UnknownValue(serde_json::Value),
 }
 
-/// MakeGCPSTSDelegateError is a struct for typed errors of method [`MakeGCPSTSDelegate`]
+/// MakeGCPSTSDelegateError is a struct for typed errors of method [`GCPIntegrationAPI::make_gcpsts_delegate`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum MakeGCPSTSDelegateError {
@@ -85,7 +84,7 @@ pub enum MakeGCPSTSDelegateError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateGCPSTSAccountError is a struct for typed errors of method [`UpdateGCPSTSAccount`]
+/// UpdateGCPSTSAccountError is a struct for typed errors of method [`GCPIntegrationAPI::update_gcpsts_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateGCPSTSAccountError {

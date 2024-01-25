@@ -1,33 +1,32 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateUserParams is a struct for passing parameters to the method [`CreateUser`]
+/// CreateUserParams is a struct for passing parameters to the method [`UsersAPI::create_user`]
 #[derive(Clone, Debug)]
 pub struct CreateUserParams {
     /// User object that needs to be created.
     pub body: crate::datadogV1::model::User,
 }
 
-/// DisableUserParams is a struct for passing parameters to the method [`DisableUser`]
+/// DisableUserParams is a struct for passing parameters to the method [`UsersAPI::disable_user`]
 #[derive(Clone, Debug)]
 pub struct DisableUserParams {
     /// The handle of the user.
     pub user_handle: String,
 }
 
-/// GetUserParams is a struct for passing parameters to the method [`GetUser`]
+/// GetUserParams is a struct for passing parameters to the method [`UsersAPI::get_user`]
 #[derive(Clone, Debug)]
 pub struct GetUserParams {
     /// The ID of the user.
     pub user_handle: String,
 }
 
-/// UpdateUserParams is a struct for passing parameters to the method [`UpdateUser`]
+/// UpdateUserParams is a struct for passing parameters to the method [`UsersAPI::update_user`]
 #[derive(Clone, Debug)]
 pub struct UpdateUserParams {
     /// The ID of the user.
@@ -36,7 +35,7 @@ pub struct UpdateUserParams {
     pub body: crate::datadogV1::model::User,
 }
 
-/// CreateUserError is a struct for typed errors of method [`CreateUser`]
+/// CreateUserError is a struct for typed errors of method [`UsersAPI::create_user`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateUserError {
@@ -47,7 +46,7 @@ pub enum CreateUserError {
     UnknownValue(serde_json::Value),
 }
 
-/// DisableUserError is a struct for typed errors of method [`DisableUser`]
+/// DisableUserError is a struct for typed errors of method [`UsersAPI::disable_user`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DisableUserError {
@@ -58,7 +57,7 @@ pub enum DisableUserError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUserError is a struct for typed errors of method [`GetUser`]
+/// GetUserError is a struct for typed errors of method [`UsersAPI::get_user`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUserError {
@@ -68,7 +67,7 @@ pub enum GetUserError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListUsersError is a struct for typed errors of method [`ListUsers`]
+/// ListUsersError is a struct for typed errors of method [`UsersAPI::list_users`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListUsersError {
@@ -77,7 +76,7 @@ pub enum ListUsersError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateUserError is a struct for typed errors of method [`UpdateUser`]
+/// UpdateUserError is a struct for typed errors of method [`UsersAPI::update_user`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateUserError {
