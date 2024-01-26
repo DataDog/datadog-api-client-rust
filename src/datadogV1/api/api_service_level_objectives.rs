@@ -1,26 +1,25 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CheckCanDeleteSLOParams is a struct for passing parameters to the method [`CheckCanDeleteSLO`]
+/// CheckCanDeleteSLOParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::check_can_delete_slo`]
 #[derive(Clone, Debug)]
 pub struct CheckCanDeleteSLOParams {
     /// A comma separated list of the IDs of the service level objectives objects.
     pub ids: String,
 }
 
-/// CreateSLOParams is a struct for passing parameters to the method [`CreateSLO`]
+/// CreateSLOParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::create_slo`]
 #[derive(Clone, Debug)]
 pub struct CreateSLOParams {
     /// Service level objective request object.
     pub body: crate::datadogV1::model::ServiceLevelObjectiveRequest,
 }
 
-/// DeleteSLOParams is a struct for passing parameters to the method [`DeleteSLO`]
+/// DeleteSLOParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::delete_slo`]
 #[derive(Clone, Debug)]
 pub struct DeleteSLOParams {
     /// The ID of the service level objective.
@@ -29,14 +28,14 @@ pub struct DeleteSLOParams {
     pub force: Option<String>,
 }
 
-/// DeleteSLOTimeframeInBulkParams is a struct for passing parameters to the method [`DeleteSLOTimeframeInBulk`]
+/// DeleteSLOTimeframeInBulkParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::delete_slo_timeframe_in_bulk`]
 #[derive(Clone, Debug)]
 pub struct DeleteSLOTimeframeInBulkParams {
     /// Delete multiple service level objective objects request body.
     pub body: std::collections::BTreeMap<String, Vec<crate::datadogV1::model::SLOTimeframe>>,
 }
 
-/// GetSLOParams is a struct for passing parameters to the method [`GetSLO`]
+/// GetSLOParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::get_slo`]
 #[derive(Clone, Debug)]
 pub struct GetSLOParams {
     /// The ID of the service level objective object.
@@ -45,14 +44,14 @@ pub struct GetSLOParams {
     pub with_configured_alert_ids: Option<bool>,
 }
 
-/// GetSLOCorrectionsParams is a struct for passing parameters to the method [`GetSLOCorrections`]
+/// GetSLOCorrectionsParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::get_slo_corrections`]
 #[derive(Clone, Debug)]
 pub struct GetSLOCorrectionsParams {
     /// The ID of the service level objective object.
     pub slo_id: String,
 }
 
-/// GetSLOHistoryParams is a struct for passing parameters to the method [`GetSLOHistory`]
+/// GetSLOHistoryParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::get_slo_history`]
 #[derive(Clone, Debug)]
 pub struct GetSLOHistoryParams {
     /// The ID of the service level objective object.
@@ -68,7 +67,7 @@ pub struct GetSLOHistoryParams {
     pub apply_correction: Option<bool>,
 }
 
-/// ListSLOsParams is a struct for passing parameters to the method [`ListSLOs`]
+/// ListSLOsParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::list_sl_os`]
 #[derive(Clone, Debug)]
 pub struct ListSLOsParams {
     /// A comma separated list of the IDs of the service level objectives objects.
@@ -85,7 +84,7 @@ pub struct ListSLOsParams {
     pub offset: Option<i64>,
 }
 
-/// SearchSLOParams is a struct for passing parameters to the method [`SearchSLO`]
+/// SearchSLOParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::search_slo`]
 #[derive(Clone, Debug)]
 pub struct SearchSLOParams {
     /// The query string to filter results based on SLO names.
@@ -100,7 +99,7 @@ pub struct SearchSLOParams {
     pub include_facets: Option<bool>,
 }
 
-/// UpdateSLOParams is a struct for passing parameters to the method [`UpdateSLO`]
+/// UpdateSLOParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::update_slo`]
 #[derive(Clone, Debug)]
 pub struct UpdateSLOParams {
     /// The ID of the service level objective object.
@@ -109,7 +108,7 @@ pub struct UpdateSLOParams {
     pub body: crate::datadogV1::model::ServiceLevelObjective,
 }
 
-/// CheckCanDeleteSLOError is a struct for typed errors of method [`CheckCanDeleteSLO`]
+/// CheckCanDeleteSLOError is a struct for typed errors of method [`ServiceLevelObjectivesAPI::check_can_delete_slo`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CheckCanDeleteSLOError {
@@ -120,7 +119,7 @@ pub enum CheckCanDeleteSLOError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateSLOError is a struct for typed errors of method [`CreateSLO`]
+/// CreateSLOError is a struct for typed errors of method [`ServiceLevelObjectivesAPI::create_slo`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateSLOError {
@@ -130,7 +129,7 @@ pub enum CreateSLOError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteSLOError is a struct for typed errors of method [`DeleteSLO`]
+/// DeleteSLOError is a struct for typed errors of method [`ServiceLevelObjectivesAPI::delete_slo`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteSLOError {
@@ -141,7 +140,7 @@ pub enum DeleteSLOError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteSLOTimeframeInBulkError is a struct for typed errors of method [`DeleteSLOTimeframeInBulk`]
+/// DeleteSLOTimeframeInBulkError is a struct for typed errors of method [`ServiceLevelObjectivesAPI::delete_slo_timeframe_in_bulk`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteSLOTimeframeInBulkError {
@@ -151,7 +150,7 @@ pub enum DeleteSLOTimeframeInBulkError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetSLOError is a struct for typed errors of method [`GetSLO`]
+/// GetSLOError is a struct for typed errors of method [`ServiceLevelObjectivesAPI::get_slo`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetSLOError {
@@ -161,7 +160,7 @@ pub enum GetSLOError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetSLOCorrectionsError is a struct for typed errors of method [`GetSLOCorrections`]
+/// GetSLOCorrectionsError is a struct for typed errors of method [`ServiceLevelObjectivesAPI::get_slo_corrections`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetSLOCorrectionsError {
@@ -172,7 +171,7 @@ pub enum GetSLOCorrectionsError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetSLOHistoryError is a struct for typed errors of method [`GetSLOHistory`]
+/// GetSLOHistoryError is a struct for typed errors of method [`ServiceLevelObjectivesAPI::get_slo_history`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetSLOHistoryError {
@@ -183,7 +182,7 @@ pub enum GetSLOHistoryError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListSLOsError is a struct for typed errors of method [`ListSLOs`]
+/// ListSLOsError is a struct for typed errors of method [`ServiceLevelObjectivesAPI::list_sl_os`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListSLOsError {
@@ -194,7 +193,7 @@ pub enum ListSLOsError {
     UnknownValue(serde_json::Value),
 }
 
-/// SearchSLOError is a struct for typed errors of method [`SearchSLO`]
+/// SearchSLOError is a struct for typed errors of method [`ServiceLevelObjectivesAPI::search_slo`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SearchSLOError {
@@ -204,7 +203,7 @@ pub enum SearchSLOError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateSLOError is a struct for typed errors of method [`UpdateSLO`]
+/// UpdateSLOError is a struct for typed errors of method [`ServiceLevelObjectivesAPI::update_slo`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateSLOError {

@@ -1,18 +1,17 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateTeamParams is a struct for passing parameters to the method [`CreateTeam`]
+/// CreateTeamParams is a struct for passing parameters to the method [`TeamsAPI::create_team`]
 #[derive(Clone, Debug)]
 pub struct CreateTeamParams {
     pub body: crate::datadogV2::model::TeamCreateRequest,
 }
 
-/// CreateTeamLinkParams is a struct for passing parameters to the method [`CreateTeamLink`]
+/// CreateTeamLinkParams is a struct for passing parameters to the method [`TeamsAPI::create_team_link`]
 #[derive(Clone, Debug)]
 pub struct CreateTeamLinkParams {
     /// None
@@ -20,7 +19,7 @@ pub struct CreateTeamLinkParams {
     pub body: crate::datadogV2::model::TeamLinkCreateRequest,
 }
 
-/// CreateTeamMembershipParams is a struct for passing parameters to the method [`CreateTeamMembership`]
+/// CreateTeamMembershipParams is a struct for passing parameters to the method [`TeamsAPI::create_team_membership`]
 #[derive(Clone, Debug)]
 pub struct CreateTeamMembershipParams {
     /// None
@@ -28,14 +27,14 @@ pub struct CreateTeamMembershipParams {
     pub body: crate::datadogV2::model::UserTeamRequest,
 }
 
-/// DeleteTeamParams is a struct for passing parameters to the method [`DeleteTeam`]
+/// DeleteTeamParams is a struct for passing parameters to the method [`TeamsAPI::delete_team`]
 #[derive(Clone, Debug)]
 pub struct DeleteTeamParams {
     /// None
     pub team_id: String,
 }
 
-/// DeleteTeamLinkParams is a struct for passing parameters to the method [`DeleteTeamLink`]
+/// DeleteTeamLinkParams is a struct for passing parameters to the method [`TeamsAPI::delete_team_link`]
 #[derive(Clone, Debug)]
 pub struct DeleteTeamLinkParams {
     /// None
@@ -44,7 +43,7 @@ pub struct DeleteTeamLinkParams {
     pub link_id: String,
 }
 
-/// DeleteTeamMembershipParams is a struct for passing parameters to the method [`DeleteTeamMembership`]
+/// DeleteTeamMembershipParams is a struct for passing parameters to the method [`TeamsAPI::delete_team_membership`]
 #[derive(Clone, Debug)]
 pub struct DeleteTeamMembershipParams {
     /// None
@@ -53,14 +52,14 @@ pub struct DeleteTeamMembershipParams {
     pub user_id: String,
 }
 
-/// GetTeamParams is a struct for passing parameters to the method [`GetTeam`]
+/// GetTeamParams is a struct for passing parameters to the method [`TeamsAPI::get_team`]
 #[derive(Clone, Debug)]
 pub struct GetTeamParams {
     /// None
     pub team_id: String,
 }
 
-/// GetTeamLinkParams is a struct for passing parameters to the method [`GetTeamLink`]
+/// GetTeamLinkParams is a struct for passing parameters to the method [`TeamsAPI::get_team_link`]
 #[derive(Clone, Debug)]
 pub struct GetTeamLinkParams {
     /// None
@@ -69,14 +68,14 @@ pub struct GetTeamLinkParams {
     pub link_id: String,
 }
 
-/// GetTeamLinksParams is a struct for passing parameters to the method [`GetTeamLinks`]
+/// GetTeamLinksParams is a struct for passing parameters to the method [`TeamsAPI::get_team_links`]
 #[derive(Clone, Debug)]
 pub struct GetTeamLinksParams {
     /// None
     pub team_id: String,
 }
 
-/// GetTeamMembershipsParams is a struct for passing parameters to the method [`GetTeamMemberships`]
+/// GetTeamMembershipsParams is a struct for passing parameters to the method [`TeamsAPI::get_team_memberships`]
 #[derive(Clone, Debug)]
 pub struct GetTeamMembershipsParams {
     /// None
@@ -91,21 +90,21 @@ pub struct GetTeamMembershipsParams {
     pub filter_keyword: Option<String>,
 }
 
-/// GetTeamPermissionSettingsParams is a struct for passing parameters to the method [`GetTeamPermissionSettings`]
+/// GetTeamPermissionSettingsParams is a struct for passing parameters to the method [`TeamsAPI::get_team_permission_settings`]
 #[derive(Clone, Debug)]
 pub struct GetTeamPermissionSettingsParams {
     /// None
     pub team_id: String,
 }
 
-/// GetUserMembershipsParams is a struct for passing parameters to the method [`GetUserMemberships`]
+/// GetUserMembershipsParams is a struct for passing parameters to the method [`TeamsAPI::get_user_memberships`]
 #[derive(Clone, Debug)]
 pub struct GetUserMembershipsParams {
     /// None
     pub user_uuid: String,
 }
 
-/// ListTeamsParams is a struct for passing parameters to the method [`ListTeams`]
+/// ListTeamsParams is a struct for passing parameters to the method [`TeamsAPI::list_teams`]
 #[derive(Clone, Debug)]
 pub struct ListTeamsParams {
     /// Specific page number to return.
@@ -124,7 +123,7 @@ pub struct ListTeamsParams {
     pub fields_team: Option<Vec<crate::datadogV2::model::TeamsField>>,
 }
 
-/// UpdateTeamParams is a struct for passing parameters to the method [`UpdateTeam`]
+/// UpdateTeamParams is a struct for passing parameters to the method [`TeamsAPI::update_team`]
 #[derive(Clone, Debug)]
 pub struct UpdateTeamParams {
     /// None
@@ -132,7 +131,7 @@ pub struct UpdateTeamParams {
     pub body: crate::datadogV2::model::TeamUpdateRequest,
 }
 
-/// UpdateTeamLinkParams is a struct for passing parameters to the method [`UpdateTeamLink`]
+/// UpdateTeamLinkParams is a struct for passing parameters to the method [`TeamsAPI::update_team_link`]
 #[derive(Clone, Debug)]
 pub struct UpdateTeamLinkParams {
     /// None
@@ -142,7 +141,7 @@ pub struct UpdateTeamLinkParams {
     pub body: crate::datadogV2::model::TeamLinkCreateRequest,
 }
 
-/// UpdateTeamMembershipParams is a struct for passing parameters to the method [`UpdateTeamMembership`]
+/// UpdateTeamMembershipParams is a struct for passing parameters to the method [`TeamsAPI::update_team_membership`]
 #[derive(Clone, Debug)]
 pub struct UpdateTeamMembershipParams {
     /// None
@@ -152,7 +151,7 @@ pub struct UpdateTeamMembershipParams {
     pub body: crate::datadogV2::model::UserTeamUpdateRequest,
 }
 
-/// UpdateTeamPermissionSettingParams is a struct for passing parameters to the method [`UpdateTeamPermissionSetting`]
+/// UpdateTeamPermissionSettingParams is a struct for passing parameters to the method [`TeamsAPI::update_team_permission_setting`]
 #[derive(Clone, Debug)]
 pub struct UpdateTeamPermissionSettingParams {
     /// None
@@ -162,7 +161,7 @@ pub struct UpdateTeamPermissionSettingParams {
     pub body: crate::datadogV2::model::TeamPermissionSettingUpdateRequest,
 }
 
-/// CreateTeamError is a struct for typed errors of method [`CreateTeam`]
+/// CreateTeamError is a struct for typed errors of method [`TeamsAPI::create_team`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateTeamError {
@@ -172,7 +171,7 @@ pub enum CreateTeamError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateTeamLinkError is a struct for typed errors of method [`CreateTeamLink`]
+/// CreateTeamLinkError is a struct for typed errors of method [`TeamsAPI::create_team_link`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateTeamLinkError {
@@ -183,7 +182,7 @@ pub enum CreateTeamLinkError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateTeamMembershipError is a struct for typed errors of method [`CreateTeamMembership`]
+/// CreateTeamMembershipError is a struct for typed errors of method [`TeamsAPI::create_team_membership`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateTeamMembershipError {
@@ -194,7 +193,7 @@ pub enum CreateTeamMembershipError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteTeamError is a struct for typed errors of method [`DeleteTeam`]
+/// DeleteTeamError is a struct for typed errors of method [`TeamsAPI::delete_team`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteTeamError {
@@ -204,7 +203,7 @@ pub enum DeleteTeamError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteTeamLinkError is a struct for typed errors of method [`DeleteTeamLink`]
+/// DeleteTeamLinkError is a struct for typed errors of method [`TeamsAPI::delete_team_link`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteTeamLinkError {
@@ -214,7 +213,7 @@ pub enum DeleteTeamLinkError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteTeamMembershipError is a struct for typed errors of method [`DeleteTeamMembership`]
+/// DeleteTeamMembershipError is a struct for typed errors of method [`TeamsAPI::delete_team_membership`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteTeamMembershipError {
@@ -224,7 +223,7 @@ pub enum DeleteTeamMembershipError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetTeamError is a struct for typed errors of method [`GetTeam`]
+/// GetTeamError is a struct for typed errors of method [`TeamsAPI::get_team`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetTeamError {
@@ -234,7 +233,7 @@ pub enum GetTeamError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetTeamLinkError is a struct for typed errors of method [`GetTeamLink`]
+/// GetTeamLinkError is a struct for typed errors of method [`TeamsAPI::get_team_link`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetTeamLinkError {
@@ -244,7 +243,7 @@ pub enum GetTeamLinkError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetTeamLinksError is a struct for typed errors of method [`GetTeamLinks`]
+/// GetTeamLinksError is a struct for typed errors of method [`TeamsAPI::get_team_links`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetTeamLinksError {
@@ -254,7 +253,7 @@ pub enum GetTeamLinksError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetTeamMembershipsError is a struct for typed errors of method [`GetTeamMemberships`]
+/// GetTeamMembershipsError is a struct for typed errors of method [`TeamsAPI::get_team_memberships`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetTeamMembershipsError {
@@ -264,7 +263,7 @@ pub enum GetTeamMembershipsError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetTeamPermissionSettingsError is a struct for typed errors of method [`GetTeamPermissionSettings`]
+/// GetTeamPermissionSettingsError is a struct for typed errors of method [`TeamsAPI::get_team_permission_settings`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetTeamPermissionSettingsError {
@@ -274,7 +273,7 @@ pub enum GetTeamPermissionSettingsError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUserMembershipsError is a struct for typed errors of method [`GetUserMemberships`]
+/// GetUserMembershipsError is a struct for typed errors of method [`TeamsAPI::get_user_memberships`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUserMembershipsError {
@@ -283,7 +282,7 @@ pub enum GetUserMembershipsError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListTeamsError is a struct for typed errors of method [`ListTeams`]
+/// ListTeamsError is a struct for typed errors of method [`TeamsAPI::list_teams`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListTeamsError {
@@ -292,7 +291,7 @@ pub enum ListTeamsError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateTeamError is a struct for typed errors of method [`UpdateTeam`]
+/// UpdateTeamError is a struct for typed errors of method [`TeamsAPI::update_team`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateTeamError {
@@ -304,7 +303,7 @@ pub enum UpdateTeamError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateTeamLinkError is a struct for typed errors of method [`UpdateTeamLink`]
+/// UpdateTeamLinkError is a struct for typed errors of method [`TeamsAPI::update_team_link`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateTeamLinkError {
@@ -314,7 +313,7 @@ pub enum UpdateTeamLinkError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateTeamMembershipError is a struct for typed errors of method [`UpdateTeamMembership`]
+/// UpdateTeamMembershipError is a struct for typed errors of method [`TeamsAPI::update_team_membership`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateTeamMembershipError {
@@ -324,7 +323,7 @@ pub enum UpdateTeamMembershipError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateTeamPermissionSettingError is a struct for typed errors of method [`UpdateTeamPermissionSetting`]
+/// UpdateTeamPermissionSettingError is a struct for typed errors of method [`TeamsAPI::update_team_permission_setting`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateTeamPermissionSettingError {

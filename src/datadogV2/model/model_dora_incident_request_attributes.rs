@@ -29,7 +29,7 @@ pub struct DORAIncidentRequestAttributes {
     /// Unix timestamp in nanoseconds when the incident started.
     #[serde(rename = "started_at")]
     pub started_at: i64,
-    /// Version to correlate with [APM Deployment Tracking](https://docs.datadoghq.com/tracing/services/deployment_tracking/).
+    /// Version to correlate with [APM Deployment Tracking](<https://docs.datadoghq.com/tracing/services/deployment_tracking/>).
     #[serde(rename = "version")]
     pub version: Option<String>,
 }

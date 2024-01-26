@@ -1,40 +1,39 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateAzureIntegrationParams is a struct for passing parameters to the method [`CreateAzureIntegration`]
+/// CreateAzureIntegrationParams is a struct for passing parameters to the method [`AzureIntegrationAPI::create_azure_integration`]
 #[derive(Clone, Debug)]
 pub struct CreateAzureIntegrationParams {
     /// Create a Datadog-Azure integration for your Datadog account request body.
     pub body: crate::datadogV1::model::AzureAccount,
 }
 
-/// DeleteAzureIntegrationParams is a struct for passing parameters to the method [`DeleteAzureIntegration`]
+/// DeleteAzureIntegrationParams is a struct for passing parameters to the method [`AzureIntegrationAPI::delete_azure_integration`]
 #[derive(Clone, Debug)]
 pub struct DeleteAzureIntegrationParams {
     /// Delete a given Datadog-Azure integration request body.
     pub body: crate::datadogV1::model::AzureAccount,
 }
 
-/// UpdateAzureHostFiltersParams is a struct for passing parameters to the method [`UpdateAzureHostFilters`]
+/// UpdateAzureHostFiltersParams is a struct for passing parameters to the method [`AzureIntegrationAPI::update_azure_host_filters`]
 #[derive(Clone, Debug)]
 pub struct UpdateAzureHostFiltersParams {
     /// Update a Datadog-Azure integration's host filters request body.
     pub body: crate::datadogV1::model::AzureAccount,
 }
 
-/// UpdateAzureIntegrationParams is a struct for passing parameters to the method [`UpdateAzureIntegration`]
+/// UpdateAzureIntegrationParams is a struct for passing parameters to the method [`AzureIntegrationAPI::update_azure_integration`]
 #[derive(Clone, Debug)]
 pub struct UpdateAzureIntegrationParams {
     /// Update a Datadog-Azure integration request body.
     pub body: crate::datadogV1::model::AzureAccount,
 }
 
-/// CreateAzureIntegrationError is a struct for typed errors of method [`CreateAzureIntegration`]
+/// CreateAzureIntegrationError is a struct for typed errors of method [`AzureIntegrationAPI::create_azure_integration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateAzureIntegrationError {
@@ -44,7 +43,7 @@ pub enum CreateAzureIntegrationError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteAzureIntegrationError is a struct for typed errors of method [`DeleteAzureIntegration`]
+/// DeleteAzureIntegrationError is a struct for typed errors of method [`AzureIntegrationAPI::delete_azure_integration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteAzureIntegrationError {
@@ -54,7 +53,7 @@ pub enum DeleteAzureIntegrationError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListAzureIntegrationError is a struct for typed errors of method [`ListAzureIntegration`]
+/// ListAzureIntegrationError is a struct for typed errors of method [`AzureIntegrationAPI::list_azure_integration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListAzureIntegrationError {
@@ -64,7 +63,7 @@ pub enum ListAzureIntegrationError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateAzureHostFiltersError is a struct for typed errors of method [`UpdateAzureHostFilters`]
+/// UpdateAzureHostFiltersError is a struct for typed errors of method [`AzureIntegrationAPI::update_azure_host_filters`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateAzureHostFiltersError {
@@ -74,7 +73,7 @@ pub enum UpdateAzureHostFiltersError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateAzureIntegrationError is a struct for typed errors of method [`UpdateAzureIntegration`]
+/// UpdateAzureIntegrationError is a struct for typed errors of method [`AzureIntegrationAPI::update_azure_integration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateAzureIntegrationError {

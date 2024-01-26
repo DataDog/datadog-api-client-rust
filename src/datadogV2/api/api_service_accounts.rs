@@ -1,18 +1,17 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateServiceAccountParams is a struct for passing parameters to the method [`CreateServiceAccount`]
+/// CreateServiceAccountParams is a struct for passing parameters to the method [`ServiceAccountsAPI::create_service_account`]
 #[derive(Clone, Debug)]
 pub struct CreateServiceAccountParams {
     pub body: crate::datadogV2::model::ServiceAccountCreateRequest,
 }
 
-/// CreateServiceAccountApplicationKeyParams is a struct for passing parameters to the method [`CreateServiceAccountApplicationKey`]
+/// CreateServiceAccountApplicationKeyParams is a struct for passing parameters to the method [`ServiceAccountsAPI::create_service_account_application_key`]
 #[derive(Clone, Debug)]
 pub struct CreateServiceAccountApplicationKeyParams {
     /// The ID of the service account.
@@ -20,7 +19,7 @@ pub struct CreateServiceAccountApplicationKeyParams {
     pub body: crate::datadogV2::model::ApplicationKeyCreateRequest,
 }
 
-/// DeleteServiceAccountApplicationKeyParams is a struct for passing parameters to the method [`DeleteServiceAccountApplicationKey`]
+/// DeleteServiceAccountApplicationKeyParams is a struct for passing parameters to the method [`ServiceAccountsAPI::delete_service_account_application_key`]
 #[derive(Clone, Debug)]
 pub struct DeleteServiceAccountApplicationKeyParams {
     /// The ID of the service account.
@@ -29,7 +28,7 @@ pub struct DeleteServiceAccountApplicationKeyParams {
     pub app_key_id: String,
 }
 
-/// GetServiceAccountApplicationKeyParams is a struct for passing parameters to the method [`GetServiceAccountApplicationKey`]
+/// GetServiceAccountApplicationKeyParams is a struct for passing parameters to the method [`ServiceAccountsAPI::get_service_account_application_key`]
 #[derive(Clone, Debug)]
 pub struct GetServiceAccountApplicationKeyParams {
     /// The ID of the service account.
@@ -38,7 +37,7 @@ pub struct GetServiceAccountApplicationKeyParams {
     pub app_key_id: String,
 }
 
-/// ListServiceAccountApplicationKeysParams is a struct for passing parameters to the method [`ListServiceAccountApplicationKeys`]
+/// ListServiceAccountApplicationKeysParams is a struct for passing parameters to the method [`ServiceAccountsAPI::list_service_account_application_keys`]
 #[derive(Clone, Debug)]
 pub struct ListServiceAccountApplicationKeysParams {
     /// The ID of the service account.
@@ -59,7 +58,7 @@ pub struct ListServiceAccountApplicationKeysParams {
     pub filter_created_at_end: Option<String>,
 }
 
-/// UpdateServiceAccountApplicationKeyParams is a struct for passing parameters to the method [`UpdateServiceAccountApplicationKey`]
+/// UpdateServiceAccountApplicationKeyParams is a struct for passing parameters to the method [`ServiceAccountsAPI::update_service_account_application_key`]
 #[derive(Clone, Debug)]
 pub struct UpdateServiceAccountApplicationKeyParams {
     /// The ID of the service account.
@@ -69,7 +68,7 @@ pub struct UpdateServiceAccountApplicationKeyParams {
     pub body: crate::datadogV2::model::ApplicationKeyUpdateRequest,
 }
 
-/// CreateServiceAccountError is a struct for typed errors of method [`CreateServiceAccount`]
+/// CreateServiceAccountError is a struct for typed errors of method [`ServiceAccountsAPI::create_service_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateServiceAccountError {
@@ -79,7 +78,7 @@ pub enum CreateServiceAccountError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateServiceAccountApplicationKeyError is a struct for typed errors of method [`CreateServiceAccountApplicationKey`]
+/// CreateServiceAccountApplicationKeyError is a struct for typed errors of method [`ServiceAccountsAPI::create_service_account_application_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateServiceAccountApplicationKeyError {
@@ -89,7 +88,7 @@ pub enum CreateServiceAccountApplicationKeyError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteServiceAccountApplicationKeyError is a struct for typed errors of method [`DeleteServiceAccountApplicationKey`]
+/// DeleteServiceAccountApplicationKeyError is a struct for typed errors of method [`ServiceAccountsAPI::delete_service_account_application_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteServiceAccountApplicationKeyError {
@@ -99,7 +98,7 @@ pub enum DeleteServiceAccountApplicationKeyError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetServiceAccountApplicationKeyError is a struct for typed errors of method [`GetServiceAccountApplicationKey`]
+/// GetServiceAccountApplicationKeyError is a struct for typed errors of method [`ServiceAccountsAPI::get_service_account_application_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetServiceAccountApplicationKeyError {
@@ -109,7 +108,7 @@ pub enum GetServiceAccountApplicationKeyError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListServiceAccountApplicationKeysError is a struct for typed errors of method [`ListServiceAccountApplicationKeys`]
+/// ListServiceAccountApplicationKeysError is a struct for typed errors of method [`ServiceAccountsAPI::list_service_account_application_keys`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListServiceAccountApplicationKeysError {
@@ -120,7 +119,7 @@ pub enum ListServiceAccountApplicationKeysError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateServiceAccountApplicationKeyError is a struct for typed errors of method [`UpdateServiceAccountApplicationKey`]
+/// UpdateServiceAccountApplicationKeyError is a struct for typed errors of method [`ServiceAccountsAPI::update_service_account_application_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateServiceAccountApplicationKeyError {

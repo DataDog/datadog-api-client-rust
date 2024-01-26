@@ -1,24 +1,23 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateDORADeploymentParams is a struct for passing parameters to the method [`CreateDORADeployment`]
+/// CreateDORADeploymentParams is a struct for passing parameters to the method [`DORAMetricsAPI::create_dora_deployment`]
 #[derive(Clone, Debug)]
 pub struct CreateDORADeploymentParams {
     pub body: crate::datadogV2::model::DORADeploymentRequest,
 }
 
-/// CreateDORAIncidentParams is a struct for passing parameters to the method [`CreateDORAIncident`]
+/// CreateDORAIncidentParams is a struct for passing parameters to the method [`DORAMetricsAPI::create_dora_incident`]
 #[derive(Clone, Debug)]
 pub struct CreateDORAIncidentParams {
     pub body: crate::datadogV2::model::DORAIncidentRequest,
 }
 
-/// CreateDORADeploymentError is a struct for typed errors of method [`CreateDORADeployment`]
+/// CreateDORADeploymentError is a struct for typed errors of method [`DORAMetricsAPI::create_dora_deployment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateDORADeploymentError {
@@ -28,7 +27,7 @@ pub enum CreateDORADeploymentError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateDORAIncidentError is a struct for typed errors of method [`CreateDORAIncident`]
+/// CreateDORAIncidentError is a struct for typed errors of method [`DORAMetricsAPI::create_dora_incident`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateDORAIncidentError {

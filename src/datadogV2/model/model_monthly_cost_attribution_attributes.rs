@@ -22,7 +22,7 @@ pub struct MonthlyCostAttributionAttributes {
     pub tag_config_source: Option<String>,
     /// Tag keys and values.
     /// A `null` value here means that the requested tag breakdown cannot be applied because it does not match the [tags
-    /// configured for usage attribution](https://docs.datadoghq.com/account_management/billing/usage_attribution/#getting-started).
+    /// configured for usage attribution](<https://docs.datadoghq.com/account_management/billing/usage_attribution/#getting-started>).
     /// In this scenario the API returns the total cost, not broken down by tags.
     #[serde(rename = "tags", default, with = "::serde_with::rust::double_option")]
     pub tags: Option<Option<std::collections::BTreeMap<String, Option<Vec<String>>>>>,

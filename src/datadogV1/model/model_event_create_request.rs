@@ -39,7 +39,7 @@ pub struct EventCreateRequest {
     #[serde(rename = "related_event_id")]
     pub related_event_id: Option<i64>,
     /// The type of event being posted. Option examples include nagios, hudson, jenkins, my_apps, chef, puppet, git, bitbucket, etc.
-    /// A complete list of source attribute values [available here](https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value).
+    /// A complete list of source attribute values [available here](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>).
     #[serde(rename = "source_type_name")]
     pub source_type_name: Option<String>,
     /// A list of tags to apply to the event.

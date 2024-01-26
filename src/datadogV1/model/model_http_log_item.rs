@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct HTTPLogItem {
     /// The integration name associated with your log: the technology from which the log originated.
     /// When it matches an integration name, Datadog automatically installs the corresponding parsers and facets.
-    /// See [reserved attributes](https://docs.datadoghq.com/logs/log_collection/#reserved-attributes).
+    /// See [reserved attributes](<https://docs.datadoghq.com/logs/log_collection/#reserved-attributes>).
     #[serde(rename = "ddsource")]
     pub ddsource: Option<String>,
     /// Tags associated with your logs.
@@ -19,14 +19,14 @@ pub struct HTTPLogItem {
     /// The name of the originating host of the log.
     #[serde(rename = "hostname")]
     pub hostname: Option<String>,
-    /// The message [reserved attribute](https://docs.datadoghq.com/logs/log_collection/#reserved-attributes)
+    /// The message [reserved attribute](<https://docs.datadoghq.com/logs/log_collection/#reserved-attributes>)
     /// of your log. By default, Datadog ingests the value of the message attribute as the body of the log entry.
     /// That value is then highlighted and displayed in the Logstream, where it is indexed for full text search.
     #[serde(rename = "message")]
     pub message: String,
     /// The name of the application or service generating the log events.
     /// It is used to switch from Logs to APM, so make sure you define the same value when you use both products.
-    /// See [reserved attributes](https://docs.datadoghq.com/logs/log_collection/#reserved-attributes).
+    /// See [reserved attributes](<https://docs.datadoghq.com/logs/log_collection/#reserved-attributes>).
     #[serde(rename = "service")]
     pub service: Option<String>,
     #[serde(flatten)]

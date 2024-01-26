@@ -1,33 +1,32 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateOpsgenieServiceParams is a struct for passing parameters to the method [`CreateOpsgenieService`]
+/// CreateOpsgenieServiceParams is a struct for passing parameters to the method [`OpsgenieIntegrationAPI::create_opsgenie_service`]
 #[derive(Clone, Debug)]
 pub struct CreateOpsgenieServiceParams {
     /// Opsgenie service payload
     pub body: crate::datadogV2::model::OpsgenieServiceCreateRequest,
 }
 
-/// DeleteOpsgenieServiceParams is a struct for passing parameters to the method [`DeleteOpsgenieService`]
+/// DeleteOpsgenieServiceParams is a struct for passing parameters to the method [`OpsgenieIntegrationAPI::delete_opsgenie_service`]
 #[derive(Clone, Debug)]
 pub struct DeleteOpsgenieServiceParams {
     /// The UUID of the service.
     pub integration_service_id: String,
 }
 
-/// GetOpsgenieServiceParams is a struct for passing parameters to the method [`GetOpsgenieService`]
+/// GetOpsgenieServiceParams is a struct for passing parameters to the method [`OpsgenieIntegrationAPI::get_opsgenie_service`]
 #[derive(Clone, Debug)]
 pub struct GetOpsgenieServiceParams {
     /// The UUID of the service.
     pub integration_service_id: String,
 }
 
-/// UpdateOpsgenieServiceParams is a struct for passing parameters to the method [`UpdateOpsgenieService`]
+/// UpdateOpsgenieServiceParams is a struct for passing parameters to the method [`OpsgenieIntegrationAPI::update_opsgenie_service`]
 #[derive(Clone, Debug)]
 pub struct UpdateOpsgenieServiceParams {
     /// The UUID of the service.
@@ -36,7 +35,7 @@ pub struct UpdateOpsgenieServiceParams {
     pub body: crate::datadogV2::model::OpsgenieServiceUpdateRequest,
 }
 
-/// CreateOpsgenieServiceError is a struct for typed errors of method [`CreateOpsgenieService`]
+/// CreateOpsgenieServiceError is a struct for typed errors of method [`OpsgenieIntegrationAPI::create_opsgenie_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateOpsgenieServiceError {
@@ -47,7 +46,7 @@ pub enum CreateOpsgenieServiceError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteOpsgenieServiceError is a struct for typed errors of method [`DeleteOpsgenieService`]
+/// DeleteOpsgenieServiceError is a struct for typed errors of method [`OpsgenieIntegrationAPI::delete_opsgenie_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteOpsgenieServiceError {
@@ -58,7 +57,7 @@ pub enum DeleteOpsgenieServiceError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetOpsgenieServiceError is a struct for typed errors of method [`GetOpsgenieService`]
+/// GetOpsgenieServiceError is a struct for typed errors of method [`OpsgenieIntegrationAPI::get_opsgenie_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetOpsgenieServiceError {
@@ -70,7 +69,7 @@ pub enum GetOpsgenieServiceError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListOpsgenieServicesError is a struct for typed errors of method [`ListOpsgenieServices`]
+/// ListOpsgenieServicesError is a struct for typed errors of method [`OpsgenieIntegrationAPI::list_opsgenie_services`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListOpsgenieServicesError {
@@ -79,7 +78,7 @@ pub enum ListOpsgenieServicesError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateOpsgenieServiceError is a struct for typed errors of method [`UpdateOpsgenieService`]
+/// UpdateOpsgenieServiceError is a struct for typed errors of method [`OpsgenieIntegrationAPI::update_opsgenie_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateOpsgenieServiceError {

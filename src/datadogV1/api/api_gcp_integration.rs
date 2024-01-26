@@ -1,33 +1,32 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateGCPIntegrationParams is a struct for passing parameters to the method [`CreateGCPIntegration`]
+/// CreateGCPIntegrationParams is a struct for passing parameters to the method [`GCPIntegrationAPI::create_gcp_integration`]
 #[derive(Clone, Debug)]
 pub struct CreateGCPIntegrationParams {
     /// Create a Datadog-GCP integration.
     pub body: crate::datadogV1::model::GCPAccount,
 }
 
-/// DeleteGCPIntegrationParams is a struct for passing parameters to the method [`DeleteGCPIntegration`]
+/// DeleteGCPIntegrationParams is a struct for passing parameters to the method [`GCPIntegrationAPI::delete_gcp_integration`]
 #[derive(Clone, Debug)]
 pub struct DeleteGCPIntegrationParams {
     /// Delete a given Datadog-GCP integration.
     pub body: crate::datadogV1::model::GCPAccount,
 }
 
-/// UpdateGCPIntegrationParams is a struct for passing parameters to the method [`UpdateGCPIntegration`]
+/// UpdateGCPIntegrationParams is a struct for passing parameters to the method [`GCPIntegrationAPI::update_gcp_integration`]
 #[derive(Clone, Debug)]
 pub struct UpdateGCPIntegrationParams {
     /// Update a Datadog-GCP integration.
     pub body: crate::datadogV1::model::GCPAccount,
 }
 
-/// CreateGCPIntegrationError is a struct for typed errors of method [`CreateGCPIntegration`]
+/// CreateGCPIntegrationError is a struct for typed errors of method [`GCPIntegrationAPI::create_gcp_integration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateGCPIntegrationError {
@@ -37,7 +36,7 @@ pub enum CreateGCPIntegrationError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteGCPIntegrationError is a struct for typed errors of method [`DeleteGCPIntegration`]
+/// DeleteGCPIntegrationError is a struct for typed errors of method [`GCPIntegrationAPI::delete_gcp_integration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteGCPIntegrationError {
@@ -47,7 +46,7 @@ pub enum DeleteGCPIntegrationError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListGCPIntegrationError is a struct for typed errors of method [`ListGCPIntegration`]
+/// ListGCPIntegrationError is a struct for typed errors of method [`GCPIntegrationAPI::list_gcp_integration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListGCPIntegrationError {
@@ -57,7 +56,7 @@ pub enum ListGCPIntegrationError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateGCPIntegrationError is a struct for typed errors of method [`UpdateGCPIntegration`]
+/// UpdateGCPIntegrationError is a struct for typed errors of method [`GCPIntegrationAPI::update_gcp_integration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateGCPIntegrationError {

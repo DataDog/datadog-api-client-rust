@@ -1,18 +1,17 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateBulkTagsMetricsConfigurationParams is a struct for passing parameters to the method [`CreateBulkTagsMetricsConfiguration`]
+/// CreateBulkTagsMetricsConfigurationParams is a struct for passing parameters to the method [`MetricsAPI::create_bulk_tags_metrics_configuration`]
 #[derive(Clone, Debug)]
 pub struct CreateBulkTagsMetricsConfigurationParams {
     pub body: crate::datadogV2::model::MetricBulkTagConfigCreateRequest,
 }
 
-/// CreateTagConfigurationParams is a struct for passing parameters to the method [`CreateTagConfiguration`]
+/// CreateTagConfigurationParams is a struct for passing parameters to the method [`MetricsAPI::create_tag_configuration`]
 #[derive(Clone, Debug)]
 pub struct CreateTagConfigurationParams {
     /// The name of the metric.
@@ -20,20 +19,20 @@ pub struct CreateTagConfigurationParams {
     pub body: crate::datadogV2::model::MetricTagConfigurationCreateRequest,
 }
 
-/// DeleteBulkTagsMetricsConfigurationParams is a struct for passing parameters to the method [`DeleteBulkTagsMetricsConfiguration`]
+/// DeleteBulkTagsMetricsConfigurationParams is a struct for passing parameters to the method [`MetricsAPI::delete_bulk_tags_metrics_configuration`]
 #[derive(Clone, Debug)]
 pub struct DeleteBulkTagsMetricsConfigurationParams {
     pub body: crate::datadogV2::model::MetricBulkTagConfigDeleteRequest,
 }
 
-/// DeleteTagConfigurationParams is a struct for passing parameters to the method [`DeleteTagConfiguration`]
+/// DeleteTagConfigurationParams is a struct for passing parameters to the method [`MetricsAPI::delete_tag_configuration`]
 #[derive(Clone, Debug)]
 pub struct DeleteTagConfigurationParams {
     /// The name of the metric.
     pub metric_name: String,
 }
 
-/// EstimateMetricsOutputSeriesParams is a struct for passing parameters to the method [`EstimateMetricsOutputSeries`]
+/// EstimateMetricsOutputSeriesParams is a struct for passing parameters to the method [`MetricsAPI::estimate_metrics_output_series`]
 #[derive(Clone, Debug)]
 pub struct EstimateMetricsOutputSeriesParams {
     /// The name of the metric.
@@ -50,7 +49,7 @@ pub struct EstimateMetricsOutputSeriesParams {
     pub filter_timespan_h: Option<i32>,
 }
 
-/// ListActiveMetricConfigurationsParams is a struct for passing parameters to the method [`ListActiveMetricConfigurations`]
+/// ListActiveMetricConfigurationsParams is a struct for passing parameters to the method [`MetricsAPI::list_active_metric_configurations`]
 #[derive(Clone, Debug)]
 pub struct ListActiveMetricConfigurationsParams {
     /// The name of the metric.
@@ -60,14 +59,14 @@ pub struct ListActiveMetricConfigurationsParams {
     pub window_seconds: Option<i64>,
 }
 
-/// ListTagConfigurationByNameParams is a struct for passing parameters to the method [`ListTagConfigurationByName`]
+/// ListTagConfigurationByNameParams is a struct for passing parameters to the method [`MetricsAPI::list_tag_configuration_by_name`]
 #[derive(Clone, Debug)]
 pub struct ListTagConfigurationByNameParams {
     /// The name of the metric.
     pub metric_name: String,
 }
 
-/// ListTagConfigurationsParams is a struct for passing parameters to the method [`ListTagConfigurations`]
+/// ListTagConfigurationsParams is a struct for passing parameters to the method [`MetricsAPI::list_tag_configurations`]
 #[derive(Clone, Debug)]
 pub struct ListTagConfigurationsParams {
     /// Filter custom metrics that have configured tags.
@@ -90,33 +89,33 @@ pub struct ListTagConfigurationsParams {
     pub window_seconds: Option<i64>,
 }
 
-/// ListTagsByMetricNameParams is a struct for passing parameters to the method [`ListTagsByMetricName`]
+/// ListTagsByMetricNameParams is a struct for passing parameters to the method [`MetricsAPI::list_tags_by_metric_name`]
 #[derive(Clone, Debug)]
 pub struct ListTagsByMetricNameParams {
     /// The name of the metric.
     pub metric_name: String,
 }
 
-/// ListVolumesByMetricNameParams is a struct for passing parameters to the method [`ListVolumesByMetricName`]
+/// ListVolumesByMetricNameParams is a struct for passing parameters to the method [`MetricsAPI::list_volumes_by_metric_name`]
 #[derive(Clone, Debug)]
 pub struct ListVolumesByMetricNameParams {
     /// The name of the metric.
     pub metric_name: String,
 }
 
-/// QueryScalarDataParams is a struct for passing parameters to the method [`QueryScalarData`]
+/// QueryScalarDataParams is a struct for passing parameters to the method [`MetricsAPI::query_scalar_data`]
 #[derive(Clone, Debug)]
 pub struct QueryScalarDataParams {
     pub body: crate::datadogV2::model::ScalarFormulaQueryRequest,
 }
 
-/// QueryTimeseriesDataParams is a struct for passing parameters to the method [`QueryTimeseriesData`]
+/// QueryTimeseriesDataParams is a struct for passing parameters to the method [`MetricsAPI::query_timeseries_data`]
 #[derive(Clone, Debug)]
 pub struct QueryTimeseriesDataParams {
     pub body: crate::datadogV2::model::TimeseriesFormulaQueryRequest,
 }
 
-/// SubmitMetricsParams is a struct for passing parameters to the method [`SubmitMetrics`]
+/// SubmitMetricsParams is a struct for passing parameters to the method [`MetricsAPI::submit_metrics`]
 #[derive(Clone, Debug)]
 pub struct SubmitMetricsParams {
     pub body: crate::datadogV2::model::MetricPayload,
@@ -124,7 +123,7 @@ pub struct SubmitMetricsParams {
     pub content_encoding: Option<crate::datadogV2::model::MetricContentEncoding>,
 }
 
-/// UpdateTagConfigurationParams is a struct for passing parameters to the method [`UpdateTagConfiguration`]
+/// UpdateTagConfigurationParams is a struct for passing parameters to the method [`MetricsAPI::update_tag_configuration`]
 #[derive(Clone, Debug)]
 pub struct UpdateTagConfigurationParams {
     /// The name of the metric.
@@ -132,7 +131,7 @@ pub struct UpdateTagConfigurationParams {
     pub body: crate::datadogV2::model::MetricTagConfigurationUpdateRequest,
 }
 
-/// CreateBulkTagsMetricsConfigurationError is a struct for typed errors of method [`CreateBulkTagsMetricsConfiguration`]
+/// CreateBulkTagsMetricsConfigurationError is a struct for typed errors of method [`MetricsAPI::create_bulk_tags_metrics_configuration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateBulkTagsMetricsConfigurationError {
@@ -143,7 +142,7 @@ pub enum CreateBulkTagsMetricsConfigurationError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateTagConfigurationError is a struct for typed errors of method [`CreateTagConfiguration`]
+/// CreateTagConfigurationError is a struct for typed errors of method [`MetricsAPI::create_tag_configuration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateTagConfigurationError {
@@ -154,7 +153,7 @@ pub enum CreateTagConfigurationError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteBulkTagsMetricsConfigurationError is a struct for typed errors of method [`DeleteBulkTagsMetricsConfiguration`]
+/// DeleteBulkTagsMetricsConfigurationError is a struct for typed errors of method [`MetricsAPI::delete_bulk_tags_metrics_configuration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteBulkTagsMetricsConfigurationError {
@@ -165,7 +164,7 @@ pub enum DeleteBulkTagsMetricsConfigurationError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteTagConfigurationError is a struct for typed errors of method [`DeleteTagConfiguration`]
+/// DeleteTagConfigurationError is a struct for typed errors of method [`MetricsAPI::delete_tag_configuration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteTagConfigurationError {
@@ -175,7 +174,7 @@ pub enum DeleteTagConfigurationError {
     UnknownValue(serde_json::Value),
 }
 
-/// EstimateMetricsOutputSeriesError is a struct for typed errors of method [`EstimateMetricsOutputSeries`]
+/// EstimateMetricsOutputSeriesError is a struct for typed errors of method [`MetricsAPI::estimate_metrics_output_series`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum EstimateMetricsOutputSeriesError {
@@ -186,7 +185,7 @@ pub enum EstimateMetricsOutputSeriesError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListActiveMetricConfigurationsError is a struct for typed errors of method [`ListActiveMetricConfigurations`]
+/// ListActiveMetricConfigurationsError is a struct for typed errors of method [`MetricsAPI::list_active_metric_configurations`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListActiveMetricConfigurationsError {
@@ -197,7 +196,7 @@ pub enum ListActiveMetricConfigurationsError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListTagConfigurationByNameError is a struct for typed errors of method [`ListTagConfigurationByName`]
+/// ListTagConfigurationByNameError is a struct for typed errors of method [`MetricsAPI::list_tag_configuration_by_name`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListTagConfigurationByNameError {
@@ -207,7 +206,7 @@ pub enum ListTagConfigurationByNameError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListTagConfigurationsError is a struct for typed errors of method [`ListTagConfigurations`]
+/// ListTagConfigurationsError is a struct for typed errors of method [`MetricsAPI::list_tag_configurations`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListTagConfigurationsError {
@@ -217,7 +216,7 @@ pub enum ListTagConfigurationsError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListTagsByMetricNameError is a struct for typed errors of method [`ListTagsByMetricName`]
+/// ListTagsByMetricNameError is a struct for typed errors of method [`MetricsAPI::list_tags_by_metric_name`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListTagsByMetricNameError {
@@ -228,7 +227,7 @@ pub enum ListTagsByMetricNameError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListVolumesByMetricNameError is a struct for typed errors of method [`ListVolumesByMetricName`]
+/// ListVolumesByMetricNameError is a struct for typed errors of method [`MetricsAPI::list_volumes_by_metric_name`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListVolumesByMetricNameError {
@@ -239,7 +238,7 @@ pub enum ListVolumesByMetricNameError {
     UnknownValue(serde_json::Value),
 }
 
-/// QueryScalarDataError is a struct for typed errors of method [`QueryScalarData`]
+/// QueryScalarDataError is a struct for typed errors of method [`MetricsAPI::query_scalar_data`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum QueryScalarDataError {
@@ -250,7 +249,7 @@ pub enum QueryScalarDataError {
     UnknownValue(serde_json::Value),
 }
 
-/// QueryTimeseriesDataError is a struct for typed errors of method [`QueryTimeseriesData`]
+/// QueryTimeseriesDataError is a struct for typed errors of method [`MetricsAPI::query_timeseries_data`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum QueryTimeseriesDataError {
@@ -261,7 +260,7 @@ pub enum QueryTimeseriesDataError {
     UnknownValue(serde_json::Value),
 }
 
-/// SubmitMetricsError is a struct for typed errors of method [`SubmitMetrics`]
+/// SubmitMetricsError is a struct for typed errors of method [`MetricsAPI::submit_metrics`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SubmitMetricsError {
@@ -273,7 +272,7 @@ pub enum SubmitMetricsError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateTagConfigurationError is a struct for typed errors of method [`UpdateTagConfiguration`]
+/// UpdateTagConfigurationError is a struct for typed errors of method [`MetricsAPI::update_tag_configuration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateTagConfigurationError {

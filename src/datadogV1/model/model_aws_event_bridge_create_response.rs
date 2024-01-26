@@ -14,7 +14,7 @@ pub struct AWSEventBridgeCreateResponse {
     /// True if the event bus was created in addition to the source.
     #[serde(rename = "has_bus")]
     pub has_bus: Option<bool>,
-    /// The event source's [AWS region](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints).
+    /// The event source's [AWS region](<https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints>).
     #[serde(rename = "region")]
     pub region: Option<String>,
     /// The event source status "created".

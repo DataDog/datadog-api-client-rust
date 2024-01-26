@@ -14,7 +14,7 @@ pub struct LogQueryDefinition {
     /// List of tag prefixes to group by in the case of a cluster check.
     #[serde(rename = "group_by")]
     pub group_by: Option<Vec<crate::datadogV1::model::LogQueryDefinitionGroupBy>>,
-    /// A coma separated-list of index names. Use "*" query all indexes at once. [Multiple Indexes](https://docs.datadoghq.com/logs/indexes/#multiple-indexes)
+    /// A coma separated-list of index names. Use "*" query all indexes at once. [Multiple Indexes](<https://docs.datadoghq.com/logs/indexes/#multiple-indexes>)
     #[serde(rename = "index")]
     pub index: Option<String>,
     /// This field is mutually exclusive with `compute`.

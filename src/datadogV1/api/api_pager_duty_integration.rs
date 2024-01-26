@@ -1,33 +1,32 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreatePagerDutyIntegrationServiceParams is a struct for passing parameters to the method [`CreatePagerDutyIntegrationService`]
+/// CreatePagerDutyIntegrationServiceParams is a struct for passing parameters to the method [`PagerDutyIntegrationAPI::create_pager_duty_integration_service`]
 #[derive(Clone, Debug)]
 pub struct CreatePagerDutyIntegrationServiceParams {
     /// Create a new service object request body.
     pub body: crate::datadogV1::model::PagerDutyService,
 }
 
-/// DeletePagerDutyIntegrationServiceParams is a struct for passing parameters to the method [`DeletePagerDutyIntegrationService`]
+/// DeletePagerDutyIntegrationServiceParams is a struct for passing parameters to the method [`PagerDutyIntegrationAPI::delete_pager_duty_integration_service`]
 #[derive(Clone, Debug)]
 pub struct DeletePagerDutyIntegrationServiceParams {
     /// The service name
     pub service_name: String,
 }
 
-/// GetPagerDutyIntegrationServiceParams is a struct for passing parameters to the method [`GetPagerDutyIntegrationService`]
+/// GetPagerDutyIntegrationServiceParams is a struct for passing parameters to the method [`PagerDutyIntegrationAPI::get_pager_duty_integration_service`]
 #[derive(Clone, Debug)]
 pub struct GetPagerDutyIntegrationServiceParams {
     /// The service name.
     pub service_name: String,
 }
 
-/// UpdatePagerDutyIntegrationServiceParams is a struct for passing parameters to the method [`UpdatePagerDutyIntegrationService`]
+/// UpdatePagerDutyIntegrationServiceParams is a struct for passing parameters to the method [`PagerDutyIntegrationAPI::update_pager_duty_integration_service`]
 #[derive(Clone, Debug)]
 pub struct UpdatePagerDutyIntegrationServiceParams {
     /// The service name
@@ -36,7 +35,7 @@ pub struct UpdatePagerDutyIntegrationServiceParams {
     pub body: crate::datadogV1::model::PagerDutyServiceKey,
 }
 
-/// CreatePagerDutyIntegrationServiceError is a struct for typed errors of method [`CreatePagerDutyIntegrationService`]
+/// CreatePagerDutyIntegrationServiceError is a struct for typed errors of method [`PagerDutyIntegrationAPI::create_pager_duty_integration_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreatePagerDutyIntegrationServiceError {
@@ -46,7 +45,7 @@ pub enum CreatePagerDutyIntegrationServiceError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeletePagerDutyIntegrationServiceError is a struct for typed errors of method [`DeletePagerDutyIntegrationService`]
+/// DeletePagerDutyIntegrationServiceError is a struct for typed errors of method [`PagerDutyIntegrationAPI::delete_pager_duty_integration_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeletePagerDutyIntegrationServiceError {
@@ -56,7 +55,7 @@ pub enum DeletePagerDutyIntegrationServiceError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetPagerDutyIntegrationServiceError is a struct for typed errors of method [`GetPagerDutyIntegrationService`]
+/// GetPagerDutyIntegrationServiceError is a struct for typed errors of method [`PagerDutyIntegrationAPI::get_pager_duty_integration_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetPagerDutyIntegrationServiceError {
@@ -66,7 +65,7 @@ pub enum GetPagerDutyIntegrationServiceError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdatePagerDutyIntegrationServiceError is a struct for typed errors of method [`UpdatePagerDutyIntegrationService`]
+/// UpdatePagerDutyIntegrationServiceError is a struct for typed errors of method [`PagerDutyIntegrationAPI::update_pager_duty_integration_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdatePagerDutyIntegrationServiceError {

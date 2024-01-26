@@ -1,52 +1,51 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateAPIKeyParams is a struct for passing parameters to the method [`CreateAPIKey`]
+/// CreateAPIKeyParams is a struct for passing parameters to the method [`KeyManagementAPI::create_api_key`]
 #[derive(Clone, Debug)]
 pub struct CreateAPIKeyParams {
     pub body: crate::datadogV1::model::ApiKey,
 }
 
-/// CreateApplicationKeyParams is a struct for passing parameters to the method [`CreateApplicationKey`]
+/// CreateApplicationKeyParams is a struct for passing parameters to the method [`KeyManagementAPI::create_application_key`]
 #[derive(Clone, Debug)]
 pub struct CreateApplicationKeyParams {
     pub body: crate::datadogV1::model::ApplicationKey,
 }
 
-/// DeleteAPIKeyParams is a struct for passing parameters to the method [`DeleteAPIKey`]
+/// DeleteAPIKeyParams is a struct for passing parameters to the method [`KeyManagementAPI::delete_api_key`]
 #[derive(Clone, Debug)]
 pub struct DeleteAPIKeyParams {
     /// The specific API key you are working with.
     pub key: String,
 }
 
-/// DeleteApplicationKeyParams is a struct for passing parameters to the method [`DeleteApplicationKey`]
+/// DeleteApplicationKeyParams is a struct for passing parameters to the method [`KeyManagementAPI::delete_application_key`]
 #[derive(Clone, Debug)]
 pub struct DeleteApplicationKeyParams {
     /// The specific APP key you are working with.
     pub key: String,
 }
 
-/// GetAPIKeyParams is a struct for passing parameters to the method [`GetAPIKey`]
+/// GetAPIKeyParams is a struct for passing parameters to the method [`KeyManagementAPI::get_api_key`]
 #[derive(Clone, Debug)]
 pub struct GetAPIKeyParams {
     /// The specific API key you are working with.
     pub key: String,
 }
 
-/// GetApplicationKeyParams is a struct for passing parameters to the method [`GetApplicationKey`]
+/// GetApplicationKeyParams is a struct for passing parameters to the method [`KeyManagementAPI::get_application_key`]
 #[derive(Clone, Debug)]
 pub struct GetApplicationKeyParams {
     /// The specific APP key you are working with.
     pub key: String,
 }
 
-/// UpdateAPIKeyParams is a struct for passing parameters to the method [`UpdateAPIKey`]
+/// UpdateAPIKeyParams is a struct for passing parameters to the method [`KeyManagementAPI::update_api_key`]
 #[derive(Clone, Debug)]
 pub struct UpdateAPIKeyParams {
     /// The specific API key you are working with.
@@ -54,7 +53,7 @@ pub struct UpdateAPIKeyParams {
     pub body: crate::datadogV1::model::ApiKey,
 }
 
-/// UpdateApplicationKeyParams is a struct for passing parameters to the method [`UpdateApplicationKey`]
+/// UpdateApplicationKeyParams is a struct for passing parameters to the method [`KeyManagementAPI::update_application_key`]
 #[derive(Clone, Debug)]
 pub struct UpdateApplicationKeyParams {
     /// The specific APP key you are working with.
@@ -62,7 +61,7 @@ pub struct UpdateApplicationKeyParams {
     pub body: crate::datadogV1::model::ApplicationKey,
 }
 
-/// CreateAPIKeyError is a struct for typed errors of method [`CreateAPIKey`]
+/// CreateAPIKeyError is a struct for typed errors of method [`KeyManagementAPI::create_api_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateAPIKeyError {
@@ -72,7 +71,7 @@ pub enum CreateAPIKeyError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateApplicationKeyError is a struct for typed errors of method [`CreateApplicationKey`]
+/// CreateApplicationKeyError is a struct for typed errors of method [`KeyManagementAPI::create_application_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateApplicationKeyError {
@@ -83,7 +82,7 @@ pub enum CreateApplicationKeyError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteAPIKeyError is a struct for typed errors of method [`DeleteAPIKey`]
+/// DeleteAPIKeyError is a struct for typed errors of method [`KeyManagementAPI::delete_api_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteAPIKeyError {
@@ -94,7 +93,7 @@ pub enum DeleteAPIKeyError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteApplicationKeyError is a struct for typed errors of method [`DeleteApplicationKey`]
+/// DeleteApplicationKeyError is a struct for typed errors of method [`KeyManagementAPI::delete_application_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteApplicationKeyError {
@@ -104,7 +103,7 @@ pub enum DeleteApplicationKeyError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetAPIKeyError is a struct for typed errors of method [`GetAPIKey`]
+/// GetAPIKeyError is a struct for typed errors of method [`KeyManagementAPI::get_api_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetAPIKeyError {
@@ -114,7 +113,7 @@ pub enum GetAPIKeyError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetApplicationKeyError is a struct for typed errors of method [`GetApplicationKey`]
+/// GetApplicationKeyError is a struct for typed errors of method [`KeyManagementAPI::get_application_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetApplicationKeyError {
@@ -124,7 +123,7 @@ pub enum GetApplicationKeyError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListAPIKeysError is a struct for typed errors of method [`ListAPIKeys`]
+/// ListAPIKeysError is a struct for typed errors of method [`KeyManagementAPI::list_api_keys`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListAPIKeysError {
@@ -133,7 +132,7 @@ pub enum ListAPIKeysError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListApplicationKeysError is a struct for typed errors of method [`ListApplicationKeys`]
+/// ListApplicationKeysError is a struct for typed errors of method [`KeyManagementAPI::list_application_keys`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListApplicationKeysError {
@@ -142,7 +141,7 @@ pub enum ListApplicationKeysError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateAPIKeyError is a struct for typed errors of method [`UpdateAPIKey`]
+/// UpdateAPIKeyError is a struct for typed errors of method [`KeyManagementAPI::update_api_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateAPIKeyError {
@@ -153,7 +152,7 @@ pub enum UpdateAPIKeyError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateApplicationKeyError is a struct for typed errors of method [`UpdateApplicationKey`]
+/// UpdateApplicationKeyError is a struct for typed errors of method [`KeyManagementAPI::update_application_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateApplicationKeyError {

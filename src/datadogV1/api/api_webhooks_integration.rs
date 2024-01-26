@@ -1,54 +1,53 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateWebhooksIntegrationParams is a struct for passing parameters to the method [`CreateWebhooksIntegration`]
+/// CreateWebhooksIntegrationParams is a struct for passing parameters to the method [`WebhooksIntegrationAPI::create_webhooks_integration`]
 #[derive(Clone, Debug)]
 pub struct CreateWebhooksIntegrationParams {
     /// Create a webhooks integration request body.
     pub body: crate::datadogV1::model::WebhooksIntegration,
 }
 
-/// CreateWebhooksIntegrationCustomVariableParams is a struct for passing parameters to the method [`CreateWebhooksIntegrationCustomVariable`]
+/// CreateWebhooksIntegrationCustomVariableParams is a struct for passing parameters to the method [`WebhooksIntegrationAPI::create_webhooks_integration_custom_variable`]
 #[derive(Clone, Debug)]
 pub struct CreateWebhooksIntegrationCustomVariableParams {
     /// Define a custom variable request body.
     pub body: crate::datadogV1::model::WebhooksIntegrationCustomVariable,
 }
 
-/// DeleteWebhooksIntegrationParams is a struct for passing parameters to the method [`DeleteWebhooksIntegration`]
+/// DeleteWebhooksIntegrationParams is a struct for passing parameters to the method [`WebhooksIntegrationAPI::delete_webhooks_integration`]
 #[derive(Clone, Debug)]
 pub struct DeleteWebhooksIntegrationParams {
     /// The name of the webhook.
     pub webhook_name: String,
 }
 
-/// DeleteWebhooksIntegrationCustomVariableParams is a struct for passing parameters to the method [`DeleteWebhooksIntegrationCustomVariable`]
+/// DeleteWebhooksIntegrationCustomVariableParams is a struct for passing parameters to the method [`WebhooksIntegrationAPI::delete_webhooks_integration_custom_variable`]
 #[derive(Clone, Debug)]
 pub struct DeleteWebhooksIntegrationCustomVariableParams {
     /// The name of the custom variable.
     pub custom_variable_name: String,
 }
 
-/// GetWebhooksIntegrationParams is a struct for passing parameters to the method [`GetWebhooksIntegration`]
+/// GetWebhooksIntegrationParams is a struct for passing parameters to the method [`WebhooksIntegrationAPI::get_webhooks_integration`]
 #[derive(Clone, Debug)]
 pub struct GetWebhooksIntegrationParams {
     /// The name of the webhook.
     pub webhook_name: String,
 }
 
-/// GetWebhooksIntegrationCustomVariableParams is a struct for passing parameters to the method [`GetWebhooksIntegrationCustomVariable`]
+/// GetWebhooksIntegrationCustomVariableParams is a struct for passing parameters to the method [`WebhooksIntegrationAPI::get_webhooks_integration_custom_variable`]
 #[derive(Clone, Debug)]
 pub struct GetWebhooksIntegrationCustomVariableParams {
     /// The name of the custom variable.
     pub custom_variable_name: String,
 }
 
-/// UpdateWebhooksIntegrationParams is a struct for passing parameters to the method [`UpdateWebhooksIntegration`]
+/// UpdateWebhooksIntegrationParams is a struct for passing parameters to the method [`WebhooksIntegrationAPI::update_webhooks_integration`]
 #[derive(Clone, Debug)]
 pub struct UpdateWebhooksIntegrationParams {
     /// The name of the webhook.
@@ -57,7 +56,7 @@ pub struct UpdateWebhooksIntegrationParams {
     pub body: crate::datadogV1::model::WebhooksIntegrationUpdateRequest,
 }
 
-/// UpdateWebhooksIntegrationCustomVariableParams is a struct for passing parameters to the method [`UpdateWebhooksIntegrationCustomVariable`]
+/// UpdateWebhooksIntegrationCustomVariableParams is a struct for passing parameters to the method [`WebhooksIntegrationAPI::update_webhooks_integration_custom_variable`]
 #[derive(Clone, Debug)]
 pub struct UpdateWebhooksIntegrationCustomVariableParams {
     /// The name of the custom variable.
@@ -66,7 +65,7 @@ pub struct UpdateWebhooksIntegrationCustomVariableParams {
     pub body: crate::datadogV1::model::WebhooksIntegrationCustomVariableUpdateRequest,
 }
 
-/// CreateWebhooksIntegrationError is a struct for typed errors of method [`CreateWebhooksIntegration`]
+/// CreateWebhooksIntegrationError is a struct for typed errors of method [`WebhooksIntegrationAPI::create_webhooks_integration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateWebhooksIntegrationError {
@@ -76,7 +75,7 @@ pub enum CreateWebhooksIntegrationError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateWebhooksIntegrationCustomVariableError is a struct for typed errors of method [`CreateWebhooksIntegrationCustomVariable`]
+/// CreateWebhooksIntegrationCustomVariableError is a struct for typed errors of method [`WebhooksIntegrationAPI::create_webhooks_integration_custom_variable`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateWebhooksIntegrationCustomVariableError {
@@ -86,7 +85,7 @@ pub enum CreateWebhooksIntegrationCustomVariableError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteWebhooksIntegrationError is a struct for typed errors of method [`DeleteWebhooksIntegration`]
+/// DeleteWebhooksIntegrationError is a struct for typed errors of method [`WebhooksIntegrationAPI::delete_webhooks_integration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteWebhooksIntegrationError {
@@ -96,7 +95,7 @@ pub enum DeleteWebhooksIntegrationError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteWebhooksIntegrationCustomVariableError is a struct for typed errors of method [`DeleteWebhooksIntegrationCustomVariable`]
+/// DeleteWebhooksIntegrationCustomVariableError is a struct for typed errors of method [`WebhooksIntegrationAPI::delete_webhooks_integration_custom_variable`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteWebhooksIntegrationCustomVariableError {
@@ -106,7 +105,7 @@ pub enum DeleteWebhooksIntegrationCustomVariableError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetWebhooksIntegrationError is a struct for typed errors of method [`GetWebhooksIntegration`]
+/// GetWebhooksIntegrationError is a struct for typed errors of method [`WebhooksIntegrationAPI::get_webhooks_integration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetWebhooksIntegrationError {
@@ -117,7 +116,7 @@ pub enum GetWebhooksIntegrationError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetWebhooksIntegrationCustomVariableError is a struct for typed errors of method [`GetWebhooksIntegrationCustomVariable`]
+/// GetWebhooksIntegrationCustomVariableError is a struct for typed errors of method [`WebhooksIntegrationAPI::get_webhooks_integration_custom_variable`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetWebhooksIntegrationCustomVariableError {
@@ -128,7 +127,7 @@ pub enum GetWebhooksIntegrationCustomVariableError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateWebhooksIntegrationError is a struct for typed errors of method [`UpdateWebhooksIntegration`]
+/// UpdateWebhooksIntegrationError is a struct for typed errors of method [`WebhooksIntegrationAPI::update_webhooks_integration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateWebhooksIntegrationError {
@@ -139,7 +138,7 @@ pub enum UpdateWebhooksIntegrationError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateWebhooksIntegrationCustomVariableError is a struct for typed errors of method [`UpdateWebhooksIntegrationCustomVariable`]
+/// UpdateWebhooksIntegrationCustomVariableError is a struct for typed errors of method [`WebhooksIntegrationAPI::update_webhooks_integration_custom_variable`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateWebhooksIntegrationCustomVariableError {

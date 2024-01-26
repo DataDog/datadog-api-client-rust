@@ -1,12 +1,11 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// ListEventsParams is a struct for passing parameters to the method [`ListEvents`]
+/// ListEventsParams is a struct for passing parameters to the method [`EventsAPI::list_events`]
 #[derive(Clone, Debug)]
 pub struct ListEventsParams {
     /// Search query following events syntax.
@@ -23,13 +22,13 @@ pub struct ListEventsParams {
     pub page_limit: Option<i32>,
 }
 
-/// SearchEventsParams is a struct for passing parameters to the method [`SearchEvents`]
+/// SearchEventsParams is a struct for passing parameters to the method [`EventsAPI::search_events`]
 #[derive(Clone, Debug)]
 pub struct SearchEventsParams {
     pub body: Option<Option<crate::datadogV2::model::EventsListRequest>>,
 }
 
-/// ListEventsError is a struct for typed errors of method [`ListEvents`]
+/// ListEventsError is a struct for typed errors of method [`EventsAPI::list_events`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListEventsError {
@@ -39,7 +38,7 @@ pub enum ListEventsError {
     UnknownValue(serde_json::Value),
 }
 
-/// SearchEventsError is a struct for typed errors of method [`SearchEvents`]
+/// SearchEventsError is a struct for typed errors of method [`EventsAPI::search_events`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SearchEventsError {
@@ -71,7 +70,7 @@ impl EventsAPI {
     }
 
     /// List endpoint returns events that match an events search query.
-    /// [Results are paginated similarly to logs](https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination).
+    /// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
     ///
     /// Use this endpoint to see your latest events.
     pub async fn list_events(
@@ -85,7 +84,7 @@ impl EventsAPI {
     }
 
     /// List endpoint returns events that match an events search query.
-    /// [Results are paginated similarly to logs](https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination).
+    /// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
     ///
     /// Use this endpoint to see your latest events.
     pub async fn list_events_with_http_info(
@@ -171,7 +170,7 @@ impl EventsAPI {
     }
 
     /// List endpoint returns events that match an events search query.
-    /// [Results are paginated similarly to logs](https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination).
+    /// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
     ///
     /// Use this endpoint to build complex events filtering and search.
     pub async fn search_events(
@@ -185,7 +184,7 @@ impl EventsAPI {
     }
 
     /// List endpoint returns events that match an events search query.
-    /// [Results are paginated similarly to logs](https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination).
+    /// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
     ///
     /// Use this endpoint to build complex events filtering and search.
     pub async fn search_events_with_http_info(

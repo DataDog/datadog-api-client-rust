@@ -1,26 +1,25 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateOrUpdateServiceDefinitionsParams is a struct for passing parameters to the method [`CreateOrUpdateServiceDefinitions`]
+/// CreateOrUpdateServiceDefinitionsParams is a struct for passing parameters to the method [`ServiceDefinitionAPI::create_or_update_service_definitions`]
 #[derive(Clone, Debug)]
 pub struct CreateOrUpdateServiceDefinitionsParams {
     /// Service Definition YAML/JSON.
     pub body: crate::datadogV2::model::ServiceDefinitionsCreateRequest,
 }
 
-/// DeleteServiceDefinitionParams is a struct for passing parameters to the method [`DeleteServiceDefinition`]
+/// DeleteServiceDefinitionParams is a struct for passing parameters to the method [`ServiceDefinitionAPI::delete_service_definition`]
 #[derive(Clone, Debug)]
 pub struct DeleteServiceDefinitionParams {
     /// The name of the service.
     pub service_name: String,
 }
 
-/// GetServiceDefinitionParams is a struct for passing parameters to the method [`GetServiceDefinition`]
+/// GetServiceDefinitionParams is a struct for passing parameters to the method [`ServiceDefinitionAPI::get_service_definition`]
 #[derive(Clone, Debug)]
 pub struct GetServiceDefinitionParams {
     /// The name of the service.
@@ -29,7 +28,7 @@ pub struct GetServiceDefinitionParams {
     pub schema_version: Option<crate::datadogV2::model::ServiceDefinitionSchemaVersions>,
 }
 
-/// ListServiceDefinitionsParams is a struct for passing parameters to the method [`ListServiceDefinitions`]
+/// ListServiceDefinitionsParams is a struct for passing parameters to the method [`ServiceDefinitionAPI::list_service_definitions`]
 #[derive(Clone, Debug)]
 pub struct ListServiceDefinitionsParams {
     /// Size for a given page. The maximum allowed value is 100.
@@ -40,7 +39,7 @@ pub struct ListServiceDefinitionsParams {
     pub schema_version: Option<crate::datadogV2::model::ServiceDefinitionSchemaVersions>,
 }
 
-/// CreateOrUpdateServiceDefinitionsError is a struct for typed errors of method [`CreateOrUpdateServiceDefinitions`]
+/// CreateOrUpdateServiceDefinitionsError is a struct for typed errors of method [`ServiceDefinitionAPI::create_or_update_service_definitions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateOrUpdateServiceDefinitionsError {
@@ -51,7 +50,7 @@ pub enum CreateOrUpdateServiceDefinitionsError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteServiceDefinitionError is a struct for typed errors of method [`DeleteServiceDefinition`]
+/// DeleteServiceDefinitionError is a struct for typed errors of method [`ServiceDefinitionAPI::delete_service_definition`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteServiceDefinitionError {
@@ -62,7 +61,7 @@ pub enum DeleteServiceDefinitionError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetServiceDefinitionError is a struct for typed errors of method [`GetServiceDefinition`]
+/// GetServiceDefinitionError is a struct for typed errors of method [`ServiceDefinitionAPI::get_service_definition`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetServiceDefinitionError {
@@ -74,7 +73,7 @@ pub enum GetServiceDefinitionError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListServiceDefinitionsError is a struct for typed errors of method [`ListServiceDefinitions`]
+/// ListServiceDefinitionsError is a struct for typed errors of method [`ServiceDefinitionAPI::list_service_definitions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListServiceDefinitionsError {

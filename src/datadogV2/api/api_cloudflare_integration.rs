@@ -1,32 +1,31 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateCloudflareAccountParams is a struct for passing parameters to the method [`CreateCloudflareAccount`]
+/// CreateCloudflareAccountParams is a struct for passing parameters to the method [`CloudflareIntegrationAPI::create_cloudflare_account`]
 #[derive(Clone, Debug)]
 pub struct CreateCloudflareAccountParams {
     pub body: crate::datadogV2::model::CloudflareAccountCreateRequest,
 }
 
-/// DeleteCloudflareAccountParams is a struct for passing parameters to the method [`DeleteCloudflareAccount`]
+/// DeleteCloudflareAccountParams is a struct for passing parameters to the method [`CloudflareIntegrationAPI::delete_cloudflare_account`]
 #[derive(Clone, Debug)]
 pub struct DeleteCloudflareAccountParams {
     /// None
     pub account_id: String,
 }
 
-/// GetCloudflareAccountParams is a struct for passing parameters to the method [`GetCloudflareAccount`]
+/// GetCloudflareAccountParams is a struct for passing parameters to the method [`CloudflareIntegrationAPI::get_cloudflare_account`]
 #[derive(Clone, Debug)]
 pub struct GetCloudflareAccountParams {
     /// None
     pub account_id: String,
 }
 
-/// UpdateCloudflareAccountParams is a struct for passing parameters to the method [`UpdateCloudflareAccount`]
+/// UpdateCloudflareAccountParams is a struct for passing parameters to the method [`CloudflareIntegrationAPI::update_cloudflare_account`]
 #[derive(Clone, Debug)]
 pub struct UpdateCloudflareAccountParams {
     /// None
@@ -34,7 +33,7 @@ pub struct UpdateCloudflareAccountParams {
     pub body: crate::datadogV2::model::CloudflareAccountUpdateRequest,
 }
 
-/// CreateCloudflareAccountError is a struct for typed errors of method [`CreateCloudflareAccount`]
+/// CreateCloudflareAccountError is a struct for typed errors of method [`CloudflareIntegrationAPI::create_cloudflare_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateCloudflareAccountError {
@@ -45,7 +44,7 @@ pub enum CreateCloudflareAccountError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteCloudflareAccountError is a struct for typed errors of method [`DeleteCloudflareAccount`]
+/// DeleteCloudflareAccountError is a struct for typed errors of method [`CloudflareIntegrationAPI::delete_cloudflare_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteCloudflareAccountError {
@@ -56,7 +55,7 @@ pub enum DeleteCloudflareAccountError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetCloudflareAccountError is a struct for typed errors of method [`GetCloudflareAccount`]
+/// GetCloudflareAccountError is a struct for typed errors of method [`CloudflareIntegrationAPI::get_cloudflare_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetCloudflareAccountError {
@@ -67,7 +66,7 @@ pub enum GetCloudflareAccountError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListCloudflareAccountsError is a struct for typed errors of method [`ListCloudflareAccounts`]
+/// ListCloudflareAccountsError is a struct for typed errors of method [`CloudflareIntegrationAPI::list_cloudflare_accounts`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListCloudflareAccountsError {
@@ -78,7 +77,7 @@ pub enum ListCloudflareAccountsError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateCloudflareAccountError is a struct for typed errors of method [`UpdateCloudflareAccount`]
+/// UpdateCloudflareAccountError is a struct for typed errors of method [`CloudflareIntegrationAPI::update_cloudflare_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateCloudflareAccountError {

@@ -3,7 +3,7 @@
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Serialize};
 
-/// [Definition of the widget](https://docs.datadoghq.com/dashboards/widgets/).
+/// [Definition of the widget](<https://docs.datadoghq.com/dashboards/widgets/>).
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum WidgetDefinition {

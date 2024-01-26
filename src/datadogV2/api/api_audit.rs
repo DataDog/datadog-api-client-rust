@@ -1,12 +1,11 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// ListAuditLogsParams is a struct for passing parameters to the method [`ListAuditLogs`]
+/// ListAuditLogsParams is a struct for passing parameters to the method [`AuditAPI::list_audit_logs`]
 #[derive(Clone, Debug)]
 pub struct ListAuditLogsParams {
     /// Search query following Audit Logs syntax.
@@ -23,13 +22,13 @@ pub struct ListAuditLogsParams {
     pub page_limit: Option<i32>,
 }
 
-/// SearchAuditLogsParams is a struct for passing parameters to the method [`SearchAuditLogs`]
+/// SearchAuditLogsParams is a struct for passing parameters to the method [`AuditAPI::search_audit_logs`]
 #[derive(Clone, Debug)]
 pub struct SearchAuditLogsParams {
     pub body: Option<Option<crate::datadogV2::model::AuditLogsSearchEventsRequest>>,
 }
 
-/// ListAuditLogsError is a struct for typed errors of method [`ListAuditLogs`]
+/// ListAuditLogsError is a struct for typed errors of method [`AuditAPI::list_audit_logs`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListAuditLogsError {
@@ -39,7 +38,7 @@ pub enum ListAuditLogsError {
     UnknownValue(serde_json::Value),
 }
 
-/// SearchAuditLogsError is a struct for typed errors of method [`SearchAuditLogs`]
+/// SearchAuditLogsError is a struct for typed errors of method [`AuditAPI::search_audit_logs`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SearchAuditLogsError {
@@ -75,7 +74,7 @@ impl AuditAPI {
     ///
     /// Use this endpoint to see your latest Audit Logs events.
     ///
-    /// [1]: https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination
+    /// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
     pub async fn list_audit_logs(
         &self,
         params: ListAuditLogsParams,
@@ -92,7 +91,7 @@ impl AuditAPI {
     ///
     /// Use this endpoint to see your latest Audit Logs events.
     ///
-    /// [1]: https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination
+    /// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
     pub async fn list_audit_logs_with_http_info(
         &self,
         params: ListAuditLogsParams,
@@ -183,7 +182,7 @@ impl AuditAPI {
     ///
     /// Use this endpoint to build complex Audit Logs events filtering and search.
     ///
-    /// [1]: https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination
+    /// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
     pub async fn search_audit_logs(
         &self,
         params: SearchAuditLogsParams,
@@ -200,7 +199,7 @@ impl AuditAPI {
     ///
     /// Use this endpoint to build complex Audit Logs events filtering and search.
     ///
-    /// [1]: https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination
+    /// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
     pub async fn search_audit_logs_with_http_info(
         &self,
         params: SearchAuditLogsParams,

@@ -8,7 +8,7 @@ use serde_with::skip_serializing_none;
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SpansFilterCreate {
-    /// The search query - following the [span search syntax](https://docs.datadoghq.com/tracing/trace_explorer/query_syntax/).
+    /// The search query - following the [span search syntax](<https://docs.datadoghq.com/tracing/trace_explorer/query_syntax/>).
     #[serde(rename = "query")]
     pub query: String,
 }

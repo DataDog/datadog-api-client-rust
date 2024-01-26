@@ -4,8 +4,8 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
-/// Create custom grok rules to parse the full message or [a specific attribute of your raw event](https://docs.datadoghq.com/logs/log_configuration/parsing/#advanced-settings).
-/// For more information, see the [parsing section](https://docs.datadoghq.com/logs/log_configuration/parsing).
+/// Create custom grok rules to parse the full message or [a specific attribute of your raw event](<https://docs.datadoghq.com/logs/log_configuration/parsing/#advanced-settings>).
+/// For more information, see the [parsing section](<https://docs.datadoghq.com/logs/log_configuration/parsing>).
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LogsGrokParser {

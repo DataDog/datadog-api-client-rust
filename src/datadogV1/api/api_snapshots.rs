@@ -1,12 +1,11 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// GetGraphSnapshotParams is a struct for passing parameters to the method [`GetGraphSnapshot`]
+/// GetGraphSnapshotParams is a struct for passing parameters to the method [`SnapshotsAPI::get_graph_snapshot`]
 #[derive(Clone, Debug)]
 pub struct GetGraphSnapshotParams {
     /// The POSIX timestamp of the start of the query in seconds.
@@ -18,7 +17,7 @@ pub struct GetGraphSnapshotParams {
     /// A query that adds event bands to the graph.
     pub event_query: Option<String>,
     /// A JSON document defining the graph. `graph_def` can be used instead of `metric_query`.
-    /// The JSON document uses the [grammar defined here](https://docs.datadoghq.com/graphing/graphing_json/#grammar)
+    /// The JSON document uses the [grammar defined here](<https://docs.datadoghq.com/graphing/graphing_json/#grammar>)
     /// and should be formatted to a single line then URL encoded.
     pub graph_def: Option<String>,
     /// A title for the graph. If no title is specified, the graph does not have a title.
@@ -29,7 +28,7 @@ pub struct GetGraphSnapshotParams {
     pub width: Option<i64>,
 }
 
-/// GetGraphSnapshotError is a struct for typed errors of method [`GetGraphSnapshot`]
+/// GetGraphSnapshotError is a struct for typed errors of method [`SnapshotsAPI::get_graph_snapshot`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetGraphSnapshotError {

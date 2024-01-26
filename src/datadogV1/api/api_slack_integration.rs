@@ -1,12 +1,11 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateSlackIntegrationChannelParams is a struct for passing parameters to the method [`CreateSlackIntegrationChannel`]
+/// CreateSlackIntegrationChannelParams is a struct for passing parameters to the method [`SlackIntegrationAPI::create_slack_integration_channel`]
 #[derive(Clone, Debug)]
 pub struct CreateSlackIntegrationChannelParams {
     /// Your Slack account name.
@@ -15,7 +14,7 @@ pub struct CreateSlackIntegrationChannelParams {
     pub body: crate::datadogV1::model::SlackIntegrationChannel,
 }
 
-/// GetSlackIntegrationChannelParams is a struct for passing parameters to the method [`GetSlackIntegrationChannel`]
+/// GetSlackIntegrationChannelParams is a struct for passing parameters to the method [`SlackIntegrationAPI::get_slack_integration_channel`]
 #[derive(Clone, Debug)]
 pub struct GetSlackIntegrationChannelParams {
     /// Your Slack account name.
@@ -24,14 +23,14 @@ pub struct GetSlackIntegrationChannelParams {
     pub channel_name: String,
 }
 
-/// GetSlackIntegrationChannelsParams is a struct for passing parameters to the method [`GetSlackIntegrationChannels`]
+/// GetSlackIntegrationChannelsParams is a struct for passing parameters to the method [`SlackIntegrationAPI::get_slack_integration_channels`]
 #[derive(Clone, Debug)]
 pub struct GetSlackIntegrationChannelsParams {
     /// Your Slack account name.
     pub account_name: String,
 }
 
-/// RemoveSlackIntegrationChannelParams is a struct for passing parameters to the method [`RemoveSlackIntegrationChannel`]
+/// RemoveSlackIntegrationChannelParams is a struct for passing parameters to the method [`SlackIntegrationAPI::remove_slack_integration_channel`]
 #[derive(Clone, Debug)]
 pub struct RemoveSlackIntegrationChannelParams {
     /// Your Slack account name.
@@ -40,7 +39,7 @@ pub struct RemoveSlackIntegrationChannelParams {
     pub channel_name: String,
 }
 
-/// UpdateSlackIntegrationChannelParams is a struct for passing parameters to the method [`UpdateSlackIntegrationChannel`]
+/// UpdateSlackIntegrationChannelParams is a struct for passing parameters to the method [`SlackIntegrationAPI::update_slack_integration_channel`]
 #[derive(Clone, Debug)]
 pub struct UpdateSlackIntegrationChannelParams {
     /// Your Slack account name.
@@ -51,7 +50,7 @@ pub struct UpdateSlackIntegrationChannelParams {
     pub body: crate::datadogV1::model::SlackIntegrationChannel,
 }
 
-/// CreateSlackIntegrationChannelError is a struct for typed errors of method [`CreateSlackIntegrationChannel`]
+/// CreateSlackIntegrationChannelError is a struct for typed errors of method [`SlackIntegrationAPI::create_slack_integration_channel`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateSlackIntegrationChannelError {
@@ -62,7 +61,7 @@ pub enum CreateSlackIntegrationChannelError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetSlackIntegrationChannelError is a struct for typed errors of method [`GetSlackIntegrationChannel`]
+/// GetSlackIntegrationChannelError is a struct for typed errors of method [`SlackIntegrationAPI::get_slack_integration_channel`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetSlackIntegrationChannelError {
@@ -73,7 +72,7 @@ pub enum GetSlackIntegrationChannelError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetSlackIntegrationChannelsError is a struct for typed errors of method [`GetSlackIntegrationChannels`]
+/// GetSlackIntegrationChannelsError is a struct for typed errors of method [`SlackIntegrationAPI::get_slack_integration_channels`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetSlackIntegrationChannelsError {
@@ -84,7 +83,7 @@ pub enum GetSlackIntegrationChannelsError {
     UnknownValue(serde_json::Value),
 }
 
-/// RemoveSlackIntegrationChannelError is a struct for typed errors of method [`RemoveSlackIntegrationChannel`]
+/// RemoveSlackIntegrationChannelError is a struct for typed errors of method [`SlackIntegrationAPI::remove_slack_integration_channel`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum RemoveSlackIntegrationChannelError {
@@ -95,7 +94,7 @@ pub enum RemoveSlackIntegrationChannelError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateSlackIntegrationChannelError is a struct for typed errors of method [`UpdateSlackIntegrationChannel`]
+/// UpdateSlackIntegrationChannelError is a struct for typed errors of method [`SlackIntegrationAPI::update_slack_integration_channel`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateSlackIntegrationChannelError {

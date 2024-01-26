@@ -1,33 +1,32 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateSLOCorrectionParams is a struct for passing parameters to the method [`CreateSLOCorrection`]
+/// CreateSLOCorrectionParams is a struct for passing parameters to the method [`ServiceLevelObjectiveCorrectionsAPI::create_slo_correction`]
 #[derive(Clone, Debug)]
 pub struct CreateSLOCorrectionParams {
     /// Create an SLO Correction
     pub body: crate::datadogV1::model::SLOCorrectionCreateRequest,
 }
 
-/// DeleteSLOCorrectionParams is a struct for passing parameters to the method [`DeleteSLOCorrection`]
+/// DeleteSLOCorrectionParams is a struct for passing parameters to the method [`ServiceLevelObjectiveCorrectionsAPI::delete_slo_correction`]
 #[derive(Clone, Debug)]
 pub struct DeleteSLOCorrectionParams {
     /// The ID of the SLO correction object.
     pub slo_correction_id: String,
 }
 
-/// GetSLOCorrectionParams is a struct for passing parameters to the method [`GetSLOCorrection`]
+/// GetSLOCorrectionParams is a struct for passing parameters to the method [`ServiceLevelObjectiveCorrectionsAPI::get_slo_correction`]
 #[derive(Clone, Debug)]
 pub struct GetSLOCorrectionParams {
     /// The ID of the SLO correction object.
     pub slo_correction_id: String,
 }
 
-/// ListSLOCorrectionParams is a struct for passing parameters to the method [`ListSLOCorrection`]
+/// ListSLOCorrectionParams is a struct for passing parameters to the method [`ServiceLevelObjectiveCorrectionsAPI::list_slo_correction`]
 #[derive(Clone, Debug)]
 pub struct ListSLOCorrectionParams {
     /// The specific offset to use as the beginning of the returned response.
@@ -36,7 +35,7 @@ pub struct ListSLOCorrectionParams {
     pub limit: Option<i64>,
 }
 
-/// UpdateSLOCorrectionParams is a struct for passing parameters to the method [`UpdateSLOCorrection`]
+/// UpdateSLOCorrectionParams is a struct for passing parameters to the method [`ServiceLevelObjectiveCorrectionsAPI::update_slo_correction`]
 #[derive(Clone, Debug)]
 pub struct UpdateSLOCorrectionParams {
     /// The ID of the SLO correction object.
@@ -45,7 +44,7 @@ pub struct UpdateSLOCorrectionParams {
     pub body: crate::datadogV1::model::SLOCorrectionUpdateRequest,
 }
 
-/// CreateSLOCorrectionError is a struct for typed errors of method [`CreateSLOCorrection`]
+/// CreateSLOCorrectionError is a struct for typed errors of method [`ServiceLevelObjectiveCorrectionsAPI::create_slo_correction`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateSLOCorrectionError {
@@ -56,7 +55,7 @@ pub enum CreateSLOCorrectionError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteSLOCorrectionError is a struct for typed errors of method [`DeleteSLOCorrection`]
+/// DeleteSLOCorrectionError is a struct for typed errors of method [`ServiceLevelObjectiveCorrectionsAPI::delete_slo_correction`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteSLOCorrectionError {
@@ -66,7 +65,7 @@ pub enum DeleteSLOCorrectionError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetSLOCorrectionError is a struct for typed errors of method [`GetSLOCorrection`]
+/// GetSLOCorrectionError is a struct for typed errors of method [`ServiceLevelObjectiveCorrectionsAPI::get_slo_correction`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetSLOCorrectionError {
@@ -76,7 +75,7 @@ pub enum GetSLOCorrectionError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListSLOCorrectionError is a struct for typed errors of method [`ListSLOCorrection`]
+/// ListSLOCorrectionError is a struct for typed errors of method [`ServiceLevelObjectiveCorrectionsAPI::list_slo_correction`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListSLOCorrectionError {
@@ -85,7 +84,7 @@ pub enum ListSLOCorrectionError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateSLOCorrectionError is a struct for typed errors of method [`UpdateSLOCorrection`]
+/// UpdateSLOCorrectionError is a struct for typed errors of method [`ServiceLevelObjectiveCorrectionsAPI::update_slo_correction`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateSLOCorrectionError {

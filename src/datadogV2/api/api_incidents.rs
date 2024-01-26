@@ -1,19 +1,18 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateIncidentParams is a struct for passing parameters to the method [`CreateIncident`]
+/// CreateIncidentParams is a struct for passing parameters to the method [`IncidentsAPI::create_incident`]
 #[derive(Clone, Debug)]
 pub struct CreateIncidentParams {
     /// Incident payload.
     pub body: crate::datadogV2::model::IncidentCreateRequest,
 }
 
-/// CreateIncidentIntegrationParams is a struct for passing parameters to the method [`CreateIncidentIntegration`]
+/// CreateIncidentIntegrationParams is a struct for passing parameters to the method [`IncidentsAPI::create_incident_integration`]
 #[derive(Clone, Debug)]
 pub struct CreateIncidentIntegrationParams {
     /// The UUID of the incident.
@@ -22,7 +21,7 @@ pub struct CreateIncidentIntegrationParams {
     pub body: crate::datadogV2::model::IncidentIntegrationMetadataCreateRequest,
 }
 
-/// CreateIncidentTodoParams is a struct for passing parameters to the method [`CreateIncidentTodo`]
+/// CreateIncidentTodoParams is a struct for passing parameters to the method [`IncidentsAPI::create_incident_todo`]
 #[derive(Clone, Debug)]
 pub struct CreateIncidentTodoParams {
     /// The UUID of the incident.
@@ -31,14 +30,14 @@ pub struct CreateIncidentTodoParams {
     pub body: crate::datadogV2::model::IncidentTodoCreateRequest,
 }
 
-/// DeleteIncidentParams is a struct for passing parameters to the method [`DeleteIncident`]
+/// DeleteIncidentParams is a struct for passing parameters to the method [`IncidentsAPI::delete_incident`]
 #[derive(Clone, Debug)]
 pub struct DeleteIncidentParams {
     /// The UUID of the incident.
     pub incident_id: String,
 }
 
-/// DeleteIncidentIntegrationParams is a struct for passing parameters to the method [`DeleteIncidentIntegration`]
+/// DeleteIncidentIntegrationParams is a struct for passing parameters to the method [`IncidentsAPI::delete_incident_integration`]
 #[derive(Clone, Debug)]
 pub struct DeleteIncidentIntegrationParams {
     /// The UUID of the incident.
@@ -47,7 +46,7 @@ pub struct DeleteIncidentIntegrationParams {
     pub integration_metadata_id: String,
 }
 
-/// DeleteIncidentTodoParams is a struct for passing parameters to the method [`DeleteIncidentTodo`]
+/// DeleteIncidentTodoParams is a struct for passing parameters to the method [`IncidentsAPI::delete_incident_todo`]
 #[derive(Clone, Debug)]
 pub struct DeleteIncidentTodoParams {
     /// The UUID of the incident.
@@ -56,7 +55,7 @@ pub struct DeleteIncidentTodoParams {
     pub todo_id: String,
 }
 
-/// GetIncidentParams is a struct for passing parameters to the method [`GetIncident`]
+/// GetIncidentParams is a struct for passing parameters to the method [`IncidentsAPI::get_incident`]
 #[derive(Clone, Debug)]
 pub struct GetIncidentParams {
     /// The UUID of the incident.
@@ -65,7 +64,7 @@ pub struct GetIncidentParams {
     pub include: Option<Vec<crate::datadogV2::model::IncidentRelatedObject>>,
 }
 
-/// GetIncidentIntegrationParams is a struct for passing parameters to the method [`GetIncidentIntegration`]
+/// GetIncidentIntegrationParams is a struct for passing parameters to the method [`IncidentsAPI::get_incident_integration`]
 #[derive(Clone, Debug)]
 pub struct GetIncidentIntegrationParams {
     /// The UUID of the incident.
@@ -74,7 +73,7 @@ pub struct GetIncidentIntegrationParams {
     pub integration_metadata_id: String,
 }
 
-/// GetIncidentTodoParams is a struct for passing parameters to the method [`GetIncidentTodo`]
+/// GetIncidentTodoParams is a struct for passing parameters to the method [`IncidentsAPI::get_incident_todo`]
 #[derive(Clone, Debug)]
 pub struct GetIncidentTodoParams {
     /// The UUID of the incident.
@@ -83,7 +82,7 @@ pub struct GetIncidentTodoParams {
     pub todo_id: String,
 }
 
-/// ListIncidentAttachmentsParams is a struct for passing parameters to the method [`ListIncidentAttachments`]
+/// ListIncidentAttachmentsParams is a struct for passing parameters to the method [`IncidentsAPI::list_incident_attachments`]
 #[derive(Clone, Debug)]
 pub struct ListIncidentAttachmentsParams {
     /// The UUID of the incident.
@@ -95,21 +94,21 @@ pub struct ListIncidentAttachmentsParams {
         Option<Vec<crate::datadogV2::model::IncidentAttachmentAttachmentType>>,
 }
 
-/// ListIncidentIntegrationsParams is a struct for passing parameters to the method [`ListIncidentIntegrations`]
+/// ListIncidentIntegrationsParams is a struct for passing parameters to the method [`IncidentsAPI::list_incident_integrations`]
 #[derive(Clone, Debug)]
 pub struct ListIncidentIntegrationsParams {
     /// The UUID of the incident.
     pub incident_id: String,
 }
 
-/// ListIncidentTodosParams is a struct for passing parameters to the method [`ListIncidentTodos`]
+/// ListIncidentTodosParams is a struct for passing parameters to the method [`IncidentsAPI::list_incident_todos`]
 #[derive(Clone, Debug)]
 pub struct ListIncidentTodosParams {
     /// The UUID of the incident.
     pub incident_id: String,
 }
 
-/// ListIncidentsParams is a struct for passing parameters to the method [`ListIncidents`]
+/// ListIncidentsParams is a struct for passing parameters to the method [`IncidentsAPI::list_incidents`]
 #[derive(Clone, Debug)]
 pub struct ListIncidentsParams {
     /// Specifies which types of related objects should be included in the response.
@@ -120,7 +119,7 @@ pub struct ListIncidentsParams {
     pub page_offset: Option<i64>,
 }
 
-/// SearchIncidentsParams is a struct for passing parameters to the method [`SearchIncidents`]
+/// SearchIncidentsParams is a struct for passing parameters to the method [`IncidentsAPI::search_incidents`]
 #[derive(Clone, Debug)]
 pub struct SearchIncidentsParams {
     /// Specifies which incidents should be returned. The query can contain any number of incident facets
@@ -137,7 +136,7 @@ pub struct SearchIncidentsParams {
     pub page_offset: Option<i64>,
 }
 
-/// UpdateIncidentParams is a struct for passing parameters to the method [`UpdateIncident`]
+/// UpdateIncidentParams is a struct for passing parameters to the method [`IncidentsAPI::update_incident`]
 #[derive(Clone, Debug)]
 pub struct UpdateIncidentParams {
     /// The UUID of the incident.
@@ -148,7 +147,7 @@ pub struct UpdateIncidentParams {
     pub include: Option<Vec<crate::datadogV2::model::IncidentRelatedObject>>,
 }
 
-/// UpdateIncidentAttachmentsParams is a struct for passing parameters to the method [`UpdateIncidentAttachments`]
+/// UpdateIncidentAttachmentsParams is a struct for passing parameters to the method [`IncidentsAPI::update_incident_attachments`]
 #[derive(Clone, Debug)]
 pub struct UpdateIncidentAttachmentsParams {
     /// The UUID of the incident.
@@ -159,7 +158,7 @@ pub struct UpdateIncidentAttachmentsParams {
     pub include: Option<Vec<crate::datadogV2::model::IncidentAttachmentRelatedObject>>,
 }
 
-/// UpdateIncidentIntegrationParams is a struct for passing parameters to the method [`UpdateIncidentIntegration`]
+/// UpdateIncidentIntegrationParams is a struct for passing parameters to the method [`IncidentsAPI::update_incident_integration`]
 #[derive(Clone, Debug)]
 pub struct UpdateIncidentIntegrationParams {
     /// The UUID of the incident.
@@ -170,7 +169,7 @@ pub struct UpdateIncidentIntegrationParams {
     pub body: crate::datadogV2::model::IncidentIntegrationMetadataPatchRequest,
 }
 
-/// UpdateIncidentTodoParams is a struct for passing parameters to the method [`UpdateIncidentTodo`]
+/// UpdateIncidentTodoParams is a struct for passing parameters to the method [`IncidentsAPI::update_incident_todo`]
 #[derive(Clone, Debug)]
 pub struct UpdateIncidentTodoParams {
     /// The UUID of the incident.
@@ -181,7 +180,7 @@ pub struct UpdateIncidentTodoParams {
     pub body: crate::datadogV2::model::IncidentTodoPatchRequest,
 }
 
-/// CreateIncidentError is a struct for typed errors of method [`CreateIncident`]
+/// CreateIncidentError is a struct for typed errors of method [`IncidentsAPI::create_incident`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateIncidentError {
@@ -193,7 +192,7 @@ pub enum CreateIncidentError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateIncidentIntegrationError is a struct for typed errors of method [`CreateIncidentIntegration`]
+/// CreateIncidentIntegrationError is a struct for typed errors of method [`IncidentsAPI::create_incident_integration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateIncidentIntegrationError {
@@ -205,7 +204,7 @@ pub enum CreateIncidentIntegrationError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateIncidentTodoError is a struct for typed errors of method [`CreateIncidentTodo`]
+/// CreateIncidentTodoError is a struct for typed errors of method [`IncidentsAPI::create_incident_todo`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateIncidentTodoError {
@@ -217,7 +216,7 @@ pub enum CreateIncidentTodoError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteIncidentError is a struct for typed errors of method [`DeleteIncident`]
+/// DeleteIncidentError is a struct for typed errors of method [`IncidentsAPI::delete_incident`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteIncidentError {
@@ -229,7 +228,7 @@ pub enum DeleteIncidentError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteIncidentIntegrationError is a struct for typed errors of method [`DeleteIncidentIntegration`]
+/// DeleteIncidentIntegrationError is a struct for typed errors of method [`IncidentsAPI::delete_incident_integration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteIncidentIntegrationError {
@@ -241,7 +240,7 @@ pub enum DeleteIncidentIntegrationError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteIncidentTodoError is a struct for typed errors of method [`DeleteIncidentTodo`]
+/// DeleteIncidentTodoError is a struct for typed errors of method [`IncidentsAPI::delete_incident_todo`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteIncidentTodoError {
@@ -253,7 +252,7 @@ pub enum DeleteIncidentTodoError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetIncidentError is a struct for typed errors of method [`GetIncident`]
+/// GetIncidentError is a struct for typed errors of method [`IncidentsAPI::get_incident`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetIncidentError {
@@ -265,7 +264,7 @@ pub enum GetIncidentError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetIncidentIntegrationError is a struct for typed errors of method [`GetIncidentIntegration`]
+/// GetIncidentIntegrationError is a struct for typed errors of method [`IncidentsAPI::get_incident_integration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetIncidentIntegrationError {
@@ -277,7 +276,7 @@ pub enum GetIncidentIntegrationError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetIncidentTodoError is a struct for typed errors of method [`GetIncidentTodo`]
+/// GetIncidentTodoError is a struct for typed errors of method [`IncidentsAPI::get_incident_todo`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetIncidentTodoError {
@@ -289,7 +288,7 @@ pub enum GetIncidentTodoError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListIncidentAttachmentsError is a struct for typed errors of method [`ListIncidentAttachments`]
+/// ListIncidentAttachmentsError is a struct for typed errors of method [`IncidentsAPI::list_incident_attachments`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListIncidentAttachmentsError {
@@ -301,7 +300,7 @@ pub enum ListIncidentAttachmentsError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListIncidentIntegrationsError is a struct for typed errors of method [`ListIncidentIntegrations`]
+/// ListIncidentIntegrationsError is a struct for typed errors of method [`IncidentsAPI::list_incident_integrations`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListIncidentIntegrationsError {
@@ -313,7 +312,7 @@ pub enum ListIncidentIntegrationsError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListIncidentTodosError is a struct for typed errors of method [`ListIncidentTodos`]
+/// ListIncidentTodosError is a struct for typed errors of method [`IncidentsAPI::list_incident_todos`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListIncidentTodosError {
@@ -325,7 +324,7 @@ pub enum ListIncidentTodosError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListIncidentsError is a struct for typed errors of method [`ListIncidents`]
+/// ListIncidentsError is a struct for typed errors of method [`IncidentsAPI::list_incidents`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListIncidentsError {
@@ -337,7 +336,7 @@ pub enum ListIncidentsError {
     UnknownValue(serde_json::Value),
 }
 
-/// SearchIncidentsError is a struct for typed errors of method [`SearchIncidents`]
+/// SearchIncidentsError is a struct for typed errors of method [`IncidentsAPI::search_incidents`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SearchIncidentsError {
@@ -349,7 +348,7 @@ pub enum SearchIncidentsError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateIncidentError is a struct for typed errors of method [`UpdateIncident`]
+/// UpdateIncidentError is a struct for typed errors of method [`IncidentsAPI::update_incident`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateIncidentError {
@@ -361,7 +360,7 @@ pub enum UpdateIncidentError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateIncidentAttachmentsError is a struct for typed errors of method [`UpdateIncidentAttachments`]
+/// UpdateIncidentAttachmentsError is a struct for typed errors of method [`IncidentsAPI::update_incident_attachments`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateIncidentAttachmentsError {
@@ -373,7 +372,7 @@ pub enum UpdateIncidentAttachmentsError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateIncidentIntegrationError is a struct for typed errors of method [`UpdateIncidentIntegration`]
+/// UpdateIncidentIntegrationError is a struct for typed errors of method [`IncidentsAPI::update_incident_integration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateIncidentIntegrationError {
@@ -385,7 +384,7 @@ pub enum UpdateIncidentIntegrationError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateIncidentTodoError is a struct for typed errors of method [`UpdateIncidentTodo`]
+/// UpdateIncidentTodoError is a struct for typed errors of method [`IncidentsAPI::update_incident_todo`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateIncidentTodoError {

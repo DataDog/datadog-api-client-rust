@@ -21,7 +21,7 @@ pub struct MonitorOptions {
     /// Whether or not to send a list of samples when the monitor triggers. This is only used by CI Test and Pipeline monitors.
     #[serde(rename = "enable_samples")]
     pub enable_samples: Option<bool>,
-    /// We recommend using the [is_renotify](https://docs.datadoghq.com/monitors/notify/?tab=is_alert#renotify),
+    /// We recommend using the [is_renotify](<https://docs.datadoghq.com/monitors/notify/?tab=is_alert#renotify>),
     /// block in the original message instead.
     /// A message to include with a re-notification. Supports the `@username` notification we allow elsewhere.
     /// Not applicable if `renotify_interval` is `None`.

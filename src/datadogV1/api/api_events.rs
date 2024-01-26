@@ -1,26 +1,25 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateEventParams is a struct for passing parameters to the method [`CreateEvent`]
+/// CreateEventParams is a struct for passing parameters to the method [`EventsAPI::create_event`]
 #[derive(Clone, Debug)]
 pub struct CreateEventParams {
     /// Event request object
     pub body: crate::datadogV1::model::EventCreateRequest,
 }
 
-/// GetEventParams is a struct for passing parameters to the method [`GetEvent`]
+/// GetEventParams is a struct for passing parameters to the method [`EventsAPI::get_event`]
 #[derive(Clone, Debug)]
 pub struct GetEventParams {
     /// The ID of the event.
     pub event_id: i64,
 }
 
-/// ListEventsParams is a struct for passing parameters to the method [`ListEvents`]
+/// ListEventsParams is a struct for passing parameters to the method [`EventsAPI::list_events`]
 #[derive(Clone, Debug)]
 pub struct ListEventsParams {
     /// POSIX timestamp.
@@ -45,7 +44,7 @@ pub struct ListEventsParams {
     pub page: Option<i32>,
 }
 
-/// CreateEventError is a struct for typed errors of method [`CreateEvent`]
+/// CreateEventError is a struct for typed errors of method [`EventsAPI::create_event`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateEventError {
@@ -54,7 +53,7 @@ pub enum CreateEventError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetEventError is a struct for typed errors of method [`GetEvent`]
+/// GetEventError is a struct for typed errors of method [`EventsAPI::get_event`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetEventError {
@@ -64,7 +63,7 @@ pub enum GetEventError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListEventsError is a struct for typed errors of method [`ListEvents`]
+/// ListEventsError is a struct for typed errors of method [`EventsAPI::list_events`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListEventsError {

@@ -17,7 +17,7 @@ pub struct SyntheticsBrowserTestConfig {
     /// Object describing the Synthetic test request.
     #[serde(rename = "request")]
     pub request: Box<crate::datadogV1::model::SyntheticsTestRequest>,
-    /// Cookies to be used for the request, using the [Set-Cookie](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie) syntax.
+    /// Cookies to be used for the request, using the [Set-Cookie](<https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie>) syntax.
     #[serde(rename = "setCookie")]
     pub set_cookie: Option<String>,
     /// Array of variables used for the test steps.

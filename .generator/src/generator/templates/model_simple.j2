@@ -10,7 +10,9 @@ pub struct {{ name }} {
 {%- set required = attr in model.required %}
 {%- set nullable = schema.get("nullable", False)%}
 {%- set dataType = get_type(schema, alternative_name=name + propertyName, render_nullable=nullable, render_option=not required, render_box=True, version=version) %}
+    {%- if schema.description is defined %}
     {{ schema.description | block_comment }}
+    {%- endif %}
 {%- if schema.deprecated %}
 	#[deprecated]
 {%- endif %}

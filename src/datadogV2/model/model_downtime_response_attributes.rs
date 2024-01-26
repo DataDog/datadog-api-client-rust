@@ -54,7 +54,7 @@ pub struct DowntimeResponseAttributes {
     /// provided, the downtime will begin immediately and never end.
     #[serde(rename = "schedule")]
     pub schedule: Option<Box<crate::datadogV2::model::DowntimeScheduleResponse>>,
-    /// The scope to which the downtime applies. Must follow the [common search syntax](https://docs.datadoghq.com/logs/explorer/search_syntax/).
+    /// The scope to which the downtime applies. Must follow the [common search syntax](<https://docs.datadoghq.com/logs/explorer/search_syntax/>).
     #[serde(rename = "scope")]
     pub scope: Option<String>,
     /// The current status of the downtime.

@@ -8,10 +8,10 @@ use serde_with::skip_serializing_none;
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct GCPAccount {
-    /// Should be `https://www.googleapis.com/oauth2/v1/certs`.
+    /// Should be `<https://www.googleapis.com/oauth2/v1/certs`.>
     #[serde(rename = "auth_provider_x509_cert_url")]
     pub auth_provider_x509_cert_url: Option<String>,
-    /// Should be `https://accounts.google.com/o/oauth2/auth`.
+    /// Should be `<https://accounts.google.com/o/oauth2/auth`.>
     #[serde(rename = "auth_uri")]
     pub auth_uri: Option<String>,
     /// Silence monitors for expected GCE instance shutdowns.
@@ -23,7 +23,7 @@ pub struct GCPAccount {
     /// Your ID found in your JSON service account key.
     #[serde(rename = "client_id")]
     pub client_id: Option<String>,
-    /// Should be `https://www.googleapis.com/robot/v1/metadata/x509/$CLIENT_EMAIL`
+    /// Should be `<https://www.googleapis.com/robot/v1/metadata/x509/$CLIENT_EMAIL`>
     /// where `$CLIENT_EMAIL` is the email found in your JSON service account key.
     #[serde(rename = "client_x509_cert_url")]
     pub client_x509_cert_url: Option<String>,
@@ -52,7 +52,7 @@ pub struct GCPAccount {
     /// When enabled, Datadog scans for all resources in your GCP environment.
     #[serde(rename = "resource_collection_enabled")]
     pub resource_collection_enabled: Option<bool>,
-    /// Should be `https://accounts.google.com/o/oauth2/token`.
+    /// Should be `<https://accounts.google.com/o/oauth2/token`.>
     #[serde(rename = "token_uri")]
     pub token_uri: Option<String>,
     /// The value for service_account found in your JSON service account key.

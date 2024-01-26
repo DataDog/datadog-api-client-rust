@@ -14,7 +14,7 @@ pub struct LogAttributes {
     /// Name of the machine from where the logs are being sent.
     #[serde(rename = "host")]
     pub host: Option<String>,
-    /// The message [reserved attribute](https://docs.datadoghq.com/logs/log_collection/#reserved-attributes)
+    /// The message [reserved attribute](<https://docs.datadoghq.com/logs/log_collection/#reserved-attributes>)
     /// of your log. By default, Datadog ingests the value of the message attribute as the body of the log entry.
     /// That value is then highlighted and displayed in the Logstream, where it is indexed for full text search.
     #[serde(rename = "message")]

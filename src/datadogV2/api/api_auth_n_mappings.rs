@@ -1,32 +1,31 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateAuthNMappingParams is a struct for passing parameters to the method [`CreateAuthNMapping`]
+/// CreateAuthNMappingParams is a struct for passing parameters to the method [`AuthNMappingsAPI::create_auth_n_mapping`]
 #[derive(Clone, Debug)]
 pub struct CreateAuthNMappingParams {
     pub body: crate::datadogV2::model::AuthNMappingCreateRequest,
 }
 
-/// DeleteAuthNMappingParams is a struct for passing parameters to the method [`DeleteAuthNMapping`]
+/// DeleteAuthNMappingParams is a struct for passing parameters to the method [`AuthNMappingsAPI::delete_auth_n_mapping`]
 #[derive(Clone, Debug)]
 pub struct DeleteAuthNMappingParams {
     /// The UUID of the AuthN Mapping.
     pub authn_mapping_id: String,
 }
 
-/// GetAuthNMappingParams is a struct for passing parameters to the method [`GetAuthNMapping`]
+/// GetAuthNMappingParams is a struct for passing parameters to the method [`AuthNMappingsAPI::get_auth_n_mapping`]
 #[derive(Clone, Debug)]
 pub struct GetAuthNMappingParams {
     /// The UUID of the AuthN Mapping.
     pub authn_mapping_id: String,
 }
 
-/// ListAuthNMappingsParams is a struct for passing parameters to the method [`ListAuthNMappings`]
+/// ListAuthNMappingsParams is a struct for passing parameters to the method [`AuthNMappingsAPI::list_auth_n_mappings`]
 #[derive(Clone, Debug)]
 pub struct ListAuthNMappingsParams {
     /// Size for a given page. The maximum allowed value is 100.
@@ -39,7 +38,7 @@ pub struct ListAuthNMappingsParams {
     pub filter: Option<String>,
 }
 
-/// UpdateAuthNMappingParams is a struct for passing parameters to the method [`UpdateAuthNMapping`]
+/// UpdateAuthNMappingParams is a struct for passing parameters to the method [`AuthNMappingsAPI::update_auth_n_mapping`]
 #[derive(Clone, Debug)]
 pub struct UpdateAuthNMappingParams {
     /// The UUID of the AuthN Mapping.
@@ -47,7 +46,7 @@ pub struct UpdateAuthNMappingParams {
     pub body: crate::datadogV2::model::AuthNMappingUpdateRequest,
 }
 
-/// CreateAuthNMappingError is a struct for typed errors of method [`CreateAuthNMapping`]
+/// CreateAuthNMappingError is a struct for typed errors of method [`AuthNMappingsAPI::create_auth_n_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateAuthNMappingError {
@@ -58,7 +57,7 @@ pub enum CreateAuthNMappingError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteAuthNMappingError is a struct for typed errors of method [`DeleteAuthNMapping`]
+/// DeleteAuthNMappingError is a struct for typed errors of method [`AuthNMappingsAPI::delete_auth_n_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteAuthNMappingError {
@@ -68,7 +67,7 @@ pub enum DeleteAuthNMappingError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetAuthNMappingError is a struct for typed errors of method [`GetAuthNMapping`]
+/// GetAuthNMappingError is a struct for typed errors of method [`AuthNMappingsAPI::get_auth_n_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetAuthNMappingError {
@@ -78,7 +77,7 @@ pub enum GetAuthNMappingError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListAuthNMappingsError is a struct for typed errors of method [`ListAuthNMappings`]
+/// ListAuthNMappingsError is a struct for typed errors of method [`AuthNMappingsAPI::list_auth_n_mappings`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListAuthNMappingsError {
@@ -87,7 +86,7 @@ pub enum ListAuthNMappingsError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateAuthNMappingError is a struct for typed errors of method [`UpdateAuthNMapping`]
+/// UpdateAuthNMappingError is a struct for typed errors of method [`AuthNMappingsAPI::update_auth_n_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateAuthNMappingError {

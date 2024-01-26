@@ -1,47 +1,46 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateDashboardParams is a struct for passing parameters to the method [`CreateDashboard`]
+/// CreateDashboardParams is a struct for passing parameters to the method [`DashboardsAPI::create_dashboard`]
 #[derive(Clone, Debug)]
 pub struct CreateDashboardParams {
     /// Create a dashboard request body.
     pub body: crate::datadogV1::model::Dashboard,
 }
 
-/// CreatePublicDashboardParams is a struct for passing parameters to the method [`CreatePublicDashboard`]
+/// CreatePublicDashboardParams is a struct for passing parameters to the method [`DashboardsAPI::create_public_dashboard`]
 #[derive(Clone, Debug)]
 pub struct CreatePublicDashboardParams {
     /// Create a shared dashboard request body.
     pub body: crate::datadogV1::model::SharedDashboard,
 }
 
-/// DeleteDashboardParams is a struct for passing parameters to the method [`DeleteDashboard`]
+/// DeleteDashboardParams is a struct for passing parameters to the method [`DashboardsAPI::delete_dashboard`]
 #[derive(Clone, Debug)]
 pub struct DeleteDashboardParams {
     /// The ID of the dashboard.
     pub dashboard_id: String,
 }
 
-/// DeleteDashboardsParams is a struct for passing parameters to the method [`DeleteDashboards`]
+/// DeleteDashboardsParams is a struct for passing parameters to the method [`DashboardsAPI::delete_dashboards`]
 #[derive(Clone, Debug)]
 pub struct DeleteDashboardsParams {
     /// Delete dashboards request body.
     pub body: crate::datadogV1::model::DashboardBulkDeleteRequest,
 }
 
-/// DeletePublicDashboardParams is a struct for passing parameters to the method [`DeletePublicDashboard`]
+/// DeletePublicDashboardParams is a struct for passing parameters to the method [`DashboardsAPI::delete_public_dashboard`]
 #[derive(Clone, Debug)]
 pub struct DeletePublicDashboardParams {
     /// The token of the shared dashboard.
     pub token: String,
 }
 
-/// DeletePublicDashboardInvitationParams is a struct for passing parameters to the method [`DeletePublicDashboardInvitation`]
+/// DeletePublicDashboardInvitationParams is a struct for passing parameters to the method [`DashboardsAPI::delete_public_dashboard_invitation`]
 #[derive(Clone, Debug)]
 pub struct DeletePublicDashboardInvitationParams {
     /// The token of the shared dashboard.
@@ -50,21 +49,21 @@ pub struct DeletePublicDashboardInvitationParams {
     pub body: crate::datadogV1::model::SharedDashboardInvites,
 }
 
-/// GetDashboardParams is a struct for passing parameters to the method [`GetDashboard`]
+/// GetDashboardParams is a struct for passing parameters to the method [`DashboardsAPI::get_dashboard`]
 #[derive(Clone, Debug)]
 pub struct GetDashboardParams {
     /// The ID of the dashboard.
     pub dashboard_id: String,
 }
 
-/// GetPublicDashboardParams is a struct for passing parameters to the method [`GetPublicDashboard`]
+/// GetPublicDashboardParams is a struct for passing parameters to the method [`DashboardsAPI::get_public_dashboard`]
 #[derive(Clone, Debug)]
 pub struct GetPublicDashboardParams {
     /// The token of the shared dashboard. Generated when a dashboard is shared.
     pub token: String,
 }
 
-/// GetPublicDashboardInvitationsParams is a struct for passing parameters to the method [`GetPublicDashboardInvitations`]
+/// GetPublicDashboardInvitationsParams is a struct for passing parameters to the method [`DashboardsAPI::get_public_dashboard_invitations`]
 #[derive(Clone, Debug)]
 pub struct GetPublicDashboardInvitationsParams {
     /// Token of the shared dashboard for which to fetch invitations.
@@ -75,7 +74,7 @@ pub struct GetPublicDashboardInvitationsParams {
     pub page_number: Option<i64>,
 }
 
-/// ListDashboardsParams is a struct for passing parameters to the method [`ListDashboards`]
+/// ListDashboardsParams is a struct for passing parameters to the method [`DashboardsAPI::list_dashboards`]
 #[derive(Clone, Debug)]
 pub struct ListDashboardsParams {
     /// When `true`, this query only returns shared custom created
@@ -90,14 +89,14 @@ pub struct ListDashboardsParams {
     pub start: Option<i64>,
 }
 
-/// RestoreDashboardsParams is a struct for passing parameters to the method [`RestoreDashboards`]
+/// RestoreDashboardsParams is a struct for passing parameters to the method [`DashboardsAPI::restore_dashboards`]
 #[derive(Clone, Debug)]
 pub struct RestoreDashboardsParams {
     /// Restore dashboards request body.
     pub body: crate::datadogV1::model::DashboardRestoreRequest,
 }
 
-/// SendPublicDashboardInvitationParams is a struct for passing parameters to the method [`SendPublicDashboardInvitation`]
+/// SendPublicDashboardInvitationParams is a struct for passing parameters to the method [`DashboardsAPI::send_public_dashboard_invitation`]
 #[derive(Clone, Debug)]
 pub struct SendPublicDashboardInvitationParams {
     /// The token of the shared dashboard.
@@ -106,7 +105,7 @@ pub struct SendPublicDashboardInvitationParams {
     pub body: crate::datadogV1::model::SharedDashboardInvites,
 }
 
-/// UpdateDashboardParams is a struct for passing parameters to the method [`UpdateDashboard`]
+/// UpdateDashboardParams is a struct for passing parameters to the method [`DashboardsAPI::update_dashboard`]
 #[derive(Clone, Debug)]
 pub struct UpdateDashboardParams {
     /// The ID of the dashboard.
@@ -115,7 +114,7 @@ pub struct UpdateDashboardParams {
     pub body: crate::datadogV1::model::Dashboard,
 }
 
-/// UpdatePublicDashboardParams is a struct for passing parameters to the method [`UpdatePublicDashboard`]
+/// UpdatePublicDashboardParams is a struct for passing parameters to the method [`DashboardsAPI::update_public_dashboard`]
 #[derive(Clone, Debug)]
 pub struct UpdatePublicDashboardParams {
     /// The token of the shared dashboard.
@@ -124,7 +123,7 @@ pub struct UpdatePublicDashboardParams {
     pub body: crate::datadogV1::model::SharedDashboardUpdateRequest,
 }
 
-/// CreateDashboardError is a struct for typed errors of method [`CreateDashboard`]
+/// CreateDashboardError is a struct for typed errors of method [`DashboardsAPI::create_dashboard`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateDashboardError {
@@ -134,7 +133,7 @@ pub enum CreateDashboardError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreatePublicDashboardError is a struct for typed errors of method [`CreatePublicDashboard`]
+/// CreatePublicDashboardError is a struct for typed errors of method [`DashboardsAPI::create_public_dashboard`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreatePublicDashboardError {
@@ -145,7 +144,7 @@ pub enum CreatePublicDashboardError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteDashboardError is a struct for typed errors of method [`DeleteDashboard`]
+/// DeleteDashboardError is a struct for typed errors of method [`DashboardsAPI::delete_dashboard`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteDashboardError {
@@ -155,7 +154,7 @@ pub enum DeleteDashboardError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteDashboardsError is a struct for typed errors of method [`DeleteDashboards`]
+/// DeleteDashboardsError is a struct for typed errors of method [`DashboardsAPI::delete_dashboards`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteDashboardsError {
@@ -166,7 +165,7 @@ pub enum DeleteDashboardsError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeletePublicDashboardError is a struct for typed errors of method [`DeletePublicDashboard`]
+/// DeletePublicDashboardError is a struct for typed errors of method [`DashboardsAPI::delete_public_dashboard`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeletePublicDashboardError {
@@ -176,7 +175,7 @@ pub enum DeletePublicDashboardError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeletePublicDashboardInvitationError is a struct for typed errors of method [`DeletePublicDashboardInvitation`]
+/// DeletePublicDashboardInvitationError is a struct for typed errors of method [`DashboardsAPI::delete_public_dashboard_invitation`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeletePublicDashboardInvitationError {
@@ -186,7 +185,7 @@ pub enum DeletePublicDashboardInvitationError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetDashboardError is a struct for typed errors of method [`GetDashboard`]
+/// GetDashboardError is a struct for typed errors of method [`DashboardsAPI::get_dashboard`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetDashboardError {
@@ -196,7 +195,7 @@ pub enum GetDashboardError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetPublicDashboardError is a struct for typed errors of method [`GetPublicDashboard`]
+/// GetPublicDashboardError is a struct for typed errors of method [`DashboardsAPI::get_public_dashboard`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetPublicDashboardError {
@@ -206,7 +205,7 @@ pub enum GetPublicDashboardError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetPublicDashboardInvitationsError is a struct for typed errors of method [`GetPublicDashboardInvitations`]
+/// GetPublicDashboardInvitationsError is a struct for typed errors of method [`DashboardsAPI::get_public_dashboard_invitations`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetPublicDashboardInvitationsError {
@@ -216,7 +215,7 @@ pub enum GetPublicDashboardInvitationsError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListDashboardsError is a struct for typed errors of method [`ListDashboards`]
+/// ListDashboardsError is a struct for typed errors of method [`DashboardsAPI::list_dashboards`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListDashboardsError {
@@ -225,7 +224,7 @@ pub enum ListDashboardsError {
     UnknownValue(serde_json::Value),
 }
 
-/// RestoreDashboardsError is a struct for typed errors of method [`RestoreDashboards`]
+/// RestoreDashboardsError is a struct for typed errors of method [`DashboardsAPI::restore_dashboards`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum RestoreDashboardsError {
@@ -236,7 +235,7 @@ pub enum RestoreDashboardsError {
     UnknownValue(serde_json::Value),
 }
 
-/// SendPublicDashboardInvitationError is a struct for typed errors of method [`SendPublicDashboardInvitation`]
+/// SendPublicDashboardInvitationError is a struct for typed errors of method [`DashboardsAPI::send_public_dashboard_invitation`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SendPublicDashboardInvitationError {
@@ -247,7 +246,7 @@ pub enum SendPublicDashboardInvitationError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateDashboardError is a struct for typed errors of method [`UpdateDashboard`]
+/// UpdateDashboardError is a struct for typed errors of method [`DashboardsAPI::update_dashboard`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateDashboardError {
@@ -258,7 +257,7 @@ pub enum UpdateDashboardError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdatePublicDashboardError is a struct for typed errors of method [`UpdatePublicDashboard`]
+/// UpdatePublicDashboardError is a struct for typed errors of method [`DashboardsAPI::update_public_dashboard`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdatePublicDashboardError {
@@ -291,7 +290,7 @@ impl DashboardsAPI {
     }
 
     /// Create a dashboard using the specified options. When defining queries in your widgets, take note of which queries should have the `as_count()` or `as_rate()` modifiers appended.
-    /// Refer to the following [documentation](https://docs.datadoghq.com/developers/metrics/type_modifiers/?tab=count#in-application-modifiers) for more information on these modifiers.
+    /// Refer to the following [documentation](<https://docs.datadoghq.com/developers/metrics/type_modifiers/?tab=count#in-application-modifiers>) for more information on these modifiers.
     pub async fn create_dashboard(
         &self,
         params: CreateDashboardParams,
@@ -303,7 +302,7 @@ impl DashboardsAPI {
     }
 
     /// Create a dashboard using the specified options. When defining queries in your widgets, take note of which queries should have the `as_count()` or `as_rate()` modifiers appended.
-    /// Refer to the following [documentation](https://docs.datadoghq.com/developers/metrics/type_modifiers/?tab=count#in-application-modifiers) for more information on these modifiers.
+    /// Refer to the following [documentation](<https://docs.datadoghq.com/developers/metrics/type_modifiers/?tab=count#in-application-modifiers>) for more information on these modifiers.
     pub async fn create_dashboard_with_http_info(
         &self,
         params: CreateDashboardParams,

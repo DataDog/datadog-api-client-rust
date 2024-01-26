@@ -12,7 +12,7 @@ pub struct SyntheticsAPITestResultShortResult {
     #[serde(rename = "passed")]
     pub passed: Option<bool>,
     /// Object containing all metrics and their values collected for a Synthetic API test.
-    /// See the [Synthetic Monitoring Metrics documentation](https://docs.datadoghq.com/synthetics/metrics/).
+    /// See the [Synthetic Monitoring Metrics documentation](<https://docs.datadoghq.com/synthetics/metrics/>).
     #[serde(rename = "timings")]
     pub timings: Option<Box<crate::datadogV1::model::SyntheticsTiming>>,
 }

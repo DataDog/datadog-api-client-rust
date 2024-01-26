@@ -1,24 +1,23 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// AggregateCIAppPipelineEventsParams is a struct for passing parameters to the method [`AggregateCIAppPipelineEvents`]
+/// AggregateCIAppPipelineEventsParams is a struct for passing parameters to the method [`CIVisibilityPipelinesAPI::aggregate_ci_app_pipeline_events`]
 #[derive(Clone, Debug)]
 pub struct AggregateCIAppPipelineEventsParams {
     pub body: crate::datadogV2::model::CIAppPipelinesAggregateRequest,
 }
 
-/// CreateCIAppPipelineEventParams is a struct for passing parameters to the method [`CreateCIAppPipelineEvent`]
+/// CreateCIAppPipelineEventParams is a struct for passing parameters to the method [`CIVisibilityPipelinesAPI::create_ci_app_pipeline_event`]
 #[derive(Clone, Debug)]
 pub struct CreateCIAppPipelineEventParams {
     pub body: crate::datadogV2::model::CIAppCreatePipelineEventRequest,
 }
 
-/// ListCIAppPipelineEventsParams is a struct for passing parameters to the method [`ListCIAppPipelineEvents`]
+/// ListCIAppPipelineEventsParams is a struct for passing parameters to the method [`CIVisibilityPipelinesAPI::list_ci_app_pipeline_events`]
 #[derive(Clone, Debug)]
 pub struct ListCIAppPipelineEventsParams {
     /// Search query following log syntax.
@@ -35,13 +34,13 @@ pub struct ListCIAppPipelineEventsParams {
     pub page_limit: Option<i32>,
 }
 
-/// SearchCIAppPipelineEventsParams is a struct for passing parameters to the method [`SearchCIAppPipelineEvents`]
+/// SearchCIAppPipelineEventsParams is a struct for passing parameters to the method [`CIVisibilityPipelinesAPI::search_ci_app_pipeline_events`]
 #[derive(Clone, Debug)]
 pub struct SearchCIAppPipelineEventsParams {
     pub body: Option<Option<crate::datadogV2::model::CIAppPipelineEventsRequest>>,
 }
 
-/// AggregateCIAppPipelineEventsError is a struct for typed errors of method [`AggregateCIAppPipelineEvents`]
+/// AggregateCIAppPipelineEventsError is a struct for typed errors of method [`CIVisibilityPipelinesAPI::aggregate_ci_app_pipeline_events`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AggregateCIAppPipelineEventsError {
@@ -51,7 +50,7 @@ pub enum AggregateCIAppPipelineEventsError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateCIAppPipelineEventError is a struct for typed errors of method [`CreateCIAppPipelineEvent`]
+/// CreateCIAppPipelineEventError is a struct for typed errors of method [`CIVisibilityPipelinesAPI::create_ci_app_pipeline_event`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateCIAppPipelineEventError {
@@ -66,7 +65,7 @@ pub enum CreateCIAppPipelineEventError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListCIAppPipelineEventsError is a struct for typed errors of method [`ListCIAppPipelineEvents`]
+/// ListCIAppPipelineEventsError is a struct for typed errors of method [`CIVisibilityPipelinesAPI::list_ci_app_pipeline_events`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListCIAppPipelineEventsError {
@@ -76,7 +75,7 @@ pub enum ListCIAppPipelineEventsError {
     UnknownValue(serde_json::Value),
 }
 
-/// SearchCIAppPipelineEventsError is a struct for typed errors of method [`SearchCIAppPipelineEvents`]
+/// SearchCIAppPipelineEventsError is a struct for typed errors of method [`CIVisibilityPipelinesAPI::search_ci_app_pipeline_events`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SearchCIAppPipelineEventsError {
@@ -194,7 +193,7 @@ impl CIVisibilityPipelinesAPI {
         }
     }
 
-    /// Send your pipeline event to your Datadog platform over HTTP. For details about how pipeline executions are modeled and what execution types we support, see [Pipeline Data Model And Execution Types](https://docs.datadoghq.com/continuous_integration/guides/pipeline_data_model/).
+    /// Send your pipeline event to your Datadog platform over HTTP. For details about how pipeline executions are modeled and what execution types we support, see [Pipeline Data Model And Execution Types](<https://docs.datadoghq.com/continuous_integration/guides/pipeline_data_model/>).
     ///
     /// Pipeline events can be submitted with a timestamp that is up to 18 hours in the past.
     pub async fn create_ci_app_pipeline_event(
@@ -213,7 +212,7 @@ impl CIVisibilityPipelinesAPI {
         }
     }
 
-    /// Send your pipeline event to your Datadog platform over HTTP. For details about how pipeline executions are modeled and what execution types we support, see [Pipeline Data Model And Execution Types](https://docs.datadoghq.com/continuous_integration/guides/pipeline_data_model/).
+    /// Send your pipeline event to your Datadog platform over HTTP. For details about how pipeline executions are modeled and what execution types we support, see [Pipeline Data Model And Execution Types](<https://docs.datadoghq.com/continuous_integration/guides/pipeline_data_model/>).
     ///
     /// Pipeline events can be submitted with a timestamp that is up to 18 hours in the past.
     pub async fn create_ci_app_pipeline_event_with_http_info(
@@ -278,8 +277,8 @@ impl CIVisibilityPipelinesAPI {
         }
     }
 
-    /// List endpoint returns CI Visibility pipeline events that match a [search query](https://docs.datadoghq.com/continuous_integration/explorer/search_syntax/).
-    /// [Results are paginated similarly to logs](https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination).
+    /// List endpoint returns CI Visibility pipeline events that match a [search query](<https://docs.datadoghq.com/continuous_integration/explorer/search_syntax/>).
+    /// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
     ///
     /// Use this endpoint to see your latest pipeline events.
     pub async fn list_ci_app_pipeline_events(
@@ -298,8 +297,8 @@ impl CIVisibilityPipelinesAPI {
         }
     }
 
-    /// List endpoint returns CI Visibility pipeline events that match a [search query](https://docs.datadoghq.com/continuous_integration/explorer/search_syntax/).
-    /// [Results are paginated similarly to logs](https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination).
+    /// List endpoint returns CI Visibility pipeline events that match a [search query](<https://docs.datadoghq.com/continuous_integration/explorer/search_syntax/>).
+    /// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
     ///
     /// Use this endpoint to see your latest pipeline events.
     pub async fn list_ci_app_pipeline_events_with_http_info(
@@ -390,8 +389,8 @@ impl CIVisibilityPipelinesAPI {
         }
     }
 
-    /// List endpoint returns CI Visibility pipeline events that match a [search query](https://docs.datadoghq.com/continuous_integration/explorer/search_syntax/).
-    /// [Results are paginated similarly to logs](https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination).
+    /// List endpoint returns CI Visibility pipeline events that match a [search query](<https://docs.datadoghq.com/continuous_integration/explorer/search_syntax/>).
+    /// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
     ///
     /// Use this endpoint to build complex events filtering and search.
     pub async fn search_ci_app_pipeline_events(
@@ -410,8 +409,8 @@ impl CIVisibilityPipelinesAPI {
         }
     }
 
-    /// List endpoint returns CI Visibility pipeline events that match a [search query](https://docs.datadoghq.com/continuous_integration/explorer/search_syntax/).
-    /// [Results are paginated similarly to logs](https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination).
+    /// List endpoint returns CI Visibility pipeline events that match a [search query](<https://docs.datadoghq.com/continuous_integration/explorer/search_syntax/>).
+    /// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
     ///
     /// Use this endpoint to build complex events filtering and search.
     pub async fn search_ci_app_pipeline_events_with_http_info(

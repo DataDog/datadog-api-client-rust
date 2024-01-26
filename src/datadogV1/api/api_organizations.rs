@@ -1,33 +1,32 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateChildOrgParams is a struct for passing parameters to the method [`CreateChildOrg`]
+/// CreateChildOrgParams is a struct for passing parameters to the method [`OrganizationsAPI::create_child_org`]
 #[derive(Clone, Debug)]
 pub struct CreateChildOrgParams {
     /// Organization object that needs to be created
     pub body: crate::datadogV1::model::OrganizationCreateBody,
 }
 
-/// DowngradeOrgParams is a struct for passing parameters to the method [`DowngradeOrg`]
+/// DowngradeOrgParams is a struct for passing parameters to the method [`OrganizationsAPI::downgrade_org`]
 #[derive(Clone, Debug)]
 pub struct DowngradeOrgParams {
     /// The `public_id` of the organization you are operating within.
     pub public_id: String,
 }
 
-/// GetOrgParams is a struct for passing parameters to the method [`GetOrg`]
+/// GetOrgParams is a struct for passing parameters to the method [`OrganizationsAPI::get_org`]
 #[derive(Clone, Debug)]
 pub struct GetOrgParams {
     /// The `public_id` of the organization you are operating within.
     pub public_id: String,
 }
 
-/// UpdateOrgParams is a struct for passing parameters to the method [`UpdateOrg`]
+/// UpdateOrgParams is a struct for passing parameters to the method [`OrganizationsAPI::update_org`]
 #[derive(Clone, Debug)]
 pub struct UpdateOrgParams {
     /// The `public_id` of the organization you are operating within.
@@ -35,7 +34,7 @@ pub struct UpdateOrgParams {
     pub body: crate::datadogV1::model::Organization,
 }
 
-/// UploadIdPForOrgParams is a struct for passing parameters to the method [`UploadIdPForOrg`]
+/// UploadIdPForOrgParams is a struct for passing parameters to the method [`OrganizationsAPI::upload_id_p_for_org`]
 #[derive(Clone, Debug)]
 pub struct UploadIdPForOrgParams {
     /// The `public_id` of the organization you are operating with
@@ -44,7 +43,7 @@ pub struct UploadIdPForOrgParams {
     pub idp_file: Vec<u8>,
 }
 
-/// CreateChildOrgError is a struct for typed errors of method [`CreateChildOrg`]
+/// CreateChildOrgError is a struct for typed errors of method [`OrganizationsAPI::create_child_org`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateChildOrgError {
@@ -54,7 +53,7 @@ pub enum CreateChildOrgError {
     UnknownValue(serde_json::Value),
 }
 
-/// DowngradeOrgError is a struct for typed errors of method [`DowngradeOrg`]
+/// DowngradeOrgError is a struct for typed errors of method [`OrganizationsAPI::downgrade_org`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DowngradeOrgError {
@@ -64,7 +63,7 @@ pub enum DowngradeOrgError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetOrgError is a struct for typed errors of method [`GetOrg`]
+/// GetOrgError is a struct for typed errors of method [`OrganizationsAPI::get_org`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetOrgError {
@@ -74,7 +73,7 @@ pub enum GetOrgError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListOrgsError is a struct for typed errors of method [`ListOrgs`]
+/// ListOrgsError is a struct for typed errors of method [`OrganizationsAPI::list_orgs`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListOrgsError {
@@ -83,7 +82,7 @@ pub enum ListOrgsError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateOrgError is a struct for typed errors of method [`UpdateOrg`]
+/// UpdateOrgError is a struct for typed errors of method [`OrganizationsAPI::update_org`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateOrgError {
@@ -93,7 +92,7 @@ pub enum UpdateOrgError {
     UnknownValue(serde_json::Value),
 }
 
-/// UploadIdPForOrgError is a struct for typed errors of method [`UploadIdPForOrg`]
+/// UploadIdPForOrgError is a struct for typed errors of method [`OrganizationsAPI::upload_id_p_for_org`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UploadIdPForOrgError {
@@ -128,9 +127,9 @@ impl OrganizationsAPI {
     /// Create a child organization.
     ///
     /// This endpoint requires the
-    /// [multi-organization account](https://docs.datadoghq.com/account_management/multi_organization/)
+    /// [multi-organization account](<https://docs.datadoghq.com/account_management/multi_organization/>)
     /// feature and must be enabled by
-    /// [contacting support](https://docs.datadoghq.com/help/).
+    /// [contacting support](<https://docs.datadoghq.com/help/>).
     ///
     /// Once a new child organization is created, you can interact with it
     /// by using the `org.public_id`, `api_key.key`, and
@@ -151,9 +150,9 @@ impl OrganizationsAPI {
     /// Create a child organization.
     ///
     /// This endpoint requires the
-    /// [multi-organization account](https://docs.datadoghq.com/account_management/multi_organization/)
+    /// [multi-organization account](<https://docs.datadoghq.com/account_management/multi_organization/>)
     /// feature and must be enabled by
-    /// [contacting support](https://docs.datadoghq.com/help/).
+    /// [contacting support](<https://docs.datadoghq.com/help/>).
     ///
     /// Once a new child organization is created, you can interact with it
     /// by using the `org.public_id`, `api_key.key`, and

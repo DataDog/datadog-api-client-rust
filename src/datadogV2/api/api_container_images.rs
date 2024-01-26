@@ -1,12 +1,11 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// ListContainerImagesParams is a struct for passing parameters to the method [`ListContainerImages`]
+/// ListContainerImagesParams is a struct for passing parameters to the method [`ContainerImagesAPI::list_container_images`]
 #[derive(Clone, Debug)]
 pub struct ListContainerImagesParams {
     /// Comma-separated list of tags to filter Container Images by.
@@ -22,7 +21,7 @@ pub struct ListContainerImagesParams {
     pub page_cursor: Option<String>,
 }
 
-/// ListContainerImagesError is a struct for typed errors of method [`ListContainerImages`]
+/// ListContainerImagesError is a struct for typed errors of method [`ContainerImagesAPI::list_container_images`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListContainerImagesError {

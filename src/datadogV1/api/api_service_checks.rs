@@ -1,19 +1,18 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// SubmitServiceCheckParams is a struct for passing parameters to the method [`SubmitServiceCheck`]
+/// SubmitServiceCheckParams is a struct for passing parameters to the method [`ServiceChecksAPI::submit_service_check`]
 #[derive(Clone, Debug)]
 pub struct SubmitServiceCheckParams {
     /// Service Check request body.
     pub body: Vec<crate::datadogV1::model::ServiceCheck>,
 }
 
-/// SubmitServiceCheckError is a struct for typed errors of method [`SubmitServiceCheck`]
+/// SubmitServiceCheckError is a struct for typed errors of method [`ServiceChecksAPI::submit_service_check`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SubmitServiceCheckError {

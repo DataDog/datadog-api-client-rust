@@ -13,7 +13,7 @@ pub struct GeomapWidgetDefinition {
     pub custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>>,
     /// Array of one request object to display in the widget. The request must contain a `group-by` tag whose value is a country ISO code.
     ///
-    /// See the [Request JSON schema documentation](https://docs.datadoghq.com/dashboards/graphing_json/request_json)
+    /// See the [Request JSON schema documentation](<https://docs.datadoghq.com/dashboards/graphing_json/request_json>)
     /// for information about building the `REQUEST_SCHEMA`.
     #[serde(rename = "requests")]
     pub requests: Vec<crate::datadogV1::model::GeomapWidgetRequest>,

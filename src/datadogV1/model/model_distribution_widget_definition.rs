@@ -22,7 +22,7 @@ pub struct DistributionWidgetDefinition {
     pub markers: Option<Vec<crate::datadogV1::model::WidgetMarker>>,
     /// Array of one request object to display in the widget.
     ///
-    /// See the dedicated [Request JSON schema documentation](https://docs.datadoghq.com/dashboards/graphing_json/request_json)
+    /// See the dedicated [Request JSON schema documentation](<https://docs.datadoghq.com/dashboards/graphing_json/request_json>)
     ///  to learn how to build the `REQUEST_SCHEMA`.
     #[serde(rename = "requests")]
     pub requests: Vec<crate::datadogV1::model::DistributionWidgetRequest>,

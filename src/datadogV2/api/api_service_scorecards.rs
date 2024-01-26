@@ -1,33 +1,32 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateScorecardOutcomesBatchParams is a struct for passing parameters to the method [`CreateScorecardOutcomesBatch`]
+/// CreateScorecardOutcomesBatchParams is a struct for passing parameters to the method [`ServiceScorecardsAPI::create_scorecard_outcomes_batch`]
 #[derive(Clone, Debug)]
 pub struct CreateScorecardOutcomesBatchParams {
     /// Set of scorecard outcomes.
     pub body: crate::datadogV2::model::OutcomesBatchRequest,
 }
 
-/// CreateScorecardRuleParams is a struct for passing parameters to the method [`CreateScorecardRule`]
+/// CreateScorecardRuleParams is a struct for passing parameters to the method [`ServiceScorecardsAPI::create_scorecard_rule`]
 #[derive(Clone, Debug)]
 pub struct CreateScorecardRuleParams {
     /// Rule attributes.
     pub body: crate::datadogV2::model::CreateRuleRequest,
 }
 
-/// DeleteScorecardRuleParams is a struct for passing parameters to the method [`DeleteScorecardRule`]
+/// DeleteScorecardRuleParams is a struct for passing parameters to the method [`ServiceScorecardsAPI::delete_scorecard_rule`]
 #[derive(Clone, Debug)]
 pub struct DeleteScorecardRuleParams {
     /// The ID of the rule/scorecard.
     pub rule_id: String,
 }
 
-/// ListScorecardOutcomesParams is a struct for passing parameters to the method [`ListScorecardOutcomes`]
+/// ListScorecardOutcomesParams is a struct for passing parameters to the method [`ServiceScorecardsAPI::list_scorecard_outcomes`]
 #[derive(Clone, Debug)]
 pub struct ListScorecardOutcomesParams {
     /// Size for a given page. The maximum allowed value is 100.
@@ -52,7 +51,7 @@ pub struct ListScorecardOutcomesParams {
     pub filter_rule_name: Option<String>,
 }
 
-/// ListScorecardRulesParams is a struct for passing parameters to the method [`ListScorecardRules`]
+/// ListScorecardRulesParams is a struct for passing parameters to the method [`ServiceScorecardsAPI::list_scorecard_rules`]
 #[derive(Clone, Debug)]
 pub struct ListScorecardRulesParams {
     /// Size for a given page. The maximum allowed value is 100.
@@ -77,7 +76,7 @@ pub struct ListScorecardRulesParams {
     pub fields_scorecard: Option<String>,
 }
 
-/// CreateScorecardOutcomesBatchError is a struct for typed errors of method [`CreateScorecardOutcomesBatch`]
+/// CreateScorecardOutcomesBatchError is a struct for typed errors of method [`ServiceScorecardsAPI::create_scorecard_outcomes_batch`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateScorecardOutcomesBatchError {
@@ -87,7 +86,7 @@ pub enum CreateScorecardOutcomesBatchError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateScorecardRuleError is a struct for typed errors of method [`CreateScorecardRule`]
+/// CreateScorecardRuleError is a struct for typed errors of method [`ServiceScorecardsAPI::create_scorecard_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateScorecardRuleError {
@@ -97,7 +96,7 @@ pub enum CreateScorecardRuleError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteScorecardRuleError is a struct for typed errors of method [`DeleteScorecardRule`]
+/// DeleteScorecardRuleError is a struct for typed errors of method [`ServiceScorecardsAPI::delete_scorecard_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteScorecardRuleError {
@@ -108,7 +107,7 @@ pub enum DeleteScorecardRuleError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListScorecardOutcomesError is a struct for typed errors of method [`ListScorecardOutcomes`]
+/// ListScorecardOutcomesError is a struct for typed errors of method [`ServiceScorecardsAPI::list_scorecard_outcomes`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListScorecardOutcomesError {
@@ -118,7 +117,7 @@ pub enum ListScorecardOutcomesError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListScorecardRulesError is a struct for typed errors of method [`ListScorecardRules`]
+/// ListScorecardRulesError is a struct for typed errors of method [`ServiceScorecardsAPI::list_scorecard_rules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListScorecardRulesError {

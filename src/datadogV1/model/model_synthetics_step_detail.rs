@@ -39,7 +39,7 @@ pub struct SyntheticsStepDetail {
     #[serde(rename = "stepId")]
     pub step_id: Option<i64>,
     /// If this step includes a sub-test.
-    /// [Subtests documentation](https://docs.datadoghq.com/synthetics/browser_tests/advanced_options/#subtests).
+    /// [Subtests documentation](<https://docs.datadoghq.com/synthetics/browser_tests/advanced_options/#subtests>).
     #[serde(rename = "subTestStepDetails")]
     pub sub_test_step_details: Option<Vec<crate::datadogV1::model::SyntheticsStepDetail>>,
     /// Time before starting the step.

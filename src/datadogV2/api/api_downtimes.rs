@@ -1,26 +1,25 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CancelDowntimeParams is a struct for passing parameters to the method [`CancelDowntime`]
+/// CancelDowntimeParams is a struct for passing parameters to the method [`DowntimesAPI::cancel_downtime`]
 #[derive(Clone, Debug)]
 pub struct CancelDowntimeParams {
     /// ID of the downtime to cancel.
     pub downtime_id: String,
 }
 
-/// CreateDowntimeParams is a struct for passing parameters to the method [`CreateDowntime`]
+/// CreateDowntimeParams is a struct for passing parameters to the method [`DowntimesAPI::create_downtime`]
 #[derive(Clone, Debug)]
 pub struct CreateDowntimeParams {
     /// Schedule a downtime request body.
     pub body: crate::datadogV2::model::DowntimeCreateRequest,
 }
 
-/// GetDowntimeParams is a struct for passing parameters to the method [`GetDowntime`]
+/// GetDowntimeParams is a struct for passing parameters to the method [`DowntimesAPI::get_downtime`]
 #[derive(Clone, Debug)]
 pub struct GetDowntimeParams {
     /// ID of the downtime to fetch.
@@ -30,7 +29,7 @@ pub struct GetDowntimeParams {
     pub include: Option<String>,
 }
 
-/// ListDowntimesParams is a struct for passing parameters to the method [`ListDowntimes`]
+/// ListDowntimesParams is a struct for passing parameters to the method [`DowntimesAPI::list_downtimes`]
 #[derive(Clone, Debug)]
 pub struct ListDowntimesParams {
     /// Only return downtimes that are active when the request is made.
@@ -44,7 +43,7 @@ pub struct ListDowntimesParams {
     pub page_limit: Option<i64>,
 }
 
-/// ListMonitorDowntimesParams is a struct for passing parameters to the method [`ListMonitorDowntimes`]
+/// ListMonitorDowntimesParams is a struct for passing parameters to the method [`DowntimesAPI::list_monitor_downtimes`]
 #[derive(Clone, Debug)]
 pub struct ListMonitorDowntimesParams {
     /// The id of the monitor.
@@ -55,7 +54,7 @@ pub struct ListMonitorDowntimesParams {
     pub page_limit: Option<i64>,
 }
 
-/// UpdateDowntimeParams is a struct for passing parameters to the method [`UpdateDowntime`]
+/// UpdateDowntimeParams is a struct for passing parameters to the method [`DowntimesAPI::update_downtime`]
 #[derive(Clone, Debug)]
 pub struct UpdateDowntimeParams {
     /// ID of the downtime to update.
@@ -64,7 +63,7 @@ pub struct UpdateDowntimeParams {
     pub body: crate::datadogV2::model::DowntimeUpdateRequest,
 }
 
-/// CancelDowntimeError is a struct for typed errors of method [`CancelDowntime`]
+/// CancelDowntimeError is a struct for typed errors of method [`DowntimesAPI::cancel_downtime`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CancelDowntimeError {
@@ -74,7 +73,7 @@ pub enum CancelDowntimeError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateDowntimeError is a struct for typed errors of method [`CreateDowntime`]
+/// CreateDowntimeError is a struct for typed errors of method [`DowntimesAPI::create_downtime`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateDowntimeError {
@@ -84,7 +83,7 @@ pub enum CreateDowntimeError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetDowntimeError is a struct for typed errors of method [`GetDowntime`]
+/// GetDowntimeError is a struct for typed errors of method [`DowntimesAPI::get_downtime`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetDowntimeError {
@@ -95,7 +94,7 @@ pub enum GetDowntimeError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListDowntimesError is a struct for typed errors of method [`ListDowntimes`]
+/// ListDowntimesError is a struct for typed errors of method [`DowntimesAPI::list_downtimes`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListDowntimesError {
@@ -104,7 +103,7 @@ pub enum ListDowntimesError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListMonitorDowntimesError is a struct for typed errors of method [`ListMonitorDowntimes`]
+/// ListMonitorDowntimesError is a struct for typed errors of method [`DowntimesAPI::list_monitor_downtimes`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListMonitorDowntimesError {
@@ -113,7 +112,7 @@ pub enum ListMonitorDowntimesError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateDowntimeError is a struct for typed errors of method [`UpdateDowntime`]
+/// UpdateDowntimeError is a struct for typed errors of method [`DowntimesAPI::update_downtime`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateDowntimeError {

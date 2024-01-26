@@ -14,7 +14,7 @@ pub struct AWSEventBridgeDeleteRequest {
     /// The event source name.
     #[serde(rename = "event_generator_name")]
     pub event_generator_name: Option<String>,
-    /// The event source's [AWS region](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints).
+    /// The event source's [AWS region](<https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints>).
     #[serde(rename = "region")]
     pub region: Option<String>,
 }

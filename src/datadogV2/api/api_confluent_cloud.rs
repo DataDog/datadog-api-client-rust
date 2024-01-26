@@ -1,19 +1,18 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateConfluentAccountParams is a struct for passing parameters to the method [`CreateConfluentAccount`]
+/// CreateConfluentAccountParams is a struct for passing parameters to the method [`ConfluentCloudAPI::create_confluent_account`]
 #[derive(Clone, Debug)]
 pub struct CreateConfluentAccountParams {
     /// Confluent payload
     pub body: crate::datadogV2::model::ConfluentAccountCreateRequest,
 }
 
-/// CreateConfluentResourceParams is a struct for passing parameters to the method [`CreateConfluentResource`]
+/// CreateConfluentResourceParams is a struct for passing parameters to the method [`ConfluentCloudAPI::create_confluent_resource`]
 #[derive(Clone, Debug)]
 pub struct CreateConfluentResourceParams {
     /// Confluent Account id.
@@ -22,14 +21,14 @@ pub struct CreateConfluentResourceParams {
     pub body: crate::datadogV2::model::ConfluentResourceRequest,
 }
 
-/// DeleteConfluentAccountParams is a struct for passing parameters to the method [`DeleteConfluentAccount`]
+/// DeleteConfluentAccountParams is a struct for passing parameters to the method [`ConfluentCloudAPI::delete_confluent_account`]
 #[derive(Clone, Debug)]
 pub struct DeleteConfluentAccountParams {
     /// Confluent Account id.
     pub account_id: String,
 }
 
-/// DeleteConfluentResourceParams is a struct for passing parameters to the method [`DeleteConfluentResource`]
+/// DeleteConfluentResourceParams is a struct for passing parameters to the method [`ConfluentCloudAPI::delete_confluent_resource`]
 #[derive(Clone, Debug)]
 pub struct DeleteConfluentResourceParams {
     /// Confluent Account id.
@@ -38,14 +37,14 @@ pub struct DeleteConfluentResourceParams {
     pub resource_id: String,
 }
 
-/// GetConfluentAccountParams is a struct for passing parameters to the method [`GetConfluentAccount`]
+/// GetConfluentAccountParams is a struct for passing parameters to the method [`ConfluentCloudAPI::get_confluent_account`]
 #[derive(Clone, Debug)]
 pub struct GetConfluentAccountParams {
     /// Confluent Account id.
     pub account_id: String,
 }
 
-/// GetConfluentResourceParams is a struct for passing parameters to the method [`GetConfluentResource`]
+/// GetConfluentResourceParams is a struct for passing parameters to the method [`ConfluentCloudAPI::get_confluent_resource`]
 #[derive(Clone, Debug)]
 pub struct GetConfluentResourceParams {
     /// Confluent Account id.
@@ -54,14 +53,14 @@ pub struct GetConfluentResourceParams {
     pub resource_id: String,
 }
 
-/// ListConfluentResourceParams is a struct for passing parameters to the method [`ListConfluentResource`]
+/// ListConfluentResourceParams is a struct for passing parameters to the method [`ConfluentCloudAPI::list_confluent_resource`]
 #[derive(Clone, Debug)]
 pub struct ListConfluentResourceParams {
     /// Confluent Account id.
     pub account_id: String,
 }
 
-/// UpdateConfluentAccountParams is a struct for passing parameters to the method [`UpdateConfluentAccount`]
+/// UpdateConfluentAccountParams is a struct for passing parameters to the method [`ConfluentCloudAPI::update_confluent_account`]
 #[derive(Clone, Debug)]
 pub struct UpdateConfluentAccountParams {
     /// Confluent Account id.
@@ -70,7 +69,7 @@ pub struct UpdateConfluentAccountParams {
     pub body: crate::datadogV2::model::ConfluentAccountUpdateRequest,
 }
 
-/// UpdateConfluentResourceParams is a struct for passing parameters to the method [`UpdateConfluentResource`]
+/// UpdateConfluentResourceParams is a struct for passing parameters to the method [`ConfluentCloudAPI::update_confluent_resource`]
 #[derive(Clone, Debug)]
 pub struct UpdateConfluentResourceParams {
     /// Confluent Account id.
@@ -81,7 +80,7 @@ pub struct UpdateConfluentResourceParams {
     pub body: crate::datadogV2::model::ConfluentResourceRequest,
 }
 
-/// CreateConfluentAccountError is a struct for typed errors of method [`CreateConfluentAccount`]
+/// CreateConfluentAccountError is a struct for typed errors of method [`ConfluentCloudAPI::create_confluent_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateConfluentAccountError {
@@ -92,7 +91,7 @@ pub enum CreateConfluentAccountError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateConfluentResourceError is a struct for typed errors of method [`CreateConfluentResource`]
+/// CreateConfluentResourceError is a struct for typed errors of method [`ConfluentCloudAPI::create_confluent_resource`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateConfluentResourceError {
@@ -103,7 +102,7 @@ pub enum CreateConfluentResourceError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteConfluentAccountError is a struct for typed errors of method [`DeleteConfluentAccount`]
+/// DeleteConfluentAccountError is a struct for typed errors of method [`ConfluentCloudAPI::delete_confluent_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteConfluentAccountError {
@@ -114,7 +113,7 @@ pub enum DeleteConfluentAccountError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteConfluentResourceError is a struct for typed errors of method [`DeleteConfluentResource`]
+/// DeleteConfluentResourceError is a struct for typed errors of method [`ConfluentCloudAPI::delete_confluent_resource`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteConfluentResourceError {
@@ -125,7 +124,7 @@ pub enum DeleteConfluentResourceError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetConfluentAccountError is a struct for typed errors of method [`GetConfluentAccount`]
+/// GetConfluentAccountError is a struct for typed errors of method [`ConfluentCloudAPI::get_confluent_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetConfluentAccountError {
@@ -136,7 +135,7 @@ pub enum GetConfluentAccountError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetConfluentResourceError is a struct for typed errors of method [`GetConfluentResource`]
+/// GetConfluentResourceError is a struct for typed errors of method [`ConfluentCloudAPI::get_confluent_resource`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetConfluentResourceError {
@@ -147,7 +146,7 @@ pub enum GetConfluentResourceError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListConfluentAccountError is a struct for typed errors of method [`ListConfluentAccount`]
+/// ListConfluentAccountError is a struct for typed errors of method [`ConfluentCloudAPI::list_confluent_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListConfluentAccountError {
@@ -158,7 +157,7 @@ pub enum ListConfluentAccountError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListConfluentResourceError is a struct for typed errors of method [`ListConfluentResource`]
+/// ListConfluentResourceError is a struct for typed errors of method [`ConfluentCloudAPI::list_confluent_resource`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListConfluentResourceError {
@@ -169,7 +168,7 @@ pub enum ListConfluentResourceError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateConfluentAccountError is a struct for typed errors of method [`UpdateConfluentAccount`]
+/// UpdateConfluentAccountError is a struct for typed errors of method [`ConfluentCloudAPI::update_confluent_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateConfluentAccountError {
@@ -180,7 +179,7 @@ pub enum UpdateConfluentAccountError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateConfluentResourceError is a struct for typed errors of method [`UpdateConfluentResource`]
+/// UpdateConfluentResourceError is a struct for typed errors of method [`ConfluentCloudAPI::update_confluent_resource`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateConfluentResourceError {

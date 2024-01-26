@@ -1,33 +1,32 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateNotebookParams is a struct for passing parameters to the method [`CreateNotebook`]
+/// CreateNotebookParams is a struct for passing parameters to the method [`NotebooksAPI::create_notebook`]
 #[derive(Clone, Debug)]
 pub struct CreateNotebookParams {
     /// The JSON description of the notebook you want to create.
     pub body: crate::datadogV1::model::NotebookCreateRequest,
 }
 
-/// DeleteNotebookParams is a struct for passing parameters to the method [`DeleteNotebook`]
+/// DeleteNotebookParams is a struct for passing parameters to the method [`NotebooksAPI::delete_notebook`]
 #[derive(Clone, Debug)]
 pub struct DeleteNotebookParams {
     /// Unique ID, assigned when you create the notebook.
     pub notebook_id: i64,
 }
 
-/// GetNotebookParams is a struct for passing parameters to the method [`GetNotebook`]
+/// GetNotebookParams is a struct for passing parameters to the method [`NotebooksAPI::get_notebook`]
 #[derive(Clone, Debug)]
 pub struct GetNotebookParams {
     /// Unique ID, assigned when you create the notebook.
     pub notebook_id: i64,
 }
 
-/// ListNotebooksParams is a struct for passing parameters to the method [`ListNotebooks`]
+/// ListNotebooksParams is a struct for passing parameters to the method [`NotebooksAPI::list_notebooks`]
 #[derive(Clone, Debug)]
 pub struct ListNotebooksParams {
     /// Return notebooks created by the given `author_handle`.
@@ -52,7 +51,7 @@ pub struct ListNotebooksParams {
     pub type_: Option<String>,
 }
 
-/// UpdateNotebookParams is a struct for passing parameters to the method [`UpdateNotebook`]
+/// UpdateNotebookParams is a struct for passing parameters to the method [`NotebooksAPI::update_notebook`]
 #[derive(Clone, Debug)]
 pub struct UpdateNotebookParams {
     /// Unique ID, assigned when you create the notebook.
@@ -61,7 +60,7 @@ pub struct UpdateNotebookParams {
     pub body: crate::datadogV1::model::NotebookUpdateRequest,
 }
 
-/// CreateNotebookError is a struct for typed errors of method [`CreateNotebook`]
+/// CreateNotebookError is a struct for typed errors of method [`NotebooksAPI::create_notebook`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateNotebookError {
@@ -71,7 +70,7 @@ pub enum CreateNotebookError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteNotebookError is a struct for typed errors of method [`DeleteNotebook`]
+/// DeleteNotebookError is a struct for typed errors of method [`NotebooksAPI::delete_notebook`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteNotebookError {
@@ -82,7 +81,7 @@ pub enum DeleteNotebookError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetNotebookError is a struct for typed errors of method [`GetNotebook`]
+/// GetNotebookError is a struct for typed errors of method [`NotebooksAPI::get_notebook`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetNotebookError {
@@ -93,7 +92,7 @@ pub enum GetNotebookError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListNotebooksError is a struct for typed errors of method [`ListNotebooks`]
+/// ListNotebooksError is a struct for typed errors of method [`NotebooksAPI::list_notebooks`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListNotebooksError {
@@ -103,7 +102,7 @@ pub enum ListNotebooksError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateNotebookError is a struct for typed errors of method [`UpdateNotebook`]
+/// UpdateNotebookError is a struct for typed errors of method [`NotebooksAPI::update_notebook`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateNotebookError {

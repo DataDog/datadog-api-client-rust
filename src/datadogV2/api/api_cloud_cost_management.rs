@@ -1,45 +1,44 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-
 use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateCostAWSCURConfigParams is a struct for passing parameters to the method [`CreateCostAWSCURConfig`]
+/// CreateCostAWSCURConfigParams is a struct for passing parameters to the method [`CloudCostManagementAPI::create_cost_awscur_config`]
 #[derive(Clone, Debug)]
 pub struct CreateCostAWSCURConfigParams {
     pub body: crate::datadogV2::model::AwsCURConfigPostRequest,
 }
 
-/// CreateCostAzureUCConfigsParams is a struct for passing parameters to the method [`CreateCostAzureUCConfigs`]
+/// CreateCostAzureUCConfigsParams is a struct for passing parameters to the method [`CloudCostManagementAPI::create_cost_azure_uc_configs`]
 #[derive(Clone, Debug)]
 pub struct CreateCostAzureUCConfigsParams {
     pub body: crate::datadogV2::model::AzureUCConfigPostRequest,
 }
 
-/// DeleteCostAWSCURConfigParams is a struct for passing parameters to the method [`DeleteCostAWSCURConfig`]
+/// DeleteCostAWSCURConfigParams is a struct for passing parameters to the method [`CloudCostManagementAPI::delete_cost_awscur_config`]
 #[derive(Clone, Debug)]
 pub struct DeleteCostAWSCURConfigParams {
     /// Cloud Account id.
     pub cloud_account_id: String,
 }
 
-/// DeleteCostAzureUCConfigParams is a struct for passing parameters to the method [`DeleteCostAzureUCConfig`]
+/// DeleteCostAzureUCConfigParams is a struct for passing parameters to the method [`CloudCostManagementAPI::delete_cost_azure_uc_config`]
 #[derive(Clone, Debug)]
 pub struct DeleteCostAzureUCConfigParams {
     /// Cloud Account id.
     pub cloud_account_id: String,
 }
 
-/// ListAWSRelatedAccountsParams is a struct for passing parameters to the method [`ListAWSRelatedAccounts`]
+/// ListAWSRelatedAccountsParams is a struct for passing parameters to the method [`CloudCostManagementAPI::list_aws_related_accounts`]
 #[derive(Clone, Debug)]
 pub struct ListAWSRelatedAccountsParams {
     /// The ID of the management account to filter by.
     pub filter_management_account_id: String,
 }
 
-/// UpdateCostAWSCURConfigParams is a struct for passing parameters to the method [`UpdateCostAWSCURConfig`]
+/// UpdateCostAWSCURConfigParams is a struct for passing parameters to the method [`CloudCostManagementAPI::update_cost_awscur_config`]
 #[derive(Clone, Debug)]
 pub struct UpdateCostAWSCURConfigParams {
     /// Cloud Account id.
@@ -47,7 +46,7 @@ pub struct UpdateCostAWSCURConfigParams {
     pub body: crate::datadogV2::model::AwsCURConfigPatchRequest,
 }
 
-/// UpdateCostAzureUCConfigsParams is a struct for passing parameters to the method [`UpdateCostAzureUCConfigs`]
+/// UpdateCostAzureUCConfigsParams is a struct for passing parameters to the method [`CloudCostManagementAPI::update_cost_azure_uc_configs`]
 #[derive(Clone, Debug)]
 pub struct UpdateCostAzureUCConfigsParams {
     /// Cloud Account id.
@@ -55,7 +54,7 @@ pub struct UpdateCostAzureUCConfigsParams {
     pub body: crate::datadogV2::model::AzureUCConfigPatchRequest,
 }
 
-/// CreateCostAWSCURConfigError is a struct for typed errors of method [`CreateCostAWSCURConfig`]
+/// CreateCostAWSCURConfigError is a struct for typed errors of method [`CloudCostManagementAPI::create_cost_awscur_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateCostAWSCURConfigError {
@@ -65,7 +64,7 @@ pub enum CreateCostAWSCURConfigError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateCostAzureUCConfigsError is a struct for typed errors of method [`CreateCostAzureUCConfigs`]
+/// CreateCostAzureUCConfigsError is a struct for typed errors of method [`CloudCostManagementAPI::create_cost_azure_uc_configs`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateCostAzureUCConfigsError {
@@ -75,7 +74,7 @@ pub enum CreateCostAzureUCConfigsError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteCostAWSCURConfigError is a struct for typed errors of method [`DeleteCostAWSCURConfig`]
+/// DeleteCostAWSCURConfigError is a struct for typed errors of method [`CloudCostManagementAPI::delete_cost_awscur_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteCostAWSCURConfigError {
@@ -85,7 +84,7 @@ pub enum DeleteCostAWSCURConfigError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteCostAzureUCConfigError is a struct for typed errors of method [`DeleteCostAzureUCConfig`]
+/// DeleteCostAzureUCConfigError is a struct for typed errors of method [`CloudCostManagementAPI::delete_cost_azure_uc_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteCostAzureUCConfigError {
@@ -95,7 +94,7 @@ pub enum DeleteCostAzureUCConfigError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetCloudCostActivityError is a struct for typed errors of method [`GetCloudCostActivity`]
+/// GetCloudCostActivityError is a struct for typed errors of method [`CloudCostManagementAPI::get_cloud_cost_activity`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetCloudCostActivityError {
@@ -104,7 +103,7 @@ pub enum GetCloudCostActivityError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListAWSRelatedAccountsError is a struct for typed errors of method [`ListAWSRelatedAccounts`]
+/// ListAWSRelatedAccountsError is a struct for typed errors of method [`CloudCostManagementAPI::list_aws_related_accounts`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListAWSRelatedAccountsError {
@@ -114,7 +113,7 @@ pub enum ListAWSRelatedAccountsError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListCostAWSCURConfigsError is a struct for typed errors of method [`ListCostAWSCURConfigs`]
+/// ListCostAWSCURConfigsError is a struct for typed errors of method [`CloudCostManagementAPI::list_cost_awscur_configs`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListCostAWSCURConfigsError {
@@ -123,7 +122,7 @@ pub enum ListCostAWSCURConfigsError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListCostAzureUCConfigsError is a struct for typed errors of method [`ListCostAzureUCConfigs`]
+/// ListCostAzureUCConfigsError is a struct for typed errors of method [`CloudCostManagementAPI::list_cost_azure_uc_configs`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListCostAzureUCConfigsError {
@@ -132,7 +131,7 @@ pub enum ListCostAzureUCConfigsError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateCostAWSCURConfigError is a struct for typed errors of method [`UpdateCostAWSCURConfig`]
+/// UpdateCostAWSCURConfigError is a struct for typed errors of method [`CloudCostManagementAPI::update_cost_awscur_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateCostAWSCURConfigError {
@@ -141,7 +140,7 @@ pub enum UpdateCostAWSCURConfigError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateCostAzureUCConfigsError is a struct for typed errors of method [`UpdateCostAzureUCConfigs`]
+/// UpdateCostAzureUCConfigsError is a struct for typed errors of method [`CloudCostManagementAPI::update_cost_azure_uc_configs`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateCostAzureUCConfigsError {

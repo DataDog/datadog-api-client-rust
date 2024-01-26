@@ -4,7 +4,7 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
-/// A single [JSON Patch](https://jsonpatch.com) operation to perform on the test
+/// A single [JSON Patch](<https://jsonpatch.com>) operation to perform on the test
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SyntheticsPatchTestOperation {
@@ -14,7 +14,7 @@ pub struct SyntheticsPatchTestOperation {
     /// The path to the value to modify
     #[serde(rename = "path")]
     pub path: Option<String>,
-    /// A value to use in a [JSON Patch](https://jsonpatch.com) operation
+    /// A value to use in a [JSON Patch](<https://jsonpatch.com>) operation
     #[serde(rename = "value")]
     pub value: Option<serde_json::Value>,
 }
