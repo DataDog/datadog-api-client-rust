@@ -5,18 +5,16 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// GetCostByOrgParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_cost_by_org`]
+/// GetCostByOrgOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_cost_by_org`]
 #[derive(Clone, Debug)]
-pub struct GetCostByOrgParams {
-    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost beginning this month.
-    pub start_month: String,
+pub struct GetCostByOrgOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
     pub end_month: Option<String>,
 }
 
-/// GetEstimatedCostByOrgParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_estimated_cost_by_org`]
+/// GetEstimatedCostByOrgOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_estimated_cost_by_org`]
 #[derive(Clone, Debug)]
-pub struct GetEstimatedCostByOrgParams {
+pub struct GetEstimatedCostByOrgOptionalParams {
     /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`. Defaults to `summary`.
     pub view: Option<String>,
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost beginning this month. Either start_month or start_date should be specified, but not both. (start_month cannot go beyond two months in the past). Provide an `end_month` to view month-over-month cost.
@@ -29,31 +27,18 @@ pub struct GetEstimatedCostByOrgParams {
     pub end_date: Option<String>,
 }
 
-/// GetHistoricalCostByOrgParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_historical_cost_by_org`]
+/// GetHistoricalCostByOrgOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_historical_cost_by_org`]
 #[derive(Clone, Debug)]
-pub struct GetHistoricalCostByOrgParams {
-    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost beginning this month.
-    pub start_month: String,
+pub struct GetHistoricalCostByOrgOptionalParams {
     /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`.  Defaults to `summary`.
     pub view: Option<String>,
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
     pub end_month: Option<String>,
 }
 
-/// GetHourlyUsageParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_hourly_usage`]
+/// GetHourlyUsageOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_hourly_usage`]
 #[derive(Clone, Debug)]
-pub struct GetHourlyUsageParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
-    pub filter_timestamp_start: String,
-    /// Comma separated list of product families to retrieve. Available families are `all`, `analyzed_logs`,
-    /// `application_security`, `audit_trail`, `serverless`, `ci_app`, `cloud_cost_management`,
-    /// `csm_container_enterprise`, `csm_host_enterprise`, `cspm`, `custom_events`, `cws`, `dbm`, `fargate`,
-    /// `infra_hosts`, `incident_management`, `indexed_logs`, `indexed_spans`, `ingested_spans`, `iot`,
-    /// `lambda_traced_invocations`, `logs`, `network_flows`, `network_hosts`, `netflow_monitoring`, `observability_pipelines`,
-    /// `online_archive`, `profiling`, `rum`, `rum_browser_sessions`, `rum_mobile_sessions`, `sds`, `snmp`,
-    /// `synthetics_api`, `synthetics_browser`, `synthetics_mobile`, `synthetics_parallel_testing`, and `timeseries`.
-    /// The following product family has been **deprecated**: `audit_logs`.
-    pub filter_product_families: String,
+pub struct GetHourlyUsageOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
     pub filter_timestamp_end: Option<String>,
     /// Include child org usage in the response. Defaults to false.
@@ -70,19 +55,9 @@ pub struct GetHourlyUsageParams {
     pub page_next_record_id: Option<String>,
 }
 
-/// GetMonthlyCostAttributionParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_monthly_cost_attribution`]
+/// GetMonthlyCostAttributionOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_monthly_cost_attribution`]
 #[derive(Clone, Debug)]
-pub struct GetMonthlyCostAttributionParams {
-    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost beginning in this month.
-    pub start_month: String,
-    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
-    pub end_month: String,
-    /// Comma-separated list specifying cost types (e.g., `<billing_dimension>_on_demand_cost`, `<billing_dimension>_committed_cost`, `<billing_dimension>_total_cost`) and the
-    /// proportions (`<billing_dimension>_percentage_in_org`, `<billing_dimension>_percentage_in_account`). Use `*` to retrieve all fields.
-    /// Example: `infra_host_on_demand_cost,infra_host_percentage_in_account`
-    /// To obtain the complete list of active billing dimensions that can be used to replace
-    /// `<billing_dimension>` in the field names, make a request to the [Get active billing dimensions API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-active-billing-dimensions-for-cost-attribution>).
-    pub fields: String,
+pub struct GetMonthlyCostAttributionOptionalParams {
     /// The direction to sort by: `[desc, asc]`.
     pub sort_direction: Option<crate::datadogV2::model::SortDirection>,
     /// The billing dimension to sort by. Always sorted by total cost. Example: `infra_host`.
@@ -96,38 +71,32 @@ pub struct GetMonthlyCostAttributionParams {
     pub include_descendants: Option<bool>,
 }
 
-/// GetProjectedCostParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_projected_cost`]
+/// GetProjectedCostOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_projected_cost`]
 #[derive(Clone, Debug)]
-pub struct GetProjectedCostParams {
+pub struct GetProjectedCostOptionalParams {
     /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`. Defaults to `summary`.
     pub view: Option<String>,
 }
 
-/// GetUsageApplicationSecurityMonitoringParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_application_security_monitoring`]
+/// GetUsageApplicationSecurityMonitoringOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_application_security_monitoring`]
 #[derive(Clone, Debug)]
-pub struct GetUsageApplicationSecurityMonitoringParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
-    pub start_hr: String,
+pub struct GetUsageApplicationSecurityMonitoringOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
-/// GetUsageLambdaTracedInvocationsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_lambda_traced_invocations`]
+/// GetUsageLambdaTracedInvocationsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_lambda_traced_invocations`]
 #[derive(Clone, Debug)]
-pub struct GetUsageLambdaTracedInvocationsParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
-    pub start_hr: String,
+pub struct GetUsageLambdaTracedInvocationsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
-/// GetUsageObservabilityPipelinesParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_observability_pipelines`]
+/// GetUsageObservabilityPipelinesOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_observability_pipelines`]
 #[derive(Clone, Debug)]
-pub struct GetUsageObservabilityPipelinesParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
-    pub start_hr: String,
+pub struct GetUsageObservabilityPipelinesOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
@@ -276,8 +245,6 @@ impl UsageMeteringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -334,9 +301,13 @@ impl UsageMeteringAPI {
     /// instead.
     pub async fn get_cost_by_org(
         &self,
-        params: GetCostByOrgParams,
+        start_month: String,
+        params: GetCostByOrgOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::CostByOrgResponse>, Error<GetCostByOrgError>> {
-        match self.get_cost_by_org_with_http_info(params).await {
+        match self
+            .get_cost_by_org_with_http_info(start_month, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -349,13 +320,13 @@ impl UsageMeteringAPI {
     /// instead.
     pub async fn get_cost_by_org_with_http_info(
         &self,
-        params: GetCostByOrgParams,
+        start_month: String,
+        params: GetCostByOrgOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV2::model::CostByOrgResponse>, Error<GetCostByOrgError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_month = params.start_month;
+        // unbox and build optional parameters
         let end_month = params.end_month;
 
         let local_client = &local_configuration.client;
@@ -365,8 +336,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_month", &start_month.to_string())]);
-        if let Some(ref local_str) = end_month {
-            local_req_builder = local_req_builder.query(&[("end_month", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_month {
+            local_req_builder =
+                local_req_builder.query(&[("end_month", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -414,7 +386,7 @@ impl UsageMeteringAPI {
     /// To access historical costs prior to this, use the `/historical_cost` endpoint.
     pub async fn get_estimated_cost_by_org(
         &self,
-        params: GetEstimatedCostByOrgParams,
+        params: GetEstimatedCostByOrgOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::CostByOrgResponse>, Error<GetEstimatedCostByOrgError>>
     {
         match self.get_estimated_cost_by_org_with_http_info(params).await {
@@ -429,14 +401,14 @@ impl UsageMeteringAPI {
     /// To access historical costs prior to this, use the `/historical_cost` endpoint.
     pub async fn get_estimated_cost_by_org_with_http_info(
         &self,
-        params: GetEstimatedCostByOrgParams,
+        params: GetEstimatedCostByOrgOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::CostByOrgResponse>,
         Error<GetEstimatedCostByOrgError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let view = params.view;
         let start_month = params.start_month;
         let end_month = params.end_month;
@@ -452,20 +424,25 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = view {
-            local_req_builder = local_req_builder.query(&[("view", &local_str.to_string())]);
+        if let Some(ref local_query_param) = view {
+            local_req_builder =
+                local_req_builder.query(&[("view", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = start_month {
-            local_req_builder = local_req_builder.query(&[("start_month", &local_str.to_string())]);
+        if let Some(ref local_query_param) = start_month {
+            local_req_builder =
+                local_req_builder.query(&[("start_month", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = end_month {
-            local_req_builder = local_req_builder.query(&[("end_month", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_month {
+            local_req_builder =
+                local_req_builder.query(&[("end_month", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = start_date {
-            local_req_builder = local_req_builder.query(&[("start_date", &local_str.to_string())]);
+        if let Some(ref local_query_param) = start_date {
+            local_req_builder =
+                local_req_builder.query(&[("start_date", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = end_date {
-            local_req_builder = local_req_builder.query(&[("end_date", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_date {
+            local_req_builder =
+                local_req_builder.query(&[("end_date", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -512,12 +489,16 @@ impl UsageMeteringAPI {
     /// Cost data for a given month becomes available no later than the 16th of the following month.
     pub async fn get_historical_cost_by_org(
         &self,
-        params: GetHistoricalCostByOrgParams,
+        start_month: String,
+        params: GetHistoricalCostByOrgOptionalParams,
     ) -> Result<
         Option<crate::datadogV2::model::CostByOrgResponse>,
         Error<GetHistoricalCostByOrgError>,
     > {
-        match self.get_historical_cost_by_org_with_http_info(params).await {
+        match self
+            .get_historical_cost_by_org_with_http_info(start_month, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -527,15 +508,15 @@ impl UsageMeteringAPI {
     /// Cost data for a given month becomes available no later than the 16th of the following month.
     pub async fn get_historical_cost_by_org_with_http_info(
         &self,
-        params: GetHistoricalCostByOrgParams,
+        start_month: String,
+        params: GetHistoricalCostByOrgOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::CostByOrgResponse>,
         Error<GetHistoricalCostByOrgError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_month = params.start_month;
+        // unbox and build optional parameters
         let view = params.view;
         let end_month = params.end_month;
 
@@ -549,11 +530,13 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_month", &start_month.to_string())]);
-        if let Some(ref local_str) = view {
-            local_req_builder = local_req_builder.query(&[("view", &local_str.to_string())]);
+        if let Some(ref local_query_param) = view {
+            local_req_builder =
+                local_req_builder.query(&[("view", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = end_month {
-            local_req_builder = local_req_builder.query(&[("end_month", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_month {
+            local_req_builder =
+                local_req_builder.query(&[("end_month", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -599,10 +582,19 @@ impl UsageMeteringAPI {
     /// Get hourly usage by product family.
     pub async fn get_hourly_usage(
         &self,
-        params: GetHourlyUsageParams,
+        filter_timestamp_start: String,
+        filter_product_families: String,
+        params: GetHourlyUsageOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::HourlyUsageResponse>, Error<GetHourlyUsageError>>
     {
-        match self.get_hourly_usage_with_http_info(params).await {
+        match self
+            .get_hourly_usage_with_http_info(
+                filter_timestamp_start,
+                filter_product_families,
+                params,
+            )
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -611,16 +603,16 @@ impl UsageMeteringAPI {
     /// Get hourly usage by product family.
     pub async fn get_hourly_usage_with_http_info(
         &self,
-        params: GetHourlyUsageParams,
+        filter_timestamp_start: String,
+        filter_product_families: String,
+        params: GetHourlyUsageOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::HourlyUsageResponse>,
         Error<GetHourlyUsageError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let filter_timestamp_start = params.filter_timestamp_start;
-        let filter_product_families = params.filter_product_families;
+        // unbox and build optional parameters
         let filter_timestamp_end = params.filter_timestamp_end;
         let filter_include_descendants = params.filter_include_descendants;
         let filter_include_breakdown = params.filter_include_breakdown;
@@ -645,28 +637,31 @@ impl UsageMeteringAPI {
             "filter[product_families]",
             &filter_product_families.to_string(),
         )]);
-        if let Some(ref local_str) = filter_timestamp_end {
-            local_req_builder =
-                local_req_builder.query(&[("filter[timestamp][end]", &local_str.to_string())]);
+        if let Some(ref local_query_param) = filter_timestamp_end {
+            local_req_builder = local_req_builder
+                .query(&[("filter[timestamp][end]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_include_descendants {
-            local_req_builder =
-                local_req_builder.query(&[("filter[include_descendants]", &local_str.to_string())]);
+        if let Some(ref local_query_param) = filter_include_descendants {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[include_descendants]",
+                &local_query_param.to_string(),
+            )]);
         };
-        if let Some(ref local_str) = filter_include_breakdown {
-            local_req_builder =
-                local_req_builder.query(&[("filter[include_breakdown]", &local_str.to_string())]);
+        if let Some(ref local_query_param) = filter_include_breakdown {
+            local_req_builder = local_req_builder
+                .query(&[("filter[include_breakdown]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_versions {
+        if let Some(ref local_query_param) = filter_versions {
             local_req_builder =
-                local_req_builder.query(&[("filter[versions]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[versions]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = page_limit {
-            local_req_builder = local_req_builder.query(&[("page[limit]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_next_record_id {
+        if let Some(ref local_query_param) = page_limit {
             local_req_builder =
-                local_req_builder.query(&[("page[next_record_id]", &local_str.to_string())]);
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_next_record_id {
+            local_req_builder = local_req_builder
+                .query(&[("page[next_record_id]", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -725,13 +720,16 @@ impl UsageMeteringAPI {
     /// ```
     pub async fn get_monthly_cost_attribution(
         &self,
-        params: GetMonthlyCostAttributionParams,
+        start_month: String,
+        end_month: String,
+        fields: String,
+        params: GetMonthlyCostAttributionOptionalParams,
     ) -> Result<
         Option<crate::datadogV2::model::MonthlyCostAttributionResponse>,
         Error<GetMonthlyCostAttributionError>,
     > {
         match self
-            .get_monthly_cost_attribution_with_http_info(params)
+            .get_monthly_cost_attribution_with_http_info(start_month, end_month, fields, params)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -755,17 +753,17 @@ impl UsageMeteringAPI {
     /// ```
     pub async fn get_monthly_cost_attribution_with_http_info(
         &self,
-        params: GetMonthlyCostAttributionParams,
+        start_month: String,
+        end_month: String,
+        fields: String,
+        params: GetMonthlyCostAttributionOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::MonthlyCostAttributionResponse>,
         Error<GetMonthlyCostAttributionError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_month = params.start_month;
-        let end_month = params.end_month;
-        let fields = params.fields;
+        // unbox and build optional parameters
         let sort_direction = params.sort_direction;
         let sort_name = params.sort_name;
         let tag_breakdown_keys = params.tag_breakdown_keys;
@@ -784,24 +782,25 @@ impl UsageMeteringAPI {
         local_req_builder = local_req_builder.query(&[("start_month", &start_month.to_string())]);
         local_req_builder = local_req_builder.query(&[("end_month", &end_month.to_string())]);
         local_req_builder = local_req_builder.query(&[("fields", &fields.to_string())]);
-        if let Some(ref local_str) = sort_direction {
+        if let Some(ref local_query_param) = sort_direction {
             local_req_builder =
-                local_req_builder.query(&[("sort_direction", &local_str.to_string())]);
+                local_req_builder.query(&[("sort_direction", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = sort_name {
-            local_req_builder = local_req_builder.query(&[("sort_name", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = tag_breakdown_keys {
+        if let Some(ref local_query_param) = sort_name {
             local_req_builder =
-                local_req_builder.query(&[("tag_breakdown_keys", &local_str.to_string())]);
+                local_req_builder.query(&[("sort_name", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = next_record_id {
+        if let Some(ref local_query_param) = tag_breakdown_keys {
             local_req_builder =
-                local_req_builder.query(&[("next_record_id", &local_str.to_string())]);
+                local_req_builder.query(&[("tag_breakdown_keys", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = include_descendants {
+        if let Some(ref local_query_param) = next_record_id {
             local_req_builder =
-                local_req_builder.query(&[("include_descendants", &local_str.to_string())]);
+                local_req_builder.query(&[("next_record_id", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include_descendants {
+            local_req_builder =
+                local_req_builder.query(&[("include_descendants", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -849,7 +848,7 @@ impl UsageMeteringAPI {
     /// This endpoint requires the usage_read authorization scope.
     pub async fn get_projected_cost(
         &self,
-        params: GetProjectedCostParams,
+        params: GetProjectedCostOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::ProjectedCostResponse>, Error<GetProjectedCostError>>
     {
         match self.get_projected_cost_with_http_info(params).await {
@@ -863,14 +862,14 @@ impl UsageMeteringAPI {
     /// This endpoint requires the usage_read authorization scope.
     pub async fn get_projected_cost_with_http_info(
         &self,
-        params: GetProjectedCostParams,
+        params: GetProjectedCostOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::ProjectedCostResponse>,
         Error<GetProjectedCostError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let view = params.view;
 
         let local_client = &local_configuration.client;
@@ -882,8 +881,9 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = view {
-            local_req_builder = local_req_builder.query(&[("view", &local_str.to_string())]);
+        if let Some(ref local_query_param) = view {
+            local_req_builder =
+                local_req_builder.query(&[("view", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -930,13 +930,14 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_application_security_monitoring(
         &self,
-        params: GetUsageApplicationSecurityMonitoringParams,
+        start_hr: String,
+        params: GetUsageApplicationSecurityMonitoringOptionalParams,
     ) -> Result<
         Option<crate::datadogV2::model::UsageApplicationSecurityMonitoringResponse>,
         Error<GetUsageApplicationSecurityMonitoringError>,
     > {
         match self
-            .get_usage_application_security_monitoring_with_http_info(params)
+            .get_usage_application_security_monitoring_with_http_info(start_hr, params)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -948,15 +949,15 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_application_security_monitoring_with_http_info(
         &self,
-        params: GetUsageApplicationSecurityMonitoringParams,
+        start_hr: String,
+        params: GetUsageApplicationSecurityMonitoringOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::UsageApplicationSecurityMonitoringResponse>,
         Error<GetUsageApplicationSecurityMonitoringError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -969,8 +970,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -1018,13 +1020,14 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_lambda_traced_invocations(
         &self,
-        params: GetUsageLambdaTracedInvocationsParams,
+        start_hr: String,
+        params: GetUsageLambdaTracedInvocationsOptionalParams,
     ) -> Result<
         Option<crate::datadogV2::model::UsageLambdaTracedInvocationsResponse>,
         Error<GetUsageLambdaTracedInvocationsError>,
     > {
         match self
-            .get_usage_lambda_traced_invocations_with_http_info(params)
+            .get_usage_lambda_traced_invocations_with_http_info(start_hr, params)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -1036,15 +1039,15 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_lambda_traced_invocations_with_http_info(
         &self,
-        params: GetUsageLambdaTracedInvocationsParams,
+        start_hr: String,
+        params: GetUsageLambdaTracedInvocationsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::UsageLambdaTracedInvocationsResponse>,
         Error<GetUsageLambdaTracedInvocationsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -1057,8 +1060,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -1106,13 +1110,14 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_observability_pipelines(
         &self,
-        params: GetUsageObservabilityPipelinesParams,
+        start_hr: String,
+        params: GetUsageObservabilityPipelinesOptionalParams,
     ) -> Result<
         Option<crate::datadogV2::model::UsageObservabilityPipelinesResponse>,
         Error<GetUsageObservabilityPipelinesError>,
     > {
         match self
-            .get_usage_observability_pipelines_with_http_info(params)
+            .get_usage_observability_pipelines_with_http_info(start_hr, params)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -1124,15 +1129,15 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_observability_pipelines_with_http_info(
         &self,
-        params: GetUsageObservabilityPipelinesParams,
+        start_hr: String,
+        params: GetUsageObservabilityPipelinesOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::UsageObservabilityPipelinesResponse>,
         Error<GetUsageObservabilityPipelinesError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -1145,8 +1150,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent

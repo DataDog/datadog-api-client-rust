@@ -43,6 +43,31 @@ impl UsageCWSHour {
             public_id: None,
         }
     }
+
+    pub fn with_cws_container_count(&mut self, value: Option<i64>) -> &mut Self {
+        self.cws_container_count = Some(value);
+        self
+    }
+
+    pub fn with_cws_host_count(&mut self, value: Option<i64>) -> &mut Self {
+        self.cws_host_count = Some(value);
+        self
+    }
+
+    pub fn with_hour(&mut self, value: String) -> &mut Self {
+        self.hour = Some(value);
+        self
+    }
+
+    pub fn with_org_name(&mut self, value: String) -> &mut Self {
+        self.org_name = Some(value);
+        self
+    }
+
+    pub fn with_public_id(&mut self, value: String) -> &mut Self {
+        self.public_id = Some(value);
+        self
+    }
 }
 impl Default for UsageCWSHour {
     fn default() -> Self {

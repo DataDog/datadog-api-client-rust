@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct LogsCategoryProcessorCategory {
     /// Filter for logs.
     #[serde(rename = "filter")]
-    pub filter: Option<Box<crate::datadogV1::model::LogsFilter>>,
+    pub filter: Option<crate::datadogV1::model::LogsFilter>,
     /// Value to assign to the target attribute.
     #[serde(rename = "name")]
     pub name: Option<String>,
@@ -22,6 +22,16 @@ impl LogsCategoryProcessorCategory {
             filter: None,
             name: None,
         }
+    }
+
+    pub fn with_filter(&mut self, value: crate::datadogV1::model::LogsFilter) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
+
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
     }
 }
 impl Default for LogsCategoryProcessorCategory {

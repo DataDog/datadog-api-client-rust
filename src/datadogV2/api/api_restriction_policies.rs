@@ -5,29 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// DeleteRestrictionPolicyParams is a struct for passing parameters to the method [`RestrictionPoliciesAPI::delete_restriction_policy`]
-#[derive(Clone, Debug)]
-pub struct DeleteRestrictionPolicyParams {
-    /// Identifier, formatted as `type:id`. Supported types: `connection`, `dashboard`, `notebook`, `security-rule`, `slo`.
-    pub resource_id: String,
-}
-
-/// GetRestrictionPolicyParams is a struct for passing parameters to the method [`RestrictionPoliciesAPI::get_restriction_policy`]
-#[derive(Clone, Debug)]
-pub struct GetRestrictionPolicyParams {
-    /// Identifier, formatted as `type:id`. Supported types: `connection`, `dashboard`, `notebook`, `security-rule`, `slo`.
-    pub resource_id: String,
-}
-
-/// UpdateRestrictionPolicyParams is a struct for passing parameters to the method [`RestrictionPoliciesAPI::update_restriction_policy`]
-#[derive(Clone, Debug)]
-pub struct UpdateRestrictionPolicyParams {
-    /// Identifier, formatted as `type:id`. Supported types: `connection`, `dashboard`, `notebook`, `security-rule`, `slo`.
-    pub resource_id: String,
-    /// Restriction policy payload
-    pub body: crate::datadogV2::model::RestrictionPolicyUpdateRequest,
-}
-
 /// DeleteRestrictionPolicyError is a struct for typed errors of method [`RestrictionPoliciesAPI::delete_restriction_policy`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -82,9 +59,12 @@ impl RestrictionPoliciesAPI {
     /// Deletes the restriction policy associated with a specified resource.
     pub async fn delete_restriction_policy(
         &self,
-        params: DeleteRestrictionPolicyParams,
+        resource_id: String,
     ) -> Result<Option<()>, Error<DeleteRestrictionPolicyError>> {
-        match self.delete_restriction_policy_with_http_info(params).await {
+        match self
+            .delete_restriction_policy_with_http_info(resource_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -93,12 +73,9 @@ impl RestrictionPoliciesAPI {
     /// Deletes the restriction policy associated with a specified resource.
     pub async fn delete_restriction_policy_with_http_info(
         &self,
-        params: DeleteRestrictionPolicyParams,
+        resource_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteRestrictionPolicyError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let resource_id = params.resource_id;
 
         let local_client = &local_configuration.client;
 
@@ -151,12 +128,15 @@ impl RestrictionPoliciesAPI {
     /// Retrieves the restriction policy associated with a specified resource.
     pub async fn get_restriction_policy(
         &self,
-        params: GetRestrictionPolicyParams,
+        resource_id: String,
     ) -> Result<
         Option<crate::datadogV2::model::RestrictionPolicyResponse>,
         Error<GetRestrictionPolicyError>,
     > {
-        match self.get_restriction_policy_with_http_info(params).await {
+        match self
+            .get_restriction_policy_with_http_info(resource_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -165,15 +145,12 @@ impl RestrictionPoliciesAPI {
     /// Retrieves the restriction policy associated with a specified resource.
     pub async fn get_restriction_policy_with_http_info(
         &self,
-        params: GetRestrictionPolicyParams,
+        resource_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::RestrictionPolicyResponse>,
         Error<GetRestrictionPolicyError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let resource_id = params.resource_id;
 
         let local_client = &local_configuration.client;
 
@@ -245,12 +222,16 @@ impl RestrictionPoliciesAPI {
     /// Service Level Objectives | `viewer`, `editor`
     pub async fn update_restriction_policy(
         &self,
-        params: UpdateRestrictionPolicyParams,
+        resource_id: String,
+        body: crate::datadogV2::model::RestrictionPolicyUpdateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::RestrictionPolicyResponse>,
         Error<UpdateRestrictionPolicyError>,
     > {
-        match self.update_restriction_policy_with_http_info(params).await {
+        match self
+            .update_restriction_policy_with_http_info(resource_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -276,16 +257,13 @@ impl RestrictionPoliciesAPI {
     /// Service Level Objectives | `viewer`, `editor`
     pub async fn update_restriction_policy_with_http_info(
         &self,
-        params: UpdateRestrictionPolicyParams,
+        resource_id: String,
+        body: crate::datadogV2::model::RestrictionPolicyUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::RestrictionPolicyResponse>,
         Error<UpdateRestrictionPolicyError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let resource_id = params.resource_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

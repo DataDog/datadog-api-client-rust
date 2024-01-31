@@ -28,13 +28,13 @@ pub struct HostMapWidgetDefinition {
     pub notes: Option<String>,
     /// List of definitions.
     #[serde(rename = "requests")]
-    pub requests: Box<crate::datadogV1::model::HostMapWidgetDefinitionRequests>,
+    pub requests: crate::datadogV1::model::HostMapWidgetDefinitionRequests,
     /// List of tags used to filter the map.
     #[serde(rename = "scope")]
     pub scope: Option<Vec<String>>,
     /// The style to apply to the widget.
     #[serde(rename = "style")]
-    pub style: Option<Box<crate::datadogV1::model::HostMapWidgetDefinitionStyle>>,
+    pub style: Option<crate::datadogV1::model::HostMapWidgetDefinitionStyle>,
     /// Title of the widget.
     #[serde(rename = "title")]
     pub title: Option<String>,
@@ -51,7 +51,7 @@ pub struct HostMapWidgetDefinition {
 
 impl HostMapWidgetDefinition {
     pub fn new(
-        requests: Box<crate::datadogV1::model::HostMapWidgetDefinitionRequests>,
+        requests: crate::datadogV1::model::HostMapWidgetDefinitionRequests,
         type_: crate::datadogV1::model::HostMapWidgetDefinitionType,
     ) -> HostMapWidgetDefinition {
         HostMapWidgetDefinition {
@@ -69,5 +69,69 @@ impl HostMapWidgetDefinition {
             title_size: None,
             type_,
         }
+    }
+
+    pub fn with_custom_links(
+        &mut self,
+        value: Vec<crate::datadogV1::model::WidgetCustomLink>,
+    ) -> &mut Self {
+        self.custom_links = Some(value);
+        self
+    }
+
+    pub fn with_group(&mut self, value: Vec<String>) -> &mut Self {
+        self.group = Some(value);
+        self
+    }
+
+    pub fn with_no_group_hosts(&mut self, value: bool) -> &mut Self {
+        self.no_group_hosts = Some(value);
+        self
+    }
+
+    pub fn with_no_metric_hosts(&mut self, value: bool) -> &mut Self {
+        self.no_metric_hosts = Some(value);
+        self
+    }
+
+    pub fn with_node_type(&mut self, value: crate::datadogV1::model::WidgetNodeType) -> &mut Self {
+        self.node_type = Some(value);
+        self
+    }
+
+    pub fn with_notes(&mut self, value: String) -> &mut Self {
+        self.notes = Some(value);
+        self
+    }
+
+    pub fn with_scope(&mut self, value: Vec<String>) -> &mut Self {
+        self.scope = Some(value);
+        self
+    }
+
+    pub fn with_style(
+        &mut self,
+        value: crate::datadogV1::model::HostMapWidgetDefinitionStyle,
+    ) -> &mut Self {
+        self.style = Some(value);
+        self
+    }
+
+    pub fn with_title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
+    }
+
+    pub fn with_title_align(
+        &mut self,
+        value: crate::datadogV1::model::WidgetTextAlign,
+    ) -> &mut Self {
+        self.title_align = Some(value);
+        self
+    }
+
+    pub fn with_title_size(&mut self, value: String) -> &mut Self {
+        self.title_size = Some(value);
+        self
     }
 }

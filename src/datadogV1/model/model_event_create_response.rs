@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct EventCreateResponse {
     /// Object representing an event.
     #[serde(rename = "event")]
-    pub event: Option<Box<crate::datadogV1::model::Event>>,
+    pub event: Option<crate::datadogV1::model::Event>,
     /// A status.
     #[serde(rename = "status")]
     pub status: Option<String>,
@@ -22,6 +22,16 @@ impl EventCreateResponse {
             event: None,
             status: None,
         }
+    }
+
+    pub fn with_event(&mut self, value: crate::datadogV1::model::Event) -> &mut Self {
+        self.event = Some(value);
+        self
+    }
+
+    pub fn with_status(&mut self, value: String) -> &mut Self {
+        self.status = Some(value);
+        self
     }
 }
 impl Default for EventCreateResponse {

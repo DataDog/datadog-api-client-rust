@@ -23,6 +23,16 @@ impl HourlyUsageMeasurement {
             value: None,
         }
     }
+
+    pub fn with_usage_type(&mut self, value: String) -> &mut Self {
+        self.usage_type = Some(value);
+        self
+    }
+
+    pub fn with_value(&mut self, value: Option<i64>) -> &mut Self {
+        self.value = Some(value);
+        self
+    }
 }
 impl Default for HourlyUsageMeasurement {
     fn default() -> Self {

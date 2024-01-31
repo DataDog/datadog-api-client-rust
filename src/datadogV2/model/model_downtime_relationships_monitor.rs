@@ -10,12 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct DowntimeRelationshipsMonitor {
     /// Data for the monitor.
     #[serde(rename = "data", default, with = "::serde_with::rust::double_option")]
-    pub data: Option<Option<Box<crate::datadogV2::model::DowntimeRelationshipsMonitorData>>>,
+    pub data: Option<Option<crate::datadogV2::model::DowntimeRelationshipsMonitorData>>,
 }
 
 impl DowntimeRelationshipsMonitor {
     pub fn new() -> DowntimeRelationshipsMonitor {
         DowntimeRelationshipsMonitor { data: None }
+    }
+
+    pub fn with_data(
+        &mut self,
+        value: Option<crate::datadogV2::model::DowntimeRelationshipsMonitorData>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
     }
 }
 impl Default for DowntimeRelationshipsMonitor {

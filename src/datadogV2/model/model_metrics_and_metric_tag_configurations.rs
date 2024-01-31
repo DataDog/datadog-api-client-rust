@@ -7,6 +7,6 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum MetricsAndMetricTagConfigurations {
-    Metric(Box<crate::datadogV2::model::Metric>),
-    MetricTagConfiguration(Box<crate::datadogV2::model::MetricTagConfiguration>),
+    Metric(crate::datadogV2::model::Metric),
+    MetricTagConfiguration(crate::datadogV2::model::MetricTagConfiguration),
 }

@@ -10,281 +10,273 @@ use serde_with::skip_serializing_none;
 pub struct UsageBillableSummaryKeys {
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "apm_fargate_average")]
-    pub apm_fargate_average: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub apm_fargate_average: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "apm_fargate_sum")]
-    pub apm_fargate_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub apm_fargate_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "apm_host_sum")]
-    pub apm_host_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub apm_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "apm_host_top99p")]
-    pub apm_host_top99p: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub apm_host_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "apm_profiler_host_sum")]
-    pub apm_profiler_host_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub apm_profiler_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "apm_profiler_host_top99p")]
-    pub apm_profiler_host_top99p: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub apm_profiler_host_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "apm_trace_search_sum")]
-    pub apm_trace_search_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub apm_trace_search_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "application_security_fargate_average")]
     pub application_security_fargate_average:
-        Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+        Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "application_security_host_sum")]
-    pub application_security_host_sum:
-        Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub application_security_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "application_security_host_top99p")]
-    pub application_security_host_top99p:
-        Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub application_security_host_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "ci_pipeline_indexed_spans_sum")]
-    pub ci_pipeline_indexed_spans_sum:
-        Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub ci_pipeline_indexed_spans_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "ci_pipeline_maximum")]
-    pub ci_pipeline_maximum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub ci_pipeline_maximum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "ci_pipeline_sum")]
-    pub ci_pipeline_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub ci_pipeline_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "ci_test_indexed_spans_sum")]
-    pub ci_test_indexed_spans_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub ci_test_indexed_spans_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "ci_testing_maximum")]
-    pub ci_testing_maximum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub ci_testing_maximum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "ci_testing_sum")]
-    pub ci_testing_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub ci_testing_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "cloud_cost_management_average")]
-    pub cloud_cost_management_average:
-        Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub cloud_cost_management_average: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "cloud_cost_management_sum")]
-    pub cloud_cost_management_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub cloud_cost_management_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "cspm_container_sum")]
-    pub cspm_container_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub cspm_container_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "cspm_host_sum")]
-    pub cspm_host_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub cspm_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "cspm_host_top99p")]
-    pub cspm_host_top99p: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub cspm_host_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "custom_event_sum")]
-    pub custom_event_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub custom_event_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "cws_container_sum")]
-    pub cws_container_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub cws_container_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "cws_host_sum")]
-    pub cws_host_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub cws_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "cws_host_top99p")]
-    pub cws_host_top99p: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub cws_host_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "dbm_host_sum")]
-    pub dbm_host_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub dbm_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "dbm_host_top99p")]
-    pub dbm_host_top99p: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub dbm_host_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "dbm_normalized_queries_average")]
-    pub dbm_normalized_queries_average:
-        Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub dbm_normalized_queries_average: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "dbm_normalized_queries_sum")]
-    pub dbm_normalized_queries_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub dbm_normalized_queries_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "fargate_container_apm_and_profiler_average")]
     pub fargate_container_apm_and_profiler_average:
-        Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+        Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "fargate_container_apm_and_profiler_sum")]
     pub fargate_container_apm_and_profiler_sum:
-        Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+        Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "fargate_container_average")]
-    pub fargate_container_average: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub fargate_container_average: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "fargate_container_profiler_average")]
     pub fargate_container_profiler_average:
-        Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+        Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "fargate_container_profiler_sum")]
-    pub fargate_container_profiler_sum:
-        Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub fargate_container_profiler_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "fargate_container_sum")]
-    pub fargate_container_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub fargate_container_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "incident_management_maximum")]
-    pub incident_management_maximum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub incident_management_maximum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "incident_management_sum")]
-    pub incident_management_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub incident_management_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "infra_and_apm_host_sum")]
-    pub infra_and_apm_host_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub infra_and_apm_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "infra_and_apm_host_top99p")]
-    pub infra_and_apm_host_top99p: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub infra_and_apm_host_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "infra_container_sum")]
-    pub infra_container_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub infra_container_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "infra_host_sum")]
-    pub infra_host_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub infra_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "infra_host_top99p")]
-    pub infra_host_top99p: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub infra_host_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "ingested_spans_sum")]
-    pub ingested_spans_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub ingested_spans_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "ingested_timeseries_average")]
-    pub ingested_timeseries_average: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub ingested_timeseries_average: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "ingested_timeseries_sum")]
-    pub ingested_timeseries_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub ingested_timeseries_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "iot_sum")]
-    pub iot_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub iot_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "iot_top99p")]
-    pub iot_top99p: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub iot_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "lambda_function_average")]
-    pub lambda_function_average: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub lambda_function_average: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "lambda_function_sum")]
-    pub lambda_function_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub lambda_function_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "logs_forwarding_sum")]
-    pub logs_forwarding_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub logs_forwarding_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "logs_indexed_15day_sum")]
-    pub logs_indexed_15day_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub logs_indexed_15day_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "logs_indexed_180day_sum")]
-    pub logs_indexed_180day_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub logs_indexed_180day_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "logs_indexed_30day_sum")]
-    pub logs_indexed_30day_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub logs_indexed_30day_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "logs_indexed_360day_sum")]
-    pub logs_indexed_360day_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub logs_indexed_360day_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "logs_indexed_3day_sum")]
-    pub logs_indexed_3day_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub logs_indexed_3day_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "logs_indexed_45day_sum")]
-    pub logs_indexed_45day_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub logs_indexed_45day_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "logs_indexed_60day_sum")]
-    pub logs_indexed_60day_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub logs_indexed_60day_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "logs_indexed_7day_sum")]
-    pub logs_indexed_7day_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub logs_indexed_7day_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "logs_indexed_90day_sum")]
-    pub logs_indexed_90day_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub logs_indexed_90day_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "logs_indexed_custom_retention_sum")]
     pub logs_indexed_custom_retention_sum:
-        Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+        Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "logs_indexed_sum")]
-    pub logs_indexed_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub logs_indexed_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "logs_ingested_sum")]
-    pub logs_ingested_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub logs_ingested_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "network_device_sum")]
-    pub network_device_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub network_device_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "network_device_top99p")]
-    pub network_device_top99p: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub network_device_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "npm_flow_sum")]
-    pub npm_flow_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub npm_flow_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "npm_host_sum")]
-    pub npm_host_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub npm_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "npm_host_top99p")]
-    pub npm_host_top99p: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub npm_host_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "observability_pipeline_sum")]
-    pub observability_pipeline_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub observability_pipeline_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "online_archive_sum")]
-    pub online_archive_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub online_archive_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "prof_container_sum")]
-    pub prof_container_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub prof_container_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "prof_host_sum")]
-    pub prof_host_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub prof_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "prof_host_top99p")]
-    pub prof_host_top99p: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub prof_host_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "rum_lite_sum")]
-    pub rum_lite_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub rum_lite_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "rum_replay_sum")]
-    pub rum_replay_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub rum_replay_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "rum_sum")]
-    pub rum_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub rum_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "rum_units_sum")]
-    pub rum_units_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub rum_units_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "sensitive_data_scanner_sum")]
-    pub sensitive_data_scanner_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub sensitive_data_scanner_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "serverless_apm_sum")]
-    pub serverless_apm_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub serverless_apm_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "serverless_infra_average")]
-    pub serverless_infra_average: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub serverless_infra_average: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "serverless_infra_sum")]
-    pub serverless_infra_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub serverless_infra_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "serverless_invocation_sum")]
-    pub serverless_invocation_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub serverless_invocation_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "siem_sum")]
-    pub siem_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub siem_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "standard_timeseries_average")]
-    pub standard_timeseries_average: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub standard_timeseries_average: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "synthetics_api_tests_sum")]
-    pub synthetics_api_tests_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub synthetics_api_tests_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "synthetics_app_testing_maximum")]
-    pub synthetics_app_testing_maximum:
-        Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub synthetics_app_testing_maximum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "synthetics_browser_checks_sum")]
-    pub synthetics_browser_checks_sum:
-        Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub synthetics_browser_checks_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "timeseries_average")]
-    pub timeseries_average: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub timeseries_average: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "timeseries_sum")]
-    pub timeseries_sum: Option<Box<crate::datadogV1::model::UsageBillableSummaryBody>>,
+    pub timeseries_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
 }
 
 impl UsageBillableSummaryKeys {
@@ -379,6 +371,710 @@ impl UsageBillableSummaryKeys {
             timeseries_average: None,
             timeseries_sum: None,
         }
+    }
+
+    pub fn with_apm_fargate_average(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.apm_fargate_average = Some(value);
+        self
+    }
+
+    pub fn with_apm_fargate_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.apm_fargate_sum = Some(value);
+        self
+    }
+
+    pub fn with_apm_host_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.apm_host_sum = Some(value);
+        self
+    }
+
+    pub fn with_apm_host_top99p(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.apm_host_top99p = Some(value);
+        self
+    }
+
+    pub fn with_apm_profiler_host_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.apm_profiler_host_sum = Some(value);
+        self
+    }
+
+    pub fn with_apm_profiler_host_top99p(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.apm_profiler_host_top99p = Some(value);
+        self
+    }
+
+    pub fn with_apm_trace_search_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.apm_trace_search_sum = Some(value);
+        self
+    }
+
+    pub fn with_application_security_fargate_average(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.application_security_fargate_average = Some(value);
+        self
+    }
+
+    pub fn with_application_security_host_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.application_security_host_sum = Some(value);
+        self
+    }
+
+    pub fn with_application_security_host_top99p(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.application_security_host_top99p = Some(value);
+        self
+    }
+
+    pub fn with_ci_pipeline_indexed_spans_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.ci_pipeline_indexed_spans_sum = Some(value);
+        self
+    }
+
+    pub fn with_ci_pipeline_maximum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.ci_pipeline_maximum = Some(value);
+        self
+    }
+
+    pub fn with_ci_pipeline_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.ci_pipeline_sum = Some(value);
+        self
+    }
+
+    pub fn with_ci_test_indexed_spans_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.ci_test_indexed_spans_sum = Some(value);
+        self
+    }
+
+    pub fn with_ci_testing_maximum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.ci_testing_maximum = Some(value);
+        self
+    }
+
+    pub fn with_ci_testing_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.ci_testing_sum = Some(value);
+        self
+    }
+
+    pub fn with_cloud_cost_management_average(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.cloud_cost_management_average = Some(value);
+        self
+    }
+
+    pub fn with_cloud_cost_management_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.cloud_cost_management_sum = Some(value);
+        self
+    }
+
+    pub fn with_cspm_container_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.cspm_container_sum = Some(value);
+        self
+    }
+
+    pub fn with_cspm_host_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.cspm_host_sum = Some(value);
+        self
+    }
+
+    pub fn with_cspm_host_top99p(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.cspm_host_top99p = Some(value);
+        self
+    }
+
+    pub fn with_custom_event_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.custom_event_sum = Some(value);
+        self
+    }
+
+    pub fn with_cws_container_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.cws_container_sum = Some(value);
+        self
+    }
+
+    pub fn with_cws_host_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.cws_host_sum = Some(value);
+        self
+    }
+
+    pub fn with_cws_host_top99p(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.cws_host_top99p = Some(value);
+        self
+    }
+
+    pub fn with_dbm_host_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.dbm_host_sum = Some(value);
+        self
+    }
+
+    pub fn with_dbm_host_top99p(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.dbm_host_top99p = Some(value);
+        self
+    }
+
+    pub fn with_dbm_normalized_queries_average(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.dbm_normalized_queries_average = Some(value);
+        self
+    }
+
+    pub fn with_dbm_normalized_queries_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.dbm_normalized_queries_sum = Some(value);
+        self
+    }
+
+    pub fn with_fargate_container_apm_and_profiler_average(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.fargate_container_apm_and_profiler_average = Some(value);
+        self
+    }
+
+    pub fn with_fargate_container_apm_and_profiler_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.fargate_container_apm_and_profiler_sum = Some(value);
+        self
+    }
+
+    pub fn with_fargate_container_average(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.fargate_container_average = Some(value);
+        self
+    }
+
+    pub fn with_fargate_container_profiler_average(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.fargate_container_profiler_average = Some(value);
+        self
+    }
+
+    pub fn with_fargate_container_profiler_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.fargate_container_profiler_sum = Some(value);
+        self
+    }
+
+    pub fn with_fargate_container_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.fargate_container_sum = Some(value);
+        self
+    }
+
+    pub fn with_incident_management_maximum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.incident_management_maximum = Some(value);
+        self
+    }
+
+    pub fn with_incident_management_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.incident_management_sum = Some(value);
+        self
+    }
+
+    pub fn with_infra_and_apm_host_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.infra_and_apm_host_sum = Some(value);
+        self
+    }
+
+    pub fn with_infra_and_apm_host_top99p(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.infra_and_apm_host_top99p = Some(value);
+        self
+    }
+
+    pub fn with_infra_container_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.infra_container_sum = Some(value);
+        self
+    }
+
+    pub fn with_infra_host_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.infra_host_sum = Some(value);
+        self
+    }
+
+    pub fn with_infra_host_top99p(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.infra_host_top99p = Some(value);
+        self
+    }
+
+    pub fn with_ingested_spans_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.ingested_spans_sum = Some(value);
+        self
+    }
+
+    pub fn with_ingested_timeseries_average(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.ingested_timeseries_average = Some(value);
+        self
+    }
+
+    pub fn with_ingested_timeseries_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.ingested_timeseries_sum = Some(value);
+        self
+    }
+
+    pub fn with_iot_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.iot_sum = Some(value);
+        self
+    }
+
+    pub fn with_iot_top99p(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.iot_top99p = Some(value);
+        self
+    }
+
+    pub fn with_lambda_function_average(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.lambda_function_average = Some(value);
+        self
+    }
+
+    pub fn with_lambda_function_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.lambda_function_sum = Some(value);
+        self
+    }
+
+    pub fn with_logs_forwarding_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.logs_forwarding_sum = Some(value);
+        self
+    }
+
+    pub fn with_logs_indexed_15day_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.logs_indexed_15day_sum = Some(value);
+        self
+    }
+
+    pub fn with_logs_indexed_180day_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.logs_indexed_180day_sum = Some(value);
+        self
+    }
+
+    pub fn with_logs_indexed_30day_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.logs_indexed_30day_sum = Some(value);
+        self
+    }
+
+    pub fn with_logs_indexed_360day_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.logs_indexed_360day_sum = Some(value);
+        self
+    }
+
+    pub fn with_logs_indexed_3day_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.logs_indexed_3day_sum = Some(value);
+        self
+    }
+
+    pub fn with_logs_indexed_45day_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.logs_indexed_45day_sum = Some(value);
+        self
+    }
+
+    pub fn with_logs_indexed_60day_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.logs_indexed_60day_sum = Some(value);
+        self
+    }
+
+    pub fn with_logs_indexed_7day_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.logs_indexed_7day_sum = Some(value);
+        self
+    }
+
+    pub fn with_logs_indexed_90day_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.logs_indexed_90day_sum = Some(value);
+        self
+    }
+
+    pub fn with_logs_indexed_custom_retention_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.logs_indexed_custom_retention_sum = Some(value);
+        self
+    }
+
+    pub fn with_logs_indexed_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.logs_indexed_sum = Some(value);
+        self
+    }
+
+    pub fn with_logs_ingested_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.logs_ingested_sum = Some(value);
+        self
+    }
+
+    pub fn with_network_device_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.network_device_sum = Some(value);
+        self
+    }
+
+    pub fn with_network_device_top99p(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.network_device_top99p = Some(value);
+        self
+    }
+
+    pub fn with_npm_flow_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.npm_flow_sum = Some(value);
+        self
+    }
+
+    pub fn with_npm_host_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.npm_host_sum = Some(value);
+        self
+    }
+
+    pub fn with_npm_host_top99p(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.npm_host_top99p = Some(value);
+        self
+    }
+
+    pub fn with_observability_pipeline_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.observability_pipeline_sum = Some(value);
+        self
+    }
+
+    pub fn with_online_archive_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.online_archive_sum = Some(value);
+        self
+    }
+
+    pub fn with_prof_container_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.prof_container_sum = Some(value);
+        self
+    }
+
+    pub fn with_prof_host_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.prof_host_sum = Some(value);
+        self
+    }
+
+    pub fn with_prof_host_top99p(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.prof_host_top99p = Some(value);
+        self
+    }
+
+    pub fn with_rum_lite_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.rum_lite_sum = Some(value);
+        self
+    }
+
+    pub fn with_rum_replay_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.rum_replay_sum = Some(value);
+        self
+    }
+
+    pub fn with_rum_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.rum_sum = Some(value);
+        self
+    }
+
+    pub fn with_rum_units_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.rum_units_sum = Some(value);
+        self
+    }
+
+    pub fn with_sensitive_data_scanner_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.sensitive_data_scanner_sum = Some(value);
+        self
+    }
+
+    pub fn with_serverless_apm_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.serverless_apm_sum = Some(value);
+        self
+    }
+
+    pub fn with_serverless_infra_average(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.serverless_infra_average = Some(value);
+        self
+    }
+
+    pub fn with_serverless_infra_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.serverless_infra_sum = Some(value);
+        self
+    }
+
+    pub fn with_serverless_invocation_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.serverless_invocation_sum = Some(value);
+        self
+    }
+
+    pub fn with_siem_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.siem_sum = Some(value);
+        self
+    }
+
+    pub fn with_standard_timeseries_average(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.standard_timeseries_average = Some(value);
+        self
+    }
+
+    pub fn with_synthetics_api_tests_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.synthetics_api_tests_sum = Some(value);
+        self
+    }
+
+    pub fn with_synthetics_app_testing_maximum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.synthetics_app_testing_maximum = Some(value);
+        self
+    }
+
+    pub fn with_synthetics_browser_checks_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.synthetics_browser_checks_sum = Some(value);
+        self
+    }
+
+    pub fn with_timeseries_average(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.timeseries_average = Some(value);
+        self
+    }
+
+    pub fn with_timeseries_sum(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> &mut Self {
+        self.timeseries_sum = Some(value);
+        self
     }
 }
 impl Default for UsageBillableSummaryKeys {

@@ -8,5 +8,5 @@ use serde::{Deserialize, Serialize};
 #[serde(untagged)]
 pub enum IncidentTodoAssignee {
     IncidentTodoAssigneeHandle(String),
-    IncidentTodoAnonymousAssignee(Box<crate::datadogV2::model::IncidentTodoAnonymousAssignee>),
+    IncidentTodoAnonymousAssignee(crate::datadogV2::model::IncidentTodoAnonymousAssignee),
 }

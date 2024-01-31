@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct DORAIncidentRequestData {
     /// Attributes to create a DORA incident event.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::DORAIncidentRequestAttributes>,
+    pub attributes: crate::datadogV2::model::DORAIncidentRequestAttributes,
 }
 
 impl DORAIncidentRequestData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::DORAIncidentRequestAttributes>,
+        attributes: crate::datadogV2::model::DORAIncidentRequestAttributes,
     ) -> DORAIncidentRequestData {
         DORAIncidentRequestData { attributes }
     }

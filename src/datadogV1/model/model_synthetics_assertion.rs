@@ -8,9 +8,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SyntheticsAssertion {
-    SyntheticsAssertionTarget(Box<crate::datadogV1::model::SyntheticsAssertionTarget>),
-    SyntheticsAssertionJSONPathTarget(
-        Box<crate::datadogV1::model::SyntheticsAssertionJSONPathTarget>,
-    ),
-    SyntheticsAssertionXPathTarget(Box<crate::datadogV1::model::SyntheticsAssertionXPathTarget>),
+    SyntheticsAssertionTarget(crate::datadogV1::model::SyntheticsAssertionTarget),
+    SyntheticsAssertionJSONPathTarget(crate::datadogV1::model::SyntheticsAssertionJSONPathTarget),
+    SyntheticsAssertionXPathTarget(crate::datadogV1::model::SyntheticsAssertionXPathTarget),
 }

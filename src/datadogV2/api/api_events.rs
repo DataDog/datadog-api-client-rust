@@ -5,9 +5,9 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// ListEventsParams is a struct for passing parameters to the method [`EventsAPI::list_events`]
+/// ListEventsOptionalParams is a struct for passing parameters to the method [`EventsAPI::list_events`]
 #[derive(Clone, Debug)]
-pub struct ListEventsParams {
+pub struct ListEventsOptionalParams {
     /// Search query following events syntax.
     pub filter_query: Option<String>,
     /// Minimum timestamp for requested events.
@@ -22,10 +22,10 @@ pub struct ListEventsParams {
     pub page_limit: Option<i32>,
 }
 
-/// SearchEventsParams is a struct for passing parameters to the method [`EventsAPI::search_events`]
+/// SearchEventsOptionalParams is a struct for passing parameters to the method [`EventsAPI::search_events`]
 #[derive(Clone, Debug)]
-pub struct SearchEventsParams {
-    pub body: Option<Option<crate::datadogV2::model::EventsListRequest>>,
+pub struct SearchEventsOptionalParams {
+    pub body: Option<crate::datadogV2::model::EventsListRequest>,
 }
 
 /// ListEventsError is a struct for typed errors of method [`EventsAPI::list_events`]
@@ -75,7 +75,7 @@ impl EventsAPI {
     /// Use this endpoint to see your latest events.
     pub async fn list_events(
         &self,
-        params: ListEventsParams,
+        params: ListEventsOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::EventsListResponse>, Error<ListEventsError>> {
         match self.list_events_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
@@ -89,12 +89,12 @@ impl EventsAPI {
     /// Use this endpoint to see your latest events.
     pub async fn list_events_with_http_info(
         &self,
-        params: ListEventsParams,
+        params: ListEventsOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV2::model::EventsListResponse>, Error<ListEventsError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let filter_query = params.filter_query;
         let filter_from = params.filter_from;
         let filter_to = params.filter_to;
@@ -108,26 +108,29 @@ impl EventsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = filter_query {
+        if let Some(ref local_query_param) = filter_query {
             local_req_builder =
-                local_req_builder.query(&[("filter[query]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_from {
+        if let Some(ref local_query_param) = filter_from {
             local_req_builder =
-                local_req_builder.query(&[("filter[from]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[from]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_to {
-            local_req_builder = local_req_builder.query(&[("filter[to]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = sort {
-            local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_cursor {
+        if let Some(ref local_query_param) = filter_to {
             local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[to]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = page_limit {
-            local_req_builder = local_req_builder.query(&[("page[limit]", &local_str.to_string())]);
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_cursor {
+            local_req_builder =
+                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -175,7 +178,7 @@ impl EventsAPI {
     /// Use this endpoint to build complex events filtering and search.
     pub async fn search_events(
         &self,
-        params: SearchEventsParams,
+        params: SearchEventsOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::EventsListResponse>, Error<SearchEventsError>> {
         match self.search_events_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
@@ -189,14 +192,14 @@ impl EventsAPI {
     /// Use this endpoint to build complex events filtering and search.
     pub async fn search_events_with_http_info(
         &self,
-        params: SearchEventsParams,
+        params: SearchEventsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::EventsListResponse>,
         Error<SearchEventsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let body = params.body;
 
         let local_client = &local_configuration.client;

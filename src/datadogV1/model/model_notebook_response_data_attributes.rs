@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct NotebookResponseDataAttributes {
     /// Attributes of user object returned by the API.
     #[serde(rename = "author")]
-    pub author: Option<Box<crate::datadogV1::model::NotebookAuthor>>,
+    pub author: Option<crate::datadogV1::model::NotebookAuthor>,
     /// List of cells to display in the notebook.
     #[serde(rename = "cells")]
     pub cells: Vec<crate::datadogV1::model::NotebookCellResponse>,
@@ -19,7 +19,7 @@ pub struct NotebookResponseDataAttributes {
     pub created: Option<String>,
     /// Metadata associated with the notebook.
     #[serde(rename = "metadata")]
-    pub metadata: Option<Box<crate::datadogV1::model::NotebookMetadata>>,
+    pub metadata: Option<crate::datadogV1::model::NotebookMetadata>,
     /// UTC time stamp for when the notebook was last modified.
     #[serde(rename = "modified")]
     pub modified: Option<String>,
@@ -31,14 +31,14 @@ pub struct NotebookResponseDataAttributes {
     pub status: Option<crate::datadogV1::model::NotebookStatus>,
     /// Notebook global timeframe.
     #[serde(rename = "time")]
-    pub time: Box<crate::datadogV1::model::NotebookGlobalTime>,
+    pub time: crate::datadogV1::model::NotebookGlobalTime,
 }
 
 impl NotebookResponseDataAttributes {
     pub fn new(
         cells: Vec<crate::datadogV1::model::NotebookCellResponse>,
         name: String,
-        time: Box<crate::datadogV1::model::NotebookGlobalTime>,
+        time: crate::datadogV1::model::NotebookGlobalTime,
     ) -> NotebookResponseDataAttributes {
         NotebookResponseDataAttributes {
             author: None,
@@ -50,5 +50,30 @@ impl NotebookResponseDataAttributes {
             status: None,
             time,
         }
+    }
+
+    pub fn with_author(&mut self, value: crate::datadogV1::model::NotebookAuthor) -> &mut Self {
+        self.author = Some(value);
+        self
+    }
+
+    pub fn with_created(&mut self, value: String) -> &mut Self {
+        self.created = Some(value);
+        self
+    }
+
+    pub fn with_metadata(&mut self, value: crate::datadogV1::model::NotebookMetadata) -> &mut Self {
+        self.metadata = Some(value);
+        self
+    }
+
+    pub fn with_modified(&mut self, value: String) -> &mut Self {
+        self.modified = Some(value);
+        self
+    }
+
+    pub fn with_status(&mut self, value: crate::datadogV1::model::NotebookStatus) -> &mut Self {
+        self.status = Some(value);
+        self
     }
 }

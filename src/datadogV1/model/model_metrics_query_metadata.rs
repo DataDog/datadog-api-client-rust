@@ -70,6 +70,74 @@ impl MetricsQueryMetadata {
             unit: None,
         }
     }
+
+    pub fn with_aggr(&mut self, value: Option<String>) -> &mut Self {
+        self.aggr = Some(value);
+        self
+    }
+
+    pub fn with_display_name(&mut self, value: String) -> &mut Self {
+        self.display_name = Some(value);
+        self
+    }
+
+    pub fn with_end(&mut self, value: i64) -> &mut Self {
+        self.end = Some(value);
+        self
+    }
+
+    pub fn with_expression(&mut self, value: String) -> &mut Self {
+        self.expression = Some(value);
+        self
+    }
+
+    pub fn with_interval(&mut self, value: i64) -> &mut Self {
+        self.interval = Some(value);
+        self
+    }
+
+    pub fn with_length(&mut self, value: i64) -> &mut Self {
+        self.length = Some(value);
+        self
+    }
+
+    pub fn with_metric(&mut self, value: String) -> &mut Self {
+        self.metric = Some(value);
+        self
+    }
+
+    pub fn with_pointlist(&mut self, value: Vec<Vec<Option<f64>>>) -> &mut Self {
+        self.pointlist = Some(value);
+        self
+    }
+
+    pub fn with_query_index(&mut self, value: i64) -> &mut Self {
+        self.query_index = Some(value);
+        self
+    }
+
+    pub fn with_scope(&mut self, value: String) -> &mut Self {
+        self.scope = Some(value);
+        self
+    }
+
+    pub fn with_start(&mut self, value: i64) -> &mut Self {
+        self.start = Some(value);
+        self
+    }
+
+    pub fn with_tag_set(&mut self, value: Vec<String>) -> &mut Self {
+        self.tag_set = Some(value);
+        self
+    }
+
+    pub fn with_unit(
+        &mut self,
+        value: Vec<Option<crate::datadogV1::model::MetricsQueryUnit>>,
+    ) -> &mut Self {
+        self.unit = Some(value);
+        self
+    }
 }
 impl Default for MetricsQueryMetadata {
     fn default() -> Self {

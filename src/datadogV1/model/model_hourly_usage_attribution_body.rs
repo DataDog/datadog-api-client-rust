@@ -55,6 +55,57 @@ impl HourlyUsageAttributionBody {
             usage_type: None,
         }
     }
+
+    pub fn with_hour(&mut self, value: String) -> &mut Self {
+        self.hour = Some(value);
+        self
+    }
+
+    pub fn with_org_name(&mut self, value: String) -> &mut Self {
+        self.org_name = Some(value);
+        self
+    }
+
+    pub fn with_public_id(&mut self, value: String) -> &mut Self {
+        self.public_id = Some(value);
+        self
+    }
+
+    pub fn with_region(&mut self, value: String) -> &mut Self {
+        self.region = Some(value);
+        self
+    }
+
+    pub fn with_tag_config_source(&mut self, value: String) -> &mut Self {
+        self.tag_config_source = Some(value);
+        self
+    }
+
+    pub fn with_tags(
+        &mut self,
+        value: Option<std::collections::BTreeMap<String, Option<Vec<String>>>>,
+    ) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+
+    pub fn with_total_usage_sum(&mut self, value: f64) -> &mut Self {
+        self.total_usage_sum = Some(value);
+        self
+    }
+
+    pub fn with_updated_at(&mut self, value: String) -> &mut Self {
+        self.updated_at = Some(value);
+        self
+    }
+
+    pub fn with_usage_type(
+        &mut self,
+        value: crate::datadogV1::model::HourlyUsageAttributionUsageType,
+    ) -> &mut Self {
+        self.usage_type = Some(value);
+        self
+    }
 }
 impl Default for HourlyUsageAttributionBody {
     fn default() -> Self {

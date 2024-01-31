@@ -13,7 +13,7 @@ pub struct RelationshipToTeamLinks {
     pub data: Option<Vec<crate::datadogV2::model::RelationshipToTeamLinkData>>,
     /// Links attributes.
     #[serde(rename = "links")]
-    pub links: Option<Box<crate::datadogV2::model::TeamRelationshipsLinks>>,
+    pub links: Option<crate::datadogV2::model::TeamRelationshipsLinks>,
 }
 
 impl RelationshipToTeamLinks {
@@ -22,6 +22,22 @@ impl RelationshipToTeamLinks {
             data: None,
             links: None,
         }
+    }
+
+    pub fn with_data(
+        &mut self,
+        value: Vec<crate::datadogV2::model::RelationshipToTeamLinkData>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn with_links(
+        &mut self,
+        value: crate::datadogV2::model::TeamRelationshipsLinks,
+    ) -> &mut Self {
+        self.links = Some(value);
+        self
     }
 }
 impl Default for RelationshipToTeamLinks {

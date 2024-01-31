@@ -27,6 +27,21 @@ impl MonitorOptionsAggregation {
             type_: None,
         }
     }
+
+    pub fn with_group_by(&mut self, value: String) -> &mut Self {
+        self.group_by = Some(value);
+        self
+    }
+
+    pub fn with_metric(&mut self, value: String) -> &mut Self {
+        self.metric = Some(value);
+        self
+    }
+
+    pub fn with_type_(&mut self, value: String) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
 impl Default for MonitorOptionsAggregation {
     fn default() -> Self {

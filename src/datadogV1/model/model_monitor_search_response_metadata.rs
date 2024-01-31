@@ -31,6 +31,26 @@ impl MonitorSearchResponseMetadata {
             total_count: None,
         }
     }
+
+    pub fn with_page(&mut self, value: i64) -> &mut Self {
+        self.page = Some(value);
+        self
+    }
+
+    pub fn with_page_count(&mut self, value: i64) -> &mut Self {
+        self.page_count = Some(value);
+        self
+    }
+
+    pub fn with_per_page(&mut self, value: i64) -> &mut Self {
+        self.per_page = Some(value);
+        self
+    }
+
+    pub fn with_total_count(&mut self, value: i64) -> &mut Self {
+        self.total_count = Some(value);
+        self
+    }
 }
 impl Default for MonitorSearchResponseMetadata {
     fn default() -> Self {

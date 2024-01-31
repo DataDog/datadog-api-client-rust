@@ -31,6 +31,26 @@ impl HostMapWidgetDefinitionStyle {
             palette_flip: None,
         }
     }
+
+    pub fn with_fill_max(&mut self, value: String) -> &mut Self {
+        self.fill_max = Some(value);
+        self
+    }
+
+    pub fn with_fill_min(&mut self, value: String) -> &mut Self {
+        self.fill_min = Some(value);
+        self
+    }
+
+    pub fn with_palette(&mut self, value: String) -> &mut Self {
+        self.palette = Some(value);
+        self
+    }
+
+    pub fn with_palette_flip(&mut self, value: bool) -> &mut Self {
+        self.palette_flip = Some(value);
+        self
+    }
 }
 impl Default for HostMapWidgetDefinitionStyle {
     fn default() -> Self {

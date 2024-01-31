@@ -61,6 +61,94 @@ impl IncidentSearchResponseFacetsData {
             time_to_resolve: None,
         }
     }
+
+    pub fn with_commander(
+        &mut self,
+        value: Vec<crate::datadogV2::model::IncidentSearchResponseUserFacetData>,
+    ) -> &mut Self {
+        self.commander = Some(value);
+        self
+    }
+
+    pub fn with_created_by(
+        &mut self,
+        value: Vec<crate::datadogV2::model::IncidentSearchResponseUserFacetData>,
+    ) -> &mut Self {
+        self.created_by = Some(value);
+        self
+    }
+
+    pub fn with_fields(
+        &mut self,
+        value: Vec<crate::datadogV2::model::IncidentSearchResponsePropertyFieldFacetData>,
+    ) -> &mut Self {
+        self.fields = Some(value);
+        self
+    }
+
+    pub fn with_impact(
+        &mut self,
+        value: Vec<crate::datadogV2::model::IncidentSearchResponseFieldFacetData>,
+    ) -> &mut Self {
+        self.impact = Some(value);
+        self
+    }
+
+    pub fn with_last_modified_by(
+        &mut self,
+        value: Vec<crate::datadogV2::model::IncidentSearchResponseUserFacetData>,
+    ) -> &mut Self {
+        self.last_modified_by = Some(value);
+        self
+    }
+
+    pub fn with_postmortem(
+        &mut self,
+        value: Vec<crate::datadogV2::model::IncidentSearchResponseFieldFacetData>,
+    ) -> &mut Self {
+        self.postmortem = Some(value);
+        self
+    }
+
+    pub fn with_responder(
+        &mut self,
+        value: Vec<crate::datadogV2::model::IncidentSearchResponseUserFacetData>,
+    ) -> &mut Self {
+        self.responder = Some(value);
+        self
+    }
+
+    pub fn with_severity(
+        &mut self,
+        value: Vec<crate::datadogV2::model::IncidentSearchResponseFieldFacetData>,
+    ) -> &mut Self {
+        self.severity = Some(value);
+        self
+    }
+
+    pub fn with_state(
+        &mut self,
+        value: Vec<crate::datadogV2::model::IncidentSearchResponseFieldFacetData>,
+    ) -> &mut Self {
+        self.state = Some(value);
+        self
+    }
+
+    pub fn with_time_to_repair(
+        &mut self,
+        value: Vec<crate::datadogV2::model::IncidentSearchResponseNumericFacetData>,
+    ) -> &mut Self {
+        self.time_to_repair = Some(value);
+        self
+    }
+
+    pub fn with_time_to_resolve(
+        &mut self,
+        value: Vec<crate::datadogV2::model::IncidentSearchResponseNumericFacetData>,
+    ) -> &mut Self {
+        self.time_to_resolve = Some(value);
+        self
+    }
 }
 impl Default for IncidentSearchResponseFacetsData {
     fn default() -> Self {

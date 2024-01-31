@@ -35,6 +35,34 @@ impl LogsQueryFilter {
             to: None,
         }
     }
+
+    pub fn with_from(&mut self, value: String) -> &mut Self {
+        self.from = Some(value);
+        self
+    }
+
+    pub fn with_indexes(&mut self, value: Vec<String>) -> &mut Self {
+        self.indexes = Some(value);
+        self
+    }
+
+    pub fn with_query(&mut self, value: String) -> &mut Self {
+        self.query = Some(value);
+        self
+    }
+
+    pub fn with_storage_tier(
+        &mut self,
+        value: crate::datadogV2::model::LogsStorageTier,
+    ) -> &mut Self {
+        self.storage_tier = Some(value);
+        self
+    }
+
+    pub fn with_to(&mut self, value: String) -> &mut Self {
+        self.to = Some(value);
+        self
+    }
 }
 impl Default for LogsQueryFilter {
     fn default() -> Self {

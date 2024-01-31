@@ -23,6 +23,16 @@ impl OutcomesBatchResponseMeta {
             total_updated: None,
         }
     }
+
+    pub fn with_total_received(&mut self, value: i64) -> &mut Self {
+        self.total_received = Some(value);
+        self
+    }
+
+    pub fn with_total_updated(&mut self, value: i64) -> &mut Self {
+        self.total_updated = Some(value);
+        self
+    }
 }
 impl Default for OutcomesBatchResponseMeta {
     fn default() -> Self {

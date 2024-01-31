@@ -5,9 +5,9 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// ListContainersParams is a struct for passing parameters to the method [`ContainersAPI::list_containers`]
+/// ListContainersOptionalParams is a struct for passing parameters to the method [`ContainersAPI::list_containers`]
 #[derive(Clone, Debug)]
-pub struct ListContainersParams {
+pub struct ListContainersOptionalParams {
     /// Comma-separated list of tags to filter containers by.
     pub filter_tags: Option<String>,
     /// Comma-separated list of tags to group containers by.
@@ -55,7 +55,7 @@ impl ContainersAPI {
     /// Get all containers for your organization.
     pub async fn list_containers(
         &self,
-        params: ListContainersParams,
+        params: ListContainersOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::ContainersResponse>, Error<ListContainersError>>
     {
         match self.list_containers_with_http_info(params).await {
@@ -67,14 +67,14 @@ impl ContainersAPI {
     /// Get all containers for your organization.
     pub async fn list_containers_with_http_info(
         &self,
-        params: ListContainersParams,
+        params: ListContainersOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::ContainersResponse>,
         Error<ListContainersError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let filter_tags = params.filter_tags;
         let group_by = params.group_by;
         let sort = params.sort;
@@ -87,22 +87,25 @@ impl ContainersAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = filter_tags {
+        if let Some(ref local_query_param) = filter_tags {
             local_req_builder =
-                local_req_builder.query(&[("filter[tags]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[tags]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = group_by {
-            local_req_builder = local_req_builder.query(&[("group_by", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = sort {
-            local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_size {
-            local_req_builder = local_req_builder.query(&[("page[size]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_cursor {
+        if let Some(ref local_query_param) = group_by {
             local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_str.to_string())]);
+                local_req_builder.query(&[("group_by", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_cursor {
+            local_req_builder =
+                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
         };
 
         // build user agent

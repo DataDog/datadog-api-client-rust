@@ -43,4 +43,19 @@ impl SyntheticsBasicAuthSigv4 {
             type_,
         }
     }
+
+    pub fn with_region(&mut self, value: String) -> &mut Self {
+        self.region = Some(value);
+        self
+    }
+
+    pub fn with_service_name(&mut self, value: String) -> &mut Self {
+        self.service_name = Some(value);
+        self
+    }
+
+    pub fn with_session_token(&mut self, value: String) -> &mut Self {
+        self.session_token = Some(value);
+        self
+    }
 }

@@ -5,36 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateSpansMetricParams is a struct for passing parameters to the method [`SpansMetricsAPI::create_spans_metric`]
-#[derive(Clone, Debug)]
-pub struct CreateSpansMetricParams {
-    /// The definition of the new span-based metric.
-    pub body: crate::datadogV2::model::SpansMetricCreateRequest,
-}
-
-/// DeleteSpansMetricParams is a struct for passing parameters to the method [`SpansMetricsAPI::delete_spans_metric`]
-#[derive(Clone, Debug)]
-pub struct DeleteSpansMetricParams {
-    /// The name of the span-based metric.
-    pub metric_id: String,
-}
-
-/// GetSpansMetricParams is a struct for passing parameters to the method [`SpansMetricsAPI::get_spans_metric`]
-#[derive(Clone, Debug)]
-pub struct GetSpansMetricParams {
-    /// The name of the span-based metric.
-    pub metric_id: String,
-}
-
-/// UpdateSpansMetricParams is a struct for passing parameters to the method [`SpansMetricsAPI::update_spans_metric`]
-#[derive(Clone, Debug)]
-pub struct UpdateSpansMetricParams {
-    /// The name of the span-based metric.
-    pub metric_id: String,
-    /// New definition of the span-based metric.
-    pub body: crate::datadogV2::model::SpansMetricUpdateRequest,
-}
-
 /// CreateSpansMetricError is a struct for typed errors of method [`SpansMetricsAPI::create_spans_metric`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -111,10 +81,10 @@ impl SpansMetricsAPI {
     /// Returns the span-based metric object from the request body when the request is successful.
     pub async fn create_spans_metric(
         &self,
-        params: CreateSpansMetricParams,
+        body: crate::datadogV2::model::SpansMetricCreateRequest,
     ) -> Result<Option<crate::datadogV2::model::SpansMetricResponse>, Error<CreateSpansMetricError>>
     {
-        match self.create_spans_metric_with_http_info(params).await {
+        match self.create_spans_metric_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -124,15 +94,12 @@ impl SpansMetricsAPI {
     /// Returns the span-based metric object from the request body when the request is successful.
     pub async fn create_spans_metric_with_http_info(
         &self,
-        params: CreateSpansMetricParams,
+        body: crate::datadogV2::model::SpansMetricCreateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::SpansMetricResponse>,
         Error<CreateSpansMetricError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -193,9 +160,9 @@ impl SpansMetricsAPI {
     /// Delete a specific span-based metric from your organization.
     pub async fn delete_spans_metric(
         &self,
-        params: DeleteSpansMetricParams,
+        metric_id: String,
     ) -> Result<Option<()>, Error<DeleteSpansMetricError>> {
-        match self.delete_spans_metric_with_http_info(params).await {
+        match self.delete_spans_metric_with_http_info(metric_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -204,12 +171,9 @@ impl SpansMetricsAPI {
     /// Delete a specific span-based metric from your organization.
     pub async fn delete_spans_metric_with_http_info(
         &self,
-        params: DeleteSpansMetricParams,
+        metric_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteSpansMetricError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let metric_id = params.metric_id;
 
         let local_client = &local_configuration.client;
 
@@ -262,10 +226,10 @@ impl SpansMetricsAPI {
     /// Get a specific span-based metric from your organization.
     pub async fn get_spans_metric(
         &self,
-        params: GetSpansMetricParams,
+        metric_id: String,
     ) -> Result<Option<crate::datadogV2::model::SpansMetricResponse>, Error<GetSpansMetricError>>
     {
-        match self.get_spans_metric_with_http_info(params).await {
+        match self.get_spans_metric_with_http_info(metric_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -274,15 +238,12 @@ impl SpansMetricsAPI {
     /// Get a specific span-based metric from your organization.
     pub async fn get_spans_metric_with_http_info(
         &self,
-        params: GetSpansMetricParams,
+        metric_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::SpansMetricResponse>,
         Error<GetSpansMetricError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let metric_id = params.metric_id;
 
         let local_client = &local_configuration.client;
 
@@ -354,8 +315,6 @@ impl SpansMetricsAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -409,10 +368,14 @@ impl SpansMetricsAPI {
     /// Returns the span-based metric object from the request body when the request is successful.
     pub async fn update_spans_metric(
         &self,
-        params: UpdateSpansMetricParams,
+        metric_id: String,
+        body: crate::datadogV2::model::SpansMetricUpdateRequest,
     ) -> Result<Option<crate::datadogV2::model::SpansMetricResponse>, Error<UpdateSpansMetricError>>
     {
-        match self.update_spans_metric_with_http_info(params).await {
+        match self
+            .update_spans_metric_with_http_info(metric_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -422,16 +385,13 @@ impl SpansMetricsAPI {
     /// Returns the span-based metric object from the request body when the request is successful.
     pub async fn update_spans_metric_with_http_info(
         &self,
-        params: UpdateSpansMetricParams,
+        metric_id: String,
+        body: crate::datadogV2::model::SpansMetricUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::SpansMetricResponse>,
         Error<UpdateSpansMetricError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let metric_id = params.metric_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

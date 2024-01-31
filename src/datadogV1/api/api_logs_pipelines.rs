@@ -5,43 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateLogsPipelineParams is a struct for passing parameters to the method [`LogsPipelinesAPI::create_logs_pipeline`]
-#[derive(Clone, Debug)]
-pub struct CreateLogsPipelineParams {
-    /// Definition of the new pipeline.
-    pub body: crate::datadogV1::model::LogsPipeline,
-}
-
-/// DeleteLogsPipelineParams is a struct for passing parameters to the method [`LogsPipelinesAPI::delete_logs_pipeline`]
-#[derive(Clone, Debug)]
-pub struct DeleteLogsPipelineParams {
-    /// ID of the pipeline to delete.
-    pub pipeline_id: String,
-}
-
-/// GetLogsPipelineParams is a struct for passing parameters to the method [`LogsPipelinesAPI::get_logs_pipeline`]
-#[derive(Clone, Debug)]
-pub struct GetLogsPipelineParams {
-    /// ID of the pipeline to get.
-    pub pipeline_id: String,
-}
-
-/// UpdateLogsPipelineParams is a struct for passing parameters to the method [`LogsPipelinesAPI::update_logs_pipeline`]
-#[derive(Clone, Debug)]
-pub struct UpdateLogsPipelineParams {
-    /// ID of the pipeline to delete.
-    pub pipeline_id: String,
-    /// New definition of the pipeline.
-    pub body: crate::datadogV1::model::LogsPipeline,
-}
-
-/// UpdateLogsPipelineOrderParams is a struct for passing parameters to the method [`LogsPipelinesAPI::update_logs_pipeline_order`]
-#[derive(Clone, Debug)]
-pub struct UpdateLogsPipelineOrderParams {
-    /// Object containing the new ordered list of pipeline IDs.
-    pub body: crate::datadogV1::model::LogsPipelinesOrder,
-}
-
 /// CreateLogsPipelineError is a struct for typed errors of method [`LogsPipelinesAPI::create_logs_pipeline`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -135,9 +98,9 @@ impl LogsPipelinesAPI {
     /// Create a pipeline in your organization.
     pub async fn create_logs_pipeline(
         &self,
-        params: CreateLogsPipelineParams,
+        body: crate::datadogV1::model::LogsPipeline,
     ) -> Result<Option<crate::datadogV1::model::LogsPipeline>, Error<CreateLogsPipelineError>> {
-        match self.create_logs_pipeline_with_http_info(params).await {
+        match self.create_logs_pipeline_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -146,15 +109,12 @@ impl LogsPipelinesAPI {
     /// Create a pipeline in your organization.
     pub async fn create_logs_pipeline_with_http_info(
         &self,
-        params: CreateLogsPipelineParams,
+        body: crate::datadogV1::model::LogsPipeline,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::LogsPipeline>,
         Error<CreateLogsPipelineError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -216,9 +176,9 @@ impl LogsPipelinesAPI {
     /// This endpoint takes no JSON arguments.
     pub async fn delete_logs_pipeline(
         &self,
-        params: DeleteLogsPipelineParams,
+        pipeline_id: String,
     ) -> Result<Option<()>, Error<DeleteLogsPipelineError>> {
-        match self.delete_logs_pipeline_with_http_info(params).await {
+        match self.delete_logs_pipeline_with_http_info(pipeline_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -228,12 +188,9 @@ impl LogsPipelinesAPI {
     /// This endpoint takes no JSON arguments.
     pub async fn delete_logs_pipeline_with_http_info(
         &self,
-        params: DeleteLogsPipelineParams,
+        pipeline_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteLogsPipelineError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let pipeline_id = params.pipeline_id;
 
         let local_client = &local_configuration.client;
 
@@ -287,9 +244,9 @@ impl LogsPipelinesAPI {
     /// This endpoint takes no JSON arguments.
     pub async fn get_logs_pipeline(
         &self,
-        params: GetLogsPipelineParams,
+        pipeline_id: String,
     ) -> Result<Option<crate::datadogV1::model::LogsPipeline>, Error<GetLogsPipelineError>> {
-        match self.get_logs_pipeline_with_http_info(params).await {
+        match self.get_logs_pipeline_with_http_info(pipeline_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -299,13 +256,10 @@ impl LogsPipelinesAPI {
     /// This endpoint takes no JSON arguments.
     pub async fn get_logs_pipeline_with_http_info(
         &self,
-        params: GetLogsPipelineParams,
+        pipeline_id: String,
     ) -> Result<ResponseContent<crate::datadogV1::model::LogsPipeline>, Error<GetLogsPipelineError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let pipeline_id = params.pipeline_id;
 
         let local_client = &local_configuration.client;
 
@@ -379,8 +333,6 @@ impl LogsPipelinesAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -452,8 +404,6 @@ impl LogsPipelinesAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -509,9 +459,13 @@ impl LogsPipelinesAPI {
     /// your current configuration with the new one sent to your Datadog organization.
     pub async fn update_logs_pipeline(
         &self,
-        params: UpdateLogsPipelineParams,
+        pipeline_id: String,
+        body: crate::datadogV1::model::LogsPipeline,
     ) -> Result<Option<crate::datadogV1::model::LogsPipeline>, Error<UpdateLogsPipelineError>> {
-        match self.update_logs_pipeline_with_http_info(params).await {
+        match self
+            .update_logs_pipeline_with_http_info(pipeline_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -523,16 +477,13 @@ impl LogsPipelinesAPI {
     /// your current configuration with the new one sent to your Datadog organization.
     pub async fn update_logs_pipeline_with_http_info(
         &self,
-        params: UpdateLogsPipelineParams,
+        pipeline_id: String,
+        body: crate::datadogV1::model::LogsPipeline,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::LogsPipeline>,
         Error<UpdateLogsPipelineError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let pipeline_id = params.pipeline_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -598,12 +549,12 @@ impl LogsPipelinesAPI {
     /// with the new one sent to your Datadog organization.
     pub async fn update_logs_pipeline_order(
         &self,
-        params: UpdateLogsPipelineOrderParams,
+        body: crate::datadogV1::model::LogsPipelinesOrder,
     ) -> Result<
         Option<crate::datadogV1::model::LogsPipelinesOrder>,
         Error<UpdateLogsPipelineOrderError>,
     > {
-        match self.update_logs_pipeline_order_with_http_info(params).await {
+        match self.update_logs_pipeline_order_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -616,15 +567,12 @@ impl LogsPipelinesAPI {
     /// with the new one sent to your Datadog organization.
     pub async fn update_logs_pipeline_order_with_http_info(
         &self,
-        params: UpdateLogsPipelineOrderParams,
+        body: crate::datadogV1::model::LogsPipelinesOrder,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::LogsPipelinesOrder>,
         Error<UpdateLogsPipelineOrderError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

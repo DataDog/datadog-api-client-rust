@@ -17,6 +17,14 @@ impl GCPSTSServiceAccountsResponse {
     pub fn new() -> GCPSTSServiceAccountsResponse {
         GCPSTSServiceAccountsResponse { data: None }
     }
+
+    pub fn with_data(
+        &mut self,
+        value: Vec<crate::datadogV2::model::GCPSTSServiceAccount>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
 impl Default for GCPSTSServiceAccountsResponse {
     fn default() -> Self {

@@ -13,31 +13,31 @@ pub struct ScatterPlotRequest {
     pub aggregator: Option<crate::datadogV1::model::ScatterplotWidgetAggregator>,
     /// The log query.
     #[serde(rename = "apm_query")]
-    pub apm_query: Option<Box<crate::datadogV1::model::LogQueryDefinition>>,
+    pub apm_query: Option<crate::datadogV1::model::LogQueryDefinition>,
     /// The log query.
     #[serde(rename = "event_query")]
-    pub event_query: Option<Box<crate::datadogV1::model::LogQueryDefinition>>,
+    pub event_query: Option<crate::datadogV1::model::LogQueryDefinition>,
     /// The log query.
     #[serde(rename = "log_query")]
-    pub log_query: Option<Box<crate::datadogV1::model::LogQueryDefinition>>,
+    pub log_query: Option<crate::datadogV1::model::LogQueryDefinition>,
     /// The log query.
     #[serde(rename = "network_query")]
-    pub network_query: Option<Box<crate::datadogV1::model::LogQueryDefinition>>,
+    pub network_query: Option<crate::datadogV1::model::LogQueryDefinition>,
     /// The process query to use in the widget.
     #[serde(rename = "process_query")]
-    pub process_query: Option<Box<crate::datadogV1::model::ProcessQueryDefinition>>,
+    pub process_query: Option<crate::datadogV1::model::ProcessQueryDefinition>,
     /// The log query.
     #[serde(rename = "profile_metrics_query")]
-    pub profile_metrics_query: Option<Box<crate::datadogV1::model::LogQueryDefinition>>,
+    pub profile_metrics_query: Option<crate::datadogV1::model::LogQueryDefinition>,
     /// Query definition.
     #[serde(rename = "q")]
     pub q: Option<String>,
     /// The log query.
     #[serde(rename = "rum_query")]
-    pub rum_query: Option<Box<crate::datadogV1::model::LogQueryDefinition>>,
+    pub rum_query: Option<crate::datadogV1::model::LogQueryDefinition>,
     /// The log query.
     #[serde(rename = "security_query")]
-    pub security_query: Option<Box<crate::datadogV1::model::LogQueryDefinition>>,
+    pub security_query: Option<crate::datadogV1::model::LogQueryDefinition>,
 }
 
 impl ScatterPlotRequest {
@@ -54,6 +54,83 @@ impl ScatterPlotRequest {
             rum_query: None,
             security_query: None,
         }
+    }
+
+    pub fn with_aggregator(
+        &mut self,
+        value: crate::datadogV1::model::ScatterplotWidgetAggregator,
+    ) -> &mut Self {
+        self.aggregator = Some(value);
+        self
+    }
+
+    pub fn with_apm_query(
+        &mut self,
+        value: crate::datadogV1::model::LogQueryDefinition,
+    ) -> &mut Self {
+        self.apm_query = Some(value);
+        self
+    }
+
+    pub fn with_event_query(
+        &mut self,
+        value: crate::datadogV1::model::LogQueryDefinition,
+    ) -> &mut Self {
+        self.event_query = Some(value);
+        self
+    }
+
+    pub fn with_log_query(
+        &mut self,
+        value: crate::datadogV1::model::LogQueryDefinition,
+    ) -> &mut Self {
+        self.log_query = Some(value);
+        self
+    }
+
+    pub fn with_network_query(
+        &mut self,
+        value: crate::datadogV1::model::LogQueryDefinition,
+    ) -> &mut Self {
+        self.network_query = Some(value);
+        self
+    }
+
+    pub fn with_process_query(
+        &mut self,
+        value: crate::datadogV1::model::ProcessQueryDefinition,
+    ) -> &mut Self {
+        self.process_query = Some(value);
+        self
+    }
+
+    pub fn with_profile_metrics_query(
+        &mut self,
+        value: crate::datadogV1::model::LogQueryDefinition,
+    ) -> &mut Self {
+        self.profile_metrics_query = Some(value);
+        self
+    }
+
+    pub fn with_q(&mut self, value: String) -> &mut Self {
+        self.q = Some(value);
+        self
+    }
+
+    pub fn with_rum_query(
+        &mut self,
+        value: crate::datadogV1::model::LogQueryDefinition,
+    ) -> &mut Self {
+        self.rum_query = Some(value);
+        self
+    }
+
+    pub fn with_security_query(
+        &mut self,
+        value: crate::datadogV1::model::LogQueryDefinition,
+    ) -> &mut Self {
+        self.security_query = Some(value);
+        self
     }
 }
 impl Default for ScatterPlotRequest {

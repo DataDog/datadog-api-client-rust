@@ -34,4 +34,19 @@ impl SecurityMonitoringRuleCaseCreate {
             status,
         }
     }
+
+    pub fn with_condition(&mut self, value: String) -> &mut Self {
+        self.condition = Some(value);
+        self
+    }
+
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn with_notifications(&mut self, value: Vec<String>) -> &mut Self {
+        self.notifications = Some(value);
+        self
+    }
 }

@@ -19,6 +19,11 @@ impl CanceledDowntimesIds {
             cancelled_ids: None,
         }
     }
+
+    pub fn with_cancelled_ids(&mut self, value: Vec<i64>) -> &mut Self {
+        self.cancelled_ids = Some(value);
+        self
+    }
 }
 impl Default for CanceledDowntimesIds {
     fn default() -> Self {

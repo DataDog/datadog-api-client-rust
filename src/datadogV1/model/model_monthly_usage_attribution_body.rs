@@ -35,7 +35,7 @@ pub struct MonthlyUsageAttributionBody {
     pub updated_at: Option<String>,
     /// Fields in Usage Summary by tag(s).
     #[serde(rename = "values")]
-    pub values: Option<Box<crate::datadogV1::model::MonthlyUsageAttributionValues>>,
+    pub values: Option<crate::datadogV1::model::MonthlyUsageAttributionValues>,
 }
 
 impl MonthlyUsageAttributionBody {
@@ -50,6 +50,52 @@ impl MonthlyUsageAttributionBody {
             updated_at: None,
             values: None,
         }
+    }
+
+    pub fn with_month(&mut self, value: String) -> &mut Self {
+        self.month = Some(value);
+        self
+    }
+
+    pub fn with_org_name(&mut self, value: String) -> &mut Self {
+        self.org_name = Some(value);
+        self
+    }
+
+    pub fn with_public_id(&mut self, value: String) -> &mut Self {
+        self.public_id = Some(value);
+        self
+    }
+
+    pub fn with_region(&mut self, value: String) -> &mut Self {
+        self.region = Some(value);
+        self
+    }
+
+    pub fn with_tag_config_source(&mut self, value: String) -> &mut Self {
+        self.tag_config_source = Some(value);
+        self
+    }
+
+    pub fn with_tags(
+        &mut self,
+        value: Option<std::collections::BTreeMap<String, Option<Vec<String>>>>,
+    ) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+
+    pub fn with_updated_at(&mut self, value: String) -> &mut Self {
+        self.updated_at = Some(value);
+        self
+    }
+
+    pub fn with_values(
+        &mut self,
+        value: crate::datadogV1::model::MonthlyUsageAttributionValues,
+    ) -> &mut Self {
+        self.values = Some(value);
+        self
     }
 }
 impl Default for MonthlyUsageAttributionBody {

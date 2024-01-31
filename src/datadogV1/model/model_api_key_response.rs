@@ -10,12 +10,17 @@ use serde_with::skip_serializing_none;
 pub struct ApiKeyResponse {
     /// Datadog API key.
     #[serde(rename = "api_key")]
-    pub api_key: Option<Box<crate::datadogV1::model::ApiKey>>,
+    pub api_key: Option<crate::datadogV1::model::ApiKey>,
 }
 
 impl ApiKeyResponse {
     pub fn new() -> ApiKeyResponse {
         ApiKeyResponse { api_key: None }
+    }
+
+    pub fn with_api_key(&mut self, value: crate::datadogV1::model::ApiKey) -> &mut Self {
+        self.api_key = Some(value);
+        self
     }
 }
 impl Default for ApiKeyResponse {

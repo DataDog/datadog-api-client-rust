@@ -17,6 +17,14 @@ impl DashboardListDeleteItemsRequest {
     pub fn new() -> DashboardListDeleteItemsRequest {
         DashboardListDeleteItemsRequest { dashboards: None }
     }
+
+    pub fn with_dashboards(
+        &mut self,
+        value: Vec<crate::datadogV2::model::DashboardListItemRequest>,
+    ) -> &mut Self {
+        self.dashboards = Some(value);
+        self
+    }
 }
 impl Default for DashboardListDeleteItemsRequest {
     fn default() -> Self {

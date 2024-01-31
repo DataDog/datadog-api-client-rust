@@ -10,16 +10,16 @@ use serde_with::skip_serializing_none;
 pub struct SensitiveDataScannerConfigRequest {
     /// Data related to the reordering of scanning groups.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::SensitiveDataScannerReorderConfig>,
+    pub data: crate::datadogV2::model::SensitiveDataScannerReorderConfig,
     /// Meta payload containing information about the API.
     #[serde(rename = "meta")]
-    pub meta: Box<crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly>,
+    pub meta: crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly,
 }
 
 impl SensitiveDataScannerConfigRequest {
     pub fn new(
-        data: Box<crate::datadogV2::model::SensitiveDataScannerReorderConfig>,
-        meta: Box<crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly>,
+        data: crate::datadogV2::model::SensitiveDataScannerReorderConfig,
+        meta: crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly,
     ) -> SensitiveDataScannerConfigRequest {
         SensitiveDataScannerConfigRequest { data, meta }
     }

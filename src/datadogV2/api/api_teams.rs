@@ -5,81 +5,9 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateTeamParams is a struct for passing parameters to the method [`TeamsAPI::create_team`]
+/// GetTeamMembershipsOptionalParams is a struct for passing parameters to the method [`TeamsAPI::get_team_memberships`]
 #[derive(Clone, Debug)]
-pub struct CreateTeamParams {
-    pub body: crate::datadogV2::model::TeamCreateRequest,
-}
-
-/// CreateTeamLinkParams is a struct for passing parameters to the method [`TeamsAPI::create_team_link`]
-#[derive(Clone, Debug)]
-pub struct CreateTeamLinkParams {
-    /// None
-    pub team_id: String,
-    pub body: crate::datadogV2::model::TeamLinkCreateRequest,
-}
-
-/// CreateTeamMembershipParams is a struct for passing parameters to the method [`TeamsAPI::create_team_membership`]
-#[derive(Clone, Debug)]
-pub struct CreateTeamMembershipParams {
-    /// None
-    pub team_id: String,
-    pub body: crate::datadogV2::model::UserTeamRequest,
-}
-
-/// DeleteTeamParams is a struct for passing parameters to the method [`TeamsAPI::delete_team`]
-#[derive(Clone, Debug)]
-pub struct DeleteTeamParams {
-    /// None
-    pub team_id: String,
-}
-
-/// DeleteTeamLinkParams is a struct for passing parameters to the method [`TeamsAPI::delete_team_link`]
-#[derive(Clone, Debug)]
-pub struct DeleteTeamLinkParams {
-    /// None
-    pub team_id: String,
-    /// None
-    pub link_id: String,
-}
-
-/// DeleteTeamMembershipParams is a struct for passing parameters to the method [`TeamsAPI::delete_team_membership`]
-#[derive(Clone, Debug)]
-pub struct DeleteTeamMembershipParams {
-    /// None
-    pub team_id: String,
-    /// None
-    pub user_id: String,
-}
-
-/// GetTeamParams is a struct for passing parameters to the method [`TeamsAPI::get_team`]
-#[derive(Clone, Debug)]
-pub struct GetTeamParams {
-    /// None
-    pub team_id: String,
-}
-
-/// GetTeamLinkParams is a struct for passing parameters to the method [`TeamsAPI::get_team_link`]
-#[derive(Clone, Debug)]
-pub struct GetTeamLinkParams {
-    /// None
-    pub team_id: String,
-    /// None
-    pub link_id: String,
-}
-
-/// GetTeamLinksParams is a struct for passing parameters to the method [`TeamsAPI::get_team_links`]
-#[derive(Clone, Debug)]
-pub struct GetTeamLinksParams {
-    /// None
-    pub team_id: String,
-}
-
-/// GetTeamMembershipsParams is a struct for passing parameters to the method [`TeamsAPI::get_team_memberships`]
-#[derive(Clone, Debug)]
-pub struct GetTeamMembershipsParams {
-    /// None
-    pub team_id: String,
+pub struct GetTeamMembershipsOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
     /// Specific page number to return.
@@ -90,23 +18,9 @@ pub struct GetTeamMembershipsParams {
     pub filter_keyword: Option<String>,
 }
 
-/// GetTeamPermissionSettingsParams is a struct for passing parameters to the method [`TeamsAPI::get_team_permission_settings`]
+/// ListTeamsOptionalParams is a struct for passing parameters to the method [`TeamsAPI::list_teams`]
 #[derive(Clone, Debug)]
-pub struct GetTeamPermissionSettingsParams {
-    /// None
-    pub team_id: String,
-}
-
-/// GetUserMembershipsParams is a struct for passing parameters to the method [`TeamsAPI::get_user_memberships`]
-#[derive(Clone, Debug)]
-pub struct GetUserMembershipsParams {
-    /// None
-    pub user_uuid: String,
-}
-
-/// ListTeamsParams is a struct for passing parameters to the method [`TeamsAPI::list_teams`]
-#[derive(Clone, Debug)]
-pub struct ListTeamsParams {
+pub struct ListTeamsOptionalParams {
     /// Specific page number to return.
     pub page_number: Option<i64>,
     /// Size for a given page. The maximum allowed value is 100.
@@ -121,44 +35,6 @@ pub struct ListTeamsParams {
     pub filter_me: Option<bool>,
     /// List of fields that need to be fetched.
     pub fields_team: Option<Vec<crate::datadogV2::model::TeamsField>>,
-}
-
-/// UpdateTeamParams is a struct for passing parameters to the method [`TeamsAPI::update_team`]
-#[derive(Clone, Debug)]
-pub struct UpdateTeamParams {
-    /// None
-    pub team_id: String,
-    pub body: crate::datadogV2::model::TeamUpdateRequest,
-}
-
-/// UpdateTeamLinkParams is a struct for passing parameters to the method [`TeamsAPI::update_team_link`]
-#[derive(Clone, Debug)]
-pub struct UpdateTeamLinkParams {
-    /// None
-    pub team_id: String,
-    /// None
-    pub link_id: String,
-    pub body: crate::datadogV2::model::TeamLinkCreateRequest,
-}
-
-/// UpdateTeamMembershipParams is a struct for passing parameters to the method [`TeamsAPI::update_team_membership`]
-#[derive(Clone, Debug)]
-pub struct UpdateTeamMembershipParams {
-    /// None
-    pub team_id: String,
-    /// None
-    pub user_id: String,
-    pub body: crate::datadogV2::model::UserTeamUpdateRequest,
-}
-
-/// UpdateTeamPermissionSettingParams is a struct for passing parameters to the method [`TeamsAPI::update_team_permission_setting`]
-#[derive(Clone, Debug)]
-pub struct UpdateTeamPermissionSettingParams {
-    /// None
-    pub team_id: String,
-    /// None
-    pub action: String,
-    pub body: crate::datadogV2::model::TeamPermissionSettingUpdateRequest,
 }
 
 /// CreateTeamError is a struct for typed errors of method [`TeamsAPI::create_team`]
@@ -358,9 +234,9 @@ impl TeamsAPI {
     /// User IDs passed through the `users` relationship field are added to the team.
     pub async fn create_team(
         &self,
-        params: CreateTeamParams,
+        body: crate::datadogV2::model::TeamCreateRequest,
     ) -> Result<Option<crate::datadogV2::model::TeamResponse>, Error<CreateTeamError>> {
-        match self.create_team_with_http_info(params).await {
+        match self.create_team_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -370,13 +246,10 @@ impl TeamsAPI {
     /// User IDs passed through the `users` relationship field are added to the team.
     pub async fn create_team_with_http_info(
         &self,
-        params: CreateTeamParams,
+        body: crate::datadogV2::model::TeamCreateRequest,
     ) -> Result<ResponseContent<crate::datadogV2::model::TeamResponse>, Error<CreateTeamError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -433,9 +306,10 @@ impl TeamsAPI {
     /// Add a new link to a team.
     pub async fn create_team_link(
         &self,
-        params: CreateTeamLinkParams,
+        team_id: String,
+        body: crate::datadogV2::model::TeamLinkCreateRequest,
     ) -> Result<Option<crate::datadogV2::model::TeamLinkResponse>, Error<CreateTeamLinkError>> {
-        match self.create_team_link_with_http_info(params).await {
+        match self.create_team_link_with_http_info(team_id, body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -444,16 +318,13 @@ impl TeamsAPI {
     /// Add a new link to a team.
     pub async fn create_team_link_with_http_info(
         &self,
-        params: CreateTeamLinkParams,
+        team_id: String,
+        body: crate::datadogV2::model::TeamLinkCreateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::TeamLinkResponse>,
         Error<CreateTeamLinkError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let team_id = params.team_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -515,10 +386,14 @@ impl TeamsAPI {
     /// Add a user to a team.
     pub async fn create_team_membership(
         &self,
-        params: CreateTeamMembershipParams,
+        team_id: String,
+        body: crate::datadogV2::model::UserTeamRequest,
     ) -> Result<Option<crate::datadogV2::model::UserTeamResponse>, Error<CreateTeamMembershipError>>
     {
-        match self.create_team_membership_with_http_info(params).await {
+        match self
+            .create_team_membership_with_http_info(team_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -527,16 +402,13 @@ impl TeamsAPI {
     /// Add a user to a team.
     pub async fn create_team_membership_with_http_info(
         &self,
-        params: CreateTeamMembershipParams,
+        team_id: String,
+        body: crate::datadogV2::model::UserTeamRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::UserTeamResponse>,
         Error<CreateTeamMembershipError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let team_id = params.team_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -596,11 +468,8 @@ impl TeamsAPI {
     }
 
     /// Remove a team using the team's `id`.
-    pub async fn delete_team(
-        &self,
-        params: DeleteTeamParams,
-    ) -> Result<Option<()>, Error<DeleteTeamError>> {
-        match self.delete_team_with_http_info(params).await {
+    pub async fn delete_team(&self, team_id: String) -> Result<Option<()>, Error<DeleteTeamError>> {
+        match self.delete_team_with_http_info(team_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -609,12 +478,9 @@ impl TeamsAPI {
     /// Remove a team using the team's `id`.
     pub async fn delete_team_with_http_info(
         &self,
-        params: DeleteTeamParams,
+        team_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteTeamError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let team_id = params.team_id;
 
         let local_client = &local_configuration.client;
 
@@ -666,9 +532,10 @@ impl TeamsAPI {
     /// Remove a link from a team.
     pub async fn delete_team_link(
         &self,
-        params: DeleteTeamLinkParams,
+        team_id: String,
+        link_id: String,
     ) -> Result<Option<()>, Error<DeleteTeamLinkError>> {
-        match self.delete_team_link_with_http_info(params).await {
+        match self.delete_team_link_with_http_info(team_id, link_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -677,13 +544,10 @@ impl TeamsAPI {
     /// Remove a link from a team.
     pub async fn delete_team_link_with_http_info(
         &self,
-        params: DeleteTeamLinkParams,
+        team_id: String,
+        link_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteTeamLinkError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let team_id = params.team_id;
-        let link_id = params.link_id;
 
         let local_client = &local_configuration.client;
 
@@ -737,9 +601,13 @@ impl TeamsAPI {
     /// Remove a user from a team.
     pub async fn delete_team_membership(
         &self,
-        params: DeleteTeamMembershipParams,
+        team_id: String,
+        user_id: String,
     ) -> Result<Option<()>, Error<DeleteTeamMembershipError>> {
-        match self.delete_team_membership_with_http_info(params).await {
+        match self
+            .delete_team_membership_with_http_info(team_id, user_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -748,13 +616,10 @@ impl TeamsAPI {
     /// Remove a user from a team.
     pub async fn delete_team_membership_with_http_info(
         &self,
-        params: DeleteTeamMembershipParams,
+        team_id: String,
+        user_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteTeamMembershipError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let team_id = params.team_id;
-        let user_id = params.user_id;
 
         let local_client = &local_configuration.client;
 
@@ -808,9 +673,9 @@ impl TeamsAPI {
     /// Get a single team using the team's `id`.
     pub async fn get_team(
         &self,
-        params: GetTeamParams,
+        team_id: String,
     ) -> Result<Option<crate::datadogV2::model::TeamResponse>, Error<GetTeamError>> {
-        match self.get_team_with_http_info(params).await {
+        match self.get_team_with_http_info(team_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -819,12 +684,9 @@ impl TeamsAPI {
     /// Get a single team using the team's `id`.
     pub async fn get_team_with_http_info(
         &self,
-        params: GetTeamParams,
+        team_id: String,
     ) -> Result<ResponseContent<crate::datadogV2::model::TeamResponse>, Error<GetTeamError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let team_id = params.team_id;
 
         let local_client = &local_configuration.client;
 
@@ -878,9 +740,10 @@ impl TeamsAPI {
     /// Get a single link for a team.
     pub async fn get_team_link(
         &self,
-        params: GetTeamLinkParams,
+        team_id: String,
+        link_id: String,
     ) -> Result<Option<crate::datadogV2::model::TeamLinkResponse>, Error<GetTeamLinkError>> {
-        match self.get_team_link_with_http_info(params).await {
+        match self.get_team_link_with_http_info(team_id, link_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -889,14 +752,11 @@ impl TeamsAPI {
     /// Get a single link for a team.
     pub async fn get_team_link_with_http_info(
         &self,
-        params: GetTeamLinkParams,
+        team_id: String,
+        link_id: String,
     ) -> Result<ResponseContent<crate::datadogV2::model::TeamLinkResponse>, Error<GetTeamLinkError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let team_id = params.team_id;
-        let link_id = params.link_id;
 
         let local_client = &local_configuration.client;
 
@@ -951,9 +811,9 @@ impl TeamsAPI {
     /// Get all links for a given team.
     pub async fn get_team_links(
         &self,
-        params: GetTeamLinksParams,
+        team_id: String,
     ) -> Result<Option<crate::datadogV2::model::TeamLinksResponse>, Error<GetTeamLinksError>> {
-        match self.get_team_links_with_http_info(params).await {
+        match self.get_team_links_with_http_info(team_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -962,13 +822,10 @@ impl TeamsAPI {
     /// Get all links for a given team.
     pub async fn get_team_links_with_http_info(
         &self,
-        params: GetTeamLinksParams,
+        team_id: String,
     ) -> Result<ResponseContent<crate::datadogV2::model::TeamLinksResponse>, Error<GetTeamLinksError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let team_id = params.team_id;
 
         let local_client = &local_configuration.client;
 
@@ -1022,10 +879,14 @@ impl TeamsAPI {
     /// Get a paginated list of members for a team
     pub async fn get_team_memberships(
         &self,
-        params: GetTeamMembershipsParams,
+        team_id: String,
+        params: GetTeamMembershipsOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::UserTeamsResponse>, Error<GetTeamMembershipsError>>
     {
-        match self.get_team_memberships_with_http_info(params).await {
+        match self
+            .get_team_memberships_with_http_info(team_id, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1034,15 +895,15 @@ impl TeamsAPI {
     /// Get a paginated list of members for a team
     pub async fn get_team_memberships_with_http_info(
         &self,
-        params: GetTeamMembershipsParams,
+        team_id: String,
+        params: GetTeamMembershipsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::UserTeamsResponse>,
         Error<GetTeamMembershipsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let team_id = params.team_id;
+        // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
         let sort = params.sort;
@@ -1058,19 +919,21 @@ impl TeamsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = page_size {
-            local_req_builder = local_req_builder.query(&[("page[size]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_number {
+        if let Some(ref local_query_param) = page_size {
             local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_str.to_string())]);
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = sort {
-            local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = filter_keyword {
+        if let Some(ref local_query_param) = page_number {
             local_req_builder =
-                local_req_builder.query(&[("filter[keyword]", &local_str.to_string())]);
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_keyword {
+            local_req_builder =
+                local_req_builder.query(&[("filter[keyword]", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -1116,13 +979,13 @@ impl TeamsAPI {
     /// Get all permission settings for a given team.
     pub async fn get_team_permission_settings(
         &self,
-        params: GetTeamPermissionSettingsParams,
+        team_id: String,
     ) -> Result<
         Option<crate::datadogV2::model::TeamPermissionSettingsResponse>,
         Error<GetTeamPermissionSettingsError>,
     > {
         match self
-            .get_team_permission_settings_with_http_info(params)
+            .get_team_permission_settings_with_http_info(team_id)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -1133,15 +996,12 @@ impl TeamsAPI {
     /// Get all permission settings for a given team.
     pub async fn get_team_permission_settings_with_http_info(
         &self,
-        params: GetTeamPermissionSettingsParams,
+        team_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::TeamPermissionSettingsResponse>,
         Error<GetTeamPermissionSettingsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let team_id = params.team_id;
 
         let local_client = &local_configuration.client;
 
@@ -1196,10 +1056,10 @@ impl TeamsAPI {
     /// Get a list of memberships for a user
     pub async fn get_user_memberships(
         &self,
-        params: GetUserMembershipsParams,
+        user_uuid: String,
     ) -> Result<Option<crate::datadogV2::model::UserTeamsResponse>, Error<GetUserMembershipsError>>
     {
-        match self.get_user_memberships_with_http_info(params).await {
+        match self.get_user_memberships_with_http_info(user_uuid).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1208,15 +1068,12 @@ impl TeamsAPI {
     /// Get a list of memberships for a user
     pub async fn get_user_memberships_with_http_info(
         &self,
-        params: GetUserMembershipsParams,
+        user_uuid: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::UserTeamsResponse>,
         Error<GetUserMembershipsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let user_uuid = params.user_uuid;
 
         let local_client = &local_configuration.client;
 
@@ -1272,7 +1129,7 @@ impl TeamsAPI {
     /// Can be used to search for teams using the `filter[keyword]` and `filter[me]` query parameters.
     pub async fn list_teams(
         &self,
-        params: ListTeamsParams,
+        params: ListTeamsOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::TeamsResponse>, Error<ListTeamsError>> {
         match self.list_teams_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
@@ -1284,12 +1141,12 @@ impl TeamsAPI {
     /// Can be used to search for teams using the `filter[keyword]` and `filter[me]` query parameters.
     pub async fn list_teams_with_http_info(
         &self,
-        params: ListTeamsParams,
+        params: ListTeamsOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV2::model::TeamsResponse>, Error<ListTeamsError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let page_number = params.page_number;
         let page_size = params.page_size;
         let sort = params.sort;
@@ -1304,39 +1161,42 @@ impl TeamsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = page_number {
+        if let Some(ref local_query_param) = page_number {
             local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_str.to_string())]);
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = page_size {
-            local_req_builder = local_req_builder.query(&[("page[size]", &local_str.to_string())]);
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = sort {
-            local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
         };
         if let Some(ref local) = include {
             local_req_builder = local_req_builder.query(&[(
                 "include",
                 &local
-                    .into_iter()
+                    .iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
                     .join(",")
                     .to_string(),
             )]);
         };
-        if let Some(ref local_str) = filter_keyword {
+        if let Some(ref local_query_param) = filter_keyword {
             local_req_builder =
-                local_req_builder.query(&[("filter[keyword]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[keyword]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_me {
-            local_req_builder = local_req_builder.query(&[("filter[me]", &local_str.to_string())]);
+        if let Some(ref local_query_param) = filter_me {
+            local_req_builder =
+                local_req_builder.query(&[("filter[me]", &local_query_param.to_string())]);
         };
         if let Some(ref local) = fields_team {
             local_req_builder = local_req_builder.query(&[(
                 "fields[team]",
                 &local
-                    .into_iter()
+                    .iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
                     .join(",")
@@ -1387,9 +1247,10 @@ impl TeamsAPI {
     /// If the `team_links` relationship is present, the associated links are updated to be in the order they appear in the array, and any existing team links not present are removed.
     pub async fn update_team(
         &self,
-        params: UpdateTeamParams,
+        team_id: String,
+        body: crate::datadogV2::model::TeamUpdateRequest,
     ) -> Result<Option<crate::datadogV2::model::TeamResponse>, Error<UpdateTeamError>> {
-        match self.update_team_with_http_info(params).await {
+        match self.update_team_with_http_info(team_id, body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1399,14 +1260,11 @@ impl TeamsAPI {
     /// If the `team_links` relationship is present, the associated links are updated to be in the order they appear in the array, and any existing team links not present are removed.
     pub async fn update_team_with_http_info(
         &self,
-        params: UpdateTeamParams,
+        team_id: String,
+        body: crate::datadogV2::model::TeamUpdateRequest,
     ) -> Result<ResponseContent<crate::datadogV2::model::TeamResponse>, Error<UpdateTeamError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let team_id = params.team_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -1467,9 +1325,14 @@ impl TeamsAPI {
     /// Update a team link.
     pub async fn update_team_link(
         &self,
-        params: UpdateTeamLinkParams,
+        team_id: String,
+        link_id: String,
+        body: crate::datadogV2::model::TeamLinkCreateRequest,
     ) -> Result<Option<crate::datadogV2::model::TeamLinkResponse>, Error<UpdateTeamLinkError>> {
-        match self.update_team_link_with_http_info(params).await {
+        match self
+            .update_team_link_with_http_info(team_id, link_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1478,17 +1341,14 @@ impl TeamsAPI {
     /// Update a team link.
     pub async fn update_team_link_with_http_info(
         &self,
-        params: UpdateTeamLinkParams,
+        team_id: String,
+        link_id: String,
+        body: crate::datadogV2::model::TeamLinkCreateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::TeamLinkResponse>,
         Error<UpdateTeamLinkError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let team_id = params.team_id;
-        let link_id = params.link_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -1551,10 +1411,15 @@ impl TeamsAPI {
     /// Update a user's membership attributes on a team.
     pub async fn update_team_membership(
         &self,
-        params: UpdateTeamMembershipParams,
+        team_id: String,
+        user_id: String,
+        body: crate::datadogV2::model::UserTeamUpdateRequest,
     ) -> Result<Option<crate::datadogV2::model::UserTeamResponse>, Error<UpdateTeamMembershipError>>
     {
-        match self.update_team_membership_with_http_info(params).await {
+        match self
+            .update_team_membership_with_http_info(team_id, user_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1563,17 +1428,14 @@ impl TeamsAPI {
     /// Update a user's membership attributes on a team.
     pub async fn update_team_membership_with_http_info(
         &self,
-        params: UpdateTeamMembershipParams,
+        team_id: String,
+        user_id: String,
+        body: crate::datadogV2::model::UserTeamUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::UserTeamResponse>,
         Error<UpdateTeamMembershipError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let team_id = params.team_id;
-        let user_id = params.user_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -1636,13 +1498,15 @@ impl TeamsAPI {
     /// Update a team permission setting for a given team.
     pub async fn update_team_permission_setting(
         &self,
-        params: UpdateTeamPermissionSettingParams,
+        team_id: String,
+        action: String,
+        body: crate::datadogV2::model::TeamPermissionSettingUpdateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::TeamPermissionSettingResponse>,
         Error<UpdateTeamPermissionSettingError>,
     > {
         match self
-            .update_team_permission_setting_with_http_info(params)
+            .update_team_permission_setting_with_http_info(team_id, action, body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -1653,17 +1517,14 @@ impl TeamsAPI {
     /// Update a team permission setting for a given team.
     pub async fn update_team_permission_setting_with_http_info(
         &self,
-        params: UpdateTeamPermissionSettingParams,
+        team_id: String,
+        action: String,
+        body: crate::datadogV2::model::TeamPermissionSettingUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::TeamPermissionSettingResponse>,
         Error<UpdateTeamPermissionSettingError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let team_id = params.team_id;
-        let action = params.action;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

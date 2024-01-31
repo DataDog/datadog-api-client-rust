@@ -32,6 +32,26 @@ impl MetricBulkTagConfigStatusAttributes {
             tags: None,
         }
     }
+
+    pub fn with_emails(&mut self, value: Vec<String>) -> &mut Self {
+        self.emails = Some(value);
+        self
+    }
+
+    pub fn with_exclude_tags_mode(&mut self, value: bool) -> &mut Self {
+        self.exclude_tags_mode = Some(value);
+        self
+    }
+
+    pub fn with_status(&mut self, value: String) -> &mut Self {
+        self.status = Some(value);
+        self
+    }
+
+    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
 }
 impl Default for MetricBulkTagConfigStatusAttributes {
     fn default() -> Self {

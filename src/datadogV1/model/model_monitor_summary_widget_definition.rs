@@ -77,4 +77,91 @@ impl MonitorSummaryWidgetDefinition {
             type_,
         }
     }
+
+    #[allow(deprecated)]
+    pub fn with_color_preference(
+        &mut self,
+        value: crate::datadogV1::model::WidgetColorPreference,
+    ) -> &mut Self {
+        self.color_preference = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_count(&mut self, value: i64) -> &mut Self {
+        self.count = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_display_format(
+        &mut self,
+        value: crate::datadogV1::model::WidgetMonitorSummaryDisplayFormat,
+    ) -> &mut Self {
+        self.display_format = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_hide_zero_counts(&mut self, value: bool) -> &mut Self {
+        self.hide_zero_counts = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_show_last_triggered(&mut self, value: bool) -> &mut Self {
+        self.show_last_triggered = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_show_priority(&mut self, value: bool) -> &mut Self {
+        self.show_priority = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_sort(
+        &mut self,
+        value: crate::datadogV1::model::WidgetMonitorSummarySort,
+    ) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_start(&mut self, value: i64) -> &mut Self {
+        self.start = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_summary_type(
+        &mut self,
+        value: crate::datadogV1::model::WidgetSummaryType,
+    ) -> &mut Self {
+        self.summary_type = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_title_align(
+        &mut self,
+        value: crate::datadogV1::model::WidgetTextAlign,
+    ) -> &mut Self {
+        self.title_align = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_title_size(&mut self, value: String) -> &mut Self {
+        self.title_size = Some(value);
+        self
+    }
 }

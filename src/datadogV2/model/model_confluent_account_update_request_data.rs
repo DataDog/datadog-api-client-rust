@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct ConfluentAccountUpdateRequestData {
     /// Attributes object for updating a Confluent account.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::ConfluentAccountUpdateRequestAttributes>,
+    pub attributes: crate::datadogV2::model::ConfluentAccountUpdateRequestAttributes,
     /// The JSON:API type for this API. Should always be `confluent-cloud-accounts`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ConfluentAccountType,
@@ -18,7 +18,7 @@ pub struct ConfluentAccountUpdateRequestData {
 
 impl ConfluentAccountUpdateRequestData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::ConfluentAccountUpdateRequestAttributes>,
+        attributes: crate::datadogV2::model::ConfluentAccountUpdateRequestAttributes,
         type_: crate::datadogV2::model::ConfluentAccountType,
     ) -> ConfluentAccountUpdateRequestData {
         ConfluentAccountUpdateRequestData { attributes, type_ }

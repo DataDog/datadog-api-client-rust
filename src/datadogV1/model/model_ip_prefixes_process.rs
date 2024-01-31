@@ -23,6 +23,16 @@ impl IPPrefixesProcess {
             prefixes_ipv6: None,
         }
     }
+
+    pub fn with_prefixes_ipv4(&mut self, value: Vec<String>) -> &mut Self {
+        self.prefixes_ipv4 = Some(value);
+        self
+    }
+
+    pub fn with_prefixes_ipv6(&mut self, value: Vec<String>) -> &mut Self {
+        self.prefixes_ipv6 = Some(value);
+        self
+    }
 }
 impl Default for IPPrefixesProcess {
     fn default() -> Self {

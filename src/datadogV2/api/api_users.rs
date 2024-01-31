@@ -5,50 +5,9 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateUserParams is a struct for passing parameters to the method [`UsersAPI::create_user`]
+/// ListUsersOptionalParams is a struct for passing parameters to the method [`UsersAPI::list_users`]
 #[derive(Clone, Debug)]
-pub struct CreateUserParams {
-    pub body: crate::datadogV2::model::UserCreateRequest,
-}
-
-/// DisableUserParams is a struct for passing parameters to the method [`UsersAPI::disable_user`]
-#[derive(Clone, Debug)]
-pub struct DisableUserParams {
-    /// The ID of the user.
-    pub user_id: String,
-}
-
-/// GetInvitationParams is a struct for passing parameters to the method [`UsersAPI::get_invitation`]
-#[derive(Clone, Debug)]
-pub struct GetInvitationParams {
-    /// The UUID of the user invitation.
-    pub user_invitation_uuid: String,
-}
-
-/// GetUserParams is a struct for passing parameters to the method [`UsersAPI::get_user`]
-#[derive(Clone, Debug)]
-pub struct GetUserParams {
-    /// The ID of the user.
-    pub user_id: String,
-}
-
-/// ListUserOrganizationsParams is a struct for passing parameters to the method [`UsersAPI::list_user_organizations`]
-#[derive(Clone, Debug)]
-pub struct ListUserOrganizationsParams {
-    /// The ID of the user.
-    pub user_id: String,
-}
-
-/// ListUserPermissionsParams is a struct for passing parameters to the method [`UsersAPI::list_user_permissions`]
-#[derive(Clone, Debug)]
-pub struct ListUserPermissionsParams {
-    /// The ID of the user.
-    pub user_id: String,
-}
-
-/// ListUsersParams is a struct for passing parameters to the method [`UsersAPI::list_users`]
-#[derive(Clone, Debug)]
-pub struct ListUsersParams {
+pub struct ListUsersOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
     /// Specific page number to return.
@@ -66,20 +25,6 @@ pub struct ListUsersParams {
     /// Comma separated list, with possible values `Active`, `Pending`, and `Disabled`.
     /// Defaults to no filtering.
     pub filter_status: Option<String>,
-}
-
-/// SendInvitationsParams is a struct for passing parameters to the method [`UsersAPI::send_invitations`]
-#[derive(Clone, Debug)]
-pub struct SendInvitationsParams {
-    pub body: crate::datadogV2::model::UserInvitationsRequest,
-}
-
-/// UpdateUserParams is a struct for passing parameters to the method [`UsersAPI::update_user`]
-#[derive(Clone, Debug)]
-pub struct UpdateUserParams {
-    /// The ID of the user.
-    pub user_id: String,
-    pub body: crate::datadogV2::model::UserUpdateRequest,
 }
 
 /// CreateUserError is a struct for typed errors of method [`UsersAPI::create_user`]
@@ -198,9 +143,9 @@ impl UsersAPI {
     /// Create a user for your organization.
     pub async fn create_user(
         &self,
-        params: CreateUserParams,
+        body: crate::datadogV2::model::UserCreateRequest,
     ) -> Result<Option<crate::datadogV2::model::UserResponse>, Error<CreateUserError>> {
-        match self.create_user_with_http_info(params).await {
+        match self.create_user_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -209,13 +154,10 @@ impl UsersAPI {
     /// Create a user for your organization.
     pub async fn create_user_with_http_info(
         &self,
-        params: CreateUserParams,
+        body: crate::datadogV2::model::UserCreateRequest,
     ) -> Result<ResponseContent<crate::datadogV2::model::UserResponse>, Error<CreateUserError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -273,9 +215,9 @@ impl UsersAPI {
     /// to an administrator user.
     pub async fn disable_user(
         &self,
-        params: DisableUserParams,
+        user_id: String,
     ) -> Result<Option<()>, Error<DisableUserError>> {
-        match self.disable_user_with_http_info(params).await {
+        match self.disable_user_with_http_info(user_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -285,12 +227,9 @@ impl UsersAPI {
     /// to an administrator user.
     pub async fn disable_user_with_http_info(
         &self,
-        params: DisableUserParams,
+        user_id: String,
     ) -> Result<ResponseContent<()>, Error<DisableUserError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let user_id = params.user_id;
 
         let local_client = &local_configuration.client;
 
@@ -342,10 +281,13 @@ impl UsersAPI {
     /// Returns a single user invitation by its UUID.
     pub async fn get_invitation(
         &self,
-        params: GetInvitationParams,
+        user_invitation_uuid: String,
     ) -> Result<Option<crate::datadogV2::model::UserInvitationResponse>, Error<GetInvitationError>>
     {
-        match self.get_invitation_with_http_info(params).await {
+        match self
+            .get_invitation_with_http_info(user_invitation_uuid)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -354,15 +296,12 @@ impl UsersAPI {
     /// Returns a single user invitation by its UUID.
     pub async fn get_invitation_with_http_info(
         &self,
-        params: GetInvitationParams,
+        user_invitation_uuid: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::UserInvitationResponse>,
         Error<GetInvitationError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let user_invitation_uuid = params.user_invitation_uuid;
 
         let local_client = &local_configuration.client;
 
@@ -417,9 +356,9 @@ impl UsersAPI {
     /// Get a user in the organization specified by the user’s `user_id`.
     pub async fn get_user(
         &self,
-        params: GetUserParams,
+        user_id: String,
     ) -> Result<Option<crate::datadogV2::model::UserResponse>, Error<GetUserError>> {
-        match self.get_user_with_http_info(params).await {
+        match self.get_user_with_http_info(user_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -428,12 +367,9 @@ impl UsersAPI {
     /// Get a user in the organization specified by the user’s `user_id`.
     pub async fn get_user_with_http_info(
         &self,
-        params: GetUserParams,
+        user_id: String,
     ) -> Result<ResponseContent<crate::datadogV2::model::UserResponse>, Error<GetUserError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let user_id = params.user_id;
 
         let local_client = &local_configuration.client;
 
@@ -488,10 +424,10 @@ impl UsersAPI {
     /// joined by this user.
     pub async fn list_user_organizations(
         &self,
-        params: ListUserOrganizationsParams,
+        user_id: String,
     ) -> Result<Option<crate::datadogV2::model::UserResponse>, Error<ListUserOrganizationsError>>
     {
-        match self.list_user_organizations_with_http_info(params).await {
+        match self.list_user_organizations_with_http_info(user_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -501,15 +437,12 @@ impl UsersAPI {
     /// joined by this user.
     pub async fn list_user_organizations_with_http_info(
         &self,
-        params: ListUserOrganizationsParams,
+        user_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::UserResponse>,
         Error<ListUserOrganizationsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let user_id = params.user_id;
 
         let local_client = &local_configuration.client;
 
@@ -565,10 +498,10 @@ impl UsersAPI {
     /// granted by the associated user's roles.
     pub async fn list_user_permissions(
         &self,
-        params: ListUserPermissionsParams,
+        user_id: String,
     ) -> Result<Option<crate::datadogV2::model::PermissionsResponse>, Error<ListUserPermissionsError>>
     {
-        match self.list_user_permissions_with_http_info(params).await {
+        match self.list_user_permissions_with_http_info(user_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -578,15 +511,12 @@ impl UsersAPI {
     /// granted by the associated user's roles.
     pub async fn list_user_permissions_with_http_info(
         &self,
-        params: ListUserPermissionsParams,
+        user_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::PermissionsResponse>,
         Error<ListUserPermissionsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let user_id = params.user_id;
 
         let local_client = &local_configuration.client;
 
@@ -642,7 +572,7 @@ impl UsersAPI {
     /// all users even if they are deactivated or unverified.
     pub async fn list_users(
         &self,
-        params: ListUsersParams,
+        params: ListUsersOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::UsersResponse>, Error<ListUsersError>> {
         match self.list_users_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
@@ -654,12 +584,12 @@ impl UsersAPI {
     /// all users even if they are deactivated or unverified.
     pub async fn list_users_with_http_info(
         &self,
-        params: ListUsersParams,
+        params: ListUsersOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV2::model::UsersResponse>, Error<ListUsersError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
         let sort = params.sort;
@@ -673,25 +603,29 @@ impl UsersAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = page_size {
-            local_req_builder = local_req_builder.query(&[("page[size]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_number {
+        if let Some(ref local_query_param) = page_size {
             local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_str.to_string())]);
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = sort {
-            local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = sort_dir {
-            local_req_builder = local_req_builder.query(&[("sort_dir", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = filter {
-            local_req_builder = local_req_builder.query(&[("filter", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = filter_status {
+        if let Some(ref local_query_param) = page_number {
             local_req_builder =
-                local_req_builder.query(&[("filter[status]", &local_str.to_string())]);
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort_dir {
+            local_req_builder =
+                local_req_builder.query(&[("sort_dir", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter {
+            local_req_builder =
+                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_status {
+            local_req_builder =
+                local_req_builder.query(&[("filter[status]", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -736,10 +670,10 @@ impl UsersAPI {
     /// Sends emails to one or more users inviting them to join the organization.
     pub async fn send_invitations(
         &self,
-        params: SendInvitationsParams,
+        body: crate::datadogV2::model::UserInvitationsRequest,
     ) -> Result<Option<crate::datadogV2::model::UserInvitationsResponse>, Error<SendInvitationsError>>
     {
-        match self.send_invitations_with_http_info(params).await {
+        match self.send_invitations_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -748,15 +682,12 @@ impl UsersAPI {
     /// Sends emails to one or more users inviting them to join the organization.
     pub async fn send_invitations_with_http_info(
         &self,
-        params: SendInvitationsParams,
+        body: crate::datadogV2::model::UserInvitationsRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::UserInvitationsResponse>,
         Error<SendInvitationsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -815,9 +746,10 @@ impl UsersAPI {
     /// to an administrator user.
     pub async fn update_user(
         &self,
-        params: UpdateUserParams,
+        user_id: String,
+        body: crate::datadogV2::model::UserUpdateRequest,
     ) -> Result<Option<crate::datadogV2::model::UserResponse>, Error<UpdateUserError>> {
-        match self.update_user_with_http_info(params).await {
+        match self.update_user_with_http_info(user_id, body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -827,14 +759,11 @@ impl UsersAPI {
     /// to an administrator user.
     pub async fn update_user_with_http_info(
         &self,
-        params: UpdateUserParams,
+        user_id: String,
+        body: crate::datadogV2::model::UserUpdateRequest,
     ) -> Result<ResponseContent<crate::datadogV2::model::UserResponse>, Error<UpdateUserError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let user_id = params.user_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

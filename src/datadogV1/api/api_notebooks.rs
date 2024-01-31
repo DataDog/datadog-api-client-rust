@@ -5,30 +5,9 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateNotebookParams is a struct for passing parameters to the method [`NotebooksAPI::create_notebook`]
+/// ListNotebooksOptionalParams is a struct for passing parameters to the method [`NotebooksAPI::list_notebooks`]
 #[derive(Clone, Debug)]
-pub struct CreateNotebookParams {
-    /// The JSON description of the notebook you want to create.
-    pub body: crate::datadogV1::model::NotebookCreateRequest,
-}
-
-/// DeleteNotebookParams is a struct for passing parameters to the method [`NotebooksAPI::delete_notebook`]
-#[derive(Clone, Debug)]
-pub struct DeleteNotebookParams {
-    /// Unique ID, assigned when you create the notebook.
-    pub notebook_id: i64,
-}
-
-/// GetNotebookParams is a struct for passing parameters to the method [`NotebooksAPI::get_notebook`]
-#[derive(Clone, Debug)]
-pub struct GetNotebookParams {
-    /// Unique ID, assigned when you create the notebook.
-    pub notebook_id: i64,
-}
-
-/// ListNotebooksParams is a struct for passing parameters to the method [`NotebooksAPI::list_notebooks`]
-#[derive(Clone, Debug)]
-pub struct ListNotebooksParams {
+pub struct ListNotebooksOptionalParams {
     /// Return notebooks created by the given `author_handle`.
     pub author_handle: Option<String>,
     /// Return notebooks not created by the given `author_handle`.
@@ -49,15 +28,6 @@ pub struct ListNotebooksParams {
     pub is_template: Option<bool>,
     /// If type is provided, returns only notebooks with that metadata type. Default does not have type filtering.
     pub type_: Option<String>,
-}
-
-/// UpdateNotebookParams is a struct for passing parameters to the method [`NotebooksAPI::update_notebook`]
-#[derive(Clone, Debug)]
-pub struct UpdateNotebookParams {
-    /// Unique ID, assigned when you create the notebook.
-    pub notebook_id: i64,
-    /// Update notebook request body.
-    pub body: crate::datadogV1::model::NotebookUpdateRequest,
 }
 
 /// CreateNotebookError is a struct for typed errors of method [`NotebooksAPI::create_notebook`]
@@ -138,9 +108,9 @@ impl NotebooksAPI {
     /// Create a notebook using the specified options.
     pub async fn create_notebook(
         &self,
-        params: CreateNotebookParams,
+        body: crate::datadogV1::model::NotebookCreateRequest,
     ) -> Result<Option<crate::datadogV1::model::NotebookResponse>, Error<CreateNotebookError>> {
-        match self.create_notebook_with_http_info(params).await {
+        match self.create_notebook_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -149,15 +119,12 @@ impl NotebooksAPI {
     /// Create a notebook using the specified options.
     pub async fn create_notebook_with_http_info(
         &self,
-        params: CreateNotebookParams,
+        body: crate::datadogV1::model::NotebookCreateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::NotebookResponse>,
         Error<CreateNotebookError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -215,9 +182,9 @@ impl NotebooksAPI {
     /// Delete a notebook using the specified ID.
     pub async fn delete_notebook(
         &self,
-        params: DeleteNotebookParams,
+        notebook_id: i64,
     ) -> Result<Option<()>, Error<DeleteNotebookError>> {
-        match self.delete_notebook_with_http_info(params).await {
+        match self.delete_notebook_with_http_info(notebook_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -226,12 +193,9 @@ impl NotebooksAPI {
     /// Delete a notebook using the specified ID.
     pub async fn delete_notebook_with_http_info(
         &self,
-        params: DeleteNotebookParams,
+        notebook_id: i64,
     ) -> Result<ResponseContent<()>, Error<DeleteNotebookError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let notebook_id = params.notebook_id;
 
         let local_client = &local_configuration.client;
 
@@ -284,9 +248,9 @@ impl NotebooksAPI {
     /// Get a notebook using the specified notebook ID.
     pub async fn get_notebook(
         &self,
-        params: GetNotebookParams,
+        notebook_id: i64,
     ) -> Result<Option<crate::datadogV1::model::NotebookResponse>, Error<GetNotebookError>> {
-        match self.get_notebook_with_http_info(params).await {
+        match self.get_notebook_with_http_info(notebook_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -295,13 +259,10 @@ impl NotebooksAPI {
     /// Get a notebook using the specified notebook ID.
     pub async fn get_notebook_with_http_info(
         &self,
-        params: GetNotebookParams,
+        notebook_id: i64,
     ) -> Result<ResponseContent<crate::datadogV1::model::NotebookResponse>, Error<GetNotebookError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let notebook_id = params.notebook_id;
 
         let local_client = &local_configuration.client;
 
@@ -356,7 +317,7 @@ impl NotebooksAPI {
     /// `name` or author `handle`.
     pub async fn list_notebooks(
         &self,
-        params: ListNotebooksParams,
+        params: ListNotebooksOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::NotebooksResponse>, Error<ListNotebooksError>> {
         match self.list_notebooks_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
@@ -368,14 +329,14 @@ impl NotebooksAPI {
     /// `name` or author `handle`.
     pub async fn list_notebooks_with_http_info(
         &self,
-        params: ListNotebooksParams,
+        params: ListNotebooksOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::NotebooksResponse>,
         Error<ListNotebooksError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let author_handle = params.author_handle;
         let exclude_author_handle = params.exclude_author_handle;
         let start = params.start;
@@ -393,38 +354,45 @@ impl NotebooksAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = author_handle {
+        if let Some(ref local_query_param) = author_handle {
             local_req_builder =
-                local_req_builder.query(&[("author_handle", &local_str.to_string())]);
+                local_req_builder.query(&[("author_handle", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = exclude_author_handle {
+        if let Some(ref local_query_param) = exclude_author_handle {
+            local_req_builder = local_req_builder
+                .query(&[("exclude_author_handle", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = start {
             local_req_builder =
-                local_req_builder.query(&[("exclude_author_handle", &local_str.to_string())]);
+                local_req_builder.query(&[("start", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = start {
-            local_req_builder = local_req_builder.query(&[("start", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = count {
-            local_req_builder = local_req_builder.query(&[("count", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = sort_field {
-            local_req_builder = local_req_builder.query(&[("sort_field", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = sort_dir {
-            local_req_builder = local_req_builder.query(&[("sort_dir", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = query {
-            local_req_builder = local_req_builder.query(&[("query", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = include_cells {
+        if let Some(ref local_query_param) = count {
             local_req_builder =
-                local_req_builder.query(&[("include_cells", &local_str.to_string())]);
+                local_req_builder.query(&[("count", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = is_template {
-            local_req_builder = local_req_builder.query(&[("is_template", &local_str.to_string())]);
+        if let Some(ref local_query_param) = sort_field {
+            local_req_builder =
+                local_req_builder.query(&[("sort_field", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = type_ {
-            local_req_builder = local_req_builder.query(&[("type", &local_str.to_string())]);
+        if let Some(ref local_query_param) = sort_dir {
+            local_req_builder =
+                local_req_builder.query(&[("sort_dir", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = query {
+            local_req_builder =
+                local_req_builder.query(&[("query", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include_cells {
+            local_req_builder =
+                local_req_builder.query(&[("include_cells", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = is_template {
+            local_req_builder =
+                local_req_builder.query(&[("is_template", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = type_ {
+            local_req_builder =
+                local_req_builder.query(&[("type", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -470,9 +438,10 @@ impl NotebooksAPI {
     /// Update a notebook using the specified ID.
     pub async fn update_notebook(
         &self,
-        params: UpdateNotebookParams,
+        notebook_id: i64,
+        body: crate::datadogV1::model::NotebookUpdateRequest,
     ) -> Result<Option<crate::datadogV1::model::NotebookResponse>, Error<UpdateNotebookError>> {
-        match self.update_notebook_with_http_info(params).await {
+        match self.update_notebook_with_http_info(notebook_id, body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -481,16 +450,13 @@ impl NotebooksAPI {
     /// Update a notebook using the specified ID.
     pub async fn update_notebook_with_http_info(
         &self,
-        params: UpdateNotebookParams,
+        notebook_id: i64,
+        body: crate::datadogV1::model::NotebookUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::NotebookResponse>,
         Error<UpdateNotebookError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let notebook_id = params.notebook_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

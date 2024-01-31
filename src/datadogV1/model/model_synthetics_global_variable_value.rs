@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SyntheticsGlobalVariableValue {
     /// Options for the Global Variable for MFA.
     #[serde(rename = "options")]
-    pub options: Option<Box<crate::datadogV1::model::SyntheticsGlobalVariableOptions>>,
+    pub options: Option<crate::datadogV1::model::SyntheticsGlobalVariableOptions>,
     /// Determines if the value of the variable is hidden.
     #[serde(rename = "secure")]
     pub secure: Option<bool>,
@@ -27,6 +27,24 @@ impl SyntheticsGlobalVariableValue {
             secure: None,
             value: None,
         }
+    }
+
+    pub fn with_options(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsGlobalVariableOptions,
+    ) -> &mut Self {
+        self.options = Some(value);
+        self
+    }
+
+    pub fn with_secure(&mut self, value: bool) -> &mut Self {
+        self.secure = Some(value);
+        self
+    }
+
+    pub fn with_value(&mut self, value: String) -> &mut Self {
+        self.value = Some(value);
+        self
     }
 }
 impl Default for SyntheticsGlobalVariableValue {

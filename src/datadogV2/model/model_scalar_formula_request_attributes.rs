@@ -35,4 +35,12 @@ impl ScalarFormulaRequestAttributes {
             to,
         }
     }
+
+    pub fn with_formulas(
+        &mut self,
+        value: Vec<crate::datadogV2::model::QueryFormula>,
+    ) -> &mut Self {
+        self.formulas = Some(value);
+        self
+    }
 }

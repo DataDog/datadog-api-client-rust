@@ -13,7 +13,7 @@ pub struct SplitConfig {
     pub limit: i64,
     /// Controls the order in which graphs appear in the split.
     #[serde(rename = "sort")]
-    pub sort: Box<crate::datadogV1::model::SplitSort>,
+    pub sort: crate::datadogV1::model::SplitSort,
     /// The dimension(s) on which to split the graph
     #[serde(rename = "split_dimensions")]
     pub split_dimensions: Vec<crate::datadogV1::model::SplitDimension>,
@@ -25,7 +25,7 @@ pub struct SplitConfig {
 impl SplitConfig {
     pub fn new(
         limit: i64,
-        sort: Box<crate::datadogV1::model::SplitSort>,
+        sort: crate::datadogV1::model::SplitSort,
         split_dimensions: Vec<crate::datadogV1::model::SplitDimension>,
     ) -> SplitConfig {
         SplitConfig {
@@ -34,5 +34,13 @@ impl SplitConfig {
             split_dimensions,
             static_splits: None,
         }
+    }
+
+    pub fn with_static_splits(
+        &mut self,
+        value: Vec<Vec<crate::datadogV1::model::SplitVectorEntryItem>>,
+    ) -> &mut Self {
+        self.static_splits = Some(value);
+        self
     }
 }

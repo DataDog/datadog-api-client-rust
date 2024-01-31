@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct OnDemandConcurrencyCap {
     /// On-demand concurrency cap attributes.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::OnDemandConcurrencyCapAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::OnDemandConcurrencyCapAttributes>,
     /// On-demand concurrency cap type.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::OnDemandConcurrencyCapType>,
@@ -22,6 +22,22 @@ impl OnDemandConcurrencyCap {
             attributes: None,
             type_: None,
         }
+    }
+
+    pub fn with_attributes(
+        &mut self,
+        value: crate::datadogV2::model::OnDemandConcurrencyCapAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn with_type_(
+        &mut self,
+        value: crate::datadogV2::model::OnDemandConcurrencyCapType,
+    ) -> &mut Self {
+        self.type_ = Some(value);
+        self
     }
 }
 impl Default for OnDemandConcurrencyCap {

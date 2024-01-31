@@ -13,17 +13,17 @@ pub struct LogsAggregateRequest {
     pub compute: Option<Vec<crate::datadogV2::model::LogsCompute>>,
     /// The search and filter query settings
     #[serde(rename = "filter")]
-    pub filter: Option<Box<crate::datadogV2::model::LogsQueryFilter>>,
+    pub filter: Option<crate::datadogV2::model::LogsQueryFilter>,
     /// The rules for the group by
     #[serde(rename = "group_by")]
     pub group_by: Option<Vec<crate::datadogV2::model::LogsGroupBy>>,
     /// Global query options that are used during the query.
     /// Note: you should supply either timezone or time offset, but not both. Otherwise, the query will fail.
     #[serde(rename = "options")]
-    pub options: Option<Box<crate::datadogV2::model::LogsQueryOptions>>,
+    pub options: Option<crate::datadogV2::model::LogsQueryOptions>,
     /// Paging settings
     #[serde(rename = "page")]
-    pub page: Option<Box<crate::datadogV2::model::LogsAggregateRequestPage>>,
+    pub page: Option<crate::datadogV2::model::LogsAggregateRequestPage>,
 }
 
 impl LogsAggregateRequest {
@@ -35,6 +35,34 @@ impl LogsAggregateRequest {
             options: None,
             page: None,
         }
+    }
+
+    pub fn with_compute(&mut self, value: Vec<crate::datadogV2::model::LogsCompute>) -> &mut Self {
+        self.compute = Some(value);
+        self
+    }
+
+    pub fn with_filter(&mut self, value: crate::datadogV2::model::LogsQueryFilter) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
+
+    pub fn with_group_by(&mut self, value: Vec<crate::datadogV2::model::LogsGroupBy>) -> &mut Self {
+        self.group_by = Some(value);
+        self
+    }
+
+    pub fn with_options(&mut self, value: crate::datadogV2::model::LogsQueryOptions) -> &mut Self {
+        self.options = Some(value);
+        self
+    }
+
+    pub fn with_page(
+        &mut self,
+        value: crate::datadogV2::model::LogsAggregateRequestPage,
+    ) -> &mut Self {
+        self.page = Some(value);
+        self
     }
 }
 impl Default for LogsAggregateRequest {

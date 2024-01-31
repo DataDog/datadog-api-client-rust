@@ -10,12 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct SensitiveDataScannerConfigurationData {
     /// A Sensitive Data Scanner configuration.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::SensitiveDataScannerConfiguration>>,
+    pub data: Option<crate::datadogV2::model::SensitiveDataScannerConfiguration>,
 }
 
 impl SensitiveDataScannerConfigurationData {
     pub fn new() -> SensitiveDataScannerConfigurationData {
         SensitiveDataScannerConfigurationData { data: None }
+    }
+
+    pub fn with_data(
+        &mut self,
+        value: crate::datadogV2::model::SensitiveDataScannerConfiguration,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
     }
 }
 impl Default for SensitiveDataScannerConfigurationData {

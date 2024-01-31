@@ -17,6 +17,14 @@ impl UsageTimeseriesResponse {
     pub fn new() -> UsageTimeseriesResponse {
         UsageTimeseriesResponse { usage: None }
     }
+
+    pub fn with_usage(
+        &mut self,
+        value: Vec<crate::datadogV1::model::UsageTimeseriesHour>,
+    ) -> &mut Self {
+        self.usage = Some(value);
+        self
+    }
 }
 impl Default for UsageTimeseriesResponse {
     fn default() -> Self {

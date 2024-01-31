@@ -20,7 +20,7 @@ pub struct SLOCorrectionResponseAttributes {
     pub created_at: Option<Option<i64>>,
     /// Object describing the creator of the shared element.
     #[serde(rename = "creator")]
-    pub creator: Option<Box<crate::datadogV1::model::Creator>>,
+    pub creator: Option<crate::datadogV1::model::Creator>,
     /// Description of the correction being made.
     #[serde(rename = "description")]
     pub description: Option<String>,
@@ -47,8 +47,7 @@ pub struct SLOCorrectionResponseAttributes {
         default,
         with = "::serde_with::rust::double_option"
     )]
-    pub modifier:
-        Option<Option<Box<crate::datadogV1::model::SLOCorrectionResponseAttributesModifier>>>,
+    pub modifier: Option<Option<crate::datadogV1::model::SLOCorrectionResponseAttributesModifier>>,
     /// The recurrence rules as defined in the iCalendar RFC 5545. The supported rules for SLO corrections
     /// are `FREQ`, `INTERVAL`, `COUNT`, and `UNTIL`.
     #[serde(rename = "rrule", default, with = "::serde_with::rust::double_option")]
@@ -80,6 +79,72 @@ impl SLOCorrectionResponseAttributes {
             start: None,
             timezone: None,
         }
+    }
+
+    pub fn with_category(
+        &mut self,
+        value: crate::datadogV1::model::SLOCorrectionCategory,
+    ) -> &mut Self {
+        self.category = Some(value);
+        self
+    }
+
+    pub fn with_created_at(&mut self, value: Option<i64>) -> &mut Self {
+        self.created_at = Some(value);
+        self
+    }
+
+    pub fn with_creator(&mut self, value: crate::datadogV1::model::Creator) -> &mut Self {
+        self.creator = Some(value);
+        self
+    }
+
+    pub fn with_description(&mut self, value: String) -> &mut Self {
+        self.description = Some(value);
+        self
+    }
+
+    pub fn with_duration(&mut self, value: Option<i64>) -> &mut Self {
+        self.duration = Some(value);
+        self
+    }
+
+    pub fn with_end(&mut self, value: Option<i64>) -> &mut Self {
+        self.end = Some(value);
+        self
+    }
+
+    pub fn with_modified_at(&mut self, value: Option<i64>) -> &mut Self {
+        self.modified_at = Some(value);
+        self
+    }
+
+    pub fn with_modifier(
+        &mut self,
+        value: Option<crate::datadogV1::model::SLOCorrectionResponseAttributesModifier>,
+    ) -> &mut Self {
+        self.modifier = Some(value);
+        self
+    }
+
+    pub fn with_rrule(&mut self, value: Option<String>) -> &mut Self {
+        self.rrule = Some(value);
+        self
+    }
+
+    pub fn with_slo_id(&mut self, value: String) -> &mut Self {
+        self.slo_id = Some(value);
+        self
+    }
+
+    pub fn with_start(&mut self, value: i64) -> &mut Self {
+        self.start = Some(value);
+        self
+    }
+
+    pub fn with_timezone(&mut self, value: String) -> &mut Self {
+        self.timezone = Some(value);
+        self
     }
 }
 impl Default for SLOCorrectionResponseAttributes {

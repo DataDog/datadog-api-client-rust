@@ -10,10 +10,10 @@ use serde_with::skip_serializing_none;
 pub struct TeamUpdate {
     /// Team update attributes
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::TeamUpdateAttributes>,
+    pub attributes: crate::datadogV2::model::TeamUpdateAttributes,
     /// Team update relationships
     #[serde(rename = "relationships")]
-    pub relationships: Option<Box<crate::datadogV2::model::TeamUpdateRelationships>>,
+    pub relationships: Option<crate::datadogV2::model::TeamUpdateRelationships>,
     /// Team type
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::TeamType,
@@ -21,7 +21,7 @@ pub struct TeamUpdate {
 
 impl TeamUpdate {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::TeamUpdateAttributes>,
+        attributes: crate::datadogV2::model::TeamUpdateAttributes,
         type_: crate::datadogV2::model::TeamType,
     ) -> TeamUpdate {
         TeamUpdate {
@@ -29,5 +29,13 @@ impl TeamUpdate {
             relationships: None,
             type_,
         }
+    }
+
+    pub fn with_relationships(
+        &mut self,
+        value: crate::datadogV2::model::TeamUpdateRelationships,
+    ) -> &mut Self {
+        self.relationships = Some(value);
+        self
     }
 }

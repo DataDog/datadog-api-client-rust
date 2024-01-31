@@ -35,6 +35,40 @@ impl TeamPermissionSettingAttributes {
             value: None,
         }
     }
+
+    pub fn with_action(
+        &mut self,
+        value: crate::datadogV2::model::TeamPermissionSettingSerializerAction,
+    ) -> &mut Self {
+        self.action = Some(value);
+        self
+    }
+
+    pub fn with_editable(&mut self, value: bool) -> &mut Self {
+        self.editable = Some(value);
+        self
+    }
+
+    pub fn with_options(
+        &mut self,
+        value: Vec<crate::datadogV2::model::TeamPermissionSettingValue>,
+    ) -> &mut Self {
+        self.options = Some(value);
+        self
+    }
+
+    pub fn with_title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
+    }
+
+    pub fn with_value(
+        &mut self,
+        value: crate::datadogV2::model::TeamPermissionSettingValue,
+    ) -> &mut Self {
+        self.value = Some(value);
+        self
+    }
 }
 impl Default for TeamPermissionSettingAttributes {
     fn default() -> Self {

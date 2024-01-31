@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct ApplicationKeyResponse {
     /// An application key with its associated metadata.
     #[serde(rename = "application_key")]
-    pub application_key: Option<Box<crate::datadogV1::model::ApplicationKey>>,
+    pub application_key: Option<crate::datadogV1::model::ApplicationKey>,
 }
 
 impl ApplicationKeyResponse {
@@ -18,6 +18,14 @@ impl ApplicationKeyResponse {
         ApplicationKeyResponse {
             application_key: None,
         }
+    }
+
+    pub fn with_application_key(
+        &mut self,
+        value: crate::datadogV1::model::ApplicationKey,
+    ) -> &mut Self {
+        self.application_key = Some(value);
+        self
     }
 }
 impl Default for ApplicationKeyResponse {

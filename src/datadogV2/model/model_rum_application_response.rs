@@ -10,12 +10,17 @@ use serde_with::skip_serializing_none;
 pub struct RUMApplicationResponse {
     /// RUM application.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::RUMApplication>>,
+    pub data: Option<crate::datadogV2::model::RUMApplication>,
 }
 
 impl RUMApplicationResponse {
     pub fn new() -> RUMApplicationResponse {
         RUMApplicationResponse { data: None }
+    }
+
+    pub fn with_data(&mut self, value: crate::datadogV2::model::RUMApplication) -> &mut Self {
+        self.data = Some(value);
+        self
     }
 }
 impl Default for RUMApplicationResponse {

@@ -27,6 +27,21 @@ impl UsageAttributionAggregatesBody {
             value: None,
         }
     }
+
+    pub fn with_agg_type(&mut self, value: String) -> &mut Self {
+        self.agg_type = Some(value);
+        self
+    }
+
+    pub fn with_field(&mut self, value: String) -> &mut Self {
+        self.field = Some(value);
+        self
+    }
+
+    pub fn with_value(&mut self, value: f64) -> &mut Self {
+        self.value = Some(value);
+        self
+    }
 }
 impl Default for UsageAttributionAggregatesBody {
     fn default() -> Self {

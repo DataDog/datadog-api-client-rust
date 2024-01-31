@@ -22,10 +22,10 @@ pub struct WidgetFormula {
     pub formula: String,
     /// Options for limiting results returned.
     #[serde(rename = "limit")]
-    pub limit: Option<Box<crate::datadogV1::model::WidgetFormulaLimit>>,
+    pub limit: Option<crate::datadogV1::model::WidgetFormulaLimit>,
     /// Styling options for widget formulas.
     #[serde(rename = "style")]
-    pub style: Option<Box<crate::datadogV1::model::WidgetFormulaStyle>>,
+    pub style: Option<crate::datadogV1::model::WidgetFormulaStyle>,
 }
 
 impl WidgetFormula {
@@ -38,5 +38,36 @@ impl WidgetFormula {
             limit: None,
             style: None,
         }
+    }
+
+    pub fn with_alias(&mut self, value: String) -> &mut Self {
+        self.alias = Some(value);
+        self
+    }
+
+    pub fn with_cell_display_mode(
+        &mut self,
+        value: crate::datadogV1::model::TableWidgetCellDisplayMode,
+    ) -> &mut Self {
+        self.cell_display_mode = Some(value);
+        self
+    }
+
+    pub fn with_conditional_formats(
+        &mut self,
+        value: Vec<crate::datadogV1::model::WidgetConditionalFormat>,
+    ) -> &mut Self {
+        self.conditional_formats = Some(value);
+        self
+    }
+
+    pub fn with_limit(&mut self, value: crate::datadogV1::model::WidgetFormulaLimit) -> &mut Self {
+        self.limit = Some(value);
+        self
+    }
+
+    pub fn with_style(&mut self, value: crate::datadogV1::model::WidgetFormulaStyle) -> &mut Self {
+        self.style = Some(value);
+        self
     }
 }

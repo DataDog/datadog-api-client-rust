@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct CIAppPipelineEvent {
     /// JSON object containing all event attributes and their associated values.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::CIAppPipelineEventAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::CIAppPipelineEventAttributes>,
     /// Unique ID of the event.
     #[serde(rename = "id")]
     pub id: Option<String>,
@@ -26,6 +26,27 @@ impl CIAppPipelineEvent {
             id: None,
             type_: None,
         }
+    }
+
+    pub fn with_attributes(
+        &mut self,
+        value: crate::datadogV2::model::CIAppPipelineEventAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn with_id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn with_type_(
+        &mut self,
+        value: crate::datadogV2::model::CIAppPipelineEventTypeName,
+    ) -> &mut Self {
+        self.type_ = Some(value);
+        self
     }
 }
 impl Default for CIAppPipelineEvent {

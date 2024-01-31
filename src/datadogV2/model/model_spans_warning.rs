@@ -27,6 +27,21 @@ impl SpansWarning {
             title: None,
         }
     }
+
+    pub fn with_code(&mut self, value: String) -> &mut Self {
+        self.code = Some(value);
+        self
+    }
+
+    pub fn with_detail(&mut self, value: String) -> &mut Self {
+        self.detail = Some(value);
+        self
+    }
+
+    pub fn with_title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
+    }
 }
 impl Default for SpansWarning {
     fn default() -> Self {

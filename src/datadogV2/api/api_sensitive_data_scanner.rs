@@ -5,56 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateScanningGroupParams is a struct for passing parameters to the method [`SensitiveDataScannerAPI::create_scanning_group`]
-#[derive(Clone, Debug)]
-pub struct CreateScanningGroupParams {
-    pub body: crate::datadogV2::model::SensitiveDataScannerGroupCreateRequest,
-}
-
-/// CreateScanningRuleParams is a struct for passing parameters to the method [`SensitiveDataScannerAPI::create_scanning_rule`]
-#[derive(Clone, Debug)]
-pub struct CreateScanningRuleParams {
-    pub body: crate::datadogV2::model::SensitiveDataScannerRuleCreateRequest,
-}
-
-/// DeleteScanningGroupParams is a struct for passing parameters to the method [`SensitiveDataScannerAPI::delete_scanning_group`]
-#[derive(Clone, Debug)]
-pub struct DeleteScanningGroupParams {
-    /// The ID of a group of rules.
-    pub group_id: String,
-    pub body: crate::datadogV2::model::SensitiveDataScannerGroupDeleteRequest,
-}
-
-/// DeleteScanningRuleParams is a struct for passing parameters to the method [`SensitiveDataScannerAPI::delete_scanning_rule`]
-#[derive(Clone, Debug)]
-pub struct DeleteScanningRuleParams {
-    /// The ID of the rule.
-    pub rule_id: String,
-    pub body: crate::datadogV2::model::SensitiveDataScannerRuleDeleteRequest,
-}
-
-/// ReorderScanningGroupsParams is a struct for passing parameters to the method [`SensitiveDataScannerAPI::reorder_scanning_groups`]
-#[derive(Clone, Debug)]
-pub struct ReorderScanningGroupsParams {
-    pub body: crate::datadogV2::model::SensitiveDataScannerConfigRequest,
-}
-
-/// UpdateScanningGroupParams is a struct for passing parameters to the method [`SensitiveDataScannerAPI::update_scanning_group`]
-#[derive(Clone, Debug)]
-pub struct UpdateScanningGroupParams {
-    /// The ID of a group of rules.
-    pub group_id: String,
-    pub body: crate::datadogV2::model::SensitiveDataScannerGroupUpdateRequest,
-}
-
-/// UpdateScanningRuleParams is a struct for passing parameters to the method [`SensitiveDataScannerAPI::update_scanning_rule`]
-#[derive(Clone, Debug)]
-pub struct UpdateScanningRuleParams {
-    /// The ID of the rule.
-    pub rule_id: String,
-    pub body: crate::datadogV2::model::SensitiveDataScannerRuleUpdateRequest,
-}
-
 /// CreateScanningGroupError is a struct for typed errors of method [`SensitiveDataScannerAPI::create_scanning_group`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -177,12 +127,12 @@ impl SensitiveDataScannerAPI {
     /// The new group will be ordered last within the configuration.
     pub async fn create_scanning_group(
         &self,
-        params: CreateScanningGroupParams,
+        body: crate::datadogV2::model::SensitiveDataScannerGroupCreateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::SensitiveDataScannerCreateGroupResponse>,
         Error<CreateScanningGroupError>,
     > {
-        match self.create_scanning_group_with_http_info(params).await {
+        match self.create_scanning_group_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -195,15 +145,12 @@ impl SensitiveDataScannerAPI {
     /// The new group will be ordered last within the configuration.
     pub async fn create_scanning_group_with_http_info(
         &self,
-        params: CreateScanningGroupParams,
+        body: crate::datadogV2::model::SensitiveDataScannerGroupCreateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::SensitiveDataScannerCreateGroupResponse>,
         Error<CreateScanningGroupError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -269,12 +216,12 @@ impl SensitiveDataScannerAPI {
     /// excluded_attributes. If both are missing, we will scan the whole event.
     pub async fn create_scanning_rule(
         &self,
-        params: CreateScanningRuleParams,
+        body: crate::datadogV2::model::SensitiveDataScannerRuleCreateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::SensitiveDataScannerCreateRuleResponse>,
         Error<CreateScanningRuleError>,
     > {
-        match self.create_scanning_rule_with_http_info(params).await {
+        match self.create_scanning_rule_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -287,15 +234,12 @@ impl SensitiveDataScannerAPI {
     /// excluded_attributes. If both are missing, we will scan the whole event.
     pub async fn create_scanning_rule_with_http_info(
         &self,
-        params: CreateScanningRuleParams,
+        body: crate::datadogV2::model::SensitiveDataScannerRuleCreateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::SensitiveDataScannerCreateRuleResponse>,
         Error<CreateScanningRuleError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -357,12 +301,16 @@ impl SensitiveDataScannerAPI {
     /// Delete a given group.
     pub async fn delete_scanning_group(
         &self,
-        params: DeleteScanningGroupParams,
+        group_id: String,
+        body: crate::datadogV2::model::SensitiveDataScannerGroupDeleteRequest,
     ) -> Result<
         Option<crate::datadogV2::model::SensitiveDataScannerGroupDeleteResponse>,
         Error<DeleteScanningGroupError>,
     > {
-        match self.delete_scanning_group_with_http_info(params).await {
+        match self
+            .delete_scanning_group_with_http_info(group_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -371,16 +319,13 @@ impl SensitiveDataScannerAPI {
     /// Delete a given group.
     pub async fn delete_scanning_group_with_http_info(
         &self,
-        params: DeleteScanningGroupParams,
+        group_id: String,
+        body: crate::datadogV2::model::SensitiveDataScannerGroupDeleteRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::SensitiveDataScannerGroupDeleteResponse>,
         Error<DeleteScanningGroupError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let group_id = params.group_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -443,12 +388,16 @@ impl SensitiveDataScannerAPI {
     /// Delete a given rule.
     pub async fn delete_scanning_rule(
         &self,
-        params: DeleteScanningRuleParams,
+        rule_id: String,
+        body: crate::datadogV2::model::SensitiveDataScannerRuleDeleteRequest,
     ) -> Result<
         Option<crate::datadogV2::model::SensitiveDataScannerRuleDeleteResponse>,
         Error<DeleteScanningRuleError>,
     > {
-        match self.delete_scanning_rule_with_http_info(params).await {
+        match self
+            .delete_scanning_rule_with_http_info(rule_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -457,16 +406,13 @@ impl SensitiveDataScannerAPI {
     /// Delete a given rule.
     pub async fn delete_scanning_rule_with_http_info(
         &self,
-        params: DeleteScanningRuleParams,
+        rule_id: String,
+        body: crate::datadogV2::model::SensitiveDataScannerRuleDeleteRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::SensitiveDataScannerRuleDeleteResponse>,
         Error<DeleteScanningRuleError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let rule_id = params.rule_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -548,8 +494,6 @@ impl SensitiveDataScannerAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -622,8 +566,6 @@ impl SensitiveDataScannerAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -677,12 +619,12 @@ impl SensitiveDataScannerAPI {
     /// Reorder the list of groups.
     pub async fn reorder_scanning_groups(
         &self,
-        params: ReorderScanningGroupsParams,
+        body: crate::datadogV2::model::SensitiveDataScannerConfigRequest,
     ) -> Result<
         Option<crate::datadogV2::model::SensitiveDataScannerReorderGroupsResponse>,
         Error<ReorderScanningGroupsError>,
     > {
-        match self.reorder_scanning_groups_with_http_info(params).await {
+        match self.reorder_scanning_groups_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -691,15 +633,12 @@ impl SensitiveDataScannerAPI {
     /// Reorder the list of groups.
     pub async fn reorder_scanning_groups_with_http_info(
         &self,
-        params: ReorderScanningGroupsParams,
+        body: crate::datadogV2::model::SensitiveDataScannerConfigRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::SensitiveDataScannerReorderGroupsResponse>,
         Error<ReorderScanningGroupsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -764,12 +703,16 @@ impl SensitiveDataScannerAPI {
     /// currently in the group, and MUST NOT contain any others.
     pub async fn update_scanning_group(
         &self,
-        params: UpdateScanningGroupParams,
+        group_id: String,
+        body: crate::datadogV2::model::SensitiveDataScannerGroupUpdateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::SensitiveDataScannerGroupUpdateResponse>,
         Error<UpdateScanningGroupError>,
     > {
-        match self.update_scanning_group_with_http_info(params).await {
+        match self
+            .update_scanning_group_with_http_info(group_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -781,16 +724,13 @@ impl SensitiveDataScannerAPI {
     /// currently in the group, and MUST NOT contain any others.
     pub async fn update_scanning_group_with_http_info(
         &self,
-        params: UpdateScanningGroupParams,
+        group_id: String,
+        body: crate::datadogV2::model::SensitiveDataScannerGroupUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::SensitiveDataScannerGroupUpdateResponse>,
         Error<UpdateScanningGroupError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let group_id = params.group_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -856,12 +796,16 @@ impl SensitiveDataScannerAPI {
     /// relationship will also result in an error.
     pub async fn update_scanning_rule(
         &self,
-        params: UpdateScanningRuleParams,
+        rule_id: String,
+        body: crate::datadogV2::model::SensitiveDataScannerRuleUpdateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::SensitiveDataScannerRuleUpdateResponse>,
         Error<UpdateScanningRuleError>,
     > {
-        match self.update_scanning_rule_with_http_info(params).await {
+        match self
+            .update_scanning_rule_with_http_info(rule_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -873,16 +817,13 @@ impl SensitiveDataScannerAPI {
     /// relationship will also result in an error.
     pub async fn update_scanning_rule_with_http_info(
         &self,
-        params: UpdateScanningRuleParams,
+        rule_id: String,
+        body: crate::datadogV2::model::SensitiveDataScannerRuleUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::SensitiveDataScannerRuleUpdateResponse>,
         Error<UpdateScanningRuleError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let rule_id = params.rule_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

@@ -17,7 +17,7 @@ pub struct SLOListResponse {
     pub errors: Option<Vec<String>>,
     /// The metadata object containing additional information about the list of SLOs.
     #[serde(rename = "metadata")]
-    pub metadata: Option<Box<crate::datadogV1::model::SLOListResponseMetadata>>,
+    pub metadata: Option<crate::datadogV1::model::SLOListResponseMetadata>,
 }
 
 impl SLOListResponse {
@@ -27,6 +27,27 @@ impl SLOListResponse {
             errors: None,
             metadata: None,
         }
+    }
+
+    pub fn with_data(
+        &mut self,
+        value: Vec<crate::datadogV1::model::ServiceLevelObjective>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn with_errors(&mut self, value: Vec<String>) -> &mut Self {
+        self.errors = Some(value);
+        self
+    }
+
+    pub fn with_metadata(
+        &mut self,
+        value: crate::datadogV1::model::SLOListResponseMetadata,
+    ) -> &mut Self {
+        self.metadata = Some(value);
+        self
     }
 }
 impl Default for SLOListResponse {

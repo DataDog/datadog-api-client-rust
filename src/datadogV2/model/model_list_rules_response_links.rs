@@ -17,6 +17,11 @@ impl ListRulesResponseLinks {
     pub fn new() -> ListRulesResponseLinks {
         ListRulesResponseLinks { next: None }
     }
+
+    pub fn with_next(&mut self, value: String) -> &mut Self {
+        self.next = Some(value);
+        self
+    }
 }
 impl Default for ListRulesResponseLinks {
     fn default() -> Self {

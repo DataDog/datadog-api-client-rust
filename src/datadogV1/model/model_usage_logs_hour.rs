@@ -91,6 +91,61 @@ impl UsageLogsHour {
             public_id: None,
         }
     }
+
+    pub fn with_billable_ingested_bytes(&mut self, value: Option<i64>) -> &mut Self {
+        self.billable_ingested_bytes = Some(value);
+        self
+    }
+
+    pub fn with_hour(&mut self, value: String) -> &mut Self {
+        self.hour = Some(value);
+        self
+    }
+
+    pub fn with_indexed_events_count(&mut self, value: Option<i64>) -> &mut Self {
+        self.indexed_events_count = Some(value);
+        self
+    }
+
+    pub fn with_ingested_events_bytes(&mut self, value: Option<i64>) -> &mut Self {
+        self.ingested_events_bytes = Some(value);
+        self
+    }
+
+    pub fn with_logs_forwarding_events_bytes(&mut self, value: Option<i64>) -> &mut Self {
+        self.logs_forwarding_events_bytes = Some(value);
+        self
+    }
+
+    pub fn with_logs_live_indexed_count(&mut self, value: Option<i64>) -> &mut Self {
+        self.logs_live_indexed_count = Some(value);
+        self
+    }
+
+    pub fn with_logs_live_ingested_bytes(&mut self, value: Option<i64>) -> &mut Self {
+        self.logs_live_ingested_bytes = Some(value);
+        self
+    }
+
+    pub fn with_logs_rehydrated_indexed_count(&mut self, value: Option<i64>) -> &mut Self {
+        self.logs_rehydrated_indexed_count = Some(value);
+        self
+    }
+
+    pub fn with_logs_rehydrated_ingested_bytes(&mut self, value: Option<i64>) -> &mut Self {
+        self.logs_rehydrated_ingested_bytes = Some(value);
+        self
+    }
+
+    pub fn with_org_name(&mut self, value: String) -> &mut Self {
+        self.org_name = Some(value);
+        self
+    }
+
+    pub fn with_public_id(&mut self, value: String) -> &mut Self {
+        self.public_id = Some(value);
+        self
+    }
 }
 impl Default for UsageLogsHour {
     fn default() -> Self {

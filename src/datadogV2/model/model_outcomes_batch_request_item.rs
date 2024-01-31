@@ -35,4 +35,9 @@ impl OutcomesBatchRequestItem {
             state,
         }
     }
+
+    pub fn with_remarks(&mut self, value: String) -> &mut Self {
+        self.remarks = Some(value);
+        self
+    }
 }

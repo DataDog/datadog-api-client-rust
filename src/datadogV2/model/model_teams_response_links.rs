@@ -35,6 +35,31 @@ impl TeamsResponseLinks {
             self_: None,
         }
     }
+
+    pub fn with_first(&mut self, value: String) -> &mut Self {
+        self.first = Some(value);
+        self
+    }
+
+    pub fn with_last(&mut self, value: Option<String>) -> &mut Self {
+        self.last = Some(value);
+        self
+    }
+
+    pub fn with_next(&mut self, value: String) -> &mut Self {
+        self.next = Some(value);
+        self
+    }
+
+    pub fn with_prev(&mut self, value: Option<String>) -> &mut Self {
+        self.prev = Some(value);
+        self
+    }
+
+    pub fn with_self_(&mut self, value: String) -> &mut Self {
+        self.self_ = Some(value);
+        self
+    }
 }
 impl Default for TeamsResponseLinks {
     fn default() -> Self {

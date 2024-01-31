@@ -28,7 +28,7 @@ pub struct ListStreamQuery {
     pub query_string: String,
     /// Which column and order to sort by
     #[serde(rename = "sort")]
-    pub sort: Option<Box<crate::datadogV1::model::WidgetFieldSort>>,
+    pub sort: Option<crate::datadogV1::model::WidgetFieldSort>,
     /// Option for storage location. Feature in Private Beta.
     #[serde(rename = "storage")]
     pub storage: Option<String>,
@@ -49,5 +49,44 @@ impl ListStreamQuery {
             sort: None,
             storage: None,
         }
+    }
+
+    pub fn with_compute(
+        &mut self,
+        value: Vec<crate::datadogV1::model::ListStreamComputeItems>,
+    ) -> &mut Self {
+        self.compute = Some(value);
+        self
+    }
+
+    pub fn with_event_size(
+        &mut self,
+        value: crate::datadogV1::model::WidgetEventSize,
+    ) -> &mut Self {
+        self.event_size = Some(value);
+        self
+    }
+
+    pub fn with_group_by(
+        &mut self,
+        value: Vec<crate::datadogV1::model::ListStreamGroupByItems>,
+    ) -> &mut Self {
+        self.group_by = Some(value);
+        self
+    }
+
+    pub fn with_indexes(&mut self, value: Vec<String>) -> &mut Self {
+        self.indexes = Some(value);
+        self
+    }
+
+    pub fn with_sort(&mut self, value: crate::datadogV1::model::WidgetFieldSort) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+
+    pub fn with_storage(&mut self, value: String) -> &mut Self {
+        self.storage = Some(value);
+        self
     }
 }

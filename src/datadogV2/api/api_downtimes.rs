@@ -5,33 +5,17 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CancelDowntimeParams is a struct for passing parameters to the method [`DowntimesAPI::cancel_downtime`]
+/// GetDowntimeOptionalParams is a struct for passing parameters to the method [`DowntimesAPI::get_downtime`]
 #[derive(Clone, Debug)]
-pub struct CancelDowntimeParams {
-    /// ID of the downtime to cancel.
-    pub downtime_id: String,
-}
-
-/// CreateDowntimeParams is a struct for passing parameters to the method [`DowntimesAPI::create_downtime`]
-#[derive(Clone, Debug)]
-pub struct CreateDowntimeParams {
-    /// Schedule a downtime request body.
-    pub body: crate::datadogV2::model::DowntimeCreateRequest,
-}
-
-/// GetDowntimeParams is a struct for passing parameters to the method [`DowntimesAPI::get_downtime`]
-#[derive(Clone, Debug)]
-pub struct GetDowntimeParams {
-    /// ID of the downtime to fetch.
-    pub downtime_id: String,
+pub struct GetDowntimeOptionalParams {
     /// Comma-separated list of resource paths for related resources to include in the response. Supported resource
     /// paths are `created_by` and `monitor`.
     pub include: Option<String>,
 }
 
-/// ListDowntimesParams is a struct for passing parameters to the method [`DowntimesAPI::list_downtimes`]
+/// ListDowntimesOptionalParams is a struct for passing parameters to the method [`DowntimesAPI::list_downtimes`]
 #[derive(Clone, Debug)]
-pub struct ListDowntimesParams {
+pub struct ListDowntimesOptionalParams {
     /// Only return downtimes that are active when the request is made.
     pub current_only: Option<bool>,
     /// Comma-separated list of resource paths for related resources to include in the response. Supported resource
@@ -43,24 +27,13 @@ pub struct ListDowntimesParams {
     pub page_limit: Option<i64>,
 }
 
-/// ListMonitorDowntimesParams is a struct for passing parameters to the method [`DowntimesAPI::list_monitor_downtimes`]
+/// ListMonitorDowntimesOptionalParams is a struct for passing parameters to the method [`DowntimesAPI::list_monitor_downtimes`]
 #[derive(Clone, Debug)]
-pub struct ListMonitorDowntimesParams {
-    /// The id of the monitor.
-    pub monitor_id: i64,
+pub struct ListMonitorDowntimesOptionalParams {
     /// Specific offset to use as the beginning of the returned page.
     pub page_offset: Option<i64>,
     /// Maximum number of downtimes in the response.
     pub page_limit: Option<i64>,
-}
-
-/// UpdateDowntimeParams is a struct for passing parameters to the method [`DowntimesAPI::update_downtime`]
-#[derive(Clone, Debug)]
-pub struct UpdateDowntimeParams {
-    /// ID of the downtime to update.
-    pub downtime_id: String,
-    /// Update a downtime request body.
-    pub body: crate::datadogV2::model::DowntimeUpdateRequest,
 }
 
 /// CancelDowntimeError is a struct for typed errors of method [`DowntimesAPI::cancel_downtime`]
@@ -147,9 +120,9 @@ impl DowntimesAPI {
     /// Cancel a downtime.
     pub async fn cancel_downtime(
         &self,
-        params: CancelDowntimeParams,
+        downtime_id: String,
     ) -> Result<Option<()>, Error<CancelDowntimeError>> {
-        match self.cancel_downtime_with_http_info(params).await {
+        match self.cancel_downtime_with_http_info(downtime_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -158,12 +131,9 @@ impl DowntimesAPI {
     /// Cancel a downtime.
     pub async fn cancel_downtime_with_http_info(
         &self,
-        params: CancelDowntimeParams,
+        downtime_id: String,
     ) -> Result<ResponseContent<()>, Error<CancelDowntimeError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let downtime_id = params.downtime_id;
 
         let local_client = &local_configuration.client;
 
@@ -216,9 +186,9 @@ impl DowntimesAPI {
     /// Schedule a downtime.
     pub async fn create_downtime(
         &self,
-        params: CreateDowntimeParams,
+        body: crate::datadogV2::model::DowntimeCreateRequest,
     ) -> Result<Option<crate::datadogV2::model::DowntimeResponse>, Error<CreateDowntimeError>> {
-        match self.create_downtime_with_http_info(params).await {
+        match self.create_downtime_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -227,15 +197,12 @@ impl DowntimesAPI {
     /// Schedule a downtime.
     pub async fn create_downtime_with_http_info(
         &self,
-        params: CreateDowntimeParams,
+        body: crate::datadogV2::model::DowntimeCreateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::DowntimeResponse>,
         Error<CreateDowntimeError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -293,9 +260,10 @@ impl DowntimesAPI {
     /// Get downtime detail by `downtime_id`.
     pub async fn get_downtime(
         &self,
-        params: GetDowntimeParams,
+        downtime_id: String,
+        params: GetDowntimeOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::DowntimeResponse>, Error<GetDowntimeError>> {
-        match self.get_downtime_with_http_info(params).await {
+        match self.get_downtime_with_http_info(downtime_id, params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -304,13 +272,13 @@ impl DowntimesAPI {
     /// Get downtime detail by `downtime_id`.
     pub async fn get_downtime_with_http_info(
         &self,
-        params: GetDowntimeParams,
+        downtime_id: String,
+        params: GetDowntimeOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV2::model::DowntimeResponse>, Error<GetDowntimeError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let downtime_id = params.downtime_id;
+        // unbox and build optional parameters
         let include = params.include;
 
         let local_client = &local_configuration.client;
@@ -323,8 +291,9 @@ impl DowntimesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = include {
-            local_req_builder = local_req_builder.query(&[("include", &local_str.to_string())]);
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -369,7 +338,7 @@ impl DowntimesAPI {
     /// Get all scheduled downtimes.
     pub async fn list_downtimes(
         &self,
-        params: ListDowntimesParams,
+        params: ListDowntimesOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::ListDowntimesResponse>, Error<ListDowntimesError>>
     {
         match self.list_downtimes_with_http_info(params).await {
@@ -381,14 +350,14 @@ impl DowntimesAPI {
     /// Get all scheduled downtimes.
     pub async fn list_downtimes_with_http_info(
         &self,
-        params: ListDowntimesParams,
+        params: ListDowntimesOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::ListDowntimesResponse>,
         Error<ListDowntimesError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let current_only = params.current_only;
         let include = params.include;
         let page_offset = params.page_offset;
@@ -400,19 +369,21 @@ impl DowntimesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = current_only {
+        if let Some(ref local_query_param) = current_only {
             local_req_builder =
-                local_req_builder.query(&[("current_only", &local_str.to_string())]);
+                local_req_builder.query(&[("current_only", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = include {
-            local_req_builder = local_req_builder.query(&[("include", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_offset {
+        if let Some(ref local_query_param) = include {
             local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_str.to_string())]);
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = page_limit {
-            local_req_builder = local_req_builder.query(&[("page[limit]", &local_str.to_string())]);
+        if let Some(ref local_query_param) = page_offset {
+            local_req_builder =
+                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -458,12 +429,16 @@ impl DowntimesAPI {
     /// Get all active downtimes for the specified monitor.
     pub async fn list_monitor_downtimes(
         &self,
-        params: ListMonitorDowntimesParams,
+        monitor_id: i64,
+        params: ListMonitorDowntimesOptionalParams,
     ) -> Result<
         Option<crate::datadogV2::model::MonitorDowntimeMatchResponse>,
         Error<ListMonitorDowntimesError>,
     > {
-        match self.list_monitor_downtimes_with_http_info(params).await {
+        match self
+            .list_monitor_downtimes_with_http_info(monitor_id, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -472,15 +447,15 @@ impl DowntimesAPI {
     /// Get all active downtimes for the specified monitor.
     pub async fn list_monitor_downtimes_with_http_info(
         &self,
-        params: ListMonitorDowntimesParams,
+        monitor_id: i64,
+        params: ListMonitorDowntimesOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::MonitorDowntimeMatchResponse>,
         Error<ListMonitorDowntimesError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let monitor_id = params.monitor_id;
+        // unbox and build optional parameters
         let page_offset = params.page_offset;
         let page_limit = params.page_limit;
 
@@ -494,12 +469,13 @@ impl DowntimesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = page_offset {
+        if let Some(ref local_query_param) = page_offset {
             local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_str.to_string())]);
+                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = page_limit {
-            local_req_builder = local_req_builder.query(&[("page[limit]", &local_str.to_string())]);
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -545,9 +521,10 @@ impl DowntimesAPI {
     /// Update a downtime by `downtime_id`.
     pub async fn update_downtime(
         &self,
-        params: UpdateDowntimeParams,
+        downtime_id: String,
+        body: crate::datadogV2::model::DowntimeUpdateRequest,
     ) -> Result<Option<crate::datadogV2::model::DowntimeResponse>, Error<UpdateDowntimeError>> {
-        match self.update_downtime_with_http_info(params).await {
+        match self.update_downtime_with_http_info(downtime_id, body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -556,16 +533,13 @@ impl DowntimesAPI {
     /// Update a downtime by `downtime_id`.
     pub async fn update_downtime_with_http_info(
         &self,
-        params: UpdateDowntimeParams,
+        downtime_id: String,
+        body: crate::datadogV2::model::DowntimeUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::DowntimeResponse>,
         Error<UpdateDowntimeError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let downtime_id = params.downtime_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

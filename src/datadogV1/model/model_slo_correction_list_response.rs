@@ -13,7 +13,7 @@ pub struct SLOCorrectionListResponse {
     pub data: Option<Vec<crate::datadogV1::model::SLOCorrection>>,
     /// Object describing meta attributes of response.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV1::model::ResponseMetaAttributes>>,
+    pub meta: Option<crate::datadogV1::model::ResponseMetaAttributes>,
 }
 
 impl SLOCorrectionListResponse {
@@ -22,6 +22,19 @@ impl SLOCorrectionListResponse {
             data: None,
             meta: None,
         }
+    }
+
+    pub fn with_data(&mut self, value: Vec<crate::datadogV1::model::SLOCorrection>) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn with_meta(
+        &mut self,
+        value: crate::datadogV1::model::ResponseMetaAttributes,
+    ) -> &mut Self {
+        self.meta = Some(value);
+        self
     }
 }
 impl Default for SLOCorrectionListResponse {

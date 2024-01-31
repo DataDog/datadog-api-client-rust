@@ -5,43 +5,13 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreatePowerpackParams is a struct for passing parameters to the method [`PowerpackAPI::create_powerpack`]
+/// ListPowerpacksOptionalParams is a struct for passing parameters to the method [`PowerpackAPI::list_powerpacks`]
 #[derive(Clone, Debug)]
-pub struct CreatePowerpackParams {
-    /// Create a powerpack request body.
-    pub body: crate::datadogV2::model::Powerpack,
-}
-
-/// DeletePowerpackParams is a struct for passing parameters to the method [`PowerpackAPI::delete_powerpack`]
-#[derive(Clone, Debug)]
-pub struct DeletePowerpackParams {
-    /// Powerpack id
-    pub powerpack_id: String,
-}
-
-/// GetPowerpackParams is a struct for passing parameters to the method [`PowerpackAPI::get_powerpack`]
-#[derive(Clone, Debug)]
-pub struct GetPowerpackParams {
-    /// ID of the powerpack.
-    pub powerpack_id: String,
-}
-
-/// ListPowerpacksParams is a struct for passing parameters to the method [`PowerpackAPI::list_powerpacks`]
-#[derive(Clone, Debug)]
-pub struct ListPowerpacksParams {
+pub struct ListPowerpacksOptionalParams {
     /// Maximum number of powerpacks in the response.
     pub page_limit: Option<i64>,
     /// Specific offset to use as the beginning of the returned page.
     pub page_offset: Option<i64>,
-}
-
-/// UpdatePowerpackParams is a struct for passing parameters to the method [`PowerpackAPI::update_powerpack`]
-#[derive(Clone, Debug)]
-pub struct UpdatePowerpackParams {
-    /// ID of the powerpack.
-    pub powerpack_id: String,
-    /// Update a powerpack request body.
-    pub body: crate::datadogV2::model::Powerpack,
 }
 
 /// CreatePowerpackError is a struct for typed errors of method [`PowerpackAPI::create_powerpack`]
@@ -113,10 +83,10 @@ impl PowerpackAPI {
     /// Create a powerpack.
     pub async fn create_powerpack(
         &self,
-        params: CreatePowerpackParams,
+        body: crate::datadogV2::model::Powerpack,
     ) -> Result<Option<crate::datadogV2::model::PowerpackResponse>, Error<CreatePowerpackError>>
     {
-        match self.create_powerpack_with_http_info(params).await {
+        match self.create_powerpack_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -125,15 +95,12 @@ impl PowerpackAPI {
     /// Create a powerpack.
     pub async fn create_powerpack_with_http_info(
         &self,
-        params: CreatePowerpackParams,
+        body: crate::datadogV2::model::Powerpack,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::PowerpackResponse>,
         Error<CreatePowerpackError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -191,9 +158,9 @@ impl PowerpackAPI {
     /// Delete a powerpack.
     pub async fn delete_powerpack(
         &self,
-        params: DeletePowerpackParams,
+        powerpack_id: String,
     ) -> Result<Option<()>, Error<DeletePowerpackError>> {
-        match self.delete_powerpack_with_http_info(params).await {
+        match self.delete_powerpack_with_http_info(powerpack_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -202,12 +169,9 @@ impl PowerpackAPI {
     /// Delete a powerpack.
     pub async fn delete_powerpack_with_http_info(
         &self,
-        params: DeletePowerpackParams,
+        powerpack_id: String,
     ) -> Result<ResponseContent<()>, Error<DeletePowerpackError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let powerpack_id = params.powerpack_id;
 
         let local_client = &local_configuration.client;
 
@@ -260,9 +224,9 @@ impl PowerpackAPI {
     /// Get a powerpack.
     pub async fn get_powerpack(
         &self,
-        params: GetPowerpackParams,
+        powerpack_id: String,
     ) -> Result<Option<crate::datadogV2::model::PowerpackResponse>, Error<GetPowerpackError>> {
-        match self.get_powerpack_with_http_info(params).await {
+        match self.get_powerpack_with_http_info(powerpack_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -271,13 +235,10 @@ impl PowerpackAPI {
     /// Get a powerpack.
     pub async fn get_powerpack_with_http_info(
         &self,
-        params: GetPowerpackParams,
+        powerpack_id: String,
     ) -> Result<ResponseContent<crate::datadogV2::model::PowerpackResponse>, Error<GetPowerpackError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let powerpack_id = params.powerpack_id;
 
         let local_client = &local_configuration.client;
 
@@ -331,7 +292,7 @@ impl PowerpackAPI {
     /// Get a list of all powerpacks.
     pub async fn list_powerpacks(
         &self,
-        params: ListPowerpacksParams,
+        params: ListPowerpacksOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::ListPowerpacksResponse>, Error<ListPowerpacksError>>
     {
         match self.list_powerpacks_with_http_info(params).await {
@@ -343,14 +304,14 @@ impl PowerpackAPI {
     /// Get a list of all powerpacks.
     pub async fn list_powerpacks_with_http_info(
         &self,
-        params: ListPowerpacksParams,
+        params: ListPowerpacksOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::ListPowerpacksResponse>,
         Error<ListPowerpacksError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let page_limit = params.page_limit;
         let page_offset = params.page_offset;
 
@@ -360,12 +321,13 @@ impl PowerpackAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = page_limit {
-            local_req_builder = local_req_builder.query(&[("page[limit]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_offset {
+        if let Some(ref local_query_param) = page_limit {
             local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_str.to_string())]);
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_offset {
+            local_req_builder =
+                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -411,10 +373,14 @@ impl PowerpackAPI {
     /// Update a powerpack.
     pub async fn update_powerpack(
         &self,
-        params: UpdatePowerpackParams,
+        powerpack_id: String,
+        body: crate::datadogV2::model::Powerpack,
     ) -> Result<Option<crate::datadogV2::model::PowerpackResponse>, Error<UpdatePowerpackError>>
     {
-        match self.update_powerpack_with_http_info(params).await {
+        match self
+            .update_powerpack_with_http_info(powerpack_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -423,16 +389,13 @@ impl PowerpackAPI {
     /// Update a powerpack.
     pub async fn update_powerpack_with_http_info(
         &self,
-        params: UpdatePowerpackParams,
+        powerpack_id: String,
+        body: crate::datadogV2::model::Powerpack,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::PowerpackResponse>,
         Error<UpdatePowerpackError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let powerpack_id = params.powerpack_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

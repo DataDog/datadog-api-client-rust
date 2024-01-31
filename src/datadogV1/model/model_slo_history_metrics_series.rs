@@ -14,7 +14,7 @@ pub struct SLOHistoryMetricsSeries {
     pub count: i64,
     /// Query metadata.
     #[serde(rename = "metadata")]
-    pub metadata: Option<Box<crate::datadogV1::model::SLOHistoryMetricsSeriesMetadata>>,
+    pub metadata: Option<crate::datadogV1::model::SLOHistoryMetricsSeriesMetadata>,
     /// Total sum of the query.
     #[serde(rename = "sum")]
     pub sum: f64,
@@ -31,5 +31,13 @@ impl SLOHistoryMetricsSeries {
             sum,
             values,
         }
+    }
+
+    pub fn with_metadata(
+        &mut self,
+        value: crate::datadogV1::model::SLOHistoryMetricsSeriesMetadata,
+    ) -> &mut Self {
+        self.metadata = Some(value);
+        self
     }
 }

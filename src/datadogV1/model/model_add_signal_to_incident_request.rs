@@ -27,4 +27,14 @@ impl AddSignalToIncidentRequest {
             version: None,
         }
     }
+
+    pub fn with_add_to_signal_timeline(&mut self, value: bool) -> &mut Self {
+        self.add_to_signal_timeline = Some(value);
+        self
+    }
+
+    pub fn with_version(&mut self, value: i64) -> &mut Self {
+        self.version = Some(value);
+        self
+    }
 }

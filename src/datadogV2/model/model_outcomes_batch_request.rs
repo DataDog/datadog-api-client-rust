@@ -10,12 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct OutcomesBatchRequest {
     /// Scorecard outcomes batch request data.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::OutcomesBatchRequestData>>,
+    pub data: Option<crate::datadogV2::model::OutcomesBatchRequestData>,
 }
 
 impl OutcomesBatchRequest {
     pub fn new() -> OutcomesBatchRequest {
         OutcomesBatchRequest { data: None }
+    }
+
+    pub fn with_data(
+        &mut self,
+        value: crate::datadogV2::model::OutcomesBatchRequestData,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
     }
 }
 impl Default for OutcomesBatchRequest {

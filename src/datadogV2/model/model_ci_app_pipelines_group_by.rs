@@ -14,19 +14,19 @@ pub struct CIAppPipelinesGroupBy {
     /// Used to perform a histogram computation (only for measure facets).
     /// At most, 100 buckets are allowed, the number of buckets is `(max - min)/interval`.
     #[serde(rename = "histogram")]
-    pub histogram: Option<Box<crate::datadogV2::model::CIAppGroupByHistogram>>,
+    pub histogram: Option<crate::datadogV2::model::CIAppGroupByHistogram>,
     /// The maximum buckets to return for this group-by.
     #[serde(rename = "limit")]
     pub limit: Option<i64>,
     /// The value to use for logs that don't have the facet used to group-by.
     #[serde(rename = "missing")]
-    pub missing: Option<Box<crate::datadogV2::model::CIAppGroupByMissing>>,
+    pub missing: Option<crate::datadogV2::model::CIAppGroupByMissing>,
     /// A sort rule.
     #[serde(rename = "sort")]
-    pub sort: Option<Box<crate::datadogV2::model::CIAppAggregateSort>>,
+    pub sort: Option<crate::datadogV2::model::CIAppAggregateSort>,
     /// A resulting object to put the given computes in over all the matching records.
     #[serde(rename = "total")]
-    pub total: Option<Box<crate::datadogV2::model::CIAppGroupByTotal>>,
+    pub total: Option<crate::datadogV2::model::CIAppGroupByTotal>,
 }
 
 impl CIAppPipelinesGroupBy {
@@ -39,5 +39,36 @@ impl CIAppPipelinesGroupBy {
             sort: None,
             total: None,
         }
+    }
+
+    pub fn with_histogram(
+        &mut self,
+        value: crate::datadogV2::model::CIAppGroupByHistogram,
+    ) -> &mut Self {
+        self.histogram = Some(value);
+        self
+    }
+
+    pub fn with_limit(&mut self, value: i64) -> &mut Self {
+        self.limit = Some(value);
+        self
+    }
+
+    pub fn with_missing(
+        &mut self,
+        value: crate::datadogV2::model::CIAppGroupByMissing,
+    ) -> &mut Self {
+        self.missing = Some(value);
+        self
+    }
+
+    pub fn with_sort(&mut self, value: crate::datadogV2::model::CIAppAggregateSort) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+
+    pub fn with_total(&mut self, value: crate::datadogV2::model::CIAppGroupByTotal) -> &mut Self {
+        self.total = Some(value);
+        self
     }
 }

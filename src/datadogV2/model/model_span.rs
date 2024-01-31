@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct Span {
     /// JSON object containing all span attributes and their associated values.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::SpansAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::SpansAttributes>,
     /// Unique ID of the Span.
     #[serde(rename = "id")]
     pub id: Option<String>,
@@ -26,6 +26,24 @@ impl Span {
             id: None,
             type_: None,
         }
+    }
+
+    pub fn with_attributes(
+        &mut self,
+        value: crate::datadogV2::model::SpansAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn with_id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn with_type_(&mut self, value: crate::datadogV2::model::SpansType) -> &mut Self {
+        self.type_ = Some(value);
+        self
     }
 }
 impl Default for Span {

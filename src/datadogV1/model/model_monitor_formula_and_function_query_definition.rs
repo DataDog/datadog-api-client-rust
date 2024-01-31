@@ -8,6 +8,6 @@ use serde::{Deserialize, Serialize};
 #[serde(untagged)]
 pub enum MonitorFormulaAndFunctionQueryDefinition {
     MonitorFormulaAndFunctionEventQueryDefinition(
-        Box<crate::datadogV1::model::MonitorFormulaAndFunctionEventQueryDefinition>,
+        crate::datadogV1::model::MonitorFormulaAndFunctionEventQueryDefinition,
     ),
 }

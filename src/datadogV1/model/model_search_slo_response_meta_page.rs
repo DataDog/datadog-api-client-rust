@@ -47,6 +47,46 @@ impl SearchSLOResponseMetaPage {
             type_: None,
         }
     }
+
+    pub fn with_first_number(&mut self, value: i64) -> &mut Self {
+        self.first_number = Some(value);
+        self
+    }
+
+    pub fn with_last_number(&mut self, value: i64) -> &mut Self {
+        self.last_number = Some(value);
+        self
+    }
+
+    pub fn with_next_number(&mut self, value: i64) -> &mut Self {
+        self.next_number = Some(value);
+        self
+    }
+
+    pub fn with_number(&mut self, value: i64) -> &mut Self {
+        self.number = Some(value);
+        self
+    }
+
+    pub fn with_prev_number(&mut self, value: i64) -> &mut Self {
+        self.prev_number = Some(value);
+        self
+    }
+
+    pub fn with_size(&mut self, value: i64) -> &mut Self {
+        self.size = Some(value);
+        self
+    }
+
+    pub fn with_total(&mut self, value: i64) -> &mut Self {
+        self.total = Some(value);
+        self
+    }
+
+    pub fn with_type_(&mut self, value: String) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
 impl Default for SearchSLOResponseMetaPage {
     fn default() -> Self {

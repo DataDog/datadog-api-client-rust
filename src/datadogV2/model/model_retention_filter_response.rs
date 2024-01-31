@@ -10,12 +10,17 @@ use serde_with::skip_serializing_none;
 pub struct RetentionFilterResponse {
     /// The definition of the retention filter.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::RetentionFilter>>,
+    pub data: Option<crate::datadogV2::model::RetentionFilter>,
 }
 
 impl RetentionFilterResponse {
     pub fn new() -> RetentionFilterResponse {
         RetentionFilterResponse { data: None }
+    }
+
+    pub fn with_data(&mut self, value: crate::datadogV2::model::RetentionFilter) -> &mut Self {
+        self.data = Some(value);
+        self
     }
 }
 impl Default for RetentionFilterResponse {

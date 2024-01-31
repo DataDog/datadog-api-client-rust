@@ -10,8 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SyntheticsGlobalVariableOptions {
     /// Parameters for the TOTP/MFA variable
     #[serde(rename = "totp_parameters")]
-    pub totp_parameters:
-        Option<Box<crate::datadogV1::model::SyntheticsGlobalVariableTOTPParameters>>,
+    pub totp_parameters: Option<crate::datadogV1::model::SyntheticsGlobalVariableTOTPParameters>,
 }
 
 impl SyntheticsGlobalVariableOptions {
@@ -19,6 +18,14 @@ impl SyntheticsGlobalVariableOptions {
         SyntheticsGlobalVariableOptions {
             totp_parameters: None,
         }
+    }
+
+    pub fn with_totp_parameters(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsGlobalVariableTOTPParameters,
+    ) -> &mut Self {
+        self.totp_parameters = Some(value);
+        self
     }
 }
 impl Default for SyntheticsGlobalVariableOptions {

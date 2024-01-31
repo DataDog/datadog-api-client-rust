@@ -10,12 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct IncidentResponseMeta {
     /// Pagination properties.
     #[serde(rename = "pagination")]
-    pub pagination: Option<Box<crate::datadogV2::model::IncidentResponseMetaPagination>>,
+    pub pagination: Option<crate::datadogV2::model::IncidentResponseMetaPagination>,
 }
 
 impl IncidentResponseMeta {
     pub fn new() -> IncidentResponseMeta {
         IncidentResponseMeta { pagination: None }
+    }
+
+    pub fn with_pagination(
+        &mut self,
+        value: crate::datadogV2::model::IncidentResponseMetaPagination,
+    ) -> &mut Self {
+        self.pagination = Some(value);
+        self
     }
 }
 impl Default for IncidentResponseMeta {

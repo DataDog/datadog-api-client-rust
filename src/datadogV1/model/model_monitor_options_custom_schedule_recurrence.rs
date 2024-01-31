@@ -27,6 +27,21 @@ impl MonitorOptionsCustomScheduleRecurrence {
             timezone: None,
         }
     }
+
+    pub fn with_rrule(&mut self, value: String) -> &mut Self {
+        self.rrule = Some(value);
+        self
+    }
+
+    pub fn with_start(&mut self, value: String) -> &mut Self {
+        self.start = Some(value);
+        self
+    }
+
+    pub fn with_timezone(&mut self, value: String) -> &mut Self {
+        self.timezone = Some(value);
+        self
+    }
 }
 impl Default for MonitorOptionsCustomScheduleRecurrence {
     fn default() -> Self {

@@ -28,7 +28,7 @@ pub struct SecurityMonitoringStandardRuleCreatePayload {
     pub name: String,
     /// Options on rules.
     #[serde(rename = "options")]
-    pub options: Box<crate::datadogV2::model::SecurityMonitoringRuleOptions>,
+    pub options: crate::datadogV2::model::SecurityMonitoringRuleOptions,
     /// Queries for selecting logs which are part of the rule.
     #[serde(rename = "queries")]
     pub queries: Vec<crate::datadogV2::model::SecurityMonitoringStandardRuleQuery>,
@@ -50,7 +50,7 @@ impl SecurityMonitoringStandardRuleCreatePayload {
         is_enabled: bool,
         message: String,
         name: String,
-        options: Box<crate::datadogV2::model::SecurityMonitoringRuleOptions>,
+        options: crate::datadogV2::model::SecurityMonitoringRuleOptions,
         queries: Vec<crate::datadogV2::model::SecurityMonitoringStandardRuleQuery>,
     ) -> SecurityMonitoringStandardRuleCreatePayload {
         SecurityMonitoringStandardRuleCreatePayload {
@@ -66,5 +66,39 @@ impl SecurityMonitoringStandardRuleCreatePayload {
             third_party_cases: None,
             type_: None,
         }
+    }
+
+    pub fn with_filters(
+        &mut self,
+        value: Vec<crate::datadogV2::model::SecurityMonitoringFilter>,
+    ) -> &mut Self {
+        self.filters = Some(value);
+        self
+    }
+
+    pub fn with_has_extended_title(&mut self, value: bool) -> &mut Self {
+        self.has_extended_title = Some(value);
+        self
+    }
+
+    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+
+    pub fn with_third_party_cases(
+        &mut self,
+        value: Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRuleCaseCreate>,
+    ) -> &mut Self {
+        self.third_party_cases = Some(value);
+        self
+    }
+
+    pub fn with_type_(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringRuleTypeCreate,
+    ) -> &mut Self {
+        self.type_ = Some(value);
+        self
     }
 }

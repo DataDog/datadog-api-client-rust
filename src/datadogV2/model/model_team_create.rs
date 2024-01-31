@@ -10,10 +10,10 @@ use serde_with::skip_serializing_none;
 pub struct TeamCreate {
     /// Team creation attributes
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::TeamCreateAttributes>,
+    pub attributes: crate::datadogV2::model::TeamCreateAttributes,
     /// Relationships formed with the team on creation
     #[serde(rename = "relationships")]
-    pub relationships: Option<Box<crate::datadogV2::model::TeamCreateRelationships>>,
+    pub relationships: Option<crate::datadogV2::model::TeamCreateRelationships>,
     /// Team type
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::TeamType,
@@ -21,7 +21,7 @@ pub struct TeamCreate {
 
 impl TeamCreate {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::TeamCreateAttributes>,
+        attributes: crate::datadogV2::model::TeamCreateAttributes,
         type_: crate::datadogV2::model::TeamType,
     ) -> TeamCreate {
         TeamCreate {
@@ -29,5 +29,13 @@ impl TeamCreate {
             relationships: None,
             type_,
         }
+    }
+
+    pub fn with_relationships(
+        &mut self,
+        value: crate::datadogV2::model::TeamCreateRelationships,
+    ) -> &mut Self {
+        self.relationships = Some(value);
+        self
     }
 }

@@ -23,4 +23,9 @@ impl DashboardListItems {
             total: None,
         }
     }
+
+    pub fn with_total(&mut self, value: i64) -> &mut Self {
+        self.total = Some(value);
+        self
+    }
 }

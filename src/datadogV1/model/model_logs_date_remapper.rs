@@ -52,4 +52,14 @@ impl LogsDateRemapper {
             type_,
         }
     }
+
+    pub fn with_is_enabled(&mut self, value: bool) -> &mut Self {
+        self.is_enabled = Some(value);
+        self
+    }
+
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
 }

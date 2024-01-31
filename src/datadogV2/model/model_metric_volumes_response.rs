@@ -10,12 +10,17 @@ use serde_with::skip_serializing_none;
 pub struct MetricVolumesResponse {
     /// Possible response objects for a metric's volume.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::MetricVolumes>>,
+    pub data: Option<crate::datadogV2::model::MetricVolumes>,
 }
 
 impl MetricVolumesResponse {
     pub fn new() -> MetricVolumesResponse {
         MetricVolumesResponse { data: None }
+    }
+
+    pub fn with_data(&mut self, value: crate::datadogV2::model::MetricVolumes) -> &mut Self {
+        self.data = Some(value);
+        self
     }
 }
 impl Default for MetricVolumesResponse {

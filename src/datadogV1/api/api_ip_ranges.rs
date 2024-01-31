@@ -50,8 +50,6 @@ impl IPRangesAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::IPRanges>, Error<GetIPRangesError>> {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/", local_configuration.base_path);

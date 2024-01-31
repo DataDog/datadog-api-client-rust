@@ -5,9 +5,9 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// ListProcessesParams is a struct for passing parameters to the method [`ProcessesAPI::list_processes`]
+/// ListProcessesOptionalParams is a struct for passing parameters to the method [`ProcessesAPI::list_processes`]
 #[derive(Clone, Debug)]
-pub struct ListProcessesParams {
+pub struct ListProcessesOptionalParams {
     /// String to search processes by.
     pub search: Option<String>,
     /// Comma-separated list of tags to filter processes by.
@@ -61,7 +61,7 @@ impl ProcessesAPI {
     /// Get all processes for your organization.
     pub async fn list_processes(
         &self,
-        params: ListProcessesParams,
+        params: ListProcessesOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::ProcessSummariesResponse>, Error<ListProcessesError>>
     {
         match self.list_processes_with_http_info(params).await {
@@ -73,14 +73,14 @@ impl ProcessesAPI {
     /// Get all processes for your organization.
     pub async fn list_processes_with_http_info(
         &self,
-        params: ListProcessesParams,
+        params: ListProcessesOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::ProcessSummariesResponse>,
         Error<ListProcessesError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let search = params.search;
         let tags = params.tags;
         let from = params.from;
@@ -94,24 +94,28 @@ impl ProcessesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = search {
-            local_req_builder = local_req_builder.query(&[("search", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = tags {
-            local_req_builder = local_req_builder.query(&[("tags", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = from {
-            local_req_builder = local_req_builder.query(&[("from", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = to {
-            local_req_builder = local_req_builder.query(&[("to", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_limit {
-            local_req_builder = local_req_builder.query(&[("page[limit]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_cursor {
+        if let Some(ref local_query_param) = search {
             local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_str.to_string())]);
+                local_req_builder.query(&[("search", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = tags {
+            local_req_builder =
+                local_req_builder.query(&[("tags", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = from {
+            local_req_builder =
+                local_req_builder.query(&[("from", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = to {
+            local_req_builder = local_req_builder.query(&[("to", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_cursor {
+            local_req_builder =
+                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
         };
 
         // build user agent

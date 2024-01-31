@@ -92,4 +92,49 @@ impl CIAppGitInfo {
             tag: None,
         }
     }
+
+    pub fn with_author_name(&mut self, value: Option<String>) -> &mut Self {
+        self.author_name = Some(value);
+        self
+    }
+
+    pub fn with_author_time(&mut self, value: Option<String>) -> &mut Self {
+        self.author_time = Some(value);
+        self
+    }
+
+    pub fn with_branch(&mut self, value: Option<String>) -> &mut Self {
+        self.branch = Some(value);
+        self
+    }
+
+    pub fn with_commit_time(&mut self, value: Option<String>) -> &mut Self {
+        self.commit_time = Some(value);
+        self
+    }
+
+    pub fn with_committer_email(&mut self, value: Option<String>) -> &mut Self {
+        self.committer_email = Some(value);
+        self
+    }
+
+    pub fn with_committer_name(&mut self, value: Option<String>) -> &mut Self {
+        self.committer_name = Some(value);
+        self
+    }
+
+    pub fn with_default_branch(&mut self, value: Option<String>) -> &mut Self {
+        self.default_branch = Some(value);
+        self
+    }
+
+    pub fn with_message(&mut self, value: Option<String>) -> &mut Self {
+        self.message = Some(value);
+        self
+    }
+
+    pub fn with_tag(&mut self, value: Option<String>) -> &mut Self {
+        self.tag = Some(value);
+        self
+    }
 }

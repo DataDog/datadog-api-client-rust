@@ -50,4 +50,40 @@ impl AlertValueWidgetDefinition {
             unit: None,
         }
     }
+
+    pub fn with_precision(&mut self, value: i64) -> &mut Self {
+        self.precision = Some(value);
+        self
+    }
+
+    pub fn with_text_align(
+        &mut self,
+        value: crate::datadogV1::model::WidgetTextAlign,
+    ) -> &mut Self {
+        self.text_align = Some(value);
+        self
+    }
+
+    pub fn with_title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
+    }
+
+    pub fn with_title_align(
+        &mut self,
+        value: crate::datadogV1::model::WidgetTextAlign,
+    ) -> &mut Self {
+        self.title_align = Some(value);
+        self
+    }
+
+    pub fn with_title_size(&mut self, value: String) -> &mut Self {
+        self.title_size = Some(value);
+        self
+    }
+
+    pub fn with_unit(&mut self, value: String) -> &mut Self {
+        self.unit = Some(value);
+        self
+    }
 }

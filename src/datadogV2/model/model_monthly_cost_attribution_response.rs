@@ -13,7 +13,7 @@ pub struct MonthlyCostAttributionResponse {
     pub data: Option<Vec<crate::datadogV2::model::MonthlyCostAttributionBody>>,
     /// The object containing document metadata.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV2::model::MonthlyCostAttributionMeta>>,
+    pub meta: Option<crate::datadogV2::model::MonthlyCostAttributionMeta>,
 }
 
 impl MonthlyCostAttributionResponse {
@@ -22,6 +22,22 @@ impl MonthlyCostAttributionResponse {
             data: None,
             meta: None,
         }
+    }
+
+    pub fn with_data(
+        &mut self,
+        value: Vec<crate::datadogV2::model::MonthlyCostAttributionBody>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn with_meta(
+        &mut self,
+        value: crate::datadogV2::model::MonthlyCostAttributionMeta,
+    ) -> &mut Self {
+        self.meta = Some(value);
+        self
     }
 }
 impl Default for MonthlyCostAttributionResponse {

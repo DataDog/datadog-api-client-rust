@@ -23,6 +23,16 @@ impl MonitorSearchCountItem {
             name: None,
         }
     }
+
+    pub fn with_count(&mut self, value: i64) -> &mut Self {
+        self.count = Some(value);
+        self
+    }
+
+    pub fn with_name(&mut self, value: serde_json::Value) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
 }
 impl Default for MonitorSearchCountItem {
     fn default() -> Self {

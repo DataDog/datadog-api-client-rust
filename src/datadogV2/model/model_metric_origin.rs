@@ -27,6 +27,21 @@ impl MetricOrigin {
             service: None,
         }
     }
+
+    pub fn with_metric_type(&mut self, value: i32) -> &mut Self {
+        self.metric_type = Some(value);
+        self
+    }
+
+    pub fn with_product(&mut self, value: i32) -> &mut Self {
+        self.product = Some(value);
+        self
+    }
+
+    pub fn with_service(&mut self, value: i32) -> &mut Self {
+        self.service = Some(value);
+        self
+    }
 }
 impl Default for MetricOrigin {
     fn default() -> Self {

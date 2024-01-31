@@ -27,4 +27,9 @@ impl ServiceDefinitionV2Repo {
             url,
         }
     }
+
+    pub fn with_provider(&mut self, value: String) -> &mut Self {
+        self.provider = Some(value);
+        self
+    }
 }

@@ -35,6 +35,26 @@ impl UsageNetworkHostsHour {
             public_id: None,
         }
     }
+
+    pub fn with_host_count(&mut self, value: Option<i64>) -> &mut Self {
+        self.host_count = Some(value);
+        self
+    }
+
+    pub fn with_hour(&mut self, value: String) -> &mut Self {
+        self.hour = Some(value);
+        self
+    }
+
+    pub fn with_org_name(&mut self, value: String) -> &mut Self {
+        self.org_name = Some(value);
+        self
+    }
+
+    pub fn with_public_id(&mut self, value: String) -> &mut Self {
+        self.public_id = Some(value);
+        self
+    }
 }
 impl Default for UsageNetworkHostsHour {
     fn default() -> Self {

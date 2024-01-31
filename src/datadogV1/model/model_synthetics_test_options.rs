@@ -20,7 +20,7 @@ pub struct SyntheticsTestOptions {
     pub check_certificate_revocation: Option<bool>,
     /// CI/CD options for a Synthetic test.
     #[serde(rename = "ci")]
-    pub ci: Option<Box<crate::datadogV1::model::SyntheticsTestCiOptions>>,
+    pub ci: Option<crate::datadogV1::model::SyntheticsTestCiOptions>,
     /// For browser test, array with the different device IDs used to run the test.
     #[serde(rename = "device_ids")]
     pub device_ids: Option<Vec<crate::datadogV1::model::SyntheticsDeviceID>>,
@@ -55,7 +55,7 @@ pub struct SyntheticsTestOptions {
     /// Object containing the options for a Synthetic test as a monitor
     /// (for example, renotification).
     #[serde(rename = "monitor_options")]
-    pub monitor_options: Option<Box<crate::datadogV1::model::SyntheticsTestOptionsMonitorOptions>>,
+    pub monitor_options: Option<crate::datadogV1::model::SyntheticsTestOptionsMonitorOptions>,
     /// Integer from 1 (high) to 5 (low) indicating alert severity.
     #[serde(rename = "monitor_priority")]
     pub monitor_priority: Option<i32>,
@@ -67,7 +67,7 @@ pub struct SyntheticsTestOptions {
     pub restricted_roles: Option<Vec<String>>,
     /// Object describing the retry strategy to apply to a Synthetic test.
     #[serde(rename = "retry")]
-    pub retry: Option<Box<crate::datadogV1::model::SyntheticsTestOptionsRetry>>,
+    pub retry: Option<crate::datadogV1::model::SyntheticsTestOptionsRetry>,
     /// The RUM data collection settings for the Synthetic browser test.
     /// **Note:** There are 3 ways to format RUM settings:
     ///
@@ -80,10 +80,10 @@ pub struct SyntheticsTestOptions {
     /// `{ isEnabled: true, applicationId: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", clientTokenId: 12345 }`
     /// RUM data is collected using the specified application.
     #[serde(rename = "rumSettings")]
-    pub rum_settings: Option<Box<crate::datadogV1::model::SyntheticsBrowserTestRumSettings>>,
+    pub rum_settings: Option<crate::datadogV1::model::SyntheticsBrowserTestRumSettings>,
     /// Object containing timeframes and timezone used for advanced scheduling.
     #[serde(rename = "scheduling")]
-    pub scheduling: Option<Box<crate::datadogV1::model::SyntheticsTestOptionsScheduling>>,
+    pub scheduling: Option<crate::datadogV1::model::SyntheticsTestOptionsScheduling>,
     /// The frequency at which to run the Synthetic test (in seconds).
     #[serde(rename = "tick_every")]
     pub tick_every: Option<i64>,
@@ -115,6 +115,137 @@ impl SyntheticsTestOptions {
             scheduling: None,
             tick_every: None,
         }
+    }
+
+    pub fn with_accept_self_signed(&mut self, value: bool) -> &mut Self {
+        self.accept_self_signed = Some(value);
+        self
+    }
+
+    pub fn with_allow_insecure(&mut self, value: bool) -> &mut Self {
+        self.allow_insecure = Some(value);
+        self
+    }
+
+    pub fn with_check_certificate_revocation(&mut self, value: bool) -> &mut Self {
+        self.check_certificate_revocation = Some(value);
+        self
+    }
+
+    pub fn with_ci(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsTestCiOptions,
+    ) -> &mut Self {
+        self.ci = Some(value);
+        self
+    }
+
+    pub fn with_device_ids(
+        &mut self,
+        value: Vec<crate::datadogV1::model::SyntheticsDeviceID>,
+    ) -> &mut Self {
+        self.device_ids = Some(value);
+        self
+    }
+
+    pub fn with_disable_cors(&mut self, value: bool) -> &mut Self {
+        self.disable_cors = Some(value);
+        self
+    }
+
+    pub fn with_disable_csp(&mut self, value: bool) -> &mut Self {
+        self.disable_csp = Some(value);
+        self
+    }
+
+    pub fn with_follow_redirects(&mut self, value: bool) -> &mut Self {
+        self.follow_redirects = Some(value);
+        self
+    }
+
+    pub fn with_http_version(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsTestOptionsHTTPVersion,
+    ) -> &mut Self {
+        self.http_version = Some(value);
+        self
+    }
+
+    pub fn with_ignore_server_certificate_error(&mut self, value: bool) -> &mut Self {
+        self.ignore_server_certificate_error = Some(value);
+        self
+    }
+
+    pub fn with_initial_navigation_timeout(&mut self, value: i64) -> &mut Self {
+        self.initial_navigation_timeout = Some(value);
+        self
+    }
+
+    pub fn with_min_failure_duration(&mut self, value: i64) -> &mut Self {
+        self.min_failure_duration = Some(value);
+        self
+    }
+
+    pub fn with_min_location_failed(&mut self, value: i64) -> &mut Self {
+        self.min_location_failed = Some(value);
+        self
+    }
+
+    pub fn with_monitor_name(&mut self, value: String) -> &mut Self {
+        self.monitor_name = Some(value);
+        self
+    }
+
+    pub fn with_monitor_options(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsTestOptionsMonitorOptions,
+    ) -> &mut Self {
+        self.monitor_options = Some(value);
+        self
+    }
+
+    pub fn with_monitor_priority(&mut self, value: i32) -> &mut Self {
+        self.monitor_priority = Some(value);
+        self
+    }
+
+    pub fn with_no_screenshot(&mut self, value: bool) -> &mut Self {
+        self.no_screenshot = Some(value);
+        self
+    }
+
+    pub fn with_restricted_roles(&mut self, value: Vec<String>) -> &mut Self {
+        self.restricted_roles = Some(value);
+        self
+    }
+
+    pub fn with_retry(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsTestOptionsRetry,
+    ) -> &mut Self {
+        self.retry = Some(value);
+        self
+    }
+
+    pub fn with_rum_settings(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsBrowserTestRumSettings,
+    ) -> &mut Self {
+        self.rum_settings = Some(value);
+        self
+    }
+
+    pub fn with_scheduling(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsTestOptionsScheduling,
+    ) -> &mut Self {
+        self.scheduling = Some(value);
+        self
+    }
+
+    pub fn with_tick_every(&mut self, value: i64) -> &mut Self {
+        self.tick_every = Some(value);
+        self
     }
 }
 impl Default for SyntheticsTestOptions {

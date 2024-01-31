@@ -33,4 +33,22 @@ impl SecurityMonitoringSignalStateUpdateAttributes {
             version: None,
         }
     }
+
+    pub fn with_archive_comment(&mut self, value: String) -> &mut Self {
+        self.archive_comment = Some(value);
+        self
+    }
+
+    pub fn with_archive_reason(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringSignalArchiveReason,
+    ) -> &mut Self {
+        self.archive_reason = Some(value);
+        self
+    }
+
+    pub fn with_version(&mut self, value: i64) -> &mut Self {
+        self.version = Some(value);
+        self
+    }
 }

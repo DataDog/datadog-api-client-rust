@@ -5,21 +5,15 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// AggregateLogsParams is a struct for passing parameters to the method [`LogsAPI::aggregate_logs`]
+/// ListLogsOptionalParams is a struct for passing parameters to the method [`LogsAPI::list_logs`]
 #[derive(Clone, Debug)]
-pub struct AggregateLogsParams {
-    pub body: crate::datadogV2::model::LogsAggregateRequest,
+pub struct ListLogsOptionalParams {
+    pub body: Option<crate::datadogV2::model::LogsListRequest>,
 }
 
-/// ListLogsParams is a struct for passing parameters to the method [`LogsAPI::list_logs`]
+/// ListLogsGetOptionalParams is a struct for passing parameters to the method [`LogsAPI::list_logs_get`]
 #[derive(Clone, Debug)]
-pub struct ListLogsParams {
-    pub body: Option<Option<crate::datadogV2::model::LogsListRequest>>,
-}
-
-/// ListLogsGetParams is a struct for passing parameters to the method [`LogsAPI::list_logs_get`]
-#[derive(Clone, Debug)]
-pub struct ListLogsGetParams {
+pub struct ListLogsGetOptionalParams {
     /// Search query following logs syntax.
     pub filter_query: Option<String>,
     /// For customers with multiple indexes, the indexes to search.
@@ -39,11 +33,9 @@ pub struct ListLogsGetParams {
     pub page_limit: Option<i32>,
 }
 
-/// SubmitLogParams is a struct for passing parameters to the method [`LogsAPI::submit_log`]
+/// SubmitLogOptionalParams is a struct for passing parameters to the method [`LogsAPI::submit_log`]
 #[derive(Clone, Debug)]
-pub struct SubmitLogParams {
-    /// Log to send (JSON format).
-    pub body: Vec<crate::datadogV2::model::HTTPLogItem>,
+pub struct SubmitLogOptionalParams {
     /// HTTP header used to compress the media-type.
     pub content_encoding: Option<crate::datadogV2::model::ContentEncoding>,
     /// Log tags can be passed as query parameters with `text/plain` content type.
@@ -119,10 +111,10 @@ impl LogsAPI {
     /// The API endpoint to aggregate events into buckets and compute metrics and timeseries.
     pub async fn aggregate_logs(
         &self,
-        params: AggregateLogsParams,
+        body: crate::datadogV2::model::LogsAggregateRequest,
     ) -> Result<Option<crate::datadogV2::model::LogsAggregateResponse>, Error<AggregateLogsError>>
     {
-        match self.aggregate_logs_with_http_info(params).await {
+        match self.aggregate_logs_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -131,15 +123,12 @@ impl LogsAPI {
     /// The API endpoint to aggregate events into buckets and compute metrics and timeseries.
     pub async fn aggregate_logs_with_http_info(
         &self,
-        params: AggregateLogsParams,
+        body: crate::datadogV2::model::LogsAggregateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::LogsAggregateResponse>,
         Error<AggregateLogsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -210,7 +199,7 @@ impl LogsAPI {
     /// [2]: <https://docs.datadoghq.com/logs/archives>
     pub async fn list_logs(
         &self,
-        params: ListLogsParams,
+        params: ListLogsOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::LogsListResponse>, Error<ListLogsError>> {
         match self.list_logs_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
@@ -231,12 +220,12 @@ impl LogsAPI {
     /// [2]: <https://docs.datadoghq.com/logs/archives>
     pub async fn list_logs_with_http_info(
         &self,
-        params: ListLogsParams,
+        params: ListLogsOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV2::model::LogsListResponse>, Error<ListLogsError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let body = params.body;
 
         let local_client = &local_configuration.client;
@@ -307,7 +296,7 @@ impl LogsAPI {
     /// [2]: <https://docs.datadoghq.com/logs/archives>
     pub async fn list_logs_get(
         &self,
-        params: ListLogsGetParams,
+        params: ListLogsGetOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::LogsListResponse>, Error<ListLogsGetError>> {
         match self.list_logs_get_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
@@ -328,12 +317,12 @@ impl LogsAPI {
     /// [2]: <https://docs.datadoghq.com/logs/archives>
     pub async fn list_logs_get_with_http_info(
         &self,
-        params: ListLogsGetParams,
+        params: ListLogsGetOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV2::model::LogsListResponse>, Error<ListLogsGetError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let filter_query = params.filter_query;
         let filter_indexes = params.filter_indexes;
         let filter_from = params.filter_from;
@@ -349,41 +338,44 @@ impl LogsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = filter_query {
+        if let Some(ref local_query_param) = filter_query {
             local_req_builder =
-                local_req_builder.query(&[("filter[query]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
         };
         if let Some(ref local) = filter_indexes {
             local_req_builder = local_req_builder.query(&[(
                 "filter[indexes]",
                 &local
-                    .into_iter()
+                    .iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
                     .join(",")
                     .to_string(),
             )]);
         };
-        if let Some(ref local_str) = filter_from {
+        if let Some(ref local_query_param) = filter_from {
             local_req_builder =
-                local_req_builder.query(&[("filter[from]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[from]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_to {
-            local_req_builder = local_req_builder.query(&[("filter[to]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = filter_storage_tier {
+        if let Some(ref local_query_param) = filter_to {
             local_req_builder =
-                local_req_builder.query(&[("filter[storage_tier]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[to]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = sort {
-            local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
+        if let Some(ref local_query_param) = filter_storage_tier {
+            local_req_builder = local_req_builder
+                .query(&[("filter[storage_tier]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = page_cursor {
+        if let Some(ref local_query_param) = sort {
             local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_str.to_string())]);
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = page_limit {
-            local_req_builder = local_req_builder.query(&[("page[limit]", &local_str.to_string())]);
+        if let Some(ref local_query_param) = page_cursor {
+            local_req_builder =
+                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -451,10 +443,11 @@ impl LogsAPI {
     /// - 503: Service Unavailable, the server is not ready to handle the request probably because it is overloaded, request should be retried after some time
     pub async fn submit_log(
         &self,
-        params: SubmitLogParams,
+        body: Vec<crate::datadogV2::model::HTTPLogItem>,
+        params: SubmitLogOptionalParams,
     ) -> Result<Option<std::collections::BTreeMap<String, serde_json::Value>>, Error<SubmitLogError>>
     {
-        match self.submit_log_with_http_info(params).await {
+        match self.submit_log_with_http_info(body, params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -486,15 +479,15 @@ impl LogsAPI {
     /// - 503: Service Unavailable, the server is not ready to handle the request probably because it is overloaded, request should be retried after some time
     pub async fn submit_log_with_http_info(
         &self,
-        params: SubmitLogParams,
+        body: Vec<crate::datadogV2::model::HTTPLogItem>,
+        params: SubmitLogOptionalParams,
     ) -> Result<
         ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<SubmitLogError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let body = params.body;
+        // unbox and build optional parameters
         let content_encoding = params.content_encoding;
         let ddtags = params.ddtags;
 
@@ -504,8 +497,9 @@ impl LogsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
-        if let Some(ref local_str) = ddtags {
-            local_req_builder = local_req_builder.query(&[("ddtags", &local_str.to_string())]);
+        if let Some(ref local_query_param) = ddtags {
+            local_req_builder =
+                local_req_builder.query(&[("ddtags", &local_query_param.to_string())]);
         };
 
         if let Some(ref local) = content_encoding {

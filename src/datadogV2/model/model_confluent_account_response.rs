@@ -10,12 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct ConfluentAccountResponse {
     /// An API key and API secret pair that represents a Confluent account.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::ConfluentAccountResponseData>>,
+    pub data: Option<crate::datadogV2::model::ConfluentAccountResponseData>,
 }
 
 impl ConfluentAccountResponse {
     pub fn new() -> ConfluentAccountResponse {
         ConfluentAccountResponse { data: None }
+    }
+
+    pub fn with_data(
+        &mut self,
+        value: crate::datadogV2::model::ConfluentAccountResponseData,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
     }
 }
 impl Default for ConfluentAccountResponse {

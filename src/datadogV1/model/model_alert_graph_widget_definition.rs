@@ -13,7 +13,7 @@ pub struct AlertGraphWidgetDefinition {
     pub alert_id: String,
     /// Time setting for the widget.
     #[serde(rename = "time")]
-    pub time: Option<Box<crate::datadogV1::model::WidgetTime>>,
+    pub time: Option<crate::datadogV1::model::WidgetTime>,
     /// The title of the widget.
     #[serde(rename = "title")]
     pub title: Option<String>,
@@ -46,5 +46,28 @@ impl AlertGraphWidgetDefinition {
             type_,
             viz_type,
         }
+    }
+
+    pub fn with_time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
+        self.time = Some(value);
+        self
+    }
+
+    pub fn with_title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
+    }
+
+    pub fn with_title_align(
+        &mut self,
+        value: crate::datadogV1::model::WidgetTextAlign,
+    ) -> &mut Self {
+        self.title_align = Some(value);
+        self
+    }
+
+    pub fn with_title_size(&mut self, value: String) -> &mut Self {
+        self.title_size = Some(value);
+        self
     }
 }

@@ -26,7 +26,7 @@ pub struct DowntimeCreateRequestAttributes {
     pub message: Option<Option<String>>,
     /// Monitor identifier for the downtime.
     #[serde(rename = "monitor_identifier")]
-    pub monitor_identifier: Box<crate::datadogV2::model::DowntimeMonitorIdentifier>,
+    pub monitor_identifier: crate::datadogV2::model::DowntimeMonitorIdentifier,
     /// If the first recovery notification during a downtime should be muted.
     #[serde(rename = "mute_first_recovery_notification")]
     pub mute_first_recovery_notification: Option<bool>,
@@ -38,7 +38,7 @@ pub struct DowntimeCreateRequestAttributes {
     pub notify_end_types: Option<Vec<crate::datadogV2::model::DowntimeNotifyEndStateActions>>,
     /// Schedule for the downtime.
     #[serde(rename = "schedule")]
-    pub schedule: Option<Box<crate::datadogV2::model::DowntimeScheduleCreateRequest>>,
+    pub schedule: Option<crate::datadogV2::model::DowntimeScheduleCreateRequest>,
     /// The scope to which the downtime applies. Must follow the [common search syntax](<https://docs.datadoghq.com/logs/explorer/search_syntax/>).
     #[serde(rename = "scope")]
     pub scope: String,
@@ -46,7 +46,7 @@ pub struct DowntimeCreateRequestAttributes {
 
 impl DowntimeCreateRequestAttributes {
     pub fn new(
-        monitor_identifier: Box<crate::datadogV2::model::DowntimeMonitorIdentifier>,
+        monitor_identifier: crate::datadogV2::model::DowntimeMonitorIdentifier,
         scope: String,
     ) -> DowntimeCreateRequestAttributes {
         DowntimeCreateRequestAttributes {
@@ -59,5 +59,44 @@ impl DowntimeCreateRequestAttributes {
             schedule: None,
             scope,
         }
+    }
+
+    pub fn with_display_timezone(&mut self, value: Option<String>) -> &mut Self {
+        self.display_timezone = Some(value);
+        self
+    }
+
+    pub fn with_message(&mut self, value: Option<String>) -> &mut Self {
+        self.message = Some(value);
+        self
+    }
+
+    pub fn with_mute_first_recovery_notification(&mut self, value: bool) -> &mut Self {
+        self.mute_first_recovery_notification = Some(value);
+        self
+    }
+
+    pub fn with_notify_end_states(
+        &mut self,
+        value: Vec<crate::datadogV2::model::DowntimeNotifyEndStateTypes>,
+    ) -> &mut Self {
+        self.notify_end_states = Some(value);
+        self
+    }
+
+    pub fn with_notify_end_types(
+        &mut self,
+        value: Vec<crate::datadogV2::model::DowntimeNotifyEndStateActions>,
+    ) -> &mut Self {
+        self.notify_end_types = Some(value);
+        self
+    }
+
+    pub fn with_schedule(
+        &mut self,
+        value: crate::datadogV2::model::DowntimeScheduleCreateRequest,
+    ) -> &mut Self {
+        self.schedule = Some(value);
+        self
     }
 }

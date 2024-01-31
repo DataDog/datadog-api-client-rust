@@ -23,6 +23,16 @@ impl UsageTimeSeriesObject {
             value: None,
         }
     }
+
+    pub fn with_timestamp(&mut self, value: String) -> &mut Self {
+        self.timestamp = Some(value);
+        self
+    }
+
+    pub fn with_value(&mut self, value: Option<i64>) -> &mut Self {
+        self.value = Some(value);
+        self
+    }
 }
 impl Default for UsageTimeSeriesObject {
     fn default() -> Self {

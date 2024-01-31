@@ -14,7 +14,7 @@ pub struct OrganizationSettings {
     /// Set the boolean property enabled to enable or disable single sign on with SAML.
     /// See the SAML documentation for more information about all SAML settings.
     #[serde(rename = "saml")]
-    pub saml: Option<Box<crate::datadogV1::model::OrganizationSettingsSaml>>,
+    pub saml: Option<crate::datadogV1::model::OrganizationSettingsSaml>,
     /// The access role of the user. Options are **st** (standard user), **adm** (admin user), or **ro** (read-only user).
     #[serde(
         rename = "saml_autocreate_access_role",
@@ -25,7 +25,7 @@ pub struct OrganizationSettings {
     /// Has two properties, `enabled` (boolean) and `domains`, which is a list of domains without the @ symbol.
     #[serde(rename = "saml_autocreate_users_domains")]
     pub saml_autocreate_users_domains:
-        Option<Box<crate::datadogV1::model::OrganizationSettingsSamlAutocreateUsersDomains>>,
+        Option<crate::datadogV1::model::OrganizationSettingsSamlAutocreateUsersDomains>,
     /// Whether or not SAML can be enabled for this organization.
     #[serde(rename = "saml_can_be_enabled")]
     pub saml_can_be_enabled: Option<bool>,
@@ -35,7 +35,7 @@ pub struct OrganizationSettings {
     /// Has one property enabled (boolean).
     #[serde(rename = "saml_idp_initiated_login")]
     pub saml_idp_initiated_login:
-        Option<Box<crate::datadogV1::model::OrganizationSettingsSamlIdpInitiatedLogin>>,
+        Option<crate::datadogV1::model::OrganizationSettingsSamlIdpInitiatedLogin>,
     /// Whether or not a SAML identity provider metadata file was provided to the Datadog organization.
     #[serde(rename = "saml_idp_metadata_uploaded")]
     pub saml_idp_metadata_uploaded: Option<bool>,
@@ -44,7 +44,7 @@ pub struct OrganizationSettings {
     pub saml_login_url: Option<String>,
     /// Has one property enabled (boolean).
     #[serde(rename = "saml_strict_mode")]
-    pub saml_strict_mode: Option<Box<crate::datadogV1::model::OrganizationSettingsSamlStrictMode>>,
+    pub saml_strict_mode: Option<crate::datadogV1::model::OrganizationSettingsSamlStrictMode>,
 }
 
 impl OrganizationSettings {
@@ -61,6 +61,71 @@ impl OrganizationSettings {
             saml_login_url: None,
             saml_strict_mode: None,
         }
+    }
+
+    pub fn with_private_widget_share(&mut self, value: bool) -> &mut Self {
+        self.private_widget_share = Some(value);
+        self
+    }
+
+    pub fn with_saml(
+        &mut self,
+        value: crate::datadogV1::model::OrganizationSettingsSaml,
+    ) -> &mut Self {
+        self.saml = Some(value);
+        self
+    }
+
+    pub fn with_saml_autocreate_access_role(
+        &mut self,
+        value: Option<crate::datadogV1::model::AccessRole>,
+    ) -> &mut Self {
+        self.saml_autocreate_access_role = Some(value);
+        self
+    }
+
+    pub fn with_saml_autocreate_users_domains(
+        &mut self,
+        value: crate::datadogV1::model::OrganizationSettingsSamlAutocreateUsersDomains,
+    ) -> &mut Self {
+        self.saml_autocreate_users_domains = Some(value);
+        self
+    }
+
+    pub fn with_saml_can_be_enabled(&mut self, value: bool) -> &mut Self {
+        self.saml_can_be_enabled = Some(value);
+        self
+    }
+
+    pub fn with_saml_idp_endpoint(&mut self, value: String) -> &mut Self {
+        self.saml_idp_endpoint = Some(value);
+        self
+    }
+
+    pub fn with_saml_idp_initiated_login(
+        &mut self,
+        value: crate::datadogV1::model::OrganizationSettingsSamlIdpInitiatedLogin,
+    ) -> &mut Self {
+        self.saml_idp_initiated_login = Some(value);
+        self
+    }
+
+    pub fn with_saml_idp_metadata_uploaded(&mut self, value: bool) -> &mut Self {
+        self.saml_idp_metadata_uploaded = Some(value);
+        self
+    }
+
+    pub fn with_saml_login_url(&mut self, value: String) -> &mut Self {
+        self.saml_login_url = Some(value);
+        self
+    }
+
+    pub fn with_saml_strict_mode(
+        &mut self,
+        value: crate::datadogV1::model::OrganizationSettingsSamlStrictMode,
+    ) -> &mut Self {
+        self.saml_strict_mode = Some(value);
+        self
     }
 }
 impl Default for OrganizationSettings {

@@ -13,17 +13,17 @@ pub struct RUMAggregateRequest {
     pub compute: Option<Vec<crate::datadogV2::model::RUMCompute>>,
     /// The search and filter query settings.
     #[serde(rename = "filter")]
-    pub filter: Option<Box<crate::datadogV2::model::RUMQueryFilter>>,
+    pub filter: Option<crate::datadogV2::model::RUMQueryFilter>,
     /// The rules for the group by.
     #[serde(rename = "group_by")]
     pub group_by: Option<Vec<crate::datadogV2::model::RUMGroupBy>>,
     /// Global query options that are used during the query.
     /// Note: Only supply timezone or time offset, not both. Otherwise, the query fails.
     #[serde(rename = "options")]
-    pub options: Option<Box<crate::datadogV2::model::RUMQueryOptions>>,
+    pub options: Option<crate::datadogV2::model::RUMQueryOptions>,
     /// Paging attributes for listing events.
     #[serde(rename = "page")]
-    pub page: Option<Box<crate::datadogV2::model::RUMQueryPageOptions>>,
+    pub page: Option<crate::datadogV2::model::RUMQueryPageOptions>,
 }
 
 impl RUMAggregateRequest {
@@ -35,6 +35,31 @@ impl RUMAggregateRequest {
             options: None,
             page: None,
         }
+    }
+
+    pub fn with_compute(&mut self, value: Vec<crate::datadogV2::model::RUMCompute>) -> &mut Self {
+        self.compute = Some(value);
+        self
+    }
+
+    pub fn with_filter(&mut self, value: crate::datadogV2::model::RUMQueryFilter) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
+
+    pub fn with_group_by(&mut self, value: Vec<crate::datadogV2::model::RUMGroupBy>) -> &mut Self {
+        self.group_by = Some(value);
+        self
+    }
+
+    pub fn with_options(&mut self, value: crate::datadogV2::model::RUMQueryOptions) -> &mut Self {
+        self.options = Some(value);
+        self
+    }
+
+    pub fn with_page(&mut self, value: crate::datadogV2::model::RUMQueryPageOptions) -> &mut Self {
+        self.page = Some(value);
+        self
     }
 }
 impl Default for RUMAggregateRequest {

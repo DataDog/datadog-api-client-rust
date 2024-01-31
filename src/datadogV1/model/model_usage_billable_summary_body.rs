@@ -43,6 +43,41 @@ impl UsageBillableSummaryBody {
             usage_unit: None,
         }
     }
+
+    pub fn with_account_billable_usage(&mut self, value: i64) -> &mut Self {
+        self.account_billable_usage = Some(value);
+        self
+    }
+
+    pub fn with_elapsed_usage_hours(&mut self, value: i64) -> &mut Self {
+        self.elapsed_usage_hours = Some(value);
+        self
+    }
+
+    pub fn with_first_billable_usage_hour(&mut self, value: String) -> &mut Self {
+        self.first_billable_usage_hour = Some(value);
+        self
+    }
+
+    pub fn with_last_billable_usage_hour(&mut self, value: String) -> &mut Self {
+        self.last_billable_usage_hour = Some(value);
+        self
+    }
+
+    pub fn with_org_billable_usage(&mut self, value: i64) -> &mut Self {
+        self.org_billable_usage = Some(value);
+        self
+    }
+
+    pub fn with_percentage_in_account(&mut self, value: f64) -> &mut Self {
+        self.percentage_in_account = Some(value);
+        self
+    }
+
+    pub fn with_usage_unit(&mut self, value: String) -> &mut Self {
+        self.usage_unit = Some(value);
+        self
+    }
 }
 impl Default for UsageBillableSummaryBody {
     fn default() -> Self {

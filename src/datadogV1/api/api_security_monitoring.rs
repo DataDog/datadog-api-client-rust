@@ -5,33 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// AddSecurityMonitoringSignalToIncidentParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::add_security_monitoring_signal_to_incident`]
-#[derive(Clone, Debug)]
-pub struct AddSecurityMonitoringSignalToIncidentParams {
-    /// The ID of the signal.
-    pub signal_id: String,
-    /// Attributes describing the signal update.
-    pub body: crate::datadogV1::model::AddSignalToIncidentRequest,
-}
-
-/// EditSecurityMonitoringSignalAssigneeParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::edit_security_monitoring_signal_assignee`]
-#[derive(Clone, Debug)]
-pub struct EditSecurityMonitoringSignalAssigneeParams {
-    /// The ID of the signal.
-    pub signal_id: String,
-    /// Attributes describing the signal update.
-    pub body: crate::datadogV1::model::SignalAssigneeUpdateRequest,
-}
-
-/// EditSecurityMonitoringSignalStateParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::edit_security_monitoring_signal_state`]
-#[derive(Clone, Debug)]
-pub struct EditSecurityMonitoringSignalStateParams {
-    /// The ID of the signal.
-    pub signal_id: String,
-    /// Attributes describing the signal update.
-    pub body: crate::datadogV1::model::SignalStateUpdateRequest,
-}
-
 /// AddSecurityMonitoringSignalToIncidentError is a struct for typed errors of method [`SecurityMonitoringAPI::add_security_monitoring_signal_to_incident`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -89,13 +62,14 @@ impl SecurityMonitoringAPI {
     /// Add a security signal to an incident. This makes it possible to search for signals by incident within the signal explorer and to view the signals on the incident timeline.
     pub async fn add_security_monitoring_signal_to_incident(
         &self,
-        params: AddSecurityMonitoringSignalToIncidentParams,
+        signal_id: String,
+        body: crate::datadogV1::model::AddSignalToIncidentRequest,
     ) -> Result<
         Option<crate::datadogV1::model::SuccessfulSignalUpdateResponse>,
         Error<AddSecurityMonitoringSignalToIncidentError>,
     > {
         match self
-            .add_security_monitoring_signal_to_incident_with_http_info(params)
+            .add_security_monitoring_signal_to_incident_with_http_info(signal_id, body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -106,16 +80,13 @@ impl SecurityMonitoringAPI {
     /// Add a security signal to an incident. This makes it possible to search for signals by incident within the signal explorer and to view the signals on the incident timeline.
     pub async fn add_security_monitoring_signal_to_incident_with_http_info(
         &self,
-        params: AddSecurityMonitoringSignalToIncidentParams,
+        signal_id: String,
+        body: crate::datadogV1::model::AddSignalToIncidentRequest,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SuccessfulSignalUpdateResponse>,
         Error<AddSecurityMonitoringSignalToIncidentError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let signal_id = params.signal_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -177,13 +148,14 @@ impl SecurityMonitoringAPI {
     /// Modify the triage assignee of a security signal.
     pub async fn edit_security_monitoring_signal_assignee(
         &self,
-        params: EditSecurityMonitoringSignalAssigneeParams,
+        signal_id: String,
+        body: crate::datadogV1::model::SignalAssigneeUpdateRequest,
     ) -> Result<
         Option<crate::datadogV1::model::SuccessfulSignalUpdateResponse>,
         Error<EditSecurityMonitoringSignalAssigneeError>,
     > {
         match self
-            .edit_security_monitoring_signal_assignee_with_http_info(params)
+            .edit_security_monitoring_signal_assignee_with_http_info(signal_id, body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -194,16 +166,13 @@ impl SecurityMonitoringAPI {
     /// Modify the triage assignee of a security signal.
     pub async fn edit_security_monitoring_signal_assignee_with_http_info(
         &self,
-        params: EditSecurityMonitoringSignalAssigneeParams,
+        signal_id: String,
+        body: crate::datadogV1::model::SignalAssigneeUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SuccessfulSignalUpdateResponse>,
         Error<EditSecurityMonitoringSignalAssigneeError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let signal_id = params.signal_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -265,13 +234,14 @@ impl SecurityMonitoringAPI {
     /// Change the triage state of a security signal.
     pub async fn edit_security_monitoring_signal_state(
         &self,
-        params: EditSecurityMonitoringSignalStateParams,
+        signal_id: String,
+        body: crate::datadogV1::model::SignalStateUpdateRequest,
     ) -> Result<
         Option<crate::datadogV1::model::SuccessfulSignalUpdateResponse>,
         Error<EditSecurityMonitoringSignalStateError>,
     > {
         match self
-            .edit_security_monitoring_signal_state_with_http_info(params)
+            .edit_security_monitoring_signal_state_with_http_info(signal_id, body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -282,16 +252,13 @@ impl SecurityMonitoringAPI {
     /// Change the triage state of a security signal.
     pub async fn edit_security_monitoring_signal_state_with_http_info(
         &self,
-        params: EditSecurityMonitoringSignalStateParams,
+        signal_id: String,
+        body: crate::datadogV1::model::SignalStateUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SuccessfulSignalUpdateResponse>,
         Error<EditSecurityMonitoringSignalStateError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let signal_id = params.signal_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

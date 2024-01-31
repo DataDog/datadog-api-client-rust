@@ -25,6 +25,25 @@ impl LogsAggregateBucket {
             computes: None,
         }
     }
+
+    pub fn with_by(
+        &mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> &mut Self {
+        self.by = Some(value);
+        self
+    }
+
+    pub fn with_computes(
+        &mut self,
+        value: std::collections::BTreeMap<
+            String,
+            crate::datadogV2::model::LogsAggregateBucketValue,
+        >,
+    ) -> &mut Self {
+        self.computes = Some(value);
+        self
+    }
 }
 impl Default for LogsAggregateBucket {
     fn default() -> Self {

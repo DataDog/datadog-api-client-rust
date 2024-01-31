@@ -16,13 +16,13 @@ pub struct SyntheticsPrivateLocation {
     pub id: Option<String>,
     /// Object containing metadata about the private location.
     #[serde(rename = "metadata")]
-    pub metadata: Option<Box<crate::datadogV1::model::SyntheticsPrivateLocationMetadata>>,
+    pub metadata: Option<crate::datadogV1::model::SyntheticsPrivateLocationMetadata>,
     /// Name of the private location.
     #[serde(rename = "name")]
     pub name: String,
     /// Secrets for the private location. Only present in the response when creating the private location.
     #[serde(rename = "secrets")]
-    pub secrets: Option<Box<crate::datadogV1::model::SyntheticsPrivateLocationSecrets>>,
+    pub secrets: Option<crate::datadogV1::model::SyntheticsPrivateLocationSecrets>,
     /// Array of tags attached to the private location.
     #[serde(rename = "tags")]
     pub tags: Vec<String>,
@@ -38,5 +38,26 @@ impl SyntheticsPrivateLocation {
             secrets: None,
             tags,
         }
+    }
+
+    pub fn with_id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn with_metadata(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsPrivateLocationMetadata,
+    ) -> &mut Self {
+        self.metadata = Some(value);
+        self
+    }
+
+    pub fn with_secrets(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsPrivateLocationSecrets,
+    ) -> &mut Self {
+        self.secrets = Some(value);
+        self
     }
 }

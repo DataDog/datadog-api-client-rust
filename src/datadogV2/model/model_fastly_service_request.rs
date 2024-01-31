@@ -10,11 +10,11 @@ use serde_with::skip_serializing_none;
 pub struct FastlyServiceRequest {
     /// Data object for Fastly service requests.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::FastlyServiceData>,
+    pub data: crate::datadogV2::model::FastlyServiceData,
 }
 
 impl FastlyServiceRequest {
-    pub fn new(data: Box<crate::datadogV2::model::FastlyServiceData>) -> FastlyServiceRequest {
+    pub fn new(data: crate::datadogV2::model::FastlyServiceData) -> FastlyServiceRequest {
         FastlyServiceRequest { data }
     }
 }

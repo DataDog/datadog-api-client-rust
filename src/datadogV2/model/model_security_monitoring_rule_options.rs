@@ -13,7 +13,7 @@ pub struct SecurityMonitoringRuleOptions {
     ///
     #[serde(rename = "complianceRuleOptions")]
     pub compliance_rule_options:
-        Option<Box<crate::datadogV2::model::CloudConfigurationComplianceRuleOptions>>,
+        Option<crate::datadogV2::model::CloudConfigurationComplianceRuleOptions>,
     /// If true, signals in non-production environments have a lower severity than what is defined by the rule case, which can reduce signal noise.
     /// The severity is decreased by one level: `CRITICAL` in production becomes `HIGH` in non-production, `HIGH` becomes `MEDIUM` and so on. `INFO` remains `INFO`.
     /// The decrement is applied when the environment tag of the signal starts with `staging`, `test` or `dev`.
@@ -33,7 +33,7 @@ pub struct SecurityMonitoringRuleOptions {
     /// Options on impossible travel rules.
     #[serde(rename = "impossibleTravelOptions")]
     pub impossible_travel_options:
-        Option<Box<crate::datadogV2::model::SecurityMonitoringRuleImpossibleTravelOptions>>,
+        Option<crate::datadogV2::model::SecurityMonitoringRuleImpossibleTravelOptions>,
     /// Once a signal is generated, the signal will remain “open” if a case is matched at least once within
     /// this keep alive window.
     #[serde(rename = "keepAlive")]
@@ -45,12 +45,11 @@ pub struct SecurityMonitoringRuleOptions {
         Option<crate::datadogV2::model::SecurityMonitoringRuleMaxSignalDuration>,
     /// Options on new value rules.
     #[serde(rename = "newValueOptions")]
-    pub new_value_options:
-        Option<Box<crate::datadogV2::model::SecurityMonitoringRuleNewValueOptions>>,
+    pub new_value_options: Option<crate::datadogV2::model::SecurityMonitoringRuleNewValueOptions>,
     /// Options on third party rules.
     #[serde(rename = "thirdPartyRuleOptions")]
     pub third_party_rule_options:
-        Option<Box<crate::datadogV2::model::SecurityMonitoringRuleThirdPartyOptions>>,
+        Option<crate::datadogV2::model::SecurityMonitoringRuleThirdPartyOptions>,
 }
 
 impl SecurityMonitoringRuleOptions {
@@ -67,6 +66,83 @@ impl SecurityMonitoringRuleOptions {
             new_value_options: None,
             third_party_rule_options: None,
         }
+    }
+
+    pub fn with_compliance_rule_options(
+        &mut self,
+        value: crate::datadogV2::model::CloudConfigurationComplianceRuleOptions,
+    ) -> &mut Self {
+        self.compliance_rule_options = Some(value);
+        self
+    }
+
+    pub fn with_decrease_criticality_based_on_env(&mut self, value: bool) -> &mut Self {
+        self.decrease_criticality_based_on_env = Some(value);
+        self
+    }
+
+    pub fn with_detection_method(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringRuleDetectionMethod,
+    ) -> &mut Self {
+        self.detection_method = Some(value);
+        self
+    }
+
+    pub fn with_evaluation_window(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringRuleEvaluationWindow,
+    ) -> &mut Self {
+        self.evaluation_window = Some(value);
+        self
+    }
+
+    pub fn with_hardcoded_evaluator_type(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringRuleHardcodedEvaluatorType,
+    ) -> &mut Self {
+        self.hardcoded_evaluator_type = Some(value);
+        self
+    }
+
+    pub fn with_impossible_travel_options(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringRuleImpossibleTravelOptions,
+    ) -> &mut Self {
+        self.impossible_travel_options = Some(value);
+        self
+    }
+
+    pub fn with_keep_alive(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringRuleKeepAlive,
+    ) -> &mut Self {
+        self.keep_alive = Some(value);
+        self
+    }
+
+    pub fn with_max_signal_duration(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringRuleMaxSignalDuration,
+    ) -> &mut Self {
+        self.max_signal_duration = Some(value);
+        self
+    }
+
+    pub fn with_new_value_options(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringRuleNewValueOptions,
+    ) -> &mut Self {
+        self.new_value_options = Some(value);
+        self
+    }
+
+    pub fn with_third_party_rule_options(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringRuleThirdPartyOptions,
+    ) -> &mut Self {
+        self.third_party_rule_options = Some(value);
+        self
     }
 }
 impl Default for SecurityMonitoringRuleOptions {

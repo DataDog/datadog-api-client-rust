@@ -25,6 +25,16 @@ impl SyntheticsTestOptionsRetry {
             interval: None,
         }
     }
+
+    pub fn with_count(&mut self, value: i64) -> &mut Self {
+        self.count = Some(value);
+        self
+    }
+
+    pub fn with_interval(&mut self, value: f64) -> &mut Self {
+        self.interval = Some(value);
+        self
+    }
 }
 impl Default for SyntheticsTestOptionsRetry {
     fn default() -> Self {

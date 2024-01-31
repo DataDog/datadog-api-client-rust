@@ -55,4 +55,37 @@ impl FormulaAndFunctionProcessQueryDefinition {
             text_filter: None,
         }
     }
+
+    pub fn with_aggregator(
+        &mut self,
+        value: crate::datadogV1::model::FormulaAndFunctionMetricAggregation,
+    ) -> &mut Self {
+        self.aggregator = Some(value);
+        self
+    }
+
+    pub fn with_is_normalized_cpu(&mut self, value: bool) -> &mut Self {
+        self.is_normalized_cpu = Some(value);
+        self
+    }
+
+    pub fn with_limit(&mut self, value: i64) -> &mut Self {
+        self.limit = Some(value);
+        self
+    }
+
+    pub fn with_sort(&mut self, value: crate::datadogV1::model::QuerySortOrder) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+
+    pub fn with_tag_filters(&mut self, value: Vec<String>) -> &mut Self {
+        self.tag_filters = Some(value);
+        self
+    }
+
+    pub fn with_text_filter(&mut self, value: String) -> &mut Self {
+        self.text_filter = Some(value);
+        self
+    }
 }

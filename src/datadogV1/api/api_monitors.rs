@@ -5,43 +5,25 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CheckCanDeleteMonitorParams is a struct for passing parameters to the method [`MonitorsAPI::check_can_delete_monitor`]
+/// DeleteMonitorOptionalParams is a struct for passing parameters to the method [`MonitorsAPI::delete_monitor`]
 #[derive(Clone, Debug)]
-pub struct CheckCanDeleteMonitorParams {
-    /// The IDs of the monitor to check.
-    pub monitor_ids: Vec<i64>,
-}
-
-/// CreateMonitorParams is a struct for passing parameters to the method [`MonitorsAPI::create_monitor`]
-#[derive(Clone, Debug)]
-pub struct CreateMonitorParams {
-    /// Create a monitor request body.
-    pub body: crate::datadogV1::model::Monitor,
-}
-
-/// DeleteMonitorParams is a struct for passing parameters to the method [`MonitorsAPI::delete_monitor`]
-#[derive(Clone, Debug)]
-pub struct DeleteMonitorParams {
-    /// The ID of the monitor.
-    pub monitor_id: i64,
+pub struct DeleteMonitorOptionalParams {
     /// Delete the monitor even if it's referenced by other resources (for example SLO, composite monitor).
     pub force: Option<String>,
 }
 
-/// GetMonitorParams is a struct for passing parameters to the method [`MonitorsAPI::get_monitor`]
+/// GetMonitorOptionalParams is a struct for passing parameters to the method [`MonitorsAPI::get_monitor`]
 #[derive(Clone, Debug)]
-pub struct GetMonitorParams {
-    /// The ID of the monitor
-    pub monitor_id: i64,
+pub struct GetMonitorOptionalParams {
     /// When specified, shows additional information about the group states. Choose one or more from `all`, `alert`, `warn`, and `no data`.
     pub group_states: Option<String>,
     /// If this argument is set to true, then the returned data includes all current active downtimes for the monitor.
     pub with_downtimes: Option<bool>,
 }
 
-/// ListMonitorsParams is a struct for passing parameters to the method [`MonitorsAPI::list_monitors`]
+/// ListMonitorsOptionalParams is a struct for passing parameters to the method [`MonitorsAPI::list_monitors`]
 #[derive(Clone, Debug)]
-pub struct ListMonitorsParams {
+pub struct ListMonitorsOptionalParams {
     /// When specified, shows additional information about the group states.
     /// Choose one or more from `all`, `alert`, `warn`, and `no data`.
     pub group_states: Option<String>,
@@ -63,9 +45,9 @@ pub struct ListMonitorsParams {
     pub page_size: Option<i32>,
 }
 
-/// SearchMonitorGroupsParams is a struct for passing parameters to the method [`MonitorsAPI::search_monitor_groups`]
+/// SearchMonitorGroupsOptionalParams is a struct for passing parameters to the method [`MonitorsAPI::search_monitor_groups`]
 #[derive(Clone, Debug)]
-pub struct SearchMonitorGroupsParams {
+pub struct SearchMonitorGroupsOptionalParams {
     /// After entering a search query in your [Manage Monitor page][1] use the query parameter value in the
     /// URL of the page as value for this parameter. Consult the dedicated [manage monitor documentation][2]
     /// page to learn more.
@@ -87,9 +69,9 @@ pub struct SearchMonitorGroupsParams {
     pub sort: Option<String>,
 }
 
-/// SearchMonitorsParams is a struct for passing parameters to the method [`MonitorsAPI::search_monitors`]
+/// SearchMonitorsOptionalParams is a struct for passing parameters to the method [`MonitorsAPI::search_monitors`]
 #[derive(Clone, Debug)]
-pub struct SearchMonitorsParams {
+pub struct SearchMonitorsOptionalParams {
     /// After entering a search query in your [Manage Monitor page][1] use the query parameter value in the
     /// URL of the page as value for this parameter. Consult the dedicated [manage monitor documentation][2]
     /// page to learn more.
@@ -109,31 +91,6 @@ pub struct SearchMonitorsParams {
     /// * `status`
     /// * `tags`
     pub sort: Option<String>,
-}
-
-/// UpdateMonitorParams is a struct for passing parameters to the method [`MonitorsAPI::update_monitor`]
-#[derive(Clone, Debug)]
-pub struct UpdateMonitorParams {
-    /// The ID of the monitor.
-    pub monitor_id: i64,
-    /// Edit a monitor request body.
-    pub body: crate::datadogV1::model::MonitorUpdateRequest,
-}
-
-/// ValidateExistingMonitorParams is a struct for passing parameters to the method [`MonitorsAPI::validate_existing_monitor`]
-#[derive(Clone, Debug)]
-pub struct ValidateExistingMonitorParams {
-    /// The ID of the monitor
-    pub monitor_id: i64,
-    /// Monitor request object
-    pub body: crate::datadogV1::model::Monitor,
-}
-
-/// ValidateMonitorParams is a struct for passing parameters to the method [`MonitorsAPI::validate_monitor`]
-#[derive(Clone, Debug)]
-pub struct ValidateMonitorParams {
-    /// Monitor request object
-    pub body: crate::datadogV1::model::Monitor,
 }
 
 /// CheckCanDeleteMonitorError is a struct for typed errors of method [`MonitorsAPI::check_can_delete_monitor`]
@@ -266,12 +223,15 @@ impl MonitorsAPI {
     /// Check if the given monitors can be deleted.
     pub async fn check_can_delete_monitor(
         &self,
-        params: CheckCanDeleteMonitorParams,
+        monitor_ids: Vec<i64>,
     ) -> Result<
         Option<crate::datadogV1::model::CheckCanDeleteMonitorResponse>,
         Error<CheckCanDeleteMonitorError>,
     > {
-        match self.check_can_delete_monitor_with_http_info(params).await {
+        match self
+            .check_can_delete_monitor_with_http_info(monitor_ids)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -280,15 +240,12 @@ impl MonitorsAPI {
     /// Check if the given monitors can be deleted.
     pub async fn check_can_delete_monitor_with_http_info(
         &self,
-        params: CheckCanDeleteMonitorParams,
+        monitor_ids: Vec<i64>,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::CheckCanDeleteMonitorResponse>,
         Error<CheckCanDeleteMonitorError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let monitor_ids = params.monitor_ids;
 
         let local_client = &local_configuration.client;
 
@@ -302,7 +259,7 @@ impl MonitorsAPI {
         local_req_builder = local_req_builder.query(&[(
             "monitor_ids",
             &monitor_ids
-                .into_iter()
+                .iter()
                 .map(|p| p.to_string())
                 .collect::<Vec<String>>()
                 .join(",")
@@ -533,9 +490,9 @@ impl MonitorsAPI {
     /// **NOTE** Database Monitoring monitors are in alpha on US1.
     pub async fn create_monitor(
         &self,
-        params: CreateMonitorParams,
+        body: crate::datadogV1::model::Monitor,
     ) -> Result<Option<crate::datadogV1::model::Monitor>, Error<CreateMonitorError>> {
-        match self.create_monitor_with_http_info(params).await {
+        match self.create_monitor_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -725,12 +682,9 @@ impl MonitorsAPI {
     /// **NOTE** Database Monitoring monitors are in alpha on US1.
     pub async fn create_monitor_with_http_info(
         &self,
-        params: CreateMonitorParams,
+        body: crate::datadogV1::model::Monitor,
     ) -> Result<ResponseContent<crate::datadogV1::model::Monitor>, Error<CreateMonitorError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -788,9 +742,10 @@ impl MonitorsAPI {
     /// Delete the specified monitor
     pub async fn delete_monitor(
         &self,
-        params: DeleteMonitorParams,
+        monitor_id: i64,
+        params: DeleteMonitorOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::DeletedMonitor>, Error<DeleteMonitorError>> {
-        match self.delete_monitor_with_http_info(params).await {
+        match self.delete_monitor_with_http_info(monitor_id, params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -799,13 +754,13 @@ impl MonitorsAPI {
     /// Delete the specified monitor
     pub async fn delete_monitor_with_http_info(
         &self,
-        params: DeleteMonitorParams,
+        monitor_id: i64,
+        params: DeleteMonitorOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV1::model::DeletedMonitor>, Error<DeleteMonitorError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let monitor_id = params.monitor_id;
+        // unbox and build optional parameters
         let force = params.force;
 
         let local_client = &local_configuration.client;
@@ -818,8 +773,9 @@ impl MonitorsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
-        if let Some(ref local_str) = force {
-            local_req_builder = local_req_builder.query(&[("force", &local_str.to_string())]);
+        if let Some(ref local_query_param) = force {
+            local_req_builder =
+                local_req_builder.query(&[("force", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -865,9 +821,10 @@ impl MonitorsAPI {
     /// Get details about the specified monitor from your organization.
     pub async fn get_monitor(
         &self,
-        params: GetMonitorParams,
+        monitor_id: i64,
+        params: GetMonitorOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::Monitor>, Error<GetMonitorError>> {
-        match self.get_monitor_with_http_info(params).await {
+        match self.get_monitor_with_http_info(monitor_id, params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -876,12 +833,12 @@ impl MonitorsAPI {
     /// Get details about the specified monitor from your organization.
     pub async fn get_monitor_with_http_info(
         &self,
-        params: GetMonitorParams,
+        monitor_id: i64,
+        params: GetMonitorOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV1::model::Monitor>, Error<GetMonitorError>> {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let monitor_id = params.monitor_id;
+        // unbox and build optional parameters
         let group_states = params.group_states;
         let with_downtimes = params.with_downtimes;
 
@@ -895,13 +852,13 @@ impl MonitorsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = group_states {
+        if let Some(ref local_query_param) = group_states {
             local_req_builder =
-                local_req_builder.query(&[("group_states", &local_str.to_string())]);
+                local_req_builder.query(&[("group_states", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = with_downtimes {
+        if let Some(ref local_query_param) = with_downtimes {
             local_req_builder =
-                local_req_builder.query(&[("with_downtimes", &local_str.to_string())]);
+                local_req_builder.query(&[("with_downtimes", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -946,7 +903,7 @@ impl MonitorsAPI {
     /// Get details about the specified monitor from your organization.
     pub async fn list_monitors(
         &self,
-        params: ListMonitorsParams,
+        params: ListMonitorsOptionalParams,
     ) -> Result<Option<Vec<crate::datadogV1::model::Monitor>>, Error<ListMonitorsError>> {
         match self.list_monitors_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
@@ -957,12 +914,12 @@ impl MonitorsAPI {
     /// Get details about the specified monitor from your organization.
     pub async fn list_monitors_with_http_info(
         &self,
-        params: ListMonitorsParams,
+        params: ListMonitorsOptionalParams,
     ) -> Result<ResponseContent<Vec<crate::datadogV1::model::Monitor>>, Error<ListMonitorsError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let group_states = params.group_states;
         let name = params.name;
         let tags = params.tags;
@@ -978,32 +935,37 @@ impl MonitorsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = group_states {
+        if let Some(ref local_query_param) = group_states {
             local_req_builder =
-                local_req_builder.query(&[("group_states", &local_str.to_string())]);
+                local_req_builder.query(&[("group_states", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = name {
-            local_req_builder = local_req_builder.query(&[("name", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = tags {
-            local_req_builder = local_req_builder.query(&[("tags", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = monitor_tags {
+        if let Some(ref local_query_param) = name {
             local_req_builder =
-                local_req_builder.query(&[("monitor_tags", &local_str.to_string())]);
+                local_req_builder.query(&[("name", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = with_downtimes {
+        if let Some(ref local_query_param) = tags {
             local_req_builder =
-                local_req_builder.query(&[("with_downtimes", &local_str.to_string())]);
+                local_req_builder.query(&[("tags", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = id_offset {
-            local_req_builder = local_req_builder.query(&[("id_offset", &local_str.to_string())]);
+        if let Some(ref local_query_param) = monitor_tags {
+            local_req_builder =
+                local_req_builder.query(&[("monitor_tags", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = page {
-            local_req_builder = local_req_builder.query(&[("page", &local_str.to_string())]);
+        if let Some(ref local_query_param) = with_downtimes {
+            local_req_builder =
+                local_req_builder.query(&[("with_downtimes", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = page_size {
-            local_req_builder = local_req_builder.query(&[("page_size", &local_str.to_string())]);
+        if let Some(ref local_query_param) = id_offset {
+            local_req_builder =
+                local_req_builder.query(&[("id_offset", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page {
+            local_req_builder =
+                local_req_builder.query(&[("page", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page_size", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -1048,7 +1010,7 @@ impl MonitorsAPI {
     /// Search and filter your monitor groups details.
     pub async fn search_monitor_groups(
         &self,
-        params: SearchMonitorGroupsParams,
+        params: SearchMonitorGroupsOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::MonitorGroupSearchResponse>,
         Error<SearchMonitorGroupsError>,
@@ -1062,14 +1024,14 @@ impl MonitorsAPI {
     /// Search and filter your monitor groups details.
     pub async fn search_monitor_groups_with_http_info(
         &self,
-        params: SearchMonitorGroupsParams,
+        params: SearchMonitorGroupsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::MonitorGroupSearchResponse>,
         Error<SearchMonitorGroupsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let query = params.query;
         let page = params.page;
         let per_page = params.per_page;
@@ -1084,17 +1046,21 @@ impl MonitorsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = query {
-            local_req_builder = local_req_builder.query(&[("query", &local_str.to_string())]);
+        if let Some(ref local_query_param) = query {
+            local_req_builder =
+                local_req_builder.query(&[("query", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = page {
-            local_req_builder = local_req_builder.query(&[("page", &local_str.to_string())]);
+        if let Some(ref local_query_param) = page {
+            local_req_builder =
+                local_req_builder.query(&[("page", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = per_page {
-            local_req_builder = local_req_builder.query(&[("per_page", &local_str.to_string())]);
+        if let Some(ref local_query_param) = per_page {
+            local_req_builder =
+                local_req_builder.query(&[("per_page", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = sort {
-            local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -1140,7 +1106,7 @@ impl MonitorsAPI {
     /// Search and filter your monitors details.
     pub async fn search_monitors(
         &self,
-        params: SearchMonitorsParams,
+        params: SearchMonitorsOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::MonitorSearchResponse>, Error<SearchMonitorsError>>
     {
         match self.search_monitors_with_http_info(params).await {
@@ -1152,14 +1118,14 @@ impl MonitorsAPI {
     /// Search and filter your monitors details.
     pub async fn search_monitors_with_http_info(
         &self,
-        params: SearchMonitorsParams,
+        params: SearchMonitorsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::MonitorSearchResponse>,
         Error<SearchMonitorsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let query = params.query;
         let page = params.page;
         let per_page = params.per_page;
@@ -1171,17 +1137,21 @@ impl MonitorsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = query {
-            local_req_builder = local_req_builder.query(&[("query", &local_str.to_string())]);
+        if let Some(ref local_query_param) = query {
+            local_req_builder =
+                local_req_builder.query(&[("query", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = page {
-            local_req_builder = local_req_builder.query(&[("page", &local_str.to_string())]);
+        if let Some(ref local_query_param) = page {
+            local_req_builder =
+                local_req_builder.query(&[("page", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = per_page {
-            local_req_builder = local_req_builder.query(&[("per_page", &local_str.to_string())]);
+        if let Some(ref local_query_param) = per_page {
+            local_req_builder =
+                local_req_builder.query(&[("per_page", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = sort {
-            local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -1227,9 +1197,10 @@ impl MonitorsAPI {
     /// Edit the specified monitor.
     pub async fn update_monitor(
         &self,
-        params: UpdateMonitorParams,
+        monitor_id: i64,
+        body: crate::datadogV1::model::MonitorUpdateRequest,
     ) -> Result<Option<crate::datadogV1::model::Monitor>, Error<UpdateMonitorError>> {
-        match self.update_monitor_with_http_info(params).await {
+        match self.update_monitor_with_http_info(monitor_id, body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1238,13 +1209,10 @@ impl MonitorsAPI {
     /// Edit the specified monitor.
     pub async fn update_monitor_with_http_info(
         &self,
-        params: UpdateMonitorParams,
+        monitor_id: i64,
+        body: crate::datadogV1::model::MonitorUpdateRequest,
     ) -> Result<ResponseContent<crate::datadogV1::model::Monitor>, Error<UpdateMonitorError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let monitor_id = params.monitor_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -1306,12 +1274,16 @@ impl MonitorsAPI {
     /// Validate the monitor provided in the request.
     pub async fn validate_existing_monitor(
         &self,
-        params: ValidateExistingMonitorParams,
+        monitor_id: i64,
+        body: crate::datadogV1::model::Monitor,
     ) -> Result<
         Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<ValidateExistingMonitorError>,
     > {
-        match self.validate_existing_monitor_with_http_info(params).await {
+        match self
+            .validate_existing_monitor_with_http_info(monitor_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1320,16 +1292,13 @@ impl MonitorsAPI {
     /// Validate the monitor provided in the request.
     pub async fn validate_existing_monitor_with_http_info(
         &self,
-        params: ValidateExistingMonitorParams,
+        monitor_id: i64,
+        body: crate::datadogV1::model::Monitor,
     ) -> Result<
         ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<ValidateExistingMonitorError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let monitor_id = params.monitor_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -1393,12 +1362,12 @@ impl MonitorsAPI {
     /// **Note**: Log monitors require an unscoped App Key.
     pub async fn validate_monitor(
         &self,
-        params: ValidateMonitorParams,
+        body: crate::datadogV1::model::Monitor,
     ) -> Result<
         Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<ValidateMonitorError>,
     > {
-        match self.validate_monitor_with_http_info(params).await {
+        match self.validate_monitor_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1409,15 +1378,12 @@ impl MonitorsAPI {
     /// **Note**: Log monitors require an unscoped App Key.
     pub async fn validate_monitor_with_http_info(
         &self,
-        params: ValidateMonitorParams,
+        body: crate::datadogV1::model::Monitor,
     ) -> Result<
         ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<ValidateMonitorError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

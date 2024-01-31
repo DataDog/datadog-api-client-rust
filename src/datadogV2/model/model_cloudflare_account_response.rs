@@ -10,12 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct CloudflareAccountResponse {
     /// Data object of a Cloudflare account.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::CloudflareAccountResponseData>>,
+    pub data: Option<crate::datadogV2::model::CloudflareAccountResponseData>,
 }
 
 impl CloudflareAccountResponse {
     pub fn new() -> CloudflareAccountResponse {
         CloudflareAccountResponse { data: None }
+    }
+
+    pub fn with_data(
+        &mut self,
+        value: crate::datadogV2::model::CloudflareAccountResponseData,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
     }
 }
 impl Default for CloudflareAccountResponse {

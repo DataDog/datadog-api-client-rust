@@ -30,11 +30,11 @@ pub struct LogsListRequest {
     pub start_at: Option<String>,
     /// Timeframe to retrieve the log from.
     #[serde(rename = "time")]
-    pub time: Box<crate::datadogV1::model::LogsListRequestTime>,
+    pub time: crate::datadogV1::model::LogsListRequestTime,
 }
 
 impl LogsListRequest {
-    pub fn new(time: Box<crate::datadogV1::model::LogsListRequestTime>) -> LogsListRequest {
+    pub fn new(time: crate::datadogV1::model::LogsListRequestTime) -> LogsListRequest {
         LogsListRequest {
             index: None,
             limit: None,
@@ -43,5 +43,30 @@ impl LogsListRequest {
             start_at: None,
             time,
         }
+    }
+
+    pub fn with_index(&mut self, value: String) -> &mut Self {
+        self.index = Some(value);
+        self
+    }
+
+    pub fn with_limit(&mut self, value: i32) -> &mut Self {
+        self.limit = Some(value);
+        self
+    }
+
+    pub fn with_query(&mut self, value: String) -> &mut Self {
+        self.query = Some(value);
+        self
+    }
+
+    pub fn with_sort(&mut self, value: crate::datadogV1::model::LogsSort) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+
+    pub fn with_start_at(&mut self, value: String) -> &mut Self {
+        self.start_at = Some(value);
+        self
     }
 }

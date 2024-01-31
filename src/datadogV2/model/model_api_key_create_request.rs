@@ -10,11 +10,11 @@ use serde_with::skip_serializing_none;
 pub struct APIKeyCreateRequest {
     /// Object used to create an API key.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::APIKeyCreateData>,
+    pub data: crate::datadogV2::model::APIKeyCreateData,
 }
 
 impl APIKeyCreateRequest {
-    pub fn new(data: Box<crate::datadogV2::model::APIKeyCreateData>) -> APIKeyCreateRequest {
+    pub fn new(data: crate::datadogV2::model::APIKeyCreateData) -> APIKeyCreateRequest {
         APIKeyCreateRequest { data }
     }
 }

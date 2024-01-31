@@ -10,13 +10,13 @@ use serde_with::skip_serializing_none;
 pub struct FullAPIKey {
     /// Attributes of a full API key.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::FullAPIKeyAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::FullAPIKeyAttributes>,
     /// ID of the API key.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Resources related to the API key.
     #[serde(rename = "relationships")]
-    pub relationships: Option<Box<crate::datadogV2::model::APIKeyRelationships>>,
+    pub relationships: Option<crate::datadogV2::model::APIKeyRelationships>,
     /// API Keys resource type.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::APIKeysType>,
@@ -30,6 +30,32 @@ impl FullAPIKey {
             relationships: None,
             type_: None,
         }
+    }
+
+    pub fn with_attributes(
+        &mut self,
+        value: crate::datadogV2::model::FullAPIKeyAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn with_id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn with_relationships(
+        &mut self,
+        value: crate::datadogV2::model::APIKeyRelationships,
+    ) -> &mut Self {
+        self.relationships = Some(value);
+        self
+    }
+
+    pub fn with_type_(&mut self, value: crate::datadogV2::model::APIKeysType) -> &mut Self {
+        self.type_ = Some(value);
+        self
     }
 }
 impl Default for FullAPIKey {

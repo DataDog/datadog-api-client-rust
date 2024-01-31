@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct RelationshipToUserTeamTeam {
     /// The team associated with the membership
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::RelationshipToUserTeamTeamData>,
+    pub data: crate::datadogV2::model::RelationshipToUserTeamTeamData,
 }
 
 impl RelationshipToUserTeamTeam {
     pub fn new(
-        data: Box<crate::datadogV2::model::RelationshipToUserTeamTeamData>,
+        data: crate::datadogV2::model::RelationshipToUserTeamTeamData,
     ) -> RelationshipToUserTeamTeam {
         RelationshipToUserTeamTeam { data }
     }

@@ -13,10 +13,10 @@ pub struct CIAppTestEventsResponse {
     pub data: Option<Vec<crate::datadogV2::model::CIAppTestEvent>>,
     /// Links attributes.
     #[serde(rename = "links")]
-    pub links: Option<Box<crate::datadogV2::model::CIAppResponseLinks>>,
+    pub links: Option<crate::datadogV2::model::CIAppResponseLinks>,
     /// The metadata associated with a request.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV2::model::CIAppResponseMetadataWithPagination>>,
+    pub meta: Option<crate::datadogV2::model::CIAppResponseMetadataWithPagination>,
 }
 
 impl CIAppTestEventsResponse {
@@ -26,6 +26,24 @@ impl CIAppTestEventsResponse {
             links: None,
             meta: None,
         }
+    }
+
+    pub fn with_data(&mut self, value: Vec<crate::datadogV2::model::CIAppTestEvent>) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn with_links(&mut self, value: crate::datadogV2::model::CIAppResponseLinks) -> &mut Self {
+        self.links = Some(value);
+        self
+    }
+
+    pub fn with_meta(
+        &mut self,
+        value: crate::datadogV2::model::CIAppResponseMetadataWithPagination,
+    ) -> &mut Self {
+        self.meta = Some(value);
+        self
     }
 }
 impl Default for CIAppTestEventsResponse {

@@ -31,6 +31,26 @@ impl CIAppHostInfo {
             workspace: None,
         }
     }
+
+    pub fn with_hostname(&mut self, value: String) -> &mut Self {
+        self.hostname = Some(value);
+        self
+    }
+
+    pub fn with_labels(&mut self, value: Vec<String>) -> &mut Self {
+        self.labels = Some(value);
+        self
+    }
+
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn with_workspace(&mut self, value: String) -> &mut Self {
+        self.workspace = Some(value);
+        self
+    }
 }
 impl Default for CIAppHostInfo {
     fn default() -> Self {

@@ -10,23 +10,39 @@ use serde_with::skip_serializing_none;
 pub struct NotebookLogStreamCellAttributes {
     /// The Log Stream displays a log flow matching the defined query. Only available on FREE layout dashboards.
     #[serde(rename = "definition")]
-    pub definition: Box<crate::datadogV1::model::LogStreamWidgetDefinition>,
+    pub definition: crate::datadogV1::model::LogStreamWidgetDefinition,
     /// The size of the graph.
     #[serde(rename = "graph_size")]
     pub graph_size: Option<crate::datadogV1::model::NotebookGraphSize>,
     /// Timeframe for the notebook cell. When 'null', the notebook global time is used.
     #[serde(rename = "time", default, with = "::serde_with::rust::double_option")]
-    pub time: Option<Option<Box<crate::datadogV1::model::NotebookCellTime>>>,
+    pub time: Option<Option<crate::datadogV1::model::NotebookCellTime>>,
 }
 
 impl NotebookLogStreamCellAttributes {
     pub fn new(
-        definition: Box<crate::datadogV1::model::LogStreamWidgetDefinition>,
+        definition: crate::datadogV1::model::LogStreamWidgetDefinition,
     ) -> NotebookLogStreamCellAttributes {
         NotebookLogStreamCellAttributes {
             definition,
             graph_size: None,
             time: None,
         }
+    }
+
+    pub fn with_graph_size(
+        &mut self,
+        value: crate::datadogV1::model::NotebookGraphSize,
+    ) -> &mut Self {
+        self.graph_size = Some(value);
+        self
+    }
+
+    pub fn with_time(
+        &mut self,
+        value: Option<crate::datadogV1::model::NotebookCellTime>,
+    ) -> &mut Self {
+        self.time = Some(value);
+        self
     }
 }

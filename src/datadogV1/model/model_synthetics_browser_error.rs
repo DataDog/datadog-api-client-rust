@@ -35,4 +35,9 @@ impl SyntheticsBrowserError {
             type_,
         }
     }
+
+    pub fn with_status(&mut self, value: i64) -> &mut Self {
+        self.status = Some(value);
+        self
+    }
 }

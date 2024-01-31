@@ -13,7 +13,7 @@ use serde_with::skip_serializing_none;
 pub struct DowntimeResponse {
     /// Downtime data.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::DowntimeResponseData>>,
+    pub data: Option<crate::datadogV2::model::DowntimeResponseData>,
     /// Array of objects related to the downtime that the user requested.
     #[serde(rename = "included")]
     pub included: Option<Vec<crate::datadogV2::model::DowntimeResponseIncludedItem>>,
@@ -25,6 +25,19 @@ impl DowntimeResponse {
             data: None,
             included: None,
         }
+    }
+
+    pub fn with_data(&mut self, value: crate::datadogV2::model::DowntimeResponseData) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn with_included(
+        &mut self,
+        value: Vec<crate::datadogV2::model::DowntimeResponseIncludedItem>,
+    ) -> &mut Self {
+        self.included = Some(value);
+        self
     }
 }
 impl Default for DowntimeResponse {

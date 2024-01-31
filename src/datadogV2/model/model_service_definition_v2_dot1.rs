@@ -25,7 +25,7 @@ pub struct ServiceDefinitionV2Dot1 {
     pub extensions: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// Third party integrations that Datadog supports.
     #[serde(rename = "integrations")]
-    pub integrations: Option<Box<crate::datadogV2::model::ServiceDefinitionV2Dot1Integrations>>,
+    pub integrations: Option<crate::datadogV2::model::ServiceDefinitionV2Dot1Integrations>,
     /// The current life cycle phase of the service.
     #[serde(rename = "lifecycle")]
     pub lifecycle: Option<String>,
@@ -65,5 +65,67 @@ impl ServiceDefinitionV2Dot1 {
             team: None,
             tier: None,
         }
+    }
+
+    pub fn with_application(&mut self, value: String) -> &mut Self {
+        self.application = Some(value);
+        self
+    }
+
+    pub fn with_contacts(
+        &mut self,
+        value: Vec<crate::datadogV2::model::ServiceDefinitionV2Dot1Contact>,
+    ) -> &mut Self {
+        self.contacts = Some(value);
+        self
+    }
+
+    pub fn with_description(&mut self, value: String) -> &mut Self {
+        self.description = Some(value);
+        self
+    }
+
+    pub fn with_extensions(
+        &mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> &mut Self {
+        self.extensions = Some(value);
+        self
+    }
+
+    pub fn with_integrations(
+        &mut self,
+        value: crate::datadogV2::model::ServiceDefinitionV2Dot1Integrations,
+    ) -> &mut Self {
+        self.integrations = Some(value);
+        self
+    }
+
+    pub fn with_lifecycle(&mut self, value: String) -> &mut Self {
+        self.lifecycle = Some(value);
+        self
+    }
+
+    pub fn with_links(
+        &mut self,
+        value: Vec<crate::datadogV2::model::ServiceDefinitionV2Dot1Link>,
+    ) -> &mut Self {
+        self.links = Some(value);
+        self
+    }
+
+    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+
+    pub fn with_team(&mut self, value: String) -> &mut Self {
+        self.team = Some(value);
+        self
+    }
+
+    pub fn with_tier(&mut self, value: String) -> &mut Self {
+        self.tier = Some(value);
+        self
     }
 }

@@ -10,12 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct SyntheticsBatchDetails {
     /// Wrapper object that contains the details of a batch.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV1::model::SyntheticsBatchDetailsData>>,
+    pub data: Option<crate::datadogV1::model::SyntheticsBatchDetailsData>,
 }
 
 impl SyntheticsBatchDetails {
     pub fn new() -> SyntheticsBatchDetails {
         SyntheticsBatchDetails { data: None }
+    }
+
+    pub fn with_data(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsBatchDetailsData,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
     }
 }
 impl Default for SyntheticsBatchDetails {

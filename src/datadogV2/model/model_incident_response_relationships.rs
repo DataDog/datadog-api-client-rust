@@ -10,34 +10,33 @@ use serde_with::skip_serializing_none;
 pub struct IncidentResponseRelationships {
     /// A relationship reference for attachments.
     #[serde(rename = "attachments")]
-    pub attachments: Option<Box<crate::datadogV2::model::RelationshipToIncidentAttachment>>,
+    pub attachments: Option<crate::datadogV2::model::RelationshipToIncidentAttachment>,
     /// Relationship to user.
     #[serde(
         rename = "commander_user",
         default,
         with = "::serde_with::rust::double_option"
     )]
-    pub commander_user: Option<Option<Box<crate::datadogV2::model::NullableRelationshipToUser>>>,
+    pub commander_user: Option<Option<crate::datadogV2::model::NullableRelationshipToUser>>,
     /// Relationship to user.
     #[serde(rename = "created_by_user")]
-    pub created_by_user: Option<Box<crate::datadogV2::model::RelationshipToUser>>,
+    pub created_by_user: Option<crate::datadogV2::model::RelationshipToUser>,
     /// Relationship to impacts.
     #[serde(rename = "impacts")]
-    pub impacts: Option<Box<crate::datadogV2::model::RelationshipToIncidentImpacts>>,
+    pub impacts: Option<crate::datadogV2::model::RelationshipToIncidentImpacts>,
     /// A relationship reference for multiple integration metadata objects.
     #[serde(rename = "integrations")]
-    pub integrations:
-        Option<Box<crate::datadogV2::model::RelationshipToIncidentIntegrationMetadatas>>,
+    pub integrations: Option<crate::datadogV2::model::RelationshipToIncidentIntegrationMetadatas>,
     /// Relationship to user.
     #[serde(rename = "last_modified_by_user")]
-    pub last_modified_by_user: Option<Box<crate::datadogV2::model::RelationshipToUser>>,
+    pub last_modified_by_user: Option<crate::datadogV2::model::RelationshipToUser>,
     /// Relationship to incident responders.
     #[serde(rename = "responders")]
-    pub responders: Option<Box<crate::datadogV2::model::RelationshipToIncidentResponders>>,
+    pub responders: Option<crate::datadogV2::model::RelationshipToIncidentResponders>,
     /// Relationship to incident user defined fields.
     #[serde(rename = "user_defined_fields")]
     pub user_defined_fields:
-        Option<Box<crate::datadogV2::model::RelationshipToIncidentUserDefinedFields>>,
+        Option<crate::datadogV2::model::RelationshipToIncidentUserDefinedFields>,
 }
 
 impl IncidentResponseRelationships {
@@ -52,6 +51,70 @@ impl IncidentResponseRelationships {
             responders: None,
             user_defined_fields: None,
         }
+    }
+
+    pub fn with_attachments(
+        &mut self,
+        value: crate::datadogV2::model::RelationshipToIncidentAttachment,
+    ) -> &mut Self {
+        self.attachments = Some(value);
+        self
+    }
+
+    pub fn with_commander_user(
+        &mut self,
+        value: Option<crate::datadogV2::model::NullableRelationshipToUser>,
+    ) -> &mut Self {
+        self.commander_user = Some(value);
+        self
+    }
+
+    pub fn with_created_by_user(
+        &mut self,
+        value: crate::datadogV2::model::RelationshipToUser,
+    ) -> &mut Self {
+        self.created_by_user = Some(value);
+        self
+    }
+
+    pub fn with_impacts(
+        &mut self,
+        value: crate::datadogV2::model::RelationshipToIncidentImpacts,
+    ) -> &mut Self {
+        self.impacts = Some(value);
+        self
+    }
+
+    pub fn with_integrations(
+        &mut self,
+        value: crate::datadogV2::model::RelationshipToIncidentIntegrationMetadatas,
+    ) -> &mut Self {
+        self.integrations = Some(value);
+        self
+    }
+
+    pub fn with_last_modified_by_user(
+        &mut self,
+        value: crate::datadogV2::model::RelationshipToUser,
+    ) -> &mut Self {
+        self.last_modified_by_user = Some(value);
+        self
+    }
+
+    pub fn with_responders(
+        &mut self,
+        value: crate::datadogV2::model::RelationshipToIncidentResponders,
+    ) -> &mut Self {
+        self.responders = Some(value);
+        self
+    }
+
+    pub fn with_user_defined_fields(
+        &mut self,
+        value: crate::datadogV2::model::RelationshipToIncidentUserDefinedFields,
+    ) -> &mut Self {
+        self.user_defined_fields = Some(value);
+        self
     }
 }
 impl Default for IncidentResponseRelationships {

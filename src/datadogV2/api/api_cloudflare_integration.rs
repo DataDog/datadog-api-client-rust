@@ -5,34 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateCloudflareAccountParams is a struct for passing parameters to the method [`CloudflareIntegrationAPI::create_cloudflare_account`]
-#[derive(Clone, Debug)]
-pub struct CreateCloudflareAccountParams {
-    pub body: crate::datadogV2::model::CloudflareAccountCreateRequest,
-}
-
-/// DeleteCloudflareAccountParams is a struct for passing parameters to the method [`CloudflareIntegrationAPI::delete_cloudflare_account`]
-#[derive(Clone, Debug)]
-pub struct DeleteCloudflareAccountParams {
-    /// None
-    pub account_id: String,
-}
-
-/// GetCloudflareAccountParams is a struct for passing parameters to the method [`CloudflareIntegrationAPI::get_cloudflare_account`]
-#[derive(Clone, Debug)]
-pub struct GetCloudflareAccountParams {
-    /// None
-    pub account_id: String,
-}
-
-/// UpdateCloudflareAccountParams is a struct for passing parameters to the method [`CloudflareIntegrationAPI::update_cloudflare_account`]
-#[derive(Clone, Debug)]
-pub struct UpdateCloudflareAccountParams {
-    /// None
-    pub account_id: String,
-    pub body: crate::datadogV2::model::CloudflareAccountUpdateRequest,
-}
-
 /// CreateCloudflareAccountError is a struct for typed errors of method [`CloudflareIntegrationAPI::create_cloudflare_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -112,12 +84,12 @@ impl CloudflareIntegrationAPI {
     /// Create a Cloudflare account.
     pub async fn create_cloudflare_account(
         &self,
-        params: CreateCloudflareAccountParams,
+        body: crate::datadogV2::model::CloudflareAccountCreateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::CloudflareAccountResponse>,
         Error<CreateCloudflareAccountError>,
     > {
-        match self.create_cloudflare_account_with_http_info(params).await {
+        match self.create_cloudflare_account_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -126,15 +98,12 @@ impl CloudflareIntegrationAPI {
     /// Create a Cloudflare account.
     pub async fn create_cloudflare_account_with_http_info(
         &self,
-        params: CreateCloudflareAccountParams,
+        body: crate::datadogV2::model::CloudflareAccountCreateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::CloudflareAccountResponse>,
         Error<CreateCloudflareAccountError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -195,9 +164,12 @@ impl CloudflareIntegrationAPI {
     /// Delete a Cloudflare account.
     pub async fn delete_cloudflare_account(
         &self,
-        params: DeleteCloudflareAccountParams,
+        account_id: String,
     ) -> Result<Option<()>, Error<DeleteCloudflareAccountError>> {
-        match self.delete_cloudflare_account_with_http_info(params).await {
+        match self
+            .delete_cloudflare_account_with_http_info(account_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -206,12 +178,9 @@ impl CloudflareIntegrationAPI {
     /// Delete a Cloudflare account.
     pub async fn delete_cloudflare_account_with_http_info(
         &self,
-        params: DeleteCloudflareAccountParams,
+        account_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteCloudflareAccountError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_id = params.account_id;
 
         let local_client = &local_configuration.client;
 
@@ -264,12 +233,12 @@ impl CloudflareIntegrationAPI {
     /// Get a Cloudflare account.
     pub async fn get_cloudflare_account(
         &self,
-        params: GetCloudflareAccountParams,
+        account_id: String,
     ) -> Result<
         Option<crate::datadogV2::model::CloudflareAccountResponse>,
         Error<GetCloudflareAccountError>,
     > {
-        match self.get_cloudflare_account_with_http_info(params).await {
+        match self.get_cloudflare_account_with_http_info(account_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -278,15 +247,12 @@ impl CloudflareIntegrationAPI {
     /// Get a Cloudflare account.
     pub async fn get_cloudflare_account_with_http_info(
         &self,
-        params: GetCloudflareAccountParams,
+        account_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::CloudflareAccountResponse>,
         Error<GetCloudflareAccountError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_id = params.account_id;
 
         let local_client = &local_configuration.client;
 
@@ -360,8 +326,6 @@ impl CloudflareIntegrationAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -414,12 +378,16 @@ impl CloudflareIntegrationAPI {
     /// Update a Cloudflare account.
     pub async fn update_cloudflare_account(
         &self,
-        params: UpdateCloudflareAccountParams,
+        account_id: String,
+        body: crate::datadogV2::model::CloudflareAccountUpdateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::CloudflareAccountResponse>,
         Error<UpdateCloudflareAccountError>,
     > {
-        match self.update_cloudflare_account_with_http_info(params).await {
+        match self
+            .update_cloudflare_account_with_http_info(account_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -428,16 +396,13 @@ impl CloudflareIntegrationAPI {
     /// Update a Cloudflare account.
     pub async fn update_cloudflare_account_with_http_info(
         &self,
-        params: UpdateCloudflareAccountParams,
+        account_id: String,
+        body: crate::datadogV2::model::CloudflareAccountUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::CloudflareAccountResponse>,
         Error<UpdateCloudflareAccountError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_id = params.account_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

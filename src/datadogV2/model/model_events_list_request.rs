@@ -10,14 +10,14 @@ use serde_with::skip_serializing_none;
 pub struct EventsListRequest {
     /// The search and filter query settings.
     #[serde(rename = "filter")]
-    pub filter: Option<Box<crate::datadogV2::model::EventsQueryFilter>>,
+    pub filter: Option<crate::datadogV2::model::EventsQueryFilter>,
     /// The global query options that are used. Either provide a timezone or a time offset but not both,
     /// otherwise the query fails.
     #[serde(rename = "options")]
-    pub options: Option<Box<crate::datadogV2::model::EventsQueryOptions>>,
+    pub options: Option<crate::datadogV2::model::EventsQueryOptions>,
     /// Pagination settings.
     #[serde(rename = "page")]
-    pub page: Option<Box<crate::datadogV2::model::EventsRequestPage>>,
+    pub page: Option<crate::datadogV2::model::EventsRequestPage>,
     /// The sort parameters when querying events.
     #[serde(rename = "sort")]
     pub sort: Option<crate::datadogV2::model::EventsSort>,
@@ -31,6 +31,29 @@ impl EventsListRequest {
             page: None,
             sort: None,
         }
+    }
+
+    pub fn with_filter(&mut self, value: crate::datadogV2::model::EventsQueryFilter) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
+
+    pub fn with_options(
+        &mut self,
+        value: crate::datadogV2::model::EventsQueryOptions,
+    ) -> &mut Self {
+        self.options = Some(value);
+        self
+    }
+
+    pub fn with_page(&mut self, value: crate::datadogV2::model::EventsRequestPage) -> &mut Self {
+        self.page = Some(value);
+        self
+    }
+
+    pub fn with_sort(&mut self, value: crate::datadogV2::model::EventsSort) -> &mut Self {
+        self.sort = Some(value);
+        self
     }
 }
 impl Default for EventsListRequest {

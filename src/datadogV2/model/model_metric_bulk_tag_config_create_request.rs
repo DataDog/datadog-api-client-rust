@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct MetricBulkTagConfigCreateRequest {
     /// Request object to bulk configure tags for metrics matching the given prefix.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::MetricBulkTagConfigCreate>,
+    pub data: crate::datadogV2::model::MetricBulkTagConfigCreate,
 }
 
 impl MetricBulkTagConfigCreateRequest {
     pub fn new(
-        data: Box<crate::datadogV2::model::MetricBulkTagConfigCreate>,
+        data: crate::datadogV2::model::MetricBulkTagConfigCreate,
     ) -> MetricBulkTagConfigCreateRequest {
         MetricBulkTagConfigCreateRequest { data }
     }

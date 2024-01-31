@@ -17,6 +17,11 @@ impl SpansMetricFilter {
     pub fn new() -> SpansMetricFilter {
         SpansMetricFilter { query: None }
     }
+
+    pub fn with_query(&mut self, value: String) -> &mut Self {
+        self.query = Some(value);
+        self
+    }
 }
 impl Default for SpansMetricFilter {
     fn default() -> Self {

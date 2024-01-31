@@ -10,12 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct MetricSearchResponse {
     /// Search result.
     #[serde(rename = "results")]
-    pub results: Option<Box<crate::datadogV1::model::MetricSearchResponseResults>>,
+    pub results: Option<crate::datadogV1::model::MetricSearchResponseResults>,
 }
 
 impl MetricSearchResponse {
     pub fn new() -> MetricSearchResponse {
         MetricSearchResponse { results: None }
+    }
+
+    pub fn with_results(
+        &mut self,
+        value: crate::datadogV1::model::MetricSearchResponseResults,
+    ) -> &mut Self {
+        self.results = Some(value);
+        self
     }
 }
 impl Default for MetricSearchResponse {

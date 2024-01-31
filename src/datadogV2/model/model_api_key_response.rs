@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct APIKeyResponse {
     /// Datadog API key.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::FullAPIKey>>,
+    pub data: Option<crate::datadogV2::model::FullAPIKey>,
     /// Array of objects related to the API key.
     #[serde(rename = "included")]
     pub included: Option<Vec<crate::datadogV2::model::APIKeyResponseIncludedItem>>,
@@ -22,6 +22,19 @@ impl APIKeyResponse {
             data: None,
             included: None,
         }
+    }
+
+    pub fn with_data(&mut self, value: crate::datadogV2::model::FullAPIKey) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn with_included(
+        &mut self,
+        value: Vec<crate::datadogV2::model::APIKeyResponseIncludedItem>,
+    ) -> &mut Self {
+        self.included = Some(value);
+        self
     }
 }
 impl Default for APIKeyResponse {

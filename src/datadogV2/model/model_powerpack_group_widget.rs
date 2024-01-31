@@ -10,10 +10,10 @@ use serde_with::skip_serializing_none;
 pub struct PowerpackGroupWidget {
     /// Powerpack group widget object.
     #[serde(rename = "definition")]
-    pub definition: Box<crate::datadogV2::model::PowerpackGroupWidgetDefinition>,
+    pub definition: crate::datadogV2::model::PowerpackGroupWidgetDefinition,
     /// Powerpack group widget layout.
     #[serde(rename = "layout")]
-    pub layout: Option<Box<crate::datadogV2::model::PowerpackGroupWidgetLayout>>,
+    pub layout: Option<crate::datadogV2::model::PowerpackGroupWidgetLayout>,
     /// The available timeframes depend on the widget you are using.
     #[serde(rename = "live_span")]
     pub live_span: Option<crate::datadogV2::model::WidgetLiveSpan>,
@@ -21,12 +21,25 @@ pub struct PowerpackGroupWidget {
 
 impl PowerpackGroupWidget {
     pub fn new(
-        definition: Box<crate::datadogV2::model::PowerpackGroupWidgetDefinition>,
+        definition: crate::datadogV2::model::PowerpackGroupWidgetDefinition,
     ) -> PowerpackGroupWidget {
         PowerpackGroupWidget {
             definition,
             layout: None,
             live_span: None,
         }
+    }
+
+    pub fn with_layout(
+        &mut self,
+        value: crate::datadogV2::model::PowerpackGroupWidgetLayout,
+    ) -> &mut Self {
+        self.layout = Some(value);
+        self
+    }
+
+    pub fn with_live_span(&mut self, value: crate::datadogV2::model::WidgetLiveSpan) -> &mut Self {
+        self.live_span = Some(value);
+        self
     }
 }

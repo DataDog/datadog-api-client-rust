@@ -27,6 +27,21 @@ impl ChargebackBreakdown {
             product_name: None,
         }
     }
+
+    pub fn with_charge_type(&mut self, value: String) -> &mut Self {
+        self.charge_type = Some(value);
+        self
+    }
+
+    pub fn with_cost(&mut self, value: f64) -> &mut Self {
+        self.cost = Some(value);
+        self
+    }
+
+    pub fn with_product_name(&mut self, value: String) -> &mut Self {
+        self.product_name = Some(value);
+        self
+    }
 }
 impl Default for ChargebackBreakdown {
     fn default() -> Self {

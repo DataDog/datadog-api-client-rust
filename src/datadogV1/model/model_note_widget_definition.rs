@@ -58,4 +58,50 @@ impl NoteWidgetDefinition {
             vertical_align: None,
         }
     }
+
+    pub fn with_background_color(&mut self, value: String) -> &mut Self {
+        self.background_color = Some(value);
+        self
+    }
+
+    pub fn with_font_size(&mut self, value: String) -> &mut Self {
+        self.font_size = Some(value);
+        self
+    }
+
+    pub fn with_has_padding(&mut self, value: bool) -> &mut Self {
+        self.has_padding = Some(value);
+        self
+    }
+
+    pub fn with_show_tick(&mut self, value: bool) -> &mut Self {
+        self.show_tick = Some(value);
+        self
+    }
+
+    pub fn with_text_align(
+        &mut self,
+        value: crate::datadogV1::model::WidgetTextAlign,
+    ) -> &mut Self {
+        self.text_align = Some(value);
+        self
+    }
+
+    pub fn with_tick_edge(&mut self, value: crate::datadogV1::model::WidgetTickEdge) -> &mut Self {
+        self.tick_edge = Some(value);
+        self
+    }
+
+    pub fn with_tick_pos(&mut self, value: String) -> &mut Self {
+        self.tick_pos = Some(value);
+        self
+    }
+
+    pub fn with_vertical_align(
+        &mut self,
+        value: crate::datadogV1::model::WidgetVerticalAlign,
+    ) -> &mut Self {
+        self.vertical_align = Some(value);
+        self
+    }
 }

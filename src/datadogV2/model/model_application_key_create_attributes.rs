@@ -20,4 +20,9 @@ impl ApplicationKeyCreateAttributes {
     pub fn new(name: String) -> ApplicationKeyCreateAttributes {
         ApplicationKeyCreateAttributes { name, scopes: None }
     }
+
+    pub fn with_scopes(&mut self, value: Option<Vec<String>>) -> &mut Self {
+        self.scopes = Some(value);
+        self
+    }
 }

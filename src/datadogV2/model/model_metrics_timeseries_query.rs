@@ -30,4 +30,9 @@ impl MetricsTimeseriesQuery {
             query,
         }
     }
+
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
 }

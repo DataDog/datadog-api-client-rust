@@ -50,6 +50,57 @@ impl SecurityMonitoringStandardRuleQuery {
             query: None,
         }
     }
+
+    #[allow(deprecated)]
+    pub fn with_aggregation(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringRuleQueryAggregation,
+    ) -> &mut Self {
+        self.aggregation = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_distinct_fields(&mut self, value: Vec<String>) -> &mut Self {
+        self.distinct_fields = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_group_by_fields(&mut self, value: Vec<String>) -> &mut Self {
+        self.group_by_fields = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_has_optional_group_by_fields(&mut self, value: bool) -> &mut Self {
+        self.has_optional_group_by_fields = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_metric(&mut self, value: String) -> &mut Self {
+        self.metric = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_metrics(&mut self, value: Vec<String>) -> &mut Self {
+        self.metrics = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_query(&mut self, value: String) -> &mut Self {
+        self.query = Some(value);
+        self
+    }
 }
 impl Default for SecurityMonitoringStandardRuleQuery {
     fn default() -> Self {

@@ -31,4 +31,17 @@ impl ConfluentAccountCreateRequestAttributes {
             tags: None,
         }
     }
+
+    pub fn with_resources(
+        &mut self,
+        value: Vec<crate::datadogV2::model::ConfluentAccountResourceAttributes>,
+    ) -> &mut Self {
+        self.resources = Some(value);
+        self
+    }
+
+    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
 }

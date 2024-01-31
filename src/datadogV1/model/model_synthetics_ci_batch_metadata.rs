@@ -10,10 +10,10 @@ use serde_with::skip_serializing_none;
 pub struct SyntheticsCIBatchMetadata {
     /// Description of the CI provider.
     #[serde(rename = "ci")]
-    pub ci: Option<Box<crate::datadogV1::model::SyntheticsCIBatchMetadataCI>>,
+    pub ci: Option<crate::datadogV1::model::SyntheticsCIBatchMetadataCI>,
     /// Git information.
     #[serde(rename = "git")]
-    pub git: Option<Box<crate::datadogV1::model::SyntheticsCIBatchMetadataGit>>,
+    pub git: Option<crate::datadogV1::model::SyntheticsCIBatchMetadataGit>,
 }
 
 impl SyntheticsCIBatchMetadata {
@@ -22,6 +22,22 @@ impl SyntheticsCIBatchMetadata {
             ci: None,
             git: None,
         }
+    }
+
+    pub fn with_ci(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsCIBatchMetadataCI,
+    ) -> &mut Self {
+        self.ci = Some(value);
+        self
+    }
+
+    pub fn with_git(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsCIBatchMetadataGit,
+    ) -> &mut Self {
+        self.git = Some(value);
+        self
     }
 }
 impl Default for SyntheticsCIBatchMetadata {

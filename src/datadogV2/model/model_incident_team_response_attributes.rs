@@ -27,6 +27,21 @@ impl IncidentTeamResponseAttributes {
             name: None,
         }
     }
+
+    pub fn with_created(&mut self, value: String) -> &mut Self {
+        self.created = Some(value);
+        self
+    }
+
+    pub fn with_modified(&mut self, value: String) -> &mut Self {
+        self.modified = Some(value);
+        self
+    }
+
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
 }
 impl Default for IncidentTeamResponseAttributes {
     fn default() -> Self {

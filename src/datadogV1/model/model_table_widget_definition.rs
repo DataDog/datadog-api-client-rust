@@ -19,7 +19,7 @@ pub struct TableWidgetDefinition {
     pub requests: Vec<crate::datadogV1::model::TableWidgetRequest>,
     /// Time setting for the widget.
     #[serde(rename = "time")]
-    pub time: Option<Box<crate::datadogV1::model::WidgetTime>>,
+    pub time: Option<crate::datadogV1::model::WidgetTime>,
     /// Title of your widget.
     #[serde(rename = "title")]
     pub title: Option<String>,
@@ -49,5 +49,44 @@ impl TableWidgetDefinition {
             title_size: None,
             type_,
         }
+    }
+
+    pub fn with_custom_links(
+        &mut self,
+        value: Vec<crate::datadogV1::model::WidgetCustomLink>,
+    ) -> &mut Self {
+        self.custom_links = Some(value);
+        self
+    }
+
+    pub fn with_has_search_bar(
+        &mut self,
+        value: crate::datadogV1::model::TableWidgetHasSearchBar,
+    ) -> &mut Self {
+        self.has_search_bar = Some(value);
+        self
+    }
+
+    pub fn with_time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
+        self.time = Some(value);
+        self
+    }
+
+    pub fn with_title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
+    }
+
+    pub fn with_title_align(
+        &mut self,
+        value: crate::datadogV1::model::WidgetTextAlign,
+    ) -> &mut Self {
+        self.title_align = Some(value);
+        self
+    }
+
+    pub fn with_title_size(&mut self, value: String) -> &mut Self {
+        self.title_size = Some(value);
+        self
     }
 }

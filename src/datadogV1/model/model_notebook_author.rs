@@ -51,6 +51,51 @@ impl NotebookAuthor {
             verified: None,
         }
     }
+
+    pub fn with_created_at(&mut self, value: String) -> &mut Self {
+        self.created_at = Some(value);
+        self
+    }
+
+    pub fn with_disabled(&mut self, value: bool) -> &mut Self {
+        self.disabled = Some(value);
+        self
+    }
+
+    pub fn with_email(&mut self, value: String) -> &mut Self {
+        self.email = Some(value);
+        self
+    }
+
+    pub fn with_handle(&mut self, value: String) -> &mut Self {
+        self.handle = Some(value);
+        self
+    }
+
+    pub fn with_icon(&mut self, value: String) -> &mut Self {
+        self.icon = Some(value);
+        self
+    }
+
+    pub fn with_name(&mut self, value: Option<String>) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn with_status(&mut self, value: String) -> &mut Self {
+        self.status = Some(value);
+        self
+    }
+
+    pub fn with_title(&mut self, value: Option<String>) -> &mut Self {
+        self.title = Some(value);
+        self
+    }
+
+    pub fn with_verified(&mut self, value: bool) -> &mut Self {
+        self.verified = Some(value);
+        self
+    }
 }
 impl Default for NotebookAuthor {
     fn default() -> Self {

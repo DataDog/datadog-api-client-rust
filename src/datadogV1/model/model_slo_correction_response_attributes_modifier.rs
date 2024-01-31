@@ -27,6 +27,21 @@ impl SLOCorrectionResponseAttributesModifier {
             name: None,
         }
     }
+
+    pub fn with_email(&mut self, value: String) -> &mut Self {
+        self.email = Some(value);
+        self
+    }
+
+    pub fn with_handle(&mut self, value: String) -> &mut Self {
+        self.handle = Some(value);
+        self
+    }
+
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
 }
 impl Default for SLOCorrectionResponseAttributesModifier {
     fn default() -> Self {

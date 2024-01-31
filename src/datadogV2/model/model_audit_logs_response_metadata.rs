@@ -13,7 +13,7 @@ pub struct AuditLogsResponseMetadata {
     pub elapsed: Option<i64>,
     /// Paging attributes.
     #[serde(rename = "page")]
-    pub page: Option<Box<crate::datadogV2::model::AuditLogsResponsePage>>,
+    pub page: Option<crate::datadogV2::model::AuditLogsResponsePage>,
     /// The identifier of the request.
     #[serde(rename = "request_id")]
     pub request_id: Option<String>,
@@ -35,6 +35,40 @@ impl AuditLogsResponseMetadata {
             status: None,
             warnings: None,
         }
+    }
+
+    pub fn with_elapsed(&mut self, value: i64) -> &mut Self {
+        self.elapsed = Some(value);
+        self
+    }
+
+    pub fn with_page(
+        &mut self,
+        value: crate::datadogV2::model::AuditLogsResponsePage,
+    ) -> &mut Self {
+        self.page = Some(value);
+        self
+    }
+
+    pub fn with_request_id(&mut self, value: String) -> &mut Self {
+        self.request_id = Some(value);
+        self
+    }
+
+    pub fn with_status(
+        &mut self,
+        value: crate::datadogV2::model::AuditLogsResponseStatus,
+    ) -> &mut Self {
+        self.status = Some(value);
+        self
+    }
+
+    pub fn with_warnings(
+        &mut self,
+        value: Vec<crate::datadogV2::model::AuditLogsWarning>,
+    ) -> &mut Self {
+        self.warnings = Some(value);
+        self
     }
 }
 impl Default for AuditLogsResponseMetadata {

@@ -34,7 +34,7 @@ pub struct UsageBillableSummaryHour {
     pub start_date: Option<String>,
     /// Response with aggregated usage types.
     #[serde(rename = "usage")]
-    pub usage: Option<Box<crate::datadogV1::model::UsageBillableSummaryKeys>>,
+    pub usage: Option<crate::datadogV1::model::UsageBillableSummaryKeys>,
 }
 
 impl UsageBillableSummaryHour {
@@ -50,6 +50,54 @@ impl UsageBillableSummaryHour {
             start_date: None,
             usage: None,
         }
+    }
+
+    pub fn with_billing_plan(&mut self, value: String) -> &mut Self {
+        self.billing_plan = Some(value);
+        self
+    }
+
+    pub fn with_end_date(&mut self, value: String) -> &mut Self {
+        self.end_date = Some(value);
+        self
+    }
+
+    pub fn with_num_orgs(&mut self, value: i64) -> &mut Self {
+        self.num_orgs = Some(value);
+        self
+    }
+
+    pub fn with_org_name(&mut self, value: String) -> &mut Self {
+        self.org_name = Some(value);
+        self
+    }
+
+    pub fn with_public_id(&mut self, value: String) -> &mut Self {
+        self.public_id = Some(value);
+        self
+    }
+
+    pub fn with_ratio_in_month(&mut self, value: f64) -> &mut Self {
+        self.ratio_in_month = Some(value);
+        self
+    }
+
+    pub fn with_region(&mut self, value: String) -> &mut Self {
+        self.region = Some(value);
+        self
+    }
+
+    pub fn with_start_date(&mut self, value: String) -> &mut Self {
+        self.start_date = Some(value);
+        self
+    }
+
+    pub fn with_usage(
+        &mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryKeys,
+    ) -> &mut Self {
+        self.usage = Some(value);
+        self
     }
 }
 impl Default for UsageBillableSummaryHour {

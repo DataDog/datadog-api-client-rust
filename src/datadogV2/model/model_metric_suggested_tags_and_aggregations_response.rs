@@ -10,12 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct MetricSuggestedTagsAndAggregationsResponse {
     /// Object for a single metric's actively queried tags and aggregations.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::MetricSuggestedTagsAndAggregations>>,
+    pub data: Option<crate::datadogV2::model::MetricSuggestedTagsAndAggregations>,
 }
 
 impl MetricSuggestedTagsAndAggregationsResponse {
     pub fn new() -> MetricSuggestedTagsAndAggregationsResponse {
         MetricSuggestedTagsAndAggregationsResponse { data: None }
+    }
+
+    pub fn with_data(
+        &mut self,
+        value: crate::datadogV2::model::MetricSuggestedTagsAndAggregations,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
     }
 }
 impl Default for MetricSuggestedTagsAndAggregationsResponse {

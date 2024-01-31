@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct UserTeamPermission {
     /// User team permission attributes
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::UserTeamPermissionAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::UserTeamPermissionAttributes>,
     /// The user team permission's identifier
     #[serde(rename = "id")]
     pub id: String,
@@ -29,5 +29,13 @@ impl UserTeamPermission {
             id,
             type_,
         }
+    }
+
+    pub fn with_attributes(
+        &mut self,
+        value: crate::datadogV2::model::UserTeamPermissionAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
     }
 }

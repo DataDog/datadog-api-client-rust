@@ -24,7 +24,7 @@ pub struct SearchServiceLevelObjectiveAttributes {
         default,
         with = "::serde_with::rust::double_option"
     )]
-    pub creator: Option<Option<Box<crate::datadogV1::model::SLOCreator>>>,
+    pub creator: Option<Option<crate::datadogV1::model::SLOCreator>>,
     /// A user-defined description of the service level objective.
     ///
     /// Always included in service level objective responses (but may be `null`).
@@ -65,7 +65,7 @@ pub struct SearchServiceLevelObjectiveAttributes {
     /// to be used because this will sum up all request counts instead of averaging them, or taking the max or
     /// min of all of those requests.
     #[serde(rename = "query", default, with = "::serde_with::rust::double_option")]
-    pub query: Option<Option<Box<crate::datadogV1::model::SearchSLOQuery>>>,
+    pub query: Option<Option<crate::datadogV1::model::SearchSLOQuery>>,
     /// Tags with the `service` tag key.
     #[serde(rename = "service_tags")]
     pub service_tags: Option<Vec<String>>,
@@ -74,7 +74,7 @@ pub struct SearchServiceLevelObjectiveAttributes {
     pub slo_type: Option<crate::datadogV1::model::SLOType>,
     /// Status of the SLO's primary timeframe.
     #[serde(rename = "status")]
-    pub status: Option<Box<crate::datadogV1::model::SLOStatus>>,
+    pub status: Option<crate::datadogV1::model::SLOStatus>,
     /// Tags with the `team` tag key.
     #[serde(rename = "team_tags")]
     pub team_tags: Option<Vec<String>>,
@@ -104,6 +104,98 @@ impl SearchServiceLevelObjectiveAttributes {
             team_tags: None,
             thresholds: None,
         }
+    }
+
+    pub fn with_all_tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.all_tags = Some(value);
+        self
+    }
+
+    pub fn with_created_at(&mut self, value: i64) -> &mut Self {
+        self.created_at = Some(value);
+        self
+    }
+
+    pub fn with_creator(
+        &mut self,
+        value: Option<crate::datadogV1::model::SLOCreator>,
+    ) -> &mut Self {
+        self.creator = Some(value);
+        self
+    }
+
+    pub fn with_description(&mut self, value: Option<String>) -> &mut Self {
+        self.description = Some(value);
+        self
+    }
+
+    pub fn with_env_tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.env_tags = Some(value);
+        self
+    }
+
+    pub fn with_groups(&mut self, value: Option<Vec<String>>) -> &mut Self {
+        self.groups = Some(value);
+        self
+    }
+
+    pub fn with_modified_at(&mut self, value: i64) -> &mut Self {
+        self.modified_at = Some(value);
+        self
+    }
+
+    pub fn with_monitor_ids(&mut self, value: Option<Vec<i64>>) -> &mut Self {
+        self.monitor_ids = Some(value);
+        self
+    }
+
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn with_overall_status(
+        &mut self,
+        value: Vec<crate::datadogV1::model::SLOOverallStatuses>,
+    ) -> &mut Self {
+        self.overall_status = Some(value);
+        self
+    }
+
+    pub fn with_query(
+        &mut self,
+        value: Option<crate::datadogV1::model::SearchSLOQuery>,
+    ) -> &mut Self {
+        self.query = Some(value);
+        self
+    }
+
+    pub fn with_service_tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.service_tags = Some(value);
+        self
+    }
+
+    pub fn with_slo_type(&mut self, value: crate::datadogV1::model::SLOType) -> &mut Self {
+        self.slo_type = Some(value);
+        self
+    }
+
+    pub fn with_status(&mut self, value: crate::datadogV1::model::SLOStatus) -> &mut Self {
+        self.status = Some(value);
+        self
+    }
+
+    pub fn with_team_tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.team_tags = Some(value);
+        self
+    }
+
+    pub fn with_thresholds(
+        &mut self,
+        value: Vec<crate::datadogV1::model::SearchSLOThreshold>,
+    ) -> &mut Self {
+        self.thresholds = Some(value);
+        self
     }
 }
 impl Default for SearchServiceLevelObjectiveAttributes {

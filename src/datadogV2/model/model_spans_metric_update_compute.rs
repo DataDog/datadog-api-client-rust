@@ -20,6 +20,11 @@ impl SpansMetricUpdateCompute {
             include_percentiles: None,
         }
     }
+
+    pub fn with_include_percentiles(&mut self, value: bool) -> &mut Self {
+        self.include_percentiles = Some(value);
+        self
+    }
 }
 impl Default for SpansMetricUpdateCompute {
     fn default() -> Self {

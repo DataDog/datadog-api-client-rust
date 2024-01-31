@@ -8,9 +8,9 @@ use serde::{Deserialize, Serialize};
 #[serde(untagged)]
 pub enum DowntimeScheduleCreateRequest {
     DowntimeScheduleRecurrencesCreateRequest(
-        Box<crate::datadogV2::model::DowntimeScheduleRecurrencesCreateRequest>,
+        crate::datadogV2::model::DowntimeScheduleRecurrencesCreateRequest,
     ),
     DowntimeScheduleOneTimeCreateUpdateRequest(
-        Box<crate::datadogV2::model::DowntimeScheduleOneTimeCreateUpdateRequest>,
+        crate::datadogV2::model::DowntimeScheduleOneTimeCreateUpdateRequest,
     ),
 }

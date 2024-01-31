@@ -25,4 +25,9 @@ impl CloudConfigurationRuleCaseCreate {
             status,
         }
     }
+
+    pub fn with_notifications(&mut self, value: Vec<String>) -> &mut Self {
+        self.notifications = Some(value);
+        self
+    }
 }

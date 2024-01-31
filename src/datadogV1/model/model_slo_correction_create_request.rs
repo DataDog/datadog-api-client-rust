@@ -10,12 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct SLOCorrectionCreateRequest {
     /// The data object associated with the SLO correction to be created.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV1::model::SLOCorrectionCreateData>>,
+    pub data: Option<crate::datadogV1::model::SLOCorrectionCreateData>,
 }
 
 impl SLOCorrectionCreateRequest {
     pub fn new() -> SLOCorrectionCreateRequest {
         SLOCorrectionCreateRequest { data: None }
+    }
+
+    pub fn with_data(
+        &mut self,
+        value: crate::datadogV1::model::SLOCorrectionCreateData,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
     }
 }
 impl Default for SLOCorrectionCreateRequest {

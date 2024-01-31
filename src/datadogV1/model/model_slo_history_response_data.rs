@@ -29,12 +29,12 @@ pub struct SLOHistoryResponseData {
     /// An object that holds an SLI value and its associated data. It can represent an SLO's overall SLI value.
     /// This can also represent the SLI value for a specific monitor in multi-monitor SLOs, or a group in grouped SLOs.
     #[serde(rename = "overall")]
-    pub overall: Option<Box<crate::datadogV1::model::SLOHistorySLIData>>,
+    pub overall: Option<crate::datadogV1::model::SLOHistorySLIData>,
     /// A `metric` based SLO history response.
     ///
     /// This is not included in responses for `monitor` based SLOs.
     #[serde(rename = "series")]
-    pub series: Option<Box<crate::datadogV1::model::SLOHistoryMetrics>>,
+    pub series: Option<crate::datadogV1::model::SLOHistoryMetrics>,
     /// mapping of string timeframe to the SLO threshold.
     #[serde(rename = "thresholds")]
     pub thresholds:
@@ -66,6 +66,65 @@ impl SLOHistoryResponseData {
             type_: None,
             type_id: None,
         }
+    }
+
+    pub fn with_from_ts(&mut self, value: i64) -> &mut Self {
+        self.from_ts = Some(value);
+        self
+    }
+
+    pub fn with_group_by(&mut self, value: Vec<String>) -> &mut Self {
+        self.group_by = Some(value);
+        self
+    }
+
+    pub fn with_groups(
+        &mut self,
+        value: Vec<crate::datadogV1::model::SLOHistoryMonitor>,
+    ) -> &mut Self {
+        self.groups = Some(value);
+        self
+    }
+
+    pub fn with_monitors(
+        &mut self,
+        value: Vec<crate::datadogV1::model::SLOHistoryMonitor>,
+    ) -> &mut Self {
+        self.monitors = Some(value);
+        self
+    }
+
+    pub fn with_overall(&mut self, value: crate::datadogV1::model::SLOHistorySLIData) -> &mut Self {
+        self.overall = Some(value);
+        self
+    }
+
+    pub fn with_series(&mut self, value: crate::datadogV1::model::SLOHistoryMetrics) -> &mut Self {
+        self.series = Some(value);
+        self
+    }
+
+    pub fn with_thresholds(
+        &mut self,
+        value: std::collections::BTreeMap<String, crate::datadogV1::model::SLOThreshold>,
+    ) -> &mut Self {
+        self.thresholds = Some(value);
+        self
+    }
+
+    pub fn with_to_ts(&mut self, value: i64) -> &mut Self {
+        self.to_ts = Some(value);
+        self
+    }
+
+    pub fn with_type_(&mut self, value: crate::datadogV1::model::SLOType) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
+
+    pub fn with_type_id(&mut self, value: crate::datadogV1::model::SLOTypeNumeric) -> &mut Self {
+        self.type_id = Some(value);
+        self
     }
 }
 impl Default for SLOHistoryResponseData {

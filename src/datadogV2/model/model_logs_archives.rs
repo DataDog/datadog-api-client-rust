@@ -17,6 +17,14 @@ impl LogsArchives {
     pub fn new() -> LogsArchives {
         LogsArchives { data: None }
     }
+
+    pub fn with_data(
+        &mut self,
+        value: Vec<crate::datadogV2::model::LogsArchiveDefinition>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
 impl Default for LogsArchives {
     fn default() -> Self {

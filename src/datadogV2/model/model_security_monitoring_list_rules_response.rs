@@ -13,7 +13,7 @@ pub struct SecurityMonitoringListRulesResponse {
     pub data: Option<Vec<crate::datadogV2::model::SecurityMonitoringRuleResponse>>,
     /// Object describing meta attributes of response.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV2::model::ResponseMetaAttributes>>,
+    pub meta: Option<crate::datadogV2::model::ResponseMetaAttributes>,
 }
 
 impl SecurityMonitoringListRulesResponse {
@@ -22,6 +22,22 @@ impl SecurityMonitoringListRulesResponse {
             data: None,
             meta: None,
         }
+    }
+
+    pub fn with_data(
+        &mut self,
+        value: Vec<crate::datadogV2::model::SecurityMonitoringRuleResponse>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn with_meta(
+        &mut self,
+        value: crate::datadogV2::model::ResponseMetaAttributes,
+    ) -> &mut Self {
+        self.meta = Some(value);
+        self
     }
 }
 impl Default for SecurityMonitoringListRulesResponse {

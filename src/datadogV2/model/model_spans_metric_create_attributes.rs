@@ -10,10 +10,10 @@ use serde_with::skip_serializing_none;
 pub struct SpansMetricCreateAttributes {
     /// The compute rule to compute the span-based metric.
     #[serde(rename = "compute")]
-    pub compute: Box<crate::datadogV2::model::SpansMetricCompute>,
+    pub compute: crate::datadogV2::model::SpansMetricCompute,
     /// The span-based metric filter. Spans matching this filter will be aggregated in this metric.
     #[serde(rename = "filter")]
-    pub filter: Option<Box<crate::datadogV2::model::SpansMetricFilter>>,
+    pub filter: Option<crate::datadogV2::model::SpansMetricFilter>,
     /// The rules for the group by.
     #[serde(rename = "group_by")]
     pub group_by: Option<Vec<crate::datadogV2::model::SpansMetricGroupBy>>,
@@ -21,12 +21,25 @@ pub struct SpansMetricCreateAttributes {
 
 impl SpansMetricCreateAttributes {
     pub fn new(
-        compute: Box<crate::datadogV2::model::SpansMetricCompute>,
+        compute: crate::datadogV2::model::SpansMetricCompute,
     ) -> SpansMetricCreateAttributes {
         SpansMetricCreateAttributes {
             compute,
             filter: None,
             group_by: None,
         }
+    }
+
+    pub fn with_filter(&mut self, value: crate::datadogV2::model::SpansMetricFilter) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
+
+    pub fn with_group_by(
+        &mut self,
+        value: Vec<crate::datadogV2::model::SpansMetricGroupBy>,
+    ) -> &mut Self {
+        self.group_by = Some(value);
+        self
     }
 }

@@ -29,7 +29,7 @@ pub struct SLOOverallStatuses {
         with = "::serde_with::rust::double_option"
     )]
     pub raw_error_budget_remaining:
-        Option<Option<Box<crate::datadogV1::model::SLORawErrorBudgetRemaining>>>,
+        Option<Option<crate::datadogV1::model::SLORawErrorBudgetRemaining>>,
     /// The amount of decimal places the SLI value is accurate to.
     #[serde(
         rename = "span_precision",
@@ -64,6 +64,54 @@ impl SLOOverallStatuses {
             target: None,
             timeframe: None,
         }
+    }
+
+    pub fn with_error(&mut self, value: Option<String>) -> &mut Self {
+        self.error = Some(value);
+        self
+    }
+
+    pub fn with_error_budget_remaining(&mut self, value: Option<f64>) -> &mut Self {
+        self.error_budget_remaining = Some(value);
+        self
+    }
+
+    pub fn with_indexed_at(&mut self, value: i64) -> &mut Self {
+        self.indexed_at = Some(value);
+        self
+    }
+
+    pub fn with_raw_error_budget_remaining(
+        &mut self,
+        value: Option<crate::datadogV1::model::SLORawErrorBudgetRemaining>,
+    ) -> &mut Self {
+        self.raw_error_budget_remaining = Some(value);
+        self
+    }
+
+    pub fn with_span_precision(&mut self, value: Option<i64>) -> &mut Self {
+        self.span_precision = Some(value);
+        self
+    }
+
+    pub fn with_state(&mut self, value: crate::datadogV1::model::SLOState) -> &mut Self {
+        self.state = Some(value);
+        self
+    }
+
+    pub fn with_status(&mut self, value: Option<f64>) -> &mut Self {
+        self.status = Some(value);
+        self
+    }
+
+    pub fn with_target(&mut self, value: f64) -> &mut Self {
+        self.target = Some(value);
+        self
+    }
+
+    pub fn with_timeframe(&mut self, value: crate::datadogV1::model::SLOTimeframe) -> &mut Self {
+        self.timeframe = Some(value);
+        self
     }
 }
 impl Default for SLOOverallStatuses {

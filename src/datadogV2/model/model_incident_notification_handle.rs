@@ -23,6 +23,16 @@ impl IncidentNotificationHandle {
             handle: None,
         }
     }
+
+    pub fn with_display_name(&mut self, value: String) -> &mut Self {
+        self.display_name = Some(value);
+        self
+    }
+
+    pub fn with_handle(&mut self, value: String) -> &mut Self {
+        self.handle = Some(value);
+        self
+    }
 }
 impl Default for IncidentNotificationHandle {
     fn default() -> Self {

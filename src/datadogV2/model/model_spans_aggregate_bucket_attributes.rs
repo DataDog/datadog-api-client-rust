@@ -29,6 +29,33 @@ impl SpansAggregateBucketAttributes {
             computes: None,
         }
     }
+
+    pub fn with_by(
+        &mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> &mut Self {
+        self.by = Some(value);
+        self
+    }
+
+    pub fn with_compute(
+        &mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> &mut Self {
+        self.compute = Some(value);
+        self
+    }
+
+    pub fn with_computes(
+        &mut self,
+        value: std::collections::BTreeMap<
+            String,
+            crate::datadogV2::model::SpansAggregateBucketValue,
+        >,
+    ) -> &mut Self {
+        self.computes = Some(value);
+        self
+    }
 }
 impl Default for SpansAggregateBucketAttributes {
     fn default() -> Self {

@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct DashboardListItem {
     /// Creator of the object.
     #[serde(rename = "author")]
-    pub author: Option<Box<crate::datadogV2::model::Creator>>,
+    pub author: Option<crate::datadogV2::model::Creator>,
     /// Date of creation of the dashboard.
     #[serde(rename = "created")]
     pub created: Option<String>,
@@ -74,5 +74,65 @@ impl DashboardListItem {
             type_,
             url: None,
         }
+    }
+
+    pub fn with_author(&mut self, value: crate::datadogV2::model::Creator) -> &mut Self {
+        self.author = Some(value);
+        self
+    }
+
+    pub fn with_created(&mut self, value: String) -> &mut Self {
+        self.created = Some(value);
+        self
+    }
+
+    pub fn with_icon(&mut self, value: Option<String>) -> &mut Self {
+        self.icon = Some(value);
+        self
+    }
+
+    pub fn with_integration_id(&mut self, value: Option<String>) -> &mut Self {
+        self.integration_id = Some(value);
+        self
+    }
+
+    pub fn with_is_favorite(&mut self, value: bool) -> &mut Self {
+        self.is_favorite = Some(value);
+        self
+    }
+
+    pub fn with_is_read_only(&mut self, value: bool) -> &mut Self {
+        self.is_read_only = Some(value);
+        self
+    }
+
+    pub fn with_is_shared(&mut self, value: bool) -> &mut Self {
+        self.is_shared = Some(value);
+        self
+    }
+
+    pub fn with_modified(&mut self, value: String) -> &mut Self {
+        self.modified = Some(value);
+        self
+    }
+
+    pub fn with_popularity(&mut self, value: i32) -> &mut Self {
+        self.popularity = Some(value);
+        self
+    }
+
+    pub fn with_tags(&mut self, value: Option<Vec<String>>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+
+    pub fn with_title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
+    }
+
+    pub fn with_url(&mut self, value: String) -> &mut Self {
+        self.url = Some(value);
+        self
     }
 }

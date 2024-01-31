@@ -13,7 +13,7 @@ pub struct MonthlyCostAttributionMeta {
     pub aggregates: Option<Vec<crate::datadogV2::model::CostAttributionAggregatesBody>>,
     /// The metadata for the current pagination.
     #[serde(rename = "pagination")]
-    pub pagination: Option<Box<crate::datadogV2::model::MonthlyCostAttributionPagination>>,
+    pub pagination: Option<crate::datadogV2::model::MonthlyCostAttributionPagination>,
 }
 
 impl MonthlyCostAttributionMeta {
@@ -22,6 +22,22 @@ impl MonthlyCostAttributionMeta {
             aggregates: None,
             pagination: None,
         }
+    }
+
+    pub fn with_aggregates(
+        &mut self,
+        value: Vec<crate::datadogV2::model::CostAttributionAggregatesBody>,
+    ) -> &mut Self {
+        self.aggregates = Some(value);
+        self
+    }
+
+    pub fn with_pagination(
+        &mut self,
+        value: crate::datadogV2::model::MonthlyCostAttributionPagination,
+    ) -> &mut Self {
+        self.pagination = Some(value);
+        self
     }
 }
 impl Default for MonthlyCostAttributionMeta {

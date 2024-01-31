@@ -10,13 +10,13 @@ use serde_with::skip_serializing_none;
 pub struct SyntheticsAPITestResultData {
     /// Object describing the SSL certificate used for a Synthetic test.
     #[serde(rename = "cert")]
-    pub cert: Option<Box<crate::datadogV1::model::SyntheticsSSLCertificate>>,
+    pub cert: Option<crate::datadogV1::model::SyntheticsSSLCertificate>,
     /// Status of a Synthetic test.
     #[serde(rename = "eventType")]
     pub event_type: Option<crate::datadogV1::model::SyntheticsTestProcessStatus>,
     /// The API test failure details.
     #[serde(rename = "failure")]
-    pub failure: Option<Box<crate::datadogV1::model::SyntheticsApiTestResultFailure>>,
+    pub failure: Option<crate::datadogV1::model::SyntheticsApiTestResultFailure>,
     /// The API test HTTP status code.
     #[serde(rename = "httpStatusCode")]
     pub http_status_code: Option<i64>,
@@ -37,7 +37,7 @@ pub struct SyntheticsAPITestResultData {
     /// Object containing all metrics and their values collected for a Synthetic API test.
     /// See the [Synthetic Monitoring Metrics documentation](<https://docs.datadoghq.com/synthetics/metrics/>).
     #[serde(rename = "timings")]
-    pub timings: Option<Box<crate::datadogV1::model::SyntheticsTiming>>,
+    pub timings: Option<crate::datadogV1::model::SyntheticsTiming>,
 }
 
 impl SyntheticsAPITestResultData {
@@ -53,6 +53,69 @@ impl SyntheticsAPITestResultData {
             response_size: None,
             timings: None,
         }
+    }
+
+    pub fn with_cert(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsSSLCertificate,
+    ) -> &mut Self {
+        self.cert = Some(value);
+        self
+    }
+
+    pub fn with_event_type(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsTestProcessStatus,
+    ) -> &mut Self {
+        self.event_type = Some(value);
+        self
+    }
+
+    pub fn with_failure(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsApiTestResultFailure,
+    ) -> &mut Self {
+        self.failure = Some(value);
+        self
+    }
+
+    pub fn with_http_status_code(&mut self, value: i64) -> &mut Self {
+        self.http_status_code = Some(value);
+        self
+    }
+
+    pub fn with_request_headers(
+        &mut self,
+        value: std::collections::BTreeMap<
+            String,
+            std::collections::BTreeMap<String, serde_json::Value>,
+        >,
+    ) -> &mut Self {
+        self.request_headers = Some(value);
+        self
+    }
+
+    pub fn with_response_body(&mut self, value: String) -> &mut Self {
+        self.response_body = Some(value);
+        self
+    }
+
+    pub fn with_response_headers(
+        &mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> &mut Self {
+        self.response_headers = Some(value);
+        self
+    }
+
+    pub fn with_response_size(&mut self, value: i64) -> &mut Self {
+        self.response_size = Some(value);
+        self
+    }
+
+    pub fn with_timings(&mut self, value: crate::datadogV1::model::SyntheticsTiming) -> &mut Self {
+        self.timings = Some(value);
+        self
     }
 }
 impl Default for SyntheticsAPITestResultData {

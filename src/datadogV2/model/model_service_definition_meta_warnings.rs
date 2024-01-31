@@ -27,6 +27,21 @@ impl ServiceDefinitionMetaWarnings {
             message: None,
         }
     }
+
+    pub fn with_instance_location(&mut self, value: String) -> &mut Self {
+        self.instance_location = Some(value);
+        self
+    }
+
+    pub fn with_keyword_location(&mut self, value: String) -> &mut Self {
+        self.keyword_location = Some(value);
+        self
+    }
+
+    pub fn with_message(&mut self, value: String) -> &mut Self {
+        self.message = Some(value);
+        self
+    }
 }
 impl Default for ServiceDefinitionMetaWarnings {
     fn default() -> Self {

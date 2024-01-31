@@ -5,32 +5,16 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateIncidentServiceParams is a struct for passing parameters to the method [`IncidentServicesAPI::create_incident_service`]
+/// GetIncidentServiceOptionalParams is a struct for passing parameters to the method [`IncidentServicesAPI::get_incident_service`]
 #[derive(Clone, Debug)]
-pub struct CreateIncidentServiceParams {
-    /// Incident Service Payload.
-    pub body: crate::datadogV2::model::IncidentServiceCreateRequest,
-}
-
-/// DeleteIncidentServiceParams is a struct for passing parameters to the method [`IncidentServicesAPI::delete_incident_service`]
-#[derive(Clone, Debug)]
-pub struct DeleteIncidentServiceParams {
-    /// The ID of the incident service.
-    pub service_id: String,
-}
-
-/// GetIncidentServiceParams is a struct for passing parameters to the method [`IncidentServicesAPI::get_incident_service`]
-#[derive(Clone, Debug)]
-pub struct GetIncidentServiceParams {
-    /// The ID of the incident service.
-    pub service_id: String,
+pub struct GetIncidentServiceOptionalParams {
     /// Specifies which types of related objects should be included in the response.
     pub include: Option<crate::datadogV2::model::IncidentRelatedObject>,
 }
 
-/// ListIncidentServicesParams is a struct for passing parameters to the method [`IncidentServicesAPI::list_incident_services`]
+/// ListIncidentServicesOptionalParams is a struct for passing parameters to the method [`IncidentServicesAPI::list_incident_services`]
 #[derive(Clone, Debug)]
-pub struct ListIncidentServicesParams {
+pub struct ListIncidentServicesOptionalParams {
     /// Specifies which types of related objects should be included in the response.
     pub include: Option<crate::datadogV2::model::IncidentRelatedObject>,
     /// Size for a given page. The maximum allowed value is 100.
@@ -39,15 +23,6 @@ pub struct ListIncidentServicesParams {
     pub page_offset: Option<i64>,
     /// A search query that filters services by name.
     pub filter: Option<String>,
-}
-
-/// UpdateIncidentServiceParams is a struct for passing parameters to the method [`IncidentServicesAPI::update_incident_service`]
-#[derive(Clone, Debug)]
-pub struct UpdateIncidentServiceParams {
-    /// The ID of the incident service.
-    pub service_id: String,
-    /// Incident Service Payload.
-    pub body: crate::datadogV2::model::IncidentServiceUpdateRequest,
 }
 
 /// CreateIncidentServiceError is a struct for typed errors of method [`IncidentServicesAPI::create_incident_service`]
@@ -134,12 +109,12 @@ impl IncidentServicesAPI {
     /// Creates a new incident service.
     pub async fn create_incident_service(
         &self,
-        params: CreateIncidentServiceParams,
+        body: crate::datadogV2::model::IncidentServiceCreateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::IncidentServiceResponse>,
         Error<CreateIncidentServiceError>,
     > {
-        match self.create_incident_service_with_http_info(params).await {
+        match self.create_incident_service_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -148,15 +123,12 @@ impl IncidentServicesAPI {
     /// Creates a new incident service.
     pub async fn create_incident_service_with_http_info(
         &self,
-        params: CreateIncidentServiceParams,
+        body: crate::datadogV2::model::IncidentServiceCreateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::IncidentServiceResponse>,
         Error<CreateIncidentServiceError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -214,9 +186,12 @@ impl IncidentServicesAPI {
     /// Deletes an existing incident service.
     pub async fn delete_incident_service(
         &self,
-        params: DeleteIncidentServiceParams,
+        service_id: String,
     ) -> Result<Option<()>, Error<DeleteIncidentServiceError>> {
-        match self.delete_incident_service_with_http_info(params).await {
+        match self
+            .delete_incident_service_with_http_info(service_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -225,12 +200,9 @@ impl IncidentServicesAPI {
     /// Deletes an existing incident service.
     pub async fn delete_incident_service_with_http_info(
         &self,
-        params: DeleteIncidentServiceParams,
+        service_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteIncidentServiceError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let service_id = params.service_id;
 
         let local_client = &local_configuration.client;
 
@@ -284,12 +256,16 @@ impl IncidentServicesAPI {
     /// the included attribute will contain the users related to these incident services.
     pub async fn get_incident_service(
         &self,
-        params: GetIncidentServiceParams,
+        service_id: String,
+        params: GetIncidentServiceOptionalParams,
     ) -> Result<
         Option<crate::datadogV2::model::IncidentServiceResponse>,
         Error<GetIncidentServiceError>,
     > {
-        match self.get_incident_service_with_http_info(params).await {
+        match self
+            .get_incident_service_with_http_info(service_id, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -299,15 +275,15 @@ impl IncidentServicesAPI {
     /// the included attribute will contain the users related to these incident services.
     pub async fn get_incident_service_with_http_info(
         &self,
-        params: GetIncidentServiceParams,
+        service_id: String,
+        params: GetIncidentServiceOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::IncidentServiceResponse>,
         Error<GetIncidentServiceError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let service_id = params.service_id;
+        // unbox and build optional parameters
         let include = params.include;
 
         let local_client = &local_configuration.client;
@@ -320,8 +296,9 @@ impl IncidentServicesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = include {
-            local_req_builder = local_req_builder.query(&[("include", &local_str.to_string())]);
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -367,7 +344,7 @@ impl IncidentServicesAPI {
     /// Get all incident services uploaded for the requesting user's organization. If the `include[users]` query parameter is provided, the included attribute will contain the users related to these incident services.
     pub async fn list_incident_services(
         &self,
-        params: ListIncidentServicesParams,
+        params: ListIncidentServicesOptionalParams,
     ) -> Result<
         Option<crate::datadogV2::model::IncidentServicesResponse>,
         Error<ListIncidentServicesError>,
@@ -381,14 +358,14 @@ impl IncidentServicesAPI {
     /// Get all incident services uploaded for the requesting user's organization. If the `include[users]` query parameter is provided, the included attribute will contain the users related to these incident services.
     pub async fn list_incident_services_with_http_info(
         &self,
-        params: ListIncidentServicesParams,
+        params: ListIncidentServicesOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::IncidentServicesResponse>,
         Error<ListIncidentServicesError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let include = params.include;
         let page_size = params.page_size;
         let page_offset = params.page_offset;
@@ -400,18 +377,21 @@ impl IncidentServicesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = include {
-            local_req_builder = local_req_builder.query(&[("include", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_size {
-            local_req_builder = local_req_builder.query(&[("page[size]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_offset {
+        if let Some(ref local_query_param) = include {
             local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_str.to_string())]);
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter {
-            local_req_builder = local_req_builder.query(&[("filter", &local_str.to_string())]);
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_offset {
+            local_req_builder =
+                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter {
+            local_req_builder =
+                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -457,12 +437,16 @@ impl IncidentServicesAPI {
     /// Updates an existing incident service. Only provide the attributes which should be updated as this request is a partial update.
     pub async fn update_incident_service(
         &self,
-        params: UpdateIncidentServiceParams,
+        service_id: String,
+        body: crate::datadogV2::model::IncidentServiceUpdateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::IncidentServiceResponse>,
         Error<UpdateIncidentServiceError>,
     > {
-        match self.update_incident_service_with_http_info(params).await {
+        match self
+            .update_incident_service_with_http_info(service_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -471,16 +455,13 @@ impl IncidentServicesAPI {
     /// Updates an existing incident service. Only provide the attributes which should be updated as this request is a partial update.
     pub async fn update_incident_service_with_http_info(
         &self,
-        params: UpdateIncidentServiceParams,
+        service_id: String,
+        body: crate::datadogV2::model::IncidentServiceUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::IncidentServiceResponse>,
         Error<UpdateIncidentServiceError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let service_id = params.service_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

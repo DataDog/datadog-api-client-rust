@@ -18,6 +18,14 @@ impl SyntheticsUpdateTestPauseStatusPayload {
     pub fn new() -> SyntheticsUpdateTestPauseStatusPayload {
         SyntheticsUpdateTestPauseStatusPayload { new_status: None }
     }
+
+    pub fn with_new_status(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsTestPauseStatus,
+    ) -> &mut Self {
+        self.new_status = Some(value);
+        self
+    }
 }
 impl Default for SyntheticsUpdateTestPauseStatusPayload {
     fn default() -> Self {

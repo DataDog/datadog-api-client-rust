@@ -17,6 +17,11 @@ impl WidgetTime {
     pub fn new() -> WidgetTime {
         WidgetTime { live_span: None }
     }
+
+    pub fn with_live_span(&mut self, value: crate::datadogV1::model::WidgetLiveSpan) -> &mut Self {
+        self.live_span = Some(value);
+        self
+    }
 }
 impl Default for WidgetTime {
     fn default() -> Self {

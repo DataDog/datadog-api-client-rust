@@ -23,6 +23,16 @@ impl RelationshipToPermissionData {
             type_: None,
         }
     }
+
+    pub fn with_id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn with_type_(&mut self, value: crate::datadogV2::model::PermissionsType) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
 impl Default for RelationshipToPermissionData {
     fn default() -> Self {

@@ -10,10 +10,10 @@ use serde_with::skip_serializing_none;
 pub struct ServiceDefinitionV2Dot2Integrations {
     /// Opsgenie integration for the service.
     #[serde(rename = "opsgenie")]
-    pub opsgenie: Option<Box<crate::datadogV2::model::ServiceDefinitionV2Dot2Opsgenie>>,
+    pub opsgenie: Option<crate::datadogV2::model::ServiceDefinitionV2Dot2Opsgenie>,
     /// PagerDuty integration for the service.
     #[serde(rename = "pagerduty")]
-    pub pagerduty: Option<Box<crate::datadogV2::model::ServiceDefinitionV2Dot2Pagerduty>>,
+    pub pagerduty: Option<crate::datadogV2::model::ServiceDefinitionV2Dot2Pagerduty>,
 }
 
 impl ServiceDefinitionV2Dot2Integrations {
@@ -22,6 +22,22 @@ impl ServiceDefinitionV2Dot2Integrations {
             opsgenie: None,
             pagerduty: None,
         }
+    }
+
+    pub fn with_opsgenie(
+        &mut self,
+        value: crate::datadogV2::model::ServiceDefinitionV2Dot2Opsgenie,
+    ) -> &mut Self {
+        self.opsgenie = Some(value);
+        self
+    }
+
+    pub fn with_pagerduty(
+        &mut self,
+        value: crate::datadogV2::model::ServiceDefinitionV2Dot2Pagerduty,
+    ) -> &mut Self {
+        self.pagerduty = Some(value);
+        self
     }
 }
 impl Default for ServiceDefinitionV2Dot2Integrations {

@@ -10,10 +10,10 @@ use serde_with::skip_serializing_none;
 pub struct SensitiveDataScannerCreateRuleResponse {
     /// Response data related to the creation of a rule.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::SensitiveDataScannerRuleResponse>>,
+    pub data: Option<crate::datadogV2::model::SensitiveDataScannerRuleResponse>,
     /// Meta payload containing information about the API.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly>>,
+    pub meta: Option<crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly>,
 }
 
 impl SensitiveDataScannerCreateRuleResponse {
@@ -22,6 +22,22 @@ impl SensitiveDataScannerCreateRuleResponse {
             data: None,
             meta: None,
         }
+    }
+
+    pub fn with_data(
+        &mut self,
+        value: crate::datadogV2::model::SensitiveDataScannerRuleResponse,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn with_meta(
+        &mut self,
+        value: crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly,
+    ) -> &mut Self {
+        self.meta = Some(value);
+        self
     }
 }
 impl Default for SensitiveDataScannerCreateRuleResponse {

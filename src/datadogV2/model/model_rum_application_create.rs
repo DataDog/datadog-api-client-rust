@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct RUMApplicationCreate {
     /// RUM application creation attributes.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::RUMApplicationCreateAttributes>,
+    pub attributes: crate::datadogV2::model::RUMApplicationCreateAttributes,
     /// RUM application creation type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::RUMApplicationCreateType,
@@ -18,7 +18,7 @@ pub struct RUMApplicationCreate {
 
 impl RUMApplicationCreate {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::RUMApplicationCreateAttributes>,
+        attributes: crate::datadogV2::model::RUMApplicationCreateAttributes,
         type_: crate::datadogV2::model::RUMApplicationCreateType,
     ) -> RUMApplicationCreate {
         RUMApplicationCreate { attributes, type_ }

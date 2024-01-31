@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct ScalarFormulaRequest {
     /// The object describing a scalar formula request.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::ScalarFormulaRequestAttributes>,
+    pub attributes: crate::datadogV2::model::ScalarFormulaRequestAttributes,
     /// The type of the resource. The value should always be scalar_request.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ScalarFormulaRequestType,
@@ -18,7 +18,7 @@ pub struct ScalarFormulaRequest {
 
 impl ScalarFormulaRequest {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::ScalarFormulaRequestAttributes>,
+        attributes: crate::datadogV2::model::ScalarFormulaRequestAttributes,
         type_: crate::datadogV2::model::ScalarFormulaRequestType,
     ) -> ScalarFormulaRequest {
         ScalarFormulaRequest { attributes, type_ }

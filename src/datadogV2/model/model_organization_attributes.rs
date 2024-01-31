@@ -47,6 +47,46 @@ impl OrganizationAttributes {
             url: None,
         }
     }
+
+    pub fn with_created_at(&mut self, value: String) -> &mut Self {
+        self.created_at = Some(value);
+        self
+    }
+
+    pub fn with_description(&mut self, value: String) -> &mut Self {
+        self.description = Some(value);
+        self
+    }
+
+    pub fn with_disabled(&mut self, value: bool) -> &mut Self {
+        self.disabled = Some(value);
+        self
+    }
+
+    pub fn with_modified_at(&mut self, value: String) -> &mut Self {
+        self.modified_at = Some(value);
+        self
+    }
+
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn with_public_id(&mut self, value: String) -> &mut Self {
+        self.public_id = Some(value);
+        self
+    }
+
+    pub fn with_sharing(&mut self, value: String) -> &mut Self {
+        self.sharing = Some(value);
+        self
+    }
+
+    pub fn with_url(&mut self, value: String) -> &mut Self {
+        self.url = Some(value);
+        self
+    }
 }
 impl Default for OrganizationAttributes {
     fn default() -> Self {

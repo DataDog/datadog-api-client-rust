@@ -5,15 +5,9 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// AggregateCIAppTestEventsParams is a struct for passing parameters to the method [`CIVisibilityTestsAPI::aggregate_ci_app_test_events`]
+/// ListCIAppTestEventsOptionalParams is a struct for passing parameters to the method [`CIVisibilityTestsAPI::list_ci_app_test_events`]
 #[derive(Clone, Debug)]
-pub struct AggregateCIAppTestEventsParams {
-    pub body: crate::datadogV2::model::CIAppTestsAggregateRequest,
-}
-
-/// ListCIAppTestEventsParams is a struct for passing parameters to the method [`CIVisibilityTestsAPI::list_ci_app_test_events`]
-#[derive(Clone, Debug)]
-pub struct ListCIAppTestEventsParams {
+pub struct ListCIAppTestEventsOptionalParams {
     /// Search query following log syntax.
     pub filter_query: Option<String>,
     /// Minimum timestamp for requested events.
@@ -28,10 +22,10 @@ pub struct ListCIAppTestEventsParams {
     pub page_limit: Option<i32>,
 }
 
-/// SearchCIAppTestEventsParams is a struct for passing parameters to the method [`CIVisibilityTestsAPI::search_ci_app_test_events`]
+/// SearchCIAppTestEventsOptionalParams is a struct for passing parameters to the method [`CIVisibilityTestsAPI::search_ci_app_test_events`]
 #[derive(Clone, Debug)]
-pub struct SearchCIAppTestEventsParams {
-    pub body: Option<Option<crate::datadogV2::model::CIAppTestEventsRequest>>,
+pub struct SearchCIAppTestEventsOptionalParams {
+    pub body: Option<crate::datadogV2::model::CIAppTestEventsRequest>,
 }
 
 /// AggregateCIAppTestEventsError is a struct for typed errors of method [`CIVisibilityTestsAPI::aggregate_ci_app_test_events`]
@@ -88,15 +82,12 @@ impl CIVisibilityTestsAPI {
     /// The API endpoint to aggregate CI Visibility test events into buckets of computed metrics and timeseries.
     pub async fn aggregate_ci_app_test_events(
         &self,
-        params: AggregateCIAppTestEventsParams,
+        body: crate::datadogV2::model::CIAppTestsAggregateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::CIAppTestsAnalyticsAggregateResponse>,
         Error<AggregateCIAppTestEventsError>,
     > {
-        match self
-            .aggregate_ci_app_test_events_with_http_info(params)
-            .await
-        {
+        match self.aggregate_ci_app_test_events_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -105,15 +96,12 @@ impl CIVisibilityTestsAPI {
     /// The API endpoint to aggregate CI Visibility test events into buckets of computed metrics and timeseries.
     pub async fn aggregate_ci_app_test_events_with_http_info(
         &self,
-        params: AggregateCIAppTestEventsParams,
+        body: crate::datadogV2::model::CIAppTestsAggregateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::CIAppTestsAnalyticsAggregateResponse>,
         Error<AggregateCIAppTestEventsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -178,7 +166,7 @@ impl CIVisibilityTestsAPI {
     /// Use this endpoint to see your latest test events.
     pub async fn list_ci_app_test_events(
         &self,
-        params: ListCIAppTestEventsParams,
+        params: ListCIAppTestEventsOptionalParams,
     ) -> Result<
         Option<crate::datadogV2::model::CIAppTestEventsResponse>,
         Error<ListCIAppTestEventsError>,
@@ -195,14 +183,14 @@ impl CIVisibilityTestsAPI {
     /// Use this endpoint to see your latest test events.
     pub async fn list_ci_app_test_events_with_http_info(
         &self,
-        params: ListCIAppTestEventsParams,
+        params: ListCIAppTestEventsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::CIAppTestEventsResponse>,
         Error<ListCIAppTestEventsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let filter_query = params.filter_query;
         let filter_from = params.filter_from;
         let filter_to = params.filter_to;
@@ -216,26 +204,29 @@ impl CIVisibilityTestsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = filter_query {
+        if let Some(ref local_query_param) = filter_query {
             local_req_builder =
-                local_req_builder.query(&[("filter[query]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_from {
+        if let Some(ref local_query_param) = filter_from {
             local_req_builder =
-                local_req_builder.query(&[("filter[from]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[from]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_to {
-            local_req_builder = local_req_builder.query(&[("filter[to]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = sort {
-            local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_cursor {
+        if let Some(ref local_query_param) = filter_to {
             local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[to]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = page_limit {
-            local_req_builder = local_req_builder.query(&[("page[limit]", &local_str.to_string())]);
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_cursor {
+            local_req_builder =
+                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -284,7 +275,7 @@ impl CIVisibilityTestsAPI {
     /// Use this endpoint to build complex events filtering and search.
     pub async fn search_ci_app_test_events(
         &self,
-        params: SearchCIAppTestEventsParams,
+        params: SearchCIAppTestEventsOptionalParams,
     ) -> Result<
         Option<crate::datadogV2::model::CIAppTestEventsResponse>,
         Error<SearchCIAppTestEventsError>,
@@ -301,14 +292,14 @@ impl CIVisibilityTestsAPI {
     /// Use this endpoint to build complex events filtering and search.
     pub async fn search_ci_app_test_events_with_http_info(
         &self,
-        params: SearchCIAppTestEventsParams,
+        params: SearchCIAppTestEventsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::CIAppTestEventsResponse>,
         Error<SearchCIAppTestEventsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let body = params.body;
 
         let local_client = &local_configuration.client;

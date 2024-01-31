@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct EventResponseAttributes {
     /// Object description of attributes from your event.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::EventAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::EventAttributes>,
     /// The message of the event.
     #[serde(rename = "message")]
     pub message: Option<String>,
@@ -30,6 +30,29 @@ impl EventResponseAttributes {
             tags: None,
             timestamp: None,
         }
+    }
+
+    pub fn with_attributes(
+        &mut self,
+        value: crate::datadogV2::model::EventAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn with_message(&mut self, value: String) -> &mut Self {
+        self.message = Some(value);
+        self
+    }
+
+    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+
+    pub fn with_timestamp(&mut self, value: String) -> &mut Self {
+        self.timestamp = Some(value);
+        self
     }
 }
 impl Default for EventResponseAttributes {

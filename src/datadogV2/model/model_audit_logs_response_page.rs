@@ -17,6 +17,11 @@ impl AuditLogsResponsePage {
     pub fn new() -> AuditLogsResponsePage {
         AuditLogsResponsePage { after: None }
     }
+
+    pub fn with_after(&mut self, value: String) -> &mut Self {
+        self.after = Some(value);
+        self
+    }
 }
 impl Default for AuditLogsResponsePage {
     fn default() -> Self {

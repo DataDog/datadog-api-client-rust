@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SharedDashboardUpdateRequest {
     /// Timeframe setting for the shared dashboard.
     #[serde(rename = "global_time")]
-    pub global_time: Option<Box<crate::datadogV1::model::SharedDashboardUpdateRequestGlobalTime>>,
+    pub global_time: Option<crate::datadogV1::model::SharedDashboardUpdateRequestGlobalTime>,
     /// Whether to allow viewers to select a different global time setting for the shared dashboard.
     #[serde(
         rename = "global_time_selectable_enabled",
@@ -44,7 +44,7 @@ pub struct SharedDashboardUpdateRequest {
 
 impl SharedDashboardUpdateRequest {
     pub fn new(
-        global_time: Option<Box<crate::datadogV1::model::SharedDashboardUpdateRequestGlobalTime>>,
+        global_time: Option<crate::datadogV1::model::SharedDashboardUpdateRequestGlobalTime>,
     ) -> SharedDashboardUpdateRequest {
         SharedDashboardUpdateRequest {
             global_time,
@@ -53,5 +53,31 @@ impl SharedDashboardUpdateRequest {
             share_list: None,
             share_type: None,
         }
+    }
+
+    pub fn with_global_time_selectable_enabled(&mut self, value: Option<bool>) -> &mut Self {
+        self.global_time_selectable_enabled = Some(value);
+        self
+    }
+
+    pub fn with_selectable_template_vars(
+        &mut self,
+        value: Option<Vec<crate::datadogV1::model::SelectableTemplateVariableItems>>,
+    ) -> &mut Self {
+        self.selectable_template_vars = Some(value);
+        self
+    }
+
+    pub fn with_share_list(&mut self, value: Option<Vec<String>>) -> &mut Self {
+        self.share_list = Some(value);
+        self
+    }
+
+    pub fn with_share_type(
+        &mut self,
+        value: Option<crate::datadogV1::model::DashboardShareType>,
+    ) -> &mut Self {
+        self.share_type = Some(value);
+        self
     }
 }

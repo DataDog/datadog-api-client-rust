@@ -23,6 +23,19 @@ impl SyntheticsTestOptionsScheduling {
             timezone: None,
         }
     }
+
+    pub fn with_timeframes(
+        &mut self,
+        value: Vec<crate::datadogV1::model::SyntheticsTestOptionsSchedulingTimeframe>,
+    ) -> &mut Self {
+        self.timeframes = Some(value);
+        self
+    }
+
+    pub fn with_timezone(&mut self, value: String) -> &mut Self {
+        self.timezone = Some(value);
+        self
+    }
 }
 impl Default for SyntheticsTestOptionsScheduling {
     fn default() -> Self {

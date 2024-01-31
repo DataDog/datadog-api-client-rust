@@ -16,7 +16,7 @@ pub struct SyntheticsGlobalVariableParseTestOptions {
     pub local_variable_name: Option<String>,
     /// Details of the parser to use for the global variable.
     #[serde(rename = "parser")]
-    pub parser: Option<Box<crate::datadogV1::model::SyntheticsVariableParser>>,
+    pub parser: Option<crate::datadogV1::model::SyntheticsVariableParser>,
     /// Property of the Synthetic Test Response to use for a Synthetic global variable.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::SyntheticsGlobalVariableParseTestOptionsType,
@@ -32,5 +32,23 @@ impl SyntheticsGlobalVariableParseTestOptions {
             parser: None,
             type_,
         }
+    }
+
+    pub fn with_field(&mut self, value: String) -> &mut Self {
+        self.field = Some(value);
+        self
+    }
+
+    pub fn with_local_variable_name(&mut self, value: String) -> &mut Self {
+        self.local_variable_name = Some(value);
+        self
+    }
+
+    pub fn with_parser(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsVariableParser,
+    ) -> &mut Self {
+        self.parser = Some(value);
+        self
     }
 }

@@ -10,13 +10,13 @@ use serde_with::skip_serializing_none;
 pub struct PowerpackData {
     /// Powerpack attribute object.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::PowerpackAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::PowerpackAttributes>,
     /// ID of the powerpack.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Powerpack relationship object.
     #[serde(rename = "relationships")]
-    pub relationships: Option<Box<crate::datadogV2::model::PowerpackRelationships>>,
+    pub relationships: Option<crate::datadogV2::model::PowerpackRelationships>,
     /// Type of widget, must be powerpack.
     #[serde(rename = "type")]
     pub type_: Option<String>,
@@ -30,6 +30,32 @@ impl PowerpackData {
             relationships: None,
             type_: None,
         }
+    }
+
+    pub fn with_attributes(
+        &mut self,
+        value: crate::datadogV2::model::PowerpackAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn with_id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn with_relationships(
+        &mut self,
+        value: crate::datadogV2::model::PowerpackRelationships,
+    ) -> &mut Self {
+        self.relationships = Some(value);
+        self
+    }
+
+    pub fn with_type_(&mut self, value: String) -> &mut Self {
+        self.type_ = Some(value);
+        self
     }
 }
 impl Default for PowerpackData {

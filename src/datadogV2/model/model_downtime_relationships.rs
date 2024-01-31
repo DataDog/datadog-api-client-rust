@@ -10,10 +10,10 @@ use serde_with::skip_serializing_none;
 pub struct DowntimeRelationships {
     /// The user who created the downtime.
     #[serde(rename = "created_by")]
-    pub created_by: Option<Box<crate::datadogV2::model::DowntimeRelationshipsCreatedBy>>,
+    pub created_by: Option<crate::datadogV2::model::DowntimeRelationshipsCreatedBy>,
     /// The monitor identified by the downtime.
     #[serde(rename = "monitor")]
-    pub monitor: Option<Box<crate::datadogV2::model::DowntimeRelationshipsMonitor>>,
+    pub monitor: Option<crate::datadogV2::model::DowntimeRelationshipsMonitor>,
 }
 
 impl DowntimeRelationships {
@@ -22,6 +22,22 @@ impl DowntimeRelationships {
             created_by: None,
             monitor: None,
         }
+    }
+
+    pub fn with_created_by(
+        &mut self,
+        value: crate::datadogV2::model::DowntimeRelationshipsCreatedBy,
+    ) -> &mut Self {
+        self.created_by = Some(value);
+        self
+    }
+
+    pub fn with_monitor(
+        &mut self,
+        value: crate::datadogV2::model::DowntimeRelationshipsMonitor,
+    ) -> &mut Self {
+        self.monitor = Some(value);
+        self
     }
 }
 impl Default for DowntimeRelationships {

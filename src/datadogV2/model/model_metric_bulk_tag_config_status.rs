@@ -11,7 +11,7 @@ use serde_with::skip_serializing_none;
 pub struct MetricBulkTagConfigStatus {
     /// Optional attributes for the status of a bulk tag configuration request.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::MetricBulkTagConfigStatusAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::MetricBulkTagConfigStatusAttributes>,
     /// A text prefix to match against metric names.
     #[serde(rename = "id")]
     pub id: String,
@@ -30,5 +30,13 @@ impl MetricBulkTagConfigStatus {
             id,
             type_,
         }
+    }
+
+    pub fn with_attributes(
+        &mut self,
+        value: crate::datadogV2::model::MetricBulkTagConfigStatusAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
     }
 }

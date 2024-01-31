@@ -19,6 +19,11 @@ impl DeleteSharedDashboardResponse {
             deleted_public_dashboard_token: None,
         }
     }
+
+    pub fn with_deleted_public_dashboard_token(&mut self, value: String) -> &mut Self {
+        self.deleted_public_dashboard_token = Some(value);
+        self
+    }
 }
 impl Default for DeleteSharedDashboardResponse {
     fn default() -> Self {

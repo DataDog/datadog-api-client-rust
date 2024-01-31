@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct CreateRuleRequestData {
     /// Details of a rule.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::RuleAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::RuleAttributes>,
     /// The JSON:API type for scorecard rules.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::RuleType>,
@@ -22,6 +22,16 @@ impl CreateRuleRequestData {
             attributes: None,
             type_: None,
         }
+    }
+
+    pub fn with_attributes(&mut self, value: crate::datadogV2::model::RuleAttributes) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn with_type_(&mut self, value: crate::datadogV2::model::RuleType) -> &mut Self {
+        self.type_ = Some(value);
+        self
     }
 }
 impl Default for CreateRuleRequestData {

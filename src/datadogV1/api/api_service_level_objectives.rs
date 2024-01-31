@@ -5,61 +5,23 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CheckCanDeleteSLOParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::check_can_delete_slo`]
+/// DeleteSLOOptionalParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::delete_slo`]
 #[derive(Clone, Debug)]
-pub struct CheckCanDeleteSLOParams {
-    /// A comma separated list of the IDs of the service level objectives objects.
-    pub ids: String,
-}
-
-/// CreateSLOParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::create_slo`]
-#[derive(Clone, Debug)]
-pub struct CreateSLOParams {
-    /// Service level objective request object.
-    pub body: crate::datadogV1::model::ServiceLevelObjectiveRequest,
-}
-
-/// DeleteSLOParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::delete_slo`]
-#[derive(Clone, Debug)]
-pub struct DeleteSLOParams {
-    /// The ID of the service level objective.
-    pub slo_id: String,
+pub struct DeleteSLOOptionalParams {
     /// Delete the monitor even if it's referenced by other resources (for example SLO, composite monitor).
     pub force: Option<String>,
 }
 
-/// DeleteSLOTimeframeInBulkParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::delete_slo_timeframe_in_bulk`]
+/// GetSLOOptionalParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::get_slo`]
 #[derive(Clone, Debug)]
-pub struct DeleteSLOTimeframeInBulkParams {
-    /// Delete multiple service level objective objects request body.
-    pub body: std::collections::BTreeMap<String, Vec<crate::datadogV1::model::SLOTimeframe>>,
-}
-
-/// GetSLOParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::get_slo`]
-#[derive(Clone, Debug)]
-pub struct GetSLOParams {
-    /// The ID of the service level objective object.
-    pub slo_id: String,
+pub struct GetSLOOptionalParams {
     /// Get the IDs of SLO monitors that reference this SLO.
     pub with_configured_alert_ids: Option<bool>,
 }
 
-/// GetSLOCorrectionsParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::get_slo_corrections`]
+/// GetSLOHistoryOptionalParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::get_slo_history`]
 #[derive(Clone, Debug)]
-pub struct GetSLOCorrectionsParams {
-    /// The ID of the service level objective object.
-    pub slo_id: String,
-}
-
-/// GetSLOHistoryParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::get_slo_history`]
-#[derive(Clone, Debug)]
-pub struct GetSLOHistoryParams {
-    /// The ID of the service level objective object.
-    pub slo_id: String,
-    /// The `from` timestamp for the query window in epoch seconds.
-    pub from_ts: i64,
-    /// The `to` timestamp for the query window in epoch seconds.
-    pub to_ts: i64,
+pub struct GetSLOHistoryOptionalParams {
     /// The SLO target. If `target` is passed in, the response will include the remaining error budget and a timeframe value of `custom`.
     pub target: Option<f64>,
     /// Defaults to `true`. If any SLO corrections are applied and this parameter is set to `false`,
@@ -67,9 +29,9 @@ pub struct GetSLOHistoryParams {
     pub apply_correction: Option<bool>,
 }
 
-/// ListSLOsParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::list_sl_os`]
+/// ListSLOsOptionalParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::list_sl_os`]
 #[derive(Clone, Debug)]
-pub struct ListSLOsParams {
+pub struct ListSLOsOptionalParams {
     /// A comma separated list of the IDs of the service level objectives objects.
     pub ids: Option<String>,
     /// The query string to filter results based on SLO names.
@@ -84,9 +46,9 @@ pub struct ListSLOsParams {
     pub offset: Option<i64>,
 }
 
-/// SearchSLOParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::search_slo`]
+/// SearchSLOOptionalParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::search_slo`]
 #[derive(Clone, Debug)]
-pub struct SearchSLOParams {
+pub struct SearchSLOOptionalParams {
     /// The query string to filter results based on SLO names.
     /// Some examples of queries include `service:<service-name>`
     /// and `<slo-name>`.
@@ -97,15 +59,6 @@ pub struct SearchSLOParams {
     pub page_number: Option<i64>,
     /// Whether or not to return facet information in the response `[default=false]`.
     pub include_facets: Option<bool>,
-}
-
-/// UpdateSLOParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::update_slo`]
-#[derive(Clone, Debug)]
-pub struct UpdateSLOParams {
-    /// The ID of the service level objective object.
-    pub slo_id: String,
-    /// The edited service level objective request object.
-    pub body: crate::datadogV1::model::ServiceLevelObjective,
 }
 
 /// CheckCanDeleteSLOError is a struct for typed errors of method [`ServiceLevelObjectivesAPI::check_can_delete_slo`]
@@ -239,12 +192,12 @@ impl ServiceLevelObjectivesAPI {
     /// assure an SLO can be deleted without disrupting a dashboard.
     pub async fn check_can_delete_slo(
         &self,
-        params: CheckCanDeleteSLOParams,
+        ids: String,
     ) -> Result<
         Option<crate::datadogV1::model::CheckCanDeleteSLOResponse>,
         Error<CheckCanDeleteSLOError>,
     > {
-        match self.check_can_delete_slo_with_http_info(params).await {
+        match self.check_can_delete_slo_with_http_info(ids).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -254,15 +207,12 @@ impl ServiceLevelObjectivesAPI {
     /// assure an SLO can be deleted without disrupting a dashboard.
     pub async fn check_can_delete_slo_with_http_info(
         &self,
-        params: CheckCanDeleteSLOParams,
+        ids: String,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::CheckCanDeleteSLOResponse>,
         Error<CheckCanDeleteSLOError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let ids = params.ids;
 
         let local_client = &local_configuration.client;
 
@@ -315,9 +265,9 @@ impl ServiceLevelObjectivesAPI {
     /// Create a service level objective object.
     pub async fn create_slo(
         &self,
-        params: CreateSLOParams,
+        body: crate::datadogV1::model::ServiceLevelObjectiveRequest,
     ) -> Result<Option<crate::datadogV1::model::SLOListResponse>, Error<CreateSLOError>> {
-        match self.create_slo_with_http_info(params).await {
+        match self.create_slo_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -326,13 +276,10 @@ impl ServiceLevelObjectivesAPI {
     /// Create a service level objective object.
     pub async fn create_slo_with_http_info(
         &self,
-        params: CreateSLOParams,
+        body: crate::datadogV1::model::ServiceLevelObjectiveRequest,
     ) -> Result<ResponseContent<crate::datadogV1::model::SLOListResponse>, Error<CreateSLOError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -392,9 +339,10 @@ impl ServiceLevelObjectivesAPI {
     /// a 409 conflict error because the SLO is referenced in a dashboard.
     pub async fn delete_slo(
         &self,
-        params: DeleteSLOParams,
+        slo_id: String,
+        params: DeleteSLOOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::SLODeleteResponse>, Error<DeleteSLOError>> {
-        match self.delete_slo_with_http_info(params).await {
+        match self.delete_slo_with_http_info(slo_id, params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -406,13 +354,13 @@ impl ServiceLevelObjectivesAPI {
     /// a 409 conflict error because the SLO is referenced in a dashboard.
     pub async fn delete_slo_with_http_info(
         &self,
-        params: DeleteSLOParams,
+        slo_id: String,
+        params: DeleteSLOOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV1::model::SLODeleteResponse>, Error<DeleteSLOError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let slo_id = params.slo_id;
+        // unbox and build optional parameters
         let force = params.force;
 
         let local_client = &local_configuration.client;
@@ -425,8 +373,9 @@ impl ServiceLevelObjectivesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
-        if let Some(ref local_str) = force {
-            local_req_builder = local_req_builder.query(&[("force", &local_str.to_string())]);
+        if let Some(ref local_query_param) = force {
+            local_req_builder =
+                local_req_builder.query(&[("force", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -475,15 +424,12 @@ impl ServiceLevelObjectivesAPI {
     /// objective object is deleted as well.
     pub async fn delete_slo_timeframe_in_bulk(
         &self,
-        params: DeleteSLOTimeframeInBulkParams,
+        body: std::collections::BTreeMap<String, Vec<crate::datadogV1::model::SLOTimeframe>>,
     ) -> Result<
         Option<crate::datadogV1::model::SLOBulkDeleteResponse>,
         Error<DeleteSLOTimeframeInBulkError>,
     > {
-        match self
-            .delete_slo_timeframe_in_bulk_with_http_info(params)
-            .await
-        {
+        match self.delete_slo_timeframe_in_bulk_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -496,15 +442,12 @@ impl ServiceLevelObjectivesAPI {
     /// objective object is deleted as well.
     pub async fn delete_slo_timeframe_in_bulk_with_http_info(
         &self,
-        params: DeleteSLOTimeframeInBulkParams,
+        body: std::collections::BTreeMap<String, Vec<crate::datadogV1::model::SLOTimeframe>>,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SLOBulkDeleteResponse>,
         Error<DeleteSLOTimeframeInBulkError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -562,9 +505,10 @@ impl ServiceLevelObjectivesAPI {
     /// Get a service level objective object.
     pub async fn get_slo(
         &self,
-        params: GetSLOParams,
+        slo_id: String,
+        params: GetSLOOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::SLOResponse>, Error<GetSLOError>> {
-        match self.get_slo_with_http_info(params).await {
+        match self.get_slo_with_http_info(slo_id, params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -573,12 +517,12 @@ impl ServiceLevelObjectivesAPI {
     /// Get a service level objective object.
     pub async fn get_slo_with_http_info(
         &self,
-        params: GetSLOParams,
+        slo_id: String,
+        params: GetSLOOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV1::model::SLOResponse>, Error<GetSLOError>> {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let slo_id = params.slo_id;
+        // unbox and build optional parameters
         let with_configured_alert_ids = params.with_configured_alert_ids;
 
         let local_client = &local_configuration.client;
@@ -591,9 +535,9 @@ impl ServiceLevelObjectivesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = with_configured_alert_ids {
-            local_req_builder =
-                local_req_builder.query(&[("with_configured_alert_ids", &local_str.to_string())]);
+        if let Some(ref local_query_param) = with_configured_alert_ids {
+            local_req_builder = local_req_builder
+                .query(&[("with_configured_alert_ids", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -638,12 +582,12 @@ impl ServiceLevelObjectivesAPI {
     /// Get corrections applied to an SLO
     pub async fn get_slo_corrections(
         &self,
-        params: GetSLOCorrectionsParams,
+        slo_id: String,
     ) -> Result<
         Option<crate::datadogV1::model::SLOCorrectionListResponse>,
         Error<GetSLOCorrectionsError>,
     > {
-        match self.get_slo_corrections_with_http_info(params).await {
+        match self.get_slo_corrections_with_http_info(slo_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -652,15 +596,12 @@ impl ServiceLevelObjectivesAPI {
     /// Get corrections applied to an SLO
     pub async fn get_slo_corrections_with_http_info(
         &self,
-        params: GetSLOCorrectionsParams,
+        slo_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SLOCorrectionListResponse>,
         Error<GetSLOCorrectionsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let slo_id = params.slo_id;
 
         let local_client = &local_configuration.client;
 
@@ -722,10 +663,16 @@ impl ServiceLevelObjectivesAPI {
     /// Examples of both are shown.
     pub async fn get_slo_history(
         &self,
-        params: GetSLOHistoryParams,
+        slo_id: String,
+        from_ts: i64,
+        to_ts: i64,
+        params: GetSLOHistoryOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::SLOHistoryResponse>, Error<GetSLOHistoryError>>
     {
-        match self.get_slo_history_with_http_info(params).await {
+        match self
+            .get_slo_history_with_http_info(slo_id, from_ts, to_ts, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -741,17 +688,17 @@ impl ServiceLevelObjectivesAPI {
     /// Examples of both are shown.
     pub async fn get_slo_history_with_http_info(
         &self,
-        params: GetSLOHistoryParams,
+        slo_id: String,
+        from_ts: i64,
+        to_ts: i64,
+        params: GetSLOHistoryOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SLOHistoryResponse>,
         Error<GetSLOHistoryError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let slo_id = params.slo_id;
-        let from_ts = params.from_ts;
-        let to_ts = params.to_ts;
+        // unbox and build optional parameters
         let target = params.target;
         let apply_correction = params.apply_correction;
 
@@ -767,12 +714,13 @@ impl ServiceLevelObjectivesAPI {
 
         local_req_builder = local_req_builder.query(&[("from_ts", &from_ts.to_string())]);
         local_req_builder = local_req_builder.query(&[("to_ts", &to_ts.to_string())]);
-        if let Some(ref local_str) = target {
-            local_req_builder = local_req_builder.query(&[("target", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = apply_correction {
+        if let Some(ref local_query_param) = target {
             local_req_builder =
-                local_req_builder.query(&[("apply_correction", &local_str.to_string())]);
+                local_req_builder.query(&[("target", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = apply_correction {
+            local_req_builder =
+                local_req_builder.query(&[("apply_correction", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -818,7 +766,7 @@ impl ServiceLevelObjectivesAPI {
     /// Get a list of service level objective objects for your organization.
     pub async fn list_sl_os(
         &self,
-        params: ListSLOsParams,
+        params: ListSLOsOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::SLOListResponse>, Error<ListSLOsError>> {
         match self.list_sl_os_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
@@ -829,12 +777,12 @@ impl ServiceLevelObjectivesAPI {
     /// Get a list of service level objective objects for your organization.
     pub async fn list_sl_os_with_http_info(
         &self,
-        params: ListSLOsParams,
+        params: ListSLOsOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV1::model::SLOListResponse>, Error<ListSLOsError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let ids = params.ids;
         let query = params.query;
         let tags_query = params.tags_query;
@@ -848,24 +796,28 @@ impl ServiceLevelObjectivesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = ids {
-            local_req_builder = local_req_builder.query(&[("ids", &local_str.to_string())]);
+        if let Some(ref local_query_param) = ids {
+            local_req_builder = local_req_builder.query(&[("ids", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = query {
-            local_req_builder = local_req_builder.query(&[("query", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = tags_query {
-            local_req_builder = local_req_builder.query(&[("tags_query", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = metrics_query {
+        if let Some(ref local_query_param) = query {
             local_req_builder =
-                local_req_builder.query(&[("metrics_query", &local_str.to_string())]);
+                local_req_builder.query(&[("query", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = limit {
-            local_req_builder = local_req_builder.query(&[("limit", &local_str.to_string())]);
+        if let Some(ref local_query_param) = tags_query {
+            local_req_builder =
+                local_req_builder.query(&[("tags_query", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = offset {
-            local_req_builder = local_req_builder.query(&[("offset", &local_str.to_string())]);
+        if let Some(ref local_query_param) = metrics_query {
+            local_req_builder =
+                local_req_builder.query(&[("metrics_query", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = limit {
+            local_req_builder =
+                local_req_builder.query(&[("limit", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = offset {
+            local_req_builder =
+                local_req_builder.query(&[("offset", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -910,7 +862,7 @@ impl ServiceLevelObjectivesAPI {
     /// Get a list of service level objective objects for your organization.
     pub async fn search_slo(
         &self,
-        params: SearchSLOParams,
+        params: SearchSLOOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::SearchSLOResponse>, Error<SearchSLOError>> {
         match self.search_slo_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
@@ -921,12 +873,12 @@ impl ServiceLevelObjectivesAPI {
     /// Get a list of service level objective objects for your organization.
     pub async fn search_slo_with_http_info(
         &self,
-        params: SearchSLOParams,
+        params: SearchSLOOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV1::model::SearchSLOResponse>, Error<SearchSLOError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let query = params.query;
         let page_size = params.page_size;
         let page_number = params.page_number;
@@ -938,19 +890,21 @@ impl ServiceLevelObjectivesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = query {
-            local_req_builder = local_req_builder.query(&[("query", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_size {
-            local_req_builder = local_req_builder.query(&[("page[size]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_number {
+        if let Some(ref local_query_param) = query {
             local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_str.to_string())]);
+                local_req_builder.query(&[("query", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = include_facets {
+        if let Some(ref local_query_param) = page_size {
             local_req_builder =
-                local_req_builder.query(&[("include_facets", &local_str.to_string())]);
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include_facets {
+            local_req_builder =
+                local_req_builder.query(&[("include_facets", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -995,9 +949,10 @@ impl ServiceLevelObjectivesAPI {
     /// Update the specified service level objective object.
     pub async fn update_slo(
         &self,
-        params: UpdateSLOParams,
+        slo_id: String,
+        body: crate::datadogV1::model::ServiceLevelObjective,
     ) -> Result<Option<crate::datadogV1::model::SLOListResponse>, Error<UpdateSLOError>> {
-        match self.update_slo_with_http_info(params).await {
+        match self.update_slo_with_http_info(slo_id, body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1006,14 +961,11 @@ impl ServiceLevelObjectivesAPI {
     /// Update the specified service level objective object.
     pub async fn update_slo_with_http_info(
         &self,
-        params: UpdateSLOParams,
+        slo_id: String,
+        body: crate::datadogV1::model::ServiceLevelObjective,
     ) -> Result<ResponseContent<crate::datadogV1::model::SLOListResponse>, Error<UpdateSLOError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let slo_id = params.slo_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

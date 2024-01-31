@@ -26,7 +26,7 @@ pub struct EventAttributes {
     pub event_object: Option<String>,
     /// The metadata associated with a request.
     #[serde(rename = "evt")]
-    pub evt: Option<Box<crate::datadogV2::model::Event>>,
+    pub evt: Option<crate::datadogV2::model::Event>,
     /// Host name to associate with the event.
     /// Any tags associated with the host are also applied to this event.
     #[serde(rename = "hostname")]
@@ -37,7 +37,7 @@ pub struct EventAttributes {
         default,
         with = "::serde_with::rust::double_option"
     )]
-    pub monitor: Option<Option<Box<crate::datadogV2::model::MonitorType>>>,
+    pub monitor: Option<Option<crate::datadogV2::model::MonitorType>>,
     /// List of groups referred to in the event.
     #[serde(
         rename = "monitor_groups",
@@ -112,6 +112,107 @@ impl EventAttributes {
             timestamp: None,
             title: None,
         }
+    }
+
+    pub fn with_aggregation_key(&mut self, value: String) -> &mut Self {
+        self.aggregation_key = Some(value);
+        self
+    }
+
+    pub fn with_date_happened(&mut self, value: i64) -> &mut Self {
+        self.date_happened = Some(value);
+        self
+    }
+
+    pub fn with_device_name(&mut self, value: String) -> &mut Self {
+        self.device_name = Some(value);
+        self
+    }
+
+    pub fn with_duration(&mut self, value: i64) -> &mut Self {
+        self.duration = Some(value);
+        self
+    }
+
+    pub fn with_event_object(&mut self, value: String) -> &mut Self {
+        self.event_object = Some(value);
+        self
+    }
+
+    pub fn with_evt(&mut self, value: crate::datadogV2::model::Event) -> &mut Self {
+        self.evt = Some(value);
+        self
+    }
+
+    pub fn with_hostname(&mut self, value: String) -> &mut Self {
+        self.hostname = Some(value);
+        self
+    }
+
+    pub fn with_monitor(
+        &mut self,
+        value: Option<crate::datadogV2::model::MonitorType>,
+    ) -> &mut Self {
+        self.monitor = Some(value);
+        self
+    }
+
+    pub fn with_monitor_groups(&mut self, value: Option<Vec<String>>) -> &mut Self {
+        self.monitor_groups = Some(value);
+        self
+    }
+
+    pub fn with_monitor_id(&mut self, value: Option<i64>) -> &mut Self {
+        self.monitor_id = Some(value);
+        self
+    }
+
+    pub fn with_priority(
+        &mut self,
+        value: Option<crate::datadogV2::model::EventPriority>,
+    ) -> &mut Self {
+        self.priority = Some(value);
+        self
+    }
+
+    pub fn with_related_event_id(&mut self, value: i64) -> &mut Self {
+        self.related_event_id = Some(value);
+        self
+    }
+
+    pub fn with_service(&mut self, value: String) -> &mut Self {
+        self.service = Some(value);
+        self
+    }
+
+    pub fn with_source_type_name(&mut self, value: String) -> &mut Self {
+        self.source_type_name = Some(value);
+        self
+    }
+
+    pub fn with_sourcecategory(&mut self, value: String) -> &mut Self {
+        self.sourcecategory = Some(value);
+        self
+    }
+
+    pub fn with_status(&mut self, value: crate::datadogV2::model::EventStatusType) -> &mut Self {
+        self.status = Some(value);
+        self
+    }
+
+    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+
+    pub fn with_timestamp(&mut self, value: i64) -> &mut Self {
+        self.timestamp = Some(value);
+        self
+    }
+
+    pub fn with_title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
     }
 }
 impl Default for EventAttributes {

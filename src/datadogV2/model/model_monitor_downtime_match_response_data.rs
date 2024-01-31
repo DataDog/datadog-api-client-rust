@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct MonitorDowntimeMatchResponseData {
     /// Downtime match details.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::MonitorDowntimeMatchResponseAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::MonitorDowntimeMatchResponseAttributes>,
     /// The downtime ID.
     #[serde(rename = "id", default, with = "::serde_with::rust::double_option")]
     pub id: Option<Option<String>>,
@@ -26,6 +26,27 @@ impl MonitorDowntimeMatchResponseData {
             id: None,
             type_: None,
         }
+    }
+
+    pub fn with_attributes(
+        &mut self,
+        value: crate::datadogV2::model::MonitorDowntimeMatchResponseAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn with_id(&mut self, value: Option<String>) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn with_type_(
+        &mut self,
+        value: crate::datadogV2::model::MonitorDowntimeMatchResourceType,
+    ) -> &mut Self {
+        self.type_ = Some(value);
+        self
     }
 }
 impl Default for MonitorDowntimeMatchResponseData {

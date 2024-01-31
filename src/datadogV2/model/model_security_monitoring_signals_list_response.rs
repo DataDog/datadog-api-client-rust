@@ -14,10 +14,10 @@ pub struct SecurityMonitoringSignalsListResponse {
     pub data: Option<Vec<crate::datadogV2::model::SecurityMonitoringSignal>>,
     /// Links attributes.
     #[serde(rename = "links")]
-    pub links: Option<Box<crate::datadogV2::model::SecurityMonitoringSignalsListResponseLinks>>,
+    pub links: Option<crate::datadogV2::model::SecurityMonitoringSignalsListResponseLinks>,
     /// Meta attributes.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV2::model::SecurityMonitoringSignalsListResponseMeta>>,
+    pub meta: Option<crate::datadogV2::model::SecurityMonitoringSignalsListResponseMeta>,
 }
 
 impl SecurityMonitoringSignalsListResponse {
@@ -27,6 +27,30 @@ impl SecurityMonitoringSignalsListResponse {
             links: None,
             meta: None,
         }
+    }
+
+    pub fn with_data(
+        &mut self,
+        value: Vec<crate::datadogV2::model::SecurityMonitoringSignal>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn with_links(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringSignalsListResponseLinks,
+    ) -> &mut Self {
+        self.links = Some(value);
+        self
+    }
+
+    pub fn with_meta(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringSignalsListResponseMeta,
+    ) -> &mut Self {
+        self.meta = Some(value);
+        self
     }
 }
 impl Default for SecurityMonitoringSignalsListResponse {

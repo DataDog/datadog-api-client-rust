@@ -17,6 +17,11 @@ impl SensitiveDataScannerMetaVersionOnly {
     pub fn new() -> SensitiveDataScannerMetaVersionOnly {
         SensitiveDataScannerMetaVersionOnly { version: None }
     }
+
+    pub fn with_version(&mut self, value: i64) -> &mut Self {
+        self.version = Some(value);
+        self
+    }
 }
 impl Default for SensitiveDataScannerMetaVersionOnly {
     fn default() -> Self {

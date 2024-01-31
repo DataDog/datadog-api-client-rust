@@ -11,7 +11,7 @@ pub struct IncidentSearchResponsePropertyFieldFacetData {
     /// Aggregate information for numeric incident data.
     #[serde(rename = "aggregates")]
     pub aggregates:
-        Option<Box<crate::datadogV2::model::IncidentSearchResponseNumericFacetDataAggregates>>,
+        Option<crate::datadogV2::model::IncidentSearchResponseNumericFacetDataAggregates>,
     /// Facet data for the property field of an incident.
     #[serde(rename = "facets")]
     pub facets: Vec<crate::datadogV2::model::IncidentSearchResponseFieldFacetData>,
@@ -30,5 +30,13 @@ impl IncidentSearchResponsePropertyFieldFacetData {
             facets,
             name,
         }
+    }
+
+    pub fn with_aggregates(
+        &mut self,
+        value: crate::datadogV2::model::IncidentSearchResponseNumericFacetDataAggregates,
+    ) -> &mut Self {
+        self.aggregates = Some(value);
+        self
     }
 }

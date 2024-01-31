@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct IncidentAttachmentLinkAttributes {
     /// The link attachment.
     #[serde(rename = "attachment")]
-    pub attachment: Box<crate::datadogV2::model::IncidentAttachmentLinkAttributesAttachmentObject>,
+    pub attachment: crate::datadogV2::model::IncidentAttachmentLinkAttributesAttachmentObject,
     /// The type of link attachment attributes.
     #[serde(rename = "attachment_type")]
     pub attachment_type: crate::datadogV2::model::IncidentAttachmentLinkAttachmentType,
@@ -21,7 +21,7 @@ pub struct IncidentAttachmentLinkAttributes {
 
 impl IncidentAttachmentLinkAttributes {
     pub fn new(
-        attachment: Box<crate::datadogV2::model::IncidentAttachmentLinkAttributesAttachmentObject>,
+        attachment: crate::datadogV2::model::IncidentAttachmentLinkAttributesAttachmentObject,
         attachment_type: crate::datadogV2::model::IncidentAttachmentLinkAttachmentType,
     ) -> IncidentAttachmentLinkAttributes {
         IncidentAttachmentLinkAttributes {
@@ -29,5 +29,10 @@ impl IncidentAttachmentLinkAttributes {
             attachment_type,
             modified: None,
         }
+    }
+
+    pub fn with_modified(&mut self, value: String) -> &mut Self {
+        self.modified = Some(value);
+        self
     }
 }

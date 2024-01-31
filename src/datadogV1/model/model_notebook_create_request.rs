@@ -10,11 +10,11 @@ use serde_with::skip_serializing_none;
 pub struct NotebookCreateRequest {
     /// The data for a notebook create request.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV1::model::NotebookCreateData>,
+    pub data: crate::datadogV1::model::NotebookCreateData,
 }
 
 impl NotebookCreateRequest {
-    pub fn new(data: Box<crate::datadogV1::model::NotebookCreateData>) -> NotebookCreateRequest {
+    pub fn new(data: crate::datadogV1::model::NotebookCreateData) -> NotebookCreateRequest {
         NotebookCreateRequest { data }
     }
 }

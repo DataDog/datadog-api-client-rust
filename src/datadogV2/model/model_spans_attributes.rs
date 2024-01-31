@@ -85,6 +85,97 @@ impl SpansAttributes {
             type_: None,
         }
     }
+
+    pub fn with_attributes(
+        &mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn with_custom(
+        &mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> &mut Self {
+        self.custom = Some(value);
+        self
+    }
+
+    pub fn with_end_timestamp(&mut self, value: String) -> &mut Self {
+        self.end_timestamp = Some(value);
+        self
+    }
+
+    pub fn with_env(&mut self, value: String) -> &mut Self {
+        self.env = Some(value);
+        self
+    }
+
+    pub fn with_host(&mut self, value: String) -> &mut Self {
+        self.host = Some(value);
+        self
+    }
+
+    pub fn with_ingestion_reason(&mut self, value: String) -> &mut Self {
+        self.ingestion_reason = Some(value);
+        self
+    }
+
+    pub fn with_parent_id(&mut self, value: String) -> &mut Self {
+        self.parent_id = Some(value);
+        self
+    }
+
+    pub fn with_resource_hash(&mut self, value: String) -> &mut Self {
+        self.resource_hash = Some(value);
+        self
+    }
+
+    pub fn with_resource_name(&mut self, value: String) -> &mut Self {
+        self.resource_name = Some(value);
+        self
+    }
+
+    pub fn with_retained_by(&mut self, value: String) -> &mut Self {
+        self.retained_by = Some(value);
+        self
+    }
+
+    pub fn with_service(&mut self, value: String) -> &mut Self {
+        self.service = Some(value);
+        self
+    }
+
+    pub fn with_single_span(&mut self, value: bool) -> &mut Self {
+        self.single_span = Some(value);
+        self
+    }
+
+    pub fn with_span_id(&mut self, value: String) -> &mut Self {
+        self.span_id = Some(value);
+        self
+    }
+
+    pub fn with_start_timestamp(&mut self, value: String) -> &mut Self {
+        self.start_timestamp = Some(value);
+        self
+    }
+
+    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+
+    pub fn with_trace_id(&mut self, value: String) -> &mut Self {
+        self.trace_id = Some(value);
+        self
+    }
+
+    pub fn with_type_(&mut self, value: String) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
 impl Default for SpansAttributes {
     fn default() -> Self {

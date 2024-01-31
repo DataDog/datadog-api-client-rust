@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct EventsScalarQuery {
     /// The instructions for what to compute for this query.
     #[serde(rename = "compute")]
-    pub compute: Box<crate::datadogV2::model::EventsCompute>,
+    pub compute: crate::datadogV2::model::EventsCompute,
     /// A data source that is powered by the Events Platform.
     #[serde(rename = "data_source")]
     pub data_source: crate::datadogV2::model::EventsDataSource,
@@ -25,12 +25,12 @@ pub struct EventsScalarQuery {
     pub name: Option<String>,
     /// Configuration of the search/filter for an events query.
     #[serde(rename = "search")]
-    pub search: Option<Box<crate::datadogV2::model::EventsSearch>>,
+    pub search: Option<crate::datadogV2::model::EventsSearch>,
 }
 
 impl EventsScalarQuery {
     pub fn new(
-        compute: Box<crate::datadogV2::model::EventsCompute>,
+        compute: crate::datadogV2::model::EventsCompute,
         data_source: crate::datadogV2::model::EventsDataSource,
     ) -> EventsScalarQuery {
         EventsScalarQuery {
@@ -41,5 +41,28 @@ impl EventsScalarQuery {
             name: None,
             search: None,
         }
+    }
+
+    pub fn with_group_by(
+        &mut self,
+        value: Vec<crate::datadogV2::model::EventsGroupBy>,
+    ) -> &mut Self {
+        self.group_by = Some(value);
+        self
+    }
+
+    pub fn with_indexes(&mut self, value: Vec<String>) -> &mut Self {
+        self.indexes = Some(value);
+        self
+    }
+
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn with_search(&mut self, value: crate::datadogV2::model::EventsSearch) -> &mut Self {
+        self.search = Some(value);
+        self
     }
 }

@@ -23,6 +23,16 @@ impl AWSRelatedAccountAttributes {
             name: None,
         }
     }
+
+    pub fn with_has_datadog_integration(&mut self, value: bool) -> &mut Self {
+        self.has_datadog_integration = Some(value);
+        self
+    }
+
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
 }
 impl Default for AWSRelatedAccountAttributes {
     fn default() -> Self {

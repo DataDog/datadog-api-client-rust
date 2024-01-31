@@ -10,13 +10,13 @@ use serde_with::skip_serializing_none;
 pub struct SensitiveDataScannerGetConfigResponse {
     /// Response data related to the scanning groups.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::SensitiveDataScannerGetConfigResponseData>>,
+    pub data: Option<crate::datadogV2::model::SensitiveDataScannerGetConfigResponseData>,
     /// Included objects from relationships.
     #[serde(rename = "included")]
     pub included: Option<Vec<crate::datadogV2::model::SensitiveDataScannerGetConfigIncludedItem>>,
     /// Meta response containing information about the API.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV2::model::SensitiveDataScannerMeta>>,
+    pub meta: Option<crate::datadogV2::model::SensitiveDataScannerMeta>,
 }
 
 impl SensitiveDataScannerGetConfigResponse {
@@ -26,6 +26,30 @@ impl SensitiveDataScannerGetConfigResponse {
             included: None,
             meta: None,
         }
+    }
+
+    pub fn with_data(
+        &mut self,
+        value: crate::datadogV2::model::SensitiveDataScannerGetConfigResponseData,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn with_included(
+        &mut self,
+        value: Vec<crate::datadogV2::model::SensitiveDataScannerGetConfigIncludedItem>,
+    ) -> &mut Self {
+        self.included = Some(value);
+        self
+    }
+
+    pub fn with_meta(
+        &mut self,
+        value: crate::datadogV2::model::SensitiveDataScannerMeta,
+    ) -> &mut Self {
+        self.meta = Some(value);
+        self
     }
 }
 impl Default for SensitiveDataScannerGetConfigResponse {

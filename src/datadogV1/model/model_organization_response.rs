@@ -10,12 +10,17 @@ use serde_with::skip_serializing_none;
 pub struct OrganizationResponse {
     /// Create, edit, and manage organizations.
     #[serde(rename = "org")]
-    pub org: Option<Box<crate::datadogV1::model::Organization>>,
+    pub org: Option<crate::datadogV1::model::Organization>,
 }
 
 impl OrganizationResponse {
     pub fn new() -> OrganizationResponse {
         OrganizationResponse { org: None }
+    }
+
+    pub fn with_org(&mut self, value: crate::datadogV1::model::Organization) -> &mut Self {
+        self.org = Some(value);
+        self
     }
 }
 impl Default for OrganizationResponse {

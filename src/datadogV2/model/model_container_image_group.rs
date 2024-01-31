@@ -10,13 +10,13 @@ use serde_with::skip_serializing_none;
 pub struct ContainerImageGroup {
     /// Attributes for a Container Image Group.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::ContainerImageGroupAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::ContainerImageGroupAttributes>,
     /// Container Image Group ID.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Relationships inside a Container Image Group.
     #[serde(rename = "relationships")]
-    pub relationships: Option<Box<crate::datadogV2::model::ContainerImageGroupRelationships>>,
+    pub relationships: Option<crate::datadogV2::model::ContainerImageGroupRelationships>,
     /// Type of Container Image Group.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::ContainerImageGroupType>,
@@ -30,6 +30,35 @@ impl ContainerImageGroup {
             relationships: None,
             type_: None,
         }
+    }
+
+    pub fn with_attributes(
+        &mut self,
+        value: crate::datadogV2::model::ContainerImageGroupAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn with_id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn with_relationships(
+        &mut self,
+        value: crate::datadogV2::model::ContainerImageGroupRelationships,
+    ) -> &mut Self {
+        self.relationships = Some(value);
+        self
+    }
+
+    pub fn with_type_(
+        &mut self,
+        value: crate::datadogV2::model::ContainerImageGroupType,
+    ) -> &mut Self {
+        self.type_ = Some(value);
+        self
     }
 }
 impl Default for ContainerImageGroup {

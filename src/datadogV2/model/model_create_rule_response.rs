@@ -10,12 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct CreateRuleResponse {
     /// Create rule response data.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::CreateRuleResponseData>>,
+    pub data: Option<crate::datadogV2::model::CreateRuleResponseData>,
 }
 
 impl CreateRuleResponse {
     pub fn new() -> CreateRuleResponse {
         CreateRuleResponse { data: None }
+    }
+
+    pub fn with_data(
+        &mut self,
+        value: crate::datadogV2::model::CreateRuleResponseData,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
     }
 }
 impl Default for CreateRuleResponse {

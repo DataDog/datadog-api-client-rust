@@ -35,6 +35,31 @@ impl ContainerImageFlavor {
             size: None,
         }
     }
+
+    pub fn with_built_at(&mut self, value: String) -> &mut Self {
+        self.built_at = Some(value);
+        self
+    }
+
+    pub fn with_os_architecture(&mut self, value: String) -> &mut Self {
+        self.os_architecture = Some(value);
+        self
+    }
+
+    pub fn with_os_name(&mut self, value: String) -> &mut Self {
+        self.os_name = Some(value);
+        self
+    }
+
+    pub fn with_os_version(&mut self, value: String) -> &mut Self {
+        self.os_version = Some(value);
+        self
+    }
+
+    pub fn with_size(&mut self, value: i64) -> &mut Self {
+        self.size = Some(value);
+        self
+    }
 }
 impl Default for ContainerImageFlavor {
     fn default() -> Self {

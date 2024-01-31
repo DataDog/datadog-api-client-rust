@@ -223,6 +223,266 @@ impl UsageAttributionValues {
             snmp_usage: None,
         }
     }
+
+    pub fn with_api_percentage(&mut self, value: f64) -> &mut Self {
+        self.api_percentage = Some(value);
+        self
+    }
+
+    pub fn with_api_usage(&mut self, value: f64) -> &mut Self {
+        self.api_usage = Some(value);
+        self
+    }
+
+    pub fn with_apm_fargate_percentage(&mut self, value: f64) -> &mut Self {
+        self.apm_fargate_percentage = Some(value);
+        self
+    }
+
+    pub fn with_apm_fargate_usage(&mut self, value: f64) -> &mut Self {
+        self.apm_fargate_usage = Some(value);
+        self
+    }
+
+    pub fn with_apm_host_percentage(&mut self, value: f64) -> &mut Self {
+        self.apm_host_percentage = Some(value);
+        self
+    }
+
+    pub fn with_apm_host_usage(&mut self, value: f64) -> &mut Self {
+        self.apm_host_usage = Some(value);
+        self
+    }
+
+    pub fn with_appsec_fargate_percentage(&mut self, value: f64) -> &mut Self {
+        self.appsec_fargate_percentage = Some(value);
+        self
+    }
+
+    pub fn with_appsec_fargate_usage(&mut self, value: f64) -> &mut Self {
+        self.appsec_fargate_usage = Some(value);
+        self
+    }
+
+    pub fn with_appsec_percentage(&mut self, value: f64) -> &mut Self {
+        self.appsec_percentage = Some(value);
+        self
+    }
+
+    pub fn with_appsec_usage(&mut self, value: f64) -> &mut Self {
+        self.appsec_usage = Some(value);
+        self
+    }
+
+    pub fn with_browser_percentage(&mut self, value: f64) -> &mut Self {
+        self.browser_percentage = Some(value);
+        self
+    }
+
+    pub fn with_browser_usage(&mut self, value: f64) -> &mut Self {
+        self.browser_usage = Some(value);
+        self
+    }
+
+    pub fn with_container_percentage(&mut self, value: f64) -> &mut Self {
+        self.container_percentage = Some(value);
+        self
+    }
+
+    pub fn with_container_usage(&mut self, value: f64) -> &mut Self {
+        self.container_usage = Some(value);
+        self
+    }
+
+    pub fn with_cspm_container_percentage(&mut self, value: f64) -> &mut Self {
+        self.cspm_container_percentage = Some(value);
+        self
+    }
+
+    pub fn with_cspm_container_usage(&mut self, value: f64) -> &mut Self {
+        self.cspm_container_usage = Some(value);
+        self
+    }
+
+    pub fn with_cspm_host_percentage(&mut self, value: f64) -> &mut Self {
+        self.cspm_host_percentage = Some(value);
+        self
+    }
+
+    pub fn with_cspm_host_usage(&mut self, value: f64) -> &mut Self {
+        self.cspm_host_usage = Some(value);
+        self
+    }
+
+    pub fn with_custom_timeseries_percentage(&mut self, value: f64) -> &mut Self {
+        self.custom_timeseries_percentage = Some(value);
+        self
+    }
+
+    pub fn with_custom_timeseries_usage(&mut self, value: f64) -> &mut Self {
+        self.custom_timeseries_usage = Some(value);
+        self
+    }
+
+    pub fn with_cws_container_percentage(&mut self, value: f64) -> &mut Self {
+        self.cws_container_percentage = Some(value);
+        self
+    }
+
+    pub fn with_cws_container_usage(&mut self, value: f64) -> &mut Self {
+        self.cws_container_usage = Some(value);
+        self
+    }
+
+    pub fn with_cws_host_percentage(&mut self, value: f64) -> &mut Self {
+        self.cws_host_percentage = Some(value);
+        self
+    }
+
+    pub fn with_cws_host_usage(&mut self, value: f64) -> &mut Self {
+        self.cws_host_usage = Some(value);
+        self
+    }
+
+    pub fn with_dbm_hosts_percentage(&mut self, value: f64) -> &mut Self {
+        self.dbm_hosts_percentage = Some(value);
+        self
+    }
+
+    pub fn with_dbm_hosts_usage(&mut self, value: f64) -> &mut Self {
+        self.dbm_hosts_usage = Some(value);
+        self
+    }
+
+    pub fn with_dbm_queries_percentage(&mut self, value: f64) -> &mut Self {
+        self.dbm_queries_percentage = Some(value);
+        self
+    }
+
+    pub fn with_dbm_queries_usage(&mut self, value: f64) -> &mut Self {
+        self.dbm_queries_usage = Some(value);
+        self
+    }
+
+    pub fn with_estimated_indexed_logs_percentage(&mut self, value: f64) -> &mut Self {
+        self.estimated_indexed_logs_percentage = Some(value);
+        self
+    }
+
+    pub fn with_estimated_indexed_logs_usage(&mut self, value: f64) -> &mut Self {
+        self.estimated_indexed_logs_usage = Some(value);
+        self
+    }
+
+    pub fn with_estimated_indexed_spans_percentage(&mut self, value: f64) -> &mut Self {
+        self.estimated_indexed_spans_percentage = Some(value);
+        self
+    }
+
+    pub fn with_estimated_indexed_spans_usage(&mut self, value: f64) -> &mut Self {
+        self.estimated_indexed_spans_usage = Some(value);
+        self
+    }
+
+    pub fn with_estimated_ingested_logs_percentage(&mut self, value: f64) -> &mut Self {
+        self.estimated_ingested_logs_percentage = Some(value);
+        self
+    }
+
+    pub fn with_estimated_ingested_logs_usage(&mut self, value: f64) -> &mut Self {
+        self.estimated_ingested_logs_usage = Some(value);
+        self
+    }
+
+    pub fn with_estimated_ingested_spans_percentage(&mut self, value: f64) -> &mut Self {
+        self.estimated_ingested_spans_percentage = Some(value);
+        self
+    }
+
+    pub fn with_estimated_ingested_spans_usage(&mut self, value: f64) -> &mut Self {
+        self.estimated_ingested_spans_usage = Some(value);
+        self
+    }
+
+    pub fn with_estimated_rum_sessions_percentage(&mut self, value: f64) -> &mut Self {
+        self.estimated_rum_sessions_percentage = Some(value);
+        self
+    }
+
+    pub fn with_estimated_rum_sessions_usage(&mut self, value: f64) -> &mut Self {
+        self.estimated_rum_sessions_usage = Some(value);
+        self
+    }
+
+    pub fn with_infra_host_percentage(&mut self, value: f64) -> &mut Self {
+        self.infra_host_percentage = Some(value);
+        self
+    }
+
+    pub fn with_infra_host_usage(&mut self, value: f64) -> &mut Self {
+        self.infra_host_usage = Some(value);
+        self
+    }
+
+    pub fn with_lambda_functions_percentage(&mut self, value: f64) -> &mut Self {
+        self.lambda_functions_percentage = Some(value);
+        self
+    }
+
+    pub fn with_lambda_functions_usage(&mut self, value: f64) -> &mut Self {
+        self.lambda_functions_usage = Some(value);
+        self
+    }
+
+    pub fn with_lambda_invocations_percentage(&mut self, value: f64) -> &mut Self {
+        self.lambda_invocations_percentage = Some(value);
+        self
+    }
+
+    pub fn with_lambda_invocations_usage(&mut self, value: f64) -> &mut Self {
+        self.lambda_invocations_usage = Some(value);
+        self
+    }
+
+    pub fn with_npm_host_percentage(&mut self, value: f64) -> &mut Self {
+        self.npm_host_percentage = Some(value);
+        self
+    }
+
+    pub fn with_npm_host_usage(&mut self, value: f64) -> &mut Self {
+        self.npm_host_usage = Some(value);
+        self
+    }
+
+    pub fn with_profiled_container_percentage(&mut self, value: f64) -> &mut Self {
+        self.profiled_container_percentage = Some(value);
+        self
+    }
+
+    pub fn with_profiled_container_usage(&mut self, value: f64) -> &mut Self {
+        self.profiled_container_usage = Some(value);
+        self
+    }
+
+    pub fn with_profiled_hosts_percentage(&mut self, value: f64) -> &mut Self {
+        self.profiled_hosts_percentage = Some(value);
+        self
+    }
+
+    pub fn with_profiled_hosts_usage(&mut self, value: f64) -> &mut Self {
+        self.profiled_hosts_usage = Some(value);
+        self
+    }
+
+    pub fn with_snmp_percentage(&mut self, value: f64) -> &mut Self {
+        self.snmp_percentage = Some(value);
+        self
+    }
+
+    pub fn with_snmp_usage(&mut self, value: f64) -> &mut Self {
+        self.snmp_usage = Some(value);
+        self
+    }
 }
 impl Default for UsageAttributionValues {
     fn default() -> Self {

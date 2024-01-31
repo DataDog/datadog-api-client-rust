@@ -26,4 +26,12 @@ impl IncidentAttachmentUpdateResponse {
             included: None,
         }
     }
+
+    pub fn with_included(
+        &mut self,
+        value: Vec<crate::datadogV2::model::IncidentAttachmentsResponseIncludedItem>,
+    ) -> &mut Self {
+        self.included = Some(value);
+        self
+    }
 }

@@ -17,6 +17,14 @@ impl UsageOnlineArchiveResponse {
     pub fn new() -> UsageOnlineArchiveResponse {
         UsageOnlineArchiveResponse { usage: None }
     }
+
+    pub fn with_usage(
+        &mut self,
+        value: Vec<crate::datadogV1::model::UsageOnlineArchiveHour>,
+    ) -> &mut Self {
+        self.usage = Some(value);
+        self
+    }
 }
 impl Default for UsageOnlineArchiveResponse {
     fn default() -> Self {

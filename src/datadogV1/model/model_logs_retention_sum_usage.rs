@@ -31,6 +31,26 @@ impl LogsRetentionSumUsage {
             retention: None,
         }
     }
+
+    pub fn with_logs_indexed_logs_usage_sum(&mut self, value: i64) -> &mut Self {
+        self.logs_indexed_logs_usage_sum = Some(value);
+        self
+    }
+
+    pub fn with_logs_live_indexed_logs_usage_sum(&mut self, value: i64) -> &mut Self {
+        self.logs_live_indexed_logs_usage_sum = Some(value);
+        self
+    }
+
+    pub fn with_logs_rehydrated_indexed_logs_usage_sum(&mut self, value: i64) -> &mut Self {
+        self.logs_rehydrated_indexed_logs_usage_sum = Some(value);
+        self
+    }
+
+    pub fn with_retention(&mut self, value: String) -> &mut Self {
+        self.retention = Some(value);
+        self
+    }
 }
 impl Default for LogsRetentionSumUsage {
     fn default() -> Self {

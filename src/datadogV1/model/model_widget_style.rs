@@ -17,6 +17,11 @@ impl WidgetStyle {
     pub fn new() -> WidgetStyle {
         WidgetStyle { palette: None }
     }
+
+    pub fn with_palette(&mut self, value: String) -> &mut Self {
+        self.palette = Some(value);
+        self
+    }
 }
 impl Default for WidgetStyle {
     fn default() -> Self {

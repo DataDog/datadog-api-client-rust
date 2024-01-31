@@ -18,7 +18,7 @@ pub struct LogsIndex {
     pub exclusion_filters: Option<Vec<crate::datadogV1::model::LogsExclusion>>,
     /// Filter for logs.
     #[serde(rename = "filter")]
-    pub filter: Box<crate::datadogV1::model::LogsFilter>,
+    pub filter: crate::datadogV1::model::LogsFilter,
     /// A boolean stating if the index is rate limited, meaning more logs than the daily limit have been sent.
     /// Rate limit is reset every-day at 2pm UTC.
     #[serde(rename = "is_rate_limited")]
@@ -33,7 +33,7 @@ pub struct LogsIndex {
 }
 
 impl LogsIndex {
-    pub fn new(filter: Box<crate::datadogV1::model::LogsFilter>, name: String) -> LogsIndex {
+    pub fn new(filter: crate::datadogV1::model::LogsFilter, name: String) -> LogsIndex {
         LogsIndex {
             daily_limit: None,
             exclusion_filters: None,
@@ -42,5 +42,28 @@ impl LogsIndex {
             name,
             num_retention_days: None,
         }
+    }
+
+    pub fn with_daily_limit(&mut self, value: i64) -> &mut Self {
+        self.daily_limit = Some(value);
+        self
+    }
+
+    pub fn with_exclusion_filters(
+        &mut self,
+        value: Vec<crate::datadogV1::model::LogsExclusion>,
+    ) -> &mut Self {
+        self.exclusion_filters = Some(value);
+        self
+    }
+
+    pub fn with_is_rate_limited(&mut self, value: bool) -> &mut Self {
+        self.is_rate_limited = Some(value);
+        self
+    }
+
+    pub fn with_num_retention_days(&mut self, value: i64) -> &mut Self {
+        self.num_retention_days = Some(value);
+        self
     }
 }

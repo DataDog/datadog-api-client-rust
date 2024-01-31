@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SyntheticsGlobalVariable {
     /// Attributes of the global variable.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV1::model::SyntheticsGlobalVariableAttributes>>,
+    pub attributes: Option<crate::datadogV1::model::SyntheticsGlobalVariableAttributes>,
     /// Description of the global variable.
     #[serde(rename = "description")]
     pub description: String,
@@ -23,7 +23,7 @@ pub struct SyntheticsGlobalVariable {
     /// Parser options to use for retrieving a Synthetic global variable from a Synthetic test. Used in conjunction with `parse_test_public_id`.
     #[serde(rename = "parse_test_options")]
     pub parse_test_options:
-        Option<Box<crate::datadogV1::model::SyntheticsGlobalVariableParseTestOptions>>,
+        Option<crate::datadogV1::model::SyntheticsGlobalVariableParseTestOptions>,
     /// A Synthetic test ID to use as a test to generate the variable value.
     #[serde(rename = "parse_test_public_id")]
     pub parse_test_public_id: Option<String>,
@@ -32,7 +32,7 @@ pub struct SyntheticsGlobalVariable {
     pub tags: Vec<String>,
     /// Value of the global variable.
     #[serde(rename = "value")]
-    pub value: Box<crate::datadogV1::model::SyntheticsGlobalVariableValue>,
+    pub value: crate::datadogV1::model::SyntheticsGlobalVariableValue,
 }
 
 impl SyntheticsGlobalVariable {
@@ -40,7 +40,7 @@ impl SyntheticsGlobalVariable {
         description: String,
         name: String,
         tags: Vec<String>,
-        value: Box<crate::datadogV1::model::SyntheticsGlobalVariableValue>,
+        value: crate::datadogV1::model::SyntheticsGlobalVariableValue,
     ) -> SyntheticsGlobalVariable {
         SyntheticsGlobalVariable {
             attributes: None,
@@ -52,5 +52,31 @@ impl SyntheticsGlobalVariable {
             tags,
             value,
         }
+    }
+
+    pub fn with_attributes(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsGlobalVariableAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn with_id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn with_parse_test_options(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsGlobalVariableParseTestOptions,
+    ) -> &mut Self {
+        self.parse_test_options = Some(value);
+        self
+    }
+
+    pub fn with_parse_test_public_id(&mut self, value: String) -> &mut Self {
+        self.parse_test_public_id = Some(value);
+        self
     }
 }

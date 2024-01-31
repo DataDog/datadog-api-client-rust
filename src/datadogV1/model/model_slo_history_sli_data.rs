@@ -71,6 +71,84 @@ impl SLOHistorySLIData {
             uptime: None,
         }
     }
+
+    #[allow(deprecated)]
+    pub fn with_error_budget_remaining(
+        &mut self,
+        value: std::collections::BTreeMap<String, f64>,
+    ) -> &mut Self {
+        self.error_budget_remaining = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_errors(
+        &mut self,
+        value: Vec<crate::datadogV1::model::SLOHistoryResponseErrorWithType>,
+    ) -> &mut Self {
+        self.errors = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_group(&mut self, value: String) -> &mut Self {
+        self.group = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_history(&mut self, value: Vec<Vec<f64>>) -> &mut Self {
+        self.history = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_monitor_modified(&mut self, value: i64) -> &mut Self {
+        self.monitor_modified = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_monitor_type(&mut self, value: String) -> &mut Self {
+        self.monitor_type = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_precision(&mut self, value: std::collections::BTreeMap<String, f64>) -> &mut Self {
+        self.precision = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_preview(&mut self, value: bool) -> &mut Self {
+        self.preview = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_sli_value(&mut self, value: Option<f64>) -> &mut Self {
+        self.sli_value = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_span_precision(&mut self, value: f64) -> &mut Self {
+        self.span_precision = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_uptime(&mut self, value: Option<f64>) -> &mut Self {
+        self.uptime = Some(value);
+        self
+    }
 }
 impl Default for SLOHistorySLIData {
     fn default() -> Self {

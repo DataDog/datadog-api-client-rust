@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct AwsCURConfigPostData {
     /// Attributes for AWS CUR config Post Request.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::AwsCURConfigPostRequestAttributes>,
+    pub attributes: crate::datadogV2::model::AwsCURConfigPostRequestAttributes,
     /// Type of AWS CUR config Post Request.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::AwsCURConfigPostRequestType,
@@ -18,7 +18,7 @@ pub struct AwsCURConfigPostData {
 
 impl AwsCURConfigPostData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::AwsCURConfigPostRequestAttributes>,
+        attributes: crate::datadogV2::model::AwsCURConfigPostRequestAttributes,
         type_: crate::datadogV2::model::AwsCURConfigPostRequestType,
     ) -> AwsCURConfigPostData {
         AwsCURConfigPostData { attributes, type_ }

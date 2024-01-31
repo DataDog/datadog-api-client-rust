@@ -14,14 +14,13 @@ pub struct IncidentUpdateRelationships {
         default,
         with = "::serde_with::rust::double_option"
     )]
-    pub commander_user: Option<Option<Box<crate::datadogV2::model::NullableRelationshipToUser>>>,
+    pub commander_user: Option<Option<crate::datadogV2::model::NullableRelationshipToUser>>,
     /// A relationship reference for multiple integration metadata objects.
     #[serde(rename = "integrations")]
-    pub integrations:
-        Option<Box<crate::datadogV2::model::RelationshipToIncidentIntegrationMetadatas>>,
+    pub integrations: Option<crate::datadogV2::model::RelationshipToIncidentIntegrationMetadatas>,
     /// A relationship reference for postmortems.
     #[serde(rename = "postmortem")]
-    pub postmortem: Option<Box<crate::datadogV2::model::RelationshipToIncidentPostmortem>>,
+    pub postmortem: Option<crate::datadogV2::model::RelationshipToIncidentPostmortem>,
 }
 
 impl IncidentUpdateRelationships {
@@ -31,6 +30,30 @@ impl IncidentUpdateRelationships {
             integrations: None,
             postmortem: None,
         }
+    }
+
+    pub fn with_commander_user(
+        &mut self,
+        value: Option<crate::datadogV2::model::NullableRelationshipToUser>,
+    ) -> &mut Self {
+        self.commander_user = Some(value);
+        self
+    }
+
+    pub fn with_integrations(
+        &mut self,
+        value: crate::datadogV2::model::RelationshipToIncidentIntegrationMetadatas,
+    ) -> &mut Self {
+        self.integrations = Some(value);
+        self
+    }
+
+    pub fn with_postmortem(
+        &mut self,
+        value: crate::datadogV2::model::RelationshipToIncidentPostmortem,
+    ) -> &mut Self {
+        self.postmortem = Some(value);
+        self
     }
 }
 impl Default for IncidentUpdateRelationships {

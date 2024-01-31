@@ -53,6 +53,60 @@ impl RuleAttributes {
             scorecard_name: None,
         }
     }
+
+    #[allow(deprecated)]
+    pub fn with_category(&mut self, value: String) -> &mut Self {
+        self.category = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_created_at(&mut self, value: String) -> &mut Self {
+        self.created_at = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_custom(&mut self, value: bool) -> &mut Self {
+        self.custom = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_description(&mut self, value: String) -> &mut Self {
+        self.description = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_enabled(&mut self, value: bool) -> &mut Self {
+        self.enabled = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_modified_at(&mut self, value: String) -> &mut Self {
+        self.modified_at = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_owner(&mut self, value: String) -> &mut Self {
+        self.owner = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_scorecard_name(&mut self, value: String) -> &mut Self {
+        self.scorecard_name = Some(value);
+        self
+    }
 }
 impl Default for RuleAttributes {
     fn default() -> Self {

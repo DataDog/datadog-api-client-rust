@@ -35,6 +35,26 @@ impl SelectableTemplateVariableItems {
             visible_tags: None,
         }
     }
+
+    pub fn with_default_value(&mut self, value: String) -> &mut Self {
+        self.default_value = Some(value);
+        self
+    }
+
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn with_prefix(&mut self, value: String) -> &mut Self {
+        self.prefix = Some(value);
+        self
+    }
+
+    pub fn with_visible_tags(&mut self, value: Option<Vec<String>>) -> &mut Self {
+        self.visible_tags = Some(value);
+        self
+    }
 }
 impl Default for SelectableTemplateVariableItems {
     fn default() -> Self {

@@ -19,6 +19,14 @@ impl SyntheticsTestCiOptions {
             execution_rule: None,
         }
     }
+
+    pub fn with_execution_rule(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsTestExecutionRule,
+    ) -> &mut Self {
+        self.execution_rule = Some(value);
+        self
+    }
 }
 impl Default for SyntheticsTestCiOptions {
     fn default() -> Self {

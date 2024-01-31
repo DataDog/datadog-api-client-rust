@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct IncidentSearchResponseData {
     /// Attributes returned by an incident search.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::IncidentSearchResponseAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::IncidentSearchResponseAttributes>,
     /// Incident search result type.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::IncidentSearchResultsType>,
@@ -22,6 +22,22 @@ impl IncidentSearchResponseData {
             attributes: None,
             type_: None,
         }
+    }
+
+    pub fn with_attributes(
+        &mut self,
+        value: crate::datadogV2::model::IncidentSearchResponseAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn with_type_(
+        &mut self,
+        value: crate::datadogV2::model::IncidentSearchResultsType,
+    ) -> &mut Self {
+        self.type_ = Some(value);
+        self
     }
 }
 impl Default for IncidentSearchResponseData {

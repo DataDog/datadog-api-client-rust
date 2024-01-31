@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct LogsArchiveOrderDefinition {
     /// The attributes associated with the archive order.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::LogsArchiveOrderAttributes>,
+    pub attributes: crate::datadogV2::model::LogsArchiveOrderAttributes,
     /// Type of the archive order definition.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::LogsArchiveOrderDefinitionType,
@@ -18,7 +18,7 @@ pub struct LogsArchiveOrderDefinition {
 
 impl LogsArchiveOrderDefinition {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::LogsArchiveOrderAttributes>,
+        attributes: crate::datadogV2::model::LogsArchiveOrderAttributes,
         type_: crate::datadogV2::model::LogsArchiveOrderDefinitionType,
     ) -> LogsArchiveOrderDefinition {
         LogsArchiveOrderDefinition { attributes, type_ }

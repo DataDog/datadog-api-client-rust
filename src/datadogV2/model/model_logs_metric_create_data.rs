@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct LogsMetricCreateData {
     /// The object describing the Datadog log-based metric to create.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::LogsMetricCreateAttributes>,
+    pub attributes: crate::datadogV2::model::LogsMetricCreateAttributes,
     /// The name of the log-based metric.
     #[serde(rename = "id")]
     pub id: String,
@@ -21,7 +21,7 @@ pub struct LogsMetricCreateData {
 
 impl LogsMetricCreateData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::LogsMetricCreateAttributes>,
+        attributes: crate::datadogV2::model::LogsMetricCreateAttributes,
         id: String,
         type_: crate::datadogV2::model::LogsMetricType,
     ) -> LogsMetricCreateData {

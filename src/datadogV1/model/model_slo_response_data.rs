@@ -19,7 +19,7 @@ pub struct SLOResponseData {
     pub created_at: Option<i64>,
     /// Object describing the creator of the shared element.
     #[serde(rename = "creator")]
-    pub creator: Option<Box<crate::datadogV1::model::Creator>>,
+    pub creator: Option<crate::datadogV1::model::Creator>,
     /// A user-defined description of the service level objective.
     ///
     /// Always included in service level objective responses (but may be `null`).
@@ -66,7 +66,7 @@ pub struct SLOResponseData {
     /// to be used because this will sum up all request counts instead of averaging them, or taking the max or
     /// min of all of those requests.
     #[serde(rename = "query")]
-    pub query: Option<Box<crate::datadogV1::model::ServiceLevelObjectiveQuery>>,
+    pub query: Option<crate::datadogV1::model::ServiceLevelObjectiveQuery>,
     /// A list of tags associated with this service level objective.
     /// Always included in service level objective responses (but may be empty).
     /// Optional in create/update requests.
@@ -115,6 +115,97 @@ impl SLOResponseData {
             type_: None,
             warning_threshold: None,
         }
+    }
+
+    pub fn with_configured_alert_ids(&mut self, value: Vec<i64>) -> &mut Self {
+        self.configured_alert_ids = Some(value);
+        self
+    }
+
+    pub fn with_created_at(&mut self, value: i64) -> &mut Self {
+        self.created_at = Some(value);
+        self
+    }
+
+    pub fn with_creator(&mut self, value: crate::datadogV1::model::Creator) -> &mut Self {
+        self.creator = Some(value);
+        self
+    }
+
+    pub fn with_description(&mut self, value: Option<String>) -> &mut Self {
+        self.description = Some(value);
+        self
+    }
+
+    pub fn with_groups(&mut self, value: Vec<String>) -> &mut Self {
+        self.groups = Some(value);
+        self
+    }
+
+    pub fn with_id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn with_modified_at(&mut self, value: i64) -> &mut Self {
+        self.modified_at = Some(value);
+        self
+    }
+
+    pub fn with_monitor_ids(&mut self, value: Vec<i64>) -> &mut Self {
+        self.monitor_ids = Some(value);
+        self
+    }
+
+    pub fn with_monitor_tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.monitor_tags = Some(value);
+        self
+    }
+
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn with_query(
+        &mut self,
+        value: crate::datadogV1::model::ServiceLevelObjectiveQuery,
+    ) -> &mut Self {
+        self.query = Some(value);
+        self
+    }
+
+    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+
+    pub fn with_target_threshold(&mut self, value: f64) -> &mut Self {
+        self.target_threshold = Some(value);
+        self
+    }
+
+    pub fn with_thresholds(
+        &mut self,
+        value: Vec<crate::datadogV1::model::SLOThreshold>,
+    ) -> &mut Self {
+        self.thresholds = Some(value);
+        self
+    }
+
+    pub fn with_timeframe(&mut self, value: crate::datadogV1::model::SLOTimeframe) -> &mut Self {
+        self.timeframe = Some(value);
+        self
+    }
+
+    pub fn with_type_(&mut self, value: crate::datadogV1::model::SLOType) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
+
+    pub fn with_warning_threshold(&mut self, value: f64) -> &mut Self {
+        self.warning_threshold = Some(value);
+        self
     }
 }
 impl Default for SLOResponseData {

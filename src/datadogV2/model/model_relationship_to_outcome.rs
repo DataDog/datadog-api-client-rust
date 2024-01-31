@@ -10,12 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct RelationshipToOutcome {
     /// The JSON:API relationship to an outcome, which returns the related rule id.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::RelationshipToOutcomeData>>,
+    pub data: Option<crate::datadogV2::model::RelationshipToOutcomeData>,
 }
 
 impl RelationshipToOutcome {
     pub fn new() -> RelationshipToOutcome {
         RelationshipToOutcome { data: None }
+    }
+
+    pub fn with_data(
+        &mut self,
+        value: crate::datadogV2::model::RelationshipToOutcomeData,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
     }
 }
 impl Default for RelationshipToOutcome {

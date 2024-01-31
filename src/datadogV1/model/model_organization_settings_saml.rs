@@ -18,6 +18,11 @@ impl OrganizationSettingsSaml {
     pub fn new() -> OrganizationSettingsSaml {
         OrganizationSettingsSaml { enabled: None }
     }
+
+    pub fn with_enabled(&mut self, value: bool) -> &mut Self {
+        self.enabled = Some(value);
+        self
+    }
 }
 impl Default for OrganizationSettingsSaml {
     fn default() -> Self {

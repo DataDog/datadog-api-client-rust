@@ -13,14 +13,14 @@ pub struct SpansAggregateRequestAttributes {
     pub compute: Option<Vec<crate::datadogV2::model::SpansCompute>>,
     /// The search and filter query settings.
     #[serde(rename = "filter")]
-    pub filter: Option<Box<crate::datadogV2::model::SpansQueryFilter>>,
+    pub filter: Option<crate::datadogV2::model::SpansQueryFilter>,
     /// The rules for the group by.
     #[serde(rename = "group_by")]
     pub group_by: Option<Vec<crate::datadogV2::model::SpansGroupBy>>,
     /// Global query options that are used during the query.
     /// Note: You should only supply timezone or time offset but not both otherwise the query will fail.
     #[serde(rename = "options")]
-    pub options: Option<Box<crate::datadogV2::model::SpansQueryOptions>>,
+    pub options: Option<crate::datadogV2::model::SpansQueryOptions>,
 }
 
 impl SpansAggregateRequestAttributes {
@@ -31,6 +31,29 @@ impl SpansAggregateRequestAttributes {
             group_by: None,
             options: None,
         }
+    }
+
+    pub fn with_compute(&mut self, value: Vec<crate::datadogV2::model::SpansCompute>) -> &mut Self {
+        self.compute = Some(value);
+        self
+    }
+
+    pub fn with_filter(&mut self, value: crate::datadogV2::model::SpansQueryFilter) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
+
+    pub fn with_group_by(
+        &mut self,
+        value: Vec<crate::datadogV2::model::SpansGroupBy>,
+    ) -> &mut Self {
+        self.group_by = Some(value);
+        self
+    }
+
+    pub fn with_options(&mut self, value: crate::datadogV2::model::SpansQueryOptions) -> &mut Self {
+        self.options = Some(value);
+        self
     }
 }
 impl Default for SpansAggregateRequestAttributes {

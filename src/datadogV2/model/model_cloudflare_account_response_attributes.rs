@@ -20,4 +20,9 @@ impl CloudflareAccountResponseAttributes {
     pub fn new(name: String) -> CloudflareAccountResponseAttributes {
         CloudflareAccountResponseAttributes { email: None, name }
     }
+
+    pub fn with_email(&mut self, value: String) -> &mut Self {
+        self.email = Some(value);
+        self
+    }
 }

@@ -25,6 +25,16 @@ impl DowntimeScheduleCurrentDowntimeResponse {
             start: None,
         }
     }
+
+    pub fn with_end(&mut self, value: Option<String>) -> &mut Self {
+        self.end = Some(value);
+        self
+    }
+
+    pub fn with_start(&mut self, value: String) -> &mut Self {
+        self.start = Some(value);
+        self
+    }
 }
 impl Default for DowntimeScheduleCurrentDowntimeResponse {
     fn default() -> Self {

@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct SecurityMonitoringSignalIncidentsUpdateRequest {
     /// Data containing the patch for changing the related incidents of a signal.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::SecurityMonitoringSignalIncidentsUpdateData>,
+    pub data: crate::datadogV2::model::SecurityMonitoringSignalIncidentsUpdateData,
 }
 
 impl SecurityMonitoringSignalIncidentsUpdateRequest {
     pub fn new(
-        data: Box<crate::datadogV2::model::SecurityMonitoringSignalIncidentsUpdateData>,
+        data: crate::datadogV2::model::SecurityMonitoringSignalIncidentsUpdateData,
     ) -> SecurityMonitoringSignalIncidentsUpdateRequest {
         SecurityMonitoringSignalIncidentsUpdateRequest { data }
     }

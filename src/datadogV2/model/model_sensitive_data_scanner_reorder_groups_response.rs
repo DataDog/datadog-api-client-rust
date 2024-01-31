@@ -10,12 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct SensitiveDataScannerReorderGroupsResponse {
     /// Meta response containing information about the API.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV2::model::SensitiveDataScannerMeta>>,
+    pub meta: Option<crate::datadogV2::model::SensitiveDataScannerMeta>,
 }
 
 impl SensitiveDataScannerReorderGroupsResponse {
     pub fn new() -> SensitiveDataScannerReorderGroupsResponse {
         SensitiveDataScannerReorderGroupsResponse { meta: None }
+    }
+
+    pub fn with_meta(
+        &mut self,
+        value: crate::datadogV2::model::SensitiveDataScannerMeta,
+    ) -> &mut Self {
+        self.meta = Some(value);
+        self
     }
 }
 impl Default for SensitiveDataScannerReorderGroupsResponse {

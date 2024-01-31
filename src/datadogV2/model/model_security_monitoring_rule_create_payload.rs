@@ -8,12 +8,12 @@ use serde::{Deserialize, Serialize};
 #[serde(untagged)]
 pub enum SecurityMonitoringRuleCreatePayload {
     SecurityMonitoringStandardRuleCreatePayload(
-        Box<crate::datadogV2::model::SecurityMonitoringStandardRuleCreatePayload>,
+        crate::datadogV2::model::SecurityMonitoringStandardRuleCreatePayload,
     ),
     SecurityMonitoringSignalRuleCreatePayload(
-        Box<crate::datadogV2::model::SecurityMonitoringSignalRuleCreatePayload>,
+        crate::datadogV2::model::SecurityMonitoringSignalRuleCreatePayload,
     ),
     CloudConfigurationRuleCreatePayload(
-        Box<crate::datadogV2::model::CloudConfigurationRuleCreatePayload>,
+        crate::datadogV2::model::CloudConfigurationRuleCreatePayload,
     ),
 }

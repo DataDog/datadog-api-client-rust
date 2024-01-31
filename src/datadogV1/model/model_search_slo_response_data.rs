@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SearchSLOResponseData {
     /// Attributes
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV1::model::SearchSLOResponseDataAttributes>>,
+    pub attributes: Option<crate::datadogV1::model::SearchSLOResponseDataAttributes>,
     /// Type of service level objective result.
     #[serde(rename = "type")]
     pub type_: Option<String>,
@@ -22,6 +22,19 @@ impl SearchSLOResponseData {
             attributes: None,
             type_: None,
         }
+    }
+
+    pub fn with_attributes(
+        &mut self,
+        value: crate::datadogV1::model::SearchSLOResponseDataAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn with_type_(&mut self, value: String) -> &mut Self {
+        self.type_ = Some(value);
+        self
     }
 }
 impl Default for SearchSLOResponseData {

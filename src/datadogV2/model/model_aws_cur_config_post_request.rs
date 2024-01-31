@@ -10,13 +10,11 @@ use serde_with::skip_serializing_none;
 pub struct AwsCURConfigPostRequest {
     /// AWS CUR config Post data.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::AwsCURConfigPostData>,
+    pub data: crate::datadogV2::model::AwsCURConfigPostData,
 }
 
 impl AwsCURConfigPostRequest {
-    pub fn new(
-        data: Box<crate::datadogV2::model::AwsCURConfigPostData>,
-    ) -> AwsCURConfigPostRequest {
+    pub fn new(data: crate::datadogV2::model::AwsCURConfigPostData) -> AwsCURConfigPostRequest {
         AwsCURConfigPostRequest { data }
     }
 }

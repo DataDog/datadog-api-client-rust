@@ -23,6 +23,16 @@ impl AuditLogsQueryPageOptions {
             limit: None,
         }
     }
+
+    pub fn with_cursor(&mut self, value: String) -> &mut Self {
+        self.cursor = Some(value);
+        self
+    }
+
+    pub fn with_limit(&mut self, value: i32) -> &mut Self {
+        self.limit = Some(value);
+        self
+    }
 }
 impl Default for AuditLogsQueryPageOptions {
     fn default() -> Self {

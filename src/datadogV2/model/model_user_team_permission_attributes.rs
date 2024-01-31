@@ -17,6 +17,14 @@ impl UserTeamPermissionAttributes {
     pub fn new() -> UserTeamPermissionAttributes {
         UserTeamPermissionAttributes { permissions: None }
     }
+
+    pub fn with_permissions(
+        &mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> &mut Self {
+        self.permissions = Some(value);
+        self
+    }
 }
 impl Default for UserTeamPermissionAttributes {
     fn default() -> Self {

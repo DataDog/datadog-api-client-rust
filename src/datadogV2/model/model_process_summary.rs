@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct ProcessSummary {
     /// Attributes for a process summary.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::ProcessSummaryAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::ProcessSummaryAttributes>,
     /// Process ID.
     #[serde(rename = "id")]
     pub id: Option<String>,
@@ -26,6 +26,24 @@ impl ProcessSummary {
             id: None,
             type_: None,
         }
+    }
+
+    pub fn with_attributes(
+        &mut self,
+        value: crate::datadogV2::model::ProcessSummaryAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn with_id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn with_type_(&mut self, value: crate::datadogV2::model::ProcessSummaryType) -> &mut Self {
+        self.type_ = Some(value);
+        self
     }
 }
 impl Default for ProcessSummary {

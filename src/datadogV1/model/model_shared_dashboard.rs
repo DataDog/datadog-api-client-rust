@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SharedDashboard {
     /// User who shared the dashboard.
     #[serde(rename = "author")]
-    pub author: Option<Box<crate::datadogV1::model::SharedDashboardAuthor>>,
+    pub author: Option<crate::datadogV1::model::SharedDashboardAuthor>,
     /// Date the dashboard was shared.
     #[serde(rename = "created_at")]
     pub created_at: Option<String>,
@@ -22,7 +22,7 @@ pub struct SharedDashboard {
     pub dashboard_type: crate::datadogV1::model::DashboardType,
     /// Object containing the live span selection for the dashboard.
     #[serde(rename = "global_time")]
-    pub global_time: Option<Box<crate::datadogV1::model::DashboardGlobalTime>>,
+    pub global_time: Option<crate::datadogV1::model::DashboardGlobalTime>,
     /// Whether to allow viewers to select a different global time setting for the shared dashboard.
     #[serde(
         rename = "global_time_selectable_enabled",
@@ -78,5 +78,62 @@ impl SharedDashboard {
             share_type: None,
             token: None,
         }
+    }
+
+    pub fn with_author(
+        &mut self,
+        value: crate::datadogV1::model::SharedDashboardAuthor,
+    ) -> &mut Self {
+        self.author = Some(value);
+        self
+    }
+
+    pub fn with_created_at(&mut self, value: String) -> &mut Self {
+        self.created_at = Some(value);
+        self
+    }
+
+    pub fn with_global_time(
+        &mut self,
+        value: crate::datadogV1::model::DashboardGlobalTime,
+    ) -> &mut Self {
+        self.global_time = Some(value);
+        self
+    }
+
+    pub fn with_global_time_selectable_enabled(&mut self, value: Option<bool>) -> &mut Self {
+        self.global_time_selectable_enabled = Some(value);
+        self
+    }
+
+    pub fn with_public_url(&mut self, value: String) -> &mut Self {
+        self.public_url = Some(value);
+        self
+    }
+
+    pub fn with_selectable_template_vars(
+        &mut self,
+        value: Option<Vec<crate::datadogV1::model::SelectableTemplateVariableItems>>,
+    ) -> &mut Self {
+        self.selectable_template_vars = Some(value);
+        self
+    }
+
+    pub fn with_share_list(&mut self, value: Option<Vec<String>>) -> &mut Self {
+        self.share_list = Some(value);
+        self
+    }
+
+    pub fn with_share_type(
+        &mut self,
+        value: Option<crate::datadogV1::model::DashboardShareType>,
+    ) -> &mut Self {
+        self.share_type = Some(value);
+        self
+    }
+
+    pub fn with_token(&mut self, value: String) -> &mut Self {
+        self.token = Some(value);
+        self
     }
 }

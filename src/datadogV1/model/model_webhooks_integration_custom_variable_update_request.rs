@@ -30,6 +30,21 @@ impl WebhooksIntegrationCustomVariableUpdateRequest {
             value: None,
         }
     }
+
+    pub fn with_is_secret(&mut self, value: bool) -> &mut Self {
+        self.is_secret = Some(value);
+        self
+    }
+
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn with_value(&mut self, value: String) -> &mut Self {
+        self.value = Some(value);
+        self
+    }
 }
 impl Default for WebhooksIntegrationCustomVariableUpdateRequest {
     fn default() -> Self {

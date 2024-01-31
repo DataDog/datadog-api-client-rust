@@ -10,12 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct CreateRuleRequest {
     /// Scorecard create rule request data.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::CreateRuleRequestData>>,
+    pub data: Option<crate::datadogV2::model::CreateRuleRequestData>,
 }
 
 impl CreateRuleRequest {
     pub fn new() -> CreateRuleRequest {
         CreateRuleRequest { data: None }
+    }
+
+    pub fn with_data(
+        &mut self,
+        value: crate::datadogV2::model::CreateRuleRequestData,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
     }
 }
 impl Default for CreateRuleRequest {

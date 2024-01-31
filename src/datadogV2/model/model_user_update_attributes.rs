@@ -27,6 +27,21 @@ impl UserUpdateAttributes {
             name: None,
         }
     }
+
+    pub fn with_disabled(&mut self, value: bool) -> &mut Self {
+        self.disabled = Some(value);
+        self
+    }
+
+    pub fn with_email(&mut self, value: String) -> &mut Self {
+        self.email = Some(value);
+        self
+    }
+
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
 }
 impl Default for UserUpdateAttributes {
     fn default() -> Self {

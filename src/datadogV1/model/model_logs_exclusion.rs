@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct LogsExclusion {
     /// Exclusion filter is defined by a query, a sampling rule, and a active/inactive toggle.
     #[serde(rename = "filter")]
-    pub filter: Option<Box<crate::datadogV1::model::LogsExclusionFilter>>,
+    pub filter: Option<crate::datadogV1::model::LogsExclusionFilter>,
     /// Whether or not the exclusion filter is active.
     #[serde(rename = "is_enabled")]
     pub is_enabled: Option<bool>,
@@ -26,5 +26,18 @@ impl LogsExclusion {
             is_enabled: None,
             name,
         }
+    }
+
+    pub fn with_filter(
+        &mut self,
+        value: crate::datadogV1::model::LogsExclusionFilter,
+    ) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
+
+    pub fn with_is_enabled(&mut self, value: bool) -> &mut Self {
+        self.is_enabled = Some(value);
+        self
     }
 }

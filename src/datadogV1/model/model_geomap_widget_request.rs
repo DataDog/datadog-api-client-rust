@@ -16,7 +16,7 @@ pub struct GeomapWidgetRequest {
     pub formulas: Option<Vec<crate::datadogV1::model::WidgetFormula>>,
     /// The log query.
     #[serde(rename = "log_query")]
-    pub log_query: Option<Box<crate::datadogV1::model::LogQueryDefinition>>,
+    pub log_query: Option<crate::datadogV1::model::LogQueryDefinition>,
     /// The widget metrics query.
     #[serde(rename = "q")]
     pub q: Option<String>,
@@ -25,16 +25,16 @@ pub struct GeomapWidgetRequest {
     pub queries: Option<Vec<crate::datadogV1::model::FormulaAndFunctionQueryDefinition>>,
     /// Updated list stream widget.
     #[serde(rename = "query")]
-    pub query: Option<Box<crate::datadogV1::model::ListStreamQuery>>,
+    pub query: Option<crate::datadogV1::model::ListStreamQuery>,
     /// Timeseries, scalar, or event list response. Event list response formats are supported by Geomap widgets.
     #[serde(rename = "response_format")]
     pub response_format: Option<crate::datadogV1::model::FormulaAndFunctionResponseFormat>,
     /// The log query.
     #[serde(rename = "rum_query")]
-    pub rum_query: Option<Box<crate::datadogV1::model::LogQueryDefinition>>,
+    pub rum_query: Option<crate::datadogV1::model::LogQueryDefinition>,
     /// The log query.
     #[serde(rename = "security_query")]
-    pub security_query: Option<Box<crate::datadogV1::model::LogQueryDefinition>>,
+    pub security_query: Option<crate::datadogV1::model::LogQueryDefinition>,
 }
 
 impl GeomapWidgetRequest {
@@ -50,6 +50,72 @@ impl GeomapWidgetRequest {
             rum_query: None,
             security_query: None,
         }
+    }
+
+    pub fn with_columns(
+        &mut self,
+        value: Vec<crate::datadogV1::model::ListStreamColumn>,
+    ) -> &mut Self {
+        self.columns = Some(value);
+        self
+    }
+
+    pub fn with_formulas(
+        &mut self,
+        value: Vec<crate::datadogV1::model::WidgetFormula>,
+    ) -> &mut Self {
+        self.formulas = Some(value);
+        self
+    }
+
+    pub fn with_log_query(
+        &mut self,
+        value: crate::datadogV1::model::LogQueryDefinition,
+    ) -> &mut Self {
+        self.log_query = Some(value);
+        self
+    }
+
+    pub fn with_q(&mut self, value: String) -> &mut Self {
+        self.q = Some(value);
+        self
+    }
+
+    pub fn with_queries(
+        &mut self,
+        value: Vec<crate::datadogV1::model::FormulaAndFunctionQueryDefinition>,
+    ) -> &mut Self {
+        self.queries = Some(value);
+        self
+    }
+
+    pub fn with_query(&mut self, value: crate::datadogV1::model::ListStreamQuery) -> &mut Self {
+        self.query = Some(value);
+        self
+    }
+
+    pub fn with_response_format(
+        &mut self,
+        value: crate::datadogV1::model::FormulaAndFunctionResponseFormat,
+    ) -> &mut Self {
+        self.response_format = Some(value);
+        self
+    }
+
+    pub fn with_rum_query(
+        &mut self,
+        value: crate::datadogV1::model::LogQueryDefinition,
+    ) -> &mut Self {
+        self.rum_query = Some(value);
+        self
+    }
+
+    pub fn with_security_query(
+        &mut self,
+        value: crate::datadogV1::model::LogQueryDefinition,
+    ) -> &mut Self {
+        self.security_query = Some(value);
+        self
     }
 }
 impl Default for GeomapWidgetRequest {

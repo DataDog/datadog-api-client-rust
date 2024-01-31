@@ -5,36 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateOpsgenieServiceParams is a struct for passing parameters to the method [`OpsgenieIntegrationAPI::create_opsgenie_service`]
-#[derive(Clone, Debug)]
-pub struct CreateOpsgenieServiceParams {
-    /// Opsgenie service payload
-    pub body: crate::datadogV2::model::OpsgenieServiceCreateRequest,
-}
-
-/// DeleteOpsgenieServiceParams is a struct for passing parameters to the method [`OpsgenieIntegrationAPI::delete_opsgenie_service`]
-#[derive(Clone, Debug)]
-pub struct DeleteOpsgenieServiceParams {
-    /// The UUID of the service.
-    pub integration_service_id: String,
-}
-
-/// GetOpsgenieServiceParams is a struct for passing parameters to the method [`OpsgenieIntegrationAPI::get_opsgenie_service`]
-#[derive(Clone, Debug)]
-pub struct GetOpsgenieServiceParams {
-    /// The UUID of the service.
-    pub integration_service_id: String,
-}
-
-/// UpdateOpsgenieServiceParams is a struct for passing parameters to the method [`OpsgenieIntegrationAPI::update_opsgenie_service`]
-#[derive(Clone, Debug)]
-pub struct UpdateOpsgenieServiceParams {
-    /// The UUID of the service.
-    pub integration_service_id: String,
-    /// Opsgenie service payload.
-    pub body: crate::datadogV2::model::OpsgenieServiceUpdateRequest,
-}
-
 /// CreateOpsgenieServiceError is a struct for typed errors of method [`OpsgenieIntegrationAPI::create_opsgenie_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -114,12 +84,12 @@ impl OpsgenieIntegrationAPI {
     /// Create a new service object in the Opsgenie integration.
     pub async fn create_opsgenie_service(
         &self,
-        params: CreateOpsgenieServiceParams,
+        body: crate::datadogV2::model::OpsgenieServiceCreateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::OpsgenieServiceResponse>,
         Error<CreateOpsgenieServiceError>,
     > {
-        match self.create_opsgenie_service_with_http_info(params).await {
+        match self.create_opsgenie_service_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -128,15 +98,12 @@ impl OpsgenieIntegrationAPI {
     /// Create a new service object in the Opsgenie integration.
     pub async fn create_opsgenie_service_with_http_info(
         &self,
-        params: CreateOpsgenieServiceParams,
+        body: crate::datadogV2::model::OpsgenieServiceCreateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::OpsgenieServiceResponse>,
         Error<CreateOpsgenieServiceError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -197,9 +164,12 @@ impl OpsgenieIntegrationAPI {
     /// Delete a single service object in the Datadog Opsgenie integration.
     pub async fn delete_opsgenie_service(
         &self,
-        params: DeleteOpsgenieServiceParams,
+        integration_service_id: String,
     ) -> Result<Option<()>, Error<DeleteOpsgenieServiceError>> {
-        match self.delete_opsgenie_service_with_http_info(params).await {
+        match self
+            .delete_opsgenie_service_with_http_info(integration_service_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -208,12 +178,9 @@ impl OpsgenieIntegrationAPI {
     /// Delete a single service object in the Datadog Opsgenie integration.
     pub async fn delete_opsgenie_service_with_http_info(
         &self,
-        params: DeleteOpsgenieServiceParams,
+        integration_service_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteOpsgenieServiceError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let integration_service_id = params.integration_service_id;
 
         let local_client = &local_configuration.client;
 
@@ -266,12 +233,15 @@ impl OpsgenieIntegrationAPI {
     /// Get a single service from the Datadog Opsgenie integration.
     pub async fn get_opsgenie_service(
         &self,
-        params: GetOpsgenieServiceParams,
+        integration_service_id: String,
     ) -> Result<
         Option<crate::datadogV2::model::OpsgenieServiceResponse>,
         Error<GetOpsgenieServiceError>,
     > {
-        match self.get_opsgenie_service_with_http_info(params).await {
+        match self
+            .get_opsgenie_service_with_http_info(integration_service_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -280,15 +250,12 @@ impl OpsgenieIntegrationAPI {
     /// Get a single service from the Datadog Opsgenie integration.
     pub async fn get_opsgenie_service_with_http_info(
         &self,
-        params: GetOpsgenieServiceParams,
+        integration_service_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::OpsgenieServiceResponse>,
         Error<GetOpsgenieServiceError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let integration_service_id = params.integration_service_id;
 
         let local_client = &local_configuration.client;
 
@@ -362,8 +329,6 @@ impl OpsgenieIntegrationAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -416,12 +381,16 @@ impl OpsgenieIntegrationAPI {
     /// Update a single service object in the Datadog Opsgenie integration.
     pub async fn update_opsgenie_service(
         &self,
-        params: UpdateOpsgenieServiceParams,
+        integration_service_id: String,
+        body: crate::datadogV2::model::OpsgenieServiceUpdateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::OpsgenieServiceResponse>,
         Error<UpdateOpsgenieServiceError>,
     > {
-        match self.update_opsgenie_service_with_http_info(params).await {
+        match self
+            .update_opsgenie_service_with_http_info(integration_service_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -430,16 +399,13 @@ impl OpsgenieIntegrationAPI {
     /// Update a single service object in the Datadog Opsgenie integration.
     pub async fn update_opsgenie_service_with_http_info(
         &self,
-        params: UpdateOpsgenieServiceParams,
+        integration_service_id: String,
+        body: crate::datadogV2::model::OpsgenieServiceUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::OpsgenieServiceResponse>,
         Error<UpdateOpsgenieServiceError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let integration_service_id = params.integration_service_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

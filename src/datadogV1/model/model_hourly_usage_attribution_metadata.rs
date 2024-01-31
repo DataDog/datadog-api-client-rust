@@ -10,12 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct HourlyUsageAttributionMetadata {
     /// The metadata for the current pagination.
     #[serde(rename = "pagination")]
-    pub pagination: Option<Box<crate::datadogV1::model::HourlyUsageAttributionPagination>>,
+    pub pagination: Option<crate::datadogV1::model::HourlyUsageAttributionPagination>,
 }
 
 impl HourlyUsageAttributionMetadata {
     pub fn new() -> HourlyUsageAttributionMetadata {
         HourlyUsageAttributionMetadata { pagination: None }
+    }
+
+    pub fn with_pagination(
+        &mut self,
+        value: crate::datadogV1::model::HourlyUsageAttributionPagination,
+    ) -> &mut Self {
+        self.pagination = Some(value);
+        self
     }
 }
 impl Default for HourlyUsageAttributionMetadata {

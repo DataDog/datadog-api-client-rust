@@ -17,6 +17,11 @@ impl UsageCWSResponse {
     pub fn new() -> UsageCWSResponse {
         UsageCWSResponse { usage: None }
     }
+
+    pub fn with_usage(&mut self, value: Vec<crate::datadogV1::model::UsageCWSHour>) -> &mut Self {
+        self.usage = Some(value);
+        self
+    }
 }
 impl Default for UsageCWSResponse {
     fn default() -> Self {

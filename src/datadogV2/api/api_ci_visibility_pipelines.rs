@@ -5,21 +5,9 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// AggregateCIAppPipelineEventsParams is a struct for passing parameters to the method [`CIVisibilityPipelinesAPI::aggregate_ci_app_pipeline_events`]
+/// ListCIAppPipelineEventsOptionalParams is a struct for passing parameters to the method [`CIVisibilityPipelinesAPI::list_ci_app_pipeline_events`]
 #[derive(Clone, Debug)]
-pub struct AggregateCIAppPipelineEventsParams {
-    pub body: crate::datadogV2::model::CIAppPipelinesAggregateRequest,
-}
-
-/// CreateCIAppPipelineEventParams is a struct for passing parameters to the method [`CIVisibilityPipelinesAPI::create_ci_app_pipeline_event`]
-#[derive(Clone, Debug)]
-pub struct CreateCIAppPipelineEventParams {
-    pub body: crate::datadogV2::model::CIAppCreatePipelineEventRequest,
-}
-
-/// ListCIAppPipelineEventsParams is a struct for passing parameters to the method [`CIVisibilityPipelinesAPI::list_ci_app_pipeline_events`]
-#[derive(Clone, Debug)]
-pub struct ListCIAppPipelineEventsParams {
+pub struct ListCIAppPipelineEventsOptionalParams {
     /// Search query following log syntax.
     pub filter_query: Option<String>,
     /// Minimum timestamp for requested events.
@@ -34,10 +22,10 @@ pub struct ListCIAppPipelineEventsParams {
     pub page_limit: Option<i32>,
 }
 
-/// SearchCIAppPipelineEventsParams is a struct for passing parameters to the method [`CIVisibilityPipelinesAPI::search_ci_app_pipeline_events`]
+/// SearchCIAppPipelineEventsOptionalParams is a struct for passing parameters to the method [`CIVisibilityPipelinesAPI::search_ci_app_pipeline_events`]
 #[derive(Clone, Debug)]
-pub struct SearchCIAppPipelineEventsParams {
-    pub body: Option<Option<crate::datadogV2::model::CIAppPipelineEventsRequest>>,
+pub struct SearchCIAppPipelineEventsOptionalParams {
+    pub body: Option<crate::datadogV2::model::CIAppPipelineEventsRequest>,
 }
 
 /// AggregateCIAppPipelineEventsError is a struct for typed errors of method [`CIVisibilityPipelinesAPI::aggregate_ci_app_pipeline_events`]
@@ -109,13 +97,13 @@ impl CIVisibilityPipelinesAPI {
     /// Use this API endpoint to aggregate CI Visibility pipeline events into buckets of computed metrics and timeseries.
     pub async fn aggregate_ci_app_pipeline_events(
         &self,
-        params: AggregateCIAppPipelineEventsParams,
+        body: crate::datadogV2::model::CIAppPipelinesAggregateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::CIAppPipelinesAnalyticsAggregateResponse>,
         Error<AggregateCIAppPipelineEventsError>,
     > {
         match self
-            .aggregate_ci_app_pipeline_events_with_http_info(params)
+            .aggregate_ci_app_pipeline_events_with_http_info(body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -126,15 +114,12 @@ impl CIVisibilityPipelinesAPI {
     /// Use this API endpoint to aggregate CI Visibility pipeline events into buckets of computed metrics and timeseries.
     pub async fn aggregate_ci_app_pipeline_events_with_http_info(
         &self,
-        params: AggregateCIAppPipelineEventsParams,
+        body: crate::datadogV2::model::CIAppPipelinesAggregateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::CIAppPipelinesAnalyticsAggregateResponse>,
         Error<AggregateCIAppPipelineEventsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -198,15 +183,12 @@ impl CIVisibilityPipelinesAPI {
     /// Pipeline events can be submitted with a timestamp that is up to 18 hours in the past.
     pub async fn create_ci_app_pipeline_event(
         &self,
-        params: CreateCIAppPipelineEventParams,
+        body: crate::datadogV2::model::CIAppCreatePipelineEventRequest,
     ) -> Result<
         Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<CreateCIAppPipelineEventError>,
     > {
-        match self
-            .create_ci_app_pipeline_event_with_http_info(params)
-            .await
-        {
+        match self.create_ci_app_pipeline_event_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -217,15 +199,12 @@ impl CIVisibilityPipelinesAPI {
     /// Pipeline events can be submitted with a timestamp that is up to 18 hours in the past.
     pub async fn create_ci_app_pipeline_event_with_http_info(
         &self,
-        params: CreateCIAppPipelineEventParams,
+        body: crate::datadogV2::model::CIAppCreatePipelineEventRequest,
     ) -> Result<
         ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<CreateCIAppPipelineEventError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -283,7 +262,7 @@ impl CIVisibilityPipelinesAPI {
     /// Use this endpoint to see your latest pipeline events.
     pub async fn list_ci_app_pipeline_events(
         &self,
-        params: ListCIAppPipelineEventsParams,
+        params: ListCIAppPipelineEventsOptionalParams,
     ) -> Result<
         Option<crate::datadogV2::model::CIAppPipelineEventsResponse>,
         Error<ListCIAppPipelineEventsError>,
@@ -303,14 +282,14 @@ impl CIVisibilityPipelinesAPI {
     /// Use this endpoint to see your latest pipeline events.
     pub async fn list_ci_app_pipeline_events_with_http_info(
         &self,
-        params: ListCIAppPipelineEventsParams,
+        params: ListCIAppPipelineEventsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::CIAppPipelineEventsResponse>,
         Error<ListCIAppPipelineEventsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let filter_query = params.filter_query;
         let filter_from = params.filter_from;
         let filter_to = params.filter_to;
@@ -327,26 +306,29 @@ impl CIVisibilityPipelinesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = filter_query {
+        if let Some(ref local_query_param) = filter_query {
             local_req_builder =
-                local_req_builder.query(&[("filter[query]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_from {
+        if let Some(ref local_query_param) = filter_from {
             local_req_builder =
-                local_req_builder.query(&[("filter[from]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[from]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_to {
-            local_req_builder = local_req_builder.query(&[("filter[to]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = sort {
-            local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_cursor {
+        if let Some(ref local_query_param) = filter_to {
             local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[to]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = page_limit {
-            local_req_builder = local_req_builder.query(&[("page[limit]", &local_str.to_string())]);
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_cursor {
+            local_req_builder =
+                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -395,7 +377,7 @@ impl CIVisibilityPipelinesAPI {
     /// Use this endpoint to build complex events filtering and search.
     pub async fn search_ci_app_pipeline_events(
         &self,
-        params: SearchCIAppPipelineEventsParams,
+        params: SearchCIAppPipelineEventsOptionalParams,
     ) -> Result<
         Option<crate::datadogV2::model::CIAppPipelineEventsResponse>,
         Error<SearchCIAppPipelineEventsError>,
@@ -415,14 +397,14 @@ impl CIVisibilityPipelinesAPI {
     /// Use this endpoint to build complex events filtering and search.
     pub async fn search_ci_app_pipeline_events_with_http_info(
         &self,
-        params: SearchCIAppPipelineEventsParams,
+        params: SearchCIAppPipelineEventsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::CIAppPipelineEventsResponse>,
         Error<SearchCIAppPipelineEventsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let body = params.body;
 
         let local_client = &local_configuration.client;

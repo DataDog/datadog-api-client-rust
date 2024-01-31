@@ -19,6 +19,14 @@ impl DashboardListListResponse {
             dashboard_lists: None,
         }
     }
+
+    pub fn with_dashboard_lists(
+        &mut self,
+        value: Vec<crate::datadogV1::model::DashboardList>,
+    ) -> &mut Self {
+        self.dashboard_lists = Some(value);
+        self
+    }
 }
 impl Default for DashboardListListResponse {
     fn default() -> Self {

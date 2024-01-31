@@ -10,7 +10,7 @@ use serde::{Deserialize, Serialize};
 #[serde(untagged)]
 pub enum DowntimeScheduleResponse {
     DowntimeScheduleRecurrencesResponse(
-        Box<crate::datadogV2::model::DowntimeScheduleRecurrencesResponse>,
+        crate::datadogV2::model::DowntimeScheduleRecurrencesResponse,
     ),
-    DowntimeScheduleOneTimeResponse(Box<crate::datadogV2::model::DowntimeScheduleOneTimeResponse>),
+    DowntimeScheduleOneTimeResponse(crate::datadogV2::model::DowntimeScheduleOneTimeResponse),
 }

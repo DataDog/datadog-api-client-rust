@@ -27,4 +27,9 @@ impl PowerpackTemplateVariableContents {
             values,
         }
     }
+
+    pub fn with_prefix(&mut self, value: String) -> &mut Self {
+        self.prefix = Some(value);
+        self
+    }
 }

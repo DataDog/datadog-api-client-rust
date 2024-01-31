@@ -11,7 +11,7 @@ use serde_with::skip_serializing_none;
 pub struct LogsGrokParser {
     /// Set of rules for the grok parser.
     #[serde(rename = "grok")]
-    pub grok: Box<crate::datadogV1::model::LogsGrokParserRules>,
+    pub grok: crate::datadogV1::model::LogsGrokParserRules,
     /// Whether or not the processor is enabled.
     #[serde(rename = "is_enabled")]
     pub is_enabled: Option<bool>,
@@ -31,7 +31,7 @@ pub struct LogsGrokParser {
 
 impl LogsGrokParser {
     pub fn new(
-        grok: Box<crate::datadogV1::model::LogsGrokParserRules>,
+        grok: crate::datadogV1::model::LogsGrokParserRules,
         source: String,
         type_: crate::datadogV1::model::LogsGrokParserType,
     ) -> LogsGrokParser {
@@ -43,5 +43,20 @@ impl LogsGrokParser {
             source,
             type_,
         }
+    }
+
+    pub fn with_is_enabled(&mut self, value: bool) -> &mut Self {
+        self.is_enabled = Some(value);
+        self
+    }
+
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn with_samples(&mut self, value: Vec<String>) -> &mut Self {
+        self.samples = Some(value);
+        self
     }
 }

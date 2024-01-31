@@ -10,13 +10,13 @@ use serde_with::skip_serializing_none;
 pub struct RoleUpdateData {
     /// Attributes of the role.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::RoleUpdateAttributes>,
+    pub attributes: crate::datadogV2::model::RoleUpdateAttributes,
     /// The unique identifier of the role.
     #[serde(rename = "id")]
     pub id: String,
     /// Relationships of the role object.
     #[serde(rename = "relationships")]
-    pub relationships: Option<Box<crate::datadogV2::model::RoleRelationships>>,
+    pub relationships: Option<crate::datadogV2::model::RoleRelationships>,
     /// Roles type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::RolesType,
@@ -24,7 +24,7 @@ pub struct RoleUpdateData {
 
 impl RoleUpdateData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::RoleUpdateAttributes>,
+        attributes: crate::datadogV2::model::RoleUpdateAttributes,
         id: String,
         type_: crate::datadogV2::model::RolesType,
     ) -> RoleUpdateData {
@@ -34,5 +34,13 @@ impl RoleUpdateData {
             relationships: None,
             type_,
         }
+    }
+
+    pub fn with_relationships(
+        &mut self,
+        value: crate::datadogV2::model::RoleRelationships,
+    ) -> &mut Self {
+        self.relationships = Some(value);
+        self
     }
 }

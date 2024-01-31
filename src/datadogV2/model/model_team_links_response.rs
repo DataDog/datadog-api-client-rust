@@ -17,6 +17,11 @@ impl TeamLinksResponse {
     pub fn new() -> TeamLinksResponse {
         TeamLinksResponse { data: None }
     }
+
+    pub fn with_data(&mut self, value: Vec<crate::datadogV2::model::TeamLink>) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
 impl Default for TeamLinksResponse {
     fn default() -> Self {

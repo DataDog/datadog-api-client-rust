@@ -17,6 +17,14 @@ impl SyntheticsListTestsResponse {
     pub fn new() -> SyntheticsListTestsResponse {
         SyntheticsListTestsResponse { tests: None }
     }
+
+    pub fn with_tests(
+        &mut self,
+        value: Vec<crate::datadogV1::model::SyntheticsTestDetails>,
+    ) -> &mut Self {
+        self.tests = Some(value);
+        self
+    }
 }
 impl Default for SyntheticsListTestsResponse {
     fn default() -> Self {

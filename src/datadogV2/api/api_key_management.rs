@@ -5,67 +5,23 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateAPIKeyParams is a struct for passing parameters to the method [`KeyManagementAPI::create_api_key`]
+/// GetAPIKeyOptionalParams is a struct for passing parameters to the method [`KeyManagementAPI::get_api_key`]
 #[derive(Clone, Debug)]
-pub struct CreateAPIKeyParams {
-    pub body: crate::datadogV2::model::APIKeyCreateRequest,
-}
-
-/// CreateCurrentUserApplicationKeyParams is a struct for passing parameters to the method [`KeyManagementAPI::create_current_user_application_key`]
-#[derive(Clone, Debug)]
-pub struct CreateCurrentUserApplicationKeyParams {
-    pub body: crate::datadogV2::model::ApplicationKeyCreateRequest,
-}
-
-/// DeleteAPIKeyParams is a struct for passing parameters to the method [`KeyManagementAPI::delete_api_key`]
-#[derive(Clone, Debug)]
-pub struct DeleteAPIKeyParams {
-    /// The ID of the API key.
-    pub api_key_id: String,
-}
-
-/// DeleteApplicationKeyParams is a struct for passing parameters to the method [`KeyManagementAPI::delete_application_key`]
-#[derive(Clone, Debug)]
-pub struct DeleteApplicationKeyParams {
-    /// The ID of the application key.
-    pub app_key_id: String,
-}
-
-/// DeleteCurrentUserApplicationKeyParams is a struct for passing parameters to the method [`KeyManagementAPI::delete_current_user_application_key`]
-#[derive(Clone, Debug)]
-pub struct DeleteCurrentUserApplicationKeyParams {
-    /// The ID of the application key.
-    pub app_key_id: String,
-}
-
-/// GetAPIKeyParams is a struct for passing parameters to the method [`KeyManagementAPI::get_api_key`]
-#[derive(Clone, Debug)]
-pub struct GetAPIKeyParams {
-    /// The ID of the API key.
-    pub api_key_id: String,
+pub struct GetAPIKeyOptionalParams {
     /// Comma separated list of resource paths for related resources to include in the response. Supported resource paths are `created_by` and `modified_by`.
     pub include: Option<String>,
 }
 
-/// GetApplicationKeyParams is a struct for passing parameters to the method [`KeyManagementAPI::get_application_key`]
+/// GetApplicationKeyOptionalParams is a struct for passing parameters to the method [`KeyManagementAPI::get_application_key`]
 #[derive(Clone, Debug)]
-pub struct GetApplicationKeyParams {
-    /// The ID of the application key.
-    pub app_key_id: String,
+pub struct GetApplicationKeyOptionalParams {
     /// Resource path for related resources to include in the response. Only `owned_by` is supported.
     pub include: Option<String>,
 }
 
-/// GetCurrentUserApplicationKeyParams is a struct for passing parameters to the method [`KeyManagementAPI::get_current_user_application_key`]
+/// ListAPIKeysOptionalParams is a struct for passing parameters to the method [`KeyManagementAPI::list_api_keys`]
 #[derive(Clone, Debug)]
-pub struct GetCurrentUserApplicationKeyParams {
-    /// The ID of the application key.
-    pub app_key_id: String,
-}
-
-/// ListAPIKeysParams is a struct for passing parameters to the method [`KeyManagementAPI::list_api_keys`]
-#[derive(Clone, Debug)]
-pub struct ListAPIKeysParams {
+pub struct ListAPIKeysOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
     /// Specific page number to return.
@@ -92,9 +48,9 @@ pub struct ListAPIKeysParams {
     pub filter_category: Option<String>,
 }
 
-/// ListApplicationKeysParams is a struct for passing parameters to the method [`KeyManagementAPI::list_application_keys`]
+/// ListApplicationKeysOptionalParams is a struct for passing parameters to the method [`KeyManagementAPI::list_application_keys`]
 #[derive(Clone, Debug)]
-pub struct ListApplicationKeysParams {
+pub struct ListApplicationKeysOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
     /// Specific page number to return.
@@ -113,9 +69,9 @@ pub struct ListApplicationKeysParams {
     pub include: Option<String>,
 }
 
-/// ListCurrentUserApplicationKeysParams is a struct for passing parameters to the method [`KeyManagementAPI::list_current_user_application_keys`]
+/// ListCurrentUserApplicationKeysOptionalParams is a struct for passing parameters to the method [`KeyManagementAPI::list_current_user_application_keys`]
 #[derive(Clone, Debug)]
-pub struct ListCurrentUserApplicationKeysParams {
+pub struct ListCurrentUserApplicationKeysOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
     /// Specific page number to return.
@@ -132,30 +88,6 @@ pub struct ListCurrentUserApplicationKeysParams {
     pub filter_created_at_end: Option<String>,
     /// Resource path for related resources to include in the response. Only `owned_by` is supported.
     pub include: Option<String>,
-}
-
-/// UpdateAPIKeyParams is a struct for passing parameters to the method [`KeyManagementAPI::update_api_key`]
-#[derive(Clone, Debug)]
-pub struct UpdateAPIKeyParams {
-    /// The ID of the API key.
-    pub api_key_id: String,
-    pub body: crate::datadogV2::model::APIKeyUpdateRequest,
-}
-
-/// UpdateApplicationKeyParams is a struct for passing parameters to the method [`KeyManagementAPI::update_application_key`]
-#[derive(Clone, Debug)]
-pub struct UpdateApplicationKeyParams {
-    /// The ID of the application key.
-    pub app_key_id: String,
-    pub body: crate::datadogV2::model::ApplicationKeyUpdateRequest,
-}
-
-/// UpdateCurrentUserApplicationKeyParams is a struct for passing parameters to the method [`KeyManagementAPI::update_current_user_application_key`]
-#[derive(Clone, Debug)]
-pub struct UpdateCurrentUserApplicationKeyParams {
-    /// The ID of the application key.
-    pub app_key_id: String,
-    pub body: crate::datadogV2::model::ApplicationKeyUpdateRequest,
 }
 
 /// CreateAPIKeyError is a struct for typed errors of method [`KeyManagementAPI::create_api_key`]
@@ -328,9 +260,9 @@ impl KeyManagementAPI {
     /// Create an API key.
     pub async fn create_api_key(
         &self,
-        params: CreateAPIKeyParams,
+        body: crate::datadogV2::model::APIKeyCreateRequest,
     ) -> Result<Option<crate::datadogV2::model::APIKeyResponse>, Error<CreateAPIKeyError>> {
-        match self.create_api_key_with_http_info(params).await {
+        match self.create_api_key_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -339,13 +271,10 @@ impl KeyManagementAPI {
     /// Create an API key.
     pub async fn create_api_key_with_http_info(
         &self,
-        params: CreateAPIKeyParams,
+        body: crate::datadogV2::model::APIKeyCreateRequest,
     ) -> Result<ResponseContent<crate::datadogV2::model::APIKeyResponse>, Error<CreateAPIKeyError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -402,13 +331,13 @@ impl KeyManagementAPI {
     /// Create an application key for current user
     pub async fn create_current_user_application_key(
         &self,
-        params: CreateCurrentUserApplicationKeyParams,
+        body: crate::datadogV2::model::ApplicationKeyCreateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::ApplicationKeyResponse>,
         Error<CreateCurrentUserApplicationKeyError>,
     > {
         match self
-            .create_current_user_application_key_with_http_info(params)
+            .create_current_user_application_key_with_http_info(body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -419,15 +348,12 @@ impl KeyManagementAPI {
     /// Create an application key for current user
     pub async fn create_current_user_application_key_with_http_info(
         &self,
-        params: CreateCurrentUserApplicationKeyParams,
+        body: crate::datadogV2::model::ApplicationKeyCreateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::ApplicationKeyResponse>,
         Error<CreateCurrentUserApplicationKeyError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -488,9 +414,9 @@ impl KeyManagementAPI {
     /// Delete an API key.
     pub async fn delete_api_key(
         &self,
-        params: DeleteAPIKeyParams,
+        api_key_id: String,
     ) -> Result<Option<()>, Error<DeleteAPIKeyError>> {
-        match self.delete_api_key_with_http_info(params).await {
+        match self.delete_api_key_with_http_info(api_key_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -499,12 +425,9 @@ impl KeyManagementAPI {
     /// Delete an API key.
     pub async fn delete_api_key_with_http_info(
         &self,
-        params: DeleteAPIKeyParams,
+        api_key_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteAPIKeyError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let api_key_id = params.api_key_id;
 
         let local_client = &local_configuration.client;
 
@@ -556,9 +479,9 @@ impl KeyManagementAPI {
     /// Delete an application key
     pub async fn delete_application_key(
         &self,
-        params: DeleteApplicationKeyParams,
+        app_key_id: String,
     ) -> Result<Option<()>, Error<DeleteApplicationKeyError>> {
-        match self.delete_application_key_with_http_info(params).await {
+        match self.delete_application_key_with_http_info(app_key_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -567,12 +490,9 @@ impl KeyManagementAPI {
     /// Delete an application key
     pub async fn delete_application_key_with_http_info(
         &self,
-        params: DeleteApplicationKeyParams,
+        app_key_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteApplicationKeyError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let app_key_id = params.app_key_id;
 
         let local_client = &local_configuration.client;
 
@@ -625,10 +545,10 @@ impl KeyManagementAPI {
     /// Delete an application key owned by current user
     pub async fn delete_current_user_application_key(
         &self,
-        params: DeleteCurrentUserApplicationKeyParams,
+        app_key_id: String,
     ) -> Result<Option<()>, Error<DeleteCurrentUserApplicationKeyError>> {
         match self
-            .delete_current_user_application_key_with_http_info(params)
+            .delete_current_user_application_key_with_http_info(app_key_id)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -639,12 +559,9 @@ impl KeyManagementAPI {
     /// Delete an application key owned by current user
     pub async fn delete_current_user_application_key_with_http_info(
         &self,
-        params: DeleteCurrentUserApplicationKeyParams,
+        app_key_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteCurrentUserApplicationKeyError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let app_key_id = params.app_key_id;
 
         let local_client = &local_configuration.client;
 
@@ -697,9 +614,10 @@ impl KeyManagementAPI {
     /// Get an API key.
     pub async fn get_api_key(
         &self,
-        params: GetAPIKeyParams,
+        api_key_id: String,
+        params: GetAPIKeyOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::APIKeyResponse>, Error<GetAPIKeyError>> {
-        match self.get_api_key_with_http_info(params).await {
+        match self.get_api_key_with_http_info(api_key_id, params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -708,13 +626,13 @@ impl KeyManagementAPI {
     /// Get an API key.
     pub async fn get_api_key_with_http_info(
         &self,
-        params: GetAPIKeyParams,
+        api_key_id: String,
+        params: GetAPIKeyOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV2::model::APIKeyResponse>, Error<GetAPIKeyError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let api_key_id = params.api_key_id;
+        // unbox and build optional parameters
         let include = params.include;
 
         let local_client = &local_configuration.client;
@@ -727,8 +645,9 @@ impl KeyManagementAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = include {
-            local_req_builder = local_req_builder.query(&[("include", &local_str.to_string())]);
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -773,12 +692,16 @@ impl KeyManagementAPI {
     /// Get an application key for your org.
     pub async fn get_application_key(
         &self,
-        params: GetApplicationKeyParams,
+        app_key_id: String,
+        params: GetApplicationKeyOptionalParams,
     ) -> Result<
         Option<crate::datadogV2::model::ApplicationKeyResponse>,
         Error<GetApplicationKeyError>,
     > {
-        match self.get_application_key_with_http_info(params).await {
+        match self
+            .get_application_key_with_http_info(app_key_id, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -787,15 +710,15 @@ impl KeyManagementAPI {
     /// Get an application key for your org.
     pub async fn get_application_key_with_http_info(
         &self,
-        params: GetApplicationKeyParams,
+        app_key_id: String,
+        params: GetApplicationKeyOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::ApplicationKeyResponse>,
         Error<GetApplicationKeyError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let app_key_id = params.app_key_id;
+        // unbox and build optional parameters
         let include = params.include;
 
         let local_client = &local_configuration.client;
@@ -808,8 +731,9 @@ impl KeyManagementAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = include {
-            local_req_builder = local_req_builder.query(&[("include", &local_str.to_string())]);
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -855,13 +779,13 @@ impl KeyManagementAPI {
     /// Get an application key owned by current user
     pub async fn get_current_user_application_key(
         &self,
-        params: GetCurrentUserApplicationKeyParams,
+        app_key_id: String,
     ) -> Result<
         Option<crate::datadogV2::model::ApplicationKeyResponse>,
         Error<GetCurrentUserApplicationKeyError>,
     > {
         match self
-            .get_current_user_application_key_with_http_info(params)
+            .get_current_user_application_key_with_http_info(app_key_id)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -872,15 +796,12 @@ impl KeyManagementAPI {
     /// Get an application key owned by current user
     pub async fn get_current_user_application_key_with_http_info(
         &self,
-        params: GetCurrentUserApplicationKeyParams,
+        app_key_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::ApplicationKeyResponse>,
         Error<GetCurrentUserApplicationKeyError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let app_key_id = params.app_key_id;
 
         let local_client = &local_configuration.client;
 
@@ -935,7 +856,7 @@ impl KeyManagementAPI {
     /// List all API keys available for your account.
     pub async fn list_api_keys(
         &self,
-        params: ListAPIKeysParams,
+        params: ListAPIKeysOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::APIKeysResponse>, Error<ListAPIKeysError>> {
         match self.list_api_keys_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
@@ -946,12 +867,12 @@ impl KeyManagementAPI {
     /// List all API keys available for your account.
     pub async fn list_api_keys_with_http_info(
         &self,
-        params: ListAPIKeysParams,
+        params: ListAPIKeysOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV2::model::APIKeysResponse>, Error<ListAPIKeysError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
         let sort = params.sort;
@@ -970,45 +891,51 @@ impl KeyManagementAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = page_size {
-            local_req_builder = local_req_builder.query(&[("page[size]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_number {
+        if let Some(ref local_query_param) = page_size {
             local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_str.to_string())]);
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = sort {
-            local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = filter {
-            local_req_builder = local_req_builder.query(&[("filter", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = filter_created_at_start {
+        if let Some(ref local_query_param) = page_number {
             local_req_builder =
-                local_req_builder.query(&[("filter[created_at][start]", &local_str.to_string())]);
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_created_at_end {
+        if let Some(ref local_query_param) = sort {
             local_req_builder =
-                local_req_builder.query(&[("filter[created_at][end]", &local_str.to_string())]);
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_modified_at_start {
+        if let Some(ref local_query_param) = filter {
             local_req_builder =
-                local_req_builder.query(&[("filter[modified_at][start]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_modified_at_end {
-            local_req_builder =
-                local_req_builder.query(&[("filter[modified_at][end]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = include {
-            local_req_builder = local_req_builder.query(&[("include", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = filter_remote_config_read_enabled {
+        if let Some(ref local_query_param) = filter_created_at_start {
             local_req_builder = local_req_builder
-                .query(&[("filter[remote_config_read_enabled]", &local_str.to_string())]);
+                .query(&[("filter[created_at][start]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_category {
+        if let Some(ref local_query_param) = filter_created_at_end {
+            local_req_builder = local_req_builder
+                .query(&[("filter[created_at][end]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_modified_at_start {
+            local_req_builder = local_req_builder
+                .query(&[("filter[modified_at][start]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_modified_at_end {
+            local_req_builder = local_req_builder
+                .query(&[("filter[modified_at][end]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include {
             local_req_builder =
-                local_req_builder.query(&[("filter[category]", &local_str.to_string())]);
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_remote_config_read_enabled {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[remote_config_read_enabled]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_category {
+            local_req_builder =
+                local_req_builder.query(&[("filter[category]", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -1053,7 +980,7 @@ impl KeyManagementAPI {
     /// List all application keys available for your org
     pub async fn list_application_keys(
         &self,
-        params: ListApplicationKeysParams,
+        params: ListApplicationKeysOptionalParams,
     ) -> Result<
         Option<crate::datadogV2::model::ListApplicationKeysResponse>,
         Error<ListApplicationKeysError>,
@@ -1067,14 +994,14 @@ impl KeyManagementAPI {
     /// List all application keys available for your org
     pub async fn list_application_keys_with_http_info(
         &self,
-        params: ListApplicationKeysParams,
+        params: ListApplicationKeysOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::ListApplicationKeysResponse>,
         Error<ListApplicationKeysError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
         let sort = params.sort;
@@ -1089,29 +1016,33 @@ impl KeyManagementAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = page_size {
-            local_req_builder = local_req_builder.query(&[("page[size]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_number {
+        if let Some(ref local_query_param) = page_size {
             local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_str.to_string())]);
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = sort {
-            local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = filter {
-            local_req_builder = local_req_builder.query(&[("filter", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = filter_created_at_start {
+        if let Some(ref local_query_param) = page_number {
             local_req_builder =
-                local_req_builder.query(&[("filter[created_at][start]", &local_str.to_string())]);
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_created_at_end {
+        if let Some(ref local_query_param) = sort {
             local_req_builder =
-                local_req_builder.query(&[("filter[created_at][end]", &local_str.to_string())]);
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = include {
-            local_req_builder = local_req_builder.query(&[("include", &local_str.to_string())]);
+        if let Some(ref local_query_param) = filter {
+            local_req_builder =
+                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_created_at_start {
+            local_req_builder = local_req_builder
+                .query(&[("filter[created_at][start]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_created_at_end {
+            local_req_builder = local_req_builder
+                .query(&[("filter[created_at][end]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -1157,7 +1088,7 @@ impl KeyManagementAPI {
     /// List all application keys available for current user
     pub async fn list_current_user_application_keys(
         &self,
-        params: ListCurrentUserApplicationKeysParams,
+        params: ListCurrentUserApplicationKeysOptionalParams,
     ) -> Result<
         Option<crate::datadogV2::model::ListApplicationKeysResponse>,
         Error<ListCurrentUserApplicationKeysError>,
@@ -1174,14 +1105,14 @@ impl KeyManagementAPI {
     /// List all application keys available for current user
     pub async fn list_current_user_application_keys_with_http_info(
         &self,
-        params: ListCurrentUserApplicationKeysParams,
+        params: ListCurrentUserApplicationKeysOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::ListApplicationKeysResponse>,
         Error<ListCurrentUserApplicationKeysError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
         let sort = params.sort;
@@ -1199,29 +1130,33 @@ impl KeyManagementAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = page_size {
-            local_req_builder = local_req_builder.query(&[("page[size]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_number {
+        if let Some(ref local_query_param) = page_size {
             local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_str.to_string())]);
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = sort {
-            local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = filter {
-            local_req_builder = local_req_builder.query(&[("filter", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = filter_created_at_start {
+        if let Some(ref local_query_param) = page_number {
             local_req_builder =
-                local_req_builder.query(&[("filter[created_at][start]", &local_str.to_string())]);
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_created_at_end {
+        if let Some(ref local_query_param) = sort {
             local_req_builder =
-                local_req_builder.query(&[("filter[created_at][end]", &local_str.to_string())]);
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = include {
-            local_req_builder = local_req_builder.query(&[("include", &local_str.to_string())]);
+        if let Some(ref local_query_param) = filter {
+            local_req_builder =
+                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_created_at_start {
+            local_req_builder = local_req_builder
+                .query(&[("filter[created_at][start]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_created_at_end {
+            local_req_builder = local_req_builder
+                .query(&[("filter[created_at][end]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -1267,9 +1202,10 @@ impl KeyManagementAPI {
     /// Update an API key.
     pub async fn update_api_key(
         &self,
-        params: UpdateAPIKeyParams,
+        api_key_id: String,
+        body: crate::datadogV2::model::APIKeyUpdateRequest,
     ) -> Result<Option<crate::datadogV2::model::APIKeyResponse>, Error<UpdateAPIKeyError>> {
-        match self.update_api_key_with_http_info(params).await {
+        match self.update_api_key_with_http_info(api_key_id, body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1278,14 +1214,11 @@ impl KeyManagementAPI {
     /// Update an API key.
     pub async fn update_api_key_with_http_info(
         &self,
-        params: UpdateAPIKeyParams,
+        api_key_id: String,
+        body: crate::datadogV2::model::APIKeyUpdateRequest,
     ) -> Result<ResponseContent<crate::datadogV2::model::APIKeyResponse>, Error<UpdateAPIKeyError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let api_key_id = params.api_key_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -1346,12 +1279,16 @@ impl KeyManagementAPI {
     /// Edit an application key
     pub async fn update_application_key(
         &self,
-        params: UpdateApplicationKeyParams,
+        app_key_id: String,
+        body: crate::datadogV2::model::ApplicationKeyUpdateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::ApplicationKeyResponse>,
         Error<UpdateApplicationKeyError>,
     > {
-        match self.update_application_key_with_http_info(params).await {
+        match self
+            .update_application_key_with_http_info(app_key_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1360,16 +1297,13 @@ impl KeyManagementAPI {
     /// Edit an application key
     pub async fn update_application_key_with_http_info(
         &self,
-        params: UpdateApplicationKeyParams,
+        app_key_id: String,
+        body: crate::datadogV2::model::ApplicationKeyUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::ApplicationKeyResponse>,
         Error<UpdateApplicationKeyError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let app_key_id = params.app_key_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -1431,13 +1365,14 @@ impl KeyManagementAPI {
     /// Edit an application key owned by current user
     pub async fn update_current_user_application_key(
         &self,
-        params: UpdateCurrentUserApplicationKeyParams,
+        app_key_id: String,
+        body: crate::datadogV2::model::ApplicationKeyUpdateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::ApplicationKeyResponse>,
         Error<UpdateCurrentUserApplicationKeyError>,
     > {
         match self
-            .update_current_user_application_key_with_http_info(params)
+            .update_current_user_application_key_with_http_info(app_key_id, body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -1448,16 +1383,13 @@ impl KeyManagementAPI {
     /// Edit an application key owned by current user
     pub async fn update_current_user_application_key_with_http_info(
         &self,
-        params: UpdateCurrentUserApplicationKeyParams,
+        app_key_id: String,
+        body: crate::datadogV2::model::ApplicationKeyUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::ApplicationKeyResponse>,
         Error<UpdateCurrentUserApplicationKeyError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let app_key_id = params.app_key_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

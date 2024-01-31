@@ -44,4 +44,24 @@ impl HTTPLogItem {
             additional_properties: std::collections::BTreeMap::new(),
         }
     }
+
+    pub fn with_ddsource(&mut self, value: String) -> &mut Self {
+        self.ddsource = Some(value);
+        self
+    }
+
+    pub fn with_ddtags(&mut self, value: String) -> &mut Self {
+        self.ddtags = Some(value);
+        self
+    }
+
+    pub fn with_hostname(&mut self, value: String) -> &mut Self {
+        self.hostname = Some(value);
+        self
+    }
+
+    pub fn with_service(&mut self, value: String) -> &mut Self {
+        self.service = Some(value);
+        self
+    }
 }

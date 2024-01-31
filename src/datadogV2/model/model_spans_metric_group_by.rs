@@ -23,4 +23,9 @@ impl SpansMetricGroupBy {
             tag_name: None,
         }
     }
+
+    pub fn with_tag_name(&mut self, value: String) -> &mut Self {
+        self.tag_name = Some(value);
+        self
+    }
 }

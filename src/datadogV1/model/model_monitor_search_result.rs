@@ -13,7 +13,7 @@ pub struct MonitorSearchResult {
     pub classification: Option<String>,
     /// Object describing the creator of the shared element.
     #[serde(rename = "creator")]
-    pub creator: Option<Box<crate::datadogV1::model::Creator>>,
+    pub creator: Option<crate::datadogV1::model::Creator>,
     /// ID of the monitor.
     #[serde(rename = "id")]
     pub id: Option<i64>,
@@ -73,6 +73,77 @@ impl MonitorSearchResult {
             tags: None,
             type_: None,
         }
+    }
+
+    pub fn with_classification(&mut self, value: String) -> &mut Self {
+        self.classification = Some(value);
+        self
+    }
+
+    pub fn with_creator(&mut self, value: crate::datadogV1::model::Creator) -> &mut Self {
+        self.creator = Some(value);
+        self
+    }
+
+    pub fn with_id(&mut self, value: i64) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn with_last_triggered_ts(&mut self, value: Option<i64>) -> &mut Self {
+        self.last_triggered_ts = Some(value);
+        self
+    }
+
+    pub fn with_metrics(&mut self, value: Vec<String>) -> &mut Self {
+        self.metrics = Some(value);
+        self
+    }
+
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn with_notifications(
+        &mut self,
+        value: Vec<crate::datadogV1::model::MonitorSearchResultNotification>,
+    ) -> &mut Self {
+        self.notifications = Some(value);
+        self
+    }
+
+    pub fn with_org_id(&mut self, value: i64) -> &mut Self {
+        self.org_id = Some(value);
+        self
+    }
+
+    pub fn with_query(&mut self, value: String) -> &mut Self {
+        self.query = Some(value);
+        self
+    }
+
+    pub fn with_scopes(&mut self, value: Vec<String>) -> &mut Self {
+        self.scopes = Some(value);
+        self
+    }
+
+    pub fn with_status(
+        &mut self,
+        value: crate::datadogV1::model::MonitorOverallStates,
+    ) -> &mut Self {
+        self.status = Some(value);
+        self
+    }
+
+    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+
+    pub fn with_type_(&mut self, value: crate::datadogV1::model::MonitorType) -> &mut Self {
+        self.type_ = Some(value);
+        self
     }
 }
 impl Default for MonitorSearchResult {

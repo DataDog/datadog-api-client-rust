@@ -25,4 +25,9 @@ impl DowntimeScheduleRecurrencesCreateRequest {
             timezone: None,
         }
     }
+
+    pub fn with_timezone(&mut self, value: String) -> &mut Self {
+        self.timezone = Some(value);
+        self
+    }
 }

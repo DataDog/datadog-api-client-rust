@@ -55,6 +55,70 @@ impl SearchSLOResponseDataAttributesFacets {
             timeframe: None,
         }
     }
+
+    pub fn with_all_tags(
+        &mut self,
+        value: Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectString>,
+    ) -> &mut Self {
+        self.all_tags = Some(value);
+        self
+    }
+
+    pub fn with_creator_name(
+        &mut self,
+        value: Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectString>,
+    ) -> &mut Self {
+        self.creator_name = Some(value);
+        self
+    }
+
+    pub fn with_env_tags(
+        &mut self,
+        value: Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectString>,
+    ) -> &mut Self {
+        self.env_tags = Some(value);
+        self
+    }
+
+    pub fn with_service_tags(
+        &mut self,
+        value: Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectString>,
+    ) -> &mut Self {
+        self.service_tags = Some(value);
+        self
+    }
+
+    pub fn with_slo_type(
+        &mut self,
+        value: Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectInt>,
+    ) -> &mut Self {
+        self.slo_type = Some(value);
+        self
+    }
+
+    pub fn with_target(
+        &mut self,
+        value: Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectInt>,
+    ) -> &mut Self {
+        self.target = Some(value);
+        self
+    }
+
+    pub fn with_team_tags(
+        &mut self,
+        value: Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectString>,
+    ) -> &mut Self {
+        self.team_tags = Some(value);
+        self
+    }
+
+    pub fn with_timeframe(
+        &mut self,
+        value: Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectString>,
+    ) -> &mut Self {
+        self.timeframe = Some(value);
+        self
+    }
 }
 impl Default for SearchSLOResponseDataAttributesFacets {
     fn default() -> Self {

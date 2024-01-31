@@ -23,6 +23,16 @@ impl AWSTagFilterDeleteRequest {
             namespace: None,
         }
     }
+
+    pub fn with_account_id(&mut self, value: String) -> &mut Self {
+        self.account_id = Some(value);
+        self
+    }
+
+    pub fn with_namespace(&mut self, value: crate::datadogV1::model::AWSNamespace) -> &mut Self {
+        self.namespace = Some(value);
+        self
+    }
 }
 impl Default for AWSTagFilterDeleteRequest {
     fn default() -> Self {

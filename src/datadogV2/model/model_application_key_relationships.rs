@@ -10,12 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct ApplicationKeyRelationships {
     /// Relationship to user.
     #[serde(rename = "owned_by")]
-    pub owned_by: Option<Box<crate::datadogV2::model::RelationshipToUser>>,
+    pub owned_by: Option<crate::datadogV2::model::RelationshipToUser>,
 }
 
 impl ApplicationKeyRelationships {
     pub fn new() -> ApplicationKeyRelationships {
         ApplicationKeyRelationships { owned_by: None }
+    }
+
+    pub fn with_owned_by(
+        &mut self,
+        value: crate::datadogV2::model::RelationshipToUser,
+    ) -> &mut Self {
+        self.owned_by = Some(value);
+        self
     }
 }
 impl Default for ApplicationKeyRelationships {

@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SyntheticsAPITest {
     /// Configuration object for a Synthetic API test.
     #[serde(rename = "config")]
-    pub config: Box<crate::datadogV1::model::SyntheticsAPITestConfig>,
+    pub config: crate::datadogV1::model::SyntheticsAPITestConfig,
     /// Array of locations used to run the test.
     #[serde(rename = "locations")]
     pub locations: Vec<String>,
@@ -25,7 +25,7 @@ pub struct SyntheticsAPITest {
     pub name: String,
     /// Object describing the extra options for a Synthetic test.
     #[serde(rename = "options")]
-    pub options: Box<crate::datadogV1::model::SyntheticsTestOptions>,
+    pub options: crate::datadogV1::model::SyntheticsTestOptions,
     /// The public ID for the test.
     #[serde(rename = "public_id")]
     pub public_id: Option<String>,
@@ -47,11 +47,11 @@ pub struct SyntheticsAPITest {
 
 impl SyntheticsAPITest {
     pub fn new(
-        config: Box<crate::datadogV1::model::SyntheticsAPITestConfig>,
+        config: crate::datadogV1::model::SyntheticsAPITestConfig,
         locations: Vec<String>,
         message: String,
         name: String,
-        options: Box<crate::datadogV1::model::SyntheticsTestOptions>,
+        options: crate::datadogV1::model::SyntheticsTestOptions,
         type_: crate::datadogV1::model::SyntheticsAPITestType,
     ) -> SyntheticsAPITest {
         SyntheticsAPITest {
@@ -67,5 +67,36 @@ impl SyntheticsAPITest {
             tags: None,
             type_,
         }
+    }
+
+    pub fn with_monitor_id(&mut self, value: i64) -> &mut Self {
+        self.monitor_id = Some(value);
+        self
+    }
+
+    pub fn with_public_id(&mut self, value: String) -> &mut Self {
+        self.public_id = Some(value);
+        self
+    }
+
+    pub fn with_status(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsTestPauseStatus,
+    ) -> &mut Self {
+        self.status = Some(value);
+        self
+    }
+
+    pub fn with_subtype(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsTestDetailsSubType,
+    ) -> &mut Self {
+        self.subtype = Some(value);
+        self
+    }
+
+    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
     }
 }

@@ -10,13 +10,13 @@ use serde_with::skip_serializing_none;
 pub struct SearchSLOResponse {
     /// Data from search SLO response.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV1::model::SearchSLOResponseData>>,
+    pub data: Option<crate::datadogV1::model::SearchSLOResponseData>,
     /// Pagination links.
     #[serde(rename = "links")]
-    pub links: Option<Box<crate::datadogV1::model::SearchSLOResponseLinks>>,
+    pub links: Option<crate::datadogV1::model::SearchSLOResponseLinks>,
     /// Searches metadata returned by the API.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV1::model::SearchSLOResponseMeta>>,
+    pub meta: Option<crate::datadogV1::model::SearchSLOResponseMeta>,
 }
 
 impl SearchSLOResponse {
@@ -26,6 +26,30 @@ impl SearchSLOResponse {
             links: None,
             meta: None,
         }
+    }
+
+    pub fn with_data(
+        &mut self,
+        value: crate::datadogV1::model::SearchSLOResponseData,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn with_links(
+        &mut self,
+        value: crate::datadogV1::model::SearchSLOResponseLinks,
+    ) -> &mut Self {
+        self.links = Some(value);
+        self
+    }
+
+    pub fn with_meta(
+        &mut self,
+        value: crate::datadogV1::model::SearchSLOResponseMeta,
+    ) -> &mut Self {
+        self.meta = Some(value);
+        self
     }
 }
 impl Default for SearchSLOResponse {

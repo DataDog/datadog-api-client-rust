@@ -31,4 +31,19 @@ impl ProcessQueryDefinition {
             search_by: None,
         }
     }
+
+    pub fn with_filter_by(&mut self, value: Vec<String>) -> &mut Self {
+        self.filter_by = Some(value);
+        self
+    }
+
+    pub fn with_limit(&mut self, value: i64) -> &mut Self {
+        self.limit = Some(value);
+        self
+    }
+
+    pub fn with_search_by(&mut self, value: String) -> &mut Self {
+        self.search_by = Some(value);
+        self
+    }
 }

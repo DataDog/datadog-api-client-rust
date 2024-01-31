@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct ServiceDefinitionV1 {
     /// Contact information about the service.
     #[serde(rename = "contact")]
-    pub contact: Option<Box<crate::datadogV2::model::ServiceDefinitionV1Contact>>,
+    pub contact: Option<crate::datadogV2::model::ServiceDefinitionV1Contact>,
     /// Extensions to V1 schema.
     #[serde(rename = "extensions")]
     pub extensions: Option<std::collections::BTreeMap<String, serde_json::Value>>,
@@ -19,13 +19,13 @@ pub struct ServiceDefinitionV1 {
     pub external_resources: Option<Vec<crate::datadogV2::model::ServiceDefinitionV1Resource>>,
     /// Basic information about a service.
     #[serde(rename = "info")]
-    pub info: Box<crate::datadogV2::model::ServiceDefinitionV1Info>,
+    pub info: crate::datadogV2::model::ServiceDefinitionV1Info,
     /// Third party integrations that Datadog supports.
     #[serde(rename = "integrations")]
-    pub integrations: Option<Box<crate::datadogV2::model::ServiceDefinitionV1Integrations>>,
+    pub integrations: Option<crate::datadogV2::model::ServiceDefinitionV1Integrations>,
     /// Org related information about the service.
     #[serde(rename = "org")]
-    pub org: Option<Box<crate::datadogV2::model::ServiceDefinitionV1Org>>,
+    pub org: Option<crate::datadogV2::model::ServiceDefinitionV1Org>,
     /// Schema version being used.
     #[serde(rename = "schema-version")]
     pub schema_version: crate::datadogV2::model::ServiceDefinitionV1Version,
@@ -36,7 +36,7 @@ pub struct ServiceDefinitionV1 {
 
 impl ServiceDefinitionV1 {
     pub fn new(
-        info: Box<crate::datadogV2::model::ServiceDefinitionV1Info>,
+        info: crate::datadogV2::model::ServiceDefinitionV1Info,
         schema_version: crate::datadogV2::model::ServiceDefinitionV1Version,
     ) -> ServiceDefinitionV1 {
         ServiceDefinitionV1 {
@@ -49,5 +49,50 @@ impl ServiceDefinitionV1 {
             schema_version,
             tags: None,
         }
+    }
+
+    pub fn with_contact(
+        &mut self,
+        value: crate::datadogV2::model::ServiceDefinitionV1Contact,
+    ) -> &mut Self {
+        self.contact = Some(value);
+        self
+    }
+
+    pub fn with_extensions(
+        &mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> &mut Self {
+        self.extensions = Some(value);
+        self
+    }
+
+    pub fn with_external_resources(
+        &mut self,
+        value: Vec<crate::datadogV2::model::ServiceDefinitionV1Resource>,
+    ) -> &mut Self {
+        self.external_resources = Some(value);
+        self
+    }
+
+    pub fn with_integrations(
+        &mut self,
+        value: crate::datadogV2::model::ServiceDefinitionV1Integrations,
+    ) -> &mut Self {
+        self.integrations = Some(value);
+        self
+    }
+
+    pub fn with_org(
+        &mut self,
+        value: crate::datadogV2::model::ServiceDefinitionV1Org,
+    ) -> &mut Self {
+        self.org = Some(value);
+        self
+    }
+
+    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
     }
 }

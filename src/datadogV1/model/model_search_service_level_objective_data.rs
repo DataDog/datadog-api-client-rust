@@ -11,7 +11,7 @@ pub struct SearchServiceLevelObjectiveData {
     /// A service level objective object includes a service level indicator, thresholds
     /// for one or more timeframes, and metadata (`name`, `description`, and `tags`).
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV1::model::SearchServiceLevelObjectiveAttributes>>,
+    pub attributes: Option<crate::datadogV1::model::SearchServiceLevelObjectiveAttributes>,
     /// A unique identifier for the service level objective object.
     ///
     /// Always included in service level objective responses.
@@ -29,6 +29,24 @@ impl SearchServiceLevelObjectiveData {
             id: None,
             type_: None,
         }
+    }
+
+    pub fn with_attributes(
+        &mut self,
+        value: crate::datadogV1::model::SearchServiceLevelObjectiveAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn with_id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn with_type_(&mut self, value: String) -> &mut Self {
+        self.type_ = Some(value);
+        self
     }
 }
 impl Default for SearchServiceLevelObjectiveData {

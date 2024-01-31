@@ -10,13 +10,13 @@ use serde_with::skip_serializing_none;
 pub struct SensitiveDataScannerRuleIncludedItem {
     /// Attributes of the Sensitive Data Scanner rule.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::SensitiveDataScannerRuleAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::SensitiveDataScannerRuleAttributes>,
     /// ID of the rule.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Relationships of a scanning rule.
     #[serde(rename = "relationships")]
-    pub relationships: Option<Box<crate::datadogV2::model::SensitiveDataScannerRuleRelationships>>,
+    pub relationships: Option<crate::datadogV2::model::SensitiveDataScannerRuleRelationships>,
     /// Sensitive Data Scanner rule type.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::SensitiveDataScannerRuleType>,
@@ -30,6 +30,35 @@ impl SensitiveDataScannerRuleIncludedItem {
             relationships: None,
             type_: None,
         }
+    }
+
+    pub fn with_attributes(
+        &mut self,
+        value: crate::datadogV2::model::SensitiveDataScannerRuleAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn with_id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn with_relationships(
+        &mut self,
+        value: crate::datadogV2::model::SensitiveDataScannerRuleRelationships,
+    ) -> &mut Self {
+        self.relationships = Some(value);
+        self
+    }
+
+    pub fn with_type_(
+        &mut self,
+        value: crate::datadogV2::model::SensitiveDataScannerRuleType,
+    ) -> &mut Self {
+        self.type_ = Some(value);
+        self
     }
 }
 impl Default for SensitiveDataScannerRuleIncludedItem {

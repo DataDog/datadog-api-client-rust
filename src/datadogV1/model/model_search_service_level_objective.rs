@@ -10,12 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct SearchServiceLevelObjective {
     /// A service level objective ID and attributes.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV1::model::SearchServiceLevelObjectiveData>>,
+    pub data: Option<crate::datadogV1::model::SearchServiceLevelObjectiveData>,
 }
 
 impl SearchServiceLevelObjective {
     pub fn new() -> SearchServiceLevelObjective {
         SearchServiceLevelObjective { data: None }
+    }
+
+    pub fn with_data(
+        &mut self,
+        value: crate::datadogV1::model::SearchServiceLevelObjectiveData,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
     }
 }
 impl Default for SearchServiceLevelObjective {

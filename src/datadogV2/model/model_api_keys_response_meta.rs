@@ -13,7 +13,7 @@ pub struct APIKeysResponseMeta {
     pub max_allowed: Option<i64>,
     /// Additional information related to the API keys response.
     #[serde(rename = "page")]
-    pub page: Option<Box<crate::datadogV2::model::APIKeysResponseMetaPage>>,
+    pub page: Option<crate::datadogV2::model::APIKeysResponseMetaPage>,
 }
 
 impl APIKeysResponseMeta {
@@ -22,6 +22,19 @@ impl APIKeysResponseMeta {
             max_allowed: None,
             page: None,
         }
+    }
+
+    pub fn with_max_allowed(&mut self, value: i64) -> &mut Self {
+        self.max_allowed = Some(value);
+        self
+    }
+
+    pub fn with_page(
+        &mut self,
+        value: crate::datadogV2::model::APIKeysResponseMetaPage,
+    ) -> &mut Self {
+        self.page = Some(value);
+        self
     }
 }
 impl Default for APIKeysResponseMeta {

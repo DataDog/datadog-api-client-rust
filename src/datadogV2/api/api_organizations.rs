@@ -5,9 +5,9 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// UploadIdPMetadataParams is a struct for passing parameters to the method [`OrganizationsAPI::upload_id_p_metadata`]
+/// UploadIdPMetadataOptionalParams is a struct for passing parameters to the method [`OrganizationsAPI::upload_id_p_metadata`]
 #[derive(Clone, Debug)]
-pub struct UploadIdPMetadataParams {
+pub struct UploadIdPMetadataOptionalParams {
     /// The IdP metadata XML file
     pub idp_file: Option<Vec<u8>>,
 }
@@ -48,7 +48,7 @@ impl OrganizationsAPI {
     /// Use this endpoint to upload or replace IdP metadata for SAML login configuration.
     pub async fn upload_id_p_metadata(
         &self,
-        params: UploadIdPMetadataParams,
+        params: UploadIdPMetadataOptionalParams,
     ) -> Result<Option<()>, Error<UploadIdPMetadataError>> {
         match self.upload_id_p_metadata_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
@@ -61,11 +61,11 @@ impl OrganizationsAPI {
     /// Use this endpoint to upload or replace IdP metadata for SAML login configuration.
     pub async fn upload_id_p_metadata_with_http_info(
         &self,
-        params: UploadIdPMetadataParams,
+        params: UploadIdPMetadataOptionalParams,
     ) -> Result<ResponseContent<()>, Error<UploadIdPMetadataError>> {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let idp_file = params.idp_file;
 
         let local_client = &local_configuration.client;

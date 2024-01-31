@@ -17,6 +17,14 @@ impl FastlyServicesResponse {
     pub fn new() -> FastlyServicesResponse {
         FastlyServicesResponse { data: None }
     }
+
+    pub fn with_data(
+        &mut self,
+        value: Vec<crate::datadogV2::model::FastlyServiceResponse>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
 impl Default for FastlyServicesResponse {
     fn default() -> Self {

@@ -13,7 +13,7 @@ pub struct HourlyUsageResponse {
     pub data: Option<Vec<crate::datadogV2::model::HourlyUsage>>,
     /// The object containing document metadata.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV2::model::HourlyUsageMetadata>>,
+    pub meta: Option<crate::datadogV2::model::HourlyUsageMetadata>,
 }
 
 impl HourlyUsageResponse {
@@ -22,6 +22,16 @@ impl HourlyUsageResponse {
             data: None,
             meta: None,
         }
+    }
+
+    pub fn with_data(&mut self, value: Vec<crate::datadogV2::model::HourlyUsage>) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn with_meta(&mut self, value: crate::datadogV2::model::HourlyUsageMetadata) -> &mut Self {
+        self.meta = Some(value);
+        self
     }
 }
 impl Default for HourlyUsageResponse {

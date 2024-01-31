@@ -22,7 +22,7 @@ pub struct PowerpackWidgetDefinition {
     pub show_title: Option<bool>,
     /// Powerpack template variables.
     #[serde(rename = "template_variables")]
-    pub template_variables: Option<Box<crate::datadogV1::model::PowerpackTemplateVariables>>,
+    pub template_variables: Option<crate::datadogV1::model::PowerpackTemplateVariables>,
     /// Title of the widget.
     #[serde(rename = "title")]
     pub title: Option<String>,
@@ -45,5 +45,33 @@ impl PowerpackWidgetDefinition {
             title: None,
             type_,
         }
+    }
+
+    pub fn with_background_color(&mut self, value: String) -> &mut Self {
+        self.background_color = Some(value);
+        self
+    }
+
+    pub fn with_banner_img(&mut self, value: String) -> &mut Self {
+        self.banner_img = Some(value);
+        self
+    }
+
+    pub fn with_show_title(&mut self, value: bool) -> &mut Self {
+        self.show_title = Some(value);
+        self
+    }
+
+    pub fn with_template_variables(
+        &mut self,
+        value: crate::datadogV1::model::PowerpackTemplateVariables,
+    ) -> &mut Self {
+        self.template_variables = Some(value);
+        self
+    }
+
+    pub fn with_title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
     }
 }

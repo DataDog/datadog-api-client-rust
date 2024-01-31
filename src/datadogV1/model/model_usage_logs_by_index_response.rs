@@ -17,6 +17,14 @@ impl UsageLogsByIndexResponse {
     pub fn new() -> UsageLogsByIndexResponse {
         UsageLogsByIndexResponse { usage: None }
     }
+
+    pub fn with_usage(
+        &mut self,
+        value: Vec<crate::datadogV1::model::UsageLogsByIndexHour>,
+    ) -> &mut Self {
+        self.usage = Some(value);
+        self
+    }
 }
 impl Default for UsageLogsByIndexResponse {
     fn default() -> Self {

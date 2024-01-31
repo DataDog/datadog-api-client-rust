@@ -8,6 +8,6 @@ use serde::{Deserialize, Serialize};
 #[serde(untagged)]
 pub enum MonitorConfigPolicyPolicyCreateRequest {
     MonitorConfigPolicyTagPolicyCreateRequest(
-        Box<crate::datadogV2::model::MonitorConfigPolicyTagPolicyCreateRequest>,
+        crate::datadogV2::model::MonitorConfigPolicyTagPolicyCreateRequest,
     ),
 }

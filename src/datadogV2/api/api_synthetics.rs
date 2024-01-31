@@ -5,13 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// SetOnDemandConcurrencyCapParams is a struct for passing parameters to the method [`SyntheticsAPI::set_on_demand_concurrency_cap`]
-#[derive(Clone, Debug)]
-pub struct SetOnDemandConcurrencyCapParams {
-    /// .
-    pub body: crate::datadogV2::model::OnDemandConcurrencyCapAttributes,
-}
-
 /// GetOnDemandConcurrencyCapError is a struct for typed errors of method [`SyntheticsAPI::get_on_demand_concurrency_cap`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -71,8 +64,6 @@ impl SyntheticsAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -125,13 +116,13 @@ impl SyntheticsAPI {
     /// Save new value for on-demand concurrency cap.
     pub async fn set_on_demand_concurrency_cap(
         &self,
-        params: SetOnDemandConcurrencyCapParams,
+        body: crate::datadogV2::model::OnDemandConcurrencyCapAttributes,
     ) -> Result<
         Option<crate::datadogV2::model::OnDemandConcurrencyCapResponse>,
         Error<SetOnDemandConcurrencyCapError>,
     > {
         match self
-            .set_on_demand_concurrency_cap_with_http_info(params)
+            .set_on_demand_concurrency_cap_with_http_info(body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -142,15 +133,12 @@ impl SyntheticsAPI {
     /// Save new value for on-demand concurrency cap.
     pub async fn set_on_demand_concurrency_cap_with_http_info(
         &self,
-        params: SetOnDemandConcurrencyCapParams,
+        body: crate::datadogV2::model::OnDemandConcurrencyCapAttributes,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::OnDemandConcurrencyCapResponse>,
         Error<SetOnDemandConcurrencyCapError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

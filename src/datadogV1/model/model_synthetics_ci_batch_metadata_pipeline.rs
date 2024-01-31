@@ -17,6 +17,11 @@ impl SyntheticsCIBatchMetadataPipeline {
     pub fn new() -> SyntheticsCIBatchMetadataPipeline {
         SyntheticsCIBatchMetadataPipeline { url: None }
     }
+
+    pub fn with_url(&mut self, value: String) -> &mut Self {
+        self.url = Some(value);
+        self
+    }
 }
 impl Default for SyntheticsCIBatchMetadataPipeline {
     fn default() -> Self {

@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct Log {
     /// JSON object containing all log attributes and their associated values.
     #[serde(rename = "content")]
-    pub content: Option<Box<crate::datadogV1::model::LogContent>>,
+    pub content: Option<crate::datadogV1::model::LogContent>,
     /// Unique ID of the Log.
     #[serde(rename = "id")]
     pub id: Option<String>,
@@ -22,6 +22,16 @@ impl Log {
             content: None,
             id: None,
         }
+    }
+
+    pub fn with_content(&mut self, value: crate::datadogV1::model::LogContent) -> &mut Self {
+        self.content = Some(value);
+        self
+    }
+
+    pub fn with_id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
     }
 }
 impl Default for Log {

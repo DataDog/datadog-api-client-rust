@@ -11,7 +11,7 @@ pub struct ContainerImageGroupRelationships {
     /// Relationships to Container Images inside a Container Image Group.
     #[serde(rename = "container_images")]
     pub container_images:
-        Option<Box<crate::datadogV2::model::ContainerImageGroupImagesRelationshipsLink>>,
+        Option<crate::datadogV2::model::ContainerImageGroupImagesRelationshipsLink>,
 }
 
 impl ContainerImageGroupRelationships {
@@ -19,6 +19,14 @@ impl ContainerImageGroupRelationships {
         ContainerImageGroupRelationships {
             container_images: None,
         }
+    }
+
+    pub fn with_container_images(
+        &mut self,
+        value: crate::datadogV2::model::ContainerImageGroupImagesRelationshipsLink,
+    ) -> &mut Self {
+        self.container_images = Some(value);
+        self
     }
 }
 impl Default for ContainerImageGroupRelationships {

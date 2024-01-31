@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct ApplicationKeyCreateRequest {
     /// Object used to create an application key.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::ApplicationKeyCreateData>,
+    pub data: crate::datadogV2::model::ApplicationKeyCreateData,
 }
 
 impl ApplicationKeyCreateRequest {
     pub fn new(
-        data: Box<crate::datadogV2::model::ApplicationKeyCreateData>,
+        data: crate::datadogV2::model::ApplicationKeyCreateData,
     ) -> ApplicationKeyCreateRequest {
         ApplicationKeyCreateRequest { data }
     }

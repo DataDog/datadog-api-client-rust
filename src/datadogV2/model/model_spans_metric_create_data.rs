@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SpansMetricCreateData {
     /// The object describing the Datadog span-based metric to create.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::SpansMetricCreateAttributes>,
+    pub attributes: crate::datadogV2::model::SpansMetricCreateAttributes,
     /// The name of the span-based metric.
     #[serde(rename = "id")]
     pub id: String,
@@ -21,7 +21,7 @@ pub struct SpansMetricCreateData {
 
 impl SpansMetricCreateData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::SpansMetricCreateAttributes>,
+        attributes: crate::datadogV2::model::SpansMetricCreateAttributes,
         id: String,
         type_: crate::datadogV2::model::SpansMetricType,
     ) -> SpansMetricCreateData {

@@ -10,12 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct GCPSTSDelegateAccountResponse {
     /// Datadog principal service account info.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::GCPSTSDelegateAccount>>,
+    pub data: Option<crate::datadogV2::model::GCPSTSDelegateAccount>,
 }
 
 impl GCPSTSDelegateAccountResponse {
     pub fn new() -> GCPSTSDelegateAccountResponse {
         GCPSTSDelegateAccountResponse { data: None }
+    }
+
+    pub fn with_data(
+        &mut self,
+        value: crate::datadogV2::model::GCPSTSDelegateAccount,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
     }
 }
 impl Default for GCPSTSDelegateAccountResponse {

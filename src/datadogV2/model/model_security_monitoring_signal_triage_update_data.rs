@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SecurityMonitoringSignalTriageUpdateData {
     /// Attributes describing a triage state update operation over a security signal.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::SecurityMonitoringSignalTriageAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::SecurityMonitoringSignalTriageAttributes>,
     /// The unique ID of the security signal.
     #[serde(rename = "id")]
     pub id: Option<String>,
@@ -26,6 +26,27 @@ impl SecurityMonitoringSignalTriageUpdateData {
             id: None,
             type_: None,
         }
+    }
+
+    pub fn with_attributes(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringSignalTriageAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn with_id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn with_type_(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringSignalMetadataType,
+    ) -> &mut Self {
+        self.type_ = Some(value);
+        self
     }
 }
 impl Default for SecurityMonitoringSignalTriageUpdateData {

@@ -55,6 +55,54 @@ impl DashboardSummaryDefinition {
             url: None,
         }
     }
+
+    pub fn with_author_handle(&mut self, value: String) -> &mut Self {
+        self.author_handle = Some(value);
+        self
+    }
+
+    pub fn with_created_at(&mut self, value: String) -> &mut Self {
+        self.created_at = Some(value);
+        self
+    }
+
+    pub fn with_description(&mut self, value: Option<String>) -> &mut Self {
+        self.description = Some(value);
+        self
+    }
+
+    pub fn with_id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn with_is_read_only(&mut self, value: bool) -> &mut Self {
+        self.is_read_only = Some(value);
+        self
+    }
+
+    pub fn with_layout_type(
+        &mut self,
+        value: crate::datadogV1::model::DashboardLayoutType,
+    ) -> &mut Self {
+        self.layout_type = Some(value);
+        self
+    }
+
+    pub fn with_modified_at(&mut self, value: String) -> &mut Self {
+        self.modified_at = Some(value);
+        self
+    }
+
+    pub fn with_title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
+    }
+
+    pub fn with_url(&mut self, value: String) -> &mut Self {
+        self.url = Some(value);
+        self
+    }
 }
 impl Default for DashboardSummaryDefinition {
     fn default() -> Self {

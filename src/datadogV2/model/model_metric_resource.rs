@@ -23,6 +23,16 @@ impl MetricResource {
             type_: None,
         }
     }
+
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn with_type_(&mut self, value: String) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
 impl Default for MetricResource {
     fn default() -> Self {

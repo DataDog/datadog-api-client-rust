@@ -17,6 +17,11 @@ impl OrganizationListResponse {
     pub fn new() -> OrganizationListResponse {
         OrganizationListResponse { orgs: None }
     }
+
+    pub fn with_orgs(&mut self, value: Vec<crate::datadogV1::model::Organization>) -> &mut Self {
+        self.orgs = Some(value);
+        self
+    }
 }
 impl Default for OrganizationListResponse {
     fn default() -> Self {

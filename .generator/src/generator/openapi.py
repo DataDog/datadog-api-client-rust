@@ -35,7 +35,7 @@ def option_wrapper(name, option, nullable):
 
 def type_to_rust(schema, alternative_name=None, render_nullable=False, render_option=True, render_box=False, version=None):
     """Return Rust type name for the type."""
-
+    render_box = False
     # special case for additionalProperties: true
     if schema is True or schema == {}:
         return "serde_json::Value"
@@ -101,6 +101,17 @@ def get_type_for_parameter(parameter, version=None):
             return type_to_rust(content["schema"], version=version, render_option=render_option)
     return type_to_rust(parameter.get("schema"), version=version, render_option=render_option)
 
+def has_required(operation):
+    for _, parameter in parameters(operation):
+        if parameter.get("required", False) == True:
+            return True
+    return False
+
+def has_optional(operation):
+    for _, parameter in parameters(operation):
+        if parameter.get("required", False) != True:
+            return True
+    return False
 
 def get_type_for_response(response, version):
     """Return Rust type name for the response."""

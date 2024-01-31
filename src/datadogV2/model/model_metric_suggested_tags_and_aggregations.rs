@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct MetricSuggestedTagsAndAggregations {
     /// Object containing the definition of a metric's actively queried tags and aggregations.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::MetricSuggestedTagsAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::MetricSuggestedTagsAttributes>,
     /// The metric name for this resource.
     #[serde(rename = "id")]
     pub id: Option<String>,
@@ -26,6 +26,27 @@ impl MetricSuggestedTagsAndAggregations {
             id: None,
             type_: None,
         }
+    }
+
+    pub fn with_attributes(
+        &mut self,
+        value: crate::datadogV2::model::MetricSuggestedTagsAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn with_id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn with_type_(
+        &mut self,
+        value: crate::datadogV2::model::MetricActiveConfigurationType,
+    ) -> &mut Self {
+        self.type_ = Some(value);
+        self
     }
 }
 impl Default for MetricSuggestedTagsAndAggregations {

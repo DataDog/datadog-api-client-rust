@@ -49,4 +49,17 @@ impl ApmStatsQueryDefinition {
             service,
         }
     }
+
+    pub fn with_columns(
+        &mut self,
+        value: Vec<crate::datadogV1::model::ApmStatsQueryColumnType>,
+    ) -> &mut Self {
+        self.columns = Some(value);
+        self
+    }
+
+    pub fn with_resource(&mut self, value: String) -> &mut Self {
+        self.resource = Some(value);
+        self
+    }
 }

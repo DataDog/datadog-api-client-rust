@@ -24,6 +24,16 @@ impl SyntheticsDeletedTest {
             public_id: None,
         }
     }
+
+    pub fn with_deleted_at(&mut self, value: String) -> &mut Self {
+        self.deleted_at = Some(value);
+        self
+    }
+
+    pub fn with_public_id(&mut self, value: String) -> &mut Self {
+        self.public_id = Some(value);
+        self
+    }
 }
 impl Default for SyntheticsDeletedTest {
     fn default() -> Self {

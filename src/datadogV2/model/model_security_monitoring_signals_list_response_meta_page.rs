@@ -18,6 +18,11 @@ impl SecurityMonitoringSignalsListResponseMetaPage {
     pub fn new() -> SecurityMonitoringSignalsListResponseMetaPage {
         SecurityMonitoringSignalsListResponseMetaPage { after: None }
     }
+
+    pub fn with_after(&mut self, value: String) -> &mut Self {
+        self.after = Some(value);
+        self
+    }
 }
 impl Default for SecurityMonitoringSignalsListResponseMetaPage {
     fn default() -> Self {

@@ -25,4 +25,9 @@ impl LogsExclusionFilter {
             sample_rate,
         }
     }
+
+    pub fn with_query(&mut self, value: String) -> &mut Self {
+        self.query = Some(value);
+        self
+    }
 }

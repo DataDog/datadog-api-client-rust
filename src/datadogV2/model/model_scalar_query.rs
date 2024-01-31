@@ -7,6 +7,6 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ScalarQuery {
-    MetricsScalarQuery(Box<crate::datadogV2::model::MetricsScalarQuery>),
-    EventsScalarQuery(Box<crate::datadogV2::model::EventsScalarQuery>),
+    MetricsScalarQuery(crate::datadogV2::model::MetricsScalarQuery),
+    EventsScalarQuery(crate::datadogV2::model::EventsScalarQuery),
 }

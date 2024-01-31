@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SecurityMonitoringSignalStateUpdateData {
     /// Attributes describing the change of state of a security signal.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::SecurityMonitoringSignalStateUpdateAttributes>,
+    pub attributes: crate::datadogV2::model::SecurityMonitoringSignalStateUpdateAttributes,
     /// The unique ID of the security signal.
     #[serde(rename = "id")]
     pub id: Option<serde_json::Value>,
@@ -21,12 +21,25 @@ pub struct SecurityMonitoringSignalStateUpdateData {
 
 impl SecurityMonitoringSignalStateUpdateData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::SecurityMonitoringSignalStateUpdateAttributes>,
+        attributes: crate::datadogV2::model::SecurityMonitoringSignalStateUpdateAttributes,
     ) -> SecurityMonitoringSignalStateUpdateData {
         SecurityMonitoringSignalStateUpdateData {
             attributes,
             id: None,
             type_: None,
         }
+    }
+
+    pub fn with_id(&mut self, value: serde_json::Value) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn with_type_(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringSignalMetadataType,
+    ) -> &mut Self {
+        self.type_ = Some(value);
+        self
     }
 }

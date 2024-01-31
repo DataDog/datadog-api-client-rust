@@ -17,6 +17,11 @@ impl UsageCustomReportsPage {
     pub fn new() -> UsageCustomReportsPage {
         UsageCustomReportsPage { total_count: None }
     }
+
+    pub fn with_total_count(&mut self, value: i64) -> &mut Self {
+        self.total_count = Some(value);
+        self
+    }
 }
 impl Default for UsageCustomReportsPage {
     fn default() -> Self {

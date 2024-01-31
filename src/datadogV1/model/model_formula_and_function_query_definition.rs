@@ -8,24 +8,24 @@ use serde::{Deserialize, Serialize};
 #[serde(untagged)]
 pub enum FormulaAndFunctionQueryDefinition {
     FormulaAndFunctionMetricQueryDefinition(
-        Box<crate::datadogV1::model::FormulaAndFunctionMetricQueryDefinition>,
+        crate::datadogV1::model::FormulaAndFunctionMetricQueryDefinition,
     ),
     FormulaAndFunctionEventQueryDefinition(
-        Box<crate::datadogV1::model::FormulaAndFunctionEventQueryDefinition>,
+        crate::datadogV1::model::FormulaAndFunctionEventQueryDefinition,
     ),
     FormulaAndFunctionProcessQueryDefinition(
-        Box<crate::datadogV1::model::FormulaAndFunctionProcessQueryDefinition>,
+        crate::datadogV1::model::FormulaAndFunctionProcessQueryDefinition,
     ),
     FormulaAndFunctionApmDependencyStatsQueryDefinition(
-        Box<crate::datadogV1::model::FormulaAndFunctionApmDependencyStatsQueryDefinition>,
+        crate::datadogV1::model::FormulaAndFunctionApmDependencyStatsQueryDefinition,
     ),
     FormulaAndFunctionApmResourceStatsQueryDefinition(
-        Box<crate::datadogV1::model::FormulaAndFunctionApmResourceStatsQueryDefinition>,
+        crate::datadogV1::model::FormulaAndFunctionApmResourceStatsQueryDefinition,
     ),
     FormulaAndFunctionSLOQueryDefinition(
-        Box<crate::datadogV1::model::FormulaAndFunctionSLOQueryDefinition>,
+        crate::datadogV1::model::FormulaAndFunctionSLOQueryDefinition,
     ),
     FormulaAndFunctionCloudCostQueryDefinition(
-        Box<crate::datadogV1::model::FormulaAndFunctionCloudCostQueryDefinition>,
+        crate::datadogV1::model::FormulaAndFunctionCloudCostQueryDefinition,
     ),
 }

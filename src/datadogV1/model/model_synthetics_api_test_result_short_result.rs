@@ -14,7 +14,7 @@ pub struct SyntheticsAPITestResultShortResult {
     /// Object containing all metrics and their values collected for a Synthetic API test.
     /// See the [Synthetic Monitoring Metrics documentation](<https://docs.datadoghq.com/synthetics/metrics/>).
     #[serde(rename = "timings")]
-    pub timings: Option<Box<crate::datadogV1::model::SyntheticsTiming>>,
+    pub timings: Option<crate::datadogV1::model::SyntheticsTiming>,
 }
 
 impl SyntheticsAPITestResultShortResult {
@@ -23,6 +23,16 @@ impl SyntheticsAPITestResultShortResult {
             passed: None,
             timings: None,
         }
+    }
+
+    pub fn with_passed(&mut self, value: bool) -> &mut Self {
+        self.passed = Some(value);
+        self
+    }
+
+    pub fn with_timings(&mut self, value: crate::datadogV1::model::SyntheticsTiming) -> &mut Self {
+        self.timings = Some(value);
+        self
     }
 }
 impl Default for SyntheticsAPITestResultShortResult {

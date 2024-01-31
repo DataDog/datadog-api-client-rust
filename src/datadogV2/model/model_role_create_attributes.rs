@@ -27,4 +27,14 @@ impl RoleCreateAttributes {
             name,
         }
     }
+
+    pub fn with_created_at(&mut self, value: String) -> &mut Self {
+        self.created_at = Some(value);
+        self
+    }
+
+    pub fn with_modified_at(&mut self, value: String) -> &mut Self {
+        self.modified_at = Some(value);
+        self
+    }
 }

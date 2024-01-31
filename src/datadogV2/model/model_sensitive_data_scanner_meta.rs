@@ -39,6 +39,36 @@ impl SensitiveDataScannerMeta {
             version: None,
         }
     }
+
+    pub fn with_count_limit(&mut self, value: i64) -> &mut Self {
+        self.count_limit = Some(value);
+        self
+    }
+
+    pub fn with_group_count_limit(&mut self, value: i64) -> &mut Self {
+        self.group_count_limit = Some(value);
+        self
+    }
+
+    pub fn with_has_highlight_enabled(&mut self, value: bool) -> &mut Self {
+        self.has_highlight_enabled = Some(value);
+        self
+    }
+
+    pub fn with_has_multi_pass_enabled(&mut self, value: bool) -> &mut Self {
+        self.has_multi_pass_enabled = Some(value);
+        self
+    }
+
+    pub fn with_is_pci_compliant(&mut self, value: bool) -> &mut Self {
+        self.is_pci_compliant = Some(value);
+        self
+    }
+
+    pub fn with_version(&mut self, value: i64) -> &mut Self {
+        self.version = Some(value);
+        self
+    }
 }
 impl Default for SensitiveDataScannerMeta {
     fn default() -> Self {

@@ -17,6 +17,11 @@ impl SharedDashboardInvitesMetaPage {
     pub fn new() -> SharedDashboardInvitesMetaPage {
         SharedDashboardInvitesMetaPage { total_count: None }
     }
+
+    pub fn with_total_count(&mut self, value: i64) -> &mut Self {
+        self.total_count = Some(value);
+        self
+    }
 }
 impl Default for SharedDashboardInvitesMetaPage {
     fn default() -> Self {

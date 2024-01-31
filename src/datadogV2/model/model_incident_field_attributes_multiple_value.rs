@@ -23,6 +23,19 @@ impl IncidentFieldAttributesMultipleValue {
             value: None,
         }
     }
+
+    pub fn with_type_(
+        &mut self,
+        value: crate::datadogV2::model::IncidentFieldAttributesValueType,
+    ) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
+
+    pub fn with_value(&mut self, value: Option<Vec<String>>) -> &mut Self {
+        self.value = Some(value);
+        self
+    }
 }
 impl Default for IncidentFieldAttributesMultipleValue {
     fn default() -> Self {

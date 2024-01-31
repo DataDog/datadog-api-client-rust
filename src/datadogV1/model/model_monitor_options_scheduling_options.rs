@@ -10,11 +10,11 @@ use serde_with::skip_serializing_none;
 pub struct MonitorOptionsSchedulingOptions {
     /// Configuration options for the custom schedule. **This feature is in private beta.**
     #[serde(rename = "custom_schedule")]
-    pub custom_schedule: Option<Box<crate::datadogV1::model::MonitorOptionsCustomSchedule>>,
+    pub custom_schedule: Option<crate::datadogV1::model::MonitorOptionsCustomSchedule>,
     /// Configuration options for the evaluation window. If `hour_starts` is set, no other fields may be set. Otherwise, `day_starts` and `month_starts` must be set together.
     #[serde(rename = "evaluation_window")]
     pub evaluation_window:
-        Option<Box<crate::datadogV1::model::MonitorOptionsSchedulingOptionsEvaluationWindow>>,
+        Option<crate::datadogV1::model::MonitorOptionsSchedulingOptionsEvaluationWindow>,
 }
 
 impl MonitorOptionsSchedulingOptions {
@@ -23,6 +23,22 @@ impl MonitorOptionsSchedulingOptions {
             custom_schedule: None,
             evaluation_window: None,
         }
+    }
+
+    pub fn with_custom_schedule(
+        &mut self,
+        value: crate::datadogV1::model::MonitorOptionsCustomSchedule,
+    ) -> &mut Self {
+        self.custom_schedule = Some(value);
+        self
+    }
+
+    pub fn with_evaluation_window(
+        &mut self,
+        value: crate::datadogV1::model::MonitorOptionsSchedulingOptionsEvaluationWindow,
+    ) -> &mut Self {
+        self.evaluation_window = Some(value);
+        self
     }
 }
 impl Default for MonitorOptionsSchedulingOptions {

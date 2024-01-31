@@ -47,4 +47,34 @@ impl TeamUpdateAttributes {
             visible_modules: None,
         }
     }
+
+    pub fn with_avatar(&mut self, value: Option<String>) -> &mut Self {
+        self.avatar = Some(value);
+        self
+    }
+
+    pub fn with_banner(&mut self, value: Option<i64>) -> &mut Self {
+        self.banner = Some(value);
+        self
+    }
+
+    pub fn with_color(&mut self, value: i32) -> &mut Self {
+        self.color = Some(value);
+        self
+    }
+
+    pub fn with_description(&mut self, value: String) -> &mut Self {
+        self.description = Some(value);
+        self
+    }
+
+    pub fn with_hidden_modules(&mut self, value: Vec<String>) -> &mut Self {
+        self.hidden_modules = Some(value);
+        self
+    }
+
+    pub fn with_visible_modules(&mut self, value: Vec<String>) -> &mut Self {
+        self.visible_modules = Some(value);
+        self
+    }
 }

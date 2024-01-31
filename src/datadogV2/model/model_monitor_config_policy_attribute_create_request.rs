@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct MonitorConfigPolicyAttributeCreateRequest {
     /// Configuration for the policy.
     #[serde(rename = "policy")]
-    pub policy: Box<crate::datadogV2::model::MonitorConfigPolicyPolicyCreateRequest>,
+    pub policy: crate::datadogV2::model::MonitorConfigPolicyPolicyCreateRequest,
     /// The monitor configuration policy type.
     #[serde(rename = "policy_type")]
     pub policy_type: crate::datadogV2::model::MonitorConfigPolicyType,
@@ -18,7 +18,7 @@ pub struct MonitorConfigPolicyAttributeCreateRequest {
 
 impl MonitorConfigPolicyAttributeCreateRequest {
     pub fn new(
-        policy: Box<crate::datadogV2::model::MonitorConfigPolicyPolicyCreateRequest>,
+        policy: crate::datadogV2::model::MonitorConfigPolicyPolicyCreateRequest,
         policy_type: crate::datadogV2::model::MonitorConfigPolicyType,
     ) -> MonitorConfigPolicyAttributeCreateRequest {
         MonitorConfigPolicyAttributeCreateRequest {

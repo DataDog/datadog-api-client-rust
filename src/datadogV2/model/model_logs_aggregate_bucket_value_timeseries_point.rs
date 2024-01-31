@@ -23,6 +23,16 @@ impl LogsAggregateBucketValueTimeseriesPoint {
             value: None,
         }
     }
+
+    pub fn with_time(&mut self, value: String) -> &mut Self {
+        self.time = Some(value);
+        self
+    }
+
+    pub fn with_value(&mut self, value: f64) -> &mut Self {
+        self.value = Some(value);
+        self
+    }
 }
 impl Default for LogsAggregateBucketValueTimeseriesPoint {
     fn default() -> Self {

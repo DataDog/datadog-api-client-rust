@@ -35,6 +35,26 @@ impl UsageIncidentManagementHour {
             public_id: None,
         }
     }
+
+    pub fn with_hour(&mut self, value: String) -> &mut Self {
+        self.hour = Some(value);
+        self
+    }
+
+    pub fn with_monthly_active_users(&mut self, value: Option<i64>) -> &mut Self {
+        self.monthly_active_users = Some(value);
+        self
+    }
+
+    pub fn with_org_name(&mut self, value: String) -> &mut Self {
+        self.org_name = Some(value);
+        self
+    }
+
+    pub fn with_public_id(&mut self, value: String) -> &mut Self {
+        self.public_id = Some(value);
+        self
+    }
 }
 impl Default for UsageIncidentManagementHour {
     fn default() -> Self {

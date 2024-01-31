@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct MonthlyUsageAttributionResponse {
     /// The object containing document metadata.
     #[serde(rename = "metadata")]
-    pub metadata: Option<Box<crate::datadogV1::model::MonthlyUsageAttributionMetadata>>,
+    pub metadata: Option<crate::datadogV1::model::MonthlyUsageAttributionMetadata>,
     /// Get usage summary by tag(s).
     #[serde(rename = "usage")]
     pub usage: Option<Vec<crate::datadogV1::model::MonthlyUsageAttributionBody>>,
@@ -22,6 +22,22 @@ impl MonthlyUsageAttributionResponse {
             metadata: None,
             usage: None,
         }
+    }
+
+    pub fn with_metadata(
+        &mut self,
+        value: crate::datadogV1::model::MonthlyUsageAttributionMetadata,
+    ) -> &mut Self {
+        self.metadata = Some(value);
+        self
+    }
+
+    pub fn with_usage(
+        &mut self,
+        value: Vec<crate::datadogV1::model::MonthlyUsageAttributionBody>,
+    ) -> &mut Self {
+        self.usage = Some(value);
+        self
     }
 }
 impl Default for MonthlyUsageAttributionResponse {

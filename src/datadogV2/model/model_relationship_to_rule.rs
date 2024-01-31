@@ -10,12 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct RelationshipToRule {
     /// Relationship data for a rule.
     #[serde(rename = "scorecard")]
-    pub scorecard: Option<Box<crate::datadogV2::model::RelationshipToRuleData>>,
+    pub scorecard: Option<crate::datadogV2::model::RelationshipToRuleData>,
 }
 
 impl RelationshipToRule {
     pub fn new() -> RelationshipToRule {
         RelationshipToRule { scorecard: None }
+    }
+
+    pub fn with_scorecard(
+        &mut self,
+        value: crate::datadogV2::model::RelationshipToRuleData,
+    ) -> &mut Self {
+        self.scorecard = Some(value);
+        self
     }
 }
 impl Default for RelationshipToRule {

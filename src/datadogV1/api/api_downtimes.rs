@@ -5,57 +5,13 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CancelDowntimeParams is a struct for passing parameters to the method [`DowntimesAPI::cancel_downtime`]
+/// ListDowntimesOptionalParams is a struct for passing parameters to the method [`DowntimesAPI::list_downtimes`]
 #[derive(Clone, Debug)]
-pub struct CancelDowntimeParams {
-    /// ID of the downtime to cancel.
-    pub downtime_id: i64,
-}
-
-/// CancelDowntimesByScopeParams is a struct for passing parameters to the method [`DowntimesAPI::cancel_downtimes_by_scope`]
-#[derive(Clone, Debug)]
-pub struct CancelDowntimesByScopeParams {
-    /// Scope to cancel downtimes for.
-    pub body: crate::datadogV1::model::CancelDowntimesByScopeRequest,
-}
-
-/// CreateDowntimeParams is a struct for passing parameters to the method [`DowntimesAPI::create_downtime`]
-#[derive(Clone, Debug)]
-pub struct CreateDowntimeParams {
-    /// Schedule a downtime request body.
-    pub body: crate::datadogV1::model::Downtime,
-}
-
-/// GetDowntimeParams is a struct for passing parameters to the method [`DowntimesAPI::get_downtime`]
-#[derive(Clone, Debug)]
-pub struct GetDowntimeParams {
-    /// ID of the downtime to fetch.
-    pub downtime_id: i64,
-}
-
-/// ListDowntimesParams is a struct for passing parameters to the method [`DowntimesAPI::list_downtimes`]
-#[derive(Clone, Debug)]
-pub struct ListDowntimesParams {
+pub struct ListDowntimesOptionalParams {
     /// Only return downtimes that are active when the request is made.
     pub current_only: Option<bool>,
     /// Return creator information.
     pub with_creator: Option<bool>,
-}
-
-/// ListMonitorDowntimesParams is a struct for passing parameters to the method [`DowntimesAPI::list_monitor_downtimes`]
-#[derive(Clone, Debug)]
-pub struct ListMonitorDowntimesParams {
-    /// The id of the monitor
-    pub monitor_id: i64,
-}
-
-/// UpdateDowntimeParams is a struct for passing parameters to the method [`DowntimesAPI::update_downtime`]
-#[derive(Clone, Debug)]
-pub struct UpdateDowntimeParams {
-    /// ID of the downtime to update.
-    pub downtime_id: i64,
-    /// Update a downtime request body.
-    pub body: crate::datadogV1::model::Downtime,
 }
 
 /// CancelDowntimeError is a struct for typed errors of method [`DowntimesAPI::cancel_downtime`]
@@ -153,9 +109,9 @@ impl DowntimesAPI {
     /// Cancel a downtime. **Note:** This endpoint has been deprecated. Please use v2 endpoints.
     pub async fn cancel_downtime(
         &self,
-        params: CancelDowntimeParams,
+        downtime_id: i64,
     ) -> Result<Option<()>, Error<CancelDowntimeError>> {
-        match self.cancel_downtime_with_http_info(params).await {
+        match self.cancel_downtime_with_http_info(downtime_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -164,12 +120,9 @@ impl DowntimesAPI {
     /// Cancel a downtime. **Note:** This endpoint has been deprecated. Please use v2 endpoints.
     pub async fn cancel_downtime_with_http_info(
         &self,
-        params: CancelDowntimeParams,
+        downtime_id: i64,
     ) -> Result<ResponseContent<()>, Error<CancelDowntimeError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let downtime_id = params.downtime_id;
 
         let local_client = &local_configuration.client;
 
@@ -222,12 +175,12 @@ impl DowntimesAPI {
     /// Delete all downtimes that match the scope of `X`. **Note:** This only interacts with Downtimes created using v1 endpoints. This endpoint has been deprecated and will not be replaced. Please use v2 endpoints to find and cancel downtimes.
     pub async fn cancel_downtimes_by_scope(
         &self,
-        params: CancelDowntimesByScopeParams,
+        body: crate::datadogV1::model::CancelDowntimesByScopeRequest,
     ) -> Result<
         Option<crate::datadogV1::model::CanceledDowntimesIds>,
         Error<CancelDowntimesByScopeError>,
     > {
-        match self.cancel_downtimes_by_scope_with_http_info(params).await {
+        match self.cancel_downtimes_by_scope_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -236,15 +189,12 @@ impl DowntimesAPI {
     /// Delete all downtimes that match the scope of `X`. **Note:** This only interacts with Downtimes created using v1 endpoints. This endpoint has been deprecated and will not be replaced. Please use v2 endpoints to find and cancel downtimes.
     pub async fn cancel_downtimes_by_scope_with_http_info(
         &self,
-        params: CancelDowntimesByScopeParams,
+        body: crate::datadogV1::model::CancelDowntimesByScopeRequest,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::CanceledDowntimesIds>,
         Error<CancelDowntimesByScopeError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -305,9 +255,9 @@ impl DowntimesAPI {
     /// Schedule a downtime. **Note:** This endpoint has been deprecated. Please use v2 endpoints.
     pub async fn create_downtime(
         &self,
-        params: CreateDowntimeParams,
+        body: crate::datadogV1::model::Downtime,
     ) -> Result<Option<crate::datadogV1::model::Downtime>, Error<CreateDowntimeError>> {
-        match self.create_downtime_with_http_info(params).await {
+        match self.create_downtime_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -316,13 +266,10 @@ impl DowntimesAPI {
     /// Schedule a downtime. **Note:** This endpoint has been deprecated. Please use v2 endpoints.
     pub async fn create_downtime_with_http_info(
         &self,
-        params: CreateDowntimeParams,
+        body: crate::datadogV1::model::Downtime,
     ) -> Result<ResponseContent<crate::datadogV1::model::Downtime>, Error<CreateDowntimeError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -380,9 +327,9 @@ impl DowntimesAPI {
     /// Get downtime detail by `downtime_id`. **Note:** This endpoint has been deprecated. Please use v2 endpoints.
     pub async fn get_downtime(
         &self,
-        params: GetDowntimeParams,
+        downtime_id: i64,
     ) -> Result<Option<crate::datadogV1::model::Downtime>, Error<GetDowntimeError>> {
-        match self.get_downtime_with_http_info(params).await {
+        match self.get_downtime_with_http_info(downtime_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -391,12 +338,9 @@ impl DowntimesAPI {
     /// Get downtime detail by `downtime_id`. **Note:** This endpoint has been deprecated. Please use v2 endpoints.
     pub async fn get_downtime_with_http_info(
         &self,
-        params: GetDowntimeParams,
+        downtime_id: i64,
     ) -> Result<ResponseContent<crate::datadogV1::model::Downtime>, Error<GetDowntimeError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let downtime_id = params.downtime_id;
 
         let local_client = &local_configuration.client;
 
@@ -450,7 +394,7 @@ impl DowntimesAPI {
     /// Get all scheduled downtimes. **Note:** This endpoint has been deprecated. Please use v2 endpoints.
     pub async fn list_downtimes(
         &self,
-        params: ListDowntimesParams,
+        params: ListDowntimesOptionalParams,
     ) -> Result<Option<Vec<crate::datadogV1::model::Downtime>>, Error<ListDowntimesError>> {
         match self.list_downtimes_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
@@ -461,12 +405,12 @@ impl DowntimesAPI {
     /// Get all scheduled downtimes. **Note:** This endpoint has been deprecated. Please use v2 endpoints.
     pub async fn list_downtimes_with_http_info(
         &self,
-        params: ListDowntimesParams,
+        params: ListDowntimesOptionalParams,
     ) -> Result<ResponseContent<Vec<crate::datadogV1::model::Downtime>>, Error<ListDowntimesError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let current_only = params.current_only;
         let with_creator = params.with_creator;
 
@@ -476,13 +420,13 @@ impl DowntimesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = current_only {
+        if let Some(ref local_query_param) = current_only {
             local_req_builder =
-                local_req_builder.query(&[("current_only", &local_str.to_string())]);
+                local_req_builder.query(&[("current_only", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = with_creator {
+        if let Some(ref local_query_param) = with_creator {
             local_req_builder =
-                local_req_builder.query(&[("with_creator", &local_str.to_string())]);
+                local_req_builder.query(&[("with_creator", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -528,10 +472,10 @@ impl DowntimesAPI {
     /// Get all active v1 downtimes for the specified monitor. **Note:** This endpoint has been deprecated. Please use v2 endpoints.
     pub async fn list_monitor_downtimes(
         &self,
-        params: ListMonitorDowntimesParams,
+        monitor_id: i64,
     ) -> Result<Option<Vec<crate::datadogV1::model::Downtime>>, Error<ListMonitorDowntimesError>>
     {
-        match self.list_monitor_downtimes_with_http_info(params).await {
+        match self.list_monitor_downtimes_with_http_info(monitor_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -540,15 +484,12 @@ impl DowntimesAPI {
     /// Get all active v1 downtimes for the specified monitor. **Note:** This endpoint has been deprecated. Please use v2 endpoints.
     pub async fn list_monitor_downtimes_with_http_info(
         &self,
-        params: ListMonitorDowntimesParams,
+        monitor_id: i64,
     ) -> Result<
         ResponseContent<Vec<crate::datadogV1::model::Downtime>>,
         Error<ListMonitorDowntimesError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let monitor_id = params.monitor_id;
 
         let local_client = &local_configuration.client;
 
@@ -603,9 +544,10 @@ impl DowntimesAPI {
     /// Update a single downtime by `downtime_id`. **Note:** This endpoint has been deprecated. Please use v2 endpoints.
     pub async fn update_downtime(
         &self,
-        params: UpdateDowntimeParams,
+        downtime_id: i64,
+        body: crate::datadogV1::model::Downtime,
     ) -> Result<Option<crate::datadogV1::model::Downtime>, Error<UpdateDowntimeError>> {
-        match self.update_downtime_with_http_info(params).await {
+        match self.update_downtime_with_http_info(downtime_id, body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -614,14 +556,11 @@ impl DowntimesAPI {
     /// Update a single downtime by `downtime_id`. **Note:** This endpoint has been deprecated. Please use v2 endpoints.
     pub async fn update_downtime_with_http_info(
         &self,
-        params: UpdateDowntimeParams,
+        downtime_id: i64,
+        body: crate::datadogV1::model::Downtime,
     ) -> Result<ResponseContent<crate::datadogV1::model::Downtime>, Error<UpdateDowntimeError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let downtime_id = params.downtime_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

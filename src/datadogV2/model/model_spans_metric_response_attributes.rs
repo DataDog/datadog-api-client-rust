@@ -10,10 +10,10 @@ use serde_with::skip_serializing_none;
 pub struct SpansMetricResponseAttributes {
     /// The compute rule to compute the span-based metric.
     #[serde(rename = "compute")]
-    pub compute: Option<Box<crate::datadogV2::model::SpansMetricResponseCompute>>,
+    pub compute: Option<crate::datadogV2::model::SpansMetricResponseCompute>,
     /// The span-based metric filter. Spans matching this filter will be aggregated in this metric.
     #[serde(rename = "filter")]
-    pub filter: Option<Box<crate::datadogV2::model::SpansMetricResponseFilter>>,
+    pub filter: Option<crate::datadogV2::model::SpansMetricResponseFilter>,
     /// The rules for the group by.
     #[serde(rename = "group_by")]
     pub group_by: Option<Vec<crate::datadogV2::model::SpansMetricResponseGroupBy>>,
@@ -26,6 +26,30 @@ impl SpansMetricResponseAttributes {
             filter: None,
             group_by: None,
         }
+    }
+
+    pub fn with_compute(
+        &mut self,
+        value: crate::datadogV2::model::SpansMetricResponseCompute,
+    ) -> &mut Self {
+        self.compute = Some(value);
+        self
+    }
+
+    pub fn with_filter(
+        &mut self,
+        value: crate::datadogV2::model::SpansMetricResponseFilter,
+    ) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
+
+    pub fn with_group_by(
+        &mut self,
+        value: Vec<crate::datadogV2::model::SpansMetricResponseGroupBy>,
+    ) -> &mut Self {
+        self.group_by = Some(value);
+        self
     }
 }
 impl Default for SpansMetricResponseAttributes {

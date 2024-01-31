@@ -5,44 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateChildOrgParams is a struct for passing parameters to the method [`OrganizationsAPI::create_child_org`]
-#[derive(Clone, Debug)]
-pub struct CreateChildOrgParams {
-    /// Organization object that needs to be created
-    pub body: crate::datadogV1::model::OrganizationCreateBody,
-}
-
-/// DowngradeOrgParams is a struct for passing parameters to the method [`OrganizationsAPI::downgrade_org`]
-#[derive(Clone, Debug)]
-pub struct DowngradeOrgParams {
-    /// The `public_id` of the organization you are operating within.
-    pub public_id: String,
-}
-
-/// GetOrgParams is a struct for passing parameters to the method [`OrganizationsAPI::get_org`]
-#[derive(Clone, Debug)]
-pub struct GetOrgParams {
-    /// The `public_id` of the organization you are operating within.
-    pub public_id: String,
-}
-
-/// UpdateOrgParams is a struct for passing parameters to the method [`OrganizationsAPI::update_org`]
-#[derive(Clone, Debug)]
-pub struct UpdateOrgParams {
-    /// The `public_id` of the organization you are operating within.
-    pub public_id: String,
-    pub body: crate::datadogV1::model::Organization,
-}
-
-/// UploadIdPForOrgParams is a struct for passing parameters to the method [`OrganizationsAPI::upload_id_p_for_org`]
-#[derive(Clone, Debug)]
-pub struct UploadIdPForOrgParams {
-    /// The `public_id` of the organization you are operating with
-    pub public_id: String,
-    /// The path to the XML metadata file you wish to upload.
-    pub idp_file: Vec<u8>,
-}
-
 /// CreateChildOrgError is a struct for typed errors of method [`OrganizationsAPI::create_child_org`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -136,12 +98,12 @@ impl OrganizationsAPI {
     /// `application_key.hash` provided in the response.
     pub async fn create_child_org(
         &self,
-        params: CreateChildOrgParams,
+        body: crate::datadogV1::model::OrganizationCreateBody,
     ) -> Result<
         Option<crate::datadogV1::model::OrganizationCreateResponse>,
         Error<CreateChildOrgError>,
     > {
-        match self.create_child_org_with_http_info(params).await {
+        match self.create_child_org_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -159,15 +121,12 @@ impl OrganizationsAPI {
     /// `application_key.hash` provided in the response.
     pub async fn create_child_org_with_http_info(
         &self,
-        params: CreateChildOrgParams,
+        body: crate::datadogV1::model::OrganizationCreateBody,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::OrganizationCreateResponse>,
         Error<CreateChildOrgError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -225,10 +184,10 @@ impl OrganizationsAPI {
     /// Only available for MSP customers. Removes a child organization from the hierarchy of the master organization and places the child organization on a 30-day trial.
     pub async fn downgrade_org(
         &self,
-        params: DowngradeOrgParams,
+        public_id: String,
     ) -> Result<Option<crate::datadogV1::model::OrgDowngradedResponse>, Error<DowngradeOrgError>>
     {
-        match self.downgrade_org_with_http_info(params).await {
+        match self.downgrade_org_with_http_info(public_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -237,15 +196,12 @@ impl OrganizationsAPI {
     /// Only available for MSP customers. Removes a child organization from the hierarchy of the master organization and places the child organization on a 30-day trial.
     pub async fn downgrade_org_with_http_info(
         &self,
-        params: DowngradeOrgParams,
+        public_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::OrgDowngradedResponse>,
         Error<DowngradeOrgError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let public_id = params.public_id;
 
         let local_client = &local_configuration.client;
 
@@ -299,9 +255,9 @@ impl OrganizationsAPI {
     /// Get organization information.
     pub async fn get_org(
         &self,
-        params: GetOrgParams,
+        public_id: String,
     ) -> Result<Option<crate::datadogV1::model::OrganizationResponse>, Error<GetOrgError>> {
-        match self.get_org_with_http_info(params).await {
+        match self.get_org_with_http_info(public_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -310,13 +266,10 @@ impl OrganizationsAPI {
     /// Get organization information.
     pub async fn get_org_with_http_info(
         &self,
-        params: GetOrgParams,
+        public_id: String,
     ) -> Result<ResponseContent<crate::datadogV1::model::OrganizationResponse>, Error<GetOrgError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let public_id = params.public_id;
 
         let local_client = &local_configuration.client;
 
@@ -387,8 +340,6 @@ impl OrganizationsAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/org", local_configuration.base_path);
@@ -437,9 +388,10 @@ impl OrganizationsAPI {
     /// Update your organization.
     pub async fn update_org(
         &self,
-        params: UpdateOrgParams,
+        public_id: String,
+        body: crate::datadogV1::model::Organization,
     ) -> Result<Option<crate::datadogV1::model::OrganizationResponse>, Error<UpdateOrgError>> {
-        match self.update_org_with_http_info(params).await {
+        match self.update_org_with_http_info(public_id, body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -448,14 +400,11 @@ impl OrganizationsAPI {
     /// Update your organization.
     pub async fn update_org_with_http_info(
         &self,
-        params: UpdateOrgParams,
+        public_id: String,
+        body: crate::datadogV1::model::Organization,
     ) -> Result<ResponseContent<crate::datadogV1::model::OrganizationResponse>, Error<UpdateOrgError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let public_id = params.public_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -521,9 +470,13 @@ impl OrganizationsAPI {
     /// * **XML Body:** Post the IdP metadata file as the body of the request.
     pub async fn upload_id_p_for_org(
         &self,
-        params: UploadIdPForOrgParams,
+        public_id: String,
+        idp_file: Vec<u8>,
     ) -> Result<Option<crate::datadogV1::model::IdpResponse>, Error<UploadIdPForOrgError>> {
-        match self.upload_id_p_for_org_with_http_info(params).await {
+        match self
+            .upload_id_p_for_org_with_http_info(public_id, idp_file)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -537,14 +490,11 @@ impl OrganizationsAPI {
     /// * **XML Body:** Post the IdP metadata file as the body of the request.
     pub async fn upload_id_p_for_org_with_http_info(
         &self,
-        params: UploadIdPForOrgParams,
+        public_id: String,
+        idp_file: Vec<u8>,
     ) -> Result<ResponseContent<crate::datadogV1::model::IdpResponse>, Error<UploadIdPForOrgError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let public_id = params.public_id;
-        let idp_file = params.idp_file;
 
         let local_client = &local_configuration.client;
 

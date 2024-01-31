@@ -11,7 +11,7 @@ pub struct SLOResponse {
     /// A service level objective object includes a service level indicator, thresholds
     /// for one or more timeframes, and metadata (`name`, `description`, `tags`, etc.).
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV1::model::SLOResponseData>>,
+    pub data: Option<crate::datadogV1::model::SLOResponseData>,
     /// An array of error messages. Each endpoint documents how/whether this field is
     /// used.
     #[serde(rename = "errors")]
@@ -24,6 +24,16 @@ impl SLOResponse {
             data: None,
             errors: None,
         }
+    }
+
+    pub fn with_data(&mut self, value: crate::datadogV1::model::SLOResponseData) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn with_errors(&mut self, value: Vec<String>) -> &mut Self {
+        self.errors = Some(value);
+        self
     }
 }
 impl Default for SLOResponse {

@@ -17,6 +17,14 @@ impl UsageIndexedSpansResponse {
     pub fn new() -> UsageIndexedSpansResponse {
         UsageIndexedSpansResponse { usage: None }
     }
+
+    pub fn with_usage(
+        &mut self,
+        value: Vec<crate::datadogV1::model::UsageIndexedSpansHour>,
+    ) -> &mut Self {
+        self.usage = Some(value);
+        self
+    }
 }
 impl Default for UsageIndexedSpansResponse {
     fn default() -> Self {

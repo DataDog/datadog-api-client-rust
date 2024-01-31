@@ -17,6 +17,11 @@ impl CheckCanDeleteSLOResponseData {
     pub fn new() -> CheckCanDeleteSLOResponseData {
         CheckCanDeleteSLOResponseData { ok: None }
     }
+
+    pub fn with_ok(&mut self, value: Vec<String>) -> &mut Self {
+        self.ok = Some(value);
+        self
+    }
 }
 impl Default for CheckCanDeleteSLOResponseData {
     fn default() -> Self {

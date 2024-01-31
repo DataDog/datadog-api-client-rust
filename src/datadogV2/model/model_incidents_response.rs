@@ -16,7 +16,7 @@ pub struct IncidentsResponse {
     pub included: Option<Vec<crate::datadogV2::model::IncidentResponseIncludedItem>>,
     /// The metadata object containing pagination metadata.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV2::model::IncidentResponseMeta>>,
+    pub meta: Option<crate::datadogV2::model::IncidentResponseMeta>,
 }
 
 impl IncidentsResponse {
@@ -26,5 +26,18 @@ impl IncidentsResponse {
             included: None,
             meta: None,
         }
+    }
+
+    pub fn with_included(
+        &mut self,
+        value: Vec<crate::datadogV2::model::IncidentResponseIncludedItem>,
+    ) -> &mut Self {
+        self.included = Some(value);
+        self
+    }
+
+    pub fn with_meta(&mut self, value: crate::datadogV2::model::IncidentResponseMeta) -> &mut Self {
+        self.meta = Some(value);
+        self
     }
 }

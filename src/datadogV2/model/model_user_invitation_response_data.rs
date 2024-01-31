@@ -10,13 +10,13 @@ use serde_with::skip_serializing_none;
 pub struct UserInvitationResponseData {
     /// Attributes of a user invitation.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::UserInvitationDataAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::UserInvitationDataAttributes>,
     /// ID of the user invitation.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Relationships data for user invitation.
     #[serde(rename = "relationships")]
-    pub relationships: Option<Box<crate::datadogV2::model::UserInvitationRelationships>>,
+    pub relationships: Option<crate::datadogV2::model::UserInvitationRelationships>,
     /// User invitations type.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::UserInvitationsType>,
@@ -30,6 +30,32 @@ impl UserInvitationResponseData {
             relationships: None,
             type_: None,
         }
+    }
+
+    pub fn with_attributes(
+        &mut self,
+        value: crate::datadogV2::model::UserInvitationDataAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn with_id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn with_relationships(
+        &mut self,
+        value: crate::datadogV2::model::UserInvitationRelationships,
+    ) -> &mut Self {
+        self.relationships = Some(value);
+        self
+    }
+
+    pub fn with_type_(&mut self, value: crate::datadogV2::model::UserInvitationsType) -> &mut Self {
+        self.type_ = Some(value);
+        self
     }
 }
 impl Default for UserInvitationResponseData {

@@ -43,6 +43,41 @@ impl SyntheticsSSLCertificateSubject {
             alt_name: None,
         }
     }
+
+    pub fn with_c(&mut self, value: String) -> &mut Self {
+        self.c = Some(value);
+        self
+    }
+
+    pub fn with_cn(&mut self, value: String) -> &mut Self {
+        self.cn = Some(value);
+        self
+    }
+
+    pub fn with_l(&mut self, value: String) -> &mut Self {
+        self.l = Some(value);
+        self
+    }
+
+    pub fn with_o(&mut self, value: String) -> &mut Self {
+        self.o = Some(value);
+        self
+    }
+
+    pub fn with_ou(&mut self, value: String) -> &mut Self {
+        self.ou = Some(value);
+        self
+    }
+
+    pub fn with_st(&mut self, value: String) -> &mut Self {
+        self.st = Some(value);
+        self
+    }
+
+    pub fn with_alt_name(&mut self, value: String) -> &mut Self {
+        self.alt_name = Some(value);
+        self
+    }
 }
 impl Default for SyntheticsSSLCertificateSubject {
     fn default() -> Self {

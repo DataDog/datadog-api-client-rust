@@ -17,6 +17,11 @@ impl AWSAccountCreateResponse {
     pub fn new() -> AWSAccountCreateResponse {
         AWSAccountCreateResponse { external_id: None }
     }
+
+    pub fn with_external_id(&mut self, value: String) -> &mut Self {
+        self.external_id = Some(value);
+        self
+    }
 }
 impl Default for AWSAccountCreateResponse {
     fn default() -> Self {

@@ -31,6 +31,26 @@ impl RoleAttributes {
             user_count: None,
         }
     }
+
+    pub fn with_created_at(&mut self, value: String) -> &mut Self {
+        self.created_at = Some(value);
+        self
+    }
+
+    pub fn with_modified_at(&mut self, value: String) -> &mut Self {
+        self.modified_at = Some(value);
+        self
+    }
+
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn with_user_count(&mut self, value: i64) -> &mut Self {
+        self.user_count = Some(value);
+        self
+    }
 }
 impl Default for RoleAttributes {
     fn default() -> Self {

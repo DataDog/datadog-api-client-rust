@@ -23,6 +23,16 @@ impl SpansMetricResponseGroupBy {
             tag_name: None,
         }
     }
+
+    pub fn with_path(&mut self, value: String) -> &mut Self {
+        self.path = Some(value);
+        self
+    }
+
+    pub fn with_tag_name(&mut self, value: String) -> &mut Self {
+        self.tag_name = Some(value);
+        self
+    }
 }
 impl Default for SpansMetricResponseGroupBy {
     fn default() -> Self {

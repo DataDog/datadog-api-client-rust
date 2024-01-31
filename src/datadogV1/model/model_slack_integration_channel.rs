@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SlackIntegrationChannel {
     /// Configuration options for what is shown in an alert event message.
     #[serde(rename = "display")]
-    pub display: Option<Box<crate::datadogV1::model::SlackIntegrationChannelDisplay>>,
+    pub display: Option<crate::datadogV1::model::SlackIntegrationChannelDisplay>,
     /// Your channel name.
     #[serde(rename = "name")]
     pub name: Option<String>,
@@ -22,6 +22,19 @@ impl SlackIntegrationChannel {
             display: None,
             name: None,
         }
+    }
+
+    pub fn with_display(
+        &mut self,
+        value: crate::datadogV1::model::SlackIntegrationChannelDisplay,
+    ) -> &mut Self {
+        self.display = Some(value);
+        self
+    }
+
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
     }
 }
 impl Default for SlackIntegrationChannel {

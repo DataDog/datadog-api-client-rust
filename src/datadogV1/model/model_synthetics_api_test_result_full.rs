@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SyntheticsAPITestResultFull {
     /// Object describing the API test configuration.
     #[serde(rename = "check")]
-    pub check: Option<Box<crate::datadogV1::model::SyntheticsAPITestResultFullCheck>>,
+    pub check: Option<crate::datadogV1::model::SyntheticsAPITestResultFullCheck>,
     /// When the API test was conducted.
     #[serde(rename = "check_time")]
     pub check_time: Option<f64>,
@@ -22,7 +22,7 @@ pub struct SyntheticsAPITestResultFull {
     pub probe_dc: Option<String>,
     /// Object containing results for your Synthetic API test.
     #[serde(rename = "result")]
-    pub result: Option<Box<crate::datadogV1::model::SyntheticsAPITestResultData>>,
+    pub result: Option<crate::datadogV1::model::SyntheticsAPITestResultData>,
     /// ID of the API test result.
     #[serde(rename = "result_id")]
     pub result_id: Option<String>,
@@ -45,6 +45,50 @@ impl SyntheticsAPITestResultFull {
             result_id: None,
             status: None,
         }
+    }
+
+    pub fn with_check(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsAPITestResultFullCheck,
+    ) -> &mut Self {
+        self.check = Some(value);
+        self
+    }
+
+    pub fn with_check_time(&mut self, value: f64) -> &mut Self {
+        self.check_time = Some(value);
+        self
+    }
+
+    pub fn with_check_version(&mut self, value: i64) -> &mut Self {
+        self.check_version = Some(value);
+        self
+    }
+
+    pub fn with_probe_dc(&mut self, value: String) -> &mut Self {
+        self.probe_dc = Some(value);
+        self
+    }
+
+    pub fn with_result(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsAPITestResultData,
+    ) -> &mut Self {
+        self.result = Some(value);
+        self
+    }
+
+    pub fn with_result_id(&mut self, value: String) -> &mut Self {
+        self.result_id = Some(value);
+        self
+    }
+
+    pub fn with_status(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsTestMonitorStatus,
+    ) -> &mut Self {
+        self.status = Some(value);
+        self
     }
 }
 impl Default for SyntheticsAPITestResultFull {

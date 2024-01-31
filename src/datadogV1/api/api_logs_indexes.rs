@@ -5,36 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateLogsIndexParams is a struct for passing parameters to the method [`LogsIndexesAPI::create_logs_index`]
-#[derive(Clone, Debug)]
-pub struct CreateLogsIndexParams {
-    /// Object containing the new index.
-    pub body: crate::datadogV1::model::LogsIndex,
-}
-
-/// GetLogsIndexParams is a struct for passing parameters to the method [`LogsIndexesAPI::get_logs_index`]
-#[derive(Clone, Debug)]
-pub struct GetLogsIndexParams {
-    /// Name of the log index.
-    pub name: String,
-}
-
-/// UpdateLogsIndexParams is a struct for passing parameters to the method [`LogsIndexesAPI::update_logs_index`]
-#[derive(Clone, Debug)]
-pub struct UpdateLogsIndexParams {
-    /// Name of the log index.
-    pub name: String,
-    /// Object containing the new `LogsIndexUpdateRequest`.
-    pub body: crate::datadogV1::model::LogsIndexUpdateRequest,
-}
-
-/// UpdateLogsIndexOrderParams is a struct for passing parameters to the method [`LogsIndexesAPI::update_logs_index_order`]
-#[derive(Clone, Debug)]
-pub struct UpdateLogsIndexOrderParams {
-    /// Object containing the new ordered list of index names
-    pub body: crate::datadogV1::model::LogsIndexesOrder,
-}
-
 /// CreateLogsIndexError is a struct for typed errors of method [`LogsIndexesAPI::create_logs_index`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -117,9 +87,9 @@ impl LogsIndexesAPI {
     /// Creates a new index. Returns the Index object passed in the request body when the request is successful.
     pub async fn create_logs_index(
         &self,
-        params: CreateLogsIndexParams,
+        body: crate::datadogV1::model::LogsIndex,
     ) -> Result<Option<crate::datadogV1::model::LogsIndex>, Error<CreateLogsIndexError>> {
-        match self.create_logs_index_with_http_info(params).await {
+        match self.create_logs_index_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -128,13 +98,10 @@ impl LogsIndexesAPI {
     /// Creates a new index. Returns the Index object passed in the request body when the request is successful.
     pub async fn create_logs_index_with_http_info(
         &self,
-        params: CreateLogsIndexParams,
+        body: crate::datadogV1::model::LogsIndex,
     ) -> Result<ResponseContent<crate::datadogV1::model::LogsIndex>, Error<CreateLogsIndexError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -195,9 +162,9 @@ impl LogsIndexesAPI {
     /// Get one log index from your organization. This endpoint takes no JSON arguments.
     pub async fn get_logs_index(
         &self,
-        params: GetLogsIndexParams,
+        name: String,
     ) -> Result<Option<crate::datadogV1::model::LogsIndex>, Error<GetLogsIndexError>> {
-        match self.get_logs_index_with_http_info(params).await {
+        match self.get_logs_index_with_http_info(name).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -206,12 +173,9 @@ impl LogsIndexesAPI {
     /// Get one log index from your organization. This endpoint takes no JSON arguments.
     pub async fn get_logs_index_with_http_info(
         &self,
-        params: GetLogsIndexParams,
+        name: String,
     ) -> Result<ResponseContent<crate::datadogV1::model::LogsIndex>, Error<GetLogsIndexError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let name = params.name;
 
         let local_client = &local_configuration.client;
 
@@ -281,8 +245,6 @@ impl LogsIndexesAPI {
         Error<GetLogsIndexOrderError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
 
         let local_client = &local_configuration.client;
 
@@ -355,8 +317,6 @@ impl LogsIndexesAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -413,9 +373,10 @@ impl LogsIndexesAPI {
     /// your current configuration with the new one sent to your Datadog organization.
     pub async fn update_logs_index(
         &self,
-        params: UpdateLogsIndexParams,
+        name: String,
+        body: crate::datadogV1::model::LogsIndexUpdateRequest,
     ) -> Result<Option<crate::datadogV1::model::LogsIndex>, Error<UpdateLogsIndexError>> {
-        match self.update_logs_index_with_http_info(params).await {
+        match self.update_logs_index_with_http_info(name, body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -428,14 +389,11 @@ impl LogsIndexesAPI {
     /// your current configuration with the new one sent to your Datadog organization.
     pub async fn update_logs_index_with_http_info(
         &self,
-        params: UpdateLogsIndexParams,
+        name: String,
+        body: crate::datadogV1::model::LogsIndexUpdateRequest,
     ) -> Result<ResponseContent<crate::datadogV1::model::LogsIndex>, Error<UpdateLogsIndexError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let name = params.name;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -498,10 +456,10 @@ impl LogsIndexesAPI {
     /// It returns the index order object passed in the request body when the request is successful.
     pub async fn update_logs_index_order(
         &self,
-        params: UpdateLogsIndexOrderParams,
+        body: crate::datadogV1::model::LogsIndexesOrder,
     ) -> Result<Option<crate::datadogV1::model::LogsIndexesOrder>, Error<UpdateLogsIndexOrderError>>
     {
-        match self.update_logs_index_order_with_http_info(params).await {
+        match self.update_logs_index_order_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -511,15 +469,12 @@ impl LogsIndexesAPI {
     /// It returns the index order object passed in the request body when the request is successful.
     pub async fn update_logs_index_order_with_http_info(
         &self,
-        params: UpdateLogsIndexOrderParams,
+        body: crate::datadogV1::model::LogsIndexesOrder,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::LogsIndexesOrder>,
         Error<UpdateLogsIndexOrderError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

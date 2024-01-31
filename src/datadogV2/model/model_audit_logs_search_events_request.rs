@@ -10,14 +10,14 @@ use serde_with::skip_serializing_none;
 pub struct AuditLogsSearchEventsRequest {
     /// Search and filter query settings.
     #[serde(rename = "filter")]
-    pub filter: Option<Box<crate::datadogV2::model::AuditLogsQueryFilter>>,
+    pub filter: Option<crate::datadogV2::model::AuditLogsQueryFilter>,
     /// Global query options that are used during the query.
     /// Note: Specify either timezone or time offset, not both. Otherwise, the query fails.
     #[serde(rename = "options")]
-    pub options: Option<Box<crate::datadogV2::model::AuditLogsQueryOptions>>,
+    pub options: Option<crate::datadogV2::model::AuditLogsQueryOptions>,
     /// Paging attributes for listing events.
     #[serde(rename = "page")]
-    pub page: Option<Box<crate::datadogV2::model::AuditLogsQueryPageOptions>>,
+    pub page: Option<crate::datadogV2::model::AuditLogsQueryPageOptions>,
     /// Sort parameters when querying events.
     #[serde(rename = "sort")]
     pub sort: Option<crate::datadogV2::model::AuditLogsSort>,
@@ -31,6 +31,35 @@ impl AuditLogsSearchEventsRequest {
             page: None,
             sort: None,
         }
+    }
+
+    pub fn with_filter(
+        &mut self,
+        value: crate::datadogV2::model::AuditLogsQueryFilter,
+    ) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
+
+    pub fn with_options(
+        &mut self,
+        value: crate::datadogV2::model::AuditLogsQueryOptions,
+    ) -> &mut Self {
+        self.options = Some(value);
+        self
+    }
+
+    pub fn with_page(
+        &mut self,
+        value: crate::datadogV2::model::AuditLogsQueryPageOptions,
+    ) -> &mut Self {
+        self.page = Some(value);
+        self
+    }
+
+    pub fn with_sort(&mut self, value: crate::datadogV2::model::AuditLogsSort) -> &mut Self {
+        self.sort = Some(value);
+        self
     }
 }
 impl Default for AuditLogsSearchEventsRequest {

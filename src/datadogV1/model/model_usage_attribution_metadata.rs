@@ -13,7 +13,7 @@ pub struct UsageAttributionMetadata {
     pub aggregates: Option<Vec<crate::datadogV1::model::UsageAttributionAggregatesBody>>,
     /// The metadata for the current pagination.
     #[serde(rename = "pagination")]
-    pub pagination: Option<Box<crate::datadogV1::model::UsageAttributionPagination>>,
+    pub pagination: Option<crate::datadogV1::model::UsageAttributionPagination>,
 }
 
 impl UsageAttributionMetadata {
@@ -22,6 +22,22 @@ impl UsageAttributionMetadata {
             aggregates: None,
             pagination: None,
         }
+    }
+
+    pub fn with_aggregates(
+        &mut self,
+        value: Vec<crate::datadogV1::model::UsageAttributionAggregatesBody>,
+    ) -> &mut Self {
+        self.aggregates = Some(value);
+        self
+    }
+
+    pub fn with_pagination(
+        &mut self,
+        value: crate::datadogV1::model::UsageAttributionPagination,
+    ) -> &mut Self {
+        self.pagination = Some(value);
+        self
     }
 }
 impl Default for UsageAttributionMetadata {

@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct CloudWorkloadSecurityAgentRuleUpdateRequest {
     /// Object for a single Agent rule.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleUpdateData>,
+    pub data: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleUpdateData,
 }
 
 impl CloudWorkloadSecurityAgentRuleUpdateRequest {
     pub fn new(
-        data: Box<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleUpdateData>,
+        data: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleUpdateData,
     ) -> CloudWorkloadSecurityAgentRuleUpdateRequest {
         CloudWorkloadSecurityAgentRuleUpdateRequest { data }
     }

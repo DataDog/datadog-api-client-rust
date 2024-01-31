@@ -10,12 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct SLOListResponseMetadata {
     /// The object containing information about the pages of the list of SLOs.
     #[serde(rename = "page")]
-    pub page: Option<Box<crate::datadogV1::model::SLOListResponseMetadataPage>>,
+    pub page: Option<crate::datadogV1::model::SLOListResponseMetadataPage>,
 }
 
 impl SLOListResponseMetadata {
     pub fn new() -> SLOListResponseMetadata {
         SLOListResponseMetadata { page: None }
+    }
+
+    pub fn with_page(
+        &mut self,
+        value: crate::datadogV1::model::SLOListResponseMetadataPage,
+    ) -> &mut Self {
+        self.page = Some(value);
+        self
     }
 }
 impl Default for SLOListResponseMetadata {

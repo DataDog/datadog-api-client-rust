@@ -5,9 +5,9 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// ListAuditLogsParams is a struct for passing parameters to the method [`AuditAPI::list_audit_logs`]
+/// ListAuditLogsOptionalParams is a struct for passing parameters to the method [`AuditAPI::list_audit_logs`]
 #[derive(Clone, Debug)]
-pub struct ListAuditLogsParams {
+pub struct ListAuditLogsOptionalParams {
     /// Search query following Audit Logs syntax.
     pub filter_query: Option<String>,
     /// Minimum timestamp for requested events.
@@ -22,10 +22,10 @@ pub struct ListAuditLogsParams {
     pub page_limit: Option<i32>,
 }
 
-/// SearchAuditLogsParams is a struct for passing parameters to the method [`AuditAPI::search_audit_logs`]
+/// SearchAuditLogsOptionalParams is a struct for passing parameters to the method [`AuditAPI::search_audit_logs`]
 #[derive(Clone, Debug)]
-pub struct SearchAuditLogsParams {
-    pub body: Option<Option<crate::datadogV2::model::AuditLogsSearchEventsRequest>>,
+pub struct SearchAuditLogsOptionalParams {
+    pub body: Option<crate::datadogV2::model::AuditLogsSearchEventsRequest>,
 }
 
 /// ListAuditLogsError is a struct for typed errors of method [`AuditAPI::list_audit_logs`]
@@ -77,7 +77,7 @@ impl AuditAPI {
     /// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
     pub async fn list_audit_logs(
         &self,
-        params: ListAuditLogsParams,
+        params: ListAuditLogsOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::AuditLogsEventsResponse>, Error<ListAuditLogsError>>
     {
         match self.list_audit_logs_with_http_info(params).await {
@@ -94,14 +94,14 @@ impl AuditAPI {
     /// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
     pub async fn list_audit_logs_with_http_info(
         &self,
-        params: ListAuditLogsParams,
+        params: ListAuditLogsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::AuditLogsEventsResponse>,
         Error<ListAuditLogsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let filter_query = params.filter_query;
         let filter_from = params.filter_from;
         let filter_to = params.filter_to;
@@ -115,26 +115,29 @@ impl AuditAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = filter_query {
+        if let Some(ref local_query_param) = filter_query {
             local_req_builder =
-                local_req_builder.query(&[("filter[query]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_from {
+        if let Some(ref local_query_param) = filter_from {
             local_req_builder =
-                local_req_builder.query(&[("filter[from]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[from]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_to {
-            local_req_builder = local_req_builder.query(&[("filter[to]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = sort {
-            local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_cursor {
+        if let Some(ref local_query_param) = filter_to {
             local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[to]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = page_limit {
-            local_req_builder = local_req_builder.query(&[("page[limit]", &local_str.to_string())]);
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_cursor {
+            local_req_builder =
+                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -185,7 +188,7 @@ impl AuditAPI {
     /// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
     pub async fn search_audit_logs(
         &self,
-        params: SearchAuditLogsParams,
+        params: SearchAuditLogsOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::AuditLogsEventsResponse>, Error<SearchAuditLogsError>>
     {
         match self.search_audit_logs_with_http_info(params).await {
@@ -202,14 +205,14 @@ impl AuditAPI {
     /// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
     pub async fn search_audit_logs_with_http_info(
         &self,
-        params: SearchAuditLogsParams,
+        params: SearchAuditLogsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::AuditLogsEventsResponse>,
         Error<SearchAuditLogsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let body = params.body;
 
         let local_client = &local_configuration.client;

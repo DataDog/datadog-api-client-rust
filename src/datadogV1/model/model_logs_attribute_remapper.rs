@@ -63,4 +63,42 @@ impl LogsAttributeRemapper {
             type_,
         }
     }
+
+    pub fn with_is_enabled(&mut self, value: bool) -> &mut Self {
+        self.is_enabled = Some(value);
+        self
+    }
+
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn with_override_on_conflict(&mut self, value: bool) -> &mut Self {
+        self.override_on_conflict = Some(value);
+        self
+    }
+
+    pub fn with_preserve_source(&mut self, value: bool) -> &mut Self {
+        self.preserve_source = Some(value);
+        self
+    }
+
+    pub fn with_source_type(&mut self, value: String) -> &mut Self {
+        self.source_type = Some(value);
+        self
+    }
+
+    pub fn with_target_format(
+        &mut self,
+        value: crate::datadogV1::model::TargetFormatType,
+    ) -> &mut Self {
+        self.target_format = Some(value);
+        self
+    }
+
+    pub fn with_target_type(&mut self, value: String) -> &mut Self {
+        self.target_type = Some(value);
+        self
+    }
 }

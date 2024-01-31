@@ -28,6 +28,24 @@ impl AWSEventBridgeAccountConfiguration {
             tags: None,
         }
     }
+
+    pub fn with_account_id(&mut self, value: String) -> &mut Self {
+        self.account_id = Some(value);
+        self
+    }
+
+    pub fn with_event_hubs(
+        &mut self,
+        value: Vec<crate::datadogV1::model::AWSEventBridgeSource>,
+    ) -> &mut Self {
+        self.event_hubs = Some(value);
+        self
+    }
+
+    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
 }
 impl Default for AWSEventBridgeAccountConfiguration {
     fn default() -> Self {

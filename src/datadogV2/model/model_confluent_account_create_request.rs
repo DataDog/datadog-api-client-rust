@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct ConfluentAccountCreateRequest {
     /// The data body for adding a Confluent account.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::ConfluentAccountCreateRequestData>,
+    pub data: crate::datadogV2::model::ConfluentAccountCreateRequestData,
 }
 
 impl ConfluentAccountCreateRequest {
     pub fn new(
-        data: Box<crate::datadogV2::model::ConfluentAccountCreateRequestData>,
+        data: crate::datadogV2::model::ConfluentAccountCreateRequestData,
     ) -> ConfluentAccountCreateRequest {
         ConfluentAccountCreateRequest { data }
     }

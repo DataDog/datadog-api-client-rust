@@ -16,7 +16,7 @@ pub struct SyntheticsParsingOptions {
     pub name: Option<String>,
     /// Details of the parser to use for the global variable.
     #[serde(rename = "parser")]
-    pub parser: Option<Box<crate::datadogV1::model::SyntheticsVariableParser>>,
+    pub parser: Option<crate::datadogV1::model::SyntheticsVariableParser>,
     /// Determines whether or not the extracted value will be obfuscated.
     #[serde(rename = "secure")]
     pub secure: Option<bool>,
@@ -34,6 +34,37 @@ impl SyntheticsParsingOptions {
             secure: None,
             type_: None,
         }
+    }
+
+    pub fn with_field(&mut self, value: String) -> &mut Self {
+        self.field = Some(value);
+        self
+    }
+
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn with_parser(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsVariableParser,
+    ) -> &mut Self {
+        self.parser = Some(value);
+        self
+    }
+
+    pub fn with_secure(&mut self, value: bool) -> &mut Self {
+        self.secure = Some(value);
+        self
+    }
+
+    pub fn with_type_(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsGlobalVariableParseTestOptionsType,
+    ) -> &mut Self {
+        self.type_ = Some(value);
+        self
     }
 }
 impl Default for SyntheticsParsingOptions {

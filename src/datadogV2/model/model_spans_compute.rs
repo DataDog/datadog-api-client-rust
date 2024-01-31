@@ -32,4 +32,19 @@ impl SpansCompute {
             type_: None,
         }
     }
+
+    pub fn with_interval(&mut self, value: String) -> &mut Self {
+        self.interval = Some(value);
+        self
+    }
+
+    pub fn with_metric(&mut self, value: String) -> &mut Self {
+        self.metric = Some(value);
+        self
+    }
+
+    pub fn with_type_(&mut self, value: crate::datadogV2::model::SpansComputeType) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }

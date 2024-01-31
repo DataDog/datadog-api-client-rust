@@ -17,6 +17,14 @@ impl RUMApplicationsResponse {
     pub fn new() -> RUMApplicationsResponse {
         RUMApplicationsResponse { data: None }
     }
+
+    pub fn with_data(
+        &mut self,
+        value: Vec<crate::datadogV2::model::RUMApplicationList>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
 impl Default for RUMApplicationsResponse {
     fn default() -> Self {

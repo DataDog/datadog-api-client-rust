@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct ConfluentAccountResponseData {
     /// The attributes of a Confluent account.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::ConfluentAccountResponseAttributes>,
+    pub attributes: crate::datadogV2::model::ConfluentAccountResponseAttributes,
     /// A randomly generated ID associated with a Confluent account.
     #[serde(rename = "id")]
     pub id: String,
@@ -21,7 +21,7 @@ pub struct ConfluentAccountResponseData {
 
 impl ConfluentAccountResponseData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::ConfluentAccountResponseAttributes>,
+        attributes: crate::datadogV2::model::ConfluentAccountResponseAttributes,
         id: String,
         type_: crate::datadogV2::model::ConfluentAccountType,
     ) -> ConfluentAccountResponseData {

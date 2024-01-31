@@ -53,4 +53,27 @@ impl SyntheticsBasicAuthOauthClient {
             type_: None,
         }
     }
+
+    pub fn with_audience(&mut self, value: String) -> &mut Self {
+        self.audience = Some(value);
+        self
+    }
+
+    pub fn with_resource(&mut self, value: String) -> &mut Self {
+        self.resource = Some(value);
+        self
+    }
+
+    pub fn with_scope(&mut self, value: String) -> &mut Self {
+        self.scope = Some(value);
+        self
+    }
+
+    pub fn with_type_(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsBasicAuthOauthClientType,
+    ) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }

@@ -10,12 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct ContainerMeta {
     /// Paging attributes.
     #[serde(rename = "pagination")]
-    pub pagination: Option<Box<crate::datadogV2::model::ContainerMetaPage>>,
+    pub pagination: Option<crate::datadogV2::model::ContainerMetaPage>,
 }
 
 impl ContainerMeta {
     pub fn new() -> ContainerMeta {
         ContainerMeta { pagination: None }
+    }
+
+    pub fn with_pagination(
+        &mut self,
+        value: crate::datadogV2::model::ContainerMetaPage,
+    ) -> &mut Self {
+        self.pagination = Some(value);
+        self
     }
 }
 impl Default for ContainerMeta {

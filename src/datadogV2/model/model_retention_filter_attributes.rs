@@ -25,7 +25,7 @@ pub struct RetentionFilterAttributes {
     pub execution_order: Option<i64>,
     /// The spans filter used to index spans.
     #[serde(rename = "filter")]
-    pub filter: Option<Box<crate::datadogV2::model::SpansFilter>>,
+    pub filter: Option<crate::datadogV2::model::SpansFilter>,
     /// The type of retention filter. The value should always be spans-sampling-processor.
     #[serde(rename = "filter_type")]
     pub filter_type: Option<crate::datadogV2::model::RetentionFilterType>,
@@ -59,6 +59,64 @@ impl RetentionFilterAttributes {
             name: None,
             rate: None,
         }
+    }
+
+    pub fn with_created_at(&mut self, value: i64) -> &mut Self {
+        self.created_at = Some(value);
+        self
+    }
+
+    pub fn with_created_by(&mut self, value: String) -> &mut Self {
+        self.created_by = Some(value);
+        self
+    }
+
+    pub fn with_editable(&mut self, value: bool) -> &mut Self {
+        self.editable = Some(value);
+        self
+    }
+
+    pub fn with_enabled(&mut self, value: bool) -> &mut Self {
+        self.enabled = Some(value);
+        self
+    }
+
+    pub fn with_execution_order(&mut self, value: i64) -> &mut Self {
+        self.execution_order = Some(value);
+        self
+    }
+
+    pub fn with_filter(&mut self, value: crate::datadogV2::model::SpansFilter) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
+
+    pub fn with_filter_type(
+        &mut self,
+        value: crate::datadogV2::model::RetentionFilterType,
+    ) -> &mut Self {
+        self.filter_type = Some(value);
+        self
+    }
+
+    pub fn with_modified_at(&mut self, value: i64) -> &mut Self {
+        self.modified_at = Some(value);
+        self
+    }
+
+    pub fn with_modified_by(&mut self, value: String) -> &mut Self {
+        self.modified_by = Some(value);
+        self
+    }
+
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn with_rate(&mut self, value: f64) -> &mut Self {
+        self.rate = Some(value);
+        self
     }
 }
 impl Default for RetentionFilterAttributes {

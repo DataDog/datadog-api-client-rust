@@ -5,55 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateCostAWSCURConfigParams is a struct for passing parameters to the method [`CloudCostManagementAPI::create_cost_awscur_config`]
-#[derive(Clone, Debug)]
-pub struct CreateCostAWSCURConfigParams {
-    pub body: crate::datadogV2::model::AwsCURConfigPostRequest,
-}
-
-/// CreateCostAzureUCConfigsParams is a struct for passing parameters to the method [`CloudCostManagementAPI::create_cost_azure_uc_configs`]
-#[derive(Clone, Debug)]
-pub struct CreateCostAzureUCConfigsParams {
-    pub body: crate::datadogV2::model::AzureUCConfigPostRequest,
-}
-
-/// DeleteCostAWSCURConfigParams is a struct for passing parameters to the method [`CloudCostManagementAPI::delete_cost_awscur_config`]
-#[derive(Clone, Debug)]
-pub struct DeleteCostAWSCURConfigParams {
-    /// Cloud Account id.
-    pub cloud_account_id: String,
-}
-
-/// DeleteCostAzureUCConfigParams is a struct for passing parameters to the method [`CloudCostManagementAPI::delete_cost_azure_uc_config`]
-#[derive(Clone, Debug)]
-pub struct DeleteCostAzureUCConfigParams {
-    /// Cloud Account id.
-    pub cloud_account_id: String,
-}
-
-/// ListAWSRelatedAccountsParams is a struct for passing parameters to the method [`CloudCostManagementAPI::list_aws_related_accounts`]
-#[derive(Clone, Debug)]
-pub struct ListAWSRelatedAccountsParams {
-    /// The ID of the management account to filter by.
-    pub filter_management_account_id: String,
-}
-
-/// UpdateCostAWSCURConfigParams is a struct for passing parameters to the method [`CloudCostManagementAPI::update_cost_awscur_config`]
-#[derive(Clone, Debug)]
-pub struct UpdateCostAWSCURConfigParams {
-    /// Cloud Account id.
-    pub cloud_account_id: String,
-    pub body: crate::datadogV2::model::AwsCURConfigPatchRequest,
-}
-
-/// UpdateCostAzureUCConfigsParams is a struct for passing parameters to the method [`CloudCostManagementAPI::update_cost_azure_uc_configs`]
-#[derive(Clone, Debug)]
-pub struct UpdateCostAzureUCConfigsParams {
-    /// Cloud Account id.
-    pub cloud_account_id: String,
-    pub body: crate::datadogV2::model::AzureUCConfigPatchRequest,
-}
-
 /// CreateCostAWSCURConfigError is a struct for typed errors of method [`CloudCostManagementAPI::create_cost_awscur_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -174,12 +125,12 @@ impl CloudCostManagementAPI {
     /// Create a Cloud Cost Management account for an AWS CUR config.
     pub async fn create_cost_awscur_config(
         &self,
-        params: CreateCostAWSCURConfigParams,
+        body: crate::datadogV2::model::AwsCURConfigPostRequest,
     ) -> Result<
         Option<crate::datadogV2::model::AwsCURConfigResponse>,
         Error<CreateCostAWSCURConfigError>,
     > {
-        match self.create_cost_awscur_config_with_http_info(params).await {
+        match self.create_cost_awscur_config_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -188,15 +139,12 @@ impl CloudCostManagementAPI {
     /// Create a Cloud Cost Management account for an AWS CUR config.
     pub async fn create_cost_awscur_config_with_http_info(
         &self,
-        params: CreateCostAWSCURConfigParams,
+        body: crate::datadogV2::model::AwsCURConfigPostRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::AwsCURConfigResponse>,
         Error<CreateCostAWSCURConfigError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -257,15 +205,12 @@ impl CloudCostManagementAPI {
     /// Create a Cloud Cost Management account for an Azure config.
     pub async fn create_cost_azure_uc_configs(
         &self,
-        params: CreateCostAzureUCConfigsParams,
+        body: crate::datadogV2::model::AzureUCConfigPostRequest,
     ) -> Result<
         Option<crate::datadogV2::model::AzureUCConfigPairsResponse>,
         Error<CreateCostAzureUCConfigsError>,
     > {
-        match self
-            .create_cost_azure_uc_configs_with_http_info(params)
-            .await
-        {
+        match self.create_cost_azure_uc_configs_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -274,15 +219,12 @@ impl CloudCostManagementAPI {
     /// Create a Cloud Cost Management account for an Azure config.
     pub async fn create_cost_azure_uc_configs_with_http_info(
         &self,
-        params: CreateCostAzureUCConfigsParams,
+        body: crate::datadogV2::model::AzureUCConfigPostRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::AzureUCConfigPairsResponse>,
         Error<CreateCostAzureUCConfigsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -343,9 +285,12 @@ impl CloudCostManagementAPI {
     /// Archive a Cloud Cost Management Account.
     pub async fn delete_cost_awscur_config(
         &self,
-        params: DeleteCostAWSCURConfigParams,
+        cloud_account_id: String,
     ) -> Result<Option<()>, Error<DeleteCostAWSCURConfigError>> {
-        match self.delete_cost_awscur_config_with_http_info(params).await {
+        match self
+            .delete_cost_awscur_config_with_http_info(cloud_account_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -354,12 +299,9 @@ impl CloudCostManagementAPI {
     /// Archive a Cloud Cost Management Account.
     pub async fn delete_cost_awscur_config_with_http_info(
         &self,
-        params: DeleteCostAWSCURConfigParams,
+        cloud_account_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteCostAWSCURConfigError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let cloud_account_id = params.cloud_account_id;
 
         let local_client = &local_configuration.client;
 
@@ -412,10 +354,10 @@ impl CloudCostManagementAPI {
     /// Archive a Cloud Cost Management Account.
     pub async fn delete_cost_azure_uc_config(
         &self,
-        params: DeleteCostAzureUCConfigParams,
+        cloud_account_id: String,
     ) -> Result<Option<()>, Error<DeleteCostAzureUCConfigError>> {
         match self
-            .delete_cost_azure_uc_config_with_http_info(params)
+            .delete_cost_azure_uc_config_with_http_info(cloud_account_id)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -426,12 +368,9 @@ impl CloudCostManagementAPI {
     /// Archive a Cloud Cost Management Account.
     pub async fn delete_cost_azure_uc_config_with_http_info(
         &self,
-        params: DeleteCostAzureUCConfigParams,
+        cloud_account_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteCostAzureUCConfigError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let cloud_account_id = params.cloud_account_id;
 
         let local_client = &local_configuration.client;
 
@@ -503,8 +442,6 @@ impl CloudCostManagementAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v2/cost/enabled", local_configuration.base_path);
@@ -554,12 +491,15 @@ impl CloudCostManagementAPI {
     /// List the AWS accounts in an organization by calling 'organizations:ListAccounts' from the specified management account.
     pub async fn list_aws_related_accounts(
         &self,
-        params: ListAWSRelatedAccountsParams,
+        filter_management_account_id: String,
     ) -> Result<
         Option<crate::datadogV2::model::AWSRelatedAccountsResponse>,
         Error<ListAWSRelatedAccountsError>,
     > {
-        match self.list_aws_related_accounts_with_http_info(params).await {
+        match self
+            .list_aws_related_accounts_with_http_info(filter_management_account_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -568,15 +508,12 @@ impl CloudCostManagementAPI {
     /// List the AWS accounts in an organization by calling 'organizations:ListAccounts' from the specified management account.
     pub async fn list_aws_related_accounts_with_http_info(
         &self,
-        params: ListAWSRelatedAccountsParams,
+        filter_management_account_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::AWSRelatedAccountsResponse>,
         Error<ListAWSRelatedAccountsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let filter_management_account_id = params.filter_management_account_id;
 
         let local_client = &local_configuration.client;
 
@@ -654,8 +591,6 @@ impl CloudCostManagementAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -727,8 +662,6 @@ impl CloudCostManagementAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -781,12 +714,16 @@ impl CloudCostManagementAPI {
     /// Update the status of an AWS CUR config (active/archived).
     pub async fn update_cost_awscur_config(
         &self,
-        params: UpdateCostAWSCURConfigParams,
+        cloud_account_id: String,
+        body: crate::datadogV2::model::AwsCURConfigPatchRequest,
     ) -> Result<
         Option<crate::datadogV2::model::AwsCURConfigsResponse>,
         Error<UpdateCostAWSCURConfigError>,
     > {
-        match self.update_cost_awscur_config_with_http_info(params).await {
+        match self
+            .update_cost_awscur_config_with_http_info(cloud_account_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -795,16 +732,13 @@ impl CloudCostManagementAPI {
     /// Update the status of an AWS CUR config (active/archived).
     pub async fn update_cost_awscur_config_with_http_info(
         &self,
-        params: UpdateCostAWSCURConfigParams,
+        cloud_account_id: String,
+        body: crate::datadogV2::model::AwsCURConfigPatchRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::AwsCURConfigsResponse>,
         Error<UpdateCostAWSCURConfigError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let cloud_account_id = params.cloud_account_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -866,13 +800,14 @@ impl CloudCostManagementAPI {
     /// Update the status of an  Azure config (active/archived).
     pub async fn update_cost_azure_uc_configs(
         &self,
-        params: UpdateCostAzureUCConfigsParams,
+        cloud_account_id: String,
+        body: crate::datadogV2::model::AzureUCConfigPatchRequest,
     ) -> Result<
         Option<crate::datadogV2::model::AzureUCConfigPairsResponse>,
         Error<UpdateCostAzureUCConfigsError>,
     > {
         match self
-            .update_cost_azure_uc_configs_with_http_info(params)
+            .update_cost_azure_uc_configs_with_http_info(cloud_account_id, body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -883,16 +818,13 @@ impl CloudCostManagementAPI {
     /// Update the status of an  Azure config (active/archived).
     pub async fn update_cost_azure_uc_configs_with_http_info(
         &self,
-        params: UpdateCostAzureUCConfigsParams,
+        cloud_account_id: String,
+        body: crate::datadogV2::model::AzureUCConfigPatchRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::AzureUCConfigPairsResponse>,
         Error<UpdateCostAzureUCConfigsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let cloud_account_id = params.cloud_account_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

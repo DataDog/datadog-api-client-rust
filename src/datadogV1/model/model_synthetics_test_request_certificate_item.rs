@@ -27,6 +27,21 @@ impl SyntheticsTestRequestCertificateItem {
             updated_at: None,
         }
     }
+
+    pub fn with_content(&mut self, value: String) -> &mut Self {
+        self.content = Some(value);
+        self
+    }
+
+    pub fn with_filename(&mut self, value: String) -> &mut Self {
+        self.filename = Some(value);
+        self
+    }
+
+    pub fn with_updated_at(&mut self, value: String) -> &mut Self {
+        self.updated_at = Some(value);
+        self
+    }
 }
 impl Default for SyntheticsTestRequestCertificateItem {
     fn default() -> Self {

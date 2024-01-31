@@ -5,32 +5,16 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateOrUpdateServiceDefinitionsParams is a struct for passing parameters to the method [`ServiceDefinitionAPI::create_or_update_service_definitions`]
+/// GetServiceDefinitionOptionalParams is a struct for passing parameters to the method [`ServiceDefinitionAPI::get_service_definition`]
 #[derive(Clone, Debug)]
-pub struct CreateOrUpdateServiceDefinitionsParams {
-    /// Service Definition YAML/JSON.
-    pub body: crate::datadogV2::model::ServiceDefinitionsCreateRequest,
-}
-
-/// DeleteServiceDefinitionParams is a struct for passing parameters to the method [`ServiceDefinitionAPI::delete_service_definition`]
-#[derive(Clone, Debug)]
-pub struct DeleteServiceDefinitionParams {
-    /// The name of the service.
-    pub service_name: String,
-}
-
-/// GetServiceDefinitionParams is a struct for passing parameters to the method [`ServiceDefinitionAPI::get_service_definition`]
-#[derive(Clone, Debug)]
-pub struct GetServiceDefinitionParams {
-    /// The name of the service.
-    pub service_name: String,
+pub struct GetServiceDefinitionOptionalParams {
     /// The schema version desired in the response.
     pub schema_version: Option<crate::datadogV2::model::ServiceDefinitionSchemaVersions>,
 }
 
-/// ListServiceDefinitionsParams is a struct for passing parameters to the method [`ServiceDefinitionAPI::list_service_definitions`]
+/// ListServiceDefinitionsOptionalParams is a struct for passing parameters to the method [`ServiceDefinitionAPI::list_service_definitions`]
 #[derive(Clone, Debug)]
-pub struct ListServiceDefinitionsParams {
+pub struct ListServiceDefinitionsOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
     /// Specific page number to return.
@@ -106,13 +90,13 @@ impl ServiceDefinitionAPI {
     /// Create or update service definition in the Datadog Service Catalog.
     pub async fn create_or_update_service_definitions(
         &self,
-        params: CreateOrUpdateServiceDefinitionsParams,
+        body: crate::datadogV2::model::ServiceDefinitionsCreateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::ServiceDefinitionCreateResponse>,
         Error<CreateOrUpdateServiceDefinitionsError>,
     > {
         match self
-            .create_or_update_service_definitions_with_http_info(params)
+            .create_or_update_service_definitions_with_http_info(body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -123,15 +107,12 @@ impl ServiceDefinitionAPI {
     /// Create or update service definition in the Datadog Service Catalog.
     pub async fn create_or_update_service_definitions_with_http_info(
         &self,
-        params: CreateOrUpdateServiceDefinitionsParams,
+        body: crate::datadogV2::model::ServiceDefinitionsCreateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::ServiceDefinitionCreateResponse>,
         Error<CreateOrUpdateServiceDefinitionsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -192,9 +173,12 @@ impl ServiceDefinitionAPI {
     /// Delete a single service definition in the Datadog Service Catalog.
     pub async fn delete_service_definition(
         &self,
-        params: DeleteServiceDefinitionParams,
+        service_name: String,
     ) -> Result<Option<()>, Error<DeleteServiceDefinitionError>> {
-        match self.delete_service_definition_with_http_info(params).await {
+        match self
+            .delete_service_definition_with_http_info(service_name)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -203,12 +187,9 @@ impl ServiceDefinitionAPI {
     /// Delete a single service definition in the Datadog Service Catalog.
     pub async fn delete_service_definition_with_http_info(
         &self,
-        params: DeleteServiceDefinitionParams,
+        service_name: String,
     ) -> Result<ResponseContent<()>, Error<DeleteServiceDefinitionError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let service_name = params.service_name;
 
         let local_client = &local_configuration.client;
 
@@ -261,12 +242,16 @@ impl ServiceDefinitionAPI {
     /// Get a single service definition from the Datadog Service Catalog.
     pub async fn get_service_definition(
         &self,
-        params: GetServiceDefinitionParams,
+        service_name: String,
+        params: GetServiceDefinitionOptionalParams,
     ) -> Result<
         Option<crate::datadogV2::model::ServiceDefinitionGetResponse>,
         Error<GetServiceDefinitionError>,
     > {
-        match self.get_service_definition_with_http_info(params).await {
+        match self
+            .get_service_definition_with_http_info(service_name, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -275,15 +260,15 @@ impl ServiceDefinitionAPI {
     /// Get a single service definition from the Datadog Service Catalog.
     pub async fn get_service_definition_with_http_info(
         &self,
-        params: GetServiceDefinitionParams,
+        service_name: String,
+        params: GetServiceDefinitionOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::ServiceDefinitionGetResponse>,
         Error<GetServiceDefinitionError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let service_name = params.service_name;
+        // unbox and build optional parameters
         let schema_version = params.schema_version;
 
         let local_client = &local_configuration.client;
@@ -296,9 +281,9 @@ impl ServiceDefinitionAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = schema_version {
+        if let Some(ref local_query_param) = schema_version {
             local_req_builder =
-                local_req_builder.query(&[("schema_version", &local_str.to_string())]);
+                local_req_builder.query(&[("schema_version", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -344,7 +329,7 @@ impl ServiceDefinitionAPI {
     /// Get a list of all service definitions from the Datadog Service Catalog.
     pub async fn list_service_definitions(
         &self,
-        params: ListServiceDefinitionsParams,
+        params: ListServiceDefinitionsOptionalParams,
     ) -> Result<
         Option<crate::datadogV2::model::ServiceDefinitionsListResponse>,
         Error<ListServiceDefinitionsError>,
@@ -358,14 +343,14 @@ impl ServiceDefinitionAPI {
     /// Get a list of all service definitions from the Datadog Service Catalog.
     pub async fn list_service_definitions_with_http_info(
         &self,
-        params: ListServiceDefinitionsParams,
+        params: ListServiceDefinitionsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::ServiceDefinitionsListResponse>,
         Error<ListServiceDefinitionsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
         let schema_version = params.schema_version;
@@ -379,16 +364,17 @@ impl ServiceDefinitionAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = page_size {
-            local_req_builder = local_req_builder.query(&[("page[size]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_number {
+        if let Some(ref local_query_param) = page_size {
             local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_str.to_string())]);
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = schema_version {
+        if let Some(ref local_query_param) = page_number {
             local_req_builder =
-                local_req_builder.query(&[("schema_version", &local_str.to_string())]);
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = schema_version {
+            local_req_builder =
+                local_req_builder.query(&[("schema_version", &local_query_param.to_string())]);
         };
 
         // build user agent

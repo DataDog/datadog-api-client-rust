@@ -48,4 +48,19 @@ impl AwsCURConfigPostRequestAttributes {
             report_prefix,
         }
     }
+
+    pub fn with_bucket_region(&mut self, value: String) -> &mut Self {
+        self.bucket_region = Some(value);
+        self
+    }
+
+    pub fn with_is_enabled(&mut self, value: bool) -> &mut Self {
+        self.is_enabled = Some(value);
+        self
+    }
+
+    pub fn with_months(&mut self, value: i32) -> &mut Self {
+        self.months = Some(value);
+        self
+    }
 }

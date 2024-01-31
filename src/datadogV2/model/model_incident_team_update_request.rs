@@ -10,13 +10,11 @@ use serde_with::skip_serializing_none;
 pub struct IncidentTeamUpdateRequest {
     /// Incident Team data for an update request.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::IncidentTeamUpdateData>,
+    pub data: crate::datadogV2::model::IncidentTeamUpdateData,
 }
 
 impl IncidentTeamUpdateRequest {
-    pub fn new(
-        data: Box<crate::datadogV2::model::IncidentTeamUpdateData>,
-    ) -> IncidentTeamUpdateRequest {
+    pub fn new(data: crate::datadogV2::model::IncidentTeamUpdateData) -> IncidentTeamUpdateRequest {
         IncidentTeamUpdateRequest { data }
     }
 }

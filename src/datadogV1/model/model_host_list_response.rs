@@ -27,6 +27,21 @@ impl HostListResponse {
             total_returned: None,
         }
     }
+
+    pub fn with_host_list(&mut self, value: Vec<crate::datadogV1::model::Host>) -> &mut Self {
+        self.host_list = Some(value);
+        self
+    }
+
+    pub fn with_total_matching(&mut self, value: i64) -> &mut Self {
+        self.total_matching = Some(value);
+        self
+    }
+
+    pub fn with_total_returned(&mut self, value: i64) -> &mut Self {
+        self.total_returned = Some(value);
+        self
+    }
 }
 impl Default for HostListResponse {
     fn default() -> Self {

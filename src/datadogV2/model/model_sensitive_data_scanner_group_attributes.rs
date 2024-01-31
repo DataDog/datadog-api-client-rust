@@ -13,7 +13,7 @@ pub struct SensitiveDataScannerGroupAttributes {
     pub description: Option<String>,
     /// Filter for the Scanning Group.
     #[serde(rename = "filter")]
-    pub filter: Option<Box<crate::datadogV2::model::SensitiveDataScannerFilter>>,
+    pub filter: Option<crate::datadogV2::model::SensitiveDataScannerFilter>,
     /// Whether or not the group is enabled.
     #[serde(rename = "is_enabled")]
     pub is_enabled: Option<bool>,
@@ -34,6 +34,37 @@ impl SensitiveDataScannerGroupAttributes {
             name: None,
             product_list: None,
         }
+    }
+
+    pub fn with_description(&mut self, value: String) -> &mut Self {
+        self.description = Some(value);
+        self
+    }
+
+    pub fn with_filter(
+        &mut self,
+        value: crate::datadogV2::model::SensitiveDataScannerFilter,
+    ) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
+
+    pub fn with_is_enabled(&mut self, value: bool) -> &mut Self {
+        self.is_enabled = Some(value);
+        self
+    }
+
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn with_product_list(
+        &mut self,
+        value: Vec<crate::datadogV2::model::SensitiveDataScannerProduct>,
+    ) -> &mut Self {
+        self.product_list = Some(value);
+        self
     }
 }
 impl Default for SensitiveDataScannerGroupAttributes {

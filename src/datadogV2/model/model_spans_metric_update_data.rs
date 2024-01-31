@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SpansMetricUpdateData {
     /// The span-based metric properties that will be updated.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::SpansMetricUpdateAttributes>,
+    pub attributes: crate::datadogV2::model::SpansMetricUpdateAttributes,
     /// The type of resource. The value should always be spans_metrics.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::SpansMetricType,
@@ -18,7 +18,7 @@ pub struct SpansMetricUpdateData {
 
 impl SpansMetricUpdateData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::SpansMetricUpdateAttributes>,
+        attributes: crate::datadogV2::model::SpansMetricUpdateAttributes,
         type_: crate::datadogV2::model::SpansMetricType,
     ) -> SpansMetricUpdateData {
         SpansMetricUpdateData { attributes, type_ }

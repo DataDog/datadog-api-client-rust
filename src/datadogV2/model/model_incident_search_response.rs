@@ -10,23 +10,39 @@ use serde_with::skip_serializing_none;
 pub struct IncidentSearchResponse {
     /// Data returned by an incident search.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::IncidentSearchResponseData>,
+    pub data: crate::datadogV2::model::IncidentSearchResponseData,
     /// Included related resources that the user requested.
     #[serde(rename = "included")]
     pub included: Option<Vec<crate::datadogV2::model::IncidentResponseIncludedItem>>,
     /// The metadata object containing pagination metadata.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV2::model::IncidentSearchResponseMeta>>,
+    pub meta: Option<crate::datadogV2::model::IncidentSearchResponseMeta>,
 }
 
 impl IncidentSearchResponse {
     pub fn new(
-        data: Box<crate::datadogV2::model::IncidentSearchResponseData>,
+        data: crate::datadogV2::model::IncidentSearchResponseData,
     ) -> IncidentSearchResponse {
         IncidentSearchResponse {
             data,
             included: None,
             meta: None,
         }
+    }
+
+    pub fn with_included(
+        &mut self,
+        value: Vec<crate::datadogV2::model::IncidentResponseIncludedItem>,
+    ) -> &mut Self {
+        self.included = Some(value);
+        self
+    }
+
+    pub fn with_meta(
+        &mut self,
+        value: crate::datadogV2::model::IncidentSearchResponseMeta,
+    ) -> &mut Self {
+        self.meta = Some(value);
+        self
     }
 }

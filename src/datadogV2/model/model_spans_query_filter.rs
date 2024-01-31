@@ -27,6 +27,21 @@ impl SpansQueryFilter {
             to: None,
         }
     }
+
+    pub fn with_from(&mut self, value: String) -> &mut Self {
+        self.from = Some(value);
+        self
+    }
+
+    pub fn with_query(&mut self, value: String) -> &mut Self {
+        self.query = Some(value);
+        self
+    }
+
+    pub fn with_to(&mut self, value: String) -> &mut Self {
+        self.to = Some(value);
+        self
+    }
 }
 impl Default for SpansQueryFilter {
     fn default() -> Self {

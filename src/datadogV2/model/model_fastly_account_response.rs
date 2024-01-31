@@ -10,12 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct FastlyAccountResponse {
     /// Data object of a Fastly account.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::FastlyAccountResponseData>>,
+    pub data: Option<crate::datadogV2::model::FastlyAccountResponseData>,
 }
 
 impl FastlyAccountResponse {
     pub fn new() -> FastlyAccountResponse {
         FastlyAccountResponse { data: None }
+    }
+
+    pub fn with_data(
+        &mut self,
+        value: crate::datadogV2::model::FastlyAccountResponseData,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
     }
 }
 impl Default for FastlyAccountResponse {

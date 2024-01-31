@@ -5,43 +5,13 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateSLOCorrectionParams is a struct for passing parameters to the method [`ServiceLevelObjectiveCorrectionsAPI::create_slo_correction`]
+/// ListSLOCorrectionOptionalParams is a struct for passing parameters to the method [`ServiceLevelObjectiveCorrectionsAPI::list_slo_correction`]
 #[derive(Clone, Debug)]
-pub struct CreateSLOCorrectionParams {
-    /// Create an SLO Correction
-    pub body: crate::datadogV1::model::SLOCorrectionCreateRequest,
-}
-
-/// DeleteSLOCorrectionParams is a struct for passing parameters to the method [`ServiceLevelObjectiveCorrectionsAPI::delete_slo_correction`]
-#[derive(Clone, Debug)]
-pub struct DeleteSLOCorrectionParams {
-    /// The ID of the SLO correction object.
-    pub slo_correction_id: String,
-}
-
-/// GetSLOCorrectionParams is a struct for passing parameters to the method [`ServiceLevelObjectiveCorrectionsAPI::get_slo_correction`]
-#[derive(Clone, Debug)]
-pub struct GetSLOCorrectionParams {
-    /// The ID of the SLO correction object.
-    pub slo_correction_id: String,
-}
-
-/// ListSLOCorrectionParams is a struct for passing parameters to the method [`ServiceLevelObjectiveCorrectionsAPI::list_slo_correction`]
-#[derive(Clone, Debug)]
-pub struct ListSLOCorrectionParams {
+pub struct ListSLOCorrectionOptionalParams {
     /// The specific offset to use as the beginning of the returned response.
     pub offset: Option<i64>,
     /// The number of SLO corrections to return in the response. Default is 25.
     pub limit: Option<i64>,
-}
-
-/// UpdateSLOCorrectionParams is a struct for passing parameters to the method [`ServiceLevelObjectiveCorrectionsAPI::update_slo_correction`]
-#[derive(Clone, Debug)]
-pub struct UpdateSLOCorrectionParams {
-    /// The ID of the SLO correction object.
-    pub slo_correction_id: String,
-    /// The edited SLO correction object.
-    pub body: crate::datadogV1::model::SLOCorrectionUpdateRequest,
 }
 
 /// CreateSLOCorrectionError is a struct for typed errors of method [`ServiceLevelObjectiveCorrectionsAPI::create_slo_correction`]
@@ -119,12 +89,12 @@ impl ServiceLevelObjectiveCorrectionsAPI {
     /// Create an SLO Correction.
     pub async fn create_slo_correction(
         &self,
-        params: CreateSLOCorrectionParams,
+        body: crate::datadogV1::model::SLOCorrectionCreateRequest,
     ) -> Result<
         Option<crate::datadogV1::model::SLOCorrectionResponse>,
         Error<CreateSLOCorrectionError>,
     > {
-        match self.create_slo_correction_with_http_info(params).await {
+        match self.create_slo_correction_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -133,15 +103,12 @@ impl ServiceLevelObjectiveCorrectionsAPI {
     /// Create an SLO Correction.
     pub async fn create_slo_correction_with_http_info(
         &self,
-        params: CreateSLOCorrectionParams,
+        body: crate::datadogV1::model::SLOCorrectionCreateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SLOCorrectionResponse>,
         Error<CreateSLOCorrectionError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -199,9 +166,12 @@ impl ServiceLevelObjectiveCorrectionsAPI {
     /// Permanently delete the specified SLO correction object.
     pub async fn delete_slo_correction(
         &self,
-        params: DeleteSLOCorrectionParams,
+        slo_correction_id: String,
     ) -> Result<Option<()>, Error<DeleteSLOCorrectionError>> {
-        match self.delete_slo_correction_with_http_info(params).await {
+        match self
+            .delete_slo_correction_with_http_info(slo_correction_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -210,12 +180,9 @@ impl ServiceLevelObjectiveCorrectionsAPI {
     /// Permanently delete the specified SLO correction object.
     pub async fn delete_slo_correction_with_http_info(
         &self,
-        params: DeleteSLOCorrectionParams,
+        slo_correction_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteSLOCorrectionError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let slo_correction_id = params.slo_correction_id;
 
         let local_client = &local_configuration.client;
 
@@ -268,10 +235,13 @@ impl ServiceLevelObjectiveCorrectionsAPI {
     /// Get an SLO correction.
     pub async fn get_slo_correction(
         &self,
-        params: GetSLOCorrectionParams,
+        slo_correction_id: String,
     ) -> Result<Option<crate::datadogV1::model::SLOCorrectionResponse>, Error<GetSLOCorrectionError>>
     {
-        match self.get_slo_correction_with_http_info(params).await {
+        match self
+            .get_slo_correction_with_http_info(slo_correction_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -280,15 +250,12 @@ impl ServiceLevelObjectiveCorrectionsAPI {
     /// Get an SLO correction.
     pub async fn get_slo_correction_with_http_info(
         &self,
-        params: GetSLOCorrectionParams,
+        slo_correction_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SLOCorrectionResponse>,
         Error<GetSLOCorrectionError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let slo_correction_id = params.slo_correction_id;
 
         let local_client = &local_configuration.client;
 
@@ -343,7 +310,7 @@ impl ServiceLevelObjectiveCorrectionsAPI {
     /// Get all Service Level Objective corrections.
     pub async fn list_slo_correction(
         &self,
-        params: ListSLOCorrectionParams,
+        params: ListSLOCorrectionOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::SLOCorrectionListResponse>,
         Error<ListSLOCorrectionError>,
@@ -357,14 +324,14 @@ impl ServiceLevelObjectiveCorrectionsAPI {
     /// Get all Service Level Objective corrections.
     pub async fn list_slo_correction_with_http_info(
         &self,
-        params: ListSLOCorrectionParams,
+        params: ListSLOCorrectionOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SLOCorrectionListResponse>,
         Error<ListSLOCorrectionError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let offset = params.offset;
         let limit = params.limit;
 
@@ -374,11 +341,13 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = offset {
-            local_req_builder = local_req_builder.query(&[("offset", &local_str.to_string())]);
+        if let Some(ref local_query_param) = offset {
+            local_req_builder =
+                local_req_builder.query(&[("offset", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = limit {
-            local_req_builder = local_req_builder.query(&[("limit", &local_str.to_string())]);
+        if let Some(ref local_query_param) = limit {
+            local_req_builder =
+                local_req_builder.query(&[("limit", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -424,12 +393,16 @@ impl ServiceLevelObjectiveCorrectionsAPI {
     /// Update the specified SLO correction object.
     pub async fn update_slo_correction(
         &self,
-        params: UpdateSLOCorrectionParams,
+        slo_correction_id: String,
+        body: crate::datadogV1::model::SLOCorrectionUpdateRequest,
     ) -> Result<
         Option<crate::datadogV1::model::SLOCorrectionResponse>,
         Error<UpdateSLOCorrectionError>,
     > {
-        match self.update_slo_correction_with_http_info(params).await {
+        match self
+            .update_slo_correction_with_http_info(slo_correction_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -438,16 +411,13 @@ impl ServiceLevelObjectiveCorrectionsAPI {
     /// Update the specified SLO correction object.
     pub async fn update_slo_correction_with_http_info(
         &self,
-        params: UpdateSLOCorrectionParams,
+        slo_correction_id: String,
+        body: crate::datadogV1::model::SLOCorrectionUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SLOCorrectionResponse>,
         Error<UpdateSLOCorrectionError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let slo_correction_id = params.slo_correction_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

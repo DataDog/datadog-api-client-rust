@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct CloudflareAccountUpdateRequest {
     /// Data object for updating a Cloudflare account.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::CloudflareAccountUpdateRequestData>,
+    pub data: crate::datadogV2::model::CloudflareAccountUpdateRequestData,
 }
 
 impl CloudflareAccountUpdateRequest {
     pub fn new(
-        data: Box<crate::datadogV2::model::CloudflareAccountUpdateRequestData>,
+        data: crate::datadogV2::model::CloudflareAccountUpdateRequestData,
     ) -> CloudflareAccountUpdateRequest {
         CloudflareAccountUpdateRequest { data }
     }

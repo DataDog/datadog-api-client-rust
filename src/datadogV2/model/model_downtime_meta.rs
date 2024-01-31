@@ -10,12 +10,17 @@ use serde_with::skip_serializing_none;
 pub struct DowntimeMeta {
     /// Object containing the total filtered count.
     #[serde(rename = "page")]
-    pub page: Option<Box<crate::datadogV2::model::DowntimeMetaPage>>,
+    pub page: Option<crate::datadogV2::model::DowntimeMetaPage>,
 }
 
 impl DowntimeMeta {
     pub fn new() -> DowntimeMeta {
         DowntimeMeta { page: None }
+    }
+
+    pub fn with_page(&mut self, value: crate::datadogV2::model::DowntimeMetaPage) -> &mut Self {
+        self.page = Some(value);
+        self
     }
 }
 impl Default for DowntimeMeta {

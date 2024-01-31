@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct DashboardList {
     /// Object describing the creator of the shared element.
     #[serde(rename = "author")]
-    pub author: Option<Box<crate::datadogV1::model::Creator>>,
+    pub author: Option<crate::datadogV1::model::Creator>,
     /// Date of creation of the dashboard list.
     #[serde(rename = "created")]
     pub created: Option<String>,
@@ -46,5 +46,40 @@ impl DashboardList {
             name,
             type_: None,
         }
+    }
+
+    pub fn with_author(&mut self, value: crate::datadogV1::model::Creator) -> &mut Self {
+        self.author = Some(value);
+        self
+    }
+
+    pub fn with_created(&mut self, value: String) -> &mut Self {
+        self.created = Some(value);
+        self
+    }
+
+    pub fn with_dashboard_count(&mut self, value: i64) -> &mut Self {
+        self.dashboard_count = Some(value);
+        self
+    }
+
+    pub fn with_id(&mut self, value: i64) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn with_is_favorite(&mut self, value: bool) -> &mut Self {
+        self.is_favorite = Some(value);
+        self
+    }
+
+    pub fn with_modified(&mut self, value: String) -> &mut Self {
+        self.modified = Some(value);
+        self
+    }
+
+    pub fn with_type_(&mut self, value: String) -> &mut Self {
+        self.type_ = Some(value);
+        self
     }
 }

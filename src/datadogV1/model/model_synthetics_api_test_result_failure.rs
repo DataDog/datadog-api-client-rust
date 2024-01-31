@@ -23,6 +23,19 @@ impl SyntheticsApiTestResultFailure {
             message: None,
         }
     }
+
+    pub fn with_code(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsApiTestFailureCode,
+    ) -> &mut Self {
+        self.code = Some(value);
+        self
+    }
+
+    pub fn with_message(&mut self, value: String) -> &mut Self {
+        self.message = Some(value);
+        self
+    }
 }
 impl Default for SyntheticsApiTestResultFailure {
     fn default() -> Self {

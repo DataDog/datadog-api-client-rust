@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SecurityMonitoringSignalAssigneeUpdateAttributes {
     /// Object representing a given user entity.
     #[serde(rename = "assignee")]
-    pub assignee: Box<crate::datadogV2::model::SecurityMonitoringTriageUser>,
+    pub assignee: crate::datadogV2::model::SecurityMonitoringTriageUser,
     /// Version of the updated signal. If server side version is higher, update will be rejected.
     #[serde(rename = "version")]
     pub version: Option<i64>,
@@ -18,11 +18,16 @@ pub struct SecurityMonitoringSignalAssigneeUpdateAttributes {
 
 impl SecurityMonitoringSignalAssigneeUpdateAttributes {
     pub fn new(
-        assignee: Box<crate::datadogV2::model::SecurityMonitoringTriageUser>,
+        assignee: crate::datadogV2::model::SecurityMonitoringTriageUser,
     ) -> SecurityMonitoringSignalAssigneeUpdateAttributes {
         SecurityMonitoringSignalAssigneeUpdateAttributes {
             assignee,
             version: None,
         }
+    }
+
+    pub fn with_version(&mut self, value: i64) -> &mut Self {
+        self.version = Some(value);
+        self
     }
 }

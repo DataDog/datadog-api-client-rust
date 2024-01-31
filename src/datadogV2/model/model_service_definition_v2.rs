@@ -25,7 +25,7 @@ pub struct ServiceDefinitionV2 {
     pub extensions: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// Third party integrations that Datadog supports.
     #[serde(rename = "integrations")]
-    pub integrations: Option<Box<crate::datadogV2::model::ServiceDefinitionV2Integrations>>,
+    pub integrations: Option<crate::datadogV2::model::ServiceDefinitionV2Integrations>,
     /// A list of links related to the services.
     #[serde(rename = "links")]
     pub links: Option<Vec<crate::datadogV2::model::ServiceDefinitionV2Link>>,
@@ -61,5 +61,68 @@ impl ServiceDefinitionV2 {
             tags: None,
             team: None,
         }
+    }
+
+    pub fn with_contacts(
+        &mut self,
+        value: Vec<crate::datadogV2::model::ServiceDefinitionV2Contact>,
+    ) -> &mut Self {
+        self.contacts = Some(value);
+        self
+    }
+
+    pub fn with_dd_team(&mut self, value: String) -> &mut Self {
+        self.dd_team = Some(value);
+        self
+    }
+
+    pub fn with_docs(
+        &mut self,
+        value: Vec<crate::datadogV2::model::ServiceDefinitionV2Doc>,
+    ) -> &mut Self {
+        self.docs = Some(value);
+        self
+    }
+
+    pub fn with_extensions(
+        &mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> &mut Self {
+        self.extensions = Some(value);
+        self
+    }
+
+    pub fn with_integrations(
+        &mut self,
+        value: crate::datadogV2::model::ServiceDefinitionV2Integrations,
+    ) -> &mut Self {
+        self.integrations = Some(value);
+        self
+    }
+
+    pub fn with_links(
+        &mut self,
+        value: Vec<crate::datadogV2::model::ServiceDefinitionV2Link>,
+    ) -> &mut Self {
+        self.links = Some(value);
+        self
+    }
+
+    pub fn with_repos(
+        &mut self,
+        value: Vec<crate::datadogV2::model::ServiceDefinitionV2Repo>,
+    ) -> &mut Self {
+        self.repos = Some(value);
+        self
+    }
+
+    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+
+    pub fn with_team(&mut self, value: String) -> &mut Self {
+        self.team = Some(value);
+        self
     }
 }

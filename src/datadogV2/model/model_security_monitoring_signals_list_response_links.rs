@@ -18,6 +18,11 @@ impl SecurityMonitoringSignalsListResponseLinks {
     pub fn new() -> SecurityMonitoringSignalsListResponseLinks {
         SecurityMonitoringSignalsListResponseLinks { next: None }
     }
+
+    pub fn with_next(&mut self, value: String) -> &mut Self {
+        self.next = Some(value);
+        self
+    }
 }
 impl Default for SecurityMonitoringSignalsListResponseLinks {
     fn default() -> Self {

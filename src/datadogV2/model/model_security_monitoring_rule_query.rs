@@ -8,9 +8,7 @@ use serde::{Deserialize, Serialize};
 #[serde(untagged)]
 pub enum SecurityMonitoringRuleQuery {
     SecurityMonitoringStandardRuleQuery(
-        Box<crate::datadogV2::model::SecurityMonitoringStandardRuleQuery>,
+        crate::datadogV2::model::SecurityMonitoringStandardRuleQuery,
     ),
-    SecurityMonitoringSignalRuleQuery(
-        Box<crate::datadogV2::model::SecurityMonitoringSignalRuleQuery>,
-    ),
+    SecurityMonitoringSignalRuleQuery(crate::datadogV2::model::SecurityMonitoringSignalRuleQuery),
 }

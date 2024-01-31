@@ -10,12 +10,17 @@ use serde_with::skip_serializing_none;
 pub struct SLOCorrectionResponse {
     /// The response object of a list of SLO corrections.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV1::model::SLOCorrection>>,
+    pub data: Option<crate::datadogV1::model::SLOCorrection>,
 }
 
 impl SLOCorrectionResponse {
     pub fn new() -> SLOCorrectionResponse {
         SLOCorrectionResponse { data: None }
+    }
+
+    pub fn with_data(&mut self, value: crate::datadogV1::model::SLOCorrection) -> &mut Self {
+        self.data = Some(value);
+        self
     }
 }
 impl Default for SLOCorrectionResponse {

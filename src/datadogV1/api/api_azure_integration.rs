@@ -5,34 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateAzureIntegrationParams is a struct for passing parameters to the method [`AzureIntegrationAPI::create_azure_integration`]
-#[derive(Clone, Debug)]
-pub struct CreateAzureIntegrationParams {
-    /// Create a Datadog-Azure integration for your Datadog account request body.
-    pub body: crate::datadogV1::model::AzureAccount,
-}
-
-/// DeleteAzureIntegrationParams is a struct for passing parameters to the method [`AzureIntegrationAPI::delete_azure_integration`]
-#[derive(Clone, Debug)]
-pub struct DeleteAzureIntegrationParams {
-    /// Delete a given Datadog-Azure integration request body.
-    pub body: crate::datadogV1::model::AzureAccount,
-}
-
-/// UpdateAzureHostFiltersParams is a struct for passing parameters to the method [`AzureIntegrationAPI::update_azure_host_filters`]
-#[derive(Clone, Debug)]
-pub struct UpdateAzureHostFiltersParams {
-    /// Update a Datadog-Azure integration's host filters request body.
-    pub body: crate::datadogV1::model::AzureAccount,
-}
-
-/// UpdateAzureIntegrationParams is a struct for passing parameters to the method [`AzureIntegrationAPI::update_azure_integration`]
-#[derive(Clone, Debug)]
-pub struct UpdateAzureIntegrationParams {
-    /// Update a Datadog-Azure integration request body.
-    pub body: crate::datadogV1::model::AzureAccount,
-}
-
 /// CreateAzureIntegrationError is a struct for typed errors of method [`AzureIntegrationAPI::create_azure_integration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -113,12 +85,12 @@ impl AzureIntegrationAPI {
     /// current configuration with the new one sent to your Datadog organization.
     pub async fn create_azure_integration(
         &self,
-        params: CreateAzureIntegrationParams,
+        body: crate::datadogV1::model::AzureAccount,
     ) -> Result<
         Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<CreateAzureIntegrationError>,
     > {
-        match self.create_azure_integration_with_http_info(params).await {
+        match self.create_azure_integration_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -133,15 +105,12 @@ impl AzureIntegrationAPI {
     /// current configuration with the new one sent to your Datadog organization.
     pub async fn create_azure_integration_with_http_info(
         &self,
-        params: CreateAzureIntegrationParams,
+        body: crate::datadogV1::model::AzureAccount,
     ) -> Result<
         ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<CreateAzureIntegrationError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -199,12 +168,12 @@ impl AzureIntegrationAPI {
     /// Delete a given Datadog-Azure integration from your Datadog account.
     pub async fn delete_azure_integration(
         &self,
-        params: DeleteAzureIntegrationParams,
+        body: crate::datadogV1::model::AzureAccount,
     ) -> Result<
         Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<DeleteAzureIntegrationError>,
     > {
-        match self.delete_azure_integration_with_http_info(params).await {
+        match self.delete_azure_integration_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -213,15 +182,12 @@ impl AzureIntegrationAPI {
     /// Delete a given Datadog-Azure integration from your Datadog account.
     pub async fn delete_azure_integration_with_http_info(
         &self,
-        params: DeleteAzureIntegrationParams,
+        body: crate::datadogV1::model::AzureAccount,
     ) -> Result<
         ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<DeleteAzureIntegrationError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -296,8 +262,6 @@ impl AzureIntegrationAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/integration/azure", local_configuration.base_path);
@@ -347,12 +311,12 @@ impl AzureIntegrationAPI {
     /// Update the defined list of host filters for a given Datadog-Azure integration.
     pub async fn update_azure_host_filters(
         &self,
-        params: UpdateAzureHostFiltersParams,
+        body: crate::datadogV1::model::AzureAccount,
     ) -> Result<
         Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<UpdateAzureHostFiltersError>,
     > {
-        match self.update_azure_host_filters_with_http_info(params).await {
+        match self.update_azure_host_filters_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -361,15 +325,12 @@ impl AzureIntegrationAPI {
     /// Update the defined list of host filters for a given Datadog-Azure integration.
     pub async fn update_azure_host_filters_with_http_info(
         &self,
-        params: UpdateAzureHostFiltersParams,
+        body: crate::datadogV1::model::AzureAccount,
     ) -> Result<
         ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<UpdateAzureHostFiltersError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -432,12 +393,12 @@ impl AzureIntegrationAPI {
     /// use `new_tenant_name` and `new_client_id`. To leave a field unchanged, do not supply that field in the payload.
     pub async fn update_azure_integration(
         &self,
-        params: UpdateAzureIntegrationParams,
+        body: crate::datadogV1::model::AzureAccount,
     ) -> Result<
         Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<UpdateAzureIntegrationError>,
     > {
-        match self.update_azure_integration_with_http_info(params).await {
+        match self.update_azure_integration_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -448,15 +409,12 @@ impl AzureIntegrationAPI {
     /// use `new_tenant_name` and `new_client_id`. To leave a field unchanged, do not supply that field in the payload.
     pub async fn update_azure_integration_with_http_info(
         &self,
-        params: UpdateAzureIntegrationParams,
+        body: crate::datadogV1::model::AzureAccount,
     ) -> Result<
         ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<UpdateAzureIntegrationError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

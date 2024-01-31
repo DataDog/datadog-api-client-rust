@@ -27,6 +27,21 @@ impl HostMetaInstallMethod {
             tool_version: None,
         }
     }
+
+    pub fn with_installer_version(&mut self, value: String) -> &mut Self {
+        self.installer_version = Some(value);
+        self
+    }
+
+    pub fn with_tool(&mut self, value: String) -> &mut Self {
+        self.tool = Some(value);
+        self
+    }
+
+    pub fn with_tool_version(&mut self, value: String) -> &mut Self {
+        self.tool_version = Some(value);
+        self
+    }
 }
 impl Default for HostMetaInstallMethod {
     fn default() -> Self {

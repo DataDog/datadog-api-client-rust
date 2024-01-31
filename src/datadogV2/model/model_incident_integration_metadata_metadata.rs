@@ -7,6 +7,6 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum IncidentIntegrationMetadataMetadata {
-    SlackIntegrationMetadata(Box<crate::datadogV2::model::SlackIntegrationMetadata>),
-    JiraIntegrationMetadata(Box<crate::datadogV2::model::JiraIntegrationMetadata>),
+    SlackIntegrationMetadata(crate::datadogV2::model::SlackIntegrationMetadata),
+    JiraIntegrationMetadata(crate::datadogV2::model::JiraIntegrationMetadata),
 }

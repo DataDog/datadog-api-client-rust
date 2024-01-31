@@ -13,10 +13,10 @@ pub struct UserTeamsResponse {
     pub data: Option<Vec<crate::datadogV2::model::UserTeam>>,
     /// Teams response links.
     #[serde(rename = "links")]
-    pub links: Option<Box<crate::datadogV2::model::TeamsResponseLinks>>,
+    pub links: Option<crate::datadogV2::model::TeamsResponseLinks>,
     /// Teams response metadata.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV2::model::TeamsResponseMeta>>,
+    pub meta: Option<crate::datadogV2::model::TeamsResponseMeta>,
 }
 
 impl UserTeamsResponse {
@@ -26,6 +26,21 @@ impl UserTeamsResponse {
             links: None,
             meta: None,
         }
+    }
+
+    pub fn with_data(&mut self, value: Vec<crate::datadogV2::model::UserTeam>) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn with_links(&mut self, value: crate::datadogV2::model::TeamsResponseLinks) -> &mut Self {
+        self.links = Some(value);
+        self
+    }
+
+    pub fn with_meta(&mut self, value: crate::datadogV2::model::TeamsResponseMeta) -> &mut Self {
+        self.meta = Some(value);
+        self
     }
 }
 impl Default for UserTeamsResponse {

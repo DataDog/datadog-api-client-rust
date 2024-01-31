@@ -13,11 +13,11 @@ pub struct CIAppPipelineEventPipeline {
     pub end: String,
     /// Contains information of the CI error.
     #[serde(rename = "error", default, with = "::serde_with::rust::double_option")]
-    pub error: Option<Option<Box<crate::datadogV2::model::CIAppCIError>>>,
+    pub error: Option<Option<crate::datadogV2::model::CIAppCIError>>,
     /// If pipelines are triggered due to actions to a Git repository, then all payloads must contain this.
     /// Note that either `tag` or `branch` has to be provided, but not both.
     #[serde(rename = "git", default, with = "::serde_with::rust::double_option")]
-    pub git: Option<Option<Box<crate::datadogV2::model::CIAppGitInfo>>>,
+    pub git: Option<Option<crate::datadogV2::model::CIAppGitInfo>>,
     /// Whether or not the pipeline was triggered manually by the user.
     #[serde(
         rename = "is_manual",
@@ -47,7 +47,7 @@ pub struct CIAppPipelineEventPipeline {
     pub name: String,
     /// Contains information of the host running the pipeline, stage, job, or step.
     #[serde(rename = "node", default, with = "::serde_with::rust::double_option")]
-    pub node: Option<Option<Box<crate::datadogV2::model::CIAppHostInfo>>>,
+    pub node: Option<Option<crate::datadogV2::model::CIAppHostInfo>>,
     /// A map of key-value parameters or environment variables that were defined for the pipeline.
     #[serde(
         rename = "parameters",
@@ -61,8 +61,7 @@ pub struct CIAppPipelineEventPipeline {
         default,
         with = "::serde_with::rust::double_option"
     )]
-    pub parent_pipeline:
-        Option<Option<Box<crate::datadogV2::model::CIAppPipelineEventParentPipeline>>>,
+    pub parent_pipeline: Option<Option<crate::datadogV2::model::CIAppPipelineEventParentPipeline>>,
     /// Whether or not the pipeline was a partial retry of a previous attempt. A partial retry is one
     /// which only runs a subset of the original jobs.
     #[serde(rename = "partial_retry")]
@@ -78,7 +77,7 @@ pub struct CIAppPipelineEventPipeline {
         with = "::serde_with::rust::double_option"
     )]
     pub previous_attempt:
-        Option<Option<Box<crate::datadogV2::model::CIAppPipelineEventPreviousPipeline>>>,
+        Option<Option<crate::datadogV2::model::CIAppPipelineEventPreviousPipeline>>,
     /// The queue time in milliseconds, if applicable.
     #[serde(
         rename = "queue_time",
@@ -137,5 +136,80 @@ impl CIAppPipelineEventPipeline {
             unique_id,
             url,
         }
+    }
+
+    pub fn with_error(
+        &mut self,
+        value: Option<crate::datadogV2::model::CIAppCIError>,
+    ) -> &mut Self {
+        self.error = Some(value);
+        self
+    }
+
+    pub fn with_git(&mut self, value: Option<crate::datadogV2::model::CIAppGitInfo>) -> &mut Self {
+        self.git = Some(value);
+        self
+    }
+
+    pub fn with_is_manual(&mut self, value: Option<bool>) -> &mut Self {
+        self.is_manual = Some(value);
+        self
+    }
+
+    pub fn with_is_resumed(&mut self, value: Option<bool>) -> &mut Self {
+        self.is_resumed = Some(value);
+        self
+    }
+
+    pub fn with_metrics(&mut self, value: Option<Vec<String>>) -> &mut Self {
+        self.metrics = Some(value);
+        self
+    }
+
+    pub fn with_node(
+        &mut self,
+        value: Option<crate::datadogV2::model::CIAppHostInfo>,
+    ) -> &mut Self {
+        self.node = Some(value);
+        self
+    }
+
+    pub fn with_parameters(
+        &mut self,
+        value: Option<std::collections::BTreeMap<String, String>>,
+    ) -> &mut Self {
+        self.parameters = Some(value);
+        self
+    }
+
+    pub fn with_parent_pipeline(
+        &mut self,
+        value: Option<crate::datadogV2::model::CIAppPipelineEventParentPipeline>,
+    ) -> &mut Self {
+        self.parent_pipeline = Some(value);
+        self
+    }
+
+    pub fn with_pipeline_id(&mut self, value: String) -> &mut Self {
+        self.pipeline_id = Some(value);
+        self
+    }
+
+    pub fn with_previous_attempt(
+        &mut self,
+        value: Option<crate::datadogV2::model::CIAppPipelineEventPreviousPipeline>,
+    ) -> &mut Self {
+        self.previous_attempt = Some(value);
+        self
+    }
+
+    pub fn with_queue_time(&mut self, value: Option<i64>) -> &mut Self {
+        self.queue_time = Some(value);
+        self
+    }
+
+    pub fn with_tags(&mut self, value: Option<Vec<String>>) -> &mut Self {
+        self.tags = Some(value);
+        self
     }
 }

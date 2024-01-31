@@ -10,10 +10,10 @@ use serde_with::skip_serializing_none;
 pub struct UsageSpecifiedCustomReportsResponse {
     /// Response containing date and type for specified custom reports.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV1::model::UsageSpecifiedCustomReportsData>>,
+    pub data: Option<crate::datadogV1::model::UsageSpecifiedCustomReportsData>,
     /// The object containing document metadata.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV1::model::UsageSpecifiedCustomReportsMeta>>,
+    pub meta: Option<crate::datadogV1::model::UsageSpecifiedCustomReportsMeta>,
 }
 
 impl UsageSpecifiedCustomReportsResponse {
@@ -22,6 +22,22 @@ impl UsageSpecifiedCustomReportsResponse {
             data: None,
             meta: None,
         }
+    }
+
+    pub fn with_data(
+        &mut self,
+        value: crate::datadogV1::model::UsageSpecifiedCustomReportsData,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn with_meta(
+        &mut self,
+        value: crate::datadogV1::model::UsageSpecifiedCustomReportsMeta,
+    ) -> &mut Self {
+        self.meta = Some(value);
+        self
     }
 }
 impl Default for UsageSpecifiedCustomReportsResponse {

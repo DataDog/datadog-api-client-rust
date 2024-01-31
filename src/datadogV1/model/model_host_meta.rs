@@ -25,7 +25,7 @@ pub struct HostMeta {
     pub gohai: Option<String>,
     /// Agent install method.
     #[serde(rename = "install_method")]
-    pub install_method: Option<Box<crate::datadogV1::model::HostMetaInstallMethod>>,
+    pub install_method: Option<crate::datadogV1::model::HostMetaInstallMethod>,
     /// An array of Mac versions.
     #[serde(rename = "macV")]
     pub mac_v: Option<Vec<serde_json::Value>>,
@@ -74,6 +74,84 @@ impl HostMeta {
             socket_hostname: None,
             win_v: None,
         }
+    }
+
+    pub fn with_agent_checks(&mut self, value: Vec<Vec<serde_json::Value>>) -> &mut Self {
+        self.agent_checks = Some(value);
+        self
+    }
+
+    pub fn with_agent_version(&mut self, value: String) -> &mut Self {
+        self.agent_version = Some(value);
+        self
+    }
+
+    pub fn with_cpu_cores(&mut self, value: i64) -> &mut Self {
+        self.cpu_cores = Some(value);
+        self
+    }
+
+    pub fn with_fbsd_v(&mut self, value: Vec<serde_json::Value>) -> &mut Self {
+        self.fbsd_v = Some(value);
+        self
+    }
+
+    pub fn with_gohai(&mut self, value: String) -> &mut Self {
+        self.gohai = Some(value);
+        self
+    }
+
+    pub fn with_install_method(
+        &mut self,
+        value: crate::datadogV1::model::HostMetaInstallMethod,
+    ) -> &mut Self {
+        self.install_method = Some(value);
+        self
+    }
+
+    pub fn with_mac_v(&mut self, value: Vec<serde_json::Value>) -> &mut Self {
+        self.mac_v = Some(value);
+        self
+    }
+
+    pub fn with_machine(&mut self, value: String) -> &mut Self {
+        self.machine = Some(value);
+        self
+    }
+
+    pub fn with_nix_v(&mut self, value: Vec<serde_json::Value>) -> &mut Self {
+        self.nix_v = Some(value);
+        self
+    }
+
+    pub fn with_platform(&mut self, value: String) -> &mut Self {
+        self.platform = Some(value);
+        self
+    }
+
+    pub fn with_processor(&mut self, value: String) -> &mut Self {
+        self.processor = Some(value);
+        self
+    }
+
+    pub fn with_python_v(&mut self, value: String) -> &mut Self {
+        self.python_v = Some(value);
+        self
+    }
+
+    pub fn with_socket_fqdn(&mut self, value: String) -> &mut Self {
+        self.socket_fqdn = Some(value);
+        self
+    }
+
+    pub fn with_socket_hostname(&mut self, value: String) -> &mut Self {
+        self.socket_hostname = Some(value);
+        self
+    }
+
+    pub fn with_win_v(&mut self, value: Vec<serde_json::Value>) -> &mut Self {
+        self.win_v = Some(value);
+        self
     }
 }
 impl Default for HostMeta {

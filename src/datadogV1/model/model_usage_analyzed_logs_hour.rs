@@ -35,6 +35,26 @@ impl UsageAnalyzedLogsHour {
             public_id: None,
         }
     }
+
+    pub fn with_analyzed_logs(&mut self, value: Option<i64>) -> &mut Self {
+        self.analyzed_logs = Some(value);
+        self
+    }
+
+    pub fn with_hour(&mut self, value: String) -> &mut Self {
+        self.hour = Some(value);
+        self
+    }
+
+    pub fn with_org_name(&mut self, value: String) -> &mut Self {
+        self.org_name = Some(value);
+        self
+    }
+
+    pub fn with_public_id(&mut self, value: String) -> &mut Self {
+        self.public_id = Some(value);
+        self
+    }
 }
 impl Default for UsageAnalyzedLogsHour {
     fn default() -> Self {

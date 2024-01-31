@@ -10,11 +10,11 @@ use serde_with::skip_serializing_none;
 pub struct AuthNMappingRelationships {
     /// Relationship to role.
     #[serde(rename = "role")]
-    pub role: Option<Box<crate::datadogV2::model::RelationshipToRole>>,
+    pub role: Option<crate::datadogV2::model::RelationshipToRole>,
     /// AuthN Mapping relationship to SAML Assertion Attribute.
     #[serde(rename = "saml_assertion_attribute")]
     pub saml_assertion_attribute:
-        Option<Box<crate::datadogV2::model::RelationshipToSAMLAssertionAttribute>>,
+        Option<crate::datadogV2::model::RelationshipToSAMLAssertionAttribute>,
 }
 
 impl AuthNMappingRelationships {
@@ -23,6 +23,19 @@ impl AuthNMappingRelationships {
             role: None,
             saml_assertion_attribute: None,
         }
+    }
+
+    pub fn with_role(&mut self, value: crate::datadogV2::model::RelationshipToRole) -> &mut Self {
+        self.role = Some(value);
+        self
+    }
+
+    pub fn with_saml_assertion_attribute(
+        &mut self,
+        value: crate::datadogV2::model::RelationshipToSAMLAssertionAttribute,
+    ) -> &mut Self {
+        self.saml_assertion_attribute = Some(value);
+        self
     }
 }
 impl Default for AuthNMappingRelationships {

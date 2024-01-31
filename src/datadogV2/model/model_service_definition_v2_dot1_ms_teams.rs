@@ -30,4 +30,9 @@ impl ServiceDefinitionV2Dot1MSTeams {
             type_,
         }
     }
+
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
 }

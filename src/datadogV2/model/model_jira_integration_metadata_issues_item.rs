@@ -35,4 +35,19 @@ impl JiraIntegrationMetadataIssuesItem {
             redirect_url: None,
         }
     }
+
+    pub fn with_issue_key(&mut self, value: String) -> &mut Self {
+        self.issue_key = Some(value);
+        self
+    }
+
+    pub fn with_issuetype_id(&mut self, value: String) -> &mut Self {
+        self.issuetype_id = Some(value);
+        self
+    }
+
+    pub fn with_redirect_url(&mut self, value: String) -> &mut Self {
+        self.redirect_url = Some(value);
+        self
+    }
 }

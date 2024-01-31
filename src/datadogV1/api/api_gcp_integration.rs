@@ -5,27 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateGCPIntegrationParams is a struct for passing parameters to the method [`GCPIntegrationAPI::create_gcp_integration`]
-#[derive(Clone, Debug)]
-pub struct CreateGCPIntegrationParams {
-    /// Create a Datadog-GCP integration.
-    pub body: crate::datadogV1::model::GCPAccount,
-}
-
-/// DeleteGCPIntegrationParams is a struct for passing parameters to the method [`GCPIntegrationAPI::delete_gcp_integration`]
-#[derive(Clone, Debug)]
-pub struct DeleteGCPIntegrationParams {
-    /// Delete a given Datadog-GCP integration.
-    pub body: crate::datadogV1::model::GCPAccount,
-}
-
-/// UpdateGCPIntegrationParams is a struct for passing parameters to the method [`GCPIntegrationAPI::update_gcp_integration`]
-#[derive(Clone, Debug)]
-pub struct UpdateGCPIntegrationParams {
-    /// Update a Datadog-GCP integration.
-    pub body: crate::datadogV1::model::GCPAccount,
-}
-
 /// CreateGCPIntegrationError is a struct for typed errors of method [`GCPIntegrationAPI::create_gcp_integration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -90,12 +69,12 @@ impl GCPIntegrationAPI {
     /// This endpoint is deprecated – use the V2 endpoints instead. Create a Datadog-GCP integration.
     pub async fn create_gcp_integration(
         &self,
-        params: CreateGCPIntegrationParams,
+        body: crate::datadogV1::model::GCPAccount,
     ) -> Result<
         Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<CreateGCPIntegrationError>,
     > {
-        match self.create_gcp_integration_with_http_info(params).await {
+        match self.create_gcp_integration_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -104,15 +83,12 @@ impl GCPIntegrationAPI {
     /// This endpoint is deprecated – use the V2 endpoints instead. Create a Datadog-GCP integration.
     pub async fn create_gcp_integration_with_http_info(
         &self,
-        params: CreateGCPIntegrationParams,
+        body: crate::datadogV1::model::GCPAccount,
     ) -> Result<
         ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<CreateGCPIntegrationError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -170,12 +146,12 @@ impl GCPIntegrationAPI {
     /// This endpoint is deprecated – use the V2 endpoints instead. Delete a given Datadog-GCP integration.
     pub async fn delete_gcp_integration(
         &self,
-        params: DeleteGCPIntegrationParams,
+        body: crate::datadogV1::model::GCPAccount,
     ) -> Result<
         Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<DeleteGCPIntegrationError>,
     > {
-        match self.delete_gcp_integration_with_http_info(params).await {
+        match self.delete_gcp_integration_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -184,15 +160,12 @@ impl GCPIntegrationAPI {
     /// This endpoint is deprecated – use the V2 endpoints instead. Delete a given Datadog-GCP integration.
     pub async fn delete_gcp_integration_with_http_info(
         &self,
-        params: DeleteGCPIntegrationParams,
+        body: crate::datadogV1::model::GCPAccount,
     ) -> Result<
         ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<DeleteGCPIntegrationError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -267,8 +240,6 @@ impl GCPIntegrationAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/integration/gcp", local_configuration.base_path);
@@ -321,12 +292,12 @@ impl GCPIntegrationAPI {
     /// The unspecified fields will keep their original values.
     pub async fn update_gcp_integration(
         &self,
-        params: UpdateGCPIntegrationParams,
+        body: crate::datadogV1::model::GCPAccount,
     ) -> Result<
         Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<UpdateGCPIntegrationError>,
     > {
-        match self.update_gcp_integration_with_http_info(params).await {
+        match self.update_gcp_integration_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -338,15 +309,12 @@ impl GCPIntegrationAPI {
     /// The unspecified fields will keep their original values.
     pub async fn update_gcp_integration_with_http_info(
         &self,
-        params: UpdateGCPIntegrationParams,
+        body: crate::datadogV1::model::GCPAccount,
     ) -> Result<
         ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<UpdateGCPIntegrationError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

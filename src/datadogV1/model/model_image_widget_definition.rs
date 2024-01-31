@@ -56,4 +56,45 @@ impl ImageWidgetDefinition {
             vertical_align: None,
         }
     }
+
+    pub fn with_has_background(&mut self, value: bool) -> &mut Self {
+        self.has_background = Some(value);
+        self
+    }
+
+    pub fn with_has_border(&mut self, value: bool) -> &mut Self {
+        self.has_border = Some(value);
+        self
+    }
+
+    pub fn with_horizontal_align(
+        &mut self,
+        value: crate::datadogV1::model::WidgetHorizontalAlign,
+    ) -> &mut Self {
+        self.horizontal_align = Some(value);
+        self
+    }
+
+    pub fn with_margin(&mut self, value: crate::datadogV1::model::WidgetMargin) -> &mut Self {
+        self.margin = Some(value);
+        self
+    }
+
+    pub fn with_sizing(&mut self, value: crate::datadogV1::model::WidgetImageSizing) -> &mut Self {
+        self.sizing = Some(value);
+        self
+    }
+
+    pub fn with_url_dark_theme(&mut self, value: String) -> &mut Self {
+        self.url_dark_theme = Some(value);
+        self
+    }
+
+    pub fn with_vertical_align(
+        &mut self,
+        value: crate::datadogV1::model::WidgetVerticalAlign,
+    ) -> &mut Self {
+        self.vertical_align = Some(value);
+        self
+    }
 }

@@ -26,6 +26,16 @@ impl SLOBulkDeleteResponseData {
             updated: None,
         }
     }
+
+    pub fn with_deleted(&mut self, value: Vec<String>) -> &mut Self {
+        self.deleted = Some(value);
+        self
+    }
+
+    pub fn with_updated(&mut self, value: Vec<String>) -> &mut Self {
+        self.updated = Some(value);
+        self
+    }
 }
 impl Default for SLOBulkDeleteResponseData {
     fn default() -> Self {

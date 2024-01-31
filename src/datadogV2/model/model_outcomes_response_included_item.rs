@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct OutcomesResponseIncludedItem {
     /// Details of a rule.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::OutcomesResponseIncludedRuleAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::OutcomesResponseIncludedRuleAttributes>,
     /// The unique ID for a scorecard rule.
     #[serde(rename = "id")]
     pub id: Option<String>,
@@ -26,6 +26,24 @@ impl OutcomesResponseIncludedItem {
             id: None,
             type_: None,
         }
+    }
+
+    pub fn with_attributes(
+        &mut self,
+        value: crate::datadogV2::model::OutcomesResponseIncludedRuleAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn with_id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn with_type_(&mut self, value: crate::datadogV2::model::RuleType) -> &mut Self {
+        self.type_ = Some(value);
+        self
     }
 }
 impl Default for OutcomesResponseIncludedItem {

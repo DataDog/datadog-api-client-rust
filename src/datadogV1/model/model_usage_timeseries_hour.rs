@@ -39,6 +39,36 @@ impl UsageTimeseriesHour {
             public_id: None,
         }
     }
+
+    pub fn with_hour(&mut self, value: String) -> &mut Self {
+        self.hour = Some(value);
+        self
+    }
+
+    pub fn with_num_custom_input_timeseries(&mut self, value: i64) -> &mut Self {
+        self.num_custom_input_timeseries = Some(value);
+        self
+    }
+
+    pub fn with_num_custom_output_timeseries(&mut self, value: i64) -> &mut Self {
+        self.num_custom_output_timeseries = Some(value);
+        self
+    }
+
+    pub fn with_num_custom_timeseries(&mut self, value: i64) -> &mut Self {
+        self.num_custom_timeseries = Some(value);
+        self
+    }
+
+    pub fn with_org_name(&mut self, value: String) -> &mut Self {
+        self.org_name = Some(value);
+        self
+    }
+
+    pub fn with_public_id(&mut self, value: String) -> &mut Self {
+        self.public_id = Some(value);
+        self
+    }
 }
 impl Default for UsageTimeseriesHour {
     fn default() -> Self {

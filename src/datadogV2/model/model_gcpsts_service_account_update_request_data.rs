@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct GCPSTSServiceAccountUpdateRequestData {
     /// Attributes associated with your service account.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::GCPSTSServiceAccountAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::GCPSTSServiceAccountAttributes>,
     /// Your service account's unique ID.
     #[serde(rename = "id")]
     pub id: Option<String>,
@@ -26,6 +26,27 @@ impl GCPSTSServiceAccountUpdateRequestData {
             id: None,
             type_: None,
         }
+    }
+
+    pub fn with_attributes(
+        &mut self,
+        value: crate::datadogV2::model::GCPSTSServiceAccountAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn with_id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn with_type_(
+        &mut self,
+        value: crate::datadogV2::model::GCPServiceAccountType,
+    ) -> &mut Self {
+        self.type_ = Some(value);
+        self
     }
 }
 impl Default for GCPSTSServiceAccountUpdateRequestData {

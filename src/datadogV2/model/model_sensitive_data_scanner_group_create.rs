@@ -10,10 +10,10 @@ use serde_with::skip_serializing_none;
 pub struct SensitiveDataScannerGroupCreate {
     /// Attributes of the Sensitive Data Scanner group.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::SensitiveDataScannerGroupAttributes>,
+    pub attributes: crate::datadogV2::model::SensitiveDataScannerGroupAttributes,
     /// Relationships of the group.
     #[serde(rename = "relationships")]
-    pub relationships: Option<Box<crate::datadogV2::model::SensitiveDataScannerGroupRelationships>>,
+    pub relationships: Option<crate::datadogV2::model::SensitiveDataScannerGroupRelationships>,
     /// Sensitive Data Scanner group type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::SensitiveDataScannerGroupType,
@@ -21,7 +21,7 @@ pub struct SensitiveDataScannerGroupCreate {
 
 impl SensitiveDataScannerGroupCreate {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::SensitiveDataScannerGroupAttributes>,
+        attributes: crate::datadogV2::model::SensitiveDataScannerGroupAttributes,
         type_: crate::datadogV2::model::SensitiveDataScannerGroupType,
     ) -> SensitiveDataScannerGroupCreate {
         SensitiveDataScannerGroupCreate {
@@ -29,5 +29,13 @@ impl SensitiveDataScannerGroupCreate {
             relationships: None,
             type_,
         }
+    }
+
+    pub fn with_relationships(
+        &mut self,
+        value: crate::datadogV2::model::SensitiveDataScannerGroupRelationships,
+    ) -> &mut Self {
+        self.relationships = Some(value);
+        self
     }
 }

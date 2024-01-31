@@ -10,12 +10,17 @@ use serde_with::skip_serializing_none;
 pub struct MetricMetadata {
     /// Metric origin information.
     #[serde(rename = "origin")]
-    pub origin: Option<Box<crate::datadogV2::model::MetricOrigin>>,
+    pub origin: Option<crate::datadogV2::model::MetricOrigin>,
 }
 
 impl MetricMetadata {
     pub fn new() -> MetricMetadata {
         MetricMetadata { origin: None }
+    }
+
+    pub fn with_origin(&mut self, value: crate::datadogV2::model::MetricOrigin) -> &mut Self {
+        self.origin = Some(value);
+        self
     }
 }
 impl Default for MetricMetadata {

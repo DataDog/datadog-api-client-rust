@@ -17,6 +17,14 @@ impl AWSRelatedAccountsResponse {
     pub fn new() -> AWSRelatedAccountsResponse {
         AWSRelatedAccountsResponse { data: None }
     }
+
+    pub fn with_data(
+        &mut self,
+        value: Vec<crate::datadogV2::model::AWSRelatedAccount>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
 impl Default for AWSRelatedAccountsResponse {
     fn default() -> Self {

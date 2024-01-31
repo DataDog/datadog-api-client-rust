@@ -42,4 +42,30 @@ impl TopologyMapWidgetDefinition {
             type_,
         }
     }
+
+    pub fn with_custom_links(
+        &mut self,
+        value: Vec<crate::datadogV1::model::WidgetCustomLink>,
+    ) -> &mut Self {
+        self.custom_links = Some(value);
+        self
+    }
+
+    pub fn with_title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
+    }
+
+    pub fn with_title_align(
+        &mut self,
+        value: crate::datadogV1::model::WidgetTextAlign,
+    ) -> &mut Self {
+        self.title_align = Some(value);
+        self
+    }
+
+    pub fn with_title_size(&mut self, value: String) -> &mut Self {
+        self.title_size = Some(value);
+        self
+    }
 }

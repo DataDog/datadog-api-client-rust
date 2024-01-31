@@ -31,6 +31,29 @@ impl SecurityMonitoringThirdPartyRuleCase {
             status: None,
         }
     }
+
+    pub fn with_name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn with_notifications(&mut self, value: Vec<String>) -> &mut Self {
+        self.notifications = Some(value);
+        self
+    }
+
+    pub fn with_query(&mut self, value: String) -> &mut Self {
+        self.query = Some(value);
+        self
+    }
+
+    pub fn with_status(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringRuleSeverity,
+    ) -> &mut Self {
+        self.status = Some(value);
+        self
+    }
 }
 impl Default for SecurityMonitoringThirdPartyRuleCase {
     fn default() -> Self {

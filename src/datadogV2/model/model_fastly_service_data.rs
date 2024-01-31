@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct FastlyServiceData {
     /// Attributes object for Fastly service requests.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::FastlyServiceAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::FastlyServiceAttributes>,
     /// The ID of the Fastly service.
     #[serde(rename = "id")]
     pub id: String,
@@ -26,5 +26,13 @@ impl FastlyServiceData {
             id,
             type_,
         }
+    }
+
+    pub fn with_attributes(
+        &mut self,
+        value: crate::datadogV2::model::FastlyServiceAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
     }
 }

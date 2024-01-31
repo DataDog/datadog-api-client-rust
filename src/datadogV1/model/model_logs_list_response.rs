@@ -32,6 +32,21 @@ impl LogsListResponse {
             status: None,
         }
     }
+
+    pub fn with_logs(&mut self, value: Vec<crate::datadogV1::model::Log>) -> &mut Self {
+        self.logs = Some(value);
+        self
+    }
+
+    pub fn with_next_log_id(&mut self, value: Option<String>) -> &mut Self {
+        self.next_log_id = Some(value);
+        self
+    }
+
+    pub fn with_status(&mut self, value: String) -> &mut Self {
+        self.status = Some(value);
+        self
+    }
 }
 impl Default for LogsListResponse {
     fn default() -> Self {

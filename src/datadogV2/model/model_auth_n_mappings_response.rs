@@ -16,7 +16,7 @@ pub struct AuthNMappingsResponse {
     pub included: Option<Vec<crate::datadogV2::model::AuthNMappingIncluded>>,
     /// Object describing meta attributes of response.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV2::model::ResponseMetaAttributes>>,
+    pub meta: Option<crate::datadogV2::model::ResponseMetaAttributes>,
 }
 
 impl AuthNMappingsResponse {
@@ -26,6 +26,27 @@ impl AuthNMappingsResponse {
             included: None,
             meta: None,
         }
+    }
+
+    pub fn with_data(&mut self, value: Vec<crate::datadogV2::model::AuthNMapping>) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn with_included(
+        &mut self,
+        value: Vec<crate::datadogV2::model::AuthNMappingIncluded>,
+    ) -> &mut Self {
+        self.included = Some(value);
+        self
+    }
+
+    pub fn with_meta(
+        &mut self,
+        value: crate::datadogV2::model::ResponseMetaAttributes,
+    ) -> &mut Self {
+        self.meta = Some(value);
+        self
     }
 }
 impl Default for AuthNMappingsResponse {

@@ -33,6 +33,29 @@ impl RUMEventAttributes {
             timestamp: None,
         }
     }
+
+    pub fn with_attributes(
+        &mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn with_service(&mut self, value: String) -> &mut Self {
+        self.service = Some(value);
+        self
+    }
+
+    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+
+    pub fn with_timestamp(&mut self, value: String) -> &mut Self {
+        self.timestamp = Some(value);
+        self
+    }
 }
 impl Default for RUMEventAttributes {
     fn default() -> Self {

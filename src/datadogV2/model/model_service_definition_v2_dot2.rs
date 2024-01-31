@@ -25,7 +25,7 @@ pub struct ServiceDefinitionV2Dot2 {
     pub extensions: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// Third party integrations that Datadog supports.
     #[serde(rename = "integrations")]
-    pub integrations: Option<Box<crate::datadogV2::model::ServiceDefinitionV2Dot2Integrations>>,
+    pub integrations: Option<crate::datadogV2::model::ServiceDefinitionV2Dot2Integrations>,
     /// The service's programming language. Datadog recognizes the following languages: `dotnet`, `go`, `java`, `js`, `php`, `python`, `ruby`, and `c++`.
     #[serde(rename = "languages")]
     pub languages: Option<Vec<String>>,
@@ -73,5 +73,80 @@ impl ServiceDefinitionV2Dot2 {
             tier: None,
             type_: None,
         }
+    }
+
+    pub fn with_application(&mut self, value: String) -> &mut Self {
+        self.application = Some(value);
+        self
+    }
+
+    pub fn with_contacts(
+        &mut self,
+        value: Vec<crate::datadogV2::model::ServiceDefinitionV2Dot2Contact>,
+    ) -> &mut Self {
+        self.contacts = Some(value);
+        self
+    }
+
+    pub fn with_description(&mut self, value: String) -> &mut Self {
+        self.description = Some(value);
+        self
+    }
+
+    pub fn with_extensions(
+        &mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> &mut Self {
+        self.extensions = Some(value);
+        self
+    }
+
+    pub fn with_integrations(
+        &mut self,
+        value: crate::datadogV2::model::ServiceDefinitionV2Dot2Integrations,
+    ) -> &mut Self {
+        self.integrations = Some(value);
+        self
+    }
+
+    pub fn with_languages(&mut self, value: Vec<String>) -> &mut Self {
+        self.languages = Some(value);
+        self
+    }
+
+    pub fn with_lifecycle(&mut self, value: String) -> &mut Self {
+        self.lifecycle = Some(value);
+        self
+    }
+
+    pub fn with_links(
+        &mut self,
+        value: Vec<crate::datadogV2::model::ServiceDefinitionV2Dot2Link>,
+    ) -> &mut Self {
+        self.links = Some(value);
+        self
+    }
+
+    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+
+    pub fn with_team(&mut self, value: String) -> &mut Self {
+        self.team = Some(value);
+        self
+    }
+
+    pub fn with_tier(&mut self, value: String) -> &mut Self {
+        self.tier = Some(value);
+        self
+    }
+
+    pub fn with_type_(
+        &mut self,
+        value: crate::datadogV2::model::ServiceDefinitionV2Dot2Type,
+    ) -> &mut Self {
+        self.type_ = Some(value);
+        self
     }
 }

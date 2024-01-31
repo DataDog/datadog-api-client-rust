@@ -7,6 +7,6 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DowntimeMonitorIdentifier {
-    DowntimeMonitorIdentifierId(Box<crate::datadogV2::model::DowntimeMonitorIdentifierId>),
-    DowntimeMonitorIdentifierTags(Box<crate::datadogV2::model::DowntimeMonitorIdentifierTags>),
+    DowntimeMonitorIdentifierId(crate::datadogV2::model::DowntimeMonitorIdentifierId),
+    DowntimeMonitorIdentifierTags(crate::datadogV2::model::DowntimeMonitorIdentifierTags),
 }

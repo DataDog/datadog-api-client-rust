@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct NotebookResponseData {
     /// The attributes of a notebook.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV1::model::NotebookResponseDataAttributes>,
+    pub attributes: crate::datadogV1::model::NotebookResponseDataAttributes,
     /// Unique notebook ID, assigned when you create the notebook.
     #[serde(rename = "id")]
     pub id: i64,
@@ -21,7 +21,7 @@ pub struct NotebookResponseData {
 
 impl NotebookResponseData {
     pub fn new(
-        attributes: Box<crate::datadogV1::model::NotebookResponseDataAttributes>,
+        attributes: crate::datadogV1::model::NotebookResponseDataAttributes,
         id: i64,
         type_: crate::datadogV1::model::NotebookResourceType,
     ) -> NotebookResponseData {

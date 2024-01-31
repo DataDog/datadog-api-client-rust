@@ -15,21 +15,31 @@ use serde_with::skip_serializing_none;
 pub struct Widget {
     /// [Definition of the widget](<https://docs.datadoghq.com/dashboards/widgets/>).
     #[serde(rename = "definition")]
-    pub definition: Box<crate::datadogV1::model::WidgetDefinition>,
+    pub definition: crate::datadogV1::model::WidgetDefinition,
     /// ID of the widget.
     #[serde(rename = "id")]
     pub id: Option<i64>,
     /// The layout for a widget on a `free` or **new dashboard layout** dashboard.
     #[serde(rename = "layout")]
-    pub layout: Option<Box<crate::datadogV1::model::WidgetLayout>>,
+    pub layout: Option<crate::datadogV1::model::WidgetLayout>,
 }
 
 impl Widget {
-    pub fn new(definition: Box<crate::datadogV1::model::WidgetDefinition>) -> Widget {
+    pub fn new(definition: crate::datadogV1::model::WidgetDefinition) -> Widget {
         Widget {
             definition,
             id: None,
             layout: None,
         }
+    }
+
+    pub fn with_id(&mut self, value: i64) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn with_layout(&mut self, value: crate::datadogV1::model::WidgetLayout) -> &mut Self {
+        self.layout = Some(value);
+        self
     }
 }

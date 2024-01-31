@@ -8,9 +8,9 @@ use serde::{Deserialize, Serialize};
 #[serde(untagged)]
 pub enum SecurityMonitoringRuleResponse {
     SecurityMonitoringStandardRuleResponse(
-        Box<crate::datadogV2::model::SecurityMonitoringStandardRuleResponse>,
+        crate::datadogV2::model::SecurityMonitoringStandardRuleResponse,
     ),
     SecurityMonitoringSignalRuleResponse(
-        Box<crate::datadogV2::model::SecurityMonitoringSignalRuleResponse>,
+        crate::datadogV2::model::SecurityMonitoringSignalRuleResponse,
     ),
 }

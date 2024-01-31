@@ -17,6 +17,11 @@ impl AwsCURConfigsResponse {
     pub fn new() -> AwsCURConfigsResponse {
         AwsCURConfigsResponse { data: None }
     }
+
+    pub fn with_data(&mut self, value: Vec<crate::datadogV2::model::AwsCURConfig>) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
 impl Default for AwsCURConfigsResponse {
     fn default() -> Self {

@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct AwsCURConfig {
     /// Attributes for An AWS CUR config.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::AwsCURConfigAttributes>,
+    pub attributes: crate::datadogV2::model::AwsCURConfigAttributes,
     /// The ID of the AWS CUR config.
     #[serde(rename = "id")]
     pub id: Option<i64>,
@@ -21,7 +21,7 @@ pub struct AwsCURConfig {
 
 impl AwsCURConfig {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::AwsCURConfigAttributes>,
+        attributes: crate::datadogV2::model::AwsCURConfigAttributes,
         type_: crate::datadogV2::model::AwsCURConfigType,
     ) -> AwsCURConfig {
         AwsCURConfig {
@@ -29,5 +29,10 @@ impl AwsCURConfig {
             id: None,
             type_,
         }
+    }
+
+    pub fn with_id(&mut self, value: i64) -> &mut Self {
+        self.id = Some(value);
+        self
     }
 }

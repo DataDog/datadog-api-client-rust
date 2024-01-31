@@ -25,7 +25,7 @@ pub struct HeatMapWidgetDefinition {
     pub show_legend: Option<bool>,
     /// Time setting for the widget.
     #[serde(rename = "time")]
-    pub time: Option<Box<crate::datadogV1::model::WidgetTime>>,
+    pub time: Option<crate::datadogV1::model::WidgetTime>,
     /// Title of the widget.
     #[serde(rename = "title")]
     pub title: Option<String>,
@@ -40,7 +40,7 @@ pub struct HeatMapWidgetDefinition {
     pub type_: crate::datadogV1::model::HeatMapWidgetDefinitionType,
     /// Axis controls for the widget.
     #[serde(rename = "yaxis")]
-    pub yaxis: Option<Box<crate::datadogV1::model::WidgetAxis>>,
+    pub yaxis: Option<crate::datadogV1::model::WidgetAxis>,
 }
 
 impl HeatMapWidgetDefinition {
@@ -61,5 +61,56 @@ impl HeatMapWidgetDefinition {
             type_,
             yaxis: None,
         }
+    }
+
+    pub fn with_custom_links(
+        &mut self,
+        value: Vec<crate::datadogV1::model::WidgetCustomLink>,
+    ) -> &mut Self {
+        self.custom_links = Some(value);
+        self
+    }
+
+    pub fn with_events(&mut self, value: Vec<crate::datadogV1::model::WidgetEvent>) -> &mut Self {
+        self.events = Some(value);
+        self
+    }
+
+    pub fn with_legend_size(&mut self, value: String) -> &mut Self {
+        self.legend_size = Some(value);
+        self
+    }
+
+    pub fn with_show_legend(&mut self, value: bool) -> &mut Self {
+        self.show_legend = Some(value);
+        self
+    }
+
+    pub fn with_time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
+        self.time = Some(value);
+        self
+    }
+
+    pub fn with_title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
+    }
+
+    pub fn with_title_align(
+        &mut self,
+        value: crate::datadogV1::model::WidgetTextAlign,
+    ) -> &mut Self {
+        self.title_align = Some(value);
+        self
+    }
+
+    pub fn with_title_size(&mut self, value: String) -> &mut Self {
+        self.title_size = Some(value);
+        self
+    }
+
+    pub fn with_yaxis(&mut self, value: crate::datadogV1::model::WidgetAxis) -> &mut Self {
+        self.yaxis = Some(value);
+        self
     }
 }

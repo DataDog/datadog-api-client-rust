@@ -31,4 +31,19 @@ impl ServiceDefinitionV1Info {
             service_tier: None,
         }
     }
+
+    pub fn with_description(&mut self, value: String) -> &mut Self {
+        self.description = Some(value);
+        self
+    }
+
+    pub fn with_display_name(&mut self, value: String) -> &mut Self {
+        self.display_name = Some(value);
+        self
+    }
+
+    pub fn with_service_tier(&mut self, value: String) -> &mut Self {
+        self.service_tier = Some(value);
+        self
+    }
 }

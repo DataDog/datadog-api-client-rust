@@ -5,29 +5,9 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateAuthNMappingParams is a struct for passing parameters to the method [`AuthNMappingsAPI::create_auth_n_mapping`]
+/// ListAuthNMappingsOptionalParams is a struct for passing parameters to the method [`AuthNMappingsAPI::list_auth_n_mappings`]
 #[derive(Clone, Debug)]
-pub struct CreateAuthNMappingParams {
-    pub body: crate::datadogV2::model::AuthNMappingCreateRequest,
-}
-
-/// DeleteAuthNMappingParams is a struct for passing parameters to the method [`AuthNMappingsAPI::delete_auth_n_mapping`]
-#[derive(Clone, Debug)]
-pub struct DeleteAuthNMappingParams {
-    /// The UUID of the AuthN Mapping.
-    pub authn_mapping_id: String,
-}
-
-/// GetAuthNMappingParams is a struct for passing parameters to the method [`AuthNMappingsAPI::get_auth_n_mapping`]
-#[derive(Clone, Debug)]
-pub struct GetAuthNMappingParams {
-    /// The UUID of the AuthN Mapping.
-    pub authn_mapping_id: String,
-}
-
-/// ListAuthNMappingsParams is a struct for passing parameters to the method [`AuthNMappingsAPI::list_auth_n_mappings`]
-#[derive(Clone, Debug)]
-pub struct ListAuthNMappingsParams {
+pub struct ListAuthNMappingsOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
     /// Specific page number to return.
@@ -36,14 +16,6 @@ pub struct ListAuthNMappingsParams {
     pub sort: Option<crate::datadogV2::model::AuthNMappingsSort>,
     /// Filter all mappings by the given string.
     pub filter: Option<String>,
-}
-
-/// UpdateAuthNMappingParams is a struct for passing parameters to the method [`AuthNMappingsAPI::update_auth_n_mapping`]
-#[derive(Clone, Debug)]
-pub struct UpdateAuthNMappingParams {
-    /// The UUID of the AuthN Mapping.
-    pub authn_mapping_id: String,
-    pub body: crate::datadogV2::model::AuthNMappingUpdateRequest,
 }
 
 /// CreateAuthNMappingError is a struct for typed errors of method [`AuthNMappingsAPI::create_auth_n_mapping`]
@@ -123,10 +95,10 @@ impl AuthNMappingsAPI {
     /// Create an AuthN Mapping.
     pub async fn create_auth_n_mapping(
         &self,
-        params: CreateAuthNMappingParams,
+        body: crate::datadogV2::model::AuthNMappingCreateRequest,
     ) -> Result<Option<crate::datadogV2::model::AuthNMappingResponse>, Error<CreateAuthNMappingError>>
     {
-        match self.create_auth_n_mapping_with_http_info(params).await {
+        match self.create_auth_n_mapping_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -135,15 +107,12 @@ impl AuthNMappingsAPI {
     /// Create an AuthN Mapping.
     pub async fn create_auth_n_mapping_with_http_info(
         &self,
-        params: CreateAuthNMappingParams,
+        body: crate::datadogV2::model::AuthNMappingCreateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::AuthNMappingResponse>,
         Error<CreateAuthNMappingError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -201,9 +170,12 @@ impl AuthNMappingsAPI {
     /// Delete an AuthN Mapping specified by AuthN Mapping UUID.
     pub async fn delete_auth_n_mapping(
         &self,
-        params: DeleteAuthNMappingParams,
+        authn_mapping_id: String,
     ) -> Result<Option<()>, Error<DeleteAuthNMappingError>> {
-        match self.delete_auth_n_mapping_with_http_info(params).await {
+        match self
+            .delete_auth_n_mapping_with_http_info(authn_mapping_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -212,12 +184,9 @@ impl AuthNMappingsAPI {
     /// Delete an AuthN Mapping specified by AuthN Mapping UUID.
     pub async fn delete_auth_n_mapping_with_http_info(
         &self,
-        params: DeleteAuthNMappingParams,
+        authn_mapping_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteAuthNMappingError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let authn_mapping_id = params.authn_mapping_id;
 
         let local_client = &local_configuration.client;
 
@@ -270,10 +239,13 @@ impl AuthNMappingsAPI {
     /// Get an AuthN Mapping specified by the AuthN Mapping UUID.
     pub async fn get_auth_n_mapping(
         &self,
-        params: GetAuthNMappingParams,
+        authn_mapping_id: String,
     ) -> Result<Option<crate::datadogV2::model::AuthNMappingResponse>, Error<GetAuthNMappingError>>
     {
-        match self.get_auth_n_mapping_with_http_info(params).await {
+        match self
+            .get_auth_n_mapping_with_http_info(authn_mapping_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -282,15 +254,12 @@ impl AuthNMappingsAPI {
     /// Get an AuthN Mapping specified by the AuthN Mapping UUID.
     pub async fn get_auth_n_mapping_with_http_info(
         &self,
-        params: GetAuthNMappingParams,
+        authn_mapping_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::AuthNMappingResponse>,
         Error<GetAuthNMappingError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let authn_mapping_id = params.authn_mapping_id;
 
         let local_client = &local_configuration.client;
 
@@ -345,7 +314,7 @@ impl AuthNMappingsAPI {
     /// List all AuthN Mappings in the org.
     pub async fn list_auth_n_mappings(
         &self,
-        params: ListAuthNMappingsParams,
+        params: ListAuthNMappingsOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::AuthNMappingsResponse>, Error<ListAuthNMappingsError>>
     {
         match self.list_auth_n_mappings_with_http_info(params).await {
@@ -357,14 +326,14 @@ impl AuthNMappingsAPI {
     /// List all AuthN Mappings in the org.
     pub async fn list_auth_n_mappings_with_http_info(
         &self,
-        params: ListAuthNMappingsParams,
+        params: ListAuthNMappingsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::AuthNMappingsResponse>,
         Error<ListAuthNMappingsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
         let sort = params.sort;
@@ -376,18 +345,21 @@ impl AuthNMappingsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = page_size {
-            local_req_builder = local_req_builder.query(&[("page[size]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_number {
+        if let Some(ref local_query_param) = page_size {
             local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_str.to_string())]);
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = sort {
-            local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter {
-            local_req_builder = local_req_builder.query(&[("filter", &local_str.to_string())]);
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter {
+            local_req_builder =
+                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -433,10 +405,14 @@ impl AuthNMappingsAPI {
     /// Edit an AuthN Mapping.
     pub async fn update_auth_n_mapping(
         &self,
-        params: UpdateAuthNMappingParams,
+        authn_mapping_id: String,
+        body: crate::datadogV2::model::AuthNMappingUpdateRequest,
     ) -> Result<Option<crate::datadogV2::model::AuthNMappingResponse>, Error<UpdateAuthNMappingError>>
     {
-        match self.update_auth_n_mapping_with_http_info(params).await {
+        match self
+            .update_auth_n_mapping_with_http_info(authn_mapping_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -445,16 +421,13 @@ impl AuthNMappingsAPI {
     /// Edit an AuthN Mapping.
     pub async fn update_auth_n_mapping_with_http_info(
         &self,
-        params: UpdateAuthNMappingParams,
+        authn_mapping_id: String,
+        body: crate::datadogV2::model::AuthNMappingUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::AuthNMappingResponse>,
         Error<UpdateAuthNMappingError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let authn_mapping_id = params.authn_mapping_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

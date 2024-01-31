@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct APIKeyCreateData {
     /// Attributes used to create an API Key.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::APIKeyCreateAttributes>,
+    pub attributes: crate::datadogV2::model::APIKeyCreateAttributes,
     /// API Keys resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::APIKeysType,
@@ -18,7 +18,7 @@ pub struct APIKeyCreateData {
 
 impl APIKeyCreateData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::APIKeyCreateAttributes>,
+        attributes: crate::datadogV2::model::APIKeyCreateAttributes,
         type_: crate::datadogV2::model::APIKeysType,
     ) -> APIKeyCreateData {
         APIKeyCreateData { attributes, type_ }

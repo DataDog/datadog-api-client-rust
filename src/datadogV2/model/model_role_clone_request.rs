@@ -10,11 +10,11 @@ use serde_with::skip_serializing_none;
 pub struct RoleCloneRequest {
     /// Data for the clone role request.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::RoleClone>,
+    pub data: crate::datadogV2::model::RoleClone,
 }
 
 impl RoleCloneRequest {
-    pub fn new(data: Box<crate::datadogV2::model::RoleClone>) -> RoleCloneRequest {
+    pub fn new(data: crate::datadogV2::model::RoleClone) -> RoleCloneRequest {
         RoleCloneRequest { data }
     }
 }

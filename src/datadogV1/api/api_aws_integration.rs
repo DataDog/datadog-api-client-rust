@@ -5,61 +5,9 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateAWSAccountParams is a struct for passing parameters to the method [`AWSIntegrationAPI::create_aws_account`]
+/// ListAWSAccountsOptionalParams is a struct for passing parameters to the method [`AWSIntegrationAPI::list_aws_accounts`]
 #[derive(Clone, Debug)]
-pub struct CreateAWSAccountParams {
-    /// AWS Request Object
-    pub body: crate::datadogV1::model::AWSAccount,
-}
-
-/// CreateAWSEventBridgeSourceParams is a struct for passing parameters to the method [`AWSIntegrationAPI::create_aws_event_bridge_source`]
-#[derive(Clone, Debug)]
-pub struct CreateAWSEventBridgeSourceParams {
-    /// Create an Amazon EventBridge source for an AWS account with a given name and region.
-    pub body: crate::datadogV1::model::AWSEventBridgeCreateRequest,
-}
-
-/// CreateAWSTagFilterParams is a struct for passing parameters to the method [`AWSIntegrationAPI::create_aws_tag_filter`]
-#[derive(Clone, Debug)]
-pub struct CreateAWSTagFilterParams {
-    /// Set an AWS tag filter using an `aws_account_identifier`, `namespace`, and filtering string.
-    /// Namespace options are `application_elb`, `elb`, `lambda`, `network_elb`, `rds`, `sqs`, and `custom`.
-    pub body: crate::datadogV1::model::AWSTagFilterCreateRequest,
-}
-
-/// CreateNewAWSExternalIDParams is a struct for passing parameters to the method [`AWSIntegrationAPI::create_new_aws_external_id`]
-#[derive(Clone, Debug)]
-pub struct CreateNewAWSExternalIDParams {
-    /// Your Datadog role delegation name.
-    /// For more information about your AWS account Role name,
-    /// see the [Datadog AWS integration configuration info](<https://docs.datadoghq.com/integrations/amazon_web_services/#setup>).
-    pub body: crate::datadogV1::model::AWSAccount,
-}
-
-/// DeleteAWSAccountParams is a struct for passing parameters to the method [`AWSIntegrationAPI::delete_aws_account`]
-#[derive(Clone, Debug)]
-pub struct DeleteAWSAccountParams {
-    /// AWS request object
-    pub body: crate::datadogV1::model::AWSAccountDeleteRequest,
-}
-
-/// DeleteAWSEventBridgeSourceParams is a struct for passing parameters to the method [`AWSIntegrationAPI::delete_aws_event_bridge_source`]
-#[derive(Clone, Debug)]
-pub struct DeleteAWSEventBridgeSourceParams {
-    /// Delete the Amazon EventBridge source with the given name, region, and associated AWS account.
-    pub body: crate::datadogV1::model::AWSEventBridgeDeleteRequest,
-}
-
-/// DeleteAWSTagFilterParams is a struct for passing parameters to the method [`AWSIntegrationAPI::delete_aws_tag_filter`]
-#[derive(Clone, Debug)]
-pub struct DeleteAWSTagFilterParams {
-    /// Delete a tag filtering entry for a given AWS account and `dd-aws` namespace.
-    pub body: crate::datadogV1::model::AWSTagFilterDeleteRequest,
-}
-
-/// ListAWSAccountsParams is a struct for passing parameters to the method [`AWSIntegrationAPI::list_aws_accounts`]
-#[derive(Clone, Debug)]
-pub struct ListAWSAccountsParams {
+pub struct ListAWSAccountsOptionalParams {
     /// Only return AWS accounts that matches this `account_id`.
     pub account_id: Option<String>,
     /// Only return AWS accounts that matches this role_name.
@@ -68,18 +16,9 @@ pub struct ListAWSAccountsParams {
     pub access_key_id: Option<String>,
 }
 
-/// ListAWSTagFiltersParams is a struct for passing parameters to the method [`AWSIntegrationAPI::list_aws_tag_filters`]
+/// UpdateAWSAccountOptionalParams is a struct for passing parameters to the method [`AWSIntegrationAPI::update_aws_account`]
 #[derive(Clone, Debug)]
-pub struct ListAWSTagFiltersParams {
-    /// Only return AWS filters that matches this `account_id`.
-    pub account_id: String,
-}
-
-/// UpdateAWSAccountParams is a struct for passing parameters to the method [`AWSIntegrationAPI::update_aws_account`]
-#[derive(Clone, Debug)]
-pub struct UpdateAWSAccountParams {
-    /// AWS request object
-    pub body: crate::datadogV1::model::AWSAccount,
+pub struct UpdateAWSAccountOptionalParams {
     /// Only return AWS accounts that matches this `account_id`.
     pub account_id: Option<String>,
     /// Only return AWS accounts that match this `role_name`.
@@ -239,12 +178,12 @@ impl AWSIntegrationAPI {
     /// A unique AWS Account ID for role based authentication.
     pub async fn create_aws_account(
         &self,
-        params: CreateAWSAccountParams,
+        body: crate::datadogV1::model::AWSAccount,
     ) -> Result<
         Option<crate::datadogV1::model::AWSAccountCreateResponse>,
         Error<CreateAWSAccountError>,
     > {
-        match self.create_aws_account_with_http_info(params).await {
+        match self.create_aws_account_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -256,15 +195,12 @@ impl AWSIntegrationAPI {
     /// A unique AWS Account ID for role based authentication.
     pub async fn create_aws_account_with_http_info(
         &self,
-        params: CreateAWSAccountParams,
+        body: crate::datadogV1::model::AWSAccount,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::AWSAccountCreateResponse>,
         Error<CreateAWSAccountError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -322,13 +258,13 @@ impl AWSIntegrationAPI {
     /// Create an Amazon EventBridge source.
     pub async fn create_aws_event_bridge_source(
         &self,
-        params: CreateAWSEventBridgeSourceParams,
+        body: crate::datadogV1::model::AWSEventBridgeCreateRequest,
     ) -> Result<
         Option<crate::datadogV1::model::AWSEventBridgeCreateResponse>,
         Error<CreateAWSEventBridgeSourceError>,
     > {
         match self
-            .create_aws_event_bridge_source_with_http_info(params)
+            .create_aws_event_bridge_source_with_http_info(body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -339,15 +275,12 @@ impl AWSIntegrationAPI {
     /// Create an Amazon EventBridge source.
     pub async fn create_aws_event_bridge_source_with_http_info(
         &self,
-        params: CreateAWSEventBridgeSourceParams,
+        body: crate::datadogV1::model::AWSEventBridgeCreateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::AWSEventBridgeCreateResponse>,
         Error<CreateAWSEventBridgeSourceError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -408,12 +341,12 @@ impl AWSIntegrationAPI {
     /// Set an AWS tag filter.
     pub async fn create_aws_tag_filter(
         &self,
-        params: CreateAWSTagFilterParams,
+        body: crate::datadogV1::model::AWSTagFilterCreateRequest,
     ) -> Result<
         Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<CreateAWSTagFilterError>,
     > {
-        match self.create_aws_tag_filter_with_http_info(params).await {
+        match self.create_aws_tag_filter_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -422,15 +355,12 @@ impl AWSIntegrationAPI {
     /// Set an AWS tag filter.
     pub async fn create_aws_tag_filter_with_http_info(
         &self,
-        params: CreateAWSTagFilterParams,
+        body: crate::datadogV1::model::AWSTagFilterCreateRequest,
     ) -> Result<
         ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<CreateAWSTagFilterError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -491,12 +421,12 @@ impl AWSIntegrationAPI {
     /// Generate a new AWS external ID for a given AWS account ID and role name pair.
     pub async fn create_new_aws_external_id(
         &self,
-        params: CreateNewAWSExternalIDParams,
+        body: crate::datadogV1::model::AWSAccount,
     ) -> Result<
         Option<crate::datadogV1::model::AWSAccountCreateResponse>,
         Error<CreateNewAWSExternalIDError>,
     > {
-        match self.create_new_aws_external_id_with_http_info(params).await {
+        match self.create_new_aws_external_id_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -505,15 +435,12 @@ impl AWSIntegrationAPI {
     /// Generate a new AWS external ID for a given AWS account ID and role name pair.
     pub async fn create_new_aws_external_id_with_http_info(
         &self,
-        params: CreateNewAWSExternalIDParams,
+        body: crate::datadogV1::model::AWSAccount,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::AWSAccountCreateResponse>,
         Error<CreateNewAWSExternalIDError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -574,12 +501,12 @@ impl AWSIntegrationAPI {
     /// Delete a Datadog-AWS integration matching the specified `account_id` and `role_name parameters`.
     pub async fn delete_aws_account(
         &self,
-        params: DeleteAWSAccountParams,
+        body: crate::datadogV1::model::AWSAccountDeleteRequest,
     ) -> Result<
         Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<DeleteAWSAccountError>,
     > {
-        match self.delete_aws_account_with_http_info(params).await {
+        match self.delete_aws_account_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -588,15 +515,12 @@ impl AWSIntegrationAPI {
     /// Delete a Datadog-AWS integration matching the specified `account_id` and `role_name parameters`.
     pub async fn delete_aws_account_with_http_info(
         &self,
-        params: DeleteAWSAccountParams,
+        body: crate::datadogV1::model::AWSAccountDeleteRequest,
     ) -> Result<
         ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<DeleteAWSAccountError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -654,13 +578,13 @@ impl AWSIntegrationAPI {
     /// Delete an Amazon EventBridge source.
     pub async fn delete_aws_event_bridge_source(
         &self,
-        params: DeleteAWSEventBridgeSourceParams,
+        body: crate::datadogV1::model::AWSEventBridgeDeleteRequest,
     ) -> Result<
         Option<crate::datadogV1::model::AWSEventBridgeDeleteResponse>,
         Error<DeleteAWSEventBridgeSourceError>,
     > {
         match self
-            .delete_aws_event_bridge_source_with_http_info(params)
+            .delete_aws_event_bridge_source_with_http_info(body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -671,15 +595,12 @@ impl AWSIntegrationAPI {
     /// Delete an Amazon EventBridge source.
     pub async fn delete_aws_event_bridge_source_with_http_info(
         &self,
-        params: DeleteAWSEventBridgeSourceParams,
+        body: crate::datadogV1::model::AWSEventBridgeDeleteRequest,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::AWSEventBridgeDeleteResponse>,
         Error<DeleteAWSEventBridgeSourceError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -740,12 +661,12 @@ impl AWSIntegrationAPI {
     /// Delete a tag filtering entry.
     pub async fn delete_aws_tag_filter(
         &self,
-        params: DeleteAWSTagFilterParams,
+        body: crate::datadogV1::model::AWSTagFilterDeleteRequest,
     ) -> Result<
         Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<DeleteAWSTagFilterError>,
     > {
-        match self.delete_aws_tag_filter_with_http_info(params).await {
+        match self.delete_aws_tag_filter_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -754,15 +675,12 @@ impl AWSIntegrationAPI {
     /// Delete a tag filtering entry.
     pub async fn delete_aws_tag_filter_with_http_info(
         &self,
-        params: DeleteAWSTagFilterParams,
+        body: crate::datadogV1::model::AWSTagFilterDeleteRequest,
     ) -> Result<
         ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<DeleteAWSTagFilterError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -823,7 +741,7 @@ impl AWSIntegrationAPI {
     /// List all Datadog-AWS integrations available in your Datadog organization.
     pub async fn list_aws_accounts(
         &self,
-        params: ListAWSAccountsParams,
+        params: ListAWSAccountsOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::AWSAccountListResponse>, Error<ListAWSAccountsError>>
     {
         match self.list_aws_accounts_with_http_info(params).await {
@@ -835,14 +753,14 @@ impl AWSIntegrationAPI {
     /// List all Datadog-AWS integrations available in your Datadog organization.
     pub async fn list_aws_accounts_with_http_info(
         &self,
-        params: ListAWSAccountsParams,
+        params: ListAWSAccountsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::AWSAccountListResponse>,
         Error<ListAWSAccountsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let account_id = params.account_id;
         let role_name = params.role_name;
         let access_key_id = params.access_key_id;
@@ -853,15 +771,17 @@ impl AWSIntegrationAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = account_id {
-            local_req_builder = local_req_builder.query(&[("account_id", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = role_name {
-            local_req_builder = local_req_builder.query(&[("role_name", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = access_key_id {
+        if let Some(ref local_query_param) = account_id {
             local_req_builder =
-                local_req_builder.query(&[("access_key_id", &local_str.to_string())]);
+                local_req_builder.query(&[("account_id", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = role_name {
+            local_req_builder =
+                local_req_builder.query(&[("role_name", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = access_key_id {
+            local_req_builder =
+                local_req_builder.query(&[("access_key_id", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -926,8 +846,6 @@ impl AWSIntegrationAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -980,12 +898,12 @@ impl AWSIntegrationAPI {
     /// Get all AWS tag filters.
     pub async fn list_aws_tag_filters(
         &self,
-        params: ListAWSTagFiltersParams,
+        account_id: String,
     ) -> Result<
         Option<crate::datadogV1::model::AWSTagFilterListResponse>,
         Error<ListAWSTagFiltersError>,
     > {
-        match self.list_aws_tag_filters_with_http_info(params).await {
+        match self.list_aws_tag_filters_with_http_info(account_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -994,15 +912,12 @@ impl AWSIntegrationAPI {
     /// Get all AWS tag filters.
     pub async fn list_aws_tag_filters_with_http_info(
         &self,
-        params: ListAWSTagFiltersParams,
+        account_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::AWSTagFilterListResponse>,
         Error<ListAWSTagFiltersError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_id = params.account_id;
 
         let local_client = &local_configuration.client;
 
@@ -1071,8 +986,6 @@ impl AWSIntegrationAPI {
     ) -> Result<ResponseContent<Vec<String>>, Error<ListAvailableAWSNamespacesError>> {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -1124,12 +1037,13 @@ impl AWSIntegrationAPI {
     /// Update a Datadog-Amazon Web Services integration.
     pub async fn update_aws_account(
         &self,
-        params: UpdateAWSAccountParams,
+        body: crate::datadogV1::model::AWSAccount,
+        params: UpdateAWSAccountOptionalParams,
     ) -> Result<
         Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<UpdateAWSAccountError>,
     > {
-        match self.update_aws_account_with_http_info(params).await {
+        match self.update_aws_account_with_http_info(body, params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1138,15 +1052,15 @@ impl AWSIntegrationAPI {
     /// Update a Datadog-Amazon Web Services integration.
     pub async fn update_aws_account_with_http_info(
         &self,
-        params: UpdateAWSAccountParams,
+        body: crate::datadogV1::model::AWSAccount,
+        params: UpdateAWSAccountOptionalParams,
     ) -> Result<
         ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<UpdateAWSAccountError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let body = params.body;
+        // unbox and build optional parameters
         let account_id = params.account_id;
         let role_name = params.role_name;
         let access_key_id = params.access_key_id;
@@ -1157,15 +1071,17 @@ impl AWSIntegrationAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
-        if let Some(ref local_str) = account_id {
-            local_req_builder = local_req_builder.query(&[("account_id", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = role_name {
-            local_req_builder = local_req_builder.query(&[("role_name", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = access_key_id {
+        if let Some(ref local_query_param) = account_id {
             local_req_builder =
-                local_req_builder.query(&[("access_key_id", &local_str.to_string())]);
+                local_req_builder.query(&[("account_id", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = role_name {
+            local_req_builder =
+                local_req_builder.query(&[("role_name", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = access_key_id {
+            local_req_builder =
+                local_req_builder.query(&[("access_key_id", &local_query_param.to_string())]);
         };
 
         // build user agent

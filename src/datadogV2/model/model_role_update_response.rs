@@ -10,12 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct RoleUpdateResponse {
     /// Role object returned by the API.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::RoleUpdateResponseData>>,
+    pub data: Option<crate::datadogV2::model::RoleUpdateResponseData>,
 }
 
 impl RoleUpdateResponse {
     pub fn new() -> RoleUpdateResponse {
         RoleUpdateResponse { data: None }
+    }
+
+    pub fn with_data(
+        &mut self,
+        value: crate::datadogV2::model::RoleUpdateResponseData,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
     }
 }
 impl Default for RoleUpdateResponse {

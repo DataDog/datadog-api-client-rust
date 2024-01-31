@@ -27,6 +27,21 @@ impl HTTPLogError {
             title: None,
         }
     }
+
+    pub fn with_detail(&mut self, value: String) -> &mut Self {
+        self.detail = Some(value);
+        self
+    }
+
+    pub fn with_status(&mut self, value: String) -> &mut Self {
+        self.status = Some(value);
+        self
+    }
+
+    pub fn with_title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
+    }
 }
 impl Default for HTTPLogError {
     fn default() -> Self {

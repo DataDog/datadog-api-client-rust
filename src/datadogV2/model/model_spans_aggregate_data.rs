@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SpansAggregateData {
     /// The object containing all the query parameters.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::SpansAggregateRequestAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::SpansAggregateRequestAttributes>,
     /// The type of resource. The value should always be aggregate_request.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::SpansAggregateRequestType>,
@@ -22,6 +22,22 @@ impl SpansAggregateData {
             attributes: None,
             type_: None,
         }
+    }
+
+    pub fn with_attributes(
+        &mut self,
+        value: crate::datadogV2::model::SpansAggregateRequestAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn with_type_(
+        &mut self,
+        value: crate::datadogV2::model::SpansAggregateRequestType,
+    ) -> &mut Self {
+        self.type_ = Some(value);
+        self
     }
 }
 impl Default for SpansAggregateData {

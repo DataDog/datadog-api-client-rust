@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct Container {
     /// Attributes for a container.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::ContainerAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::ContainerAttributes>,
     /// Container ID.
     #[serde(rename = "id")]
     pub id: Option<String>,
@@ -26,6 +26,24 @@ impl Container {
             id: None,
             type_: None,
         }
+    }
+
+    pub fn with_attributes(
+        &mut self,
+        value: crate::datadogV2::model::ContainerAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn with_id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn with_type_(&mut self, value: crate::datadogV2::model::ContainerType) -> &mut Self {
+        self.type_ = Some(value);
+        self
     }
 }
 impl Default for Container {

@@ -10,12 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct SharedDashboardInvitesMeta {
     /// Object containing the total count of invitations across all pages
     #[serde(rename = "page")]
-    pub page: Option<Box<crate::datadogV1::model::SharedDashboardInvitesMetaPage>>,
+    pub page: Option<crate::datadogV1::model::SharedDashboardInvitesMetaPage>,
 }
 
 impl SharedDashboardInvitesMeta {
     pub fn new() -> SharedDashboardInvitesMeta {
         SharedDashboardInvitesMeta { page: None }
+    }
+
+    pub fn with_page(
+        &mut self,
+        value: crate::datadogV1::model::SharedDashboardInvitesMetaPage,
+    ) -> &mut Self {
+        self.page = Some(value);
+        self
     }
 }
 impl Default for SharedDashboardInvitesMeta {

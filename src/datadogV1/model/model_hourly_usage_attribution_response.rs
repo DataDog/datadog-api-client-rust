@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct HourlyUsageAttributionResponse {
     /// The object containing document metadata.
     #[serde(rename = "metadata")]
-    pub metadata: Option<Box<crate::datadogV1::model::HourlyUsageAttributionMetadata>>,
+    pub metadata: Option<crate::datadogV1::model::HourlyUsageAttributionMetadata>,
     /// Get the hourly usage attribution by tag(s).
     #[serde(rename = "usage")]
     pub usage: Option<Vec<crate::datadogV1::model::HourlyUsageAttributionBody>>,
@@ -22,6 +22,22 @@ impl HourlyUsageAttributionResponse {
             metadata: None,
             usage: None,
         }
+    }
+
+    pub fn with_metadata(
+        &mut self,
+        value: crate::datadogV1::model::HourlyUsageAttributionMetadata,
+    ) -> &mut Self {
+        self.metadata = Some(value);
+        self
+    }
+
+    pub fn with_usage(
+        &mut self,
+        value: Vec<crate::datadogV1::model::HourlyUsageAttributionBody>,
+    ) -> &mut Self {
+        self.usage = Some(value);
+        self
     }
 }
 impl Default for HourlyUsageAttributionResponse {

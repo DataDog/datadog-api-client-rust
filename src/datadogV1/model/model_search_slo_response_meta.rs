@@ -10,12 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct SearchSLOResponseMeta {
     /// Pagination metadata returned by the API.
     #[serde(rename = "pagination")]
-    pub pagination: Option<Box<crate::datadogV1::model::SearchSLOResponseMetaPage>>,
+    pub pagination: Option<crate::datadogV1::model::SearchSLOResponseMetaPage>,
 }
 
 impl SearchSLOResponseMeta {
     pub fn new() -> SearchSLOResponseMeta {
         SearchSLOResponseMeta { pagination: None }
+    }
+
+    pub fn with_pagination(
+        &mut self,
+        value: crate::datadogV1::model::SearchSLOResponseMetaPage,
+    ) -> &mut Self {
+        self.pagination = Some(value);
+        self
     }
 }
 impl Default for SearchSLOResponseMeta {

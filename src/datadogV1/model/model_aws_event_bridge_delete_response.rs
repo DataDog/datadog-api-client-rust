@@ -17,6 +17,14 @@ impl AWSEventBridgeDeleteResponse {
     pub fn new() -> AWSEventBridgeDeleteResponse {
         AWSEventBridgeDeleteResponse { status: None }
     }
+
+    pub fn with_status(
+        &mut self,
+        value: crate::datadogV1::model::AWSEventBridgeDeleteStatus,
+    ) -> &mut Self {
+        self.status = Some(value);
+        self
+    }
 }
 impl Default for AWSEventBridgeDeleteResponse {
     fn default() -> Self {

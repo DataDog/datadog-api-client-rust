@@ -17,6 +17,11 @@ impl UsageDBMResponse {
     pub fn new() -> UsageDBMResponse {
         UsageDBMResponse { usage: None }
     }
+
+    pub fn with_usage(&mut self, value: Vec<crate::datadogV1::model::UsageDBMHour>) -> &mut Self {
+        self.usage = Some(value);
+        self
+    }
 }
 impl Default for UsageDBMResponse {
     fn default() -> Self {

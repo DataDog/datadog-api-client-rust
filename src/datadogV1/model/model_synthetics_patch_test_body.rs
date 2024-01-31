@@ -17,6 +17,14 @@ impl SyntheticsPatchTestBody {
     pub fn new() -> SyntheticsPatchTestBody {
         SyntheticsPatchTestBody { data: None }
     }
+
+    pub fn with_data(
+        &mut self,
+        value: Vec<crate::datadogV1::model::SyntheticsPatchTestOperation>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
 impl Default for SyntheticsPatchTestBody {
     fn default() -> Self {

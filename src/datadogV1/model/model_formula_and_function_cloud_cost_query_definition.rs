@@ -35,4 +35,12 @@ impl FormulaAndFunctionCloudCostQueryDefinition {
             query,
         }
     }
+
+    pub fn with_aggregator(
+        &mut self,
+        value: crate::datadogV1::model::WidgetAggregator,
+    ) -> &mut Self {
+        self.aggregator = Some(value);
+        self
+    }
 }

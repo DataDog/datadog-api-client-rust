@@ -27,6 +27,21 @@ impl AWSAccountDeleteRequest {
             role_name: None,
         }
     }
+
+    pub fn with_access_key_id(&mut self, value: String) -> &mut Self {
+        self.access_key_id = Some(value);
+        self
+    }
+
+    pub fn with_account_id(&mut self, value: String) -> &mut Self {
+        self.account_id = Some(value);
+        self
+    }
+
+    pub fn with_role_name(&mut self, value: String) -> &mut Self {
+        self.role_name = Some(value);
+        self
+    }
 }
 impl Default for AWSAccountDeleteRequest {
     fn default() -> Self {

@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct RelationshipToIncidentPostmortem {
     /// The postmortem relationship data.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::RelationshipToIncidentPostmortemData>,
+    pub data: crate::datadogV2::model::RelationshipToIncidentPostmortemData,
 }
 
 impl RelationshipToIncidentPostmortem {
     pub fn new(
-        data: Box<crate::datadogV2::model::RelationshipToIncidentPostmortemData>,
+        data: crate::datadogV2::model::RelationshipToIncidentPostmortemData,
     ) -> RelationshipToIncidentPostmortem {
         RelationshipToIncidentPostmortem { data }
     }

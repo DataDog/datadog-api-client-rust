@@ -31,6 +31,26 @@ impl SyntheticsTriggerCITestRunResult {
             result_id: None,
         }
     }
+
+    pub fn with_device(&mut self, value: crate::datadogV1::model::SyntheticsDeviceID) -> &mut Self {
+        self.device = Some(value);
+        self
+    }
+
+    pub fn with_location(&mut self, value: i64) -> &mut Self {
+        self.location = Some(value);
+        self
+    }
+
+    pub fn with_public_id(&mut self, value: String) -> &mut Self {
+        self.public_id = Some(value);
+        self
+    }
+
+    pub fn with_result_id(&mut self, value: String) -> &mut Self {
+        self.result_id = Some(value);
+        self
+    }
 }
 impl Default for SyntheticsTriggerCITestRunResult {
     fn default() -> Self {

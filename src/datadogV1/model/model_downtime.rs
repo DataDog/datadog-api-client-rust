@@ -21,7 +21,7 @@ pub struct Downtime {
         default,
         with = "::serde_with::rust::double_option"
     )]
-    pub active_child: Option<Option<Box<crate::datadogV1::model::DowntimeChild>>>,
+    pub active_child: Option<Option<crate::datadogV1::model::DowntimeChild>>,
     /// If a scheduled downtime is canceled.
     #[serde(
         rename = "canceled",
@@ -94,7 +94,7 @@ pub struct Downtime {
         default,
         with = "::serde_with::rust::double_option"
     )]
-    pub recurrence: Option<Option<Box<crate::datadogV1::model::DowntimeRecurrence>>>,
+    pub recurrence: Option<Option<crate::datadogV1::model::DowntimeRecurrence>>,
     /// The scope(s) to which the downtime applies and must be in `key:value` format. For example, `host:app2`.
     /// Provide multiple scopes as a comma-separated list like `env:dev,env:prod`.
     /// The resulting downtime applies to sources that matches ALL provided scopes (`env:dev` **AND** `env:prod`).
@@ -140,6 +140,118 @@ impl Downtime {
             timezone: None,
             updater_id: None,
         }
+    }
+
+    pub fn with_active(&mut self, value: bool) -> &mut Self {
+        self.active = Some(value);
+        self
+    }
+
+    pub fn with_active_child(
+        &mut self,
+        value: Option<crate::datadogV1::model::DowntimeChild>,
+    ) -> &mut Self {
+        self.active_child = Some(value);
+        self
+    }
+
+    pub fn with_canceled(&mut self, value: Option<i64>) -> &mut Self {
+        self.canceled = Some(value);
+        self
+    }
+
+    pub fn with_creator_id(&mut self, value: i32) -> &mut Self {
+        self.creator_id = Some(value);
+        self
+    }
+
+    pub fn with_disabled(&mut self, value: bool) -> &mut Self {
+        self.disabled = Some(value);
+        self
+    }
+
+    pub fn with_downtime_type(&mut self, value: i32) -> &mut Self {
+        self.downtime_type = Some(value);
+        self
+    }
+
+    pub fn with_end(&mut self, value: Option<i64>) -> &mut Self {
+        self.end = Some(value);
+        self
+    }
+
+    pub fn with_id(&mut self, value: i64) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn with_message(&mut self, value: Option<String>) -> &mut Self {
+        self.message = Some(value);
+        self
+    }
+
+    pub fn with_monitor_id(&mut self, value: Option<i64>) -> &mut Self {
+        self.monitor_id = Some(value);
+        self
+    }
+
+    pub fn with_monitor_tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.monitor_tags = Some(value);
+        self
+    }
+
+    pub fn with_mute_first_recovery_notification(&mut self, value: bool) -> &mut Self {
+        self.mute_first_recovery_notification = Some(value);
+        self
+    }
+
+    pub fn with_notify_end_states(
+        &mut self,
+        value: Vec<crate::datadogV1::model::NotifyEndState>,
+    ) -> &mut Self {
+        self.notify_end_states = Some(value);
+        self
+    }
+
+    pub fn with_notify_end_types(
+        &mut self,
+        value: Vec<crate::datadogV1::model::NotifyEndType>,
+    ) -> &mut Self {
+        self.notify_end_types = Some(value);
+        self
+    }
+
+    pub fn with_parent_id(&mut self, value: Option<i64>) -> &mut Self {
+        self.parent_id = Some(value);
+        self
+    }
+
+    pub fn with_recurrence(
+        &mut self,
+        value: Option<crate::datadogV1::model::DowntimeRecurrence>,
+    ) -> &mut Self {
+        self.recurrence = Some(value);
+        self
+    }
+
+    pub fn with_scope(&mut self, value: Vec<String>) -> &mut Self {
+        self.scope = Some(value);
+        self
+    }
+
+    pub fn with_start(&mut self, value: i64) -> &mut Self {
+        self.start = Some(value);
+        self
+    }
+
+    pub fn with_timezone(&mut self, value: String) -> &mut Self {
+        self.timezone = Some(value);
+        self
+    }
+
+    pub fn with_updater_id(&mut self, value: Option<i32>) -> &mut Self {
+        self.updater_id = Some(value);
+        self
     }
 }
 impl Default for Downtime {

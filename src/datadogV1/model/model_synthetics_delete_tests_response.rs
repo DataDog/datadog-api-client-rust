@@ -20,6 +20,14 @@ impl SyntheticsDeleteTestsResponse {
             deleted_tests: None,
         }
     }
+
+    pub fn with_deleted_tests(
+        &mut self,
+        value: Vec<crate::datadogV1::model::SyntheticsDeletedTest>,
+    ) -> &mut Self {
+        self.deleted_tests = Some(value);
+        self
+    }
 }
 impl Default for SyntheticsDeleteTestsResponse {
     fn default() -> Self {

@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct MonitorOptions {
     /// Type of aggregation performed in the monitor query.
     #[serde(rename = "aggregation")]
-    pub aggregation: Option<Box<crate::datadogV1::model::MonitorOptionsAggregation>>,
+    pub aggregation: Option<crate::datadogV1::model::MonitorOptionsAggregation>,
     /// IDs of the device the Synthetics monitor is running on.
     #[deprecated]
     #[serde(rename = "device_ids")]
@@ -158,7 +158,7 @@ pub struct MonitorOptions {
     pub require_full_window: Option<bool>,
     /// Configuration options for scheduling.
     #[serde(rename = "scheduling_options")]
-    pub scheduling_options: Option<Box<crate::datadogV1::model::MonitorOptionsSchedulingOptions>>,
+    pub scheduling_options: Option<crate::datadogV1::model::MonitorOptionsSchedulingOptions>,
     /// Information about the downtime applied to the monitor. Only shows v1 downtimes.
     #[deprecated]
     #[serde(rename = "silenced")]
@@ -173,10 +173,10 @@ pub struct MonitorOptions {
     pub synthetics_check_id: Option<Option<String>>,
     /// Alerting time window options.
     #[serde(rename = "threshold_windows")]
-    pub threshold_windows: Option<Box<crate::datadogV1::model::MonitorThresholdWindowOptions>>,
+    pub threshold_windows: Option<crate::datadogV1::model::MonitorThresholdWindowOptions>,
     /// List of the different monitor threshold available.
     #[serde(rename = "thresholds")]
-    pub thresholds: Option<Box<crate::datadogV1::model::MonitorThresholds>>,
+    pub thresholds: Option<crate::datadogV1::model::MonitorThresholds>,
     /// The number of hours of the monitor not reporting data before it automatically resolves from a triggered state. The minimum allowed value is 0 hours. The maximum allowed value is 24 hours.
     #[serde(
         rename = "timeout_h",
@@ -225,6 +225,219 @@ impl MonitorOptions {
             timeout_h: None,
             variables: None,
         }
+    }
+
+    #[allow(deprecated)]
+    pub fn with_aggregation(
+        &mut self,
+        value: crate::datadogV1::model::MonitorOptionsAggregation,
+    ) -> &mut Self {
+        self.aggregation = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_device_ids(
+        &mut self,
+        value: Vec<crate::datadogV1::model::MonitorDeviceID>,
+    ) -> &mut Self {
+        self.device_ids = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_enable_logs_sample(&mut self, value: bool) -> &mut Self {
+        self.enable_logs_sample = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_enable_samples(&mut self, value: bool) -> &mut Self {
+        self.enable_samples = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_escalation_message(&mut self, value: String) -> &mut Self {
+        self.escalation_message = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_evaluation_delay(&mut self, value: Option<i64>) -> &mut Self {
+        self.evaluation_delay = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_group_retention_duration(&mut self, value: String) -> &mut Self {
+        self.group_retention_duration = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_groupby_simple_monitor(&mut self, value: bool) -> &mut Self {
+        self.groupby_simple_monitor = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_include_tags(&mut self, value: bool) -> &mut Self {
+        self.include_tags = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_locked(&mut self, value: bool) -> &mut Self {
+        self.locked = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_min_failure_duration(&mut self, value: Option<i64>) -> &mut Self {
+        self.min_failure_duration = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_min_location_failed(&mut self, value: Option<i64>) -> &mut Self {
+        self.min_location_failed = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_new_group_delay(&mut self, value: Option<i64>) -> &mut Self {
+        self.new_group_delay = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_new_host_delay(&mut self, value: Option<i64>) -> &mut Self {
+        self.new_host_delay = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_no_data_timeframe(&mut self, value: Option<i64>) -> &mut Self {
+        self.no_data_timeframe = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_notification_preset_name(
+        &mut self,
+        value: crate::datadogV1::model::MonitorOptionsNotificationPresets,
+    ) -> &mut Self {
+        self.notification_preset_name = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_notify_audit(&mut self, value: bool) -> &mut Self {
+        self.notify_audit = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_notify_by(&mut self, value: Vec<String>) -> &mut Self {
+        self.notify_by = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_notify_no_data(&mut self, value: bool) -> &mut Self {
+        self.notify_no_data = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_on_missing_data(
+        &mut self,
+        value: crate::datadogV1::model::OnMissingDataOption,
+    ) -> &mut Self {
+        self.on_missing_data = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_renotify_interval(&mut self, value: Option<i64>) -> &mut Self {
+        self.renotify_interval = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_renotify_occurrences(&mut self, value: Option<i64>) -> &mut Self {
+        self.renotify_occurrences = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_renotify_statuses(
+        &mut self,
+        value: Option<Vec<crate::datadogV1::model::MonitorRenotifyStatusType>>,
+    ) -> &mut Self {
+        self.renotify_statuses = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_require_full_window(&mut self, value: bool) -> &mut Self {
+        self.require_full_window = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_scheduling_options(
+        &mut self,
+        value: crate::datadogV1::model::MonitorOptionsSchedulingOptions,
+    ) -> &mut Self {
+        self.scheduling_options = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_silenced(&mut self, value: std::collections::BTreeMap<String, i64>) -> &mut Self {
+        self.silenced = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_synthetics_check_id(&mut self, value: Option<String>) -> &mut Self {
+        self.synthetics_check_id = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_threshold_windows(
+        &mut self,
+        value: crate::datadogV1::model::MonitorThresholdWindowOptions,
+    ) -> &mut Self {
+        self.threshold_windows = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_thresholds(
+        &mut self,
+        value: crate::datadogV1::model::MonitorThresholds,
+    ) -> &mut Self {
+        self.thresholds = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_timeout_h(&mut self, value: Option<i64>) -> &mut Self {
+        self.timeout_h = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn with_variables(
+        &mut self,
+        value: Vec<crate::datadogV1::model::MonitorFormulaAndFunctionQueryDefinition>,
+    ) -> &mut Self {
+        self.variables = Some(value);
+        self
     }
 }
 impl Default for MonitorOptions {

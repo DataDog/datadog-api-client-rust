@@ -35,6 +35,31 @@ impl AuthNMappingAttributes {
             saml_assertion_attribute_id: None,
         }
     }
+
+    pub fn with_attribute_key(&mut self, value: String) -> &mut Self {
+        self.attribute_key = Some(value);
+        self
+    }
+
+    pub fn with_attribute_value(&mut self, value: String) -> &mut Self {
+        self.attribute_value = Some(value);
+        self
+    }
+
+    pub fn with_created_at(&mut self, value: String) -> &mut Self {
+        self.created_at = Some(value);
+        self
+    }
+
+    pub fn with_modified_at(&mut self, value: String) -> &mut Self {
+        self.modified_at = Some(value);
+        self
+    }
+
+    pub fn with_saml_assertion_attribute_id(&mut self, value: String) -> &mut Self {
+        self.saml_assertion_attribute_id = Some(value);
+        self
+    }
 }
 impl Default for AuthNMappingAttributes {
     fn default() -> Self {
