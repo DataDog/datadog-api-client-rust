@@ -37,31 +37,32 @@ impl RUMResponseMetadata {
         }
     }
 
-    pub fn with_elapsed(&mut self, value: i64) -> &mut Self {
+    pub fn elapsed(&mut self, value: i64) -> &mut Self {
         self.elapsed = Some(value);
         self
     }
 
-    pub fn with_page(&mut self, value: crate::datadogV2::model::RUMResponsePage) -> &mut Self {
+    pub fn page(&mut self, value: crate::datadogV2::model::RUMResponsePage) -> &mut Self {
         self.page = Some(value);
         self
     }
 
-    pub fn with_request_id(&mut self, value: String) -> &mut Self {
+    pub fn request_id(&mut self, value: String) -> &mut Self {
         self.request_id = Some(value);
         self
     }
 
-    pub fn with_status(&mut self, value: crate::datadogV2::model::RUMResponseStatus) -> &mut Self {
+    pub fn status(&mut self, value: crate::datadogV2::model::RUMResponseStatus) -> &mut Self {
         self.status = Some(value);
         self
     }
 
-    pub fn with_warnings(&mut self, value: Vec<crate::datadogV2::model::RUMWarning>) -> &mut Self {
+    pub fn warnings(&mut self, value: Vec<crate::datadogV2::model::RUMWarning>) -> &mut Self {
         self.warnings = Some(value);
         self
     }
 }
+
 impl Default for RUMResponseMetadata {
     fn default() -> Self {
         Self::new()

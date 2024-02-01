@@ -36,7 +36,7 @@ impl SplitConfig {
         }
     }
 
-    pub fn with_static_splits(
+    pub fn static_splits(
         &mut self,
         value: Vec<Vec<crate::datadogV1::model::SplitVectorEntryItem>>,
     ) -> &mut Self {

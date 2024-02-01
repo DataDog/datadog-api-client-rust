@@ -64,56 +64,57 @@ impl ContainerAttributes {
         }
     }
 
-    pub fn with_container_id(&mut self, value: String) -> &mut Self {
+    pub fn container_id(&mut self, value: String) -> &mut Self {
         self.container_id = Some(value);
         self
     }
 
-    pub fn with_created_at(&mut self, value: String) -> &mut Self {
+    pub fn created_at(&mut self, value: String) -> &mut Self {
         self.created_at = Some(value);
         self
     }
 
-    pub fn with_host(&mut self, value: String) -> &mut Self {
+    pub fn host(&mut self, value: String) -> &mut Self {
         self.host = Some(value);
         self
     }
 
-    pub fn with_image_digest(&mut self, value: Option<String>) -> &mut Self {
+    pub fn image_digest(&mut self, value: Option<String>) -> &mut Self {
         self.image_digest = Some(value);
         self
     }
 
-    pub fn with_image_name(&mut self, value: String) -> &mut Self {
+    pub fn image_name(&mut self, value: String) -> &mut Self {
         self.image_name = Some(value);
         self
     }
 
-    pub fn with_image_tags(&mut self, value: Option<Vec<String>>) -> &mut Self {
+    pub fn image_tags(&mut self, value: Option<Vec<String>>) -> &mut Self {
         self.image_tags = Some(value);
         self
     }
 
-    pub fn with_name(&mut self, value: String) -> &mut Self {
+    pub fn name(&mut self, value: String) -> &mut Self {
         self.name = Some(value);
         self
     }
 
-    pub fn with_started_at(&mut self, value: String) -> &mut Self {
+    pub fn started_at(&mut self, value: String) -> &mut Self {
         self.started_at = Some(value);
         self
     }
 
-    pub fn with_state(&mut self, value: String) -> &mut Self {
+    pub fn state(&mut self, value: String) -> &mut Self {
         self.state = Some(value);
         self
     }
 
-    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
         self.tags = Some(value);
         self
     }
 }
+
 impl Default for ContainerAttributes {
     fn default() -> Self {
         Self::new()

@@ -24,7 +24,7 @@ impl MonitorDowntimeMatchResponse {
         }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: Vec<crate::datadogV2::model::MonitorDowntimeMatchResponseData>,
     ) -> &mut Self {
@@ -32,11 +32,12 @@ impl MonitorDowntimeMatchResponse {
         self
     }
 
-    pub fn with_meta(&mut self, value: crate::datadogV2::model::DowntimeMeta) -> &mut Self {
+    pub fn meta(&mut self, value: crate::datadogV2::model::DowntimeMeta) -> &mut Self {
         self.meta = Some(value);
         self
     }
 }
+
 impl Default for MonitorDowntimeMatchResponse {
     fn default() -> Self {
         Self::new()

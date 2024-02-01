@@ -28,7 +28,7 @@ impl CIAppPipelinesAnalyticsAggregateResponse {
         }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: crate::datadogV2::model::CIAppPipelinesAggregationBucketsResponse,
     ) -> &mut Self {
@@ -36,19 +36,17 @@ impl CIAppPipelinesAnalyticsAggregateResponse {
         self
     }
 
-    pub fn with_links(&mut self, value: crate::datadogV2::model::CIAppResponseLinks) -> &mut Self {
+    pub fn links(&mut self, value: crate::datadogV2::model::CIAppResponseLinks) -> &mut Self {
         self.links = Some(value);
         self
     }
 
-    pub fn with_meta(
-        &mut self,
-        value: crate::datadogV2::model::CIAppResponseMetadata,
-    ) -> &mut Self {
+    pub fn meta(&mut self, value: crate::datadogV2::model::CIAppResponseMetadata) -> &mut Self {
         self.meta = Some(value);
         self
     }
 }
+
 impl Default for CIAppPipelinesAnalyticsAggregateResponse {
     fn default() -> Self {
         Self::new()

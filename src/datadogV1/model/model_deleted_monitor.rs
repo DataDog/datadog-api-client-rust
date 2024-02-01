@@ -20,11 +20,12 @@ impl DeletedMonitor {
         }
     }
 
-    pub fn with_deleted_monitor_id(&mut self, value: i64) -> &mut Self {
+    pub fn deleted_monitor_id(&mut self, value: i64) -> &mut Self {
         self.deleted_monitor_id = Some(value);
         self
     }
 }
+
 impl Default for DeletedMonitor {
     fn default() -> Self {
         Self::new()

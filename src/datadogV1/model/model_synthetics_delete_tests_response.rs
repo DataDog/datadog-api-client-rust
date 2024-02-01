@@ -21,7 +21,7 @@ impl SyntheticsDeleteTestsResponse {
         }
     }
 
-    pub fn with_deleted_tests(
+    pub fn deleted_tests(
         &mut self,
         value: Vec<crate::datadogV1::model::SyntheticsDeletedTest>,
     ) -> &mut Self {
@@ -29,6 +29,7 @@ impl SyntheticsDeleteTestsResponse {
         self
     }
 }
+
 impl Default for SyntheticsDeleteTestsResponse {
     fn default() -> Self {
         Self::new()

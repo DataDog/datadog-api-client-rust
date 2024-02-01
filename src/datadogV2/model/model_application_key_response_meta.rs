@@ -24,12 +24,12 @@ impl ApplicationKeyResponseMeta {
         }
     }
 
-    pub fn with_max_allowed_per_user(&mut self, value: i64) -> &mut Self {
+    pub fn max_allowed_per_user(&mut self, value: i64) -> &mut Self {
         self.max_allowed_per_user = Some(value);
         self
     }
 
-    pub fn with_page(
+    pub fn page(
         &mut self,
         value: crate::datadogV2::model::ApplicationKeyResponseMetaPage,
     ) -> &mut Self {
@@ -37,6 +37,7 @@ impl ApplicationKeyResponseMeta {
         self
     }
 }
+
 impl Default for ApplicationKeyResponseMeta {
     fn default() -> Self {
         Self::new()

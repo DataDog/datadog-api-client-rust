@@ -24,7 +24,7 @@ impl ScalarResponse {
         }
     }
 
-    pub fn with_attributes(
+    pub fn attributes(
         &mut self,
         value: crate::datadogV2::model::ScalarFormulaResponseAtrributes,
     ) -> &mut Self {
@@ -32,7 +32,7 @@ impl ScalarResponse {
         self
     }
 
-    pub fn with_type_(
+    pub fn type_(
         &mut self,
         value: crate::datadogV2::model::ScalarFormulaResponseType,
     ) -> &mut Self {
@@ -40,6 +40,7 @@ impl ScalarResponse {
         self
     }
 }
+
 impl Default for ScalarResponse {
     fn default() -> Self {
         Self::new()

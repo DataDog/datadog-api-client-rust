@@ -63,20 +63,17 @@ impl OrganizationSettings {
         }
     }
 
-    pub fn with_private_widget_share(&mut self, value: bool) -> &mut Self {
+    pub fn private_widget_share(&mut self, value: bool) -> &mut Self {
         self.private_widget_share = Some(value);
         self
     }
 
-    pub fn with_saml(
-        &mut self,
-        value: crate::datadogV1::model::OrganizationSettingsSaml,
-    ) -> &mut Self {
+    pub fn saml(&mut self, value: crate::datadogV1::model::OrganizationSettingsSaml) -> &mut Self {
         self.saml = Some(value);
         self
     }
 
-    pub fn with_saml_autocreate_access_role(
+    pub fn saml_autocreate_access_role(
         &mut self,
         value: Option<crate::datadogV1::model::AccessRole>,
     ) -> &mut Self {
@@ -84,7 +81,7 @@ impl OrganizationSettings {
         self
     }
 
-    pub fn with_saml_autocreate_users_domains(
+    pub fn saml_autocreate_users_domains(
         &mut self,
         value: crate::datadogV1::model::OrganizationSettingsSamlAutocreateUsersDomains,
     ) -> &mut Self {
@@ -92,17 +89,17 @@ impl OrganizationSettings {
         self
     }
 
-    pub fn with_saml_can_be_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn saml_can_be_enabled(&mut self, value: bool) -> &mut Self {
         self.saml_can_be_enabled = Some(value);
         self
     }
 
-    pub fn with_saml_idp_endpoint(&mut self, value: String) -> &mut Self {
+    pub fn saml_idp_endpoint(&mut self, value: String) -> &mut Self {
         self.saml_idp_endpoint = Some(value);
         self
     }
 
-    pub fn with_saml_idp_initiated_login(
+    pub fn saml_idp_initiated_login(
         &mut self,
         value: crate::datadogV1::model::OrganizationSettingsSamlIdpInitiatedLogin,
     ) -> &mut Self {
@@ -110,17 +107,17 @@ impl OrganizationSettings {
         self
     }
 
-    pub fn with_saml_idp_metadata_uploaded(&mut self, value: bool) -> &mut Self {
+    pub fn saml_idp_metadata_uploaded(&mut self, value: bool) -> &mut Self {
         self.saml_idp_metadata_uploaded = Some(value);
         self
     }
 
-    pub fn with_saml_login_url(&mut self, value: String) -> &mut Self {
+    pub fn saml_login_url(&mut self, value: String) -> &mut Self {
         self.saml_login_url = Some(value);
         self
     }
 
-    pub fn with_saml_strict_mode(
+    pub fn saml_strict_mode(
         &mut self,
         value: crate::datadogV1::model::OrganizationSettingsSamlStrictMode,
     ) -> &mut Self {
@@ -128,6 +125,7 @@ impl OrganizationSettings {
         self
     }
 }
+
 impl Default for OrganizationSettings {
     fn default() -> Self {
         Self::new()

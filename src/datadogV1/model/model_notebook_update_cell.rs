@@ -8,6 +8,6 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum NotebookUpdateCell {
-    NotebookCellCreateRequest(crate::datadogV1::model::NotebookCellCreateRequest),
-    NotebookCellUpdateRequest(crate::datadogV1::model::NotebookCellUpdateRequest),
+    NotebookCellCreateRequest(Box<crate::datadogV1::model::NotebookCellCreateRequest>),
+    NotebookCellUpdateRequest(Box<crate::datadogV1::model::NotebookCellUpdateRequest>),
 }

@@ -36,12 +36,12 @@ impl CloudConfigurationComplianceRuleOptions {
         }
     }
 
-    pub fn with_complex_rule(&mut self, value: bool) -> &mut Self {
+    pub fn complex_rule(&mut self, value: bool) -> &mut Self {
         self.complex_rule = Some(value);
         self
     }
 
-    pub fn with_rego_rule(
+    pub fn rego_rule(
         &mut self,
         value: crate::datadogV2::model::CloudConfigurationRegoRule,
     ) -> &mut Self {
@@ -49,11 +49,12 @@ impl CloudConfigurationComplianceRuleOptions {
         self
     }
 
-    pub fn with_resource_type(&mut self, value: String) -> &mut Self {
+    pub fn resource_type(&mut self, value: String) -> &mut Self {
         self.resource_type = Some(value);
         self
     }
 }
+
 impl Default for CloudConfigurationComplianceRuleOptions {
     fn default() -> Self {
         Self::new()

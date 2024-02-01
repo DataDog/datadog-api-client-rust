@@ -6,10 +6,18 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// UploadIdPMetadataOptionalParams is a struct for passing parameters to the method [`OrganizationsAPI::upload_id_p_metadata`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct UploadIdPMetadataOptionalParams {
     /// The IdP metadata XML file
     pub idp_file: Option<Vec<u8>>,
+}
+
+impl UploadIdPMetadataOptionalParams {
+    /// The IdP metadata XML file
+    pub fn idp_file(&mut self, value: Vec<u8>) -> &mut Self {
+        self.idp_file = Some(value);
+        self
+    }
 }
 
 /// UploadIdPMetadataError is a struct for typed errors of method [`OrganizationsAPI::upload_id_p_metadata`]

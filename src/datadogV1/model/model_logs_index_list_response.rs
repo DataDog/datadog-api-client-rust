@@ -18,11 +18,12 @@ impl LogsIndexListResponse {
         LogsIndexListResponse { indexes: None }
     }
 
-    pub fn with_indexes(&mut self, value: Vec<crate::datadogV1::model::LogsIndex>) -> &mut Self {
+    pub fn indexes(&mut self, value: Vec<crate::datadogV1::model::LogsIndex>) -> &mut Self {
         self.indexes = Some(value);
         self
     }
 }
+
 impl Default for LogsIndexListResponse {
     fn default() -> Self {
         Self::new()

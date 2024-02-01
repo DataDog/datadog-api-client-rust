@@ -18,7 +18,7 @@ impl CloudWorkloadSecurityAgentRuleResponse {
         CloudWorkloadSecurityAgentRuleResponse { data: None }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleData,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl CloudWorkloadSecurityAgentRuleResponse {
         self
     }
 }
+
 impl Default for CloudWorkloadSecurityAgentRuleResponse {
     fn default() -> Self {
         Self::new()

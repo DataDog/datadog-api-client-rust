@@ -24,11 +24,12 @@ impl HourlyUsagePagination {
         }
     }
 
-    pub fn with_next_record_id(&mut self, value: Option<String>) -> &mut Self {
+    pub fn next_record_id(&mut self, value: Option<String>) -> &mut Self {
         self.next_record_id = Some(value);
         self
     }
 }
+
 impl Default for HourlyUsagePagination {
     fn default() -> Self {
         Self::new()

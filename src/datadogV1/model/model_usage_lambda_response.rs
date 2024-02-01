@@ -19,14 +19,12 @@ impl UsageLambdaResponse {
         UsageLambdaResponse { usage: None }
     }
 
-    pub fn with_usage(
-        &mut self,
-        value: Vec<crate::datadogV1::model::UsageLambdaHour>,
-    ) -> &mut Self {
+    pub fn usage(&mut self, value: Vec<crate::datadogV1::model::UsageLambdaHour>) -> &mut Self {
         self.usage = Some(value);
         self
     }
 }
+
 impl Default for UsageLambdaResponse {
     fn default() -> Self {
         Self::new()

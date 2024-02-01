@@ -28,7 +28,7 @@ impl LogsMetricResponseAttributes {
         }
     }
 
-    pub fn with_compute(
+    pub fn compute(
         &mut self,
         value: crate::datadogV2::model::LogsMetricResponseCompute,
     ) -> &mut Self {
@@ -36,7 +36,7 @@ impl LogsMetricResponseAttributes {
         self
     }
 
-    pub fn with_filter(
+    pub fn filter(
         &mut self,
         value: crate::datadogV2::model::LogsMetricResponseFilter,
     ) -> &mut Self {
@@ -44,7 +44,7 @@ impl LogsMetricResponseAttributes {
         self
     }
 
-    pub fn with_group_by(
+    pub fn group_by(
         &mut self,
         value: Vec<crate::datadogV2::model::LogsMetricResponseGroupBy>,
     ) -> &mut Self {
@@ -52,6 +52,7 @@ impl LogsMetricResponseAttributes {
         self
     }
 }
+
 impl Default for LogsMetricResponseAttributes {
     fn default() -> Self {
         Self::new()

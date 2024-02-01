@@ -28,21 +28,22 @@ impl LogsAPIError {
         }
     }
 
-    pub fn with_code(&mut self, value: String) -> &mut Self {
+    pub fn code(&mut self, value: String) -> &mut Self {
         self.code = Some(value);
         self
     }
 
-    pub fn with_details(&mut self, value: Vec<crate::datadogV1::model::LogsAPIError>) -> &mut Self {
+    pub fn details(&mut self, value: Vec<crate::datadogV1::model::LogsAPIError>) -> &mut Self {
         self.details = Some(value);
         self
     }
 
-    pub fn with_message(&mut self, value: String) -> &mut Self {
+    pub fn message(&mut self, value: String) -> &mut Self {
         self.message = Some(value);
         self
     }
 }
+
 impl Default for LogsAPIError {
     fn default() -> Self {
         Self::new()

@@ -53,22 +53,22 @@ impl LogsArchiveAttributes {
         }
     }
 
-    pub fn with_include_tags(&mut self, value: bool) -> &mut Self {
+    pub fn include_tags(&mut self, value: bool) -> &mut Self {
         self.include_tags = Some(value);
         self
     }
 
-    pub fn with_rehydration_max_scan_size_in_gb(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn rehydration_max_scan_size_in_gb(&mut self, value: Option<i64>) -> &mut Self {
         self.rehydration_max_scan_size_in_gb = Some(value);
         self
     }
 
-    pub fn with_rehydration_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn rehydration_tags(&mut self, value: Vec<String>) -> &mut Self {
         self.rehydration_tags = Some(value);
         self
     }
 
-    pub fn with_state(&mut self, value: crate::datadogV2::model::LogsArchiveState) -> &mut Self {
+    pub fn state(&mut self, value: crate::datadogV2::model::LogsArchiveState) -> &mut Self {
         self.state = Some(value);
         self
     }

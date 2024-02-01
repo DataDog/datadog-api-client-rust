@@ -24,16 +24,17 @@ impl MetricIngestedIndexedVolumeAttributes {
         }
     }
 
-    pub fn with_indexed_volume(&mut self, value: i64) -> &mut Self {
+    pub fn indexed_volume(&mut self, value: i64) -> &mut Self {
         self.indexed_volume = Some(value);
         self
     }
 
-    pub fn with_ingested_volume(&mut self, value: i64) -> &mut Self {
+    pub fn ingested_volume(&mut self, value: i64) -> &mut Self {
         self.ingested_volume = Some(value);
         self
     }
 }
+
 impl Default for MetricIngestedIndexedVolumeAttributes {
     fn default() -> Self {
         Self::new()

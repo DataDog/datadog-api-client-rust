@@ -28,7 +28,7 @@ impl SensitiveDataScannerGetConfigResponse {
         }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: crate::datadogV2::model::SensitiveDataScannerGetConfigResponseData,
     ) -> &mut Self {
@@ -36,7 +36,7 @@ impl SensitiveDataScannerGetConfigResponse {
         self
     }
 
-    pub fn with_included(
+    pub fn included(
         &mut self,
         value: Vec<crate::datadogV2::model::SensitiveDataScannerGetConfigIncludedItem>,
     ) -> &mut Self {
@@ -44,14 +44,12 @@ impl SensitiveDataScannerGetConfigResponse {
         self
     }
 
-    pub fn with_meta(
-        &mut self,
-        value: crate::datadogV2::model::SensitiveDataScannerMeta,
-    ) -> &mut Self {
+    pub fn meta(&mut self, value: crate::datadogV2::model::SensitiveDataScannerMeta) -> &mut Self {
         self.meta = Some(value);
         self
     }
 }
+
 impl Default for SensitiveDataScannerGetConfigResponse {
     fn default() -> Self {
         Self::new()

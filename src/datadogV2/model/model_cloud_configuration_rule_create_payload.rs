@@ -61,7 +61,7 @@ impl CloudConfigurationRuleCreatePayload {
         }
     }
 
-    pub fn with_filters(
+    pub fn filters(
         &mut self,
         value: Vec<crate::datadogV2::model::SecurityMonitoringFilter>,
     ) -> &mut Self {
@@ -69,12 +69,12 @@ impl CloudConfigurationRuleCreatePayload {
         self
     }
 
-    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
         self.tags = Some(value);
         self
     }
 
-    pub fn with_type_(
+    pub fn type_(
         &mut self,
         value: crate::datadogV2::model::CloudConfigurationRuleType,
     ) -> &mut Self {

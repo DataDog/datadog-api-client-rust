@@ -18,11 +18,12 @@ impl NotebookResponse {
         NotebookResponse { data: None }
     }
 
-    pub fn with_data(&mut self, value: crate::datadogV1::model::NotebookResponseData) -> &mut Self {
+    pub fn data(&mut self, value: crate::datadogV1::model::NotebookResponseData) -> &mut Self {
         self.data = Some(value);
         self
     }
 }
+
 impl Default for NotebookResponse {
     fn default() -> Self {
         Self::new()

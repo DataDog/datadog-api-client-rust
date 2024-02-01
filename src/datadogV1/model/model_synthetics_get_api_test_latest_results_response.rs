@@ -24,12 +24,12 @@ impl SyntheticsGetAPITestLatestResultsResponse {
         }
     }
 
-    pub fn with_last_timestamp_fetched(&mut self, value: i64) -> &mut Self {
+    pub fn last_timestamp_fetched(&mut self, value: i64) -> &mut Self {
         self.last_timestamp_fetched = Some(value);
         self
     }
 
-    pub fn with_results(
+    pub fn results(
         &mut self,
         value: Vec<crate::datadogV1::model::SyntheticsAPITestResultShort>,
     ) -> &mut Self {
@@ -37,6 +37,7 @@ impl SyntheticsGetAPITestLatestResultsResponse {
         self
     }
 }
+
 impl Default for SyntheticsGetAPITestLatestResultsResponse {
     fn default() -> Self {
         Self::new()

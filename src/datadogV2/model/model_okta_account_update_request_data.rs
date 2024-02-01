@@ -24,7 +24,7 @@ impl OktaAccountUpdateRequestData {
         }
     }
 
-    pub fn with_attributes(
+    pub fn attributes(
         &mut self,
         value: crate::datadogV2::model::OktaAccountUpdateRequestAttributes,
     ) -> &mut Self {
@@ -32,11 +32,12 @@ impl OktaAccountUpdateRequestData {
         self
     }
 
-    pub fn with_type_(&mut self, value: crate::datadogV2::model::OktaAccountType) -> &mut Self {
+    pub fn type_(&mut self, value: crate::datadogV2::model::OktaAccountType) -> &mut Self {
         self.type_ = Some(value);
         self
     }
 }
+
 impl Default for OktaAccountUpdateRequestData {
     fn default() -> Self {
         Self::new()

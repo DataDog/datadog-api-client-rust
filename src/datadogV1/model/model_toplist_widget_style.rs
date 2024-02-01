@@ -24,22 +24,17 @@ impl ToplistWidgetStyle {
         }
     }
 
-    pub fn with_display(
-        &mut self,
-        value: crate::datadogV1::model::ToplistWidgetDisplay,
-    ) -> &mut Self {
+    pub fn display(&mut self, value: crate::datadogV1::model::ToplistWidgetDisplay) -> &mut Self {
         self.display = Some(value);
         self
     }
 
-    pub fn with_scaling(
-        &mut self,
-        value: crate::datadogV1::model::ToplistWidgetScaling,
-    ) -> &mut Self {
+    pub fn scaling(&mut self, value: crate::datadogV1::model::ToplistWidgetScaling) -> &mut Self {
         self.scaling = Some(value);
         self
     }
 }
+
 impl Default for ToplistWidgetStyle {
     fn default() -> Self {
         Self::new()

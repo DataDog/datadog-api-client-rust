@@ -24,16 +24,17 @@ impl FindingRule {
         }
     }
 
-    pub fn with_id(&mut self, value: String) -> &mut Self {
+    pub fn id(&mut self, value: String) -> &mut Self {
         self.id = Some(value);
         self
     }
 
-    pub fn with_name(&mut self, value: String) -> &mut Self {
+    pub fn name(&mut self, value: String) -> &mut Self {
         self.name = Some(value);
         self
     }
 }
+
 impl Default for FindingRule {
     fn default() -> Self {
         Self::new()

@@ -57,17 +57,17 @@ impl ImageWidgetDefinition {
         }
     }
 
-    pub fn with_has_background(&mut self, value: bool) -> &mut Self {
+    pub fn has_background(&mut self, value: bool) -> &mut Self {
         self.has_background = Some(value);
         self
     }
 
-    pub fn with_has_border(&mut self, value: bool) -> &mut Self {
+    pub fn has_border(&mut self, value: bool) -> &mut Self {
         self.has_border = Some(value);
         self
     }
 
-    pub fn with_horizontal_align(
+    pub fn horizontal_align(
         &mut self,
         value: crate::datadogV1::model::WidgetHorizontalAlign,
     ) -> &mut Self {
@@ -75,22 +75,22 @@ impl ImageWidgetDefinition {
         self
     }
 
-    pub fn with_margin(&mut self, value: crate::datadogV1::model::WidgetMargin) -> &mut Self {
+    pub fn margin(&mut self, value: crate::datadogV1::model::WidgetMargin) -> &mut Self {
         self.margin = Some(value);
         self
     }
 
-    pub fn with_sizing(&mut self, value: crate::datadogV1::model::WidgetImageSizing) -> &mut Self {
+    pub fn sizing(&mut self, value: crate::datadogV1::model::WidgetImageSizing) -> &mut Self {
         self.sizing = Some(value);
         self
     }
 
-    pub fn with_url_dark_theme(&mut self, value: String) -> &mut Self {
+    pub fn url_dark_theme(&mut self, value: String) -> &mut Self {
         self.url_dark_theme = Some(value);
         self
     }
 
-    pub fn with_vertical_align(
+    pub fn vertical_align(
         &mut self,
         value: crate::datadogV1::model::WidgetVerticalAlign,
     ) -> &mut Self {

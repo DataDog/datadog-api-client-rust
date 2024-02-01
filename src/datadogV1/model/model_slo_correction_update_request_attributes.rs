@@ -45,44 +45,42 @@ impl SLOCorrectionUpdateRequestAttributes {
         }
     }
 
-    pub fn with_category(
-        &mut self,
-        value: crate::datadogV1::model::SLOCorrectionCategory,
-    ) -> &mut Self {
+    pub fn category(&mut self, value: crate::datadogV1::model::SLOCorrectionCategory) -> &mut Self {
         self.category = Some(value);
         self
     }
 
-    pub fn with_description(&mut self, value: String) -> &mut Self {
+    pub fn description(&mut self, value: String) -> &mut Self {
         self.description = Some(value);
         self
     }
 
-    pub fn with_duration(&mut self, value: i64) -> &mut Self {
+    pub fn duration(&mut self, value: i64) -> &mut Self {
         self.duration = Some(value);
         self
     }
 
-    pub fn with_end(&mut self, value: i64) -> &mut Self {
+    pub fn end(&mut self, value: i64) -> &mut Self {
         self.end = Some(value);
         self
     }
 
-    pub fn with_rrule(&mut self, value: String) -> &mut Self {
+    pub fn rrule(&mut self, value: String) -> &mut Self {
         self.rrule = Some(value);
         self
     }
 
-    pub fn with_start(&mut self, value: i64) -> &mut Self {
+    pub fn start(&mut self, value: i64) -> &mut Self {
         self.start = Some(value);
         self
     }
 
-    pub fn with_timezone(&mut self, value: String) -> &mut Self {
+    pub fn timezone(&mut self, value: String) -> &mut Self {
         self.timezone = Some(value);
         self
     }
 }
+
 impl Default for SLOCorrectionUpdateRequestAttributes {
     fn default() -> Self {
         Self::new()

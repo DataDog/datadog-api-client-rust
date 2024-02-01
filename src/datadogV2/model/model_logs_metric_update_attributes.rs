@@ -28,7 +28,7 @@ impl LogsMetricUpdateAttributes {
         }
     }
 
-    pub fn with_compute(
+    pub fn compute(
         &mut self,
         value: crate::datadogV2::model::LogsMetricUpdateCompute,
     ) -> &mut Self {
@@ -36,12 +36,12 @@ impl LogsMetricUpdateAttributes {
         self
     }
 
-    pub fn with_filter(&mut self, value: crate::datadogV2::model::LogsMetricFilter) -> &mut Self {
+    pub fn filter(&mut self, value: crate::datadogV2::model::LogsMetricFilter) -> &mut Self {
         self.filter = Some(value);
         self
     }
 
-    pub fn with_group_by(
+    pub fn group_by(
         &mut self,
         value: Vec<crate::datadogV2::model::LogsMetricGroupBy>,
     ) -> &mut Self {
@@ -49,6 +49,7 @@ impl LogsMetricUpdateAttributes {
         self
     }
 }
+
 impl Default for LogsMetricUpdateAttributes {
     fn default() -> Self {
         Self::new()

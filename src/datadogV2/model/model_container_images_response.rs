@@ -28,15 +28,12 @@ impl ContainerImagesResponse {
         }
     }
 
-    pub fn with_data(
-        &mut self,
-        value: Vec<crate::datadogV2::model::ContainerImageItem>,
-    ) -> &mut Self {
+    pub fn data(&mut self, value: Vec<crate::datadogV2::model::ContainerImageItem>) -> &mut Self {
         self.data = Some(value);
         self
     }
 
-    pub fn with_links(
+    pub fn links(
         &mut self,
         value: crate::datadogV2::model::ContainerImagesResponseLinks,
     ) -> &mut Self {
@@ -44,11 +41,12 @@ impl ContainerImagesResponse {
         self
     }
 
-    pub fn with_meta(&mut self, value: crate::datadogV2::model::ContainerImageMeta) -> &mut Self {
+    pub fn meta(&mut self, value: crate::datadogV2::model::ContainerImageMeta) -> &mut Self {
         self.meta = Some(value);
         self
     }
 }
+
 impl Default for ContainerImagesResponse {
     fn default() -> Self {
         Self::new()

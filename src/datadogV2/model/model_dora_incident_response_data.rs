@@ -21,7 +21,7 @@ impl DORAIncidentResponseData {
         DORAIncidentResponseData { id, type_: None }
     }
 
-    pub fn with_type_(&mut self, value: crate::datadogV2::model::DORAIncidentType) -> &mut Self {
+    pub fn type_(&mut self, value: crate::datadogV2::model::DORAIncidentType) -> &mut Self {
         self.type_ = Some(value);
         self
     }

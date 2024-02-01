@@ -18,11 +18,12 @@ impl SuccessfulSignalUpdateResponse {
         SuccessfulSignalUpdateResponse { status: None }
     }
 
-    pub fn with_status(&mut self, value: String) -> &mut Self {
+    pub fn status(&mut self, value: String) -> &mut Self {
         self.status = Some(value);
         self
     }
 }
+
 impl Default for SuccessfulSignalUpdateResponse {
     fn default() -> Self {
         Self::new()

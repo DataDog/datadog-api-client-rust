@@ -64,17 +64,17 @@ impl FormulaAndFunctionApmDependencyStatsQueryDefinition {
         }
     }
 
-    pub fn with_is_upstream(&mut self, value: bool) -> &mut Self {
+    pub fn is_upstream(&mut self, value: bool) -> &mut Self {
         self.is_upstream = Some(value);
         self
     }
 
-    pub fn with_primary_tag_name(&mut self, value: String) -> &mut Self {
+    pub fn primary_tag_name(&mut self, value: String) -> &mut Self {
         self.primary_tag_name = Some(value);
         self
     }
 
-    pub fn with_primary_tag_value(&mut self, value: String) -> &mut Self {
+    pub fn primary_tag_value(&mut self, value: String) -> &mut Self {
         self.primary_tag_value = Some(value);
         self
     }

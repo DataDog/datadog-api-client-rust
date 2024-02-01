@@ -28,7 +28,7 @@ impl TopologyQuery {
         }
     }
 
-    pub fn with_data_source(
+    pub fn data_source(
         &mut self,
         value: crate::datadogV1::model::TopologyQueryDataSource,
     ) -> &mut Self {
@@ -36,16 +36,17 @@ impl TopologyQuery {
         self
     }
 
-    pub fn with_filters(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn filters(&mut self, value: Vec<String>) -> &mut Self {
         self.filters = Some(value);
         self
     }
 
-    pub fn with_service(&mut self, value: String) -> &mut Self {
+    pub fn service(&mut self, value: String) -> &mut Self {
         self.service = Some(value);
         self
     }
 }
+
 impl Default for TopologyQuery {
     fn default() -> Self {
         Self::new()

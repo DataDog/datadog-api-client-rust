@@ -23,7 +23,7 @@ impl SharedDashboardInvites {
         SharedDashboardInvites { data, meta: None }
     }
 
-    pub fn with_meta(
+    pub fn meta(
         &mut self,
         value: crate::datadogV1::model::SharedDashboardInvitesMeta,
     ) -> &mut Self {

@@ -36,31 +36,32 @@ impl Unit {
         }
     }
 
-    pub fn with_family(&mut self, value: String) -> &mut Self {
+    pub fn family(&mut self, value: String) -> &mut Self {
         self.family = Some(value);
         self
     }
 
-    pub fn with_name(&mut self, value: String) -> &mut Self {
+    pub fn name(&mut self, value: String) -> &mut Self {
         self.name = Some(value);
         self
     }
 
-    pub fn with_plural(&mut self, value: String) -> &mut Self {
+    pub fn plural(&mut self, value: String) -> &mut Self {
         self.plural = Some(value);
         self
     }
 
-    pub fn with_scale_factor(&mut self, value: f64) -> &mut Self {
+    pub fn scale_factor(&mut self, value: f64) -> &mut Self {
         self.scale_factor = Some(value);
         self
     }
 
-    pub fn with_short_name(&mut self, value: String) -> &mut Self {
+    pub fn short_name(&mut self, value: String) -> &mut Self {
         self.short_name = Some(value);
         self
     }
 }
+
 impl Default for Unit {
     fn default() -> Self {
         Self::new()

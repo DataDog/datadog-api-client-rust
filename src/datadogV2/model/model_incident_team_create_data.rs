@@ -28,7 +28,7 @@ impl IncidentTeamCreateData {
         }
     }
 
-    pub fn with_attributes(
+    pub fn attributes(
         &mut self,
         value: crate::datadogV2::model::IncidentTeamCreateAttributes,
     ) -> &mut Self {
@@ -36,7 +36,7 @@ impl IncidentTeamCreateData {
         self
     }
 
-    pub fn with_relationships(
+    pub fn relationships(
         &mut self,
         value: crate::datadogV2::model::IncidentTeamRelationships,
     ) -> &mut Self {

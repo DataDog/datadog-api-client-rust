@@ -32,7 +32,7 @@ impl SensitiveDataScannerRuleIncludedItem {
         }
     }
 
-    pub fn with_attributes(
+    pub fn attributes(
         &mut self,
         value: crate::datadogV2::model::SensitiveDataScannerRuleAttributes,
     ) -> &mut Self {
@@ -40,12 +40,12 @@ impl SensitiveDataScannerRuleIncludedItem {
         self
     }
 
-    pub fn with_id(&mut self, value: String) -> &mut Self {
+    pub fn id(&mut self, value: String) -> &mut Self {
         self.id = Some(value);
         self
     }
 
-    pub fn with_relationships(
+    pub fn relationships(
         &mut self,
         value: crate::datadogV2::model::SensitiveDataScannerRuleRelationships,
     ) -> &mut Self {
@@ -53,7 +53,7 @@ impl SensitiveDataScannerRuleIncludedItem {
         self
     }
 
-    pub fn with_type_(
+    pub fn type_(
         &mut self,
         value: crate::datadogV2::model::SensitiveDataScannerRuleType,
     ) -> &mut Self {
@@ -61,6 +61,7 @@ impl SensitiveDataScannerRuleIncludedItem {
         self
     }
 }
+
 impl Default for SensitiveDataScannerRuleIncludedItem {
     fn default() -> Self {
         Self::new()

@@ -53,51 +53,52 @@ impl SyntheticsTiming {
         }
     }
 
-    pub fn with_dns(&mut self, value: f64) -> &mut Self {
+    pub fn dns(&mut self, value: f64) -> &mut Self {
         self.dns = Some(value);
         self
     }
 
-    pub fn with_download(&mut self, value: f64) -> &mut Self {
+    pub fn download(&mut self, value: f64) -> &mut Self {
         self.download = Some(value);
         self
     }
 
-    pub fn with_first_byte(&mut self, value: f64) -> &mut Self {
+    pub fn first_byte(&mut self, value: f64) -> &mut Self {
         self.first_byte = Some(value);
         self
     }
 
-    pub fn with_handshake(&mut self, value: f64) -> &mut Self {
+    pub fn handshake(&mut self, value: f64) -> &mut Self {
         self.handshake = Some(value);
         self
     }
 
-    pub fn with_redirect(&mut self, value: f64) -> &mut Self {
+    pub fn redirect(&mut self, value: f64) -> &mut Self {
         self.redirect = Some(value);
         self
     }
 
-    pub fn with_ssl(&mut self, value: f64) -> &mut Self {
+    pub fn ssl(&mut self, value: f64) -> &mut Self {
         self.ssl = Some(value);
         self
     }
 
-    pub fn with_tcp(&mut self, value: f64) -> &mut Self {
+    pub fn tcp(&mut self, value: f64) -> &mut Self {
         self.tcp = Some(value);
         self
     }
 
-    pub fn with_total(&mut self, value: f64) -> &mut Self {
+    pub fn total(&mut self, value: f64) -> &mut Self {
         self.total = Some(value);
         self
     }
 
-    pub fn with_wait(&mut self, value: f64) -> &mut Self {
+    pub fn wait(&mut self, value: f64) -> &mut Self {
         self.wait = Some(value);
         self
     }
 }
+
 impl Default for SyntheticsTiming {
     fn default() -> Self {
         Self::new()

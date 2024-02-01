@@ -30,7 +30,7 @@ impl IncidentSearchResponse {
         }
     }
 
-    pub fn with_included(
+    pub fn included(
         &mut self,
         value: Vec<crate::datadogV2::model::IncidentResponseIncludedItem>,
     ) -> &mut Self {
@@ -38,7 +38,7 @@ impl IncidentSearchResponse {
         self
     }
 
-    pub fn with_meta(
+    pub fn meta(
         &mut self,
         value: crate::datadogV2::model::IncidentSearchResponseMeta,
     ) -> &mut Self {

@@ -25,12 +25,12 @@ impl AuthNMappingRelationships {
         }
     }
 
-    pub fn with_role(&mut self, value: crate::datadogV2::model::RelationshipToRole) -> &mut Self {
+    pub fn role(&mut self, value: crate::datadogV2::model::RelationshipToRole) -> &mut Self {
         self.role = Some(value);
         self
     }
 
-    pub fn with_saml_assertion_attribute(
+    pub fn saml_assertion_attribute(
         &mut self,
         value: crate::datadogV2::model::RelationshipToSAMLAssertionAttribute,
     ) -> &mut Self {
@@ -38,6 +38,7 @@ impl AuthNMappingRelationships {
         self
     }
 }
+
 impl Default for AuthNMappingRelationships {
     fn default() -> Self {
         Self::new()

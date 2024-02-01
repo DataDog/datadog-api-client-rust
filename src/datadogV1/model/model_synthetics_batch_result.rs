@@ -56,17 +56,17 @@ impl SyntheticsBatchResult {
         }
     }
 
-    pub fn with_device(&mut self, value: crate::datadogV1::model::SyntheticsDeviceID) -> &mut Self {
+    pub fn device(&mut self, value: crate::datadogV1::model::SyntheticsDeviceID) -> &mut Self {
         self.device = Some(value);
         self
     }
 
-    pub fn with_duration(&mut self, value: f64) -> &mut Self {
+    pub fn duration(&mut self, value: f64) -> &mut Self {
         self.duration = Some(value);
         self
     }
 
-    pub fn with_execution_rule(
+    pub fn execution_rule(
         &mut self,
         value: crate::datadogV1::model::SyntheticsTestExecutionRule,
     ) -> &mut Self {
@@ -74,37 +74,37 @@ impl SyntheticsBatchResult {
         self
     }
 
-    pub fn with_location(&mut self, value: String) -> &mut Self {
+    pub fn location(&mut self, value: String) -> &mut Self {
         self.location = Some(value);
         self
     }
 
-    pub fn with_result_id(&mut self, value: String) -> &mut Self {
+    pub fn result_id(&mut self, value: String) -> &mut Self {
         self.result_id = Some(value);
         self
     }
 
-    pub fn with_retries(&mut self, value: f64) -> &mut Self {
+    pub fn retries(&mut self, value: f64) -> &mut Self {
         self.retries = Some(value);
         self
     }
 
-    pub fn with_status(&mut self, value: crate::datadogV1::model::SyntheticsStatus) -> &mut Self {
+    pub fn status(&mut self, value: crate::datadogV1::model::SyntheticsStatus) -> &mut Self {
         self.status = Some(value);
         self
     }
 
-    pub fn with_test_name(&mut self, value: String) -> &mut Self {
+    pub fn test_name(&mut self, value: String) -> &mut Self {
         self.test_name = Some(value);
         self
     }
 
-    pub fn with_test_public_id(&mut self, value: String) -> &mut Self {
+    pub fn test_public_id(&mut self, value: String) -> &mut Self {
         self.test_public_id = Some(value);
         self
     }
 
-    pub fn with_test_type(
+    pub fn test_type(
         &mut self,
         value: crate::datadogV1::model::SyntheticsTestDetailsType,
     ) -> &mut Self {
@@ -112,6 +112,7 @@ impl SyntheticsBatchResult {
         self
     }
 }
+
 impl Default for SyntheticsBatchResult {
     fn default() -> Self {
         Self::new()

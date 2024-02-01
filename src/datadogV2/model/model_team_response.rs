@@ -18,11 +18,12 @@ impl TeamResponse {
         TeamResponse { data: None }
     }
 
-    pub fn with_data(&mut self, value: crate::datadogV2::model::Team) -> &mut Self {
+    pub fn data(&mut self, value: crate::datadogV2::model::Team) -> &mut Self {
         self.data = Some(value);
         self
     }
 }
+
 impl Default for TeamResponse {
     fn default() -> Self {
         Self::new()

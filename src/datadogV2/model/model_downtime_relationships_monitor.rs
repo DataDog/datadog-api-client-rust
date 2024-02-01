@@ -18,7 +18,7 @@ impl DowntimeRelationshipsMonitor {
         DowntimeRelationshipsMonitor { data: None }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: Option<crate::datadogV2::model::DowntimeRelationshipsMonitorData>,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl DowntimeRelationshipsMonitor {
         self
     }
 }
+
 impl Default for DowntimeRelationshipsMonitor {
     fn default() -> Self {
         Self::new()

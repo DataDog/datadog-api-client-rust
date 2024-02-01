@@ -32,29 +32,27 @@ impl EventResponseAttributes {
         }
     }
 
-    pub fn with_attributes(
-        &mut self,
-        value: crate::datadogV2::model::EventAttributes,
-    ) -> &mut Self {
+    pub fn attributes(&mut self, value: crate::datadogV2::model::EventAttributes) -> &mut Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn with_message(&mut self, value: String) -> &mut Self {
+    pub fn message(&mut self, value: String) -> &mut Self {
         self.message = Some(value);
         self
     }
 
-    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
         self.tags = Some(value);
         self
     }
 
-    pub fn with_timestamp(&mut self, value: String) -> &mut Self {
+    pub fn timestamp(&mut self, value: String) -> &mut Self {
         self.timestamp = Some(value);
         self
     }
 }
+
 impl Default for EventResponseAttributes {
     fn default() -> Self {
         Self::new()

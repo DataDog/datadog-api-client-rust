@@ -7,8 +7,8 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CIAppCreatePipelineEventRequestAttributesResource {
-    CIAppPipelineEventPipeline(crate::datadogV2::model::CIAppPipelineEventPipeline),
-    CIAppPipelineEventStage(crate::datadogV2::model::CIAppPipelineEventStage),
-    CIAppPipelineEventJob(crate::datadogV2::model::CIAppPipelineEventJob),
-    CIAppPipelineEventStep(crate::datadogV2::model::CIAppPipelineEventStep),
+    CIAppPipelineEventPipeline(Box<crate::datadogV2::model::CIAppPipelineEventPipeline>),
+    CIAppPipelineEventStage(Box<crate::datadogV2::model::CIAppPipelineEventStage>),
+    CIAppPipelineEventJob(Box<crate::datadogV2::model::CIAppPipelineEventJob>),
+    CIAppPipelineEventStep(Box<crate::datadogV2::model::CIAppPipelineEventStep>),
 }

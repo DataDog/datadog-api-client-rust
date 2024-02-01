@@ -18,7 +18,7 @@ impl ContainerGroupRelationships {
         ContainerGroupRelationships { containers: None }
     }
 
-    pub fn with_containers(
+    pub fn containers(
         &mut self,
         value: crate::datadogV2::model::ContainerGroupRelationshipsLink,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl ContainerGroupRelationships {
         self
     }
 }
+
 impl Default for ContainerGroupRelationships {
     fn default() -> Self {
         Self::new()

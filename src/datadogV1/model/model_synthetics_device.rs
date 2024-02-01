@@ -41,7 +41,7 @@ impl SyntheticsDevice {
         }
     }
 
-    pub fn with_is_mobile(&mut self, value: bool) -> &mut Self {
+    pub fn is_mobile(&mut self, value: bool) -> &mut Self {
         self.is_mobile = Some(value);
         self
     }

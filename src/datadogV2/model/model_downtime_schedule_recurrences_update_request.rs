@@ -25,7 +25,7 @@ impl DowntimeScheduleRecurrencesUpdateRequest {
         }
     }
 
-    pub fn with_recurrences(
+    pub fn recurrences(
         &mut self,
         value: Vec<crate::datadogV2::model::DowntimeScheduleRecurrenceCreateUpdateRequest>,
     ) -> &mut Self {
@@ -33,11 +33,12 @@ impl DowntimeScheduleRecurrencesUpdateRequest {
         self
     }
 
-    pub fn with_timezone(&mut self, value: String) -> &mut Self {
+    pub fn timezone(&mut self, value: String) -> &mut Self {
         self.timezone = Some(value);
         self
     }
 }
+
 impl Default for DowntimeScheduleRecurrencesUpdateRequest {
     fn default() -> Self {
         Self::new()

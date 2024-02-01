@@ -36,31 +36,32 @@ impl WidgetAxis {
         }
     }
 
-    pub fn with_include_zero(&mut self, value: bool) -> &mut Self {
+    pub fn include_zero(&mut self, value: bool) -> &mut Self {
         self.include_zero = Some(value);
         self
     }
 
-    pub fn with_label(&mut self, value: String) -> &mut Self {
+    pub fn label(&mut self, value: String) -> &mut Self {
         self.label = Some(value);
         self
     }
 
-    pub fn with_max(&mut self, value: String) -> &mut Self {
+    pub fn max(&mut self, value: String) -> &mut Self {
         self.max = Some(value);
         self
     }
 
-    pub fn with_min(&mut self, value: String) -> &mut Self {
+    pub fn min(&mut self, value: String) -> &mut Self {
         self.min = Some(value);
         self
     }
 
-    pub fn with_scale(&mut self, value: String) -> &mut Self {
+    pub fn scale(&mut self, value: String) -> &mut Self {
         self.scale = Some(value);
         self
     }
 }
+
 impl Default for WidgetAxis {
     fn default() -> Self {
         Self::new()

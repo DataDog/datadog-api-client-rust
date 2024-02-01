@@ -24,16 +24,17 @@ impl LogsCategoryProcessorCategory {
         }
     }
 
-    pub fn with_filter(&mut self, value: crate::datadogV1::model::LogsFilter) -> &mut Self {
+    pub fn filter(&mut self, value: crate::datadogV1::model::LogsFilter) -> &mut Self {
         self.filter = Some(value);
         self
     }
 
-    pub fn with_name(&mut self, value: String) -> &mut Self {
+    pub fn name(&mut self, value: String) -> &mut Self {
         self.name = Some(value);
         self
     }
 }
+
 impl Default for LogsCategoryProcessorCategory {
     fn default() -> Self {
         Self::new()

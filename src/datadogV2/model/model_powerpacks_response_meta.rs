@@ -18,7 +18,7 @@ impl PowerpacksResponseMeta {
         PowerpacksResponseMeta { pagination: None }
     }
 
-    pub fn with_pagination(
+    pub fn pagination(
         &mut self,
         value: crate::datadogV2::model::PowerpacksResponseMetaPagination,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl PowerpacksResponseMeta {
         self
     }
 }
+
 impl Default for PowerpacksResponseMeta {
     fn default() -> Self {
         Self::new()

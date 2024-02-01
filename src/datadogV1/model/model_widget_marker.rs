@@ -36,17 +36,17 @@ impl WidgetMarker {
         }
     }
 
-    pub fn with_display_type(&mut self, value: String) -> &mut Self {
+    pub fn display_type(&mut self, value: String) -> &mut Self {
         self.display_type = Some(value);
         self
     }
 
-    pub fn with_label(&mut self, value: String) -> &mut Self {
+    pub fn label(&mut self, value: String) -> &mut Self {
         self.label = Some(value);
         self
     }
 
-    pub fn with_time(&mut self, value: String) -> &mut Self {
+    pub fn time(&mut self, value: String) -> &mut Self {
         self.time = Some(value);
         self
     }

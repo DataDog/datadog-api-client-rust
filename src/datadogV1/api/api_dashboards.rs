@@ -6,7 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetPublicDashboardInvitationsOptionalParams is a struct for passing parameters to the method [`DashboardsAPI::get_public_dashboard_invitations`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetPublicDashboardInvitationsOptionalParams {
     /// The number of records to return in a single request.
     pub page_size: Option<i64>,
@@ -14,8 +14,21 @@ pub struct GetPublicDashboardInvitationsOptionalParams {
     pub page_number: Option<i64>,
 }
 
+impl GetPublicDashboardInvitationsOptionalParams {
+    /// The number of records to return in a single request.
+    pub fn page_size(&mut self, value: i64) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// The page to access (base 0).
+    pub fn page_number(&mut self, value: i64) -> &mut Self {
+        self.page_number = Some(value);
+        self
+    }
+}
+
 /// ListDashboardsOptionalParams is a struct for passing parameters to the method [`DashboardsAPI::list_dashboards`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListDashboardsOptionalParams {
     /// When `true`, this query only returns shared custom created
     /// or cloned dashboards.
@@ -27,6 +40,31 @@ pub struct ListDashboardsOptionalParams {
     pub count: Option<i64>,
     /// The specific offset to use as the beginning of the returned response.
     pub start: Option<i64>,
+}
+
+impl ListDashboardsOptionalParams {
+    /// When `true`, this query only returns shared custom created
+    /// or cloned dashboards.
+    pub fn filter_shared(&mut self, value: bool) -> &mut Self {
+        self.filter_shared = Some(value);
+        self
+    }
+    /// When `true`, this query returns only deleted custom-created
+    /// or cloned dashboards. This parameter is incompatible with `filter[shared]`.
+    pub fn filter_deleted(&mut self, value: bool) -> &mut Self {
+        self.filter_deleted = Some(value);
+        self
+    }
+    /// The maximum number of dashboards returned in the list.
+    pub fn count(&mut self, value: i64) -> &mut Self {
+        self.count = Some(value);
+        self
+    }
+    /// The specific offset to use as the beginning of the returned response.
+    pub fn start(&mut self, value: i64) -> &mut Self {
+        self.start = Some(value);
+        self
+    }
 }
 
 /// CreateDashboardError is a struct for typed errors of method [`DashboardsAPI::create_dashboard`]

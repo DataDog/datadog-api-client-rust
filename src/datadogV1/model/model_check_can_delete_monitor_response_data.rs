@@ -18,11 +18,12 @@ impl CheckCanDeleteMonitorResponseData {
         CheckCanDeleteMonitorResponseData { ok: None }
     }
 
-    pub fn with_ok(&mut self, value: Vec<i64>) -> &mut Self {
+    pub fn ok(&mut self, value: Vec<i64>) -> &mut Self {
         self.ok = Some(value);
         self
     }
 }
+
 impl Default for CheckCanDeleteMonitorResponseData {
     fn default() -> Self {
         Self::new()

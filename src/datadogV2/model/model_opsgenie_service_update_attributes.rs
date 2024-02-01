@@ -36,22 +36,22 @@ impl OpsgenieServiceUpdateAttributes {
         }
     }
 
-    pub fn with_custom_url(&mut self, value: Option<String>) -> &mut Self {
+    pub fn custom_url(&mut self, value: Option<String>) -> &mut Self {
         self.custom_url = Some(value);
         self
     }
 
-    pub fn with_name(&mut self, value: String) -> &mut Self {
+    pub fn name(&mut self, value: String) -> &mut Self {
         self.name = Some(value);
         self
     }
 
-    pub fn with_opsgenie_api_key(&mut self, value: String) -> &mut Self {
+    pub fn opsgenie_api_key(&mut self, value: String) -> &mut Self {
         self.opsgenie_api_key = Some(value);
         self
     }
 
-    pub fn with_region(
+    pub fn region(
         &mut self,
         value: crate::datadogV2::model::OpsgenieServiceRegionType,
     ) -> &mut Self {
@@ -59,6 +59,7 @@ impl OpsgenieServiceUpdateAttributes {
         self
     }
 }
+
 impl Default for OpsgenieServiceUpdateAttributes {
     fn default() -> Self {
         Self::new()

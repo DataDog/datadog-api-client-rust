@@ -6,7 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListCIAppPipelineEventsOptionalParams is a struct for passing parameters to the method [`CIVisibilityPipelinesAPI::list_ci_app_pipeline_events`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListCIAppPipelineEventsOptionalParams {
     /// Search query following log syntax.
     pub filter_query: Option<String>,
@@ -22,10 +22,53 @@ pub struct ListCIAppPipelineEventsOptionalParams {
     pub page_limit: Option<i32>,
 }
 
+impl ListCIAppPipelineEventsOptionalParams {
+    /// Search query following log syntax.
+    pub fn filter_query(&mut self, value: String) -> &mut Self {
+        self.filter_query = Some(value);
+        self
+    }
+    /// Minimum timestamp for requested events.
+    pub fn filter_from(&mut self, value: String) -> &mut Self {
+        self.filter_from = Some(value);
+        self
+    }
+    /// Maximum timestamp for requested events.
+    pub fn filter_to(&mut self, value: String) -> &mut Self {
+        self.filter_to = Some(value);
+        self
+    }
+    /// Order of events in results.
+    pub fn sort(&mut self, value: crate::datadogV2::model::CIAppSort) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+    /// List following results with a cursor provided in the previous query.
+    pub fn page_cursor(&mut self, value: String) -> &mut Self {
+        self.page_cursor = Some(value);
+        self
+    }
+    /// Maximum number of events in the response.
+    pub fn page_limit(&mut self, value: i32) -> &mut Self {
+        self.page_limit = Some(value);
+        self
+    }
+}
+
 /// SearchCIAppPipelineEventsOptionalParams is a struct for passing parameters to the method [`CIVisibilityPipelinesAPI::search_ci_app_pipeline_events`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct SearchCIAppPipelineEventsOptionalParams {
     pub body: Option<crate::datadogV2::model::CIAppPipelineEventsRequest>,
+}
+
+impl SearchCIAppPipelineEventsOptionalParams {
+    pub fn body(
+        &mut self,
+        value: crate::datadogV2::model::CIAppPipelineEventsRequest,
+    ) -> &mut Self {
+        self.body = Some(value);
+        self
+    }
 }
 
 /// AggregateCIAppPipelineEventsError is a struct for typed errors of method [`CIVisibilityPipelinesAPI::aggregate_ci_app_pipeline_events`]

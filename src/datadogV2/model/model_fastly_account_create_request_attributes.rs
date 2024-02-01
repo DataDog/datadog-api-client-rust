@@ -28,10 +28,7 @@ impl FastlyAccountCreateRequestAttributes {
         }
     }
 
-    pub fn with_services(
-        &mut self,
-        value: Vec<crate::datadogV2::model::FastlyService>,
-    ) -> &mut Self {
+    pub fn services(&mut self, value: Vec<crate::datadogV2::model::FastlyService>) -> &mut Self {
         self.services = Some(value);
         self
     }

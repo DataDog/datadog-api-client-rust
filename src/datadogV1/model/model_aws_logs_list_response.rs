@@ -28,24 +28,22 @@ impl AWSLogsListResponse {
         }
     }
 
-    pub fn with_account_id(&mut self, value: String) -> &mut Self {
+    pub fn account_id(&mut self, value: String) -> &mut Self {
         self.account_id = Some(value);
         self
     }
 
-    pub fn with_lambdas(
-        &mut self,
-        value: Vec<crate::datadogV1::model::AWSLogsLambda>,
-    ) -> &mut Self {
+    pub fn lambdas(&mut self, value: Vec<crate::datadogV1::model::AWSLogsLambda>) -> &mut Self {
         self.lambdas = Some(value);
         self
     }
 
-    pub fn with_services(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn services(&mut self, value: Vec<String>) -> &mut Self {
         self.services = Some(value);
         self
     }
 }
+
 impl Default for AWSLogsListResponse {
     fn default() -> Self {
         Self::new()

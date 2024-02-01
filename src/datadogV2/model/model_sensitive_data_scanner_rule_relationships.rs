@@ -24,7 +24,7 @@ impl SensitiveDataScannerRuleRelationships {
         }
     }
 
-    pub fn with_group(
+    pub fn group(
         &mut self,
         value: crate::datadogV2::model::SensitiveDataScannerGroupData,
     ) -> &mut Self {
@@ -32,7 +32,7 @@ impl SensitiveDataScannerRuleRelationships {
         self
     }
 
-    pub fn with_standard_pattern(
+    pub fn standard_pattern(
         &mut self,
         value: crate::datadogV2::model::SensitiveDataScannerStandardPatternData,
     ) -> &mut Self {
@@ -40,6 +40,7 @@ impl SensitiveDataScannerRuleRelationships {
         self
     }
 }
+
 impl Default for SensitiveDataScannerRuleRelationships {
     fn default() -> Self {
         Self::new()

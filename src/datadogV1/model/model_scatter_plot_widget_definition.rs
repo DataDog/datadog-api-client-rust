@@ -59,12 +59,12 @@ impl ScatterPlotWidgetDefinition {
         }
     }
 
-    pub fn with_color_by_groups(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn color_by_groups(&mut self, value: Vec<String>) -> &mut Self {
         self.color_by_groups = Some(value);
         self
     }
 
-    pub fn with_custom_links(
+    pub fn custom_links(
         &mut self,
         value: Vec<crate::datadogV1::model::WidgetCustomLink>,
     ) -> &mut Self {
@@ -72,35 +72,32 @@ impl ScatterPlotWidgetDefinition {
         self
     }
 
-    pub fn with_time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
+    pub fn time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
         self.time = Some(value);
         self
     }
 
-    pub fn with_title(&mut self, value: String) -> &mut Self {
+    pub fn title(&mut self, value: String) -> &mut Self {
         self.title = Some(value);
         self
     }
 
-    pub fn with_title_align(
-        &mut self,
-        value: crate::datadogV1::model::WidgetTextAlign,
-    ) -> &mut Self {
+    pub fn title_align(&mut self, value: crate::datadogV1::model::WidgetTextAlign) -> &mut Self {
         self.title_align = Some(value);
         self
     }
 
-    pub fn with_title_size(&mut self, value: String) -> &mut Self {
+    pub fn title_size(&mut self, value: String) -> &mut Self {
         self.title_size = Some(value);
         self
     }
 
-    pub fn with_xaxis(&mut self, value: crate::datadogV1::model::WidgetAxis) -> &mut Self {
+    pub fn xaxis(&mut self, value: crate::datadogV1::model::WidgetAxis) -> &mut Self {
         self.xaxis = Some(value);
         self
     }
 
-    pub fn with_yaxis(&mut self, value: crate::datadogV1::model::WidgetAxis) -> &mut Self {
+    pub fn yaxis(&mut self, value: crate::datadogV1::model::WidgetAxis) -> &mut Self {
         self.yaxis = Some(value);
         self
     }

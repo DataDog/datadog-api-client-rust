@@ -30,12 +30,12 @@ impl MonitorFormulaAndFunctionEventQueryGroupBySort {
         }
     }
 
-    pub fn with_metric(&mut self, value: String) -> &mut Self {
+    pub fn metric(&mut self, value: String) -> &mut Self {
         self.metric = Some(value);
         self
     }
 
-    pub fn with_order(&mut self, value: crate::datadogV1::model::QuerySortOrder) -> &mut Self {
+    pub fn order(&mut self, value: crate::datadogV1::model::QuerySortOrder) -> &mut Self {
         self.order = Some(value);
         self
     }

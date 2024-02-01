@@ -32,26 +32,27 @@ impl UserInvitationDataAttributes {
         }
     }
 
-    pub fn with_created_at(&mut self, value: String) -> &mut Self {
+    pub fn created_at(&mut self, value: String) -> &mut Self {
         self.created_at = Some(value);
         self
     }
 
-    pub fn with_expires_at(&mut self, value: String) -> &mut Self {
+    pub fn expires_at(&mut self, value: String) -> &mut Self {
         self.expires_at = Some(value);
         self
     }
 
-    pub fn with_invite_type(&mut self, value: String) -> &mut Self {
+    pub fn invite_type(&mut self, value: String) -> &mut Self {
         self.invite_type = Some(value);
         self
     }
 
-    pub fn with_uuid(&mut self, value: String) -> &mut Self {
+    pub fn uuid(&mut self, value: String) -> &mut Self {
         self.uuid = Some(value);
         self
     }
 }
+
 impl Default for UserInvitationDataAttributes {
     fn default() -> Self {
         Self::new()

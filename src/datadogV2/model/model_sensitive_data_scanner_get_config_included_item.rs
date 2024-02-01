@@ -8,9 +8,9 @@ use serde::{Deserialize, Serialize};
 #[serde(untagged)]
 pub enum SensitiveDataScannerGetConfigIncludedItem {
     SensitiveDataScannerRuleIncludedItem(
-        crate::datadogV2::model::SensitiveDataScannerRuleIncludedItem,
+        Box<crate::datadogV2::model::SensitiveDataScannerRuleIncludedItem>,
     ),
     SensitiveDataScannerGroupIncludedItem(
-        crate::datadogV2::model::SensitiveDataScannerGroupIncludedItem,
+        Box<crate::datadogV2::model::SensitiveDataScannerGroupIncludedItem>,
     ),
 }

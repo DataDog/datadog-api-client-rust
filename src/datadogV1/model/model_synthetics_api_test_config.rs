@@ -32,7 +32,7 @@ impl SyntheticsAPITestConfig {
         }
     }
 
-    pub fn with_assertions(
+    pub fn assertions(
         &mut self,
         value: Vec<crate::datadogV1::model::SyntheticsAssertion>,
     ) -> &mut Self {
@@ -40,7 +40,7 @@ impl SyntheticsAPITestConfig {
         self
     }
 
-    pub fn with_config_variables(
+    pub fn config_variables(
         &mut self,
         value: Vec<crate::datadogV1::model::SyntheticsConfigVariable>,
     ) -> &mut Self {
@@ -48,22 +48,17 @@ impl SyntheticsAPITestConfig {
         self
     }
 
-    pub fn with_request(
-        &mut self,
-        value: crate::datadogV1::model::SyntheticsTestRequest,
-    ) -> &mut Self {
+    pub fn request(&mut self, value: crate::datadogV1::model::SyntheticsTestRequest) -> &mut Self {
         self.request = Some(value);
         self
     }
 
-    pub fn with_steps(
-        &mut self,
-        value: Vec<crate::datadogV1::model::SyntheticsAPIStep>,
-    ) -> &mut Self {
+    pub fn steps(&mut self, value: Vec<crate::datadogV1::model::SyntheticsAPIStep>) -> &mut Self {
         self.steps = Some(value);
         self
     }
 }
+
 impl Default for SyntheticsAPITestConfig {
     fn default() -> Self {
         Self::new()

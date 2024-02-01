@@ -18,11 +18,12 @@ impl PowerpackRelationships {
         PowerpackRelationships { author: None }
     }
 
-    pub fn with_author(&mut self, value: crate::datadogV2::model::RelationshipToUser) -> &mut Self {
+    pub fn author(&mut self, value: crate::datadogV2::model::RelationshipToUser) -> &mut Self {
         self.author = Some(value);
         self
     }
 }
+
 impl Default for PowerpackRelationships {
     fn default() -> Self {
         Self::new()

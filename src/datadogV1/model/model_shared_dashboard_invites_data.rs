@@ -7,6 +7,8 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SharedDashboardInvitesData {
-    SharedDashboardInvitesDataObject(crate::datadogV1::model::SharedDashboardInvitesDataObject),
+    SharedDashboardInvitesDataObject(
+        Box<crate::datadogV1::model::SharedDashboardInvitesDataObject>,
+    ),
     SharedDashboardInvitesDataList(Vec<crate::datadogV1::model::SharedDashboardInvitesDataObject>),
 }

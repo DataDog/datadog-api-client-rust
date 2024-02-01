@@ -28,7 +28,7 @@ impl MonitorConfigPolicyResponseData {
         }
     }
 
-    pub fn with_attributes(
+    pub fn attributes(
         &mut self,
         value: crate::datadogV2::model::MonitorConfigPolicyAttributeResponse,
     ) -> &mut Self {
@@ -36,12 +36,12 @@ impl MonitorConfigPolicyResponseData {
         self
     }
 
-    pub fn with_id(&mut self, value: String) -> &mut Self {
+    pub fn id(&mut self, value: String) -> &mut Self {
         self.id = Some(value);
         self
     }
 
-    pub fn with_type_(
+    pub fn type_(
         &mut self,
         value: crate::datadogV2::model::MonitorConfigPolicyResourceType,
     ) -> &mut Self {
@@ -49,6 +49,7 @@ impl MonitorConfigPolicyResponseData {
         self
     }
 }
+
 impl Default for MonitorConfigPolicyResponseData {
     fn default() -> Self {
         Self::new()

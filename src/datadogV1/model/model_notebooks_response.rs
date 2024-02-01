@@ -24,7 +24,7 @@ impl NotebooksResponse {
         }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: Vec<crate::datadogV1::model::NotebooksResponseData>,
     ) -> &mut Self {
@@ -32,14 +32,12 @@ impl NotebooksResponse {
         self
     }
 
-    pub fn with_meta(
-        &mut self,
-        value: crate::datadogV1::model::NotebooksResponseMeta,
-    ) -> &mut Self {
+    pub fn meta(&mut self, value: crate::datadogV1::model::NotebooksResponseMeta) -> &mut Self {
         self.meta = Some(value);
         self
     }
 }
+
 impl Default for NotebooksResponse {
     fn default() -> Self {
         Self::new()

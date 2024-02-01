@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ServiceDefinitionV2Contact {
-    ServiceDefinitionV2Email(crate::datadogV2::model::ServiceDefinitionV2Email),
-    ServiceDefinitionV2Slack(crate::datadogV2::model::ServiceDefinitionV2Slack),
-    ServiceDefinitionV2MSTeams(crate::datadogV2::model::ServiceDefinitionV2MSTeams),
+    ServiceDefinitionV2Email(Box<crate::datadogV2::model::ServiceDefinitionV2Email>),
+    ServiceDefinitionV2Slack(Box<crate::datadogV2::model::ServiceDefinitionV2Slack>),
+    ServiceDefinitionV2MSTeams(Box<crate::datadogV2::model::ServiceDefinitionV2MSTeams>),
 }

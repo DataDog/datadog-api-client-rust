@@ -8,6 +8,6 @@ use serde::{Deserialize, Serialize};
 #[serde(untagged)]
 pub enum IncidentTimelineCellCreateAttributes {
     IncidentTimelineCellMarkdownCreateAttributes(
-        crate::datadogV2::model::IncidentTimelineCellMarkdownCreateAttributes,
+        Box<crate::datadogV2::model::IncidentTimelineCellMarkdownCreateAttributes>,
     ),
 }

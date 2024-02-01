@@ -20,7 +20,7 @@ impl SyntheticsGlobalVariableOptions {
         }
     }
 
-    pub fn with_totp_parameters(
+    pub fn totp_parameters(
         &mut self,
         value: crate::datadogV1::model::SyntheticsGlobalVariableTOTPParameters,
     ) -> &mut Self {
@@ -28,6 +28,7 @@ impl SyntheticsGlobalVariableOptions {
         self
     }
 }
+
 impl Default for SyntheticsGlobalVariableOptions {
     fn default() -> Self {
         Self::new()

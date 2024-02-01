@@ -24,16 +24,17 @@ impl SLOListResponseMetadataPage {
         }
     }
 
-    pub fn with_total_count(&mut self, value: i64) -> &mut Self {
+    pub fn total_count(&mut self, value: i64) -> &mut Self {
         self.total_count = Some(value);
         self
     }
 
-    pub fn with_total_filtered_count(&mut self, value: i64) -> &mut Self {
+    pub fn total_filtered_count(&mut self, value: i64) -> &mut Self {
         self.total_filtered_count = Some(value);
         self
     }
 }
+
 impl Default for SLOListResponseMetadataPage {
     fn default() -> Self {
         Self::new()

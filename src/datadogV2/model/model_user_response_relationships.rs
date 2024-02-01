@@ -32,15 +32,12 @@ impl UserResponseRelationships {
         }
     }
 
-    pub fn with_org(
-        &mut self,
-        value: crate::datadogV2::model::RelationshipToOrganization,
-    ) -> &mut Self {
+    pub fn org(&mut self, value: crate::datadogV2::model::RelationshipToOrganization) -> &mut Self {
         self.org = Some(value);
         self
     }
 
-    pub fn with_other_orgs(
+    pub fn other_orgs(
         &mut self,
         value: crate::datadogV2::model::RelationshipToOrganizations,
     ) -> &mut Self {
@@ -48,7 +45,7 @@ impl UserResponseRelationships {
         self
     }
 
-    pub fn with_other_users(
+    pub fn other_users(
         &mut self,
         value: crate::datadogV2::model::RelationshipToUsers,
     ) -> &mut Self {
@@ -56,11 +53,12 @@ impl UserResponseRelationships {
         self
     }
 
-    pub fn with_roles(&mut self, value: crate::datadogV2::model::RelationshipToRoles) -> &mut Self {
+    pub fn roles(&mut self, value: crate::datadogV2::model::RelationshipToRoles) -> &mut Self {
         self.roles = Some(value);
         self
     }
 }
+
 impl Default for UserResponseRelationships {
     fn default() -> Self {
         Self::new()

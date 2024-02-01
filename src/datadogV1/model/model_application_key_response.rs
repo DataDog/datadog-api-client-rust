@@ -20,14 +20,12 @@ impl ApplicationKeyResponse {
         }
     }
 
-    pub fn with_application_key(
-        &mut self,
-        value: crate::datadogV1::model::ApplicationKey,
-    ) -> &mut Self {
+    pub fn application_key(&mut self, value: crate::datadogV1::model::ApplicationKey) -> &mut Self {
         self.application_key = Some(value);
         self
     }
 }
+
 impl Default for ApplicationKeyResponse {
     fn default() -> Self {
         Self::new()

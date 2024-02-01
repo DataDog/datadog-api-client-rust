@@ -41,30 +41,27 @@ impl RUMGroupBy {
         }
     }
 
-    pub fn with_histogram(
-        &mut self,
-        value: crate::datadogV2::model::RUMGroupByHistogram,
-    ) -> &mut Self {
+    pub fn histogram(&mut self, value: crate::datadogV2::model::RUMGroupByHistogram) -> &mut Self {
         self.histogram = Some(value);
         self
     }
 
-    pub fn with_limit(&mut self, value: i64) -> &mut Self {
+    pub fn limit(&mut self, value: i64) -> &mut Self {
         self.limit = Some(value);
         self
     }
 
-    pub fn with_missing(&mut self, value: crate::datadogV2::model::RUMGroupByMissing) -> &mut Self {
+    pub fn missing(&mut self, value: crate::datadogV2::model::RUMGroupByMissing) -> &mut Self {
         self.missing = Some(value);
         self
     }
 
-    pub fn with_sort(&mut self, value: crate::datadogV2::model::RUMAggregateSort) -> &mut Self {
+    pub fn sort(&mut self, value: crate::datadogV2::model::RUMAggregateSort) -> &mut Self {
         self.sort = Some(value);
         self
     }
 
-    pub fn with_total(&mut self, value: crate::datadogV2::model::RUMGroupByTotal) -> &mut Self {
+    pub fn total(&mut self, value: crate::datadogV2::model::RUMGroupByTotal) -> &mut Self {
         self.total = Some(value);
         self
     }

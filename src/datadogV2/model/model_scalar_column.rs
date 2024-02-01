@@ -7,6 +7,6 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ScalarColumn {
-    GroupScalarColumn(crate::datadogV2::model::GroupScalarColumn),
-    DataScalarColumn(crate::datadogV2::model::DataScalarColumn),
+    GroupScalarColumn(Box<crate::datadogV2::model::GroupScalarColumn>),
+    DataScalarColumn(Box<crate::datadogV2::model::DataScalarColumn>),
 }

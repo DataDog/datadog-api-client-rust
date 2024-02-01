@@ -20,11 +20,12 @@ impl OnDemandConcurrencyCapAttributes {
         }
     }
 
-    pub fn with_on_demand_concurrency_cap(&mut self, value: f64) -> &mut Self {
+    pub fn on_demand_concurrency_cap(&mut self, value: f64) -> &mut Self {
         self.on_demand_concurrency_cap = Some(value);
         self
     }
 }
+
 impl Default for OnDemandConcurrencyCapAttributes {
     fn default() -> Self {
         Self::new()

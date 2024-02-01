@@ -18,11 +18,12 @@ impl FastlyAccountUpdateRequestAttributes {
         FastlyAccountUpdateRequestAttributes { api_key: None }
     }
 
-    pub fn with_api_key(&mut self, value: String) -> &mut Self {
+    pub fn api_key(&mut self, value: String) -> &mut Self {
         self.api_key = Some(value);
         self
     }
 }
+
 impl Default for FastlyAccountUpdateRequestAttributes {
     fn default() -> Self {
         Self::new()

@@ -36,26 +36,27 @@ impl UsageOnlineArchiveHour {
         }
     }
 
-    pub fn with_hour(&mut self, value: String) -> &mut Self {
+    pub fn hour(&mut self, value: String) -> &mut Self {
         self.hour = Some(value);
         self
     }
 
-    pub fn with_online_archive_events_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn online_archive_events_count(&mut self, value: Option<i64>) -> &mut Self {
         self.online_archive_events_count = Some(value);
         self
     }
 
-    pub fn with_org_name(&mut self, value: String) -> &mut Self {
+    pub fn org_name(&mut self, value: String) -> &mut Self {
         self.org_name = Some(value);
         self
     }
 
-    pub fn with_public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(&mut self, value: String) -> &mut Self {
         self.public_id = Some(value);
         self
     }
 }
+
 impl Default for UsageOnlineArchiveHour {
     fn default() -> Self {
         Self::new()

@@ -35,12 +35,12 @@ impl SyntheticsAssertionXPathTarget {
         }
     }
 
-    pub fn with_property(&mut self, value: String) -> &mut Self {
+    pub fn property(&mut self, value: String) -> &mut Self {
         self.property = Some(value);
         self
     }
 
-    pub fn with_target(
+    pub fn target(
         &mut self,
         value: crate::datadogV1::model::SyntheticsAssertionXPathTargetTarget,
     ) -> &mut Self {

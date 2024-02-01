@@ -6,7 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetAPITestLatestResultsOptionalParams is a struct for passing parameters to the method [`SyntheticsAPI::get_api_test_latest_results`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetAPITestLatestResultsOptionalParams {
     /// Timestamp in milliseconds from which to start querying results.
     pub from_ts: Option<i64>,
@@ -16,8 +16,26 @@ pub struct GetAPITestLatestResultsOptionalParams {
     pub probe_dc: Option<Vec<String>>,
 }
 
+impl GetAPITestLatestResultsOptionalParams {
+    /// Timestamp in milliseconds from which to start querying results.
+    pub fn from_ts(&mut self, value: i64) -> &mut Self {
+        self.from_ts = Some(value);
+        self
+    }
+    /// Timestamp in milliseconds up to which to query results.
+    pub fn to_ts(&mut self, value: i64) -> &mut Self {
+        self.to_ts = Some(value);
+        self
+    }
+    /// Locations for which to query results.
+    pub fn probe_dc(&mut self, value: Vec<String>) -> &mut Self {
+        self.probe_dc = Some(value);
+        self
+    }
+}
+
 /// GetBrowserTestLatestResultsOptionalParams is a struct for passing parameters to the method [`SyntheticsAPI::get_browser_test_latest_results`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetBrowserTestLatestResultsOptionalParams {
     /// Timestamp in milliseconds from which to start querying results.
     pub from_ts: Option<i64>,
@@ -27,13 +45,44 @@ pub struct GetBrowserTestLatestResultsOptionalParams {
     pub probe_dc: Option<Vec<String>>,
 }
 
+impl GetBrowserTestLatestResultsOptionalParams {
+    /// Timestamp in milliseconds from which to start querying results.
+    pub fn from_ts(&mut self, value: i64) -> &mut Self {
+        self.from_ts = Some(value);
+        self
+    }
+    /// Timestamp in milliseconds up to which to query results.
+    pub fn to_ts(&mut self, value: i64) -> &mut Self {
+        self.to_ts = Some(value);
+        self
+    }
+    /// Locations for which to query results.
+    pub fn probe_dc(&mut self, value: Vec<String>) -> &mut Self {
+        self.probe_dc = Some(value);
+        self
+    }
+}
+
 /// ListTestsOptionalParams is a struct for passing parameters to the method [`SyntheticsAPI::list_tests`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListTestsOptionalParams {
     /// Used for pagination. The number of tests returned in the page.
     pub page_size: Option<i64>,
     /// Used for pagination. Which page you want to retrieve. Starts at zero.
     pub page_number: Option<i64>,
+}
+
+impl ListTestsOptionalParams {
+    /// Used for pagination. The number of tests returned in the page.
+    pub fn page_size(&mut self, value: i64) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Used for pagination. Which page you want to retrieve. Starts at zero.
+    pub fn page_number(&mut self, value: i64) -> &mut Self {
+        self.page_number = Some(value);
+        self
+    }
 }
 
 /// CreateGlobalVariableError is a struct for typed errors of method [`SyntheticsAPI::create_global_variable`]

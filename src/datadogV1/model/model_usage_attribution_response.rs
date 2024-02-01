@@ -24,7 +24,7 @@ impl UsageAttributionResponse {
         }
     }
 
-    pub fn with_metadata(
+    pub fn metadata(
         &mut self,
         value: crate::datadogV1::model::UsageAttributionMetadata,
     ) -> &mut Self {
@@ -32,7 +32,7 @@ impl UsageAttributionResponse {
         self
     }
 
-    pub fn with_usage(
+    pub fn usage(
         &mut self,
         value: Vec<crate::datadogV1::model::UsageAttributionBody>,
     ) -> &mut Self {
@@ -40,6 +40,7 @@ impl UsageAttributionResponse {
         self
     }
 }
+
 impl Default for UsageAttributionResponse {
     fn default() -> Self {
         Self::new()

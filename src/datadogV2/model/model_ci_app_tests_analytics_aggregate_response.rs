@@ -28,7 +28,7 @@ impl CIAppTestsAnalyticsAggregateResponse {
         }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: crate::datadogV2::model::CIAppTestsAggregationBucketsResponse,
     ) -> &mut Self {
@@ -36,12 +36,12 @@ impl CIAppTestsAnalyticsAggregateResponse {
         self
     }
 
-    pub fn with_links(&mut self, value: crate::datadogV2::model::CIAppResponseLinks) -> &mut Self {
+    pub fn links(&mut self, value: crate::datadogV2::model::CIAppResponseLinks) -> &mut Self {
         self.links = Some(value);
         self
     }
 
-    pub fn with_meta(
+    pub fn meta(
         &mut self,
         value: crate::datadogV2::model::CIAppResponseMetadataWithPagination,
     ) -> &mut Self {
@@ -49,6 +49,7 @@ impl CIAppTestsAnalyticsAggregateResponse {
         self
     }
 }
+
 impl Default for CIAppTestsAnalyticsAggregateResponse {
     fn default() -> Self {
         Self::new()

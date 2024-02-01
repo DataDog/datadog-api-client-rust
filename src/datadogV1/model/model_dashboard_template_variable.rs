@@ -47,25 +47,25 @@ impl DashboardTemplateVariable {
     }
 
     #[allow(deprecated)]
-    pub fn with_available_values(&mut self, value: Option<Vec<String>>) -> &mut Self {
+    pub fn available_values(&mut self, value: Option<Vec<String>>) -> &mut Self {
         self.available_values = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_default(&mut self, value: Option<String>) -> &mut Self {
+    pub fn default(&mut self, value: Option<String>) -> &mut Self {
         self.default = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_defaults(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn defaults(&mut self, value: Vec<String>) -> &mut Self {
         self.defaults = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_prefix(&mut self, value: Option<String>) -> &mut Self {
+    pub fn prefix(&mut self, value: Option<String>) -> &mut Self {
         self.prefix = Some(value);
         self
     }

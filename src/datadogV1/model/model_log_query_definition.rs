@@ -36,12 +36,12 @@ impl LogQueryDefinition {
         }
     }
 
-    pub fn with_compute(&mut self, value: crate::datadogV1::model::LogsQueryCompute) -> &mut Self {
+    pub fn compute(&mut self, value: crate::datadogV1::model::LogsQueryCompute) -> &mut Self {
         self.compute = Some(value);
         self
     }
 
-    pub fn with_group_by(
+    pub fn group_by(
         &mut self,
         value: Vec<crate::datadogV1::model::LogQueryDefinitionGroupBy>,
     ) -> &mut Self {
@@ -49,12 +49,12 @@ impl LogQueryDefinition {
         self
     }
 
-    pub fn with_index(&mut self, value: String) -> &mut Self {
+    pub fn index(&mut self, value: String) -> &mut Self {
         self.index = Some(value);
         self
     }
 
-    pub fn with_multi_compute(
+    pub fn multi_compute(
         &mut self,
         value: Vec<crate::datadogV1::model::LogsQueryCompute>,
     ) -> &mut Self {
@@ -62,7 +62,7 @@ impl LogQueryDefinition {
         self
     }
 
-    pub fn with_search(
+    pub fn search(
         &mut self,
         value: crate::datadogV1::model::LogQueryDefinitionSearch,
     ) -> &mut Self {
@@ -70,6 +70,7 @@ impl LogQueryDefinition {
         self
     }
 }
+
 impl Default for LogQueryDefinition {
     fn default() -> Self {
         Self::new()

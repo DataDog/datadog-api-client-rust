@@ -66,7 +66,7 @@ impl SecurityMonitoringRuleUpdatePayload {
         }
     }
 
-    pub fn with_cases(
+    pub fn cases(
         &mut self,
         value: Vec<crate::datadogV2::model::SecurityMonitoringRuleCase>,
     ) -> &mut Self {
@@ -74,7 +74,7 @@ impl SecurityMonitoringRuleUpdatePayload {
         self
     }
 
-    pub fn with_compliance_signal_options(
+    pub fn compliance_signal_options(
         &mut self,
         value: crate::datadogV2::model::CloudConfigurationRuleComplianceSignalOptions,
     ) -> &mut Self {
@@ -82,7 +82,7 @@ impl SecurityMonitoringRuleUpdatePayload {
         self
     }
 
-    pub fn with_filters(
+    pub fn filters(
         &mut self,
         value: Vec<crate::datadogV2::model::SecurityMonitoringFilter>,
     ) -> &mut Self {
@@ -90,27 +90,27 @@ impl SecurityMonitoringRuleUpdatePayload {
         self
     }
 
-    pub fn with_has_extended_title(&mut self, value: bool) -> &mut Self {
+    pub fn has_extended_title(&mut self, value: bool) -> &mut Self {
         self.has_extended_title = Some(value);
         self
     }
 
-    pub fn with_is_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn is_enabled(&mut self, value: bool) -> &mut Self {
         self.is_enabled = Some(value);
         self
     }
 
-    pub fn with_message(&mut self, value: String) -> &mut Self {
+    pub fn message(&mut self, value: String) -> &mut Self {
         self.message = Some(value);
         self
     }
 
-    pub fn with_name(&mut self, value: String) -> &mut Self {
+    pub fn name(&mut self, value: String) -> &mut Self {
         self.name = Some(value);
         self
     }
 
-    pub fn with_options(
+    pub fn options(
         &mut self,
         value: crate::datadogV2::model::SecurityMonitoringRuleOptions,
     ) -> &mut Self {
@@ -118,7 +118,7 @@ impl SecurityMonitoringRuleUpdatePayload {
         self
     }
 
-    pub fn with_queries(
+    pub fn queries(
         &mut self,
         value: Vec<crate::datadogV2::model::SecurityMonitoringRuleQuery>,
     ) -> &mut Self {
@@ -126,12 +126,12 @@ impl SecurityMonitoringRuleUpdatePayload {
         self
     }
 
-    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
         self.tags = Some(value);
         self
     }
 
-    pub fn with_third_party_cases(
+    pub fn third_party_cases(
         &mut self,
         value: Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRuleCase>,
     ) -> &mut Self {
@@ -139,11 +139,12 @@ impl SecurityMonitoringRuleUpdatePayload {
         self
     }
 
-    pub fn with_version(&mut self, value: i32) -> &mut Self {
+    pub fn version(&mut self, value: i32) -> &mut Self {
         self.version = Some(value);
         self
     }
 }
+
 impl Default for SecurityMonitoringRuleUpdatePayload {
     fn default() -> Self {
         Self::new()

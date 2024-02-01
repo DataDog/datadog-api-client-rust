@@ -18,11 +18,12 @@ impl SpansListRequest {
         SpansListRequest { data: None }
     }
 
-    pub fn with_data(&mut self, value: crate::datadogV2::model::SpansListRequestData) -> &mut Self {
+    pub fn data(&mut self, value: crate::datadogV2::model::SpansListRequestData) -> &mut Self {
         self.data = Some(value);
         self
     }
 }
+
 impl Default for SpansListRequest {
     fn default() -> Self {
         Self::new()

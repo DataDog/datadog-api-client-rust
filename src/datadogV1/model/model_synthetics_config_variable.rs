@@ -43,22 +43,22 @@ impl SyntheticsConfigVariable {
         }
     }
 
-    pub fn with_example(&mut self, value: String) -> &mut Self {
+    pub fn example(&mut self, value: String) -> &mut Self {
         self.example = Some(value);
         self
     }
 
-    pub fn with_id(&mut self, value: String) -> &mut Self {
+    pub fn id(&mut self, value: String) -> &mut Self {
         self.id = Some(value);
         self
     }
 
-    pub fn with_pattern(&mut self, value: String) -> &mut Self {
+    pub fn pattern(&mut self, value: String) -> &mut Self {
         self.pattern = Some(value);
         self
     }
 
-    pub fn with_secure(&mut self, value: bool) -> &mut Self {
+    pub fn secure(&mut self, value: bool) -> &mut Self {
         self.secure = Some(value);
         self
     }

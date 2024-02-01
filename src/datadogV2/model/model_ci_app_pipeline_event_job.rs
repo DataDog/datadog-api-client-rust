@@ -127,38 +127,32 @@ impl CIAppPipelineEventJob {
         }
     }
 
-    pub fn with_dependencies(&mut self, value: Option<Vec<String>>) -> &mut Self {
+    pub fn dependencies(&mut self, value: Option<Vec<String>>) -> &mut Self {
         self.dependencies = Some(value);
         self
     }
 
-    pub fn with_error(
-        &mut self,
-        value: Option<crate::datadogV2::model::CIAppCIError>,
-    ) -> &mut Self {
+    pub fn error(&mut self, value: Option<crate::datadogV2::model::CIAppCIError>) -> &mut Self {
         self.error = Some(value);
         self
     }
 
-    pub fn with_git(&mut self, value: Option<crate::datadogV2::model::CIAppGitInfo>) -> &mut Self {
+    pub fn git(&mut self, value: Option<crate::datadogV2::model::CIAppGitInfo>) -> &mut Self {
         self.git = Some(value);
         self
     }
 
-    pub fn with_metrics(&mut self, value: Option<Vec<String>>) -> &mut Self {
+    pub fn metrics(&mut self, value: Option<Vec<String>>) -> &mut Self {
         self.metrics = Some(value);
         self
     }
 
-    pub fn with_node(
-        &mut self,
-        value: Option<crate::datadogV2::model::CIAppHostInfo>,
-    ) -> &mut Self {
+    pub fn node(&mut self, value: Option<crate::datadogV2::model::CIAppHostInfo>) -> &mut Self {
         self.node = Some(value);
         self
     }
 
-    pub fn with_parameters(
+    pub fn parameters(
         &mut self,
         value: Option<std::collections::BTreeMap<String, String>>,
     ) -> &mut Self {
@@ -166,22 +160,22 @@ impl CIAppPipelineEventJob {
         self
     }
 
-    pub fn with_queue_time(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn queue_time(&mut self, value: Option<i64>) -> &mut Self {
         self.queue_time = Some(value);
         self
     }
 
-    pub fn with_stage_id(&mut self, value: Option<String>) -> &mut Self {
+    pub fn stage_id(&mut self, value: Option<String>) -> &mut Self {
         self.stage_id = Some(value);
         self
     }
 
-    pub fn with_stage_name(&mut self, value: Option<String>) -> &mut Self {
+    pub fn stage_name(&mut self, value: Option<String>) -> &mut Self {
         self.stage_name = Some(value);
         self
     }
 
-    pub fn with_tags(&mut self, value: Option<Vec<String>>) -> &mut Self {
+    pub fn tags(&mut self, value: Option<Vec<String>>) -> &mut Self {
         self.tags = Some(value);
         self
     }

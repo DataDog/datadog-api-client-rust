@@ -18,7 +18,7 @@ impl UsageSyntheticsBrowserResponse {
         UsageSyntheticsBrowserResponse { usage: None }
     }
 
-    pub fn with_usage(
+    pub fn usage(
         &mut self,
         value: Vec<crate::datadogV1::model::UsageSyntheticsBrowserHour>,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl UsageSyntheticsBrowserResponse {
         self
     }
 }
+
 impl Default for UsageSyntheticsBrowserResponse {
     fn default() -> Self {
         Self::new()

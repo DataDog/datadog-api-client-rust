@@ -28,7 +28,7 @@ impl SecurityMonitoringSignalListRequest {
         }
     }
 
-    pub fn with_filter(
+    pub fn filter(
         &mut self,
         value: crate::datadogV2::model::SecurityMonitoringSignalListRequestFilter,
     ) -> &mut Self {
@@ -36,7 +36,7 @@ impl SecurityMonitoringSignalListRequest {
         self
     }
 
-    pub fn with_page(
+    pub fn page(
         &mut self,
         value: crate::datadogV2::model::SecurityMonitoringSignalListRequestPage,
     ) -> &mut Self {
@@ -44,7 +44,7 @@ impl SecurityMonitoringSignalListRequest {
         self
     }
 
-    pub fn with_sort(
+    pub fn sort(
         &mut self,
         value: crate::datadogV2::model::SecurityMonitoringSignalsSort,
     ) -> &mut Self {
@@ -52,6 +52,7 @@ impl SecurityMonitoringSignalListRequest {
         self
     }
 }
+
 impl Default for SecurityMonitoringSignalListRequest {
     fn default() -> Self {
         Self::new()

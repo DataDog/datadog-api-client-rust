@@ -18,7 +18,7 @@ impl SensitiveDataScannerConfigurationData {
         SensitiveDataScannerConfigurationData { data: None }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: crate::datadogV2::model::SensitiveDataScannerConfiguration,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl SensitiveDataScannerConfigurationData {
         self
     }
 }
+
 impl Default for SensitiveDataScannerConfigurationData {
     fn default() -> Self {
         Self::new()

@@ -24,16 +24,17 @@ impl AWSEventBridgeSource {
         }
     }
 
-    pub fn with_name(&mut self, value: String) -> &mut Self {
+    pub fn name(&mut self, value: String) -> &mut Self {
         self.name = Some(value);
         self
     }
 
-    pub fn with_region(&mut self, value: String) -> &mut Self {
+    pub fn region(&mut self, value: String) -> &mut Self {
         self.region = Some(value);
         self
     }
 }
+
 impl Default for AWSEventBridgeSource {
     fn default() -> Self {
         Self::new()

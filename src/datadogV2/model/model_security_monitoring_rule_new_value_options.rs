@@ -37,7 +37,7 @@ impl SecurityMonitoringRuleNewValueOptions {
         }
     }
 
-    pub fn with_forget_after(
+    pub fn forget_after(
         &mut self,
         value: crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsForgetAfter,
     ) -> &mut Self {
@@ -45,7 +45,7 @@ impl SecurityMonitoringRuleNewValueOptions {
         self
     }
 
-    pub fn with_learning_duration(
+    pub fn learning_duration(
         &mut self,
         value: crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningDuration,
     ) -> &mut Self {
@@ -53,7 +53,7 @@ impl SecurityMonitoringRuleNewValueOptions {
         self
     }
 
-    pub fn with_learning_method(
+    pub fn learning_method(
         &mut self,
         value: crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningMethod,
     ) -> &mut Self {
@@ -61,7 +61,7 @@ impl SecurityMonitoringRuleNewValueOptions {
         self
     }
 
-    pub fn with_learning_threshold(
+    pub fn learning_threshold(
         &mut self,
         value: crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningThreshold,
     ) -> &mut Self {
@@ -69,6 +69,7 @@ impl SecurityMonitoringRuleNewValueOptions {
         self
     }
 }
+
 impl Default for SecurityMonitoringRuleNewValueOptions {
     fn default() -> Self {
         Self::new()

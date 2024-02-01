@@ -24,16 +24,17 @@ impl CIAppAggregateBucketValueTimeseriesPoint {
         }
     }
 
-    pub fn with_time(&mut self, value: String) -> &mut Self {
+    pub fn time(&mut self, value: String) -> &mut Self {
         self.time = Some(value);
         self
     }
 
-    pub fn with_value(&mut self, value: f64) -> &mut Self {
+    pub fn value(&mut self, value: f64) -> &mut Self {
         self.value = Some(value);
         self
     }
 }
+
 impl Default for CIAppAggregateBucketValueTimeseriesPoint {
     fn default() -> Self {
         Self::new()

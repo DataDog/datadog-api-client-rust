@@ -40,36 +40,37 @@ impl PartialAPIKeyAttributes {
         }
     }
 
-    pub fn with_category(&mut self, value: String) -> &mut Self {
+    pub fn category(&mut self, value: String) -> &mut Self {
         self.category = Some(value);
         self
     }
 
-    pub fn with_created_at(&mut self, value: String) -> &mut Self {
+    pub fn created_at(&mut self, value: String) -> &mut Self {
         self.created_at = Some(value);
         self
     }
 
-    pub fn with_last4(&mut self, value: String) -> &mut Self {
+    pub fn last4(&mut self, value: String) -> &mut Self {
         self.last4 = Some(value);
         self
     }
 
-    pub fn with_modified_at(&mut self, value: String) -> &mut Self {
+    pub fn modified_at(&mut self, value: String) -> &mut Self {
         self.modified_at = Some(value);
         self
     }
 
-    pub fn with_name(&mut self, value: String) -> &mut Self {
+    pub fn name(&mut self, value: String) -> &mut Self {
         self.name = Some(value);
         self
     }
 
-    pub fn with_remote_config_read_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn remote_config_read_enabled(&mut self, value: bool) -> &mut Self {
         self.remote_config_read_enabled = Some(value);
         self
     }
 }
+
 impl Default for PartialAPIKeyAttributes {
     fn default() -> Self {
         Self::new()

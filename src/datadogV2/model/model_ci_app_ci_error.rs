@@ -36,26 +36,27 @@ impl CIAppCIError {
         }
     }
 
-    pub fn with_domain(&mut self, value: crate::datadogV2::model::CIAppCIErrorDomain) -> &mut Self {
+    pub fn domain(&mut self, value: crate::datadogV2::model::CIAppCIErrorDomain) -> &mut Self {
         self.domain = Some(value);
         self
     }
 
-    pub fn with_message(&mut self, value: Option<String>) -> &mut Self {
+    pub fn message(&mut self, value: Option<String>) -> &mut Self {
         self.message = Some(value);
         self
     }
 
-    pub fn with_stack(&mut self, value: Option<String>) -> &mut Self {
+    pub fn stack(&mut self, value: Option<String>) -> &mut Self {
         self.stack = Some(value);
         self
     }
 
-    pub fn with_type_(&mut self, value: Option<String>) -> &mut Self {
+    pub fn type_(&mut self, value: Option<String>) -> &mut Self {
         self.type_ = Some(value);
         self
     }
 }
+
 impl Default for CIAppCIError {
     fn default() -> Self {
         Self::new()

@@ -43,32 +43,32 @@ impl SLOHistoryMetricsSeriesMetadata {
         }
     }
 
-    pub fn with_aggr(&mut self, value: String) -> &mut Self {
+    pub fn aggr(&mut self, value: String) -> &mut Self {
         self.aggr = Some(value);
         self
     }
 
-    pub fn with_expression(&mut self, value: String) -> &mut Self {
+    pub fn expression(&mut self, value: String) -> &mut Self {
         self.expression = Some(value);
         self
     }
 
-    pub fn with_metric(&mut self, value: String) -> &mut Self {
+    pub fn metric(&mut self, value: String) -> &mut Self {
         self.metric = Some(value);
         self
     }
 
-    pub fn with_query_index(&mut self, value: i64) -> &mut Self {
+    pub fn query_index(&mut self, value: i64) -> &mut Self {
         self.query_index = Some(value);
         self
     }
 
-    pub fn with_scope(&mut self, value: String) -> &mut Self {
+    pub fn scope(&mut self, value: String) -> &mut Self {
         self.scope = Some(value);
         self
     }
 
-    pub fn with_unit(
+    pub fn unit(
         &mut self,
         value: Option<Vec<Option<crate::datadogV1::model::SLOHistoryMetricsSeriesMetadataUnit>>>,
     ) -> &mut Self {
@@ -76,6 +76,7 @@ impl SLOHistoryMetricsSeriesMetadata {
         self
     }
 }
+
 impl Default for SLOHistoryMetricsSeriesMetadata {
     fn default() -> Self {
         Self::new()

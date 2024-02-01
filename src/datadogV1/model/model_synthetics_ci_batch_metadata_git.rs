@@ -24,16 +24,17 @@ impl SyntheticsCIBatchMetadataGit {
         }
     }
 
-    pub fn with_branch(&mut self, value: String) -> &mut Self {
+    pub fn branch(&mut self, value: String) -> &mut Self {
         self.branch = Some(value);
         self
     }
 
-    pub fn with_commit_sha(&mut self, value: String) -> &mut Self {
+    pub fn commit_sha(&mut self, value: String) -> &mut Self {
         self.commit_sha = Some(value);
         self
     }
 }
+
 impl Default for SyntheticsCIBatchMetadataGit {
     fn default() -> Self {
         Self::new()

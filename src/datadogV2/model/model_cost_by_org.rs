@@ -28,24 +28,22 @@ impl CostByOrg {
         }
     }
 
-    pub fn with_attributes(
-        &mut self,
-        value: crate::datadogV2::model::CostByOrgAttributes,
-    ) -> &mut Self {
+    pub fn attributes(&mut self, value: crate::datadogV2::model::CostByOrgAttributes) -> &mut Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn with_id(&mut self, value: String) -> &mut Self {
+    pub fn id(&mut self, value: String) -> &mut Self {
         self.id = Some(value);
         self
     }
 
-    pub fn with_type_(&mut self, value: crate::datadogV2::model::CostByOrgType) -> &mut Self {
+    pub fn type_(&mut self, value: crate::datadogV2::model::CostByOrgType) -> &mut Self {
         self.type_ = Some(value);
         self
     }
 }
+
 impl Default for CostByOrg {
     fn default() -> Self {
         Self::new()

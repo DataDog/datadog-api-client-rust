@@ -24,7 +24,7 @@ impl OutcomesBatchRequestData {
         }
     }
 
-    pub fn with_attributes(
+    pub fn attributes(
         &mut self,
         value: crate::datadogV2::model::OutcomesBatchAttributes,
     ) -> &mut Self {
@@ -32,11 +32,12 @@ impl OutcomesBatchRequestData {
         self
     }
 
-    pub fn with_type_(&mut self, value: crate::datadogV2::model::OutcomesBatchType) -> &mut Self {
+    pub fn type_(&mut self, value: crate::datadogV2::model::OutcomesBatchType) -> &mut Self {
         self.type_ = Some(value);
         self
     }
 }
+
 impl Default for OutcomesBatchRequestData {
     fn default() -> Self {
         Self::new()

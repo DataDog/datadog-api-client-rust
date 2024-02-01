@@ -48,44 +48,42 @@ impl MonitorGroupSearchResult {
         }
     }
 
-    pub fn with_group(&mut self, value: String) -> &mut Self {
+    pub fn group(&mut self, value: String) -> &mut Self {
         self.group = Some(value);
         self
     }
 
-    pub fn with_group_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn group_tags(&mut self, value: Vec<String>) -> &mut Self {
         self.group_tags = Some(value);
         self
     }
 
-    pub fn with_last_nodata_ts(&mut self, value: i64) -> &mut Self {
+    pub fn last_nodata_ts(&mut self, value: i64) -> &mut Self {
         self.last_nodata_ts = Some(value);
         self
     }
 
-    pub fn with_last_triggered_ts(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn last_triggered_ts(&mut self, value: Option<i64>) -> &mut Self {
         self.last_triggered_ts = Some(value);
         self
     }
 
-    pub fn with_monitor_id(&mut self, value: i64) -> &mut Self {
+    pub fn monitor_id(&mut self, value: i64) -> &mut Self {
         self.monitor_id = Some(value);
         self
     }
 
-    pub fn with_monitor_name(&mut self, value: String) -> &mut Self {
+    pub fn monitor_name(&mut self, value: String) -> &mut Self {
         self.monitor_name = Some(value);
         self
     }
 
-    pub fn with_status(
-        &mut self,
-        value: crate::datadogV1::model::MonitorOverallStates,
-    ) -> &mut Self {
+    pub fn status(&mut self, value: crate::datadogV1::model::MonitorOverallStates) -> &mut Self {
         self.status = Some(value);
         self
     }
 }
+
 impl Default for MonitorGroupSearchResult {
     fn default() -> Self {
         Self::new()

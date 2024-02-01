@@ -18,11 +18,12 @@ impl SLOHistoryResponseError {
         SLOHistoryResponseError { error: None }
     }
 
-    pub fn with_error(&mut self, value: String) -> &mut Self {
+    pub fn error(&mut self, value: String) -> &mut Self {
         self.error = Some(value);
         self
     }
 }
+
 impl Default for SLOHistoryResponseError {
     fn default() -> Self {
         Self::new()

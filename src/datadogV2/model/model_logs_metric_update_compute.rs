@@ -21,11 +21,12 @@ impl LogsMetricUpdateCompute {
         }
     }
 
-    pub fn with_include_percentiles(&mut self, value: bool) -> &mut Self {
+    pub fn include_percentiles(&mut self, value: bool) -> &mut Self {
         self.include_percentiles = Some(value);
         self
     }
 }
+
 impl Default for LogsMetricUpdateCompute {
     fn default() -> Self {
         Self::new()

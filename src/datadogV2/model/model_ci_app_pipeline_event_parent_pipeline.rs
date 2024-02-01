@@ -21,7 +21,7 @@ impl CIAppPipelineEventParentPipeline {
         CIAppPipelineEventParentPipeline { id, url: None }
     }
 
-    pub fn with_url(&mut self, value: String) -> &mut Self {
+    pub fn url(&mut self, value: String) -> &mut Self {
         self.url = Some(value);
         self
     }

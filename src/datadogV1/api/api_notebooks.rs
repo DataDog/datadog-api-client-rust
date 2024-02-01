@@ -6,7 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListNotebooksOptionalParams is a struct for passing parameters to the method [`NotebooksAPI::list_notebooks`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListNotebooksOptionalParams {
     /// Return notebooks created by the given `author_handle`.
     pub author_handle: Option<String>,
@@ -28,6 +28,59 @@ pub struct ListNotebooksOptionalParams {
     pub is_template: Option<bool>,
     /// If type is provided, returns only notebooks with that metadata type. Default does not have type filtering.
     pub type_: Option<String>,
+}
+
+impl ListNotebooksOptionalParams {
+    /// Return notebooks created by the given `author_handle`.
+    pub fn author_handle(&mut self, value: String) -> &mut Self {
+        self.author_handle = Some(value);
+        self
+    }
+    /// Return notebooks not created by the given `author_handle`.
+    pub fn exclude_author_handle(&mut self, value: String) -> &mut Self {
+        self.exclude_author_handle = Some(value);
+        self
+    }
+    /// The index of the first notebook you want returned.
+    pub fn start(&mut self, value: i64) -> &mut Self {
+        self.start = Some(value);
+        self
+    }
+    /// The number of notebooks to be returned.
+    pub fn count(&mut self, value: i64) -> &mut Self {
+        self.count = Some(value);
+        self
+    }
+    /// Sort by field `modified`, `name`, or `created`.
+    pub fn sort_field(&mut self, value: String) -> &mut Self {
+        self.sort_field = Some(value);
+        self
+    }
+    /// Sort by direction `asc` or `desc`.
+    pub fn sort_dir(&mut self, value: String) -> &mut Self {
+        self.sort_dir = Some(value);
+        self
+    }
+    /// Return only notebooks with `query` string in notebook name or author handle.
+    pub fn query(&mut self, value: String) -> &mut Self {
+        self.query = Some(value);
+        self
+    }
+    /// Value of `false` excludes the `cells` and global `time` for each notebook.
+    pub fn include_cells(&mut self, value: bool) -> &mut Self {
+        self.include_cells = Some(value);
+        self
+    }
+    /// True value returns only template notebooks. Default is false (returns only non-template notebooks).
+    pub fn is_template(&mut self, value: bool) -> &mut Self {
+        self.is_template = Some(value);
+        self
+    }
+    /// If type is provided, returns only notebooks with that metadata type. Default does not have type filtering.
+    pub fn type_(&mut self, value: String) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
 
 /// CreateNotebookError is a struct for typed errors of method [`NotebooksAPI::create_notebook`]

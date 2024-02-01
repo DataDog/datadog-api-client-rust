@@ -24,15 +24,12 @@ impl SLOHistoryResponse {
         }
     }
 
-    pub fn with_data(
-        &mut self,
-        value: crate::datadogV1::model::SLOHistoryResponseData,
-    ) -> &mut Self {
+    pub fn data(&mut self, value: crate::datadogV1::model::SLOHistoryResponseData) -> &mut Self {
         self.data = Some(value);
         self
     }
 
-    pub fn with_errors(
+    pub fn errors(
         &mut self,
         value: Option<Vec<crate::datadogV1::model::SLOHistoryResponseError>>,
     ) -> &mut Self {
@@ -40,6 +37,7 @@ impl SLOHistoryResponse {
         self
     }
 }
+
 impl Default for SLOHistoryResponse {
     fn default() -> Self {
         Self::new()

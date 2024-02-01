@@ -28,7 +28,7 @@ impl OutcomesResponse {
         }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: Vec<crate::datadogV2::model::OutcomesResponseDataItem>,
     ) -> &mut Self {
@@ -36,7 +36,7 @@ impl OutcomesResponse {
         self
     }
 
-    pub fn with_included(
+    pub fn included(
         &mut self,
         value: Vec<crate::datadogV2::model::OutcomesResponseIncludedItem>,
     ) -> &mut Self {
@@ -44,14 +44,12 @@ impl OutcomesResponse {
         self
     }
 
-    pub fn with_links(
-        &mut self,
-        value: crate::datadogV2::model::OutcomesResponseLinks,
-    ) -> &mut Self {
+    pub fn links(&mut self, value: crate::datadogV2::model::OutcomesResponseLinks) -> &mut Self {
         self.links = Some(value);
         self
     }
 }
+
 impl Default for OutcomesResponse {
     fn default() -> Self {
         Self::new()

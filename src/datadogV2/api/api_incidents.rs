@@ -6,14 +6,25 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetIncidentOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::get_incident`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetIncidentOptionalParams {
     /// Specifies which types of related objects should be included in the response.
     pub include: Option<Vec<crate::datadogV2::model::IncidentRelatedObject>>,
 }
 
+impl GetIncidentOptionalParams {
+    /// Specifies which types of related objects should be included in the response.
+    pub fn include(
+        &mut self,
+        value: Vec<crate::datadogV2::model::IncidentRelatedObject>,
+    ) -> &mut Self {
+        self.include = Some(value);
+        self
+    }
+}
+
 /// ListIncidentAttachmentsOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::list_incident_attachments`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListIncidentAttachmentsOptionalParams {
     /// Specifies which types of related objects are included in the response.
     pub include: Option<Vec<crate::datadogV2::model::IncidentAttachmentRelatedObject>>,
@@ -22,8 +33,27 @@ pub struct ListIncidentAttachmentsOptionalParams {
         Option<Vec<crate::datadogV2::model::IncidentAttachmentAttachmentType>>,
 }
 
+impl ListIncidentAttachmentsOptionalParams {
+    /// Specifies which types of related objects are included in the response.
+    pub fn include(
+        &mut self,
+        value: Vec<crate::datadogV2::model::IncidentAttachmentRelatedObject>,
+    ) -> &mut Self {
+        self.include = Some(value);
+        self
+    }
+    /// Specifies which types of attachments are included in the response.
+    pub fn filter_attachment_type(
+        &mut self,
+        value: Vec<crate::datadogV2::model::IncidentAttachmentAttachmentType>,
+    ) -> &mut Self {
+        self.filter_attachment_type = Some(value);
+        self
+    }
+}
+
 /// ListIncidentsOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::list_incidents`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListIncidentsOptionalParams {
     /// Specifies which types of related objects should be included in the response.
     pub include: Option<Vec<crate::datadogV2::model::IncidentRelatedObject>>,
@@ -33,8 +63,29 @@ pub struct ListIncidentsOptionalParams {
     pub page_offset: Option<i64>,
 }
 
+impl ListIncidentsOptionalParams {
+    /// Specifies which types of related objects should be included in the response.
+    pub fn include(
+        &mut self,
+        value: Vec<crate::datadogV2::model::IncidentRelatedObject>,
+    ) -> &mut Self {
+        self.include = Some(value);
+        self
+    }
+    /// Size for a given page. The maximum allowed value is 100.
+    pub fn page_size(&mut self, value: i64) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Specific offset to use as the beginning of the returned page.
+    pub fn page_offset(&mut self, value: i64) -> &mut Self {
+        self.page_offset = Some(value);
+        self
+    }
+}
+
 /// SearchIncidentsOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::search_incidents`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct SearchIncidentsOptionalParams {
     /// Specifies which types of related objects should be included in the response.
     pub include: Option<crate::datadogV2::model::IncidentRelatedObject>,
@@ -46,18 +97,63 @@ pub struct SearchIncidentsOptionalParams {
     pub page_offset: Option<i64>,
 }
 
+impl SearchIncidentsOptionalParams {
+    /// Specifies which types of related objects should be included in the response.
+    pub fn include(&mut self, value: crate::datadogV2::model::IncidentRelatedObject) -> &mut Self {
+        self.include = Some(value);
+        self
+    }
+    /// Specifies the order of returned incidents.
+    pub fn sort(&mut self, value: crate::datadogV2::model::IncidentSearchSortOrder) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+    /// Size for a given page. The maximum allowed value is 100.
+    pub fn page_size(&mut self, value: i64) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Specific offset to use as the beginning of the returned page.
+    pub fn page_offset(&mut self, value: i64) -> &mut Self {
+        self.page_offset = Some(value);
+        self
+    }
+}
+
 /// UpdateIncidentOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::update_incident`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct UpdateIncidentOptionalParams {
     /// Specifies which types of related objects should be included in the response.
     pub include: Option<Vec<crate::datadogV2::model::IncidentRelatedObject>>,
 }
 
+impl UpdateIncidentOptionalParams {
+    /// Specifies which types of related objects should be included in the response.
+    pub fn include(
+        &mut self,
+        value: Vec<crate::datadogV2::model::IncidentRelatedObject>,
+    ) -> &mut Self {
+        self.include = Some(value);
+        self
+    }
+}
+
 /// UpdateIncidentAttachmentsOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::update_incident_attachments`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct UpdateIncidentAttachmentsOptionalParams {
     /// Specifies which types of related objects are included in the response.
     pub include: Option<Vec<crate::datadogV2::model::IncidentAttachmentRelatedObject>>,
+}
+
+impl UpdateIncidentAttachmentsOptionalParams {
+    /// Specifies which types of related objects are included in the response.
+    pub fn include(
+        &mut self,
+        value: Vec<crate::datadogV2::model::IncidentAttachmentRelatedObject>,
+    ) -> &mut Self {
+        self.include = Some(value);
+        self
+    }
 }
 
 /// CreateIncidentError is a struct for typed errors of method [`IncidentsAPI::create_incident`]

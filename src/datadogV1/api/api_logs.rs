@@ -6,12 +6,28 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// SubmitLogOptionalParams is a struct for passing parameters to the method [`LogsAPI::submit_log`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct SubmitLogOptionalParams {
     /// HTTP header used to compress the media-type.
     pub content_encoding: Option<crate::datadogV1::model::ContentEncoding>,
     /// Log tags can be passed as query parameters with `text/plain` content type.
     pub ddtags: Option<String>,
+}
+
+impl SubmitLogOptionalParams {
+    /// HTTP header used to compress the media-type.
+    pub fn content_encoding(
+        &mut self,
+        value: crate::datadogV1::model::ContentEncoding,
+    ) -> &mut Self {
+        self.content_encoding = Some(value);
+        self
+    }
+    /// Log tags can be passed as query parameters with `text/plain` content type.
+    pub fn ddtags(&mut self, value: String) -> &mut Self {
+        self.ddtags = Some(value);
+        self
+    }
 }
 
 /// ListLogsError is a struct for typed errors of method [`LogsAPI::list_logs`]

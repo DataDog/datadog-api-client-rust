@@ -60,35 +60,32 @@ impl DetailedFindingAttributes {
         }
     }
 
-    pub fn with_evaluation(
-        &mut self,
-        value: crate::datadogV2::model::FindingEvaluation,
-    ) -> &mut Self {
+    pub fn evaluation(&mut self, value: crate::datadogV2::model::FindingEvaluation) -> &mut Self {
         self.evaluation = Some(value);
         self
     }
 
-    pub fn with_evaluation_changed_at(&mut self, value: i64) -> &mut Self {
+    pub fn evaluation_changed_at(&mut self, value: i64) -> &mut Self {
         self.evaluation_changed_at = Some(value);
         self
     }
 
-    pub fn with_message(&mut self, value: String) -> &mut Self {
+    pub fn message(&mut self, value: String) -> &mut Self {
         self.message = Some(value);
         self
     }
 
-    pub fn with_mute(&mut self, value: crate::datadogV2::model::FindingMute) -> &mut Self {
+    pub fn mute(&mut self, value: crate::datadogV2::model::FindingMute) -> &mut Self {
         self.mute = Some(value);
         self
     }
 
-    pub fn with_resource(&mut self, value: String) -> &mut Self {
+    pub fn resource(&mut self, value: String) -> &mut Self {
         self.resource = Some(value);
         self
     }
 
-    pub fn with_resource_configuration(
+    pub fn resource_configuration(
         &mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
     ) -> &mut Self {
@@ -96,31 +93,32 @@ impl DetailedFindingAttributes {
         self
     }
 
-    pub fn with_resource_discovery_date(&mut self, value: i64) -> &mut Self {
+    pub fn resource_discovery_date(&mut self, value: i64) -> &mut Self {
         self.resource_discovery_date = Some(value);
         self
     }
 
-    pub fn with_resource_type(&mut self, value: String) -> &mut Self {
+    pub fn resource_type(&mut self, value: String) -> &mut Self {
         self.resource_type = Some(value);
         self
     }
 
-    pub fn with_rule(&mut self, value: crate::datadogV2::model::FindingRule) -> &mut Self {
+    pub fn rule(&mut self, value: crate::datadogV2::model::FindingRule) -> &mut Self {
         self.rule = Some(value);
         self
     }
 
-    pub fn with_status(&mut self, value: crate::datadogV2::model::FindingStatus) -> &mut Self {
+    pub fn status(&mut self, value: crate::datadogV2::model::FindingStatus) -> &mut Self {
         self.status = Some(value);
         self
     }
 
-    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
         self.tags = Some(value);
         self
     }
 }
+
 impl Default for DetailedFindingAttributes {
     fn default() -> Self {
         Self::new()

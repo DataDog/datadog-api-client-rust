@@ -32,7 +32,7 @@ impl IncidentSearchResponsePropertyFieldFacetData {
         }
     }
 
-    pub fn with_aggregates(
+    pub fn aggregates(
         &mut self,
         value: crate::datadogV2::model::IncidentSearchResponseNumericFacetDataAggregates,
     ) -> &mut Self {

@@ -6,14 +6,22 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetIncidentTeamOptionalParams is a struct for passing parameters to the method [`IncidentTeamsAPI::get_incident_team`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetIncidentTeamOptionalParams {
     /// Specifies which types of related objects should be included in the response.
     pub include: Option<crate::datadogV2::model::IncidentRelatedObject>,
 }
 
+impl GetIncidentTeamOptionalParams {
+    /// Specifies which types of related objects should be included in the response.
+    pub fn include(&mut self, value: crate::datadogV2::model::IncidentRelatedObject) -> &mut Self {
+        self.include = Some(value);
+        self
+    }
+}
+
 /// ListIncidentTeamsOptionalParams is a struct for passing parameters to the method [`IncidentTeamsAPI::list_incident_teams`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListIncidentTeamsOptionalParams {
     /// Specifies which types of related objects should be included in the response.
     pub include: Option<crate::datadogV2::model::IncidentRelatedObject>,
@@ -23,6 +31,29 @@ pub struct ListIncidentTeamsOptionalParams {
     pub page_offset: Option<i64>,
     /// A search query that filters teams by name.
     pub filter: Option<String>,
+}
+
+impl ListIncidentTeamsOptionalParams {
+    /// Specifies which types of related objects should be included in the response.
+    pub fn include(&mut self, value: crate::datadogV2::model::IncidentRelatedObject) -> &mut Self {
+        self.include = Some(value);
+        self
+    }
+    /// Size for a given page. The maximum allowed value is 100.
+    pub fn page_size(&mut self, value: i64) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Specific offset to use as the beginning of the returned page.
+    pub fn page_offset(&mut self, value: i64) -> &mut Self {
+        self.page_offset = Some(value);
+        self
+    }
+    /// A search query that filters teams by name.
+    pub fn filter(&mut self, value: String) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
 }
 
 /// CreateIncidentTeamError is a struct for typed errors of method [`IncidentTeamsAPI::create_incident_team`]

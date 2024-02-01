@@ -6,14 +6,25 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetServiceDefinitionOptionalParams is a struct for passing parameters to the method [`ServiceDefinitionAPI::get_service_definition`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetServiceDefinitionOptionalParams {
     /// The schema version desired in the response.
     pub schema_version: Option<crate::datadogV2::model::ServiceDefinitionSchemaVersions>,
 }
 
+impl GetServiceDefinitionOptionalParams {
+    /// The schema version desired in the response.
+    pub fn schema_version(
+        &mut self,
+        value: crate::datadogV2::model::ServiceDefinitionSchemaVersions,
+    ) -> &mut Self {
+        self.schema_version = Some(value);
+        self
+    }
+}
+
 /// ListServiceDefinitionsOptionalParams is a struct for passing parameters to the method [`ServiceDefinitionAPI::list_service_definitions`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListServiceDefinitionsOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
@@ -21,6 +32,27 @@ pub struct ListServiceDefinitionsOptionalParams {
     pub page_number: Option<i64>,
     /// The schema version desired in the response.
     pub schema_version: Option<crate::datadogV2::model::ServiceDefinitionSchemaVersions>,
+}
+
+impl ListServiceDefinitionsOptionalParams {
+    /// Size for a given page. The maximum allowed value is 100.
+    pub fn page_size(&mut self, value: i64) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Specific page number to return.
+    pub fn page_number(&mut self, value: i64) -> &mut Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// The schema version desired in the response.
+    pub fn schema_version(
+        &mut self,
+        value: crate::datadogV2::model::ServiceDefinitionSchemaVersions,
+    ) -> &mut Self {
+        self.schema_version = Some(value);
+        self
+    }
 }
 
 /// CreateOrUpdateServiceDefinitionsError is a struct for typed errors of method [`ServiceDefinitionAPI::create_or_update_service_definitions`]

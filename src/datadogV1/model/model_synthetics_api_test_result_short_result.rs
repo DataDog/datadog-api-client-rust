@@ -25,16 +25,17 @@ impl SyntheticsAPITestResultShortResult {
         }
     }
 
-    pub fn with_passed(&mut self, value: bool) -> &mut Self {
+    pub fn passed(&mut self, value: bool) -> &mut Self {
         self.passed = Some(value);
         self
     }
 
-    pub fn with_timings(&mut self, value: crate::datadogV1::model::SyntheticsTiming) -> &mut Self {
+    pub fn timings(&mut self, value: crate::datadogV1::model::SyntheticsTiming) -> &mut Self {
         self.timings = Some(value);
         self
     }
 }
+
 impl Default for SyntheticsAPITestResultShortResult {
     fn default() -> Self {
         Self::new()

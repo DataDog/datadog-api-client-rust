@@ -44,41 +44,42 @@ impl UsageLogsByIndexHour {
         }
     }
 
-    pub fn with_event_count(&mut self, value: i64) -> &mut Self {
+    pub fn event_count(&mut self, value: i64) -> &mut Self {
         self.event_count = Some(value);
         self
     }
 
-    pub fn with_hour(&mut self, value: String) -> &mut Self {
+    pub fn hour(&mut self, value: String) -> &mut Self {
         self.hour = Some(value);
         self
     }
 
-    pub fn with_index_id(&mut self, value: String) -> &mut Self {
+    pub fn index_id(&mut self, value: String) -> &mut Self {
         self.index_id = Some(value);
         self
     }
 
-    pub fn with_index_name(&mut self, value: String) -> &mut Self {
+    pub fn index_name(&mut self, value: String) -> &mut Self {
         self.index_name = Some(value);
         self
     }
 
-    pub fn with_org_name(&mut self, value: String) -> &mut Self {
+    pub fn org_name(&mut self, value: String) -> &mut Self {
         self.org_name = Some(value);
         self
     }
 
-    pub fn with_public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(&mut self, value: String) -> &mut Self {
         self.public_id = Some(value);
         self
     }
 
-    pub fn with_retention(&mut self, value: i64) -> &mut Self {
+    pub fn retention(&mut self, value: i64) -> &mut Self {
         self.retention = Some(value);
         self
     }
 }
+
 impl Default for UsageLogsByIndexHour {
     fn default() -> Self {
         Self::new()

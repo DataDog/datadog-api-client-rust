@@ -18,11 +18,12 @@ impl UsageObservabilityPipelinesResponse {
         UsageObservabilityPipelinesResponse { data: None }
     }
 
-    pub fn with_data(&mut self, value: Vec<crate::datadogV2::model::UsageDataObject>) -> &mut Self {
+    pub fn data(&mut self, value: Vec<crate::datadogV2::model::UsageDataObject>) -> &mut Self {
         self.data = Some(value);
         self
     }
 }
+
 impl Default for UsageObservabilityPipelinesResponse {
     fn default() -> Self {
         Self::new()

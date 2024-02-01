@@ -24,16 +24,17 @@ impl HostMapWidgetDefinitionRequests {
         }
     }
 
-    pub fn with_fill(&mut self, value: crate::datadogV1::model::HostMapRequest) -> &mut Self {
+    pub fn fill(&mut self, value: crate::datadogV1::model::HostMapRequest) -> &mut Self {
         self.fill = Some(value);
         self
     }
 
-    pub fn with_size(&mut self, value: crate::datadogV1::model::HostMapRequest) -> &mut Self {
+    pub fn size(&mut self, value: crate::datadogV1::model::HostMapRequest) -> &mut Self {
         self.size = Some(value);
         self
     }
 }
+
 impl Default for HostMapWidgetDefinitionRequests {
     fn default() -> Self {
         Self::new()

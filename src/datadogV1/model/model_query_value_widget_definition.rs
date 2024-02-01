@@ -67,12 +67,12 @@ impl QueryValueWidgetDefinition {
         }
     }
 
-    pub fn with_autoscale(&mut self, value: bool) -> &mut Self {
+    pub fn autoscale(&mut self, value: bool) -> &mut Self {
         self.autoscale = Some(value);
         self
     }
 
-    pub fn with_custom_links(
+    pub fn custom_links(
         &mut self,
         value: Vec<crate::datadogV1::model::WidgetCustomLink>,
     ) -> &mut Self {
@@ -80,30 +80,27 @@ impl QueryValueWidgetDefinition {
         self
     }
 
-    pub fn with_custom_unit(&mut self, value: String) -> &mut Self {
+    pub fn custom_unit(&mut self, value: String) -> &mut Self {
         self.custom_unit = Some(value);
         self
     }
 
-    pub fn with_precision(&mut self, value: i64) -> &mut Self {
+    pub fn precision(&mut self, value: i64) -> &mut Self {
         self.precision = Some(value);
         self
     }
 
-    pub fn with_text_align(
-        &mut self,
-        value: crate::datadogV1::model::WidgetTextAlign,
-    ) -> &mut Self {
+    pub fn text_align(&mut self, value: crate::datadogV1::model::WidgetTextAlign) -> &mut Self {
         self.text_align = Some(value);
         self
     }
 
-    pub fn with_time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
+    pub fn time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
         self.time = Some(value);
         self
     }
 
-    pub fn with_timeseries_background(
+    pub fn timeseries_background(
         &mut self,
         value: crate::datadogV1::model::TimeseriesBackground,
     ) -> &mut Self {
@@ -111,20 +108,17 @@ impl QueryValueWidgetDefinition {
         self
     }
 
-    pub fn with_title(&mut self, value: String) -> &mut Self {
+    pub fn title(&mut self, value: String) -> &mut Self {
         self.title = Some(value);
         self
     }
 
-    pub fn with_title_align(
-        &mut self,
-        value: crate::datadogV1::model::WidgetTextAlign,
-    ) -> &mut Self {
+    pub fn title_align(&mut self, value: crate::datadogV1::model::WidgetTextAlign) -> &mut Self {
         self.title_align = Some(value);
         self
     }
 
-    pub fn with_title_size(&mut self, value: String) -> &mut Self {
+    pub fn title_size(&mut self, value: String) -> &mut Self {
         self.title_size = Some(value);
         self
     }

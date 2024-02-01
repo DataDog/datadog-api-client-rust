@@ -18,14 +18,12 @@ impl GCPSTSServiceAccountCreateRequest {
         GCPSTSServiceAccountCreateRequest { data: None }
     }
 
-    pub fn with_data(
-        &mut self,
-        value: crate::datadogV2::model::GCPSTSServiceAccountData,
-    ) -> &mut Self {
+    pub fn data(&mut self, value: crate::datadogV2::model::GCPSTSServiceAccountData) -> &mut Self {
         self.data = Some(value);
         self
     }
 }
+
 impl Default for GCPSTSServiceAccountCreateRequest {
     fn default() -> Self {
         Self::new()

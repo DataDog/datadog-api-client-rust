@@ -84,56 +84,57 @@ impl UsageCloudSecurityPostureManagementHour {
         }
     }
 
-    pub fn with_aas_host_count(&mut self, value: Option<f64>) -> &mut Self {
+    pub fn aas_host_count(&mut self, value: Option<f64>) -> &mut Self {
         self.aas_host_count = Some(value);
         self
     }
 
-    pub fn with_aws_host_count(&mut self, value: Option<f64>) -> &mut Self {
+    pub fn aws_host_count(&mut self, value: Option<f64>) -> &mut Self {
         self.aws_host_count = Some(value);
         self
     }
 
-    pub fn with_azure_host_count(&mut self, value: Option<f64>) -> &mut Self {
+    pub fn azure_host_count(&mut self, value: Option<f64>) -> &mut Self {
         self.azure_host_count = Some(value);
         self
     }
 
-    pub fn with_compliance_host_count(&mut self, value: Option<f64>) -> &mut Self {
+    pub fn compliance_host_count(&mut self, value: Option<f64>) -> &mut Self {
         self.compliance_host_count = Some(value);
         self
     }
 
-    pub fn with_container_count(&mut self, value: Option<f64>) -> &mut Self {
+    pub fn container_count(&mut self, value: Option<f64>) -> &mut Self {
         self.container_count = Some(value);
         self
     }
 
-    pub fn with_gcp_host_count(&mut self, value: Option<f64>) -> &mut Self {
+    pub fn gcp_host_count(&mut self, value: Option<f64>) -> &mut Self {
         self.gcp_host_count = Some(value);
         self
     }
 
-    pub fn with_host_count(&mut self, value: Option<f64>) -> &mut Self {
+    pub fn host_count(&mut self, value: Option<f64>) -> &mut Self {
         self.host_count = Some(value);
         self
     }
 
-    pub fn with_hour(&mut self, value: String) -> &mut Self {
+    pub fn hour(&mut self, value: String) -> &mut Self {
         self.hour = Some(value);
         self
     }
 
-    pub fn with_org_name(&mut self, value: String) -> &mut Self {
+    pub fn org_name(&mut self, value: String) -> &mut Self {
         self.org_name = Some(value);
         self
     }
 
-    pub fn with_public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(&mut self, value: String) -> &mut Self {
         self.public_id = Some(value);
         self
     }
 }
+
 impl Default for UsageCloudSecurityPostureManagementHour {
     fn default() -> Self {
         Self::new()

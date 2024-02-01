@@ -28,7 +28,7 @@ impl SyntheticsBatchDetailsData {
         }
     }
 
-    pub fn with_metadata(
+    pub fn metadata(
         &mut self,
         value: crate::datadogV1::model::SyntheticsCIBatchMetadata,
     ) -> &mut Self {
@@ -36,7 +36,7 @@ impl SyntheticsBatchDetailsData {
         self
     }
 
-    pub fn with_results(
+    pub fn results(
         &mut self,
         value: Vec<crate::datadogV1::model::SyntheticsBatchResult>,
     ) -> &mut Self {
@@ -44,11 +44,12 @@ impl SyntheticsBatchDetailsData {
         self
     }
 
-    pub fn with_status(&mut self, value: crate::datadogV1::model::SyntheticsStatus) -> &mut Self {
+    pub fn status(&mut self, value: crate::datadogV1::model::SyntheticsStatus) -> &mut Self {
         self.status = Some(value);
         self
     }
 }
+
 impl Default for SyntheticsBatchDetailsData {
     fn default() -> Self {
         Self::new()

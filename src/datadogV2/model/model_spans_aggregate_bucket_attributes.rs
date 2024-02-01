@@ -30,7 +30,7 @@ impl SpansAggregateBucketAttributes {
         }
     }
 
-    pub fn with_by(
+    pub fn by(
         &mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
     ) -> &mut Self {
@@ -38,7 +38,7 @@ impl SpansAggregateBucketAttributes {
         self
     }
 
-    pub fn with_compute(
+    pub fn compute(
         &mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
     ) -> &mut Self {
@@ -46,7 +46,7 @@ impl SpansAggregateBucketAttributes {
         self
     }
 
-    pub fn with_computes(
+    pub fn computes(
         &mut self,
         value: std::collections::BTreeMap<
             String,
@@ -57,6 +57,7 @@ impl SpansAggregateBucketAttributes {
         self
     }
 }
+
 impl Default for SpansAggregateBucketAttributes {
     fn default() -> Self {
         Self::new()

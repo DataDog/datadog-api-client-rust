@@ -24,16 +24,17 @@ impl ProcessSummariesResponse {
         }
     }
 
-    pub fn with_data(&mut self, value: Vec<crate::datadogV2::model::ProcessSummary>) -> &mut Self {
+    pub fn data(&mut self, value: Vec<crate::datadogV2::model::ProcessSummary>) -> &mut Self {
         self.data = Some(value);
         self
     }
 
-    pub fn with_meta(&mut self, value: crate::datadogV2::model::ProcessSummariesMeta) -> &mut Self {
+    pub fn meta(&mut self, value: crate::datadogV2::model::ProcessSummariesMeta) -> &mut Self {
         self.meta = Some(value);
         self
     }
 }
+
 impl Default for ProcessSummariesResponse {
     fn default() -> Self {
         Self::new()

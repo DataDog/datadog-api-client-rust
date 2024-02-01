@@ -7,6 +7,6 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ContainerImageItem {
-    ContainerImage(crate::datadogV2::model::ContainerImage),
-    ContainerImageGroup(crate::datadogV2::model::ContainerImageGroup),
+    ContainerImage(Box<crate::datadogV2::model::ContainerImage>),
+    ContainerImageGroup(Box<crate::datadogV2::model::ContainerImageGroup>),
 }

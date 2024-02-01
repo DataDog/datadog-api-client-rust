@@ -33,29 +33,27 @@ impl SpansAggregateRequestAttributes {
         }
     }
 
-    pub fn with_compute(&mut self, value: Vec<crate::datadogV2::model::SpansCompute>) -> &mut Self {
+    pub fn compute(&mut self, value: Vec<crate::datadogV2::model::SpansCompute>) -> &mut Self {
         self.compute = Some(value);
         self
     }
 
-    pub fn with_filter(&mut self, value: crate::datadogV2::model::SpansQueryFilter) -> &mut Self {
+    pub fn filter(&mut self, value: crate::datadogV2::model::SpansQueryFilter) -> &mut Self {
         self.filter = Some(value);
         self
     }
 
-    pub fn with_group_by(
-        &mut self,
-        value: Vec<crate::datadogV2::model::SpansGroupBy>,
-    ) -> &mut Self {
+    pub fn group_by(&mut self, value: Vec<crate::datadogV2::model::SpansGroupBy>) -> &mut Self {
         self.group_by = Some(value);
         self
     }
 
-    pub fn with_options(&mut self, value: crate::datadogV2::model::SpansQueryOptions) -> &mut Self {
+    pub fn options(&mut self, value: crate::datadogV2::model::SpansQueryOptions) -> &mut Self {
         self.options = Some(value);
         self
     }
 }
+
 impl Default for SpansAggregateRequestAttributes {
     fn default() -> Self {
         Self::new()

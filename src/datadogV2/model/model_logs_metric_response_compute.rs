@@ -29,7 +29,7 @@ impl LogsMetricResponseCompute {
         }
     }
 
-    pub fn with_aggregation_type(
+    pub fn aggregation_type(
         &mut self,
         value: crate::datadogV2::model::LogsMetricResponseComputeAggregationType,
     ) -> &mut Self {
@@ -37,16 +37,17 @@ impl LogsMetricResponseCompute {
         self
     }
 
-    pub fn with_include_percentiles(&mut self, value: bool) -> &mut Self {
+    pub fn include_percentiles(&mut self, value: bool) -> &mut Self {
         self.include_percentiles = Some(value);
         self
     }
 
-    pub fn with_path(&mut self, value: String) -> &mut Self {
+    pub fn path(&mut self, value: String) -> &mut Self {
         self.path = Some(value);
         self
     }
 }
+
 impl Default for LogsMetricResponseCompute {
     fn default() -> Self {
         Self::new()

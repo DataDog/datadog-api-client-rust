@@ -24,12 +24,12 @@ impl TopologyRequest {
         }
     }
 
-    pub fn with_query(&mut self, value: crate::datadogV1::model::TopologyQuery) -> &mut Self {
+    pub fn query(&mut self, value: crate::datadogV1::model::TopologyQuery) -> &mut Self {
         self.query = Some(value);
         self
     }
 
-    pub fn with_request_type(
+    pub fn request_type(
         &mut self,
         value: crate::datadogV1::model::TopologyRequestType,
     ) -> &mut Self {
@@ -37,6 +37,7 @@ impl TopologyRequest {
         self
     }
 }
+
 impl Default for TopologyRequest {
     fn default() -> Self {
         Self::new()

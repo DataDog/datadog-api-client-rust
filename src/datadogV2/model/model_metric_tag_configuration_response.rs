@@ -18,14 +18,12 @@ impl MetricTagConfigurationResponse {
         MetricTagConfigurationResponse { data: None }
     }
 
-    pub fn with_data(
-        &mut self,
-        value: crate::datadogV2::model::MetricTagConfiguration,
-    ) -> &mut Self {
+    pub fn data(&mut self, value: crate::datadogV2::model::MetricTagConfiguration) -> &mut Self {
         self.data = Some(value);
         self
     }
 }
+
 impl Default for MetricTagConfigurationResponse {
     fn default() -> Self {
         Self::new()

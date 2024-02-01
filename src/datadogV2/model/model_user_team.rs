@@ -32,15 +32,12 @@ impl UserTeam {
         }
     }
 
-    pub fn with_attributes(
-        &mut self,
-        value: crate::datadogV2::model::UserTeamAttributes,
-    ) -> &mut Self {
+    pub fn attributes(&mut self, value: crate::datadogV2::model::UserTeamAttributes) -> &mut Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn with_relationships(
+    pub fn relationships(
         &mut self,
         value: crate::datadogV2::model::UserTeamRelationships,
     ) -> &mut Self {

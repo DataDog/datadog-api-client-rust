@@ -40,7 +40,7 @@ impl SecurityMonitoringSignalRuleQuery {
         }
     }
 
-    pub fn with_aggregation(
+    pub fn aggregation(
         &mut self,
         value: crate::datadogV2::model::SecurityMonitoringRuleQueryAggregation,
     ) -> &mut Self {
@@ -48,22 +48,22 @@ impl SecurityMonitoringSignalRuleQuery {
         self
     }
 
-    pub fn with_correlated_by_fields(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn correlated_by_fields(&mut self, value: Vec<String>) -> &mut Self {
         self.correlated_by_fields = Some(value);
         self
     }
 
-    pub fn with_correlated_query_index(&mut self, value: i32) -> &mut Self {
+    pub fn correlated_query_index(&mut self, value: i32) -> &mut Self {
         self.correlated_query_index = Some(value);
         self
     }
 
-    pub fn with_metrics(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn metrics(&mut self, value: Vec<String>) -> &mut Self {
         self.metrics = Some(value);
         self
     }
 
-    pub fn with_name(&mut self, value: String) -> &mut Self {
+    pub fn name(&mut self, value: String) -> &mut Self {
         self.name = Some(value);
         self
     }

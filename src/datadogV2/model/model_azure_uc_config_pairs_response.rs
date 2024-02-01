@@ -18,11 +18,12 @@ impl AzureUCConfigPairsResponse {
         AzureUCConfigPairsResponse { data: None }
     }
 
-    pub fn with_data(&mut self, value: crate::datadogV2::model::AzureUCConfigPair) -> &mut Self {
+    pub fn data(&mut self, value: crate::datadogV2::model::AzureUCConfigPair) -> &mut Self {
         self.data = Some(value);
         self
     }
 }
+
 impl Default for AzureUCConfigPairsResponse {
     fn default() -> Self {
         Self::new()

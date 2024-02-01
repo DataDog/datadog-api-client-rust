@@ -18,7 +18,7 @@ impl MonitorOptionsCustomSchedule {
         MonitorOptionsCustomSchedule { recurrences: None }
     }
 
-    pub fn with_recurrences(
+    pub fn recurrences(
         &mut self,
         value: Vec<crate::datadogV1::model::MonitorOptionsCustomScheduleRecurrence>,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl MonitorOptionsCustomSchedule {
         self
     }
 }
+
 impl Default for MonitorOptionsCustomSchedule {
     fn default() -> Self {
         Self::new()

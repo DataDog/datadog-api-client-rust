@@ -28,7 +28,7 @@ impl SpansMetricResponseAttributes {
         }
     }
 
-    pub fn with_compute(
+    pub fn compute(
         &mut self,
         value: crate::datadogV2::model::SpansMetricResponseCompute,
     ) -> &mut Self {
@@ -36,7 +36,7 @@ impl SpansMetricResponseAttributes {
         self
     }
 
-    pub fn with_filter(
+    pub fn filter(
         &mut self,
         value: crate::datadogV2::model::SpansMetricResponseFilter,
     ) -> &mut Self {
@@ -44,7 +44,7 @@ impl SpansMetricResponseAttributes {
         self
     }
 
-    pub fn with_group_by(
+    pub fn group_by(
         &mut self,
         value: Vec<crate::datadogV2::model::SpansMetricResponseGroupBy>,
     ) -> &mut Self {
@@ -52,6 +52,7 @@ impl SpansMetricResponseAttributes {
         self
     }
 }
+
 impl Default for SpansMetricResponseAttributes {
     fn default() -> Self {
         Self::new()

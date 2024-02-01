@@ -24,7 +24,7 @@ impl UsageSpecifiedCustomReportsResponse {
         }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: crate::datadogV1::model::UsageSpecifiedCustomReportsData,
     ) -> &mut Self {
@@ -32,7 +32,7 @@ impl UsageSpecifiedCustomReportsResponse {
         self
     }
 
-    pub fn with_meta(
+    pub fn meta(
         &mut self,
         value: crate::datadogV1::model::UsageSpecifiedCustomReportsMeta,
     ) -> &mut Self {
@@ -40,6 +40,7 @@ impl UsageSpecifiedCustomReportsResponse {
         self
     }
 }
+
 impl Default for UsageSpecifiedCustomReportsResponse {
     fn default() -> Self {
         Self::new()

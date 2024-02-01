@@ -30,12 +30,12 @@ impl SecurityMonitoringSignalStateUpdateData {
         }
     }
 
-    pub fn with_id(&mut self, value: serde_json::Value) -> &mut Self {
+    pub fn id(&mut self, value: serde_json::Value) -> &mut Self {
         self.id = Some(value);
         self
     }
 
-    pub fn with_type_(
+    pub fn type_(
         &mut self,
         value: crate::datadogV2::model::SecurityMonitoringSignalMetadataType,
     ) -> &mut Self {

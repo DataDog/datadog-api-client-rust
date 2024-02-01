@@ -6,7 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetDailyCustomReportsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_daily_custom_reports`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetDailyCustomReportsOptionalParams {
     /// The number of files to return in the response. `[default=60]`.
     pub page_size: Option<i64>,
@@ -18,8 +18,31 @@ pub struct GetDailyCustomReportsOptionalParams {
     pub sort: Option<crate::datadogV1::model::UsageSort>,
 }
 
+impl GetDailyCustomReportsOptionalParams {
+    /// The number of files to return in the response. `[default=60]`.
+    pub fn page_size(&mut self, value: i64) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// The identifier of the first page to return. This parameter is used for the pagination feature `[default=0]`.
+    pub fn page_number(&mut self, value: i64) -> &mut Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// The direction to sort by: `[desc, asc]`.
+    pub fn sort_dir(&mut self, value: crate::datadogV1::model::UsageSortDirection) -> &mut Self {
+        self.sort_dir = Some(value);
+        self
+    }
+    /// The field to sort by: `[computed_on, size, start_date, end_date]`.
+    pub fn sort(&mut self, value: crate::datadogV1::model::UsageSort) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+}
+
 /// GetHourlyUsageAttributionOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_hourly_usage_attribution`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetHourlyUsageAttributionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
@@ -34,24 +57,68 @@ pub struct GetHourlyUsageAttributionOptionalParams {
     pub include_descendants: Option<bool>,
 }
 
+impl GetHourlyUsageAttributionOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+    /// List following results with a next_record_id provided in the previous query.
+    pub fn next_record_id(&mut self, value: String) -> &mut Self {
+        self.next_record_id = Some(value);
+        self
+    }
+    /// Comma separated list of tags used to group usage. If no value is provided the usage will not be broken down by tags.
+    ///
+    /// To see which tags are available, look for the value of `tag_config_source` in the API response.
+    pub fn tag_breakdown_keys(&mut self, value: String) -> &mut Self {
+        self.tag_breakdown_keys = Some(value);
+        self
+    }
+    /// Include child org usage in the response. Defaults to `true`.
+    pub fn include_descendants(&mut self, value: bool) -> &mut Self {
+        self.include_descendants = Some(value);
+        self
+    }
+}
+
 /// GetIncidentManagementOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_incident_management`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetIncidentManagementOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
+impl GetIncidentManagementOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
 /// GetIngestedSpansOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_ingested_spans`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetIngestedSpansOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
+impl GetIngestedSpansOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
 /// GetMonthlyCustomReportsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_monthly_custom_reports`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetMonthlyCustomReportsOptionalParams {
     /// The number of files to return in the response `[default=60].`
     pub page_size: Option<i64>,
@@ -63,8 +130,31 @@ pub struct GetMonthlyCustomReportsOptionalParams {
     pub sort: Option<crate::datadogV1::model::UsageSort>,
 }
 
+impl GetMonthlyCustomReportsOptionalParams {
+    /// The number of files to return in the response `[default=60].`
+    pub fn page_size(&mut self, value: i64) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// The identifier of the first page to return. This parameter is used for the pagination feature `[default=0]`.
+    pub fn page_number(&mut self, value: i64) -> &mut Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// The direction to sort by: `[desc, asc]`.
+    pub fn sort_dir(&mut self, value: crate::datadogV1::model::UsageSortDirection) -> &mut Self {
+        self.sort_dir = Some(value);
+        self
+    }
+    /// The field to sort by: `[computed_on, size, start_date, end_date]`.
+    pub fn sort(&mut self, value: crate::datadogV1::model::UsageSort) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+}
+
 /// GetMonthlyUsageAttributionOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_monthly_usage_attribution`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetMonthlyUsageAttributionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
     pub end_month: Option<String>,
@@ -82,16 +172,66 @@ pub struct GetMonthlyUsageAttributionOptionalParams {
     pub include_descendants: Option<bool>,
 }
 
+impl GetMonthlyUsageAttributionOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
+    pub fn end_month(&mut self, value: String) -> &mut Self {
+        self.end_month = Some(value);
+        self
+    }
+    /// The direction to sort by: `[desc, asc]`.
+    pub fn sort_direction(
+        &mut self,
+        value: crate::datadogV1::model::UsageSortDirection,
+    ) -> &mut Self {
+        self.sort_direction = Some(value);
+        self
+    }
+    /// The field to sort by.
+    pub fn sort_name(
+        &mut self,
+        value: crate::datadogV1::model::MonthlyUsageAttributionSupportedMetrics,
+    ) -> &mut Self {
+        self.sort_name = Some(value);
+        self
+    }
+    /// Comma separated list of tag keys used to group usage. If no value is provided the usage will not be broken down by tags.
+    ///
+    /// To see which tags are available, look for the value of `tag_config_source` in the API response.
+    pub fn tag_breakdown_keys(&mut self, value: String) -> &mut Self {
+        self.tag_breakdown_keys = Some(value);
+        self
+    }
+    /// List following results with a next_record_id provided in the previous query.
+    pub fn next_record_id(&mut self, value: String) -> &mut Self {
+        self.next_record_id = Some(value);
+        self
+    }
+    /// Include child org usage in the response. Defaults to `true`.
+    pub fn include_descendants(&mut self, value: bool) -> &mut Self {
+        self.include_descendants = Some(value);
+        self
+    }
+}
+
 /// GetUsageAnalyzedLogsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_analyzed_logs`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageAnalyzedLogsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
+impl GetUsageAnalyzedLogsOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
 /// GetUsageAttributionOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_attribution`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageAttributionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
     pub end_month: Option<String>,
@@ -107,98 +247,236 @@ pub struct GetUsageAttributionOptionalParams {
     pub limit: Option<i64>,
 }
 
+impl GetUsageAttributionOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
+    pub fn end_month(&mut self, value: String) -> &mut Self {
+        self.end_month = Some(value);
+        self
+    }
+    /// The direction to sort by: `[desc, asc]`.
+    pub fn sort_direction(
+        &mut self,
+        value: crate::datadogV1::model::UsageSortDirection,
+    ) -> &mut Self {
+        self.sort_direction = Some(value);
+        self
+    }
+    /// The field to sort by.
+    pub fn sort_name(&mut self, value: crate::datadogV1::model::UsageAttributionSort) -> &mut Self {
+        self.sort_name = Some(value);
+        self
+    }
+    /// Include child org usage in the response. Defaults to false.
+    pub fn include_descendants(&mut self, value: bool) -> &mut Self {
+        self.include_descendants = Some(value);
+        self
+    }
+    /// Number of records to skip before beginning to return.
+    pub fn offset(&mut self, value: i64) -> &mut Self {
+        self.offset = Some(value);
+        self
+    }
+    /// Maximum number of records to be returned.
+    pub fn limit(&mut self, value: i64) -> &mut Self {
+        self.limit = Some(value);
+        self
+    }
+}
+
 /// GetUsageAuditLogsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_audit_logs`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageAuditLogsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
+impl GetUsageAuditLogsOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
 /// GetUsageBillableSummaryOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_billable_summary`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageBillableSummaryOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage starting this month.
     pub month: Option<String>,
 }
 
+impl GetUsageBillableSummaryOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage starting this month.
+    pub fn month(&mut self, value: String) -> &mut Self {
+        self.month = Some(value);
+        self
+    }
+}
+
 /// GetUsageCIAppOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_ci_app`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageCIAppOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
+impl GetUsageCIAppOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
 /// GetUsageCWSOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_cws`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageCWSOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
+impl GetUsageCWSOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
 /// GetUsageCloudSecurityPostureManagementOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_cloud_security_posture_management`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageCloudSecurityPostureManagementOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
+impl GetUsageCloudSecurityPostureManagementOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
 /// GetUsageDBMOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_dbm`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageDBMOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
+impl GetUsageDBMOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
 /// GetUsageFargateOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_fargate`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageFargateOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
     pub end_hr: Option<String>,
 }
 
+impl GetUsageFargateOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
 /// GetUsageHostsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_hosts`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageHostsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
     pub end_hr: Option<String>,
 }
 
+impl GetUsageHostsOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
 /// GetUsageIndexedSpansOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_indexed_spans`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageIndexedSpansOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending **before** this hour.
     pub end_hr: Option<String>,
 }
 
+impl GetUsageIndexedSpansOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
 /// GetUsageInternetOfThingsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_internet_of_things`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageInternetOfThingsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
+impl GetUsageInternetOfThingsOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
 /// GetUsageLambdaOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_lambda`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageLambdaOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
     pub end_hr: Option<String>,
 }
 
+impl GetUsageLambdaOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
 /// GetUsageLogsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_logs`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageLogsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
     pub end_hr: Option<String>,
 }
 
+impl GetUsageLogsOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
 /// GetUsageLogsByIndexOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_logs_by_index`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageLogsByIndexOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
     pub end_hr: Option<String>,
@@ -206,47 +484,104 @@ pub struct GetUsageLogsByIndexOptionalParams {
     pub index_name: Option<Vec<String>>,
 }
 
+impl GetUsageLogsByIndexOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+    /// Comma-separated list of log index names.
+    pub fn index_name(&mut self, value: Vec<String>) -> &mut Self {
+        self.index_name = Some(value);
+        self
+    }
+}
+
 /// GetUsageLogsByRetentionOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_logs_by_retention`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageLogsByRetentionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
+impl GetUsageLogsByRetentionOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
 /// GetUsageNetworkFlowsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_network_flows`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageNetworkFlowsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
+impl GetUsageNetworkFlowsOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
 /// GetUsageNetworkHostsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_network_hosts`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageNetworkHostsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
     pub end_hr: Option<String>,
 }
 
+impl GetUsageNetworkHostsOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
 /// GetUsageOnlineArchiveOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_online_archive`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageOnlineArchiveOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
+impl GetUsageOnlineArchiveOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
 /// GetUsageProfilingOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_profiling`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageProfilingOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
+impl GetUsageProfilingOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
 /// GetUsageRumSessionsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_rum_sessions`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageRumSessionsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
     pub end_hr: Option<String>,
@@ -254,31 +589,70 @@ pub struct GetUsageRumSessionsOptionalParams {
     pub type_: Option<String>,
 }
 
+impl GetUsageRumSessionsOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+    /// RUM type: `[browser, mobile]`. Defaults to `browser`.
+    pub fn type_(&mut self, value: String) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
+}
+
 /// GetUsageRumUnitsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_rum_units`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageRumUnitsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
     pub end_hr: Option<String>,
 }
 
+impl GetUsageRumUnitsOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
 /// GetUsageSDSOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_sds`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageSDSOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
+impl GetUsageSDSOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
 /// GetUsageSNMPOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_snmp`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageSNMPOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
+impl GetUsageSNMPOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
 /// GetUsageSummaryOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_summary`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageSummaryOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
     pub end_month: Option<String>,
@@ -286,36 +660,81 @@ pub struct GetUsageSummaryOptionalParams {
     pub include_org_details: Option<bool>,
 }
 
+impl GetUsageSummaryOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
+    pub fn end_month(&mut self, value: String) -> &mut Self {
+        self.end_month = Some(value);
+        self
+    }
+    /// Include usage summaries for each sub-org.
+    pub fn include_org_details(&mut self, value: bool) -> &mut Self {
+        self.include_org_details = Some(value);
+        self
+    }
+}
+
 /// GetUsageSyntheticsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_synthetics`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageSyntheticsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
     pub end_hr: Option<String>,
 }
 
+impl GetUsageSyntheticsOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
 /// GetUsageSyntheticsAPIOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_synthetics_api`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageSyntheticsAPIOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
     pub end_hr: Option<String>,
 }
 
+impl GetUsageSyntheticsAPIOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
 /// GetUsageSyntheticsBrowserOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_synthetics_browser`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageSyntheticsBrowserOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
     pub end_hr: Option<String>,
 }
 
+impl GetUsageSyntheticsBrowserOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
 /// GetUsageTimeseriesOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_timeseries`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageTimeseriesOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
     pub end_hr: Option<String>,
 }
 
+impl GetUsageTimeseriesOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
 /// GetUsageTopAvgMetricsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_top_avg_metrics`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageTopAvgMetricsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: [YYYY-MM] for usage beginning at this hour. (Either month or day should be specified, but not both)
     pub month: Option<String>,
@@ -327,6 +746,34 @@ pub struct GetUsageTopAvgMetricsOptionalParams {
     pub limit: Option<i32>,
     /// List following results with a next_record_id provided in the previous query.
     pub next_record_id: Option<String>,
+}
+
+impl GetUsageTopAvgMetricsOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to month: [YYYY-MM] for usage beginning at this hour. (Either month or day should be specified, but not both)
+    pub fn month(&mut self, value: String) -> &mut Self {
+        self.month = Some(value);
+        self
+    }
+    /// Datetime in ISO-8601 format, UTC, precise to day: [YYYY-MM-DD] for usage beginning at this hour. (Either month or day should be specified, but not both)
+    pub fn day(&mut self, value: String) -> &mut Self {
+        self.day = Some(value);
+        self
+    }
+    /// Comma-separated list of metric names.
+    pub fn names(&mut self, value: Vec<String>) -> &mut Self {
+        self.names = Some(value);
+        self
+    }
+    /// Maximum number of results to return (between 1 and 5000) - defaults to 500 results if limit not specified.
+    pub fn limit(&mut self, value: i32) -> &mut Self {
+        self.limit = Some(value);
+        self
+    }
+    /// List following results with a next_record_id provided in the previous query.
+    pub fn next_record_id(&mut self, value: String) -> &mut Self {
+        self.next_record_id = Some(value);
+        self
+    }
 }
 
 /// GetDailyCustomReportsError is a struct for typed errors of method [`UsageMeteringAPI::get_daily_custom_reports`]

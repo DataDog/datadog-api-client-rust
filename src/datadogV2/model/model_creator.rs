@@ -28,21 +28,22 @@ impl Creator {
         }
     }
 
-    pub fn with_email(&mut self, value: String) -> &mut Self {
+    pub fn email(&mut self, value: String) -> &mut Self {
         self.email = Some(value);
         self
     }
 
-    pub fn with_handle(&mut self, value: String) -> &mut Self {
+    pub fn handle(&mut self, value: String) -> &mut Self {
         self.handle = Some(value);
         self
     }
 
-    pub fn with_name(&mut self, value: Option<String>) -> &mut Self {
+    pub fn name(&mut self, value: Option<String>) -> &mut Self {
         self.name = Some(value);
         self
     }
 }
+
 impl Default for Creator {
     fn default() -> Self {
         Self::new()

@@ -8,12 +8,12 @@ use serde::{Deserialize, Serialize};
 #[serde(untagged)]
 pub enum DistributionWidgetHistogramRequestQuery {
     FormulaAndFunctionMetricQueryDefinition(
-        crate::datadogV1::model::FormulaAndFunctionMetricQueryDefinition,
+        Box<crate::datadogV1::model::FormulaAndFunctionMetricQueryDefinition>,
     ),
     FormulaAndFunctionEventQueryDefinition(
-        crate::datadogV1::model::FormulaAndFunctionEventQueryDefinition,
+        Box<crate::datadogV1::model::FormulaAndFunctionEventQueryDefinition>,
     ),
     FormulaAndFunctionApmResourceStatsQueryDefinition(
-        crate::datadogV1::model::FormulaAndFunctionApmResourceStatsQueryDefinition,
+        Box<crate::datadogV1::model::FormulaAndFunctionApmResourceStatsQueryDefinition>,
     ),
 }

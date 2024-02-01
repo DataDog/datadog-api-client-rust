@@ -24,7 +24,7 @@ impl IncidentFieldAttributesSingleValue {
         }
     }
 
-    pub fn with_type_(
+    pub fn type_(
         &mut self,
         value: crate::datadogV2::model::IncidentFieldAttributesSingleValueType,
     ) -> &mut Self {
@@ -32,11 +32,12 @@ impl IncidentFieldAttributesSingleValue {
         self
     }
 
-    pub fn with_value(&mut self, value: Option<String>) -> &mut Self {
+    pub fn value(&mut self, value: Option<String>) -> &mut Self {
         self.value = Some(value);
         self
     }
 }
+
 impl Default for IncidentFieldAttributesSingleValue {
     fn default() -> Self {
         Self::new()

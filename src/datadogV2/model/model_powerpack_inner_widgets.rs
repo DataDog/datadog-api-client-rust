@@ -26,7 +26,7 @@ impl PowerpackInnerWidgets {
         }
     }
 
-    pub fn with_layout(
+    pub fn layout(
         &mut self,
         value: crate::datadogV2::model::PowerpackInnerWidgetLayout,
     ) -> &mut Self {

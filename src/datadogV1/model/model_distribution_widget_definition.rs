@@ -76,7 +76,7 @@ impl DistributionWidgetDefinition {
     }
 
     #[allow(deprecated)]
-    pub fn with_custom_links(
+    pub fn custom_links(
         &mut self,
         value: Vec<crate::datadogV1::model::WidgetCustomLink>,
     ) -> &mut Self {
@@ -85,64 +85,55 @@ impl DistributionWidgetDefinition {
     }
 
     #[allow(deprecated)]
-    pub fn with_legend_size(&mut self, value: String) -> &mut Self {
+    pub fn legend_size(&mut self, value: String) -> &mut Self {
         self.legend_size = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_markers(&mut self, value: Vec<crate::datadogV1::model::WidgetMarker>) -> &mut Self {
+    pub fn markers(&mut self, value: Vec<crate::datadogV1::model::WidgetMarker>) -> &mut Self {
         self.markers = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_show_legend(&mut self, value: bool) -> &mut Self {
+    pub fn show_legend(&mut self, value: bool) -> &mut Self {
         self.show_legend = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
+    pub fn time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
         self.time = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_title(&mut self, value: String) -> &mut Self {
+    pub fn title(&mut self, value: String) -> &mut Self {
         self.title = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_title_align(
-        &mut self,
-        value: crate::datadogV1::model::WidgetTextAlign,
-    ) -> &mut Self {
+    pub fn title_align(&mut self, value: crate::datadogV1::model::WidgetTextAlign) -> &mut Self {
         self.title_align = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_title_size(&mut self, value: String) -> &mut Self {
+    pub fn title_size(&mut self, value: String) -> &mut Self {
         self.title_size = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_xaxis(
-        &mut self,
-        value: crate::datadogV1::model::DistributionWidgetXAxis,
-    ) -> &mut Self {
+    pub fn xaxis(&mut self, value: crate::datadogV1::model::DistributionWidgetXAxis) -> &mut Self {
         self.xaxis = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_yaxis(
-        &mut self,
-        value: crate::datadogV1::model::DistributionWidgetYAxis,
-    ) -> &mut Self {
+    pub fn yaxis(&mut self, value: crate::datadogV1::model::DistributionWidgetYAxis) -> &mut Self {
         self.yaxis = Some(value);
         self
     }

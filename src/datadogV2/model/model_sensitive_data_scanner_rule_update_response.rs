@@ -18,7 +18,7 @@ impl SensitiveDataScannerRuleUpdateResponse {
         SensitiveDataScannerRuleUpdateResponse { meta: None }
     }
 
-    pub fn with_meta(
+    pub fn meta(
         &mut self,
         value: crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl SensitiveDataScannerRuleUpdateResponse {
         self
     }
 }
+
 impl Default for SensitiveDataScannerRuleUpdateResponse {
     fn default() -> Self {
         Self::new()

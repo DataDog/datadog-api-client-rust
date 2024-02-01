@@ -40,7 +40,7 @@ impl HourlyUsageAttributes {
         }
     }
 
-    pub fn with_measurements(
+    pub fn measurements(
         &mut self,
         value: Vec<crate::datadogV2::model::HourlyUsageMeasurement>,
     ) -> &mut Self {
@@ -48,31 +48,32 @@ impl HourlyUsageAttributes {
         self
     }
 
-    pub fn with_org_name(&mut self, value: String) -> &mut Self {
+    pub fn org_name(&mut self, value: String) -> &mut Self {
         self.org_name = Some(value);
         self
     }
 
-    pub fn with_product_family(&mut self, value: String) -> &mut Self {
+    pub fn product_family(&mut self, value: String) -> &mut Self {
         self.product_family = Some(value);
         self
     }
 
-    pub fn with_public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(&mut self, value: String) -> &mut Self {
         self.public_id = Some(value);
         self
     }
 
-    pub fn with_region(&mut self, value: String) -> &mut Self {
+    pub fn region(&mut self, value: String) -> &mut Self {
         self.region = Some(value);
         self
     }
 
-    pub fn with_timestamp(&mut self, value: String) -> &mut Self {
+    pub fn timestamp(&mut self, value: String) -> &mut Self {
         self.timestamp = Some(value);
         self
     }
 }
+
 impl Default for HourlyUsageAttributes {
     fn default() -> Self {
         Self::new()

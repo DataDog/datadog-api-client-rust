@@ -24,16 +24,17 @@ impl ListFindingsMeta {
         }
     }
 
-    pub fn with_page(&mut self, value: crate::datadogV2::model::ListFindingsPage) -> &mut Self {
+    pub fn page(&mut self, value: crate::datadogV2::model::ListFindingsPage) -> &mut Self {
         self.page = Some(value);
         self
     }
 
-    pub fn with_snapshot_timestamp(&mut self, value: i64) -> &mut Self {
+    pub fn snapshot_timestamp(&mut self, value: i64) -> &mut Self {
         self.snapshot_timestamp = Some(value);
         self
     }
 }
+
 impl Default for ListFindingsMeta {
     fn default() -> Self {
         Self::new()

@@ -30,7 +30,7 @@ impl PowerpackGroupWidget {
         }
     }
 
-    pub fn with_layout(
+    pub fn layout(
         &mut self,
         value: crate::datadogV2::model::PowerpackGroupWidgetLayout,
     ) -> &mut Self {
@@ -38,7 +38,7 @@ impl PowerpackGroupWidget {
         self
     }
 
-    pub fn with_live_span(&mut self, value: crate::datadogV2::model::WidgetLiveSpan) -> &mut Self {
+    pub fn live_span(&mut self, value: crate::datadogV2::model::WidgetLiveSpan) -> &mut Self {
         self.live_span = Some(value);
         self
     }

@@ -29,22 +29,17 @@ impl SLOBulkDeleteResponse {
         }
     }
 
-    pub fn with_data(
-        &mut self,
-        value: crate::datadogV1::model::SLOBulkDeleteResponseData,
-    ) -> &mut Self {
+    pub fn data(&mut self, value: crate::datadogV1::model::SLOBulkDeleteResponseData) -> &mut Self {
         self.data = Some(value);
         self
     }
 
-    pub fn with_errors(
-        &mut self,
-        value: Vec<crate::datadogV1::model::SLOBulkDeleteError>,
-    ) -> &mut Self {
+    pub fn errors(&mut self, value: Vec<crate::datadogV1::model::SLOBulkDeleteError>) -> &mut Self {
         self.errors = Some(value);
         self
     }
 }
+
 impl Default for SLOBulkDeleteResponse {
     fn default() -> Self {
         Self::new()

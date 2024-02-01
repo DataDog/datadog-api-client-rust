@@ -24,19 +24,17 @@ impl RolesResponse {
         }
     }
 
-    pub fn with_data(&mut self, value: Vec<crate::datadogV2::model::Role>) -> &mut Self {
+    pub fn data(&mut self, value: Vec<crate::datadogV2::model::Role>) -> &mut Self {
         self.data = Some(value);
         self
     }
 
-    pub fn with_meta(
-        &mut self,
-        value: crate::datadogV2::model::ResponseMetaAttributes,
-    ) -> &mut Self {
+    pub fn meta(&mut self, value: crate::datadogV2::model::ResponseMetaAttributes) -> &mut Self {
         self.meta = Some(value);
         self
     }
 }
+
 impl Default for RolesResponse {
     fn default() -> Self {
         Self::new()

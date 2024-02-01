@@ -18,7 +18,7 @@ impl IncidentResponseMeta {
         IncidentResponseMeta { pagination: None }
     }
 
-    pub fn with_pagination(
+    pub fn pagination(
         &mut self,
         value: crate::datadogV2::model::IncidentResponseMetaPagination,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl IncidentResponseMeta {
         self
     }
 }
+
 impl Default for IncidentResponseMeta {
     fn default() -> Self {
         Self::new()

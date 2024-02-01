@@ -28,24 +28,22 @@ impl WidgetRequestStyle {
         }
     }
 
-    pub fn with_line_type(&mut self, value: crate::datadogV1::model::WidgetLineType) -> &mut Self {
+    pub fn line_type(&mut self, value: crate::datadogV1::model::WidgetLineType) -> &mut Self {
         self.line_type = Some(value);
         self
     }
 
-    pub fn with_line_width(
-        &mut self,
-        value: crate::datadogV1::model::WidgetLineWidth,
-    ) -> &mut Self {
+    pub fn line_width(&mut self, value: crate::datadogV1::model::WidgetLineWidth) -> &mut Self {
         self.line_width = Some(value);
         self
     }
 
-    pub fn with_palette(&mut self, value: String) -> &mut Self {
+    pub fn palette(&mut self, value: String) -> &mut Self {
         self.palette = Some(value);
         self
     }
 }
+
 impl Default for WidgetRequestStyle {
     fn default() -> Self {
         Self::new()

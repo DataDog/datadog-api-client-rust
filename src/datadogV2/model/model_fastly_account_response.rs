@@ -18,14 +18,12 @@ impl FastlyAccountResponse {
         FastlyAccountResponse { data: None }
     }
 
-    pub fn with_data(
-        &mut self,
-        value: crate::datadogV2::model::FastlyAccountResponseData,
-    ) -> &mut Self {
+    pub fn data(&mut self, value: crate::datadogV2::model::FastlyAccountResponseData) -> &mut Self {
         self.data = Some(value);
         self
     }
 }
+
 impl Default for FastlyAccountResponse {
     fn default() -> Self {
         Self::new()

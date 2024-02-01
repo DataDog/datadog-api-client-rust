@@ -18,11 +18,12 @@ impl DowntimeMeta {
         DowntimeMeta { page: None }
     }
 
-    pub fn with_page(&mut self, value: crate::datadogV2::model::DowntimeMetaPage) -> &mut Self {
+    pub fn page(&mut self, value: crate::datadogV2::model::DowntimeMetaPage) -> &mut Self {
         self.page = Some(value);
         self
     }
 }
+
 impl Default for DowntimeMeta {
     fn default() -> Self {
         Self::new()

@@ -63,27 +63,27 @@ impl SLOWidgetDefinition {
         }
     }
 
-    pub fn with_additional_query_filters(&mut self, value: String) -> &mut Self {
+    pub fn additional_query_filters(&mut self, value: String) -> &mut Self {
         self.additional_query_filters = Some(value);
         self
     }
 
-    pub fn with_global_time_target(&mut self, value: String) -> &mut Self {
+    pub fn global_time_target(&mut self, value: String) -> &mut Self {
         self.global_time_target = Some(value);
         self
     }
 
-    pub fn with_show_error_budget(&mut self, value: bool) -> &mut Self {
+    pub fn show_error_budget(&mut self, value: bool) -> &mut Self {
         self.show_error_budget = Some(value);
         self
     }
 
-    pub fn with_slo_id(&mut self, value: String) -> &mut Self {
+    pub fn slo_id(&mut self, value: String) -> &mut Self {
         self.slo_id = Some(value);
         self
     }
 
-    pub fn with_time_windows(
+    pub fn time_windows(
         &mut self,
         value: Vec<crate::datadogV1::model::WidgetTimeWindows>,
     ) -> &mut Self {
@@ -91,25 +91,22 @@ impl SLOWidgetDefinition {
         self
     }
 
-    pub fn with_title(&mut self, value: String) -> &mut Self {
+    pub fn title(&mut self, value: String) -> &mut Self {
         self.title = Some(value);
         self
     }
 
-    pub fn with_title_align(
-        &mut self,
-        value: crate::datadogV1::model::WidgetTextAlign,
-    ) -> &mut Self {
+    pub fn title_align(&mut self, value: crate::datadogV1::model::WidgetTextAlign) -> &mut Self {
         self.title_align = Some(value);
         self
     }
 
-    pub fn with_title_size(&mut self, value: String) -> &mut Self {
+    pub fn title_size(&mut self, value: String) -> &mut Self {
         self.title_size = Some(value);
         self
     }
 
-    pub fn with_view_mode(&mut self, value: crate::datadogV1::model::WidgetViewMode) -> &mut Self {
+    pub fn view_mode(&mut self, value: crate::datadogV1::model::WidgetViewMode) -> &mut Self {
         self.view_mode = Some(value);
         self
     }

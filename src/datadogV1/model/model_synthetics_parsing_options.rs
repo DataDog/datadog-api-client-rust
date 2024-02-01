@@ -36,17 +36,17 @@ impl SyntheticsParsingOptions {
         }
     }
 
-    pub fn with_field(&mut self, value: String) -> &mut Self {
+    pub fn field(&mut self, value: String) -> &mut Self {
         self.field = Some(value);
         self
     }
 
-    pub fn with_name(&mut self, value: String) -> &mut Self {
+    pub fn name(&mut self, value: String) -> &mut Self {
         self.name = Some(value);
         self
     }
 
-    pub fn with_parser(
+    pub fn parser(
         &mut self,
         value: crate::datadogV1::model::SyntheticsVariableParser,
     ) -> &mut Self {
@@ -54,12 +54,12 @@ impl SyntheticsParsingOptions {
         self
     }
 
-    pub fn with_secure(&mut self, value: bool) -> &mut Self {
+    pub fn secure(&mut self, value: bool) -> &mut Self {
         self.secure = Some(value);
         self
     }
 
-    pub fn with_type_(
+    pub fn type_(
         &mut self,
         value: crate::datadogV1::model::SyntheticsGlobalVariableParseTestOptionsType,
     ) -> &mut Self {
@@ -67,6 +67,7 @@ impl SyntheticsParsingOptions {
         self
     }
 }
+
 impl Default for SyntheticsParsingOptions {
     fn default() -> Self {
         Self::new()

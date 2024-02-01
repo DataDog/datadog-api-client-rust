@@ -33,20 +33,17 @@ impl CIAppTestsAggregateRequest {
         }
     }
 
-    pub fn with_compute(&mut self, value: Vec<crate::datadogV2::model::CIAppCompute>) -> &mut Self {
+    pub fn compute(&mut self, value: Vec<crate::datadogV2::model::CIAppCompute>) -> &mut Self {
         self.compute = Some(value);
         self
     }
 
-    pub fn with_filter(
-        &mut self,
-        value: crate::datadogV2::model::CIAppTestsQueryFilter,
-    ) -> &mut Self {
+    pub fn filter(&mut self, value: crate::datadogV2::model::CIAppTestsQueryFilter) -> &mut Self {
         self.filter = Some(value);
         self
     }
 
-    pub fn with_group_by(
+    pub fn group_by(
         &mut self,
         value: Vec<crate::datadogV2::model::CIAppTestsGroupBy>,
     ) -> &mut Self {
@@ -54,11 +51,12 @@ impl CIAppTestsAggregateRequest {
         self
     }
 
-    pub fn with_options(&mut self, value: crate::datadogV2::model::CIAppQueryOptions) -> &mut Self {
+    pub fn options(&mut self, value: crate::datadogV2::model::CIAppQueryOptions) -> &mut Self {
         self.options = Some(value);
         self
     }
 }
+
 impl Default for CIAppTestsAggregateRequest {
     fn default() -> Self {
         Self::new()

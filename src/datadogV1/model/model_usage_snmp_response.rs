@@ -18,11 +18,12 @@ impl UsageSNMPResponse {
         UsageSNMPResponse { usage: None }
     }
 
-    pub fn with_usage(&mut self, value: Vec<crate::datadogV1::model::UsageSNMPHour>) -> &mut Self {
+    pub fn usage(&mut self, value: Vec<crate::datadogV1::model::UsageSNMPHour>) -> &mut Self {
         self.usage = Some(value);
         self
     }
 }
+
 impl Default for UsageSNMPResponse {
     fn default() -> Self {
         Self::new()

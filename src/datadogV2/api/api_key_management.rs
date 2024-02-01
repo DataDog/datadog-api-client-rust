@@ -6,21 +6,37 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetAPIKeyOptionalParams is a struct for passing parameters to the method [`KeyManagementAPI::get_api_key`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetAPIKeyOptionalParams {
     /// Comma separated list of resource paths for related resources to include in the response. Supported resource paths are `created_by` and `modified_by`.
     pub include: Option<String>,
 }
 
+impl GetAPIKeyOptionalParams {
+    /// Comma separated list of resource paths for related resources to include in the response. Supported resource paths are `created_by` and `modified_by`.
+    pub fn include(&mut self, value: String) -> &mut Self {
+        self.include = Some(value);
+        self
+    }
+}
+
 /// GetApplicationKeyOptionalParams is a struct for passing parameters to the method [`KeyManagementAPI::get_application_key`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetApplicationKeyOptionalParams {
     /// Resource path for related resources to include in the response. Only `owned_by` is supported.
     pub include: Option<String>,
 }
 
+impl GetApplicationKeyOptionalParams {
+    /// Resource path for related resources to include in the response. Only `owned_by` is supported.
+    pub fn include(&mut self, value: String) -> &mut Self {
+        self.include = Some(value);
+        self
+    }
+}
+
 /// ListAPIKeysOptionalParams is a struct for passing parameters to the method [`KeyManagementAPI::list_api_keys`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListAPIKeysOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
@@ -48,8 +64,68 @@ pub struct ListAPIKeysOptionalParams {
     pub filter_category: Option<String>,
 }
 
+impl ListAPIKeysOptionalParams {
+    /// Size for a given page. The maximum allowed value is 100.
+    pub fn page_size(&mut self, value: i64) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Specific page number to return.
+    pub fn page_number(&mut self, value: i64) -> &mut Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// API key attribute used to sort results. Sort order is ascending
+    /// by default. In order to specify a descending sort, prefix the
+    /// attribute with a minus sign.
+    pub fn sort(&mut self, value: crate::datadogV2::model::APIKeysSort) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+    /// Filter API keys by the specified string.
+    pub fn filter(&mut self, value: String) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
+    /// Only include API keys created on or after the specified date.
+    pub fn filter_created_at_start(&mut self, value: String) -> &mut Self {
+        self.filter_created_at_start = Some(value);
+        self
+    }
+    /// Only include API keys created on or before the specified date.
+    pub fn filter_created_at_end(&mut self, value: String) -> &mut Self {
+        self.filter_created_at_end = Some(value);
+        self
+    }
+    /// Only include API keys modified on or after the specified date.
+    pub fn filter_modified_at_start(&mut self, value: String) -> &mut Self {
+        self.filter_modified_at_start = Some(value);
+        self
+    }
+    /// Only include API keys modified on or before the specified date.
+    pub fn filter_modified_at_end(&mut self, value: String) -> &mut Self {
+        self.filter_modified_at_end = Some(value);
+        self
+    }
+    /// Comma separated list of resource paths for related resources to include in the response. Supported resource paths are `created_by` and `modified_by`.
+    pub fn include(&mut self, value: String) -> &mut Self {
+        self.include = Some(value);
+        self
+    }
+    /// Filter API keys by remote config read enabled status.
+    pub fn filter_remote_config_read_enabled(&mut self, value: bool) -> &mut Self {
+        self.filter_remote_config_read_enabled = Some(value);
+        self
+    }
+    /// Filter API keys by category.
+    pub fn filter_category(&mut self, value: String) -> &mut Self {
+        self.filter_category = Some(value);
+        self
+    }
+}
+
 /// ListApplicationKeysOptionalParams is a struct for passing parameters to the method [`KeyManagementAPI::list_application_keys`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListApplicationKeysOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
@@ -69,8 +145,48 @@ pub struct ListApplicationKeysOptionalParams {
     pub include: Option<String>,
 }
 
+impl ListApplicationKeysOptionalParams {
+    /// Size for a given page. The maximum allowed value is 100.
+    pub fn page_size(&mut self, value: i64) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Specific page number to return.
+    pub fn page_number(&mut self, value: i64) -> &mut Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// Application key attribute used to sort results. Sort order is ascending
+    /// by default. In order to specify a descending sort, prefix the
+    /// attribute with a minus sign.
+    pub fn sort(&mut self, value: crate::datadogV2::model::ApplicationKeysSort) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+    /// Filter application keys by the specified string.
+    pub fn filter(&mut self, value: String) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
+    /// Only include application keys created on or after the specified date.
+    pub fn filter_created_at_start(&mut self, value: String) -> &mut Self {
+        self.filter_created_at_start = Some(value);
+        self
+    }
+    /// Only include application keys created on or before the specified date.
+    pub fn filter_created_at_end(&mut self, value: String) -> &mut Self {
+        self.filter_created_at_end = Some(value);
+        self
+    }
+    /// Resource path for related resources to include in the response. Only `owned_by` is supported.
+    pub fn include(&mut self, value: String) -> &mut Self {
+        self.include = Some(value);
+        self
+    }
+}
+
 /// ListCurrentUserApplicationKeysOptionalParams is a struct for passing parameters to the method [`KeyManagementAPI::list_current_user_application_keys`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListCurrentUserApplicationKeysOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
@@ -88,6 +204,46 @@ pub struct ListCurrentUserApplicationKeysOptionalParams {
     pub filter_created_at_end: Option<String>,
     /// Resource path for related resources to include in the response. Only `owned_by` is supported.
     pub include: Option<String>,
+}
+
+impl ListCurrentUserApplicationKeysOptionalParams {
+    /// Size for a given page. The maximum allowed value is 100.
+    pub fn page_size(&mut self, value: i64) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Specific page number to return.
+    pub fn page_number(&mut self, value: i64) -> &mut Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// Application key attribute used to sort results. Sort order is ascending
+    /// by default. In order to specify a descending sort, prefix the
+    /// attribute with a minus sign.
+    pub fn sort(&mut self, value: crate::datadogV2::model::ApplicationKeysSort) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+    /// Filter application keys by the specified string.
+    pub fn filter(&mut self, value: String) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
+    /// Only include application keys created on or after the specified date.
+    pub fn filter_created_at_start(&mut self, value: String) -> &mut Self {
+        self.filter_created_at_start = Some(value);
+        self
+    }
+    /// Only include application keys created on or before the specified date.
+    pub fn filter_created_at_end(&mut self, value: String) -> &mut Self {
+        self.filter_created_at_end = Some(value);
+        self
+    }
+    /// Resource path for related resources to include in the response. Only `owned_by` is supported.
+    pub fn include(&mut self, value: String) -> &mut Self {
+        self.include = Some(value);
+        self
+    }
 }
 
 /// CreateAPIKeyError is a struct for typed errors of method [`KeyManagementAPI::create_api_key`]

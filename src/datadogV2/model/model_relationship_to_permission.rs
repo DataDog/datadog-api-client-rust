@@ -18,7 +18,7 @@ impl RelationshipToPermission {
         RelationshipToPermission { data: None }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: crate::datadogV2::model::RelationshipToPermissionData,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl RelationshipToPermission {
         self
     }
 }
+
 impl Default for RelationshipToPermission {
     fn default() -> Self {
         Self::new()

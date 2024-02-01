@@ -33,26 +33,27 @@ impl LogsListRequest {
         }
     }
 
-    pub fn with_filter(&mut self, value: crate::datadogV2::model::LogsQueryFilter) -> &mut Self {
+    pub fn filter(&mut self, value: crate::datadogV2::model::LogsQueryFilter) -> &mut Self {
         self.filter = Some(value);
         self
     }
 
-    pub fn with_options(&mut self, value: crate::datadogV2::model::LogsQueryOptions) -> &mut Self {
+    pub fn options(&mut self, value: crate::datadogV2::model::LogsQueryOptions) -> &mut Self {
         self.options = Some(value);
         self
     }
 
-    pub fn with_page(&mut self, value: crate::datadogV2::model::LogsListRequestPage) -> &mut Self {
+    pub fn page(&mut self, value: crate::datadogV2::model::LogsListRequestPage) -> &mut Self {
         self.page = Some(value);
         self
     }
 
-    pub fn with_sort(&mut self, value: crate::datadogV2::model::LogsSort) -> &mut Self {
+    pub fn sort(&mut self, value: crate::datadogV2::model::LogsSort) -> &mut Self {
         self.sort = Some(value);
         self
     }
 }
+
 impl Default for LogsListRequest {
     fn default() -> Self {
         Self::new()

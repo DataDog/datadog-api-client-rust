@@ -47,27 +47,27 @@ impl MonthlyCostAttributionAttributes {
         }
     }
 
-    pub fn with_month(&mut self, value: String) -> &mut Self {
+    pub fn month(&mut self, value: String) -> &mut Self {
         self.month = Some(value);
         self
     }
 
-    pub fn with_org_name(&mut self, value: String) -> &mut Self {
+    pub fn org_name(&mut self, value: String) -> &mut Self {
         self.org_name = Some(value);
         self
     }
 
-    pub fn with_public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(&mut self, value: String) -> &mut Self {
         self.public_id = Some(value);
         self
     }
 
-    pub fn with_tag_config_source(&mut self, value: String) -> &mut Self {
+    pub fn tag_config_source(&mut self, value: String) -> &mut Self {
         self.tag_config_source = Some(value);
         self
     }
 
-    pub fn with_tags(
+    pub fn tags(
         &mut self,
         value: Option<std::collections::BTreeMap<String, Option<Vec<String>>>>,
     ) -> &mut Self {
@@ -75,12 +75,12 @@ impl MonthlyCostAttributionAttributes {
         self
     }
 
-    pub fn with_updated_at(&mut self, value: String) -> &mut Self {
+    pub fn updated_at(&mut self, value: String) -> &mut Self {
         self.updated_at = Some(value);
         self
     }
 
-    pub fn with_values(
+    pub fn values(
         &mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
     ) -> &mut Self {
@@ -88,6 +88,7 @@ impl MonthlyCostAttributionAttributes {
         self
     }
 }
+
 impl Default for MonthlyCostAttributionAttributes {
     fn default() -> Self {
         Self::new()

@@ -18,7 +18,7 @@ impl ActiveBillingDimensionsResponse {
         ActiveBillingDimensionsResponse { data: None }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: crate::datadogV2::model::ActiveBillingDimensionsBody,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl ActiveBillingDimensionsResponse {
         self
     }
 }
+
 impl Default for ActiveBillingDimensionsResponse {
     fn default() -> Self {
         Self::new()

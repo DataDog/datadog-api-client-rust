@@ -31,7 +31,7 @@ impl UserCreateData {
         }
     }
 
-    pub fn with_relationships(
+    pub fn relationships(
         &mut self,
         value: crate::datadogV2::model::UserRelationships,
     ) -> &mut Self {

@@ -38,22 +38,22 @@ impl SyntheticsBasicAuthNTLM {
         }
     }
 
-    pub fn with_domain(&mut self, value: String) -> &mut Self {
+    pub fn domain(&mut self, value: String) -> &mut Self {
         self.domain = Some(value);
         self
     }
 
-    pub fn with_password(&mut self, value: String) -> &mut Self {
+    pub fn password(&mut self, value: String) -> &mut Self {
         self.password = Some(value);
         self
     }
 
-    pub fn with_username(&mut self, value: String) -> &mut Self {
+    pub fn username(&mut self, value: String) -> &mut Self {
         self.username = Some(value);
         self
     }
 
-    pub fn with_workstation(&mut self, value: String) -> &mut Self {
+    pub fn workstation(&mut self, value: String) -> &mut Self {
         self.workstation = Some(value);
         self
     }

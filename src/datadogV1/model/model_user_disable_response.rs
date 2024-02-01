@@ -18,11 +18,12 @@ impl UserDisableResponse {
         UserDisableResponse { message: None }
     }
 
-    pub fn with_message(&mut self, value: String) -> &mut Self {
+    pub fn message(&mut self, value: String) -> &mut Self {
         self.message = Some(value);
         self
     }
 }
+
 impl Default for UserDisableResponse {
     fn default() -> Self {
         Self::new()

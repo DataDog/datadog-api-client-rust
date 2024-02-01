@@ -24,7 +24,7 @@ impl SlackIntegrationChannel {
         }
     }
 
-    pub fn with_display(
+    pub fn display(
         &mut self,
         value: crate::datadogV1::model::SlackIntegrationChannelDisplay,
     ) -> &mut Self {
@@ -32,11 +32,12 @@ impl SlackIntegrationChannel {
         self
     }
 
-    pub fn with_name(&mut self, value: String) -> &mut Self {
+    pub fn name(&mut self, value: String) -> &mut Self {
         self.name = Some(value);
         self
     }
 }
+
 impl Default for SlackIntegrationChannel {
     fn default() -> Self {
         Self::new()

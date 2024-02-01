@@ -18,7 +18,7 @@ impl UsageSyntheticsAPIResponse {
         UsageSyntheticsAPIResponse { usage: None }
     }
 
-    pub fn with_usage(
+    pub fn usage(
         &mut self,
         value: Vec<crate::datadogV1::model::UsageSyntheticsAPIHour>,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl UsageSyntheticsAPIResponse {
         self
     }
 }
+
 impl Default for UsageSyntheticsAPIResponse {
     fn default() -> Self {
         Self::new()

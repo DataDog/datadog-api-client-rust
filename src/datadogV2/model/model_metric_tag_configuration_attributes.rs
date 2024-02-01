@@ -62,7 +62,7 @@ impl MetricTagConfigurationAttributes {
         }
     }
 
-    pub fn with_aggregations(
+    pub fn aggregations(
         &mut self,
         value: Vec<crate::datadogV2::model::MetricCustomAggregation>,
     ) -> &mut Self {
@@ -70,22 +70,22 @@ impl MetricTagConfigurationAttributes {
         self
     }
 
-    pub fn with_created_at(&mut self, value: String) -> &mut Self {
+    pub fn created_at(&mut self, value: String) -> &mut Self {
         self.created_at = Some(value);
         self
     }
 
-    pub fn with_exclude_tags_mode(&mut self, value: bool) -> &mut Self {
+    pub fn exclude_tags_mode(&mut self, value: bool) -> &mut Self {
         self.exclude_tags_mode = Some(value);
         self
     }
 
-    pub fn with_include_percentiles(&mut self, value: bool) -> &mut Self {
+    pub fn include_percentiles(&mut self, value: bool) -> &mut Self {
         self.include_percentiles = Some(value);
         self
     }
 
-    pub fn with_metric_type(
+    pub fn metric_type(
         &mut self,
         value: crate::datadogV2::model::MetricTagConfigurationMetricTypes,
     ) -> &mut Self {
@@ -93,16 +93,17 @@ impl MetricTagConfigurationAttributes {
         self
     }
 
-    pub fn with_modified_at(&mut self, value: String) -> &mut Self {
+    pub fn modified_at(&mut self, value: String) -> &mut Self {
         self.modified_at = Some(value);
         self
     }
 
-    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
         self.tags = Some(value);
         self
     }
 }
+
 impl Default for MetricTagConfigurationAttributes {
     fn default() -> Self {
         Self::new()

@@ -18,14 +18,12 @@ impl OnDemandConcurrencyCapResponse {
         OnDemandConcurrencyCapResponse { data: None }
     }
 
-    pub fn with_data(
-        &mut self,
-        value: crate::datadogV2::model::OnDemandConcurrencyCap,
-    ) -> &mut Self {
+    pub fn data(&mut self, value: crate::datadogV2::model::OnDemandConcurrencyCap) -> &mut Self {
         self.data = Some(value);
         self
     }
 }
+
 impl Default for OnDemandConcurrencyCapResponse {
     fn default() -> Self {
         Self::new()

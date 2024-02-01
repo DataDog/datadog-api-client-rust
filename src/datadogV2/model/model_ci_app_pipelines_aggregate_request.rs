@@ -33,12 +33,12 @@ impl CIAppPipelinesAggregateRequest {
         }
     }
 
-    pub fn with_compute(&mut self, value: Vec<crate::datadogV2::model::CIAppCompute>) -> &mut Self {
+    pub fn compute(&mut self, value: Vec<crate::datadogV2::model::CIAppCompute>) -> &mut Self {
         self.compute = Some(value);
         self
     }
 
-    pub fn with_filter(
+    pub fn filter(
         &mut self,
         value: crate::datadogV2::model::CIAppPipelinesQueryFilter,
     ) -> &mut Self {
@@ -46,7 +46,7 @@ impl CIAppPipelinesAggregateRequest {
         self
     }
 
-    pub fn with_group_by(
+    pub fn group_by(
         &mut self,
         value: Vec<crate::datadogV2::model::CIAppPipelinesGroupBy>,
     ) -> &mut Self {
@@ -54,11 +54,12 @@ impl CIAppPipelinesAggregateRequest {
         self
     }
 
-    pub fn with_options(&mut self, value: crate::datadogV2::model::CIAppQueryOptions) -> &mut Self {
+    pub fn options(&mut self, value: crate::datadogV2::model::CIAppQueryOptions) -> &mut Self {
         self.options = Some(value);
         self
     }
 }
+
 impl Default for CIAppPipelinesAggregateRequest {
     fn default() -> Self {
         Self::new()

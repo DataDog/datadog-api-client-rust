@@ -18,11 +18,12 @@ impl SensitiveDataScannerFilter {
         SensitiveDataScannerFilter { query: None }
     }
 
-    pub fn with_query(&mut self, value: String) -> &mut Self {
+    pub fn query(&mut self, value: String) -> &mut Self {
         self.query = Some(value);
         self
     }
 }
+
 impl Default for SensitiveDataScannerFilter {
     fn default() -> Self {
         Self::new()

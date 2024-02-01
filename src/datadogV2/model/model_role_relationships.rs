@@ -24,7 +24,7 @@ impl RoleRelationships {
         }
     }
 
-    pub fn with_permissions(
+    pub fn permissions(
         &mut self,
         value: crate::datadogV2::model::RelationshipToPermissions,
     ) -> &mut Self {
@@ -32,11 +32,12 @@ impl RoleRelationships {
         self
     }
 
-    pub fn with_users(&mut self, value: crate::datadogV2::model::RelationshipToUsers) -> &mut Self {
+    pub fn users(&mut self, value: crate::datadogV2::model::RelationshipToUsers) -> &mut Self {
         self.users = Some(value);
         self
     }
 }
+
 impl Default for RoleRelationships {
     fn default() -> Self {
         Self::new()

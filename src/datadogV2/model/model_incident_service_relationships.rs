@@ -24,15 +24,12 @@ impl IncidentServiceRelationships {
         }
     }
 
-    pub fn with_created_by(
-        &mut self,
-        value: crate::datadogV2::model::RelationshipToUser,
-    ) -> &mut Self {
+    pub fn created_by(&mut self, value: crate::datadogV2::model::RelationshipToUser) -> &mut Self {
         self.created_by = Some(value);
         self
     }
 
-    pub fn with_last_modified_by(
+    pub fn last_modified_by(
         &mut self,
         value: crate::datadogV2::model::RelationshipToUser,
     ) -> &mut Self {
@@ -40,6 +37,7 @@ impl IncidentServiceRelationships {
         self
     }
 }
+
 impl Default for IncidentServiceRelationships {
     fn default() -> Self {
         Self::new()

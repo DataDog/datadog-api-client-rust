@@ -60,7 +60,7 @@ impl SLOHistoryMetrics {
         }
     }
 
-    pub fn with_message(&mut self, value: String) -> &mut Self {
+    pub fn message(&mut self, value: String) -> &mut Self {
         self.message = Some(value);
         self
     }

@@ -7,10 +7,10 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SyntheticsBasicAuth {
-    SyntheticsBasicAuthWeb(crate::datadogV1::model::SyntheticsBasicAuthWeb),
-    SyntheticsBasicAuthSigv4(crate::datadogV1::model::SyntheticsBasicAuthSigv4),
-    SyntheticsBasicAuthNTLM(crate::datadogV1::model::SyntheticsBasicAuthNTLM),
-    SyntheticsBasicAuthDigest(crate::datadogV1::model::SyntheticsBasicAuthDigest),
-    SyntheticsBasicAuthOauthClient(crate::datadogV1::model::SyntheticsBasicAuthOauthClient),
-    SyntheticsBasicAuthOauthROP(crate::datadogV1::model::SyntheticsBasicAuthOauthROP),
+    SyntheticsBasicAuthWeb(Box<crate::datadogV1::model::SyntheticsBasicAuthWeb>),
+    SyntheticsBasicAuthSigv4(Box<crate::datadogV1::model::SyntheticsBasicAuthSigv4>),
+    SyntheticsBasicAuthNTLM(Box<crate::datadogV1::model::SyntheticsBasicAuthNTLM>),
+    SyntheticsBasicAuthDigest(Box<crate::datadogV1::model::SyntheticsBasicAuthDigest>),
+    SyntheticsBasicAuthOauthClient(Box<crate::datadogV1::model::SyntheticsBasicAuthOauthClient>),
+    SyntheticsBasicAuthOauthROP(Box<crate::datadogV1::model::SyntheticsBasicAuthOauthROP>),
 }

@@ -20,11 +20,12 @@ impl SyntheticsGlobalVariableAttributes {
         }
     }
 
-    pub fn with_restricted_roles(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn restricted_roles(&mut self, value: Vec<String>) -> &mut Self {
         self.restricted_roles = Some(value);
         self
     }
 }
+
 impl Default for SyntheticsGlobalVariableAttributes {
     fn default() -> Self {
         Self::new()

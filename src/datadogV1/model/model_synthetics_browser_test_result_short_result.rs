@@ -36,31 +36,32 @@ impl SyntheticsBrowserTestResultShortResult {
         }
     }
 
-    pub fn with_device(&mut self, value: crate::datadogV1::model::SyntheticsDevice) -> &mut Self {
+    pub fn device(&mut self, value: crate::datadogV1::model::SyntheticsDevice) -> &mut Self {
         self.device = Some(value);
         self
     }
 
-    pub fn with_duration(&mut self, value: f64) -> &mut Self {
+    pub fn duration(&mut self, value: f64) -> &mut Self {
         self.duration = Some(value);
         self
     }
 
-    pub fn with_error_count(&mut self, value: i64) -> &mut Self {
+    pub fn error_count(&mut self, value: i64) -> &mut Self {
         self.error_count = Some(value);
         self
     }
 
-    pub fn with_step_count_completed(&mut self, value: i64) -> &mut Self {
+    pub fn step_count_completed(&mut self, value: i64) -> &mut Self {
         self.step_count_completed = Some(value);
         self
     }
 
-    pub fn with_step_count_total(&mut self, value: i64) -> &mut Self {
+    pub fn step_count_total(&mut self, value: i64) -> &mut Self {
         self.step_count_total = Some(value);
         self
     }
 }
+
 impl Default for SyntheticsBrowserTestResultShortResult {
     fn default() -> Self {
         Self::new()

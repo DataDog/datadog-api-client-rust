@@ -14,6 +14,7 @@ impl LogsAggregateBucketValueTimeseries {
         LogsAggregateBucketValueTimeseries {}
     }
 }
+
 impl Default for LogsAggregateBucketValueTimeseries {
     fn default() -> Self {
         Self::new()

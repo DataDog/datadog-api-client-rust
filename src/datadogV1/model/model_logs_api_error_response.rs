@@ -18,11 +18,12 @@ impl LogsAPIErrorResponse {
         LogsAPIErrorResponse { error: None }
     }
 
-    pub fn with_error(&mut self, value: crate::datadogV1::model::LogsAPIError) -> &mut Self {
+    pub fn error(&mut self, value: crate::datadogV1::model::LogsAPIError) -> &mut Self {
         self.error = Some(value);
         self
     }
 }
+
 impl Default for LogsAPIErrorResponse {
     fn default() -> Self {
         Self::new()

@@ -36,7 +36,7 @@ impl OpsgenieServiceCreateAttributes {
         }
     }
 
-    pub fn with_custom_url(&mut self, value: String) -> &mut Self {
+    pub fn custom_url(&mut self, value: String) -> &mut Self {
         self.custom_url = Some(value);
         self
     }

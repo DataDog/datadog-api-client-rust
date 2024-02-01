@@ -7,6 +7,6 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum TimeseriesQuery {
-    MetricsTimeseriesQuery(crate::datadogV2::model::MetricsTimeseriesQuery),
-    EventsTimeseriesQuery(crate::datadogV2::model::EventsTimeseriesQuery),
+    MetricsTimeseriesQuery(Box<crate::datadogV2::model::MetricsTimeseriesQuery>),
+    EventsTimeseriesQuery(Box<crate::datadogV2::model::EventsTimeseriesQuery>),
 }

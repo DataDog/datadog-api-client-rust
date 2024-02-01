@@ -28,7 +28,7 @@ impl RoleCreateData {
         }
     }
 
-    pub fn with_relationships(
+    pub fn relationships(
         &mut self,
         value: crate::datadogV2::model::RoleRelationships,
     ) -> &mut Self {
@@ -36,7 +36,7 @@ impl RoleCreateData {
         self
     }
 
-    pub fn with_type_(&mut self, value: crate::datadogV2::model::RolesType) -> &mut Self {
+    pub fn type_(&mut self, value: crate::datadogV2::model::RolesType) -> &mut Self {
         self.type_ = Some(value);
         self
     }

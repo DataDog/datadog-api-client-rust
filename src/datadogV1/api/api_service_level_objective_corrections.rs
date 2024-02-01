@@ -6,12 +6,25 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListSLOCorrectionOptionalParams is a struct for passing parameters to the method [`ServiceLevelObjectiveCorrectionsAPI::list_slo_correction`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListSLOCorrectionOptionalParams {
     /// The specific offset to use as the beginning of the returned response.
     pub offset: Option<i64>,
     /// The number of SLO corrections to return in the response. Default is 25.
     pub limit: Option<i64>,
+}
+
+impl ListSLOCorrectionOptionalParams {
+    /// The specific offset to use as the beginning of the returned response.
+    pub fn offset(&mut self, value: i64) -> &mut Self {
+        self.offset = Some(value);
+        self
+    }
+    /// The number of SLO corrections to return in the response. Default is 25.
+    pub fn limit(&mut self, value: i64) -> &mut Self {
+        self.limit = Some(value);
+        self
+    }
 }
 
 /// CreateSLOCorrectionError is a struct for typed errors of method [`ServiceLevelObjectiveCorrectionsAPI::create_slo_correction`]

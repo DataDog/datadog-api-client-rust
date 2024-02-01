@@ -6,7 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListRoleUsersOptionalParams is a struct for passing parameters to the method [`RolesAPI::list_role_users`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListRoleUsersOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
@@ -20,8 +20,33 @@ pub struct ListRoleUsersOptionalParams {
     pub filter: Option<String>,
 }
 
+impl ListRoleUsersOptionalParams {
+    /// Size for a given page. The maximum allowed value is 100.
+    pub fn page_size(&mut self, value: i64) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Specific page number to return.
+    pub fn page_number(&mut self, value: i64) -> &mut Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// User attribute to order results by. Sort order is **ascending** by default.
+    /// Sort order is **descending** if the field is prefixed by a negative sign,
+    /// for example `sort=-name`. Options: `name`, `email`, `status`.
+    pub fn sort(&mut self, value: String) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+    /// Filter all users by the given string. Defaults to no filtering.
+    pub fn filter(&mut self, value: String) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
+}
+
 /// ListRolesOptionalParams is a struct for passing parameters to the method [`RolesAPI::list_roles`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListRolesOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
@@ -35,6 +60,36 @@ pub struct ListRolesOptionalParams {
     pub filter: Option<String>,
     /// Filter all roles by the given list of role IDs.
     pub filter_id: Option<String>,
+}
+
+impl ListRolesOptionalParams {
+    /// Size for a given page. The maximum allowed value is 100.
+    pub fn page_size(&mut self, value: i64) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Specific page number to return.
+    pub fn page_number(&mut self, value: i64) -> &mut Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// Sort roles depending on the given field. Sort order is **ascending** by default.
+    /// Sort order is **descending** if the field is prefixed by a negative sign, for example:
+    /// `sort=-name`.
+    pub fn sort(&mut self, value: crate::datadogV2::model::RolesSort) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+    /// Filter all roles by the given string.
+    pub fn filter(&mut self, value: String) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
+    /// Filter all roles by the given list of role IDs.
+    pub fn filter_id(&mut self, value: String) -> &mut Self {
+        self.filter_id = Some(value);
+        self
+    }
 }
 
 /// AddPermissionToRoleError is a struct for typed errors of method [`RolesAPI::add_permission_to_role`]

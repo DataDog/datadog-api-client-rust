@@ -28,17 +28,17 @@ impl NotebookMetadata {
         }
     }
 
-    pub fn with_is_template(&mut self, value: bool) -> &mut Self {
+    pub fn is_template(&mut self, value: bool) -> &mut Self {
         self.is_template = Some(value);
         self
     }
 
-    pub fn with_take_snapshots(&mut self, value: bool) -> &mut Self {
+    pub fn take_snapshots(&mut self, value: bool) -> &mut Self {
         self.take_snapshots = Some(value);
         self
     }
 
-    pub fn with_type_(
+    pub fn type_(
         &mut self,
         value: Option<crate::datadogV1::model::NotebookMetadataType>,
     ) -> &mut Self {
@@ -46,6 +46,7 @@ impl NotebookMetadata {
         self
     }
 }
+
 impl Default for NotebookMetadata {
     fn default() -> Self {
         Self::new()

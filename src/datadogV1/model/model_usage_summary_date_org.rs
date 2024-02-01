@@ -443,644 +443,642 @@ impl UsageSummaryDateOrg {
     }
 
     #[allow(deprecated)]
-    pub fn with_agent_host_top99p(&mut self, value: i64) -> &mut Self {
+    pub fn agent_host_top99p(&mut self, value: i64) -> &mut Self {
         self.agent_host_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_apm_azure_app_service_host_top99p(&mut self, value: i64) -> &mut Self {
+    pub fn apm_azure_app_service_host_top99p(&mut self, value: i64) -> &mut Self {
         self.apm_azure_app_service_host_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_apm_fargate_count_avg(&mut self, value: i64) -> &mut Self {
+    pub fn apm_fargate_count_avg(&mut self, value: i64) -> &mut Self {
         self.apm_fargate_count_avg = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_apm_host_top99p(&mut self, value: i64) -> &mut Self {
+    pub fn apm_host_top99p(&mut self, value: i64) -> &mut Self {
         self.apm_host_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_appsec_fargate_count_avg(&mut self, value: i64) -> &mut Self {
+    pub fn appsec_fargate_count_avg(&mut self, value: i64) -> &mut Self {
         self.appsec_fargate_count_avg = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_audit_logs_lines_indexed_sum(&mut self, value: i64) -> &mut Self {
+    pub fn audit_logs_lines_indexed_sum(&mut self, value: i64) -> &mut Self {
         self.audit_logs_lines_indexed_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_audit_trail_enabled_hwm(&mut self, value: i64) -> &mut Self {
+    pub fn audit_trail_enabled_hwm(&mut self, value: i64) -> &mut Self {
         self.audit_trail_enabled_hwm = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_avg_profiled_fargate_tasks(&mut self, value: i64) -> &mut Self {
+    pub fn avg_profiled_fargate_tasks(&mut self, value: i64) -> &mut Self {
         self.avg_profiled_fargate_tasks = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_aws_host_top99p(&mut self, value: i64) -> &mut Self {
+    pub fn aws_host_top99p(&mut self, value: i64) -> &mut Self {
         self.aws_host_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_aws_lambda_func_count(&mut self, value: i64) -> &mut Self {
+    pub fn aws_lambda_func_count(&mut self, value: i64) -> &mut Self {
         self.aws_lambda_func_count = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_aws_lambda_invocations_sum(&mut self, value: i64) -> &mut Self {
+    pub fn aws_lambda_invocations_sum(&mut self, value: i64) -> &mut Self {
         self.aws_lambda_invocations_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_azure_app_service_top99p(&mut self, value: i64) -> &mut Self {
+    pub fn azure_app_service_top99p(&mut self, value: i64) -> &mut Self {
         self.azure_app_service_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_billable_ingested_bytes_sum(&mut self, value: i64) -> &mut Self {
+    pub fn billable_ingested_bytes_sum(&mut self, value: i64) -> &mut Self {
         self.billable_ingested_bytes_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_browser_rum_lite_session_count_sum(&mut self, value: i64) -> &mut Self {
+    pub fn browser_rum_lite_session_count_sum(&mut self, value: i64) -> &mut Self {
         self.browser_rum_lite_session_count_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_browser_rum_replay_session_count_sum(&mut self, value: i64) -> &mut Self {
+    pub fn browser_rum_replay_session_count_sum(&mut self, value: i64) -> &mut Self {
         self.browser_rum_replay_session_count_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_browser_rum_units_sum(&mut self, value: i64) -> &mut Self {
+    pub fn browser_rum_units_sum(&mut self, value: i64) -> &mut Self {
         self.browser_rum_units_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_ci_pipeline_indexed_spans_sum(&mut self, value: i64) -> &mut Self {
+    pub fn ci_pipeline_indexed_spans_sum(&mut self, value: i64) -> &mut Self {
         self.ci_pipeline_indexed_spans_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_ci_test_indexed_spans_sum(&mut self, value: i64) -> &mut Self {
+    pub fn ci_test_indexed_spans_sum(&mut self, value: i64) -> &mut Self {
         self.ci_test_indexed_spans_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_ci_visibility_itr_committers_hwm(&mut self, value: i64) -> &mut Self {
+    pub fn ci_visibility_itr_committers_hwm(&mut self, value: i64) -> &mut Self {
         self.ci_visibility_itr_committers_hwm = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_ci_visibility_pipeline_committers_hwm(&mut self, value: i64) -> &mut Self {
+    pub fn ci_visibility_pipeline_committers_hwm(&mut self, value: i64) -> &mut Self {
         self.ci_visibility_pipeline_committers_hwm = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_ci_visibility_test_committers_hwm(&mut self, value: i64) -> &mut Self {
+    pub fn ci_visibility_test_committers_hwm(&mut self, value: i64) -> &mut Self {
         self.ci_visibility_test_committers_hwm = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_cloud_cost_management_aws_host_count_avg(&mut self, value: i64) -> &mut Self {
+    pub fn cloud_cost_management_aws_host_count_avg(&mut self, value: i64) -> &mut Self {
         self.cloud_cost_management_aws_host_count_avg = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_cloud_cost_management_azure_host_count_avg(&mut self, value: i64) -> &mut Self {
+    pub fn cloud_cost_management_azure_host_count_avg(&mut self, value: i64) -> &mut Self {
         self.cloud_cost_management_azure_host_count_avg = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_cloud_cost_management_host_count_avg(&mut self, value: i64) -> &mut Self {
+    pub fn cloud_cost_management_host_count_avg(&mut self, value: i64) -> &mut Self {
         self.cloud_cost_management_host_count_avg = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_cloud_siem_events_sum(&mut self, value: i64) -> &mut Self {
+    pub fn cloud_siem_events_sum(&mut self, value: i64) -> &mut Self {
         self.cloud_siem_events_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_container_avg(&mut self, value: i64) -> &mut Self {
+    pub fn container_avg(&mut self, value: i64) -> &mut Self {
         self.container_avg = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_container_excl_agent_avg(&mut self, value: i64) -> &mut Self {
+    pub fn container_excl_agent_avg(&mut self, value: i64) -> &mut Self {
         self.container_excl_agent_avg = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_container_hwm(&mut self, value: i64) -> &mut Self {
+    pub fn container_hwm(&mut self, value: i64) -> &mut Self {
         self.container_hwm = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_csm_container_enterprise_compliance_count_sum(&mut self, value: i64) -> &mut Self {
+    pub fn csm_container_enterprise_compliance_count_sum(&mut self, value: i64) -> &mut Self {
         self.csm_container_enterprise_compliance_count_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_csm_container_enterprise_cws_count_sum(&mut self, value: i64) -> &mut Self {
+    pub fn csm_container_enterprise_cws_count_sum(&mut self, value: i64) -> &mut Self {
         self.csm_container_enterprise_cws_count_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_csm_container_enterprise_total_count_sum(&mut self, value: i64) -> &mut Self {
+    pub fn csm_container_enterprise_total_count_sum(&mut self, value: i64) -> &mut Self {
         self.csm_container_enterprise_total_count_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_csm_host_enterprise_aas_host_count_top99p(&mut self, value: i64) -> &mut Self {
+    pub fn csm_host_enterprise_aas_host_count_top99p(&mut self, value: i64) -> &mut Self {
         self.csm_host_enterprise_aas_host_count_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_csm_host_enterprise_aws_host_count_top99p(&mut self, value: i64) -> &mut Self {
+    pub fn csm_host_enterprise_aws_host_count_top99p(&mut self, value: i64) -> &mut Self {
         self.csm_host_enterprise_aws_host_count_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_csm_host_enterprise_azure_host_count_top99p(&mut self, value: i64) -> &mut Self {
+    pub fn csm_host_enterprise_azure_host_count_top99p(&mut self, value: i64) -> &mut Self {
         self.csm_host_enterprise_azure_host_count_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_csm_host_enterprise_compliance_host_count_top99p(
-        &mut self,
-        value: i64,
-    ) -> &mut Self {
+    pub fn csm_host_enterprise_compliance_host_count_top99p(&mut self, value: i64) -> &mut Self {
         self.csm_host_enterprise_compliance_host_count_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_csm_host_enterprise_cws_host_count_top99p(&mut self, value: i64) -> &mut Self {
+    pub fn csm_host_enterprise_cws_host_count_top99p(&mut self, value: i64) -> &mut Self {
         self.csm_host_enterprise_cws_host_count_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_csm_host_enterprise_gcp_host_count_top99p(&mut self, value: i64) -> &mut Self {
+    pub fn csm_host_enterprise_gcp_host_count_top99p(&mut self, value: i64) -> &mut Self {
         self.csm_host_enterprise_gcp_host_count_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_csm_host_enterprise_total_host_count_top99p(&mut self, value: i64) -> &mut Self {
+    pub fn csm_host_enterprise_total_host_count_top99p(&mut self, value: i64) -> &mut Self {
         self.csm_host_enterprise_total_host_count_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_cspm_aas_host_top99p(&mut self, value: i64) -> &mut Self {
+    pub fn cspm_aas_host_top99p(&mut self, value: i64) -> &mut Self {
         self.cspm_aas_host_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_cspm_aws_host_top99p(&mut self, value: i64) -> &mut Self {
+    pub fn cspm_aws_host_top99p(&mut self, value: i64) -> &mut Self {
         self.cspm_aws_host_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_cspm_azure_host_top99p(&mut self, value: i64) -> &mut Self {
+    pub fn cspm_azure_host_top99p(&mut self, value: i64) -> &mut Self {
         self.cspm_azure_host_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_cspm_container_avg(&mut self, value: i64) -> &mut Self {
+    pub fn cspm_container_avg(&mut self, value: i64) -> &mut Self {
         self.cspm_container_avg = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_cspm_container_hwm(&mut self, value: i64) -> &mut Self {
+    pub fn cspm_container_hwm(&mut self, value: i64) -> &mut Self {
         self.cspm_container_hwm = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_cspm_gcp_host_top99p(&mut self, value: i64) -> &mut Self {
+    pub fn cspm_gcp_host_top99p(&mut self, value: i64) -> &mut Self {
         self.cspm_gcp_host_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_cspm_host_top99p(&mut self, value: i64) -> &mut Self {
+    pub fn cspm_host_top99p(&mut self, value: i64) -> &mut Self {
         self.cspm_host_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_custom_historical_ts_avg(&mut self, value: i64) -> &mut Self {
+    pub fn custom_historical_ts_avg(&mut self, value: i64) -> &mut Self {
         self.custom_historical_ts_avg = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_custom_live_ts_avg(&mut self, value: i64) -> &mut Self {
+    pub fn custom_live_ts_avg(&mut self, value: i64) -> &mut Self {
         self.custom_live_ts_avg = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_custom_ts_avg(&mut self, value: i64) -> &mut Self {
+    pub fn custom_ts_avg(&mut self, value: i64) -> &mut Self {
         self.custom_ts_avg = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_cws_container_count_avg(&mut self, value: i64) -> &mut Self {
+    pub fn cws_container_count_avg(&mut self, value: i64) -> &mut Self {
         self.cws_container_count_avg = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_cws_host_top99p(&mut self, value: i64) -> &mut Self {
+    pub fn cws_host_top99p(&mut self, value: i64) -> &mut Self {
         self.cws_host_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_dbm_host_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn dbm_host_top99p_sum(&mut self, value: i64) -> &mut Self {
         self.dbm_host_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_dbm_queries_avg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn dbm_queries_avg_sum(&mut self, value: i64) -> &mut Self {
         self.dbm_queries_avg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_fargate_tasks_count_avg(&mut self, value: i64) -> &mut Self {
+    pub fn fargate_tasks_count_avg(&mut self, value: i64) -> &mut Self {
         self.fargate_tasks_count_avg = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_fargate_tasks_count_hwm(&mut self, value: i64) -> &mut Self {
+    pub fn fargate_tasks_count_hwm(&mut self, value: i64) -> &mut Self {
         self.fargate_tasks_count_hwm = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_forwarding_events_bytes_sum(&mut self, value: i64) -> &mut Self {
+    pub fn forwarding_events_bytes_sum(&mut self, value: i64) -> &mut Self {
         self.forwarding_events_bytes_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_gcp_host_top99p(&mut self, value: i64) -> &mut Self {
+    pub fn gcp_host_top99p(&mut self, value: i64) -> &mut Self {
         self.gcp_host_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_heroku_host_top99p(&mut self, value: i64) -> &mut Self {
+    pub fn heroku_host_top99p(&mut self, value: i64) -> &mut Self {
         self.heroku_host_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_id(&mut self, value: String) -> &mut Self {
+    pub fn id(&mut self, value: String) -> &mut Self {
         self.id = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_incident_management_monthly_active_users_hwm(&mut self, value: i64) -> &mut Self {
+    pub fn incident_management_monthly_active_users_hwm(&mut self, value: i64) -> &mut Self {
         self.incident_management_monthly_active_users_hwm = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_indexed_events_count_sum(&mut self, value: i64) -> &mut Self {
+    pub fn indexed_events_count_sum(&mut self, value: i64) -> &mut Self {
         self.indexed_events_count_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_infra_host_top99p(&mut self, value: i64) -> &mut Self {
+    pub fn infra_host_top99p(&mut self, value: i64) -> &mut Self {
         self.infra_host_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_ingested_events_bytes_sum(&mut self, value: i64) -> &mut Self {
+    pub fn ingested_events_bytes_sum(&mut self, value: i64) -> &mut Self {
         self.ingested_events_bytes_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_iot_device_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn iot_device_agg_sum(&mut self, value: i64) -> &mut Self {
         self.iot_device_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_iot_device_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn iot_device_top99p_sum(&mut self, value: i64) -> &mut Self {
         self.iot_device_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_mobile_rum_lite_session_count_sum(&mut self, value: i64) -> &mut Self {
+    pub fn mobile_rum_lite_session_count_sum(&mut self, value: i64) -> &mut Self {
         self.mobile_rum_lite_session_count_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_mobile_rum_session_count_android_sum(&mut self, value: i64) -> &mut Self {
+    pub fn mobile_rum_session_count_android_sum(&mut self, value: i64) -> &mut Self {
         self.mobile_rum_session_count_android_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_mobile_rum_session_count_flutter_sum(&mut self, value: i64) -> &mut Self {
+    pub fn mobile_rum_session_count_flutter_sum(&mut self, value: i64) -> &mut Self {
         self.mobile_rum_session_count_flutter_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_mobile_rum_session_count_ios_sum(&mut self, value: i64) -> &mut Self {
+    pub fn mobile_rum_session_count_ios_sum(&mut self, value: i64) -> &mut Self {
         self.mobile_rum_session_count_ios_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_mobile_rum_session_count_reactnative_sum(&mut self, value: i64) -> &mut Self {
+    pub fn mobile_rum_session_count_reactnative_sum(&mut self, value: i64) -> &mut Self {
         self.mobile_rum_session_count_reactnative_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_mobile_rum_session_count_roku_sum(&mut self, value: i64) -> &mut Self {
+    pub fn mobile_rum_session_count_roku_sum(&mut self, value: i64) -> &mut Self {
         self.mobile_rum_session_count_roku_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_mobile_rum_session_count_sum(&mut self, value: i64) -> &mut Self {
+    pub fn mobile_rum_session_count_sum(&mut self, value: i64) -> &mut Self {
         self.mobile_rum_session_count_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_mobile_rum_units_sum(&mut self, value: i64) -> &mut Self {
+    pub fn mobile_rum_units_sum(&mut self, value: i64) -> &mut Self {
         self.mobile_rum_units_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_name(&mut self, value: String) -> &mut Self {
+    pub fn name(&mut self, value: String) -> &mut Self {
         self.name = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_ndm_netflow_events_sum(&mut self, value: i64) -> &mut Self {
+    pub fn ndm_netflow_events_sum(&mut self, value: i64) -> &mut Self {
         self.ndm_netflow_events_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_netflow_indexed_events_count_sum(&mut self, value: i64) -> &mut Self {
+    pub fn netflow_indexed_events_count_sum(&mut self, value: i64) -> &mut Self {
         self.netflow_indexed_events_count_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_npm_host_top99p(&mut self, value: i64) -> &mut Self {
+    pub fn npm_host_top99p(&mut self, value: i64) -> &mut Self {
         self.npm_host_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_observability_pipelines_bytes_processed_sum(&mut self, value: i64) -> &mut Self {
+    pub fn observability_pipelines_bytes_processed_sum(&mut self, value: i64) -> &mut Self {
         self.observability_pipelines_bytes_processed_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_online_archive_events_count_sum(&mut self, value: i64) -> &mut Self {
+    pub fn online_archive_events_count_sum(&mut self, value: i64) -> &mut Self {
         self.online_archive_events_count_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_opentelemetry_apm_host_top99p(&mut self, value: i64) -> &mut Self {
+    pub fn opentelemetry_apm_host_top99p(&mut self, value: i64) -> &mut Self {
         self.opentelemetry_apm_host_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_opentelemetry_host_top99p(&mut self, value: i64) -> &mut Self {
+    pub fn opentelemetry_host_top99p(&mut self, value: i64) -> &mut Self {
         self.opentelemetry_host_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_profiling_aas_count_top99p(&mut self, value: i64) -> &mut Self {
+    pub fn profiling_aas_count_top99p(&mut self, value: i64) -> &mut Self {
         self.profiling_aas_count_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_profiling_host_top99p(&mut self, value: i64) -> &mut Self {
+    pub fn profiling_host_top99p(&mut self, value: i64) -> &mut Self {
         self.profiling_host_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(&mut self, value: String) -> &mut Self {
         self.public_id = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_region(&mut self, value: String) -> &mut Self {
+    pub fn region(&mut self, value: String) -> &mut Self {
         self.region = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_rum_browser_and_mobile_session_count(&mut self, value: i64) -> &mut Self {
+    pub fn rum_browser_and_mobile_session_count(&mut self, value: i64) -> &mut Self {
         self.rum_browser_and_mobile_session_count = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_rum_session_count_sum(&mut self, value: i64) -> &mut Self {
+    pub fn rum_session_count_sum(&mut self, value: i64) -> &mut Self {
         self.rum_session_count_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_rum_total_session_count_sum(&mut self, value: i64) -> &mut Self {
+    pub fn rum_total_session_count_sum(&mut self, value: i64) -> &mut Self {
         self.rum_total_session_count_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_rum_units_sum(&mut self, value: i64) -> &mut Self {
+    pub fn rum_units_sum(&mut self, value: i64) -> &mut Self {
         self.rum_units_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_sds_apm_scanned_bytes_sum(&mut self, value: i64) -> &mut Self {
+    pub fn sds_apm_scanned_bytes_sum(&mut self, value: i64) -> &mut Self {
         self.sds_apm_scanned_bytes_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_sds_events_scanned_bytes_sum(&mut self, value: i64) -> &mut Self {
+    pub fn sds_events_scanned_bytes_sum(&mut self, value: i64) -> &mut Self {
         self.sds_events_scanned_bytes_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_sds_logs_scanned_bytes_sum(&mut self, value: i64) -> &mut Self {
+    pub fn sds_logs_scanned_bytes_sum(&mut self, value: i64) -> &mut Self {
         self.sds_logs_scanned_bytes_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_sds_rum_scanned_bytes_sum(&mut self, value: i64) -> &mut Self {
+    pub fn sds_rum_scanned_bytes_sum(&mut self, value: i64) -> &mut Self {
         self.sds_rum_scanned_bytes_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_sds_total_scanned_bytes_sum(&mut self, value: i64) -> &mut Self {
+    pub fn sds_total_scanned_bytes_sum(&mut self, value: i64) -> &mut Self {
         self.sds_total_scanned_bytes_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_serverless_apps_azure_count_avg(&mut self, value: i64) -> &mut Self {
+    pub fn serverless_apps_azure_count_avg(&mut self, value: i64) -> &mut Self {
         self.serverless_apps_azure_count_avg = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_serverless_apps_google_count_avg(&mut self, value: i64) -> &mut Self {
+    pub fn serverless_apps_google_count_avg(&mut self, value: i64) -> &mut Self {
         self.serverless_apps_google_count_avg = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_serverless_apps_total_count_avg(&mut self, value: i64) -> &mut Self {
+    pub fn serverless_apps_total_count_avg(&mut self, value: i64) -> &mut Self {
         self.serverless_apps_total_count_avg = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_synthetics_browser_check_calls_count_sum(&mut self, value: i64) -> &mut Self {
+    pub fn synthetics_browser_check_calls_count_sum(&mut self, value: i64) -> &mut Self {
         self.synthetics_browser_check_calls_count_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_synthetics_check_calls_count_sum(&mut self, value: i64) -> &mut Self {
+    pub fn synthetics_check_calls_count_sum(&mut self, value: i64) -> &mut Self {
         self.synthetics_check_calls_count_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_synthetics_mobile_test_runs_sum(&mut self, value: i64) -> &mut Self {
+    pub fn synthetics_mobile_test_runs_sum(&mut self, value: i64) -> &mut Self {
         self.synthetics_mobile_test_runs_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_synthetics_parallel_testing_max_slots_hwm(&mut self, value: i64) -> &mut Self {
+    pub fn synthetics_parallel_testing_max_slots_hwm(&mut self, value: i64) -> &mut Self {
         self.synthetics_parallel_testing_max_slots_hwm = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_trace_search_indexed_events_count_sum(&mut self, value: i64) -> &mut Self {
+    pub fn trace_search_indexed_events_count_sum(&mut self, value: i64) -> &mut Self {
         self.trace_search_indexed_events_count_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_twol_ingested_events_bytes_sum(&mut self, value: i64) -> &mut Self {
+    pub fn twol_ingested_events_bytes_sum(&mut self, value: i64) -> &mut Self {
         self.twol_ingested_events_bytes_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_universal_service_monitoring_host_top99p(&mut self, value: i64) -> &mut Self {
+    pub fn universal_service_monitoring_host_top99p(&mut self, value: i64) -> &mut Self {
         self.universal_service_monitoring_host_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_vsphere_host_top99p(&mut self, value: i64) -> &mut Self {
+    pub fn vsphere_host_top99p(&mut self, value: i64) -> &mut Self {
         self.vsphere_host_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_vuln_management_host_count_top99p(&mut self, value: i64) -> &mut Self {
+    pub fn vuln_management_host_count_top99p(&mut self, value: i64) -> &mut Self {
         self.vuln_management_host_count_top99p = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_workflow_executions_usage_sum(&mut self, value: i64) -> &mut Self {
+    pub fn workflow_executions_usage_sum(&mut self, value: i64) -> &mut Self {
         self.workflow_executions_usage_sum = Some(value);
         self
     }
 }
+
 impl Default for UsageSummaryDateOrg {
     fn default() -> Self {
         Self::new()

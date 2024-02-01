@@ -48,12 +48,12 @@ impl NotebooksResponseDataAttributes {
         }
     }
 
-    pub fn with_author(&mut self, value: crate::datadogV1::model::NotebookAuthor) -> &mut Self {
+    pub fn author(&mut self, value: crate::datadogV1::model::NotebookAuthor) -> &mut Self {
         self.author = Some(value);
         self
     }
 
-    pub fn with_cells(
+    pub fn cells(
         &mut self,
         value: Vec<crate::datadogV1::model::NotebookCellResponse>,
     ) -> &mut Self {
@@ -61,27 +61,27 @@ impl NotebooksResponseDataAttributes {
         self
     }
 
-    pub fn with_created(&mut self, value: String) -> &mut Self {
+    pub fn created(&mut self, value: String) -> &mut Self {
         self.created = Some(value);
         self
     }
 
-    pub fn with_metadata(&mut self, value: crate::datadogV1::model::NotebookMetadata) -> &mut Self {
+    pub fn metadata(&mut self, value: crate::datadogV1::model::NotebookMetadata) -> &mut Self {
         self.metadata = Some(value);
         self
     }
 
-    pub fn with_modified(&mut self, value: String) -> &mut Self {
+    pub fn modified(&mut self, value: String) -> &mut Self {
         self.modified = Some(value);
         self
     }
 
-    pub fn with_status(&mut self, value: crate::datadogV1::model::NotebookStatus) -> &mut Self {
+    pub fn status(&mut self, value: crate::datadogV1::model::NotebookStatus) -> &mut Self {
         self.status = Some(value);
         self
     }
 
-    pub fn with_time(&mut self, value: crate::datadogV1::model::NotebookGlobalTime) -> &mut Self {
+    pub fn time(&mut self, value: crate::datadogV1::model::NotebookGlobalTime) -> &mut Self {
         self.time = Some(value);
         self
     }

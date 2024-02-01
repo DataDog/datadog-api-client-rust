@@ -28,17 +28,17 @@ impl CIAppTestEventsResponse {
         }
     }
 
-    pub fn with_data(&mut self, value: Vec<crate::datadogV2::model::CIAppTestEvent>) -> &mut Self {
+    pub fn data(&mut self, value: Vec<crate::datadogV2::model::CIAppTestEvent>) -> &mut Self {
         self.data = Some(value);
         self
     }
 
-    pub fn with_links(&mut self, value: crate::datadogV2::model::CIAppResponseLinks) -> &mut Self {
+    pub fn links(&mut self, value: crate::datadogV2::model::CIAppResponseLinks) -> &mut Self {
         self.links = Some(value);
         self
     }
 
-    pub fn with_meta(
+    pub fn meta(
         &mut self,
         value: crate::datadogV2::model::CIAppResponseMetadataWithPagination,
     ) -> &mut Self {
@@ -46,6 +46,7 @@ impl CIAppTestEventsResponse {
         self
     }
 }
+
 impl Default for CIAppTestEventsResponse {
     fn default() -> Self {
         Self::new()

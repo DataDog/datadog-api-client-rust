@@ -44,39 +44,37 @@ impl ContainerMetaPage {
         }
     }
 
-    pub fn with_cursor(&mut self, value: String) -> &mut Self {
+    pub fn cursor(&mut self, value: String) -> &mut Self {
         self.cursor = Some(value);
         self
     }
 
-    pub fn with_limit(&mut self, value: i32) -> &mut Self {
+    pub fn limit(&mut self, value: i32) -> &mut Self {
         self.limit = Some(value);
         self
     }
 
-    pub fn with_next_cursor(&mut self, value: String) -> &mut Self {
+    pub fn next_cursor(&mut self, value: String) -> &mut Self {
         self.next_cursor = Some(value);
         self
     }
 
-    pub fn with_prev_cursor(&mut self, value: Option<String>) -> &mut Self {
+    pub fn prev_cursor(&mut self, value: Option<String>) -> &mut Self {
         self.prev_cursor = Some(value);
         self
     }
 
-    pub fn with_total(&mut self, value: i64) -> &mut Self {
+    pub fn total(&mut self, value: i64) -> &mut Self {
         self.total = Some(value);
         self
     }
 
-    pub fn with_type_(
-        &mut self,
-        value: crate::datadogV2::model::ContainerMetaPageType,
-    ) -> &mut Self {
+    pub fn type_(&mut self, value: crate::datadogV2::model::ContainerMetaPageType) -> &mut Self {
         self.type_ = Some(value);
         self
     }
 }
+
 impl Default for ContainerMetaPage {
     fn default() -> Self {
         Self::new()

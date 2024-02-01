@@ -32,26 +32,27 @@ impl PartialApplicationKeyAttributes {
         }
     }
 
-    pub fn with_created_at(&mut self, value: String) -> &mut Self {
+    pub fn created_at(&mut self, value: String) -> &mut Self {
         self.created_at = Some(value);
         self
     }
 
-    pub fn with_last4(&mut self, value: String) -> &mut Self {
+    pub fn last4(&mut self, value: String) -> &mut Self {
         self.last4 = Some(value);
         self
     }
 
-    pub fn with_name(&mut self, value: String) -> &mut Self {
+    pub fn name(&mut self, value: String) -> &mut Self {
         self.name = Some(value);
         self
     }
 
-    pub fn with_scopes(&mut self, value: Option<Vec<String>>) -> &mut Self {
+    pub fn scopes(&mut self, value: Option<Vec<String>>) -> &mut Self {
         self.scopes = Some(value);
         self
     }
 }
+
 impl Default for PartialApplicationKeyAttributes {
     fn default() -> Self {
         Self::new()

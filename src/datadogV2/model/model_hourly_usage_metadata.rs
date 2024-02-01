@@ -18,7 +18,7 @@ impl HourlyUsageMetadata {
         HourlyUsageMetadata { pagination: None }
     }
 
-    pub fn with_pagination(
+    pub fn pagination(
         &mut self,
         value: crate::datadogV2::model::HourlyUsagePagination,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl HourlyUsageMetadata {
         self
     }
 }
+
 impl Default for HourlyUsageMetadata {
     fn default() -> Self {
         Self::new()

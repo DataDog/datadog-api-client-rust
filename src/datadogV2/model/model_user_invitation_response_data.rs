@@ -32,7 +32,7 @@ impl UserInvitationResponseData {
         }
     }
 
-    pub fn with_attributes(
+    pub fn attributes(
         &mut self,
         value: crate::datadogV2::model::UserInvitationDataAttributes,
     ) -> &mut Self {
@@ -40,12 +40,12 @@ impl UserInvitationResponseData {
         self
     }
 
-    pub fn with_id(&mut self, value: String) -> &mut Self {
+    pub fn id(&mut self, value: String) -> &mut Self {
         self.id = Some(value);
         self
     }
 
-    pub fn with_relationships(
+    pub fn relationships(
         &mut self,
         value: crate::datadogV2::model::UserInvitationRelationships,
     ) -> &mut Self {
@@ -53,11 +53,12 @@ impl UserInvitationResponseData {
         self
     }
 
-    pub fn with_type_(&mut self, value: crate::datadogV2::model::UserInvitationsType) -> &mut Self {
+    pub fn type_(&mut self, value: crate::datadogV2::model::UserInvitationsType) -> &mut Self {
         self.type_ = Some(value);
         self
     }
 }
+
 impl Default for UserInvitationResponseData {
     fn default() -> Self {
         Self::new()

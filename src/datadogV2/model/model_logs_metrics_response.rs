@@ -18,7 +18,7 @@ impl LogsMetricsResponse {
         LogsMetricsResponse { data: None }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: Vec<crate::datadogV2::model::LogsMetricResponseData>,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl LogsMetricsResponse {
         self
     }
 }
+
 impl Default for LogsMetricsResponse {
     fn default() -> Self {
         Self::new()

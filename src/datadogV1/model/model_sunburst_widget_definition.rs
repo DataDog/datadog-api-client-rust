@@ -55,7 +55,7 @@ impl SunburstWidgetDefinition {
         }
     }
 
-    pub fn with_custom_links(
+    pub fn custom_links(
         &mut self,
         value: Vec<crate::datadogV1::model::WidgetCustomLink>,
     ) -> &mut Self {
@@ -63,38 +63,32 @@ impl SunburstWidgetDefinition {
         self
     }
 
-    pub fn with_hide_total(&mut self, value: bool) -> &mut Self {
+    pub fn hide_total(&mut self, value: bool) -> &mut Self {
         self.hide_total = Some(value);
         self
     }
 
-    pub fn with_legend(
-        &mut self,
-        value: crate::datadogV1::model::SunburstWidgetLegend,
-    ) -> &mut Self {
+    pub fn legend(&mut self, value: crate::datadogV1::model::SunburstWidgetLegend) -> &mut Self {
         self.legend = Some(value);
         self
     }
 
-    pub fn with_time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
+    pub fn time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
         self.time = Some(value);
         self
     }
 
-    pub fn with_title(&mut self, value: String) -> &mut Self {
+    pub fn title(&mut self, value: String) -> &mut Self {
         self.title = Some(value);
         self
     }
 
-    pub fn with_title_align(
-        &mut self,
-        value: crate::datadogV1::model::WidgetTextAlign,
-    ) -> &mut Self {
+    pub fn title_align(&mut self, value: crate::datadogV1::model::WidgetTextAlign) -> &mut Self {
         self.title_align = Some(value);
         self
     }
 
-    pub fn with_title_size(&mut self, value: String) -> &mut Self {
+    pub fn title_size(&mut self, value: String) -> &mut Self {
         self.title_size = Some(value);
         self
     }

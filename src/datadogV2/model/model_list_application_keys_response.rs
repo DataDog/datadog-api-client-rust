@@ -28,7 +28,7 @@ impl ListApplicationKeysResponse {
         }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: Vec<crate::datadogV2::model::PartialApplicationKey>,
     ) -> &mut Self {
@@ -36,7 +36,7 @@ impl ListApplicationKeysResponse {
         self
     }
 
-    pub fn with_included(
+    pub fn included(
         &mut self,
         value: Vec<crate::datadogV2::model::ApplicationKeyResponseIncludedItem>,
     ) -> &mut Self {
@@ -44,7 +44,7 @@ impl ListApplicationKeysResponse {
         self
     }
 
-    pub fn with_meta(
+    pub fn meta(
         &mut self,
         value: crate::datadogV2::model::ApplicationKeyResponseMeta,
     ) -> &mut Self {
@@ -52,6 +52,7 @@ impl ListApplicationKeysResponse {
         self
     }
 }
+
 impl Default for ListApplicationKeysResponse {
     fn default() -> Self {
         Self::new()

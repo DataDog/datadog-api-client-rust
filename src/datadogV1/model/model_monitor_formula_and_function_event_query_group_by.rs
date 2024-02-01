@@ -28,12 +28,12 @@ impl MonitorFormulaAndFunctionEventQueryGroupBy {
         }
     }
 
-    pub fn with_limit(&mut self, value: i64) -> &mut Self {
+    pub fn limit(&mut self, value: i64) -> &mut Self {
         self.limit = Some(value);
         self
     }
 
-    pub fn with_sort(
+    pub fn sort(
         &mut self,
         value: crate::datadogV1::model::MonitorFormulaAndFunctionEventQueryGroupBySort,
     ) -> &mut Self {

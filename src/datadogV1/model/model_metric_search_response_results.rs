@@ -18,11 +18,12 @@ impl MetricSearchResponseResults {
         MetricSearchResponseResults { metrics: None }
     }
 
-    pub fn with_metrics(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn metrics(&mut self, value: Vec<String>) -> &mut Self {
         self.metrics = Some(value);
         self
     }
 }
+
 impl Default for MetricSearchResponseResults {
     fn default() -> Self {
         Self::new()

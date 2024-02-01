@@ -18,7 +18,7 @@ impl SLOListResponseMetadata {
         SLOListResponseMetadata { page: None }
     }
 
-    pub fn with_page(
+    pub fn page(
         &mut self,
         value: crate::datadogV1::model::SLOListResponseMetadataPage,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl SLOListResponseMetadata {
         self
     }
 }
+
 impl Default for SLOListResponseMetadata {
     fn default() -> Self {
         Self::new()

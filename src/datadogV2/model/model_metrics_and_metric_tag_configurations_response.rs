@@ -18,7 +18,7 @@ impl MetricsAndMetricTagConfigurationsResponse {
         MetricsAndMetricTagConfigurationsResponse { data: None }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: Vec<crate::datadogV2::model::MetricsAndMetricTagConfigurations>,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl MetricsAndMetricTagConfigurationsResponse {
         self
     }
 }
+
 impl Default for MetricsAndMetricTagConfigurationsResponse {
     fn default() -> Self {
         Self::new()

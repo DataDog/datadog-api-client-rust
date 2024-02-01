@@ -26,7 +26,7 @@ impl SyntheticsPrivateLocationSecrets {
         }
     }
 
-    pub fn with_authentication(
+    pub fn authentication(
         &mut self,
         value: crate::datadogV1::model::SyntheticsPrivateLocationSecretsAuthentication,
     ) -> &mut Self {
@@ -34,7 +34,7 @@ impl SyntheticsPrivateLocationSecrets {
         self
     }
 
-    pub fn with_config_decryption(
+    pub fn config_decryption(
         &mut self,
         value: crate::datadogV1::model::SyntheticsPrivateLocationSecretsConfigDecryption,
     ) -> &mut Self {
@@ -42,6 +42,7 @@ impl SyntheticsPrivateLocationSecrets {
         self
     }
 }
+
 impl Default for SyntheticsPrivateLocationSecrets {
     fn default() -> Self {
         Self::new()

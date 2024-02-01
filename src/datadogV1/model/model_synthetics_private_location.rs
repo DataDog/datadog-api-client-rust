@@ -40,12 +40,12 @@ impl SyntheticsPrivateLocation {
         }
     }
 
-    pub fn with_id(&mut self, value: String) -> &mut Self {
+    pub fn id(&mut self, value: String) -> &mut Self {
         self.id = Some(value);
         self
     }
 
-    pub fn with_metadata(
+    pub fn metadata(
         &mut self,
         value: crate::datadogV1::model::SyntheticsPrivateLocationMetadata,
     ) -> &mut Self {
@@ -53,7 +53,7 @@ impl SyntheticsPrivateLocation {
         self
     }
 
-    pub fn with_secrets(
+    pub fn secrets(
         &mut self,
         value: crate::datadogV1::model::SyntheticsPrivateLocationSecrets,
     ) -> &mut Self {

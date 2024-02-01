@@ -24,7 +24,7 @@ impl SearchSLOResponseDataAttributes {
         }
     }
 
-    pub fn with_facets(
+    pub fn facets(
         &mut self,
         value: crate::datadogV1::model::SearchSLOResponseDataAttributesFacets,
     ) -> &mut Self {
@@ -32,7 +32,7 @@ impl SearchSLOResponseDataAttributes {
         self
     }
 
-    pub fn with_slos(
+    pub fn slos(
         &mut self,
         value: Vec<crate::datadogV1::model::SearchServiceLevelObjective>,
     ) -> &mut Self {
@@ -40,6 +40,7 @@ impl SearchSLOResponseDataAttributes {
         self
     }
 }
+
 impl Default for SearchSLOResponseDataAttributes {
     fn default() -> Self {
         Self::new()

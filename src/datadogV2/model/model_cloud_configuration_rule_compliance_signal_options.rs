@@ -48,26 +48,27 @@ impl CloudConfigurationRuleComplianceSignalOptions {
         }
     }
 
-    pub fn with_default_activation_status(&mut self, value: Option<bool>) -> &mut Self {
+    pub fn default_activation_status(&mut self, value: Option<bool>) -> &mut Self {
         self.default_activation_status = Some(value);
         self
     }
 
-    pub fn with_default_group_by_fields(&mut self, value: Option<Vec<String>>) -> &mut Self {
+    pub fn default_group_by_fields(&mut self, value: Option<Vec<String>>) -> &mut Self {
         self.default_group_by_fields = Some(value);
         self
     }
 
-    pub fn with_user_activation_status(&mut self, value: Option<bool>) -> &mut Self {
+    pub fn user_activation_status(&mut self, value: Option<bool>) -> &mut Self {
         self.user_activation_status = Some(value);
         self
     }
 
-    pub fn with_user_group_by_fields(&mut self, value: Option<Vec<String>>) -> &mut Self {
+    pub fn user_group_by_fields(&mut self, value: Option<Vec<String>>) -> &mut Self {
         self.user_group_by_fields = Some(value);
         self
     }
 }
+
 impl Default for CloudConfigurationRuleComplianceSignalOptions {
     fn default() -> Self {
         Self::new()

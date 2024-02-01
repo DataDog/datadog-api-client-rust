@@ -18,14 +18,12 @@ impl SyntheticsCITestBody {
         SyntheticsCITestBody { tests: None }
     }
 
-    pub fn with_tests(
-        &mut self,
-        value: Vec<crate::datadogV1::model::SyntheticsCITest>,
-    ) -> &mut Self {
+    pub fn tests(&mut self, value: Vec<crate::datadogV1::model::SyntheticsCITest>) -> &mut Self {
         self.tests = Some(value);
         self
     }
 }
+
 impl Default for SyntheticsCITestBody {
     fn default() -> Self {
         Self::new()

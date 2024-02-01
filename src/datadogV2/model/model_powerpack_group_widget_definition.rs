@@ -40,12 +40,12 @@ impl PowerpackGroupWidgetDefinition {
         }
     }
 
-    pub fn with_show_title(&mut self, value: bool) -> &mut Self {
+    pub fn show_title(&mut self, value: bool) -> &mut Self {
         self.show_title = Some(value);
         self
     }
 
-    pub fn with_title(&mut self, value: String) -> &mut Self {
+    pub fn title(&mut self, value: String) -> &mut Self {
         self.title = Some(value);
         self
     }

@@ -18,7 +18,7 @@ impl RelationshipToRuleData {
         RelationshipToRuleData { data: None }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: crate::datadogV2::model::RelationshipToRuleDataObject,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl RelationshipToRuleData {
         self
     }
 }
+
 impl Default for RelationshipToRuleData {
     fn default() -> Self {
         Self::new()

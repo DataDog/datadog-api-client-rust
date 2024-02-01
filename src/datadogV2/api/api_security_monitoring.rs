@@ -6,14 +6,22 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetFindingOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::get_finding`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetFindingOptionalParams {
     /// Return the finding for a given snapshot of time (Unix ms).
     pub snapshot_timestamp: Option<i64>,
 }
 
+impl GetFindingOptionalParams {
+    /// Return the finding for a given snapshot of time (Unix ms).
+    pub fn snapshot_timestamp(&mut self, value: i64) -> &mut Self {
+        self.snapshot_timestamp = Some(value);
+        self
+    }
+}
+
 /// ListFindingsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_findings`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListFindingsOptionalParams {
     /// Limit the number of findings returned. Must be <= 1000.
     pub page_limit: Option<i64>,
@@ -41,8 +49,74 @@ pub struct ListFindingsOptionalParams {
     pub filter_status: Option<crate::datadogV2::model::FindingStatus>,
 }
 
+impl ListFindingsOptionalParams {
+    /// Limit the number of findings returned. Must be <= 1000.
+    pub fn page_limit(&mut self, value: i64) -> &mut Self {
+        self.page_limit = Some(value);
+        self
+    }
+    /// Return findings for a given snapshot of time (Unix ms).
+    pub fn snapshot_timestamp(&mut self, value: i64) -> &mut Self {
+        self.snapshot_timestamp = Some(value);
+        self
+    }
+    /// Return the next page of findings pointed to by the cursor.
+    pub fn page_cursor(&mut self, value: String) -> &mut Self {
+        self.page_cursor = Some(value);
+        self
+    }
+    /// Return findings that have these associated tags (repeatable).
+    pub fn filter_tags(&mut self, value: String) -> &mut Self {
+        self.filter_tags = Some(value);
+        self
+    }
+    /// Return findings that have changed from pass to fail or vice versa on a specified date (Unix ms) or date range (using comparison operators).
+    pub fn filter_evaluation_changed_at(&mut self, value: String) -> &mut Self {
+        self.filter_evaluation_changed_at = Some(value);
+        self
+    }
+    /// Set to `true` to return findings that are muted. Set to `false` to return unmuted findings.
+    pub fn filter_muted(&mut self, value: bool) -> &mut Self {
+        self.filter_muted = Some(value);
+        self
+    }
+    /// Return findings for the specified rule ID.
+    pub fn filter_rule_id(&mut self, value: String) -> &mut Self {
+        self.filter_rule_id = Some(value);
+        self
+    }
+    /// Return findings for the specified rule.
+    pub fn filter_rule_name(&mut self, value: String) -> &mut Self {
+        self.filter_rule_name = Some(value);
+        self
+    }
+    /// Return only findings for the specified resource type.
+    pub fn filter_resource_type(&mut self, value: String) -> &mut Self {
+        self.filter_resource_type = Some(value);
+        self
+    }
+    /// Return findings that were found on a specified date (Unix ms) or date range (using comparison operators).
+    pub fn filter_discovery_timestamp(&mut self, value: String) -> &mut Self {
+        self.filter_discovery_timestamp = Some(value);
+        self
+    }
+    /// Return only `pass` or `fail` findings.
+    pub fn filter_evaluation(
+        &mut self,
+        value: crate::datadogV2::model::FindingEvaluation,
+    ) -> &mut Self {
+        self.filter_evaluation = Some(value);
+        self
+    }
+    /// Return only findings with the specified status.
+    pub fn filter_status(&mut self, value: crate::datadogV2::model::FindingStatus) -> &mut Self {
+        self.filter_status = Some(value);
+        self
+    }
+}
+
 /// ListSecurityMonitoringRulesOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_security_monitoring_rules`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListSecurityMonitoringRulesOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
@@ -50,8 +124,21 @@ pub struct ListSecurityMonitoringRulesOptionalParams {
     pub page_number: Option<i64>,
 }
 
+impl ListSecurityMonitoringRulesOptionalParams {
+    /// Size for a given page. The maximum allowed value is 100.
+    pub fn page_size(&mut self, value: i64) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Specific page number to return.
+    pub fn page_number(&mut self, value: i64) -> &mut Self {
+        self.page_number = Some(value);
+        self
+    }
+}
+
 /// ListSecurityMonitoringSignalsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_security_monitoring_signals`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListSecurityMonitoringSignalsOptionalParams {
     /// The search query for security signals.
     pub filter_query: Option<String>,
@@ -67,10 +154,56 @@ pub struct ListSecurityMonitoringSignalsOptionalParams {
     pub page_limit: Option<i32>,
 }
 
+impl ListSecurityMonitoringSignalsOptionalParams {
+    /// The search query for security signals.
+    pub fn filter_query(&mut self, value: String) -> &mut Self {
+        self.filter_query = Some(value);
+        self
+    }
+    /// The minimum timestamp for requested security signals.
+    pub fn filter_from(&mut self, value: String) -> &mut Self {
+        self.filter_from = Some(value);
+        self
+    }
+    /// The maximum timestamp for requested security signals.
+    pub fn filter_to(&mut self, value: String) -> &mut Self {
+        self.filter_to = Some(value);
+        self
+    }
+    /// The order of the security signals in results.
+    pub fn sort(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringSignalsSort,
+    ) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+    /// A list of results using the cursor provided in the previous query.
+    pub fn page_cursor(&mut self, value: String) -> &mut Self {
+        self.page_cursor = Some(value);
+        self
+    }
+    /// The maximum number of security signals in the response.
+    pub fn page_limit(&mut self, value: i32) -> &mut Self {
+        self.page_limit = Some(value);
+        self
+    }
+}
+
 /// SearchSecurityMonitoringSignalsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::search_security_monitoring_signals`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct SearchSecurityMonitoringSignalsOptionalParams {
     pub body: Option<crate::datadogV2::model::SecurityMonitoringSignalListRequest>,
+}
+
+impl SearchSecurityMonitoringSignalsOptionalParams {
+    pub fn body(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringSignalListRequest,
+    ) -> &mut Self {
+        self.body = Some(value);
+        self
+    }
 }
 
 /// CreateSecurityFilterError is a struct for typed errors of method [`SecurityMonitoringAPI::create_security_filter`]

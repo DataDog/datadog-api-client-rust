@@ -18,11 +18,12 @@ impl AuthNMappingCreateRelationships {
         AuthNMappingCreateRelationships { role: None }
     }
 
-    pub fn with_role(&mut self, value: crate::datadogV2::model::RelationshipToRole) -> &mut Self {
+    pub fn role(&mut self, value: crate::datadogV2::model::RelationshipToRole) -> &mut Self {
         self.role = Some(value);
         self
     }
 }
+
 impl Default for AuthNMappingCreateRelationships {
     fn default() -> Self {
         Self::new()

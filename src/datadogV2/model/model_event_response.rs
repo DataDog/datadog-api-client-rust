@@ -28,7 +28,7 @@ impl EventResponse {
         }
     }
 
-    pub fn with_attributes(
+    pub fn attributes(
         &mut self,
         value: crate::datadogV2::model::EventResponseAttributes,
     ) -> &mut Self {
@@ -36,16 +36,17 @@ impl EventResponse {
         self
     }
 
-    pub fn with_id(&mut self, value: String) -> &mut Self {
+    pub fn id(&mut self, value: String) -> &mut Self {
         self.id = Some(value);
         self
     }
 
-    pub fn with_type_(&mut self, value: crate::datadogV2::model::EventType) -> &mut Self {
+    pub fn type_(&mut self, value: crate::datadogV2::model::EventType) -> &mut Self {
         self.type_ = Some(value);
         self
     }
 }
+
 impl Default for EventResponse {
     fn default() -> Self {
         Self::new()

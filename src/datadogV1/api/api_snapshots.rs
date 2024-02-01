@@ -6,7 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetGraphSnapshotOptionalParams is a struct for passing parameters to the method [`SnapshotsAPI::get_graph_snapshot`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetGraphSnapshotOptionalParams {
     /// The metric query.
     pub metric_query: Option<String>,
@@ -22,6 +22,41 @@ pub struct GetGraphSnapshotOptionalParams {
     pub height: Option<i64>,
     /// The width of the graph. If no width is specified, the graph's original width is used.
     pub width: Option<i64>,
+}
+
+impl GetGraphSnapshotOptionalParams {
+    /// The metric query.
+    pub fn metric_query(&mut self, value: String) -> &mut Self {
+        self.metric_query = Some(value);
+        self
+    }
+    /// A query that adds event bands to the graph.
+    pub fn event_query(&mut self, value: String) -> &mut Self {
+        self.event_query = Some(value);
+        self
+    }
+    /// A JSON document defining the graph. `graph_def` can be used instead of `metric_query`.
+    /// The JSON document uses the [grammar defined here](<https://docs.datadoghq.com/graphing/graphing_json/#grammar>)
+    /// and should be formatted to a single line then URL encoded.
+    pub fn graph_def(&mut self, value: String) -> &mut Self {
+        self.graph_def = Some(value);
+        self
+    }
+    /// A title for the graph. If no title is specified, the graph does not have a title.
+    pub fn title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
+    }
+    /// The height of the graph. If no height is specified, the graph's original height is used.
+    pub fn height(&mut self, value: i64) -> &mut Self {
+        self.height = Some(value);
+        self
+    }
+    /// The width of the graph. If no width is specified, the graph's original width is used.
+    pub fn width(&mut self, value: i64) -> &mut Self {
+        self.width = Some(value);
+        self
+    }
 }
 
 /// GetGraphSnapshotError is a struct for typed errors of method [`SnapshotsAPI::get_graph_snapshot`]

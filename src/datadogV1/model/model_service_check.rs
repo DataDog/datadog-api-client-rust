@@ -45,12 +45,12 @@ impl ServiceCheck {
         }
     }
 
-    pub fn with_message(&mut self, value: String) -> &mut Self {
+    pub fn message(&mut self, value: String) -> &mut Self {
         self.message = Some(value);
         self
     }
 
-    pub fn with_timestamp(&mut self, value: i64) -> &mut Self {
+    pub fn timestamp(&mut self, value: i64) -> &mut Self {
         self.timestamp = Some(value);
         self
     }

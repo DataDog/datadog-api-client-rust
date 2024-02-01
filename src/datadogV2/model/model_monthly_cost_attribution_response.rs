@@ -24,7 +24,7 @@ impl MonthlyCostAttributionResponse {
         }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: Vec<crate::datadogV2::model::MonthlyCostAttributionBody>,
     ) -> &mut Self {
@@ -32,7 +32,7 @@ impl MonthlyCostAttributionResponse {
         self
     }
 
-    pub fn with_meta(
+    pub fn meta(
         &mut self,
         value: crate::datadogV2::model::MonthlyCostAttributionMeta,
     ) -> &mut Self {
@@ -40,6 +40,7 @@ impl MonthlyCostAttributionResponse {
         self
     }
 }
+
 impl Default for MonthlyCostAttributionResponse {
     fn default() -> Self {
         Self::new()

@@ -7,6 +7,6 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ApplicationKeyResponseIncludedItem {
-    User(crate::datadogV2::model::User),
-    Role(crate::datadogV2::model::Role),
+    User(Box<crate::datadogV2::model::User>),
+    Role(Box<crate::datadogV2::model::Role>),
 }

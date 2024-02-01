@@ -29,7 +29,7 @@ impl SecurityMonitoringSignalsListResponse {
         }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: Vec<crate::datadogV2::model::SecurityMonitoringSignal>,
     ) -> &mut Self {
@@ -37,7 +37,7 @@ impl SecurityMonitoringSignalsListResponse {
         self
     }
 
-    pub fn with_links(
+    pub fn links(
         &mut self,
         value: crate::datadogV2::model::SecurityMonitoringSignalsListResponseLinks,
     ) -> &mut Self {
@@ -45,7 +45,7 @@ impl SecurityMonitoringSignalsListResponse {
         self
     }
 
-    pub fn with_meta(
+    pub fn meta(
         &mut self,
         value: crate::datadogV2::model::SecurityMonitoringSignalsListResponseMeta,
     ) -> &mut Self {
@@ -53,6 +53,7 @@ impl SecurityMonitoringSignalsListResponse {
         self
     }
 }
+
 impl Default for SecurityMonitoringSignalsListResponse {
     fn default() -> Self {
         Self::new()

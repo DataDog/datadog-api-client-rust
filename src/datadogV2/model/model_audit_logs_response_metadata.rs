@@ -37,40 +37,32 @@ impl AuditLogsResponseMetadata {
         }
     }
 
-    pub fn with_elapsed(&mut self, value: i64) -> &mut Self {
+    pub fn elapsed(&mut self, value: i64) -> &mut Self {
         self.elapsed = Some(value);
         self
     }
 
-    pub fn with_page(
-        &mut self,
-        value: crate::datadogV2::model::AuditLogsResponsePage,
-    ) -> &mut Self {
+    pub fn page(&mut self, value: crate::datadogV2::model::AuditLogsResponsePage) -> &mut Self {
         self.page = Some(value);
         self
     }
 
-    pub fn with_request_id(&mut self, value: String) -> &mut Self {
+    pub fn request_id(&mut self, value: String) -> &mut Self {
         self.request_id = Some(value);
         self
     }
 
-    pub fn with_status(
-        &mut self,
-        value: crate::datadogV2::model::AuditLogsResponseStatus,
-    ) -> &mut Self {
+    pub fn status(&mut self, value: crate::datadogV2::model::AuditLogsResponseStatus) -> &mut Self {
         self.status = Some(value);
         self
     }
 
-    pub fn with_warnings(
-        &mut self,
-        value: Vec<crate::datadogV2::model::AuditLogsWarning>,
-    ) -> &mut Self {
+    pub fn warnings(&mut self, value: Vec<crate::datadogV2::model::AuditLogsWarning>) -> &mut Self {
         self.warnings = Some(value);
         self
     }
 }
+
 impl Default for AuditLogsResponseMetadata {
     fn default() -> Self {
         Self::new()

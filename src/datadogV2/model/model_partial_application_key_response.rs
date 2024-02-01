@@ -24,15 +24,12 @@ impl PartialApplicationKeyResponse {
         }
     }
 
-    pub fn with_data(
-        &mut self,
-        value: crate::datadogV2::model::PartialApplicationKey,
-    ) -> &mut Self {
+    pub fn data(&mut self, value: crate::datadogV2::model::PartialApplicationKey) -> &mut Self {
         self.data = Some(value);
         self
     }
 
-    pub fn with_included(
+    pub fn included(
         &mut self,
         value: Vec<crate::datadogV2::model::ApplicationKeyResponseIncludedItem>,
     ) -> &mut Self {
@@ -40,6 +37,7 @@ impl PartialApplicationKeyResponse {
         self
     }
 }
+
 impl Default for PartialApplicationKeyResponse {
     fn default() -> Self {
         Self::new()

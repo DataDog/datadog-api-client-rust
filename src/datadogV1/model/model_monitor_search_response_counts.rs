@@ -32,7 +32,7 @@ impl MonitorSearchResponseCounts {
         }
     }
 
-    pub fn with_muted(
+    pub fn muted(
         &mut self,
         value: Vec<crate::datadogV1::model::MonitorSearchCountItem>,
     ) -> &mut Self {
@@ -40,7 +40,7 @@ impl MonitorSearchResponseCounts {
         self
     }
 
-    pub fn with_status(
+    pub fn status(
         &mut self,
         value: Vec<crate::datadogV1::model::MonitorSearchCountItem>,
     ) -> &mut Self {
@@ -48,7 +48,7 @@ impl MonitorSearchResponseCounts {
         self
     }
 
-    pub fn with_tag(
+    pub fn tag(
         &mut self,
         value: Vec<crate::datadogV1::model::MonitorSearchCountItem>,
     ) -> &mut Self {
@@ -56,7 +56,7 @@ impl MonitorSearchResponseCounts {
         self
     }
 
-    pub fn with_type_(
+    pub fn type_(
         &mut self,
         value: Vec<crate::datadogV1::model::MonitorSearchCountItem>,
     ) -> &mut Self {
@@ -64,6 +64,7 @@ impl MonitorSearchResponseCounts {
         self
     }
 }
+
 impl Default for MonitorSearchResponseCounts {
     fn default() -> Self {
         Self::new()

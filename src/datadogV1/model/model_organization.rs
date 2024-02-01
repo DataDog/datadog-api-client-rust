@@ -52,49 +52,43 @@ impl Organization {
     }
 
     #[allow(deprecated)]
-    pub fn with_billing(
-        &mut self,
-        value: crate::datadogV1::model::OrganizationBilling,
-    ) -> &mut Self {
+    pub fn billing(&mut self, value: crate::datadogV1::model::OrganizationBilling) -> &mut Self {
         self.billing = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_created(&mut self, value: String) -> &mut Self {
+    pub fn created(&mut self, value: String) -> &mut Self {
         self.created = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_description(&mut self, value: String) -> &mut Self {
+    pub fn description(&mut self, value: String) -> &mut Self {
         self.description = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_name(&mut self, value: String) -> &mut Self {
+    pub fn name(&mut self, value: String) -> &mut Self {
         self.name = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(&mut self, value: String) -> &mut Self {
         self.public_id = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_settings(
-        &mut self,
-        value: crate::datadogV1::model::OrganizationSettings,
-    ) -> &mut Self {
+    pub fn settings(&mut self, value: crate::datadogV1::model::OrganizationSettings) -> &mut Self {
         self.settings = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_subscription(
+    pub fn subscription(
         &mut self,
         value: crate::datadogV1::model::OrganizationSubscription,
     ) -> &mut Self {
@@ -103,11 +97,12 @@ impl Organization {
     }
 
     #[allow(deprecated)]
-    pub fn with_trial(&mut self, value: bool) -> &mut Self {
+    pub fn trial(&mut self, value: bool) -> &mut Self {
         self.trial = Some(value);
         self
     }
 }
+
 impl Default for Organization {
     fn default() -> Self {
         Self::new()

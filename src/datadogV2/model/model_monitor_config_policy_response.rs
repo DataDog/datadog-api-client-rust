@@ -18,7 +18,7 @@ impl MonitorConfigPolicyResponse {
         MonitorConfigPolicyResponse { data: None }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: crate::datadogV2::model::MonitorConfigPolicyResponseData,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl MonitorConfigPolicyResponse {
         self
     }
 }
+
 impl Default for MonitorConfigPolicyResponse {
     fn default() -> Self {
         Self::new()

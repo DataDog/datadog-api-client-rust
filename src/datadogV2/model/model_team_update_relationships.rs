@@ -18,7 +18,7 @@ impl TeamUpdateRelationships {
         TeamUpdateRelationships { team_links: None }
     }
 
-    pub fn with_team_links(
+    pub fn team_links(
         &mut self,
         value: crate::datadogV2::model::RelationshipToTeamLinks,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl TeamUpdateRelationships {
         self
     }
 }
+
 impl Default for TeamUpdateRelationships {
     fn default() -> Self {
         Self::new()

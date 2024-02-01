@@ -81,45 +81,42 @@ impl SLOCorrectionResponseAttributes {
         }
     }
 
-    pub fn with_category(
-        &mut self,
-        value: crate::datadogV1::model::SLOCorrectionCategory,
-    ) -> &mut Self {
+    pub fn category(&mut self, value: crate::datadogV1::model::SLOCorrectionCategory) -> &mut Self {
         self.category = Some(value);
         self
     }
 
-    pub fn with_created_at(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn created_at(&mut self, value: Option<i64>) -> &mut Self {
         self.created_at = Some(value);
         self
     }
 
-    pub fn with_creator(&mut self, value: crate::datadogV1::model::Creator) -> &mut Self {
+    pub fn creator(&mut self, value: crate::datadogV1::model::Creator) -> &mut Self {
         self.creator = Some(value);
         self
     }
 
-    pub fn with_description(&mut self, value: String) -> &mut Self {
+    pub fn description(&mut self, value: String) -> &mut Self {
         self.description = Some(value);
         self
     }
 
-    pub fn with_duration(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn duration(&mut self, value: Option<i64>) -> &mut Self {
         self.duration = Some(value);
         self
     }
 
-    pub fn with_end(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn end(&mut self, value: Option<i64>) -> &mut Self {
         self.end = Some(value);
         self
     }
 
-    pub fn with_modified_at(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn modified_at(&mut self, value: Option<i64>) -> &mut Self {
         self.modified_at = Some(value);
         self
     }
 
-    pub fn with_modifier(
+    pub fn modifier(
         &mut self,
         value: Option<crate::datadogV1::model::SLOCorrectionResponseAttributesModifier>,
     ) -> &mut Self {
@@ -127,26 +124,27 @@ impl SLOCorrectionResponseAttributes {
         self
     }
 
-    pub fn with_rrule(&mut self, value: Option<String>) -> &mut Self {
+    pub fn rrule(&mut self, value: Option<String>) -> &mut Self {
         self.rrule = Some(value);
         self
     }
 
-    pub fn with_slo_id(&mut self, value: String) -> &mut Self {
+    pub fn slo_id(&mut self, value: String) -> &mut Self {
         self.slo_id = Some(value);
         self
     }
 
-    pub fn with_start(&mut self, value: i64) -> &mut Self {
+    pub fn start(&mut self, value: i64) -> &mut Self {
         self.start = Some(value);
         self
     }
 
-    pub fn with_timezone(&mut self, value: String) -> &mut Self {
+    pub fn timezone(&mut self, value: String) -> &mut Self {
         self.timezone = Some(value);
         self
     }
 }
+
 impl Default for SLOCorrectionResponseAttributes {
     fn default() -> Self {
         Self::new()

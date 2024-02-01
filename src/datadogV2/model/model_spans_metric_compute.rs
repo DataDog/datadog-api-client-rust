@@ -31,12 +31,12 @@ impl SpansMetricCompute {
         }
     }
 
-    pub fn with_include_percentiles(&mut self, value: bool) -> &mut Self {
+    pub fn include_percentiles(&mut self, value: bool) -> &mut Self {
         self.include_percentiles = Some(value);
         self
     }
 
-    pub fn with_path(&mut self, value: String) -> &mut Self {
+    pub fn path(&mut self, value: String) -> &mut Self {
         self.path = Some(value);
         self
     }

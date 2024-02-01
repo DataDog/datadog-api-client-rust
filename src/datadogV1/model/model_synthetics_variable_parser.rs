@@ -23,7 +23,7 @@ impl SyntheticsVariableParser {
         SyntheticsVariableParser { type_, value: None }
     }
 
-    pub fn with_value(&mut self, value: String) -> &mut Self {
+    pub fn value(&mut self, value: String) -> &mut Self {
         self.value = Some(value);
         self
     }

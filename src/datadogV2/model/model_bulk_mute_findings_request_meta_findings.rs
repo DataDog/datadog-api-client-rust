@@ -18,11 +18,12 @@ impl BulkMuteFindingsRequestMetaFindings {
         BulkMuteFindingsRequestMetaFindings { finding_id: None }
     }
 
-    pub fn with_finding_id(&mut self, value: String) -> &mut Self {
+    pub fn finding_id(&mut self, value: String) -> &mut Self {
         self.finding_id = Some(value);
         self
     }
 }
+
 impl Default for BulkMuteFindingsRequestMetaFindings {
     fn default() -> Self {
         Self::new()

@@ -6,7 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListProcessesOptionalParams is a struct for passing parameters to the method [`ProcessesAPI::list_processes`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListProcessesOptionalParams {
     /// String to search processes by.
     pub search: Option<String>,
@@ -25,6 +25,44 @@ pub struct ListProcessesOptionalParams {
     /// String to query the next page of results.
     /// This key is provided with each valid response from the API in `meta.page.after`.
     pub page_cursor: Option<String>,
+}
+
+impl ListProcessesOptionalParams {
+    /// String to search processes by.
+    pub fn search(&mut self, value: String) -> &mut Self {
+        self.search = Some(value);
+        self
+    }
+    /// Comma-separated list of tags to filter processes by.
+    pub fn tags(&mut self, value: String) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+    /// Unix timestamp (number of seconds since epoch) of the start of the query window.
+    /// If not provided, the start of the query window will be 15 minutes before the `to` timestamp. If neither
+    /// `from` nor `to` are provided, the query window will be `[now - 15m, now]`.
+    pub fn from(&mut self, value: i64) -> &mut Self {
+        self.from = Some(value);
+        self
+    }
+    /// Unix timestamp (number of seconds since epoch) of the end of the query window.
+    /// If not provided, the end of the query window will be 15 minutes after the `from` timestamp. If neither
+    /// `from` nor `to` are provided, the query window will be `[now - 15m, now]`.
+    pub fn to(&mut self, value: i64) -> &mut Self {
+        self.to = Some(value);
+        self
+    }
+    /// Maximum number of results returned.
+    pub fn page_limit(&mut self, value: i32) -> &mut Self {
+        self.page_limit = Some(value);
+        self
+    }
+    /// String to query the next page of results.
+    /// This key is provided with each valid response from the API in `meta.page.after`.
+    pub fn page_cursor(&mut self, value: String) -> &mut Self {
+        self.page_cursor = Some(value);
+        self
+    }
 }
 
 /// ListProcessesError is a struct for typed errors of method [`ProcessesAPI::list_processes`]

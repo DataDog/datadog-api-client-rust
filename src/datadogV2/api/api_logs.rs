@@ -6,13 +6,20 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListLogsOptionalParams is a struct for passing parameters to the method [`LogsAPI::list_logs`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListLogsOptionalParams {
     pub body: Option<crate::datadogV2::model::LogsListRequest>,
 }
 
+impl ListLogsOptionalParams {
+    pub fn body(&mut self, value: crate::datadogV2::model::LogsListRequest) -> &mut Self {
+        self.body = Some(value);
+        self
+    }
+}
+
 /// ListLogsGetOptionalParams is a struct for passing parameters to the method [`LogsAPI::list_logs_get`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListLogsGetOptionalParams {
     /// Search query following logs syntax.
     pub filter_query: Option<String>,
@@ -33,13 +40,76 @@ pub struct ListLogsGetOptionalParams {
     pub page_limit: Option<i32>,
 }
 
+impl ListLogsGetOptionalParams {
+    /// Search query following logs syntax.
+    pub fn filter_query(&mut self, value: String) -> &mut Self {
+        self.filter_query = Some(value);
+        self
+    }
+    /// For customers with multiple indexes, the indexes to search.
+    /// Defaults to '*' which means all indexes
+    pub fn filter_indexes(&mut self, value: Vec<String>) -> &mut Self {
+        self.filter_indexes = Some(value);
+        self
+    }
+    /// Minimum timestamp for requested logs.
+    pub fn filter_from(&mut self, value: String) -> &mut Self {
+        self.filter_from = Some(value);
+        self
+    }
+    /// Maximum timestamp for requested logs.
+    pub fn filter_to(&mut self, value: String) -> &mut Self {
+        self.filter_to = Some(value);
+        self
+    }
+    /// Specifies the storage type to be used
+    pub fn filter_storage_tier(
+        &mut self,
+        value: crate::datadogV2::model::LogsStorageTier,
+    ) -> &mut Self {
+        self.filter_storage_tier = Some(value);
+        self
+    }
+    /// Order of logs in results.
+    pub fn sort(&mut self, value: crate::datadogV2::model::LogsSort) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+    /// List following results with a cursor provided in the previous query.
+    pub fn page_cursor(&mut self, value: String) -> &mut Self {
+        self.page_cursor = Some(value);
+        self
+    }
+    /// Maximum number of logs in the response.
+    pub fn page_limit(&mut self, value: i32) -> &mut Self {
+        self.page_limit = Some(value);
+        self
+    }
+}
+
 /// SubmitLogOptionalParams is a struct for passing parameters to the method [`LogsAPI::submit_log`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct SubmitLogOptionalParams {
     /// HTTP header used to compress the media-type.
     pub content_encoding: Option<crate::datadogV2::model::ContentEncoding>,
     /// Log tags can be passed as query parameters with `text/plain` content type.
     pub ddtags: Option<String>,
+}
+
+impl SubmitLogOptionalParams {
+    /// HTTP header used to compress the media-type.
+    pub fn content_encoding(
+        &mut self,
+        value: crate::datadogV2::model::ContentEncoding,
+    ) -> &mut Self {
+        self.content_encoding = Some(value);
+        self
+    }
+    /// Log tags can be passed as query parameters with `text/plain` content type.
+    pub fn ddtags(&mut self, value: String) -> &mut Self {
+        self.ddtags = Some(value);
+        self
+    }
 }
 
 /// AggregateLogsError is a struct for typed errors of method [`LogsAPI::aggregate_logs`]

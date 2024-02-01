@@ -32,7 +32,7 @@ impl IncidentTeamResponseData {
         }
     }
 
-    pub fn with_attributes(
+    pub fn attributes(
         &mut self,
         value: crate::datadogV2::model::IncidentTeamResponseAttributes,
     ) -> &mut Self {
@@ -40,12 +40,12 @@ impl IncidentTeamResponseData {
         self
     }
 
-    pub fn with_id(&mut self, value: String) -> &mut Self {
+    pub fn id(&mut self, value: String) -> &mut Self {
         self.id = Some(value);
         self
     }
 
-    pub fn with_relationships(
+    pub fn relationships(
         &mut self,
         value: crate::datadogV2::model::IncidentTeamRelationships,
     ) -> &mut Self {
@@ -53,11 +53,12 @@ impl IncidentTeamResponseData {
         self
     }
 
-    pub fn with_type_(&mut self, value: crate::datadogV2::model::IncidentTeamType) -> &mut Self {
+    pub fn type_(&mut self, value: crate::datadogV2::model::IncidentTeamType) -> &mut Self {
         self.type_ = Some(value);
         self
     }
 }
+
 impl Default for IncidentTeamResponseData {
     fn default() -> Self {
         Self::new()

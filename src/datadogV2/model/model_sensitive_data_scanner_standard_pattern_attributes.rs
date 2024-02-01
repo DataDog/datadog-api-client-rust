@@ -40,36 +40,37 @@ impl SensitiveDataScannerStandardPatternAttributes {
         }
     }
 
-    pub fn with_description(&mut self, value: String) -> &mut Self {
+    pub fn description(&mut self, value: String) -> &mut Self {
         self.description = Some(value);
         self
     }
 
-    pub fn with_included_keywords(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn included_keywords(&mut self, value: Vec<String>) -> &mut Self {
         self.included_keywords = Some(value);
         self
     }
 
-    pub fn with_name(&mut self, value: String) -> &mut Self {
+    pub fn name(&mut self, value: String) -> &mut Self {
         self.name = Some(value);
         self
     }
 
-    pub fn with_pattern(&mut self, value: String) -> &mut Self {
+    pub fn pattern(&mut self, value: String) -> &mut Self {
         self.pattern = Some(value);
         self
     }
 
-    pub fn with_priority(&mut self, value: i64) -> &mut Self {
+    pub fn priority(&mut self, value: i64) -> &mut Self {
         self.priority = Some(value);
         self
     }
 
-    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
         self.tags = Some(value);
         self
     }
 }
+
 impl Default for SensitiveDataScannerStandardPatternAttributes {
     fn default() -> Self {
         Self::new()

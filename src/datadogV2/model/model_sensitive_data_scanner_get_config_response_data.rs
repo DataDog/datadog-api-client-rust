@@ -33,7 +33,7 @@ impl SensitiveDataScannerGetConfigResponseData {
         }
     }
 
-    pub fn with_attributes(
+    pub fn attributes(
         &mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
     ) -> &mut Self {
@@ -41,12 +41,12 @@ impl SensitiveDataScannerGetConfigResponseData {
         self
     }
 
-    pub fn with_id(&mut self, value: String) -> &mut Self {
+    pub fn id(&mut self, value: String) -> &mut Self {
         self.id = Some(value);
         self
     }
 
-    pub fn with_relationships(
+    pub fn relationships(
         &mut self,
         value: crate::datadogV2::model::SensitiveDataScannerConfigurationRelationships,
     ) -> &mut Self {
@@ -54,7 +54,7 @@ impl SensitiveDataScannerGetConfigResponseData {
         self
     }
 
-    pub fn with_type_(
+    pub fn type_(
         &mut self,
         value: crate::datadogV2::model::SensitiveDataScannerConfigurationType,
     ) -> &mut Self {
@@ -62,6 +62,7 @@ impl SensitiveDataScannerGetConfigResponseData {
         self
     }
 }
+
 impl Default for SensitiveDataScannerGetConfigResponseData {
     fn default() -> Self {
         Self::new()

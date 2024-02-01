@@ -60,41 +60,42 @@ impl UsageFargateHour {
         }
     }
 
-    pub fn with_apm_fargate_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn apm_fargate_count(&mut self, value: Option<i64>) -> &mut Self {
         self.apm_fargate_count = Some(value);
         self
     }
 
-    pub fn with_appsec_fargate_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn appsec_fargate_count(&mut self, value: Option<i64>) -> &mut Self {
         self.appsec_fargate_count = Some(value);
         self
     }
 
-    pub fn with_avg_profiled_fargate_tasks(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn avg_profiled_fargate_tasks(&mut self, value: Option<i64>) -> &mut Self {
         self.avg_profiled_fargate_tasks = Some(value);
         self
     }
 
-    pub fn with_hour(&mut self, value: String) -> &mut Self {
+    pub fn hour(&mut self, value: String) -> &mut Self {
         self.hour = Some(value);
         self
     }
 
-    pub fn with_org_name(&mut self, value: String) -> &mut Self {
+    pub fn org_name(&mut self, value: String) -> &mut Self {
         self.org_name = Some(value);
         self
     }
 
-    pub fn with_public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(&mut self, value: String) -> &mut Self {
         self.public_id = Some(value);
         self
     }
 
-    pub fn with_tasks_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn tasks_count(&mut self, value: Option<i64>) -> &mut Self {
         self.tasks_count = Some(value);
         self
     }
 }
+
 impl Default for UsageFargateHour {
     fn default() -> Self {
         Self::new()

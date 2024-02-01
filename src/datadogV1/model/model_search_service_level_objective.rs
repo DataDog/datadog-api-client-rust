@@ -18,7 +18,7 @@ impl SearchServiceLevelObjective {
         SearchServiceLevelObjective { data: None }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: crate::datadogV1::model::SearchServiceLevelObjectiveData,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl SearchServiceLevelObjective {
         self
     }
 }
+
 impl Default for SearchServiceLevelObjective {
     fn default() -> Self {
         Self::new()

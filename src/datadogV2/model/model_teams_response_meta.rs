@@ -18,7 +18,7 @@ impl TeamsResponseMeta {
         TeamsResponseMeta { pagination: None }
     }
 
-    pub fn with_pagination(
+    pub fn pagination(
         &mut self,
         value: crate::datadogV2::model::TeamsResponseMetaPagination,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl TeamsResponseMeta {
         self
     }
 }
+
 impl Default for TeamsResponseMeta {
     fn default() -> Self {
         Self::new()

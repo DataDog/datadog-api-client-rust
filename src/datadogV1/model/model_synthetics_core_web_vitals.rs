@@ -28,21 +28,22 @@ impl SyntheticsCoreWebVitals {
         }
     }
 
-    pub fn with_cls(&mut self, value: f64) -> &mut Self {
+    pub fn cls(&mut self, value: f64) -> &mut Self {
         self.cls = Some(value);
         self
     }
 
-    pub fn with_lcp(&mut self, value: f64) -> &mut Self {
+    pub fn lcp(&mut self, value: f64) -> &mut Self {
         self.lcp = Some(value);
         self
     }
 
-    pub fn with_url(&mut self, value: String) -> &mut Self {
+    pub fn url(&mut self, value: String) -> &mut Self {
         self.url = Some(value);
         self
     }
 }
+
 impl Default for SyntheticsCoreWebVitals {
     fn default() -> Self {
         Self::new()

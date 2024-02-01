@@ -37,12 +37,12 @@ impl BulkMuteFindingsRequestProperties {
         }
     }
 
-    pub fn with_description(&mut self, value: String) -> &mut Self {
+    pub fn description(&mut self, value: String) -> &mut Self {
         self.description = Some(value);
         self
     }
 
-    pub fn with_expiration_date(&mut self, value: i64) -> &mut Self {
+    pub fn expiration_date(&mut self, value: i64) -> &mut Self {
         self.expiration_date = Some(value);
         self
     }

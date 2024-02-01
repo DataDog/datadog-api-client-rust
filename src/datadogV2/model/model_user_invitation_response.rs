@@ -18,7 +18,7 @@ impl UserInvitationResponse {
         UserInvitationResponse { data: None }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: crate::datadogV2::model::UserInvitationResponseData,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl UserInvitationResponse {
         self
     }
 }
+
 impl Default for UserInvitationResponse {
     fn default() -> Self {
         Self::new()

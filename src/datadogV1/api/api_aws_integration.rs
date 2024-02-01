@@ -6,7 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListAWSAccountsOptionalParams is a struct for passing parameters to the method [`AWSIntegrationAPI::list_aws_accounts`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListAWSAccountsOptionalParams {
     /// Only return AWS accounts that matches this `account_id`.
     pub account_id: Option<String>,
@@ -16,8 +16,26 @@ pub struct ListAWSAccountsOptionalParams {
     pub access_key_id: Option<String>,
 }
 
+impl ListAWSAccountsOptionalParams {
+    /// Only return AWS accounts that matches this `account_id`.
+    pub fn account_id(&mut self, value: String) -> &mut Self {
+        self.account_id = Some(value);
+        self
+    }
+    /// Only return AWS accounts that matches this role_name.
+    pub fn role_name(&mut self, value: String) -> &mut Self {
+        self.role_name = Some(value);
+        self
+    }
+    /// Only return AWS accounts that matches this `access_key_id`.
+    pub fn access_key_id(&mut self, value: String) -> &mut Self {
+        self.access_key_id = Some(value);
+        self
+    }
+}
+
 /// UpdateAWSAccountOptionalParams is a struct for passing parameters to the method [`AWSIntegrationAPI::update_aws_account`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct UpdateAWSAccountOptionalParams {
     /// Only return AWS accounts that matches this `account_id`.
     pub account_id: Option<String>,
@@ -27,6 +45,26 @@ pub struct UpdateAWSAccountOptionalParams {
     /// Only return AWS accounts that matches this `access_key_id`.
     /// Required if none of the other two options are specified.
     pub access_key_id: Option<String>,
+}
+
+impl UpdateAWSAccountOptionalParams {
+    /// Only return AWS accounts that matches this `account_id`.
+    pub fn account_id(&mut self, value: String) -> &mut Self {
+        self.account_id = Some(value);
+        self
+    }
+    /// Only return AWS accounts that match this `role_name`.
+    /// Required if `account_id` is specified.
+    pub fn role_name(&mut self, value: String) -> &mut Self {
+        self.role_name = Some(value);
+        self
+    }
+    /// Only return AWS accounts that matches this `access_key_id`.
+    /// Required if none of the other two options are specified.
+    pub fn access_key_id(&mut self, value: String) -> &mut Self {
+        self.access_key_id = Some(value);
+        self
+    }
 }
 
 /// CreateAWSAccountError is a struct for typed errors of method [`AWSIntegrationAPI::create_aws_account`]

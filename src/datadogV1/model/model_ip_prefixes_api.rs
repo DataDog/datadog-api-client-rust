@@ -24,16 +24,17 @@ impl IPPrefixesAPI {
         }
     }
 
-    pub fn with_prefixes_ipv4(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn prefixes_ipv4(&mut self, value: Vec<String>) -> &mut Self {
         self.prefixes_ipv4 = Some(value);
         self
     }
 
-    pub fn with_prefixes_ipv6(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn prefixes_ipv6(&mut self, value: Vec<String>) -> &mut Self {
         self.prefixes_ipv6 = Some(value);
         self
     }
 }
+
 impl Default for IPPrefixesAPI {
     fn default() -> Self {
         Self::new()

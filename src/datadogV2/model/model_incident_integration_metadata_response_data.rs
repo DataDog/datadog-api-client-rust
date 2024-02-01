@@ -35,7 +35,7 @@ impl IncidentIntegrationMetadataResponseData {
         }
     }
 
-    pub fn with_attributes(
+    pub fn attributes(
         &mut self,
         value: crate::datadogV2::model::IncidentIntegrationMetadataAttributes,
     ) -> &mut Self {
@@ -43,7 +43,7 @@ impl IncidentIntegrationMetadataResponseData {
         self
     }
 
-    pub fn with_relationships(
+    pub fn relationships(
         &mut self,
         value: crate::datadogV2::model::IncidentIntegrationRelationships,
     ) -> &mut Self {

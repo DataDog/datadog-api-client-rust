@@ -24,7 +24,7 @@ impl MonthlyCostAttributionMeta {
         }
     }
 
-    pub fn with_aggregates(
+    pub fn aggregates(
         &mut self,
         value: Vec<crate::datadogV2::model::CostAttributionAggregatesBody>,
     ) -> &mut Self {
@@ -32,7 +32,7 @@ impl MonthlyCostAttributionMeta {
         self
     }
 
-    pub fn with_pagination(
+    pub fn pagination(
         &mut self,
         value: crate::datadogV2::model::MonthlyCostAttributionPagination,
     ) -> &mut Self {
@@ -40,6 +40,7 @@ impl MonthlyCostAttributionMeta {
         self
     }
 }
+
 impl Default for MonthlyCostAttributionMeta {
     fn default() -> Self {
         Self::new()

@@ -24,7 +24,7 @@ impl SensitiveDataScannerCreateRuleResponse {
         }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: crate::datadogV2::model::SensitiveDataScannerRuleResponse,
     ) -> &mut Self {
@@ -32,7 +32,7 @@ impl SensitiveDataScannerCreateRuleResponse {
         self
     }
 
-    pub fn with_meta(
+    pub fn meta(
         &mut self,
         value: crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly,
     ) -> &mut Self {
@@ -40,6 +40,7 @@ impl SensitiveDataScannerCreateRuleResponse {
         self
     }
 }
+
 impl Default for SensitiveDataScannerCreateRuleResponse {
     fn default() -> Self {
         Self::new()

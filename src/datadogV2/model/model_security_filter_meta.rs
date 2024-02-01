@@ -18,11 +18,12 @@ impl SecurityFilterMeta {
         SecurityFilterMeta { warning: None }
     }
 
-    pub fn with_warning(&mut self, value: String) -> &mut Self {
+    pub fn warning(&mut self, value: String) -> &mut Self {
         self.warning = Some(value);
         self
     }
 }
+
 impl Default for SecurityFilterMeta {
     fn default() -> Self {
         Self::new()

@@ -31,7 +31,7 @@ impl LogQueryDefinitionGroupBySort {
         }
     }
 
-    pub fn with_facet(&mut self, value: String) -> &mut Self {
+    pub fn facet(&mut self, value: String) -> &mut Self {
         self.facet = Some(value);
         self
     }

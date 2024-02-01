@@ -34,26 +34,27 @@ impl AWSEventBridgeCreateRequest {
         }
     }
 
-    pub fn with_account_id(&mut self, value: String) -> &mut Self {
+    pub fn account_id(&mut self, value: String) -> &mut Self {
         self.account_id = Some(value);
         self
     }
 
-    pub fn with_create_event_bus(&mut self, value: bool) -> &mut Self {
+    pub fn create_event_bus(&mut self, value: bool) -> &mut Self {
         self.create_event_bus = Some(value);
         self
     }
 
-    pub fn with_event_generator_name(&mut self, value: String) -> &mut Self {
+    pub fn event_generator_name(&mut self, value: String) -> &mut Self {
         self.event_generator_name = Some(value);
         self
     }
 
-    pub fn with_region(&mut self, value: String) -> &mut Self {
+    pub fn region(&mut self, value: String) -> &mut Self {
         self.region = Some(value);
         self
     }
 }
+
 impl Default for AWSEventBridgeCreateRequest {
     fn default() -> Self {
         Self::new()

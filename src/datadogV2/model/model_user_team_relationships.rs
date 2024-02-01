@@ -24,7 +24,7 @@ impl UserTeamRelationships {
         }
     }
 
-    pub fn with_team(
+    pub fn team(
         &mut self,
         value: crate::datadogV2::model::RelationshipToUserTeamTeam,
     ) -> &mut Self {
@@ -32,7 +32,7 @@ impl UserTeamRelationships {
         self
     }
 
-    pub fn with_user(
+    pub fn user(
         &mut self,
         value: crate::datadogV2::model::RelationshipToUserTeamUser,
     ) -> &mut Self {
@@ -40,6 +40,7 @@ impl UserTeamRelationships {
         self
     }
 }
+
 impl Default for UserTeamRelationships {
     fn default() -> Self {
         Self::new()

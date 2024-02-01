@@ -36,7 +36,7 @@ impl SecurityMonitoringSignalAttributes {
         }
     }
 
-    pub fn with_custom(
+    pub fn custom(
         &mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
     ) -> &mut Self {
@@ -44,21 +44,22 @@ impl SecurityMonitoringSignalAttributes {
         self
     }
 
-    pub fn with_message(&mut self, value: String) -> &mut Self {
+    pub fn message(&mut self, value: String) -> &mut Self {
         self.message = Some(value);
         self
     }
 
-    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
         self.tags = Some(value);
         self
     }
 
-    pub fn with_timestamp(&mut self, value: String) -> &mut Self {
+    pub fn timestamp(&mut self, value: String) -> &mut Self {
         self.timestamp = Some(value);
         self
     }
 }
+
 impl Default for SecurityMonitoringSignalAttributes {
     fn default() -> Self {
         Self::new()

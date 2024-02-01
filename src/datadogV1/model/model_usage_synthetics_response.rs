@@ -18,14 +18,12 @@ impl UsageSyntheticsResponse {
         UsageSyntheticsResponse { usage: None }
     }
 
-    pub fn with_usage(
-        &mut self,
-        value: Vec<crate::datadogV1::model::UsageSyntheticsHour>,
-    ) -> &mut Self {
+    pub fn usage(&mut self, value: Vec<crate::datadogV1::model::UsageSyntheticsHour>) -> &mut Self {
         self.usage = Some(value);
         self
     }
 }
+
 impl Default for UsageSyntheticsResponse {
     fn default() -> Self {
         Self::new()

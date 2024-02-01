@@ -72,35 +72,32 @@ impl SyntheticsCITest {
         }
     }
 
-    pub fn with_allow_insecure_certificates(&mut self, value: bool) -> &mut Self {
+    pub fn allow_insecure_certificates(&mut self, value: bool) -> &mut Self {
         self.allow_insecure_certificates = Some(value);
         self
     }
 
-    pub fn with_basic_auth(
-        &mut self,
-        value: crate::datadogV1::model::SyntheticsBasicAuth,
-    ) -> &mut Self {
+    pub fn basic_auth(&mut self, value: crate::datadogV1::model::SyntheticsBasicAuth) -> &mut Self {
         self.basic_auth = Some(value);
         self
     }
 
-    pub fn with_body(&mut self, value: String) -> &mut Self {
+    pub fn body(&mut self, value: String) -> &mut Self {
         self.body = Some(value);
         self
     }
 
-    pub fn with_body_type(&mut self, value: String) -> &mut Self {
+    pub fn body_type(&mut self, value: String) -> &mut Self {
         self.body_type = Some(value);
         self
     }
 
-    pub fn with_cookies(&mut self, value: String) -> &mut Self {
+    pub fn cookies(&mut self, value: String) -> &mut Self {
         self.cookies = Some(value);
         self
     }
 
-    pub fn with_device_ids(
+    pub fn device_ids(
         &mut self,
         value: Vec<crate::datadogV1::model::SyntheticsDeviceID>,
     ) -> &mut Self {
@@ -108,22 +105,22 @@ impl SyntheticsCITest {
         self
     }
 
-    pub fn with_follow_redirects(&mut self, value: bool) -> &mut Self {
+    pub fn follow_redirects(&mut self, value: bool) -> &mut Self {
         self.follow_redirects = Some(value);
         self
     }
 
-    pub fn with_headers(&mut self, value: std::collections::BTreeMap<String, String>) -> &mut Self {
+    pub fn headers(&mut self, value: std::collections::BTreeMap<String, String>) -> &mut Self {
         self.headers = Some(value);
         self
     }
 
-    pub fn with_locations(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn locations(&mut self, value: Vec<String>) -> &mut Self {
         self.locations = Some(value);
         self
     }
 
-    pub fn with_metadata(
+    pub fn metadata(
         &mut self,
         value: crate::datadogV1::model::SyntheticsCIBatchMetadata,
     ) -> &mut Self {
@@ -131,7 +128,7 @@ impl SyntheticsCITest {
         self
     }
 
-    pub fn with_retry(
+    pub fn retry(
         &mut self,
         value: crate::datadogV1::model::SyntheticsTestOptionsRetry,
     ) -> &mut Self {
@@ -139,15 +136,12 @@ impl SyntheticsCITest {
         self
     }
 
-    pub fn with_start_url(&mut self, value: String) -> &mut Self {
+    pub fn start_url(&mut self, value: String) -> &mut Self {
         self.start_url = Some(value);
         self
     }
 
-    pub fn with_variables(
-        &mut self,
-        value: std::collections::BTreeMap<String, String>,
-    ) -> &mut Self {
+    pub fn variables(&mut self, value: std::collections::BTreeMap<String, String>) -> &mut Self {
         self.variables = Some(value);
         self
     }

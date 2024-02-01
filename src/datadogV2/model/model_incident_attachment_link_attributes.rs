@@ -31,7 +31,7 @@ impl IncidentAttachmentLinkAttributes {
         }
     }
 
-    pub fn with_modified(&mut self, value: String) -> &mut Self {
+    pub fn modified(&mut self, value: String) -> &mut Self {
         self.modified = Some(value);
         self
     }

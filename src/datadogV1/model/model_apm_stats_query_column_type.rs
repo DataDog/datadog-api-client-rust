@@ -32,12 +32,12 @@ impl ApmStatsQueryColumnType {
         }
     }
 
-    pub fn with_alias(&mut self, value: String) -> &mut Self {
+    pub fn alias(&mut self, value: String) -> &mut Self {
         self.alias = Some(value);
         self
     }
 
-    pub fn with_cell_display_mode(
+    pub fn cell_display_mode(
         &mut self,
         value: crate::datadogV1::model::TableWidgetCellDisplayMode,
     ) -> &mut Self {
@@ -45,7 +45,7 @@ impl ApmStatsQueryColumnType {
         self
     }
 
-    pub fn with_order(&mut self, value: crate::datadogV1::model::WidgetSort) -> &mut Self {
+    pub fn order(&mut self, value: crate::datadogV1::model::WidgetSort) -> &mut Self {
         self.order = Some(value);
         self
     }

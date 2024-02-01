@@ -40,36 +40,37 @@ impl UsageSpecifiedCustomReportsAttributes {
         }
     }
 
-    pub fn with_computed_on(&mut self, value: String) -> &mut Self {
+    pub fn computed_on(&mut self, value: String) -> &mut Self {
         self.computed_on = Some(value);
         self
     }
 
-    pub fn with_end_date(&mut self, value: String) -> &mut Self {
+    pub fn end_date(&mut self, value: String) -> &mut Self {
         self.end_date = Some(value);
         self
     }
 
-    pub fn with_location(&mut self, value: String) -> &mut Self {
+    pub fn location(&mut self, value: String) -> &mut Self {
         self.location = Some(value);
         self
     }
 
-    pub fn with_size(&mut self, value: i64) -> &mut Self {
+    pub fn size(&mut self, value: i64) -> &mut Self {
         self.size = Some(value);
         self
     }
 
-    pub fn with_start_date(&mut self, value: String) -> &mut Self {
+    pub fn start_date(&mut self, value: String) -> &mut Self {
         self.start_date = Some(value);
         self
     }
 
-    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
         self.tags = Some(value);
         self
     }
 }
+
 impl Default for UsageSpecifiedCustomReportsAttributes {
     fn default() -> Self {
         Self::new()

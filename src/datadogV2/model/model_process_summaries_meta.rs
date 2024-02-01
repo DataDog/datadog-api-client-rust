@@ -18,14 +18,12 @@ impl ProcessSummariesMeta {
         ProcessSummariesMeta { page: None }
     }
 
-    pub fn with_page(
-        &mut self,
-        value: crate::datadogV2::model::ProcessSummariesMetaPage,
-    ) -> &mut Self {
+    pub fn page(&mut self, value: crate::datadogV2::model::ProcessSummariesMetaPage) -> &mut Self {
         self.page = Some(value);
         self
     }
 }
+
 impl Default for ProcessSummariesMeta {
     fn default() -> Self {
         Self::new()

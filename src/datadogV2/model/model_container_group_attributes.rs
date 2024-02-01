@@ -24,12 +24,12 @@ impl ContainerGroupAttributes {
         }
     }
 
-    pub fn with_count(&mut self, value: i64) -> &mut Self {
+    pub fn count(&mut self, value: i64) -> &mut Self {
         self.count = Some(value);
         self
     }
 
-    pub fn with_tags(
+    pub fn tags(
         &mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
     ) -> &mut Self {
@@ -37,6 +37,7 @@ impl ContainerGroupAttributes {
         self
     }
 }
+
 impl Default for ContainerGroupAttributes {
     fn default() -> Self {
         Self::new()

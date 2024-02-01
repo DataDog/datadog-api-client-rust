@@ -18,11 +18,12 @@ impl UserRelationships {
         UserRelationships { roles: None }
     }
 
-    pub fn with_roles(&mut self, value: crate::datadogV2::model::RelationshipToRoles) -> &mut Self {
+    pub fn roles(&mut self, value: crate::datadogV2::model::RelationshipToRoles) -> &mut Self {
         self.roles = Some(value);
         self
     }
 }
+
 impl Default for UserRelationships {
     fn default() -> Self {
         Self::new()

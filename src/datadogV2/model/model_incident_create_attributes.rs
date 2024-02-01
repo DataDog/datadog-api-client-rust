@@ -42,12 +42,12 @@ impl IncidentCreateAttributes {
         }
     }
 
-    pub fn with_customer_impact_scope(&mut self, value: String) -> &mut Self {
+    pub fn customer_impact_scope(&mut self, value: String) -> &mut Self {
         self.customer_impact_scope = Some(value);
         self
     }
 
-    pub fn with_fields(
+    pub fn fields(
         &mut self,
         value: std::collections::BTreeMap<String, crate::datadogV2::model::IncidentFieldAttributes>,
     ) -> &mut Self {
@@ -55,7 +55,7 @@ impl IncidentCreateAttributes {
         self
     }
 
-    pub fn with_initial_cells(
+    pub fn initial_cells(
         &mut self,
         value: Vec<crate::datadogV2::model::IncidentTimelineCellCreateAttributes>,
     ) -> &mut Self {
@@ -63,7 +63,7 @@ impl IncidentCreateAttributes {
         self
     }
 
-    pub fn with_notification_handles(
+    pub fn notification_handles(
         &mut self,
         value: Vec<crate::datadogV2::model::IncidentNotificationHandle>,
     ) -> &mut Self {

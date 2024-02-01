@@ -18,11 +18,12 @@ impl OrganizationResponse {
         OrganizationResponse { org: None }
     }
 
-    pub fn with_org(&mut self, value: crate::datadogV1::model::Organization) -> &mut Self {
+    pub fn org(&mut self, value: crate::datadogV1::model::Organization) -> &mut Self {
         self.org = Some(value);
         self
     }
 }
+
 impl Default for OrganizationResponse {
     fn default() -> Self {
         Self::new()

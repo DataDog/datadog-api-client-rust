@@ -18,7 +18,7 @@ impl FastlyAccountsResponse {
         FastlyAccountsResponse { data: None }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: Vec<crate::datadogV2::model::FastlyAccountResponseData>,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl FastlyAccountsResponse {
         self
     }
 }
+
 impl Default for FastlyAccountsResponse {
     fn default() -> Self {
         Self::new()

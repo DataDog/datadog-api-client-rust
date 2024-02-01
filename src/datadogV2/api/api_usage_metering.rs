@@ -6,14 +6,22 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetCostByOrgOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_cost_by_org`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetCostByOrgOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
     pub end_month: Option<String>,
 }
 
+impl GetCostByOrgOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
+    pub fn end_month(&mut self, value: String) -> &mut Self {
+        self.end_month = Some(value);
+        self
+    }
+}
+
 /// GetEstimatedCostByOrgOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_estimated_cost_by_org`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetEstimatedCostByOrgOptionalParams {
     /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`. Defaults to `summary`.
     pub view: Option<String>,
@@ -27,8 +35,36 @@ pub struct GetEstimatedCostByOrgOptionalParams {
     pub end_date: Option<String>,
 }
 
+impl GetEstimatedCostByOrgOptionalParams {
+    /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`. Defaults to `summary`.
+    pub fn view(&mut self, value: String) -> &mut Self {
+        self.view = Some(value);
+        self
+    }
+    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost beginning this month. Either start_month or start_date should be specified, but not both. (start_month cannot go beyond two months in the past). Provide an `end_month` to view month-over-month cost.
+    pub fn start_month(&mut self, value: String) -> &mut Self {
+        self.start_month = Some(value);
+        self
+    }
+    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
+    pub fn end_month(&mut self, value: String) -> &mut Self {
+        self.end_month = Some(value);
+        self
+    }
+    /// Datetime in ISO-8601 format, UTC, precise to day: `[YYYY-MM-DD]` for cost beginning this day. Either start_month or start_date should be specified, but not both. (start_date cannot go beyond two months in the past). Provide an `end_date` to view day-over-day cumulative cost.
+    pub fn start_date(&mut self, value: String) -> &mut Self {
+        self.start_date = Some(value);
+        self
+    }
+    /// Datetime in ISO-8601 format, UTC, precise to day: `[YYYY-MM-DD]` for cost ending this day.
+    pub fn end_date(&mut self, value: String) -> &mut Self {
+        self.end_date = Some(value);
+        self
+    }
+}
+
 /// GetHistoricalCostByOrgOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_historical_cost_by_org`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetHistoricalCostByOrgOptionalParams {
     /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`.  Defaults to `summary`.
     pub view: Option<String>,
@@ -36,8 +72,21 @@ pub struct GetHistoricalCostByOrgOptionalParams {
     pub end_month: Option<String>,
 }
 
+impl GetHistoricalCostByOrgOptionalParams {
+    /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`.  Defaults to `summary`.
+    pub fn view(&mut self, value: String) -> &mut Self {
+        self.view = Some(value);
+        self
+    }
+    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
+    pub fn end_month(&mut self, value: String) -> &mut Self {
+        self.end_month = Some(value);
+        self
+    }
+}
+
 /// GetHourlyUsageOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_hourly_usage`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetHourlyUsageOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
     pub filter_timestamp_end: Option<String>,
@@ -55,8 +104,43 @@ pub struct GetHourlyUsageOptionalParams {
     pub page_next_record_id: Option<String>,
 }
 
+impl GetHourlyUsageOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
+    pub fn filter_timestamp_end(&mut self, value: String) -> &mut Self {
+        self.filter_timestamp_end = Some(value);
+        self
+    }
+    /// Include child org usage in the response. Defaults to false.
+    pub fn filter_include_descendants(&mut self, value: bool) -> &mut Self {
+        self.filter_include_descendants = Some(value);
+        self
+    }
+    /// Include breakdown of usage by subcategories where applicable (for product family logs only). Defaults to false.
+    pub fn filter_include_breakdown(&mut self, value: bool) -> &mut Self {
+        self.filter_include_breakdown = Some(value);
+        self
+    }
+    /// Comma separated list of product family versions to use in the format `product_family:version`. For example,
+    /// `infra_hosts:1.0.0`. If this parameter is not used, the API will use the latest version of each requested
+    /// product family. Currently all families have one version `1.0.0`.
+    pub fn filter_versions(&mut self, value: String) -> &mut Self {
+        self.filter_versions = Some(value);
+        self
+    }
+    /// Maximum number of results to return (between 1 and 500) - defaults to 500 if limit not specified.
+    pub fn page_limit(&mut self, value: i32) -> &mut Self {
+        self.page_limit = Some(value);
+        self
+    }
+    /// List following results with a next_record_id provided in the previous query.
+    pub fn page_next_record_id(&mut self, value: String) -> &mut Self {
+        self.page_next_record_id = Some(value);
+        self
+    }
+}
+
 /// GetMonthlyCostAttributionOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_monthly_cost_attribution`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetMonthlyCostAttributionOptionalParams {
     /// The direction to sort by: `[desc, asc]`.
     pub sort_direction: Option<crate::datadogV2::model::SortDirection>,
@@ -71,35 +155,99 @@ pub struct GetMonthlyCostAttributionOptionalParams {
     pub include_descendants: Option<bool>,
 }
 
+impl GetMonthlyCostAttributionOptionalParams {
+    /// The direction to sort by: `[desc, asc]`.
+    pub fn sort_direction(&mut self, value: crate::datadogV2::model::SortDirection) -> &mut Self {
+        self.sort_direction = Some(value);
+        self
+    }
+    /// The billing dimension to sort by. Always sorted by total cost. Example: `infra_host`.
+    pub fn sort_name(&mut self, value: String) -> &mut Self {
+        self.sort_name = Some(value);
+        self
+    }
+    /// Comma separated list of tag keys used to group cost. If no value is provided the cost will not be broken down by tags.
+    /// To see which tags are available, look for the value of `tag_config_source` in the API response.
+    pub fn tag_breakdown_keys(&mut self, value: String) -> &mut Self {
+        self.tag_breakdown_keys = Some(value);
+        self
+    }
+    /// List following results with a next_record_id provided in the previous query.
+    pub fn next_record_id(&mut self, value: String) -> &mut Self {
+        self.next_record_id = Some(value);
+        self
+    }
+    /// Include child org cost in the response. Defaults to `true`.
+    pub fn include_descendants(&mut self, value: bool) -> &mut Self {
+        self.include_descendants = Some(value);
+        self
+    }
+}
+
 /// GetProjectedCostOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_projected_cost`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetProjectedCostOptionalParams {
     /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`. Defaults to `summary`.
     pub view: Option<String>,
 }
 
+impl GetProjectedCostOptionalParams {
+    /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`. Defaults to `summary`.
+    pub fn view(&mut self, value: String) -> &mut Self {
+        self.view = Some(value);
+        self
+    }
+}
+
 /// GetUsageApplicationSecurityMonitoringOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_application_security_monitoring`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageApplicationSecurityMonitoringOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
+impl GetUsageApplicationSecurityMonitoringOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
 /// GetUsageLambdaTracedInvocationsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_lambda_traced_invocations`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageLambdaTracedInvocationsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
+impl GetUsageLambdaTracedInvocationsOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
 /// GetUsageObservabilityPipelinesOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_observability_pipelines`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetUsageObservabilityPipelinesOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
+}
+
+impl GetUsageObservabilityPipelinesOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
 }
 
 /// GetActiveBillingDimensionsError is a struct for typed errors of method [`UsageMeteringAPI::get_active_billing_dimensions`]

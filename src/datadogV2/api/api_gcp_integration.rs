@@ -6,10 +6,21 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// MakeGCPSTSDelegateOptionalParams is a struct for passing parameters to the method [`GCPIntegrationAPI::make_gcpsts_delegate`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct MakeGCPSTSDelegateOptionalParams {
     /// Create a delegate service account within Datadog.
     pub body: Option<std::collections::BTreeMap<String, serde_json::Value>>,
+}
+
+impl MakeGCPSTSDelegateOptionalParams {
+    /// Create a delegate service account within Datadog.
+    pub fn body(
+        &mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> &mut Self {
+        self.body = Some(value);
+        self
+    }
 }
 
 /// CreateGCPSTSAccountError is a struct for typed errors of method [`GCPIntegrationAPI::create_gcpsts_account`]

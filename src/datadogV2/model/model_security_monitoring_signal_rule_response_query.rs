@@ -52,7 +52,7 @@ impl SecurityMonitoringSignalRuleResponseQuery {
         }
     }
 
-    pub fn with_aggregation(
+    pub fn aggregation(
         &mut self,
         value: crate::datadogV2::model::SecurityMonitoringRuleQueryAggregation,
     ) -> &mut Self {
@@ -60,46 +60,47 @@ impl SecurityMonitoringSignalRuleResponseQuery {
         self
     }
 
-    pub fn with_correlated_by_fields(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn correlated_by_fields(&mut self, value: Vec<String>) -> &mut Self {
         self.correlated_by_fields = Some(value);
         self
     }
 
-    pub fn with_correlated_query_index(&mut self, value: i32) -> &mut Self {
+    pub fn correlated_query_index(&mut self, value: i32) -> &mut Self {
         self.correlated_query_index = Some(value);
         self
     }
 
-    pub fn with_default_rule_id(&mut self, value: String) -> &mut Self {
+    pub fn default_rule_id(&mut self, value: String) -> &mut Self {
         self.default_rule_id = Some(value);
         self
     }
 
-    pub fn with_distinct_fields(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn distinct_fields(&mut self, value: Vec<String>) -> &mut Self {
         self.distinct_fields = Some(value);
         self
     }
 
-    pub fn with_group_by_fields(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn group_by_fields(&mut self, value: Vec<String>) -> &mut Self {
         self.group_by_fields = Some(value);
         self
     }
 
-    pub fn with_metrics(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn metrics(&mut self, value: Vec<String>) -> &mut Self {
         self.metrics = Some(value);
         self
     }
 
-    pub fn with_name(&mut self, value: String) -> &mut Self {
+    pub fn name(&mut self, value: String) -> &mut Self {
         self.name = Some(value);
         self
     }
 
-    pub fn with_rule_id(&mut self, value: String) -> &mut Self {
+    pub fn rule_id(&mut self, value: String) -> &mut Self {
         self.rule_id = Some(value);
         self
     }
 }
+
 impl Default for SecurityMonitoringSignalRuleResponseQuery {
     fn default() -> Self {
         Self::new()

@@ -6,7 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListSpansGetOptionalParams is a struct for passing parameters to the method [`SpansAPI::list_spans_get`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListSpansGetOptionalParams {
     /// Search query following spans syntax.
     pub filter_query: Option<String>,
@@ -20,6 +20,39 @@ pub struct ListSpansGetOptionalParams {
     pub page_cursor: Option<String>,
     /// Maximum number of spans in the response.
     pub page_limit: Option<i32>,
+}
+
+impl ListSpansGetOptionalParams {
+    /// Search query following spans syntax.
+    pub fn filter_query(&mut self, value: String) -> &mut Self {
+        self.filter_query = Some(value);
+        self
+    }
+    /// Minimum timestamp for requested spans. Supports date-time ISO8601, date math, and regular timestamps (milliseconds).
+    pub fn filter_from(&mut self, value: String) -> &mut Self {
+        self.filter_from = Some(value);
+        self
+    }
+    /// Maximum timestamp for requested spans. Supports date-time ISO8601, date math, and regular timestamps (milliseconds).
+    pub fn filter_to(&mut self, value: String) -> &mut Self {
+        self.filter_to = Some(value);
+        self
+    }
+    /// Order of spans in results.
+    pub fn sort(&mut self, value: crate::datadogV2::model::SpansSort) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+    /// List following results with a cursor provided in the previous query.
+    pub fn page_cursor(&mut self, value: String) -> &mut Self {
+        self.page_cursor = Some(value);
+        self
+    }
+    /// Maximum number of spans in the response.
+    pub fn page_limit(&mut self, value: i32) -> &mut Self {
+        self.page_limit = Some(value);
+        self
+    }
 }
 
 /// AggregateSpansError is a struct for typed errors of method [`SpansAPI::aggregate_spans`]

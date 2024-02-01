@@ -24,16 +24,17 @@ impl ScalarFormulaQueryResponse {
         }
     }
 
-    pub fn with_data(&mut self, value: crate::datadogV2::model::ScalarResponse) -> &mut Self {
+    pub fn data(&mut self, value: crate::datadogV2::model::ScalarResponse) -> &mut Self {
         self.data = Some(value);
         self
     }
 
-    pub fn with_errors(&mut self, value: String) -> &mut Self {
+    pub fn errors(&mut self, value: String) -> &mut Self {
         self.errors = Some(value);
         self
     }
 }
+
 impl Default for ScalarFormulaQueryResponse {
     fn default() -> Self {
         Self::new()

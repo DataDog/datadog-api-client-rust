@@ -18,11 +18,12 @@ impl IncidentTimelineCellMarkdownCreateAttributesContent {
         IncidentTimelineCellMarkdownCreateAttributesContent { content: None }
     }
 
-    pub fn with_content(&mut self, value: String) -> &mut Self {
+    pub fn content(&mut self, value: String) -> &mut Self {
         self.content = Some(value);
         self
     }
 }
+
 impl Default for IncidentTimelineCellMarkdownCreateAttributesContent {
     fn default() -> Self {
         Self::new()

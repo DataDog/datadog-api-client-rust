@@ -32,7 +32,7 @@ impl GCPSTSServiceAccount {
         }
     }
 
-    pub fn with_attributes(
+    pub fn attributes(
         &mut self,
         value: crate::datadogV2::model::GCPSTSServiceAccountAttributes,
     ) -> &mut Self {
@@ -40,27 +40,22 @@ impl GCPSTSServiceAccount {
         self
     }
 
-    pub fn with_id(&mut self, value: String) -> &mut Self {
+    pub fn id(&mut self, value: String) -> &mut Self {
         self.id = Some(value);
         self
     }
 
-    pub fn with_meta(
-        &mut self,
-        value: crate::datadogV2::model::GCPServiceAccountMeta,
-    ) -> &mut Self {
+    pub fn meta(&mut self, value: crate::datadogV2::model::GCPServiceAccountMeta) -> &mut Self {
         self.meta = Some(value);
         self
     }
 
-    pub fn with_type_(
-        &mut self,
-        value: crate::datadogV2::model::GCPServiceAccountType,
-    ) -> &mut Self {
+    pub fn type_(&mut self, value: crate::datadogV2::model::GCPServiceAccountType) -> &mut Self {
         self.type_ = Some(value);
         self
     }
 }
+
 impl Default for GCPSTSServiceAccount {
     fn default() -> Self {
         Self::new()

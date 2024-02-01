@@ -18,14 +18,12 @@ impl ContainerMeta {
         ContainerMeta { pagination: None }
     }
 
-    pub fn with_pagination(
-        &mut self,
-        value: crate::datadogV2::model::ContainerMetaPage,
-    ) -> &mut Self {
+    pub fn pagination(&mut self, value: crate::datadogV2::model::ContainerMetaPage) -> &mut Self {
         self.pagination = Some(value);
         self
     }
 }
+
 impl Default for ContainerMeta {
     fn default() -> Self {
         Self::new()

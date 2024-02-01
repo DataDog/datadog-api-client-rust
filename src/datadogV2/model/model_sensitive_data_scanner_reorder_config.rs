@@ -29,12 +29,12 @@ impl SensitiveDataScannerReorderConfig {
         }
     }
 
-    pub fn with_id(&mut self, value: String) -> &mut Self {
+    pub fn id(&mut self, value: String) -> &mut Self {
         self.id = Some(value);
         self
     }
 
-    pub fn with_relationships(
+    pub fn relationships(
         &mut self,
         value: crate::datadogV2::model::SensitiveDataScannerConfigurationRelationships,
     ) -> &mut Self {
@@ -42,7 +42,7 @@ impl SensitiveDataScannerReorderConfig {
         self
     }
 
-    pub fn with_type_(
+    pub fn type_(
         &mut self,
         value: crate::datadogV2::model::SensitiveDataScannerConfigurationType,
     ) -> &mut Self {
@@ -50,6 +50,7 @@ impl SensitiveDataScannerReorderConfig {
         self
     }
 }
+
 impl Default for SensitiveDataScannerReorderConfig {
     fn default() -> Self {
         Self::new()

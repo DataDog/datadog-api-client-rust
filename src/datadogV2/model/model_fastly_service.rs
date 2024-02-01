@@ -21,7 +21,7 @@ impl FastlyService {
         FastlyService { id, tags: None }
     }
 
-    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
         self.tags = Some(value);
         self
     }

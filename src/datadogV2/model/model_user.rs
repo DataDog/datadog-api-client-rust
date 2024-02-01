@@ -32,17 +32,17 @@ impl User {
         }
     }
 
-    pub fn with_attributes(&mut self, value: crate::datadogV2::model::UserAttributes) -> &mut Self {
+    pub fn attributes(&mut self, value: crate::datadogV2::model::UserAttributes) -> &mut Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn with_id(&mut self, value: String) -> &mut Self {
+    pub fn id(&mut self, value: String) -> &mut Self {
         self.id = Some(value);
         self
     }
 
-    pub fn with_relationships(
+    pub fn relationships(
         &mut self,
         value: crate::datadogV2::model::UserResponseRelationships,
     ) -> &mut Self {
@@ -50,11 +50,12 @@ impl User {
         self
     }
 
-    pub fn with_type_(&mut self, value: crate::datadogV2::model::UsersType) -> &mut Self {
+    pub fn type_(&mut self, value: crate::datadogV2::model::UsersType) -> &mut Self {
         self.type_ = Some(value);
         self
     }
 }
+
 impl Default for User {
     fn default() -> Self {
         Self::new()

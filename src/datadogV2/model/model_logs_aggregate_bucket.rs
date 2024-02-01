@@ -26,7 +26,7 @@ impl LogsAggregateBucket {
         }
     }
 
-    pub fn with_by(
+    pub fn by(
         &mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
     ) -> &mut Self {
@@ -34,7 +34,7 @@ impl LogsAggregateBucket {
         self
     }
 
-    pub fn with_computes(
+    pub fn computes(
         &mut self,
         value: std::collections::BTreeMap<
             String,
@@ -45,6 +45,7 @@ impl LogsAggregateBucket {
         self
     }
 }
+
 impl Default for LogsAggregateBucket {
     fn default() -> Self {
         Self::new()

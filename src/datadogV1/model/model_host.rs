@@ -76,67 +76,67 @@ impl Host {
         }
     }
 
-    pub fn with_aliases(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn aliases(&mut self, value: Vec<String>) -> &mut Self {
         self.aliases = Some(value);
         self
     }
 
-    pub fn with_apps(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn apps(&mut self, value: Vec<String>) -> &mut Self {
         self.apps = Some(value);
         self
     }
 
-    pub fn with_aws_name(&mut self, value: String) -> &mut Self {
+    pub fn aws_name(&mut self, value: String) -> &mut Self {
         self.aws_name = Some(value);
         self
     }
 
-    pub fn with_host_name(&mut self, value: String) -> &mut Self {
+    pub fn host_name(&mut self, value: String) -> &mut Self {
         self.host_name = Some(value);
         self
     }
 
-    pub fn with_id(&mut self, value: i64) -> &mut Self {
+    pub fn id(&mut self, value: i64) -> &mut Self {
         self.id = Some(value);
         self
     }
 
-    pub fn with_is_muted(&mut self, value: bool) -> &mut Self {
+    pub fn is_muted(&mut self, value: bool) -> &mut Self {
         self.is_muted = Some(value);
         self
     }
 
-    pub fn with_last_reported_time(&mut self, value: i64) -> &mut Self {
+    pub fn last_reported_time(&mut self, value: i64) -> &mut Self {
         self.last_reported_time = Some(value);
         self
     }
 
-    pub fn with_meta(&mut self, value: crate::datadogV1::model::HostMeta) -> &mut Self {
+    pub fn meta(&mut self, value: crate::datadogV1::model::HostMeta) -> &mut Self {
         self.meta = Some(value);
         self
     }
 
-    pub fn with_metrics(&mut self, value: crate::datadogV1::model::HostMetrics) -> &mut Self {
+    pub fn metrics(&mut self, value: crate::datadogV1::model::HostMetrics) -> &mut Self {
         self.metrics = Some(value);
         self
     }
 
-    pub fn with_mute_timeout(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn mute_timeout(&mut self, value: Option<i64>) -> &mut Self {
         self.mute_timeout = Some(value);
         self
     }
 
-    pub fn with_name(&mut self, value: String) -> &mut Self {
+    pub fn name(&mut self, value: String) -> &mut Self {
         self.name = Some(value);
         self
     }
 
-    pub fn with_sources(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn sources(&mut self, value: Vec<String>) -> &mut Self {
         self.sources = Some(value);
         self
     }
 
-    pub fn with_tags_by_source(
+    pub fn tags_by_source(
         &mut self,
         value: std::collections::BTreeMap<String, Vec<String>>,
     ) -> &mut Self {
@@ -144,11 +144,12 @@ impl Host {
         self
     }
 
-    pub fn with_up(&mut self, value: bool) -> &mut Self {
+    pub fn up(&mut self, value: bool) -> &mut Self {
         self.up = Some(value);
         self
     }
 }
+
 impl Default for Host {
     fn default() -> Self {
         Self::new()

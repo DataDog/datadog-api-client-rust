@@ -63,7 +63,7 @@ impl SecurityMonitoringSignalRuleCreatePayload {
         }
     }
 
-    pub fn with_filters(
+    pub fn filters(
         &mut self,
         value: Vec<crate::datadogV2::model::SecurityMonitoringFilter>,
     ) -> &mut Self {
@@ -71,17 +71,17 @@ impl SecurityMonitoringSignalRuleCreatePayload {
         self
     }
 
-    pub fn with_has_extended_title(&mut self, value: bool) -> &mut Self {
+    pub fn has_extended_title(&mut self, value: bool) -> &mut Self {
         self.has_extended_title = Some(value);
         self
     }
 
-    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
         self.tags = Some(value);
         self
     }
 
-    pub fn with_type_(
+    pub fn type_(
         &mut self,
         value: crate::datadogV2::model::SecurityMonitoringSignalRuleType,
     ) -> &mut Self {

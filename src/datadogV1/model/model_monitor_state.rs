@@ -20,7 +20,7 @@ impl MonitorState {
         MonitorState { groups: None }
     }
 
-    pub fn with_groups(
+    pub fn groups(
         &mut self,
         value: std::collections::BTreeMap<String, crate::datadogV1::model::MonitorStateGroup>,
     ) -> &mut Self {
@@ -28,6 +28,7 @@ impl MonitorState {
         self
     }
 }
+
 impl Default for MonitorState {
     fn default() -> Self {
         Self::new()

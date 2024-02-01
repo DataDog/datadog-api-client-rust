@@ -27,7 +27,7 @@ impl WidgetEvent {
         }
     }
 
-    pub fn with_tags_execution(&mut self, value: String) -> &mut Self {
+    pub fn tags_execution(&mut self, value: String) -> &mut Self {
         self.tags_execution = Some(value);
         self
     }

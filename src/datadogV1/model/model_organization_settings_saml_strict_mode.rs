@@ -19,11 +19,12 @@ impl OrganizationSettingsSamlStrictMode {
         OrganizationSettingsSamlStrictMode { enabled: None }
     }
 
-    pub fn with_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn enabled(&mut self, value: bool) -> &mut Self {
         self.enabled = Some(value);
         self
     }
 }
+
 impl Default for OrganizationSettingsSamlStrictMode {
     fn default() -> Self {
         Self::new()

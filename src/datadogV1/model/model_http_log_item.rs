@@ -45,22 +45,22 @@ impl HTTPLogItem {
         }
     }
 
-    pub fn with_ddsource(&mut self, value: String) -> &mut Self {
+    pub fn ddsource(&mut self, value: String) -> &mut Self {
         self.ddsource = Some(value);
         self
     }
 
-    pub fn with_ddtags(&mut self, value: String) -> &mut Self {
+    pub fn ddtags(&mut self, value: String) -> &mut Self {
         self.ddtags = Some(value);
         self
     }
 
-    pub fn with_hostname(&mut self, value: String) -> &mut Self {
+    pub fn hostname(&mut self, value: String) -> &mut Self {
         self.hostname = Some(value);
         self
     }
 
-    pub fn with_service(&mut self, value: String) -> &mut Self {
+    pub fn service(&mut self, value: String) -> &mut Self {
         self.service = Some(value);
         self
     }

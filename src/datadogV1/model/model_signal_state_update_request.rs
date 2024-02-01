@@ -32,12 +32,12 @@ impl SignalStateUpdateRequest {
         }
     }
 
-    pub fn with_archive_comment(&mut self, value: String) -> &mut Self {
+    pub fn archive_comment(&mut self, value: String) -> &mut Self {
         self.archive_comment = Some(value);
         self
     }
 
-    pub fn with_archive_reason(
+    pub fn archive_reason(
         &mut self,
         value: crate::datadogV1::model::SignalArchiveReason,
     ) -> &mut Self {
@@ -45,7 +45,7 @@ impl SignalStateUpdateRequest {
         self
     }
 
-    pub fn with_version(&mut self, value: i64) -> &mut Self {
+    pub fn version(&mut self, value: i64) -> &mut Self {
         self.version = Some(value);
         self
     }

@@ -6,7 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListActiveMetricsOptionalParams is a struct for passing parameters to the method [`MetricsAPI::list_active_metrics`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListActiveMetricsOptionalParams {
     /// Hostname for filtering the list of metrics returned.
     /// If set, metrics retrieved are those with the corresponding hostname tag.
@@ -16,18 +16,55 @@ pub struct ListActiveMetricsOptionalParams {
     pub tag_filter: Option<String>,
 }
 
+impl ListActiveMetricsOptionalParams {
+    /// Hostname for filtering the list of metrics returned.
+    /// If set, metrics retrieved are those with the corresponding hostname tag.
+    pub fn host(&mut self, value: String) -> &mut Self {
+        self.host = Some(value);
+        self
+    }
+    /// Filter metrics that have been submitted with the given tags. Supports boolean and wildcard expressions.
+    /// Cannot be combined with other filters.
+    pub fn tag_filter(&mut self, value: String) -> &mut Self {
+        self.tag_filter = Some(value);
+        self
+    }
+}
+
 /// SubmitDistributionPointsOptionalParams is a struct for passing parameters to the method [`MetricsAPI::submit_distribution_points`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct SubmitDistributionPointsOptionalParams {
     /// HTTP header used to compress the media-type.
     pub content_encoding: Option<crate::datadogV1::model::DistributionPointsContentEncoding>,
 }
 
+impl SubmitDistributionPointsOptionalParams {
+    /// HTTP header used to compress the media-type.
+    pub fn content_encoding(
+        &mut self,
+        value: crate::datadogV1::model::DistributionPointsContentEncoding,
+    ) -> &mut Self {
+        self.content_encoding = Some(value);
+        self
+    }
+}
+
 /// SubmitMetricsOptionalParams is a struct for passing parameters to the method [`MetricsAPI::submit_metrics`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct SubmitMetricsOptionalParams {
     /// HTTP header used to compress the media-type.
     pub content_encoding: Option<crate::datadogV1::model::MetricContentEncoding>,
+}
+
+impl SubmitMetricsOptionalParams {
+    /// HTTP header used to compress the media-type.
+    pub fn content_encoding(
+        &mut self,
+        value: crate::datadogV1::model::MetricContentEncoding,
+    ) -> &mut Self {
+        self.content_encoding = Some(value);
+        self
+    }
 }
 
 /// GetMetricMetadataError is a struct for typed errors of method [`MetricsAPI::get_metric_metadata`]

@@ -48,32 +48,32 @@ impl DORAIncidentRequestAttributes {
         }
     }
 
-    pub fn with_finished_at(&mut self, value: i64) -> &mut Self {
+    pub fn finished_at(&mut self, value: i64) -> &mut Self {
         self.finished_at = Some(value);
         self
     }
 
-    pub fn with_git(&mut self, value: crate::datadogV2::model::DORAGitInfo) -> &mut Self {
+    pub fn git(&mut self, value: crate::datadogV2::model::DORAGitInfo) -> &mut Self {
         self.git = Some(value);
         self
     }
 
-    pub fn with_id(&mut self, value: String) -> &mut Self {
+    pub fn id(&mut self, value: String) -> &mut Self {
         self.id = Some(value);
         self
     }
 
-    pub fn with_name(&mut self, value: String) -> &mut Self {
+    pub fn name(&mut self, value: String) -> &mut Self {
         self.name = Some(value);
         self
     }
 
-    pub fn with_severity(&mut self, value: String) -> &mut Self {
+    pub fn severity(&mut self, value: String) -> &mut Self {
         self.severity = Some(value);
         self
     }
 
-    pub fn with_version(&mut self, value: String) -> &mut Self {
+    pub fn version(&mut self, value: String) -> &mut Self {
         self.version = Some(value);
         self
     }

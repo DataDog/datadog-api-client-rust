@@ -64,32 +64,32 @@ impl SyntheticsSSLCertificate {
         }
     }
 
-    pub fn with_cipher(&mut self, value: String) -> &mut Self {
+    pub fn cipher(&mut self, value: String) -> &mut Self {
         self.cipher = Some(value);
         self
     }
 
-    pub fn with_exponent(&mut self, value: f64) -> &mut Self {
+    pub fn exponent(&mut self, value: f64) -> &mut Self {
         self.exponent = Some(value);
         self
     }
 
-    pub fn with_ext_key_usage(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn ext_key_usage(&mut self, value: Vec<String>) -> &mut Self {
         self.ext_key_usage = Some(value);
         self
     }
 
-    pub fn with_fingerprint(&mut self, value: String) -> &mut Self {
+    pub fn fingerprint(&mut self, value: String) -> &mut Self {
         self.fingerprint = Some(value);
         self
     }
 
-    pub fn with_fingerprint256(&mut self, value: String) -> &mut Self {
+    pub fn fingerprint256(&mut self, value: String) -> &mut Self {
         self.fingerprint256 = Some(value);
         self
     }
 
-    pub fn with_issuer(
+    pub fn issuer(
         &mut self,
         value: crate::datadogV1::model::SyntheticsSSLCertificateIssuer,
     ) -> &mut Self {
@@ -97,22 +97,22 @@ impl SyntheticsSSLCertificate {
         self
     }
 
-    pub fn with_modulus(&mut self, value: String) -> &mut Self {
+    pub fn modulus(&mut self, value: String) -> &mut Self {
         self.modulus = Some(value);
         self
     }
 
-    pub fn with_protocol(&mut self, value: String) -> &mut Self {
+    pub fn protocol(&mut self, value: String) -> &mut Self {
         self.protocol = Some(value);
         self
     }
 
-    pub fn with_serial_number(&mut self, value: String) -> &mut Self {
+    pub fn serial_number(&mut self, value: String) -> &mut Self {
         self.serial_number = Some(value);
         self
     }
 
-    pub fn with_subject(
+    pub fn subject(
         &mut self,
         value: crate::datadogV1::model::SyntheticsSSLCertificateSubject,
     ) -> &mut Self {
@@ -120,16 +120,17 @@ impl SyntheticsSSLCertificate {
         self
     }
 
-    pub fn with_valid_from(&mut self, value: String) -> &mut Self {
+    pub fn valid_from(&mut self, value: String) -> &mut Self {
         self.valid_from = Some(value);
         self
     }
 
-    pub fn with_valid_to(&mut self, value: String) -> &mut Self {
+    pub fn valid_to(&mut self, value: String) -> &mut Self {
         self.valid_to = Some(value);
         self
     }
 }
+
 impl Default for SyntheticsSSLCertificate {
     fn default() -> Self {
         Self::new()

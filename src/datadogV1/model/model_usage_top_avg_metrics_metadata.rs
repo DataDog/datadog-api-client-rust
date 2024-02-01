@@ -28,17 +28,17 @@ impl UsageTopAvgMetricsMetadata {
         }
     }
 
-    pub fn with_day(&mut self, value: String) -> &mut Self {
+    pub fn day(&mut self, value: String) -> &mut Self {
         self.day = Some(value);
         self
     }
 
-    pub fn with_month(&mut self, value: String) -> &mut Self {
+    pub fn month(&mut self, value: String) -> &mut Self {
         self.month = Some(value);
         self
     }
 
-    pub fn with_pagination(
+    pub fn pagination(
         &mut self,
         value: crate::datadogV1::model::UsageTopAvgMetricsPagination,
     ) -> &mut Self {
@@ -46,6 +46,7 @@ impl UsageTopAvgMetricsMetadata {
         self
     }
 }
+
 impl Default for UsageTopAvgMetricsMetadata {
     fn default() -> Self {
         Self::new()

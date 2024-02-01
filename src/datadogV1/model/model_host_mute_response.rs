@@ -32,26 +32,27 @@ impl HostMuteResponse {
         }
     }
 
-    pub fn with_action(&mut self, value: String) -> &mut Self {
+    pub fn action(&mut self, value: String) -> &mut Self {
         self.action = Some(value);
         self
     }
 
-    pub fn with_end(&mut self, value: i64) -> &mut Self {
+    pub fn end(&mut self, value: i64) -> &mut Self {
         self.end = Some(value);
         self
     }
 
-    pub fn with_hostname(&mut self, value: String) -> &mut Self {
+    pub fn hostname(&mut self, value: String) -> &mut Self {
         self.hostname = Some(value);
         self
     }
 
-    pub fn with_message(&mut self, value: String) -> &mut Self {
+    pub fn message(&mut self, value: String) -> &mut Self {
         self.message = Some(value);
         self
     }
 }
+
 impl Default for HostMuteResponse {
     fn default() -> Self {
         Self::new()

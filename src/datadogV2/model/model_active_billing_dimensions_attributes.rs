@@ -24,16 +24,17 @@ impl ActiveBillingDimensionsAttributes {
         }
     }
 
-    pub fn with_month(&mut self, value: String) -> &mut Self {
+    pub fn month(&mut self, value: String) -> &mut Self {
         self.month = Some(value);
         self
     }
 
-    pub fn with_values(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn values(&mut self, value: Vec<String>) -> &mut Self {
         self.values = Some(value);
         self
     }
 }
+
 impl Default for ActiveBillingDimensionsAttributes {
     fn default() -> Self {
         Self::new()

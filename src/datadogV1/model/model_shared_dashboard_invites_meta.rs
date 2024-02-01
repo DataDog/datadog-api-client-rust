@@ -18,7 +18,7 @@ impl SharedDashboardInvitesMeta {
         SharedDashboardInvitesMeta { page: None }
     }
 
-    pub fn with_page(
+    pub fn page(
         &mut self,
         value: crate::datadogV1::model::SharedDashboardInvitesMetaPage,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl SharedDashboardInvitesMeta {
         self
     }
 }
+
 impl Default for SharedDashboardInvitesMeta {
     fn default() -> Self {
         Self::new()

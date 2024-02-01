@@ -18,11 +18,12 @@ impl AuthenticationValidationResponse {
         AuthenticationValidationResponse { valid: None }
     }
 
-    pub fn with_valid(&mut self, value: bool) -> &mut Self {
+    pub fn valid(&mut self, value: bool) -> &mut Self {
         self.valid = Some(value);
         self
     }
 }
+
 impl Default for AuthenticationValidationResponse {
     fn default() -> Self {
         Self::new()

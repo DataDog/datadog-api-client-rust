@@ -18,7 +18,7 @@ impl SearchSLOResponseMeta {
         SearchSLOResponseMeta { pagination: None }
     }
 
-    pub fn with_pagination(
+    pub fn pagination(
         &mut self,
         value: crate::datadogV1::model::SearchSLOResponseMetaPage,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl SearchSLOResponseMeta {
         self
     }
 }
+
 impl Default for SearchSLOResponseMeta {
     fn default() -> Self {
         Self::new()

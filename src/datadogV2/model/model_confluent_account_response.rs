@@ -18,7 +18,7 @@ impl ConfluentAccountResponse {
         ConfluentAccountResponse { data: None }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: crate::datadogV2::model::ConfluentAccountResponseData,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl ConfluentAccountResponse {
         self
     }
 }
+
 impl Default for ConfluentAccountResponse {
     fn default() -> Self {
         Self::new()

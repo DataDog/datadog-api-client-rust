@@ -23,7 +23,7 @@ impl AzureUCConfigPairAttributes {
         AzureUCConfigPairAttributes { configs, id: None }
     }
 
-    pub fn with_id(&mut self, value: i64) -> &mut Self {
+    pub fn id(&mut self, value: i64) -> &mut Self {
         self.id = Some(value);
         self
     }

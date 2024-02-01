@@ -18,7 +18,7 @@ impl RoleResponseRelationships {
         RoleResponseRelationships { permissions: None }
     }
 
-    pub fn with_permissions(
+    pub fn permissions(
         &mut self,
         value: crate::datadogV2::model::RelationshipToPermissions,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl RoleResponseRelationships {
         self
     }
 }
+
 impl Default for RoleResponseRelationships {
     fn default() -> Self {
         Self::new()

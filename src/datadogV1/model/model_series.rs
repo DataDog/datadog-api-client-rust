@@ -45,22 +45,22 @@ impl Series {
         }
     }
 
-    pub fn with_host(&mut self, value: String) -> &mut Self {
+    pub fn host(&mut self, value: String) -> &mut Self {
         self.host = Some(value);
         self
     }
 
-    pub fn with_interval(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn interval(&mut self, value: Option<i64>) -> &mut Self {
         self.interval = Some(value);
         self
     }
 
-    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
         self.tags = Some(value);
         self
     }
 
-    pub fn with_type_(&mut self, value: String) -> &mut Self {
+    pub fn type_(&mut self, value: String) -> &mut Self {
         self.type_ = Some(value);
         self
     }

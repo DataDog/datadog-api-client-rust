@@ -33,7 +33,7 @@ impl SLOHistoryMetricsSeries {
         }
     }
 
-    pub fn with_metadata(
+    pub fn metadata(
         &mut self,
         value: crate::datadogV1::model::SLOHistoryMetricsSeriesMetadata,
     ) -> &mut Self {

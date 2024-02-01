@@ -7,8 +7,10 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum IncidentFieldAttributes {
-    IncidentFieldAttributesSingleValue(crate::datadogV2::model::IncidentFieldAttributesSingleValue),
+    IncidentFieldAttributesSingleValue(
+        Box<crate::datadogV2::model::IncidentFieldAttributesSingleValue>,
+    ),
     IncidentFieldAttributesMultipleValue(
-        crate::datadogV2::model::IncidentFieldAttributesMultipleValue,
+        Box<crate::datadogV2::model::IncidentFieldAttributesMultipleValue>,
     ),
 }

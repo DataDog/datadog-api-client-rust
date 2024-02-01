@@ -7,6 +7,6 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum MetricVolumes {
-    MetricDistinctVolume(crate::datadogV2::model::MetricDistinctVolume),
-    MetricIngestedIndexedVolume(crate::datadogV2::model::MetricIngestedIndexedVolume),
+    MetricDistinctVolume(Box<crate::datadogV2::model::MetricDistinctVolume>),
+    MetricIngestedIndexedVolume(Box<crate::datadogV2::model::MetricIngestedIndexedVolume>),
 }

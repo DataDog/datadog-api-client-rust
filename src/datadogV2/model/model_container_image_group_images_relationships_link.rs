@@ -24,12 +24,12 @@ impl ContainerImageGroupImagesRelationshipsLink {
         }
     }
 
-    pub fn with_data(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn data(&mut self, value: Vec<String>) -> &mut Self {
         self.data = Some(value);
         self
     }
 
-    pub fn with_links(
+    pub fn links(
         &mut self,
         value: crate::datadogV2::model::ContainerImageGroupRelationshipsLinks,
     ) -> &mut Self {
@@ -37,6 +37,7 @@ impl ContainerImageGroupImagesRelationshipsLink {
         self
     }
 }
+
 impl Default for ContainerImageGroupImagesRelationshipsLink {
     fn default() -> Self {
         Self::new()

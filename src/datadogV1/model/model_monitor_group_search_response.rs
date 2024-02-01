@@ -28,7 +28,7 @@ impl MonitorGroupSearchResponse {
         }
     }
 
-    pub fn with_counts(
+    pub fn counts(
         &mut self,
         value: crate::datadogV1::model::MonitorGroupSearchResponseCounts,
     ) -> &mut Self {
@@ -36,7 +36,7 @@ impl MonitorGroupSearchResponse {
         self
     }
 
-    pub fn with_groups(
+    pub fn groups(
         &mut self,
         value: Vec<crate::datadogV1::model::MonitorGroupSearchResult>,
     ) -> &mut Self {
@@ -44,7 +44,7 @@ impl MonitorGroupSearchResponse {
         self
     }
 
-    pub fn with_metadata(
+    pub fn metadata(
         &mut self,
         value: crate::datadogV1::model::MonitorSearchResponseMetadata,
     ) -> &mut Self {
@@ -52,6 +52,7 @@ impl MonitorGroupSearchResponse {
         self
     }
 }
+
 impl Default for MonitorGroupSearchResponse {
     fn default() -> Self {
         Self::new()

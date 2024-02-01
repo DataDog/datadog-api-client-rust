@@ -24,16 +24,17 @@ impl AuthNMappingCreateAttributes {
         }
     }
 
-    pub fn with_attribute_key(&mut self, value: String) -> &mut Self {
+    pub fn attribute_key(&mut self, value: String) -> &mut Self {
         self.attribute_key = Some(value);
         self
     }
 
-    pub fn with_attribute_value(&mut self, value: String) -> &mut Self {
+    pub fn attribute_value(&mut self, value: String) -> &mut Self {
         self.attribute_value = Some(value);
         self
     }
 }
+
 impl Default for AuthNMappingCreateAttributes {
     fn default() -> Self {
         Self::new()

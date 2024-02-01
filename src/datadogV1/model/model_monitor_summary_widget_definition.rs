@@ -79,7 +79,7 @@ impl MonitorSummaryWidgetDefinition {
     }
 
     #[allow(deprecated)]
-    pub fn with_color_preference(
+    pub fn color_preference(
         &mut self,
         value: crate::datadogV1::model::WidgetColorPreference,
     ) -> &mut Self {
@@ -88,13 +88,13 @@ impl MonitorSummaryWidgetDefinition {
     }
 
     #[allow(deprecated)]
-    pub fn with_count(&mut self, value: i64) -> &mut Self {
+    pub fn count(&mut self, value: i64) -> &mut Self {
         self.count = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_display_format(
+    pub fn display_format(
         &mut self,
         value: crate::datadogV1::model::WidgetMonitorSummaryDisplayFormat,
     ) -> &mut Self {
@@ -103,64 +103,55 @@ impl MonitorSummaryWidgetDefinition {
     }
 
     #[allow(deprecated)]
-    pub fn with_hide_zero_counts(&mut self, value: bool) -> &mut Self {
+    pub fn hide_zero_counts(&mut self, value: bool) -> &mut Self {
         self.hide_zero_counts = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_show_last_triggered(&mut self, value: bool) -> &mut Self {
+    pub fn show_last_triggered(&mut self, value: bool) -> &mut Self {
         self.show_last_triggered = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_show_priority(&mut self, value: bool) -> &mut Self {
+    pub fn show_priority(&mut self, value: bool) -> &mut Self {
         self.show_priority = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_sort(
-        &mut self,
-        value: crate::datadogV1::model::WidgetMonitorSummarySort,
-    ) -> &mut Self {
+    pub fn sort(&mut self, value: crate::datadogV1::model::WidgetMonitorSummarySort) -> &mut Self {
         self.sort = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_start(&mut self, value: i64) -> &mut Self {
+    pub fn start(&mut self, value: i64) -> &mut Self {
         self.start = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_summary_type(
-        &mut self,
-        value: crate::datadogV1::model::WidgetSummaryType,
-    ) -> &mut Self {
+    pub fn summary_type(&mut self, value: crate::datadogV1::model::WidgetSummaryType) -> &mut Self {
         self.summary_type = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_title(&mut self, value: String) -> &mut Self {
+    pub fn title(&mut self, value: String) -> &mut Self {
         self.title = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_title_align(
-        &mut self,
-        value: crate::datadogV1::model::WidgetTextAlign,
-    ) -> &mut Self {
+    pub fn title_align(&mut self, value: crate::datadogV1::model::WidgetTextAlign) -> &mut Self {
         self.title_align = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_title_size(&mut self, value: String) -> &mut Self {
+    pub fn title_size(&mut self, value: String) -> &mut Self {
         self.title_size = Some(value);
         self
     }

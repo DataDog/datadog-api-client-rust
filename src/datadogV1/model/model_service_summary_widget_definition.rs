@@ -85,7 +85,7 @@ impl ServiceSummaryWidgetDefinition {
         }
     }
 
-    pub fn with_display_format(
+    pub fn display_format(
         &mut self,
         value: crate::datadogV1::model::WidgetServiceSummaryDisplayFormat,
     ) -> &mut Self {
@@ -93,63 +93,57 @@ impl ServiceSummaryWidgetDefinition {
         self
     }
 
-    pub fn with_show_breakdown(&mut self, value: bool) -> &mut Self {
+    pub fn show_breakdown(&mut self, value: bool) -> &mut Self {
         self.show_breakdown = Some(value);
         self
     }
 
-    pub fn with_show_distribution(&mut self, value: bool) -> &mut Self {
+    pub fn show_distribution(&mut self, value: bool) -> &mut Self {
         self.show_distribution = Some(value);
         self
     }
 
-    pub fn with_show_errors(&mut self, value: bool) -> &mut Self {
+    pub fn show_errors(&mut self, value: bool) -> &mut Self {
         self.show_errors = Some(value);
         self
     }
 
-    pub fn with_show_hits(&mut self, value: bool) -> &mut Self {
+    pub fn show_hits(&mut self, value: bool) -> &mut Self {
         self.show_hits = Some(value);
         self
     }
 
-    pub fn with_show_latency(&mut self, value: bool) -> &mut Self {
+    pub fn show_latency(&mut self, value: bool) -> &mut Self {
         self.show_latency = Some(value);
         self
     }
 
-    pub fn with_show_resource_list(&mut self, value: bool) -> &mut Self {
+    pub fn show_resource_list(&mut self, value: bool) -> &mut Self {
         self.show_resource_list = Some(value);
         self
     }
 
-    pub fn with_size_format(
-        &mut self,
-        value: crate::datadogV1::model::WidgetSizeFormat,
-    ) -> &mut Self {
+    pub fn size_format(&mut self, value: crate::datadogV1::model::WidgetSizeFormat) -> &mut Self {
         self.size_format = Some(value);
         self
     }
 
-    pub fn with_time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
+    pub fn time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
         self.time = Some(value);
         self
     }
 
-    pub fn with_title(&mut self, value: String) -> &mut Self {
+    pub fn title(&mut self, value: String) -> &mut Self {
         self.title = Some(value);
         self
     }
 
-    pub fn with_title_align(
-        &mut self,
-        value: crate::datadogV1::model::WidgetTextAlign,
-    ) -> &mut Self {
+    pub fn title_align(&mut self, value: crate::datadogV1::model::WidgetTextAlign) -> &mut Self {
         self.title_align = Some(value);
         self
     }
 
-    pub fn with_title_size(&mut self, value: String) -> &mut Self {
+    pub fn title_size(&mut self, value: String) -> &mut Self {
         self.title_size = Some(value);
         self
     }

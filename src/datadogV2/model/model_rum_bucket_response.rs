@@ -26,12 +26,12 @@ impl RUMBucketResponse {
         }
     }
 
-    pub fn with_by(&mut self, value: std::collections::BTreeMap<String, String>) -> &mut Self {
+    pub fn by(&mut self, value: std::collections::BTreeMap<String, String>) -> &mut Self {
         self.by = Some(value);
         self
     }
 
-    pub fn with_computes(
+    pub fn computes(
         &mut self,
         value: std::collections::BTreeMap<String, crate::datadogV2::model::RUMAggregateBucketValue>,
     ) -> &mut Self {
@@ -39,6 +39,7 @@ impl RUMBucketResponse {
         self
     }
 }
+
 impl Default for RUMBucketResponse {
     fn default() -> Self {
         Self::new()

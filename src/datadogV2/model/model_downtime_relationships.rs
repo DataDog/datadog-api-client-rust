@@ -24,7 +24,7 @@ impl DowntimeRelationships {
         }
     }
 
-    pub fn with_created_by(
+    pub fn created_by(
         &mut self,
         value: crate::datadogV2::model::DowntimeRelationshipsCreatedBy,
     ) -> &mut Self {
@@ -32,7 +32,7 @@ impl DowntimeRelationships {
         self
     }
 
-    pub fn with_monitor(
+    pub fn monitor(
         &mut self,
         value: crate::datadogV2::model::DowntimeRelationshipsMonitor,
     ) -> &mut Self {
@@ -40,6 +40,7 @@ impl DowntimeRelationships {
         self
     }
 }
+
 impl Default for DowntimeRelationships {
     fn default() -> Self {
         Self::new()

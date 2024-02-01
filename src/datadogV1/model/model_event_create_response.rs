@@ -24,16 +24,17 @@ impl EventCreateResponse {
         }
     }
 
-    pub fn with_event(&mut self, value: crate::datadogV1::model::Event) -> &mut Self {
+    pub fn event(&mut self, value: crate::datadogV1::model::Event) -> &mut Self {
         self.event = Some(value);
         self
     }
 
-    pub fn with_status(&mut self, value: String) -> &mut Self {
+    pub fn status(&mut self, value: String) -> &mut Self {
         self.status = Some(value);
         self
     }
 }
+
 impl Default for EventCreateResponse {
     fn default() -> Self {
         Self::new()

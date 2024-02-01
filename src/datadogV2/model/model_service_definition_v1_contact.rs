@@ -24,16 +24,17 @@ impl ServiceDefinitionV1Contact {
         }
     }
 
-    pub fn with_email(&mut self, value: String) -> &mut Self {
+    pub fn email(&mut self, value: String) -> &mut Self {
         self.email = Some(value);
         self
     }
 
-    pub fn with_slack(&mut self, value: String) -> &mut Self {
+    pub fn slack(&mut self, value: String) -> &mut Self {
         self.slack = Some(value);
         self
     }
 }
+
 impl Default for ServiceDefinitionV1Contact {
     fn default() -> Self {
         Self::new()

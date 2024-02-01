@@ -24,7 +24,7 @@ impl SLOCorrectionCreateData {
         }
     }
 
-    pub fn with_attributes(
+    pub fn attributes(
         &mut self,
         value: crate::datadogV1::model::SLOCorrectionCreateRequestAttributes,
     ) -> &mut Self {

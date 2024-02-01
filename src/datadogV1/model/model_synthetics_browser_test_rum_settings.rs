@@ -38,12 +38,12 @@ impl SyntheticsBrowserTestRumSettings {
         }
     }
 
-    pub fn with_application_id(&mut self, value: String) -> &mut Self {
+    pub fn application_id(&mut self, value: String) -> &mut Self {
         self.application_id = Some(value);
         self
     }
 
-    pub fn with_client_token_id(&mut self, value: i64) -> &mut Self {
+    pub fn client_token_id(&mut self, value: i64) -> &mut Self {
         self.client_token_id = Some(value);
         self
     }

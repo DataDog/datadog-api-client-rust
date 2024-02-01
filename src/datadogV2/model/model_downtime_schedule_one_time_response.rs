@@ -21,7 +21,7 @@ impl DowntimeScheduleOneTimeResponse {
         DowntimeScheduleOneTimeResponse { end: None, start }
     }
 
-    pub fn with_end(&mut self, value: Option<String>) -> &mut Self {
+    pub fn end(&mut self, value: Option<String>) -> &mut Self {
         self.end = Some(value);
         self
     }

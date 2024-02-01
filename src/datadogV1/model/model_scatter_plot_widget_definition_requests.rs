@@ -28,24 +28,22 @@ impl ScatterPlotWidgetDefinitionRequests {
         }
     }
 
-    pub fn with_table(
-        &mut self,
-        value: crate::datadogV1::model::ScatterplotTableRequest,
-    ) -> &mut Self {
+    pub fn table(&mut self, value: crate::datadogV1::model::ScatterplotTableRequest) -> &mut Self {
         self.table = Some(value);
         self
     }
 
-    pub fn with_x(&mut self, value: crate::datadogV1::model::ScatterPlotRequest) -> &mut Self {
+    pub fn x(&mut self, value: crate::datadogV1::model::ScatterPlotRequest) -> &mut Self {
         self.x = Some(value);
         self
     }
 
-    pub fn with_y(&mut self, value: crate::datadogV1::model::ScatterPlotRequest) -> &mut Self {
+    pub fn y(&mut self, value: crate::datadogV1::model::ScatterPlotRequest) -> &mut Self {
         self.y = Some(value);
         self
     }
 }
+
 impl Default for ScatterPlotWidgetDefinitionRequests {
     fn default() -> Self {
         Self::new()

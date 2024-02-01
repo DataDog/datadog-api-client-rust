@@ -18,14 +18,12 @@ impl TagToHosts {
         TagToHosts { tags: None }
     }
 
-    pub fn with_tags(
-        &mut self,
-        value: std::collections::BTreeMap<String, Vec<String>>,
-    ) -> &mut Self {
+    pub fn tags(&mut self, value: std::collections::BTreeMap<String, Vec<String>>) -> &mut Self {
         self.tags = Some(value);
         self
     }
 }
+
 impl Default for TagToHosts {
     fn default() -> Self {
         Self::new()

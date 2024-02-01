@@ -7,6 +7,6 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum NotebookGlobalTime {
-    NotebookRelativeTime(crate::datadogV1::model::NotebookRelativeTime),
-    NotebookAbsoluteTime(crate::datadogV1::model::NotebookAbsoluteTime),
+    NotebookRelativeTime(Box<crate::datadogV1::model::NotebookRelativeTime>),
+    NotebookAbsoluteTime(Box<crate::datadogV1::model::NotebookAbsoluteTime>),
 }

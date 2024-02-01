@@ -24,7 +24,7 @@ impl TimeseriesWidgetExpressionAlias {
         }
     }
 
-    pub fn with_alias_name(&mut self, value: String) -> &mut Self {
+    pub fn alias_name(&mut self, value: String) -> &mut Self {
         self.alias_name = Some(value);
         self
     }

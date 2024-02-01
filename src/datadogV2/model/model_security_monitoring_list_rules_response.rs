@@ -24,7 +24,7 @@ impl SecurityMonitoringListRulesResponse {
         }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: Vec<crate::datadogV2::model::SecurityMonitoringRuleResponse>,
     ) -> &mut Self {
@@ -32,14 +32,12 @@ impl SecurityMonitoringListRulesResponse {
         self
     }
 
-    pub fn with_meta(
-        &mut self,
-        value: crate::datadogV2::model::ResponseMetaAttributes,
-    ) -> &mut Self {
+    pub fn meta(&mut self, value: crate::datadogV2::model::ResponseMetaAttributes) -> &mut Self {
         self.meta = Some(value);
         self
     }
 }
+
 impl Default for SecurityMonitoringListRulesResponse {
     fn default() -> Self {
         Self::new()

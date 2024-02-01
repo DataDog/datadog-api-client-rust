@@ -30,12 +30,12 @@ impl CIAppCreatePipelineEventRequestAttributes {
         }
     }
 
-    pub fn with_env(&mut self, value: String) -> &mut Self {
+    pub fn env(&mut self, value: String) -> &mut Self {
         self.env = Some(value);
         self
     }
 
-    pub fn with_service(&mut self, value: String) -> &mut Self {
+    pub fn service(&mut self, value: String) -> &mut Self {
         self.service = Some(value);
         self
     }

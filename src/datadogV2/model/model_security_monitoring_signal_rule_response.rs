@@ -88,7 +88,7 @@ impl SecurityMonitoringSignalRuleResponse {
         }
     }
 
-    pub fn with_cases(
+    pub fn cases(
         &mut self,
         value: Vec<crate::datadogV2::model::SecurityMonitoringRuleCase>,
     ) -> &mut Self {
@@ -96,22 +96,22 @@ impl SecurityMonitoringSignalRuleResponse {
         self
     }
 
-    pub fn with_created_at(&mut self, value: i64) -> &mut Self {
+    pub fn created_at(&mut self, value: i64) -> &mut Self {
         self.created_at = Some(value);
         self
     }
 
-    pub fn with_creation_author_id(&mut self, value: i64) -> &mut Self {
+    pub fn creation_author_id(&mut self, value: i64) -> &mut Self {
         self.creation_author_id = Some(value);
         self
     }
 
-    pub fn with_deprecation_date(&mut self, value: i64) -> &mut Self {
+    pub fn deprecation_date(&mut self, value: i64) -> &mut Self {
         self.deprecation_date = Some(value);
         self
     }
 
-    pub fn with_filters(
+    pub fn filters(
         &mut self,
         value: Vec<crate::datadogV2::model::SecurityMonitoringFilter>,
     ) -> &mut Self {
@@ -119,42 +119,42 @@ impl SecurityMonitoringSignalRuleResponse {
         self
     }
 
-    pub fn with_has_extended_title(&mut self, value: bool) -> &mut Self {
+    pub fn has_extended_title(&mut self, value: bool) -> &mut Self {
         self.has_extended_title = Some(value);
         self
     }
 
-    pub fn with_id(&mut self, value: String) -> &mut Self {
+    pub fn id(&mut self, value: String) -> &mut Self {
         self.id = Some(value);
         self
     }
 
-    pub fn with_is_default(&mut self, value: bool) -> &mut Self {
+    pub fn is_default(&mut self, value: bool) -> &mut Self {
         self.is_default = Some(value);
         self
     }
 
-    pub fn with_is_deleted(&mut self, value: bool) -> &mut Self {
+    pub fn is_deleted(&mut self, value: bool) -> &mut Self {
         self.is_deleted = Some(value);
         self
     }
 
-    pub fn with_is_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn is_enabled(&mut self, value: bool) -> &mut Self {
         self.is_enabled = Some(value);
         self
     }
 
-    pub fn with_message(&mut self, value: String) -> &mut Self {
+    pub fn message(&mut self, value: String) -> &mut Self {
         self.message = Some(value);
         self
     }
 
-    pub fn with_name(&mut self, value: String) -> &mut Self {
+    pub fn name(&mut self, value: String) -> &mut Self {
         self.name = Some(value);
         self
     }
 
-    pub fn with_options(
+    pub fn options(
         &mut self,
         value: crate::datadogV2::model::SecurityMonitoringRuleOptions,
     ) -> &mut Self {
@@ -162,7 +162,7 @@ impl SecurityMonitoringSignalRuleResponse {
         self
     }
 
-    pub fn with_queries(
+    pub fn queries(
         &mut self,
         value: Vec<crate::datadogV2::model::SecurityMonitoringSignalRuleResponseQuery>,
     ) -> &mut Self {
@@ -170,12 +170,12 @@ impl SecurityMonitoringSignalRuleResponse {
         self
     }
 
-    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
         self.tags = Some(value);
         self
     }
 
-    pub fn with_type_(
+    pub fn type_(
         &mut self,
         value: crate::datadogV2::model::SecurityMonitoringSignalRuleType,
     ) -> &mut Self {
@@ -183,16 +183,17 @@ impl SecurityMonitoringSignalRuleResponse {
         self
     }
 
-    pub fn with_update_author_id(&mut self, value: i64) -> &mut Self {
+    pub fn update_author_id(&mut self, value: i64) -> &mut Self {
         self.update_author_id = Some(value);
         self
     }
 
-    pub fn with_version(&mut self, value: i64) -> &mut Self {
+    pub fn version(&mut self, value: i64) -> &mut Self {
         self.version = Some(value);
         self
     }
 }
+
 impl Default for SecurityMonitoringSignalRuleResponse {
     fn default() -> Self {
         Self::new()

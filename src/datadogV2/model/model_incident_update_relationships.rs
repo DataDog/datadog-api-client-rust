@@ -32,7 +32,7 @@ impl IncidentUpdateRelationships {
         }
     }
 
-    pub fn with_commander_user(
+    pub fn commander_user(
         &mut self,
         value: Option<crate::datadogV2::model::NullableRelationshipToUser>,
     ) -> &mut Self {
@@ -40,7 +40,7 @@ impl IncidentUpdateRelationships {
         self
     }
 
-    pub fn with_integrations(
+    pub fn integrations(
         &mut self,
         value: crate::datadogV2::model::RelationshipToIncidentIntegrationMetadatas,
     ) -> &mut Self {
@@ -48,7 +48,7 @@ impl IncidentUpdateRelationships {
         self
     }
 
-    pub fn with_postmortem(
+    pub fn postmortem(
         &mut self,
         value: crate::datadogV2::model::RelationshipToIncidentPostmortem,
     ) -> &mut Self {
@@ -56,6 +56,7 @@ impl IncidentUpdateRelationships {
         self
     }
 }
+
 impl Default for IncidentUpdateRelationships {
     fn default() -> Self {
         Self::new()

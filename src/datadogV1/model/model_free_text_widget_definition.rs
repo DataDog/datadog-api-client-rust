@@ -39,20 +39,17 @@ impl FreeTextWidgetDefinition {
         }
     }
 
-    pub fn with_color(&mut self, value: String) -> &mut Self {
+    pub fn color(&mut self, value: String) -> &mut Self {
         self.color = Some(value);
         self
     }
 
-    pub fn with_font_size(&mut self, value: String) -> &mut Self {
+    pub fn font_size(&mut self, value: String) -> &mut Self {
         self.font_size = Some(value);
         self
     }
 
-    pub fn with_text_align(
-        &mut self,
-        value: crate::datadogV1::model::WidgetTextAlign,
-    ) -> &mut Self {
+    pub fn text_align(&mut self, value: crate::datadogV1::model::WidgetTextAlign) -> &mut Self {
         self.text_align = Some(value);
         self
     }

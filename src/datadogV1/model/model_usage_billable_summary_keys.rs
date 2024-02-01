@@ -373,7 +373,7 @@ impl UsageBillableSummaryKeys {
         }
     }
 
-    pub fn with_apm_fargate_average(
+    pub fn apm_fargate_average(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -381,7 +381,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_apm_fargate_sum(
+    pub fn apm_fargate_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -389,7 +389,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_apm_host_sum(
+    pub fn apm_host_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -397,7 +397,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_apm_host_top99p(
+    pub fn apm_host_top99p(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -405,7 +405,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_apm_profiler_host_sum(
+    pub fn apm_profiler_host_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -413,7 +413,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_apm_profiler_host_top99p(
+    pub fn apm_profiler_host_top99p(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -421,7 +421,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_apm_trace_search_sum(
+    pub fn apm_trace_search_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -429,7 +429,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_application_security_fargate_average(
+    pub fn application_security_fargate_average(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -437,7 +437,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_application_security_host_sum(
+    pub fn application_security_host_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -445,7 +445,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_application_security_host_top99p(
+    pub fn application_security_host_top99p(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -453,7 +453,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_ci_pipeline_indexed_spans_sum(
+    pub fn ci_pipeline_indexed_spans_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -461,7 +461,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_ci_pipeline_maximum(
+    pub fn ci_pipeline_maximum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -469,7 +469,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_ci_pipeline_sum(
+    pub fn ci_pipeline_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -477,7 +477,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_ci_test_indexed_spans_sum(
+    pub fn ci_test_indexed_spans_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -485,7 +485,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_ci_testing_maximum(
+    pub fn ci_testing_maximum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -493,7 +493,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_ci_testing_sum(
+    pub fn ci_testing_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -501,7 +501,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_cloud_cost_management_average(
+    pub fn cloud_cost_management_average(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -509,7 +509,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_cloud_cost_management_sum(
+    pub fn cloud_cost_management_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -517,7 +517,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_cspm_container_sum(
+    pub fn cspm_container_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -525,7 +525,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_cspm_host_sum(
+    pub fn cspm_host_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -533,7 +533,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_cspm_host_top99p(
+    pub fn cspm_host_top99p(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -541,7 +541,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_custom_event_sum(
+    pub fn custom_event_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -549,7 +549,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_cws_container_sum(
+    pub fn cws_container_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -557,7 +557,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_cws_host_sum(
+    pub fn cws_host_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -565,7 +565,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_cws_host_top99p(
+    pub fn cws_host_top99p(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -573,7 +573,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_dbm_host_sum(
+    pub fn dbm_host_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -581,7 +581,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_dbm_host_top99p(
+    pub fn dbm_host_top99p(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -589,7 +589,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_dbm_normalized_queries_average(
+    pub fn dbm_normalized_queries_average(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -597,7 +597,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_dbm_normalized_queries_sum(
+    pub fn dbm_normalized_queries_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -605,7 +605,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_fargate_container_apm_and_profiler_average(
+    pub fn fargate_container_apm_and_profiler_average(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -613,7 +613,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_fargate_container_apm_and_profiler_sum(
+    pub fn fargate_container_apm_and_profiler_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -621,7 +621,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_fargate_container_average(
+    pub fn fargate_container_average(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -629,7 +629,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_fargate_container_profiler_average(
+    pub fn fargate_container_profiler_average(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -637,7 +637,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_fargate_container_profiler_sum(
+    pub fn fargate_container_profiler_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -645,7 +645,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_fargate_container_sum(
+    pub fn fargate_container_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -653,7 +653,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_incident_management_maximum(
+    pub fn incident_management_maximum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -661,7 +661,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_incident_management_sum(
+    pub fn incident_management_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -669,7 +669,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_infra_and_apm_host_sum(
+    pub fn infra_and_apm_host_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -677,7 +677,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_infra_and_apm_host_top99p(
+    pub fn infra_and_apm_host_top99p(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -685,7 +685,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_infra_container_sum(
+    pub fn infra_container_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -693,7 +693,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_infra_host_sum(
+    pub fn infra_host_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -701,7 +701,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_infra_host_top99p(
+    pub fn infra_host_top99p(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -709,7 +709,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_ingested_spans_sum(
+    pub fn ingested_spans_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -717,7 +717,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_ingested_timeseries_average(
+    pub fn ingested_timeseries_average(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -725,7 +725,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_ingested_timeseries_sum(
+    pub fn ingested_timeseries_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -733,7 +733,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_iot_sum(
+    pub fn iot_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -741,7 +741,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_iot_top99p(
+    pub fn iot_top99p(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -749,7 +749,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_lambda_function_average(
+    pub fn lambda_function_average(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -757,7 +757,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_lambda_function_sum(
+    pub fn lambda_function_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -765,7 +765,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_logs_forwarding_sum(
+    pub fn logs_forwarding_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -773,7 +773,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_logs_indexed_15day_sum(
+    pub fn logs_indexed_15day_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -781,7 +781,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_logs_indexed_180day_sum(
+    pub fn logs_indexed_180day_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -789,7 +789,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_logs_indexed_30day_sum(
+    pub fn logs_indexed_30day_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -797,7 +797,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_logs_indexed_360day_sum(
+    pub fn logs_indexed_360day_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -805,7 +805,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_logs_indexed_3day_sum(
+    pub fn logs_indexed_3day_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -813,7 +813,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_logs_indexed_45day_sum(
+    pub fn logs_indexed_45day_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -821,7 +821,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_logs_indexed_60day_sum(
+    pub fn logs_indexed_60day_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -829,7 +829,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_logs_indexed_7day_sum(
+    pub fn logs_indexed_7day_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -837,7 +837,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_logs_indexed_90day_sum(
+    pub fn logs_indexed_90day_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -845,7 +845,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_logs_indexed_custom_retention_sum(
+    pub fn logs_indexed_custom_retention_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -853,7 +853,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_logs_indexed_sum(
+    pub fn logs_indexed_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -861,7 +861,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_logs_ingested_sum(
+    pub fn logs_ingested_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -869,7 +869,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_network_device_sum(
+    pub fn network_device_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -877,7 +877,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_network_device_top99p(
+    pub fn network_device_top99p(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -885,7 +885,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_npm_flow_sum(
+    pub fn npm_flow_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -893,7 +893,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_npm_host_sum(
+    pub fn npm_host_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -901,7 +901,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_npm_host_top99p(
+    pub fn npm_host_top99p(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -909,7 +909,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_observability_pipeline_sum(
+    pub fn observability_pipeline_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -917,7 +917,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_online_archive_sum(
+    pub fn online_archive_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -925,7 +925,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_prof_container_sum(
+    pub fn prof_container_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -933,7 +933,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_prof_host_sum(
+    pub fn prof_host_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -941,7 +941,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_prof_host_top99p(
+    pub fn prof_host_top99p(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -949,7 +949,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_rum_lite_sum(
+    pub fn rum_lite_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -957,7 +957,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_rum_replay_sum(
+    pub fn rum_replay_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -965,7 +965,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_rum_sum(
+    pub fn rum_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -973,7 +973,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_rum_units_sum(
+    pub fn rum_units_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -981,7 +981,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_sensitive_data_scanner_sum(
+    pub fn sensitive_data_scanner_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -989,7 +989,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_serverless_apm_sum(
+    pub fn serverless_apm_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -997,7 +997,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_serverless_infra_average(
+    pub fn serverless_infra_average(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -1005,7 +1005,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_serverless_infra_sum(
+    pub fn serverless_infra_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -1013,7 +1013,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_serverless_invocation_sum(
+    pub fn serverless_invocation_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -1021,7 +1021,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_siem_sum(
+    pub fn siem_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -1029,7 +1029,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_standard_timeseries_average(
+    pub fn standard_timeseries_average(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -1037,7 +1037,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_synthetics_api_tests_sum(
+    pub fn synthetics_api_tests_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -1045,7 +1045,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_synthetics_app_testing_maximum(
+    pub fn synthetics_app_testing_maximum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -1053,7 +1053,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_synthetics_browser_checks_sum(
+    pub fn synthetics_browser_checks_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -1061,7 +1061,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_timeseries_average(
+    pub fn timeseries_average(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -1069,7 +1069,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 
-    pub fn with_timeseries_sum(
+    pub fn timeseries_sum(
         &mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> &mut Self {
@@ -1077,6 +1077,7 @@ impl UsageBillableSummaryKeys {
         self
     }
 }
+
 impl Default for UsageBillableSummaryKeys {
     fn default() -> Self {
         Self::new()

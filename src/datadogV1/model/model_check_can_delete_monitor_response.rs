@@ -23,7 +23,7 @@ impl CheckCanDeleteMonitorResponse {
         CheckCanDeleteMonitorResponse { data, errors: None }
     }
 
-    pub fn with_errors(
+    pub fn errors(
         &mut self,
         value: Option<std::collections::BTreeMap<String, Option<Vec<String>>>>,
     ) -> &mut Self {

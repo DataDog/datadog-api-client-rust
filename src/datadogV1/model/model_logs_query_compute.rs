@@ -28,12 +28,12 @@ impl LogsQueryCompute {
         }
     }
 
-    pub fn with_facet(&mut self, value: String) -> &mut Self {
+    pub fn facet(&mut self, value: String) -> &mut Self {
         self.facet = Some(value);
         self
     }
 
-    pub fn with_interval(&mut self, value: i64) -> &mut Self {
+    pub fn interval(&mut self, value: i64) -> &mut Self {
         self.interval = Some(value);
         self
     }

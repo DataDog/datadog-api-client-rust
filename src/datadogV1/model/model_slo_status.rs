@@ -62,22 +62,22 @@ impl SLOStatus {
         }
     }
 
-    pub fn with_calculation_error(&mut self, value: Option<String>) -> &mut Self {
+    pub fn calculation_error(&mut self, value: Option<String>) -> &mut Self {
         self.calculation_error = Some(value);
         self
     }
 
-    pub fn with_error_budget_remaining(&mut self, value: Option<f64>) -> &mut Self {
+    pub fn error_budget_remaining(&mut self, value: Option<f64>) -> &mut Self {
         self.error_budget_remaining = Some(value);
         self
     }
 
-    pub fn with_indexed_at(&mut self, value: i64) -> &mut Self {
+    pub fn indexed_at(&mut self, value: i64) -> &mut Self {
         self.indexed_at = Some(value);
         self
     }
 
-    pub fn with_raw_error_budget_remaining(
+    pub fn raw_error_budget_remaining(
         &mut self,
         value: Option<crate::datadogV1::model::SLORawErrorBudgetRemaining>,
     ) -> &mut Self {
@@ -85,21 +85,22 @@ impl SLOStatus {
         self
     }
 
-    pub fn with_sli(&mut self, value: Option<f64>) -> &mut Self {
+    pub fn sli(&mut self, value: Option<f64>) -> &mut Self {
         self.sli = Some(value);
         self
     }
 
-    pub fn with_span_precision(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn span_precision(&mut self, value: Option<i64>) -> &mut Self {
         self.span_precision = Some(value);
         self
     }
 
-    pub fn with_state(&mut self, value: crate::datadogV1::model::SLOState) -> &mut Self {
+    pub fn state(&mut self, value: crate::datadogV1::model::SLOState) -> &mut Self {
         self.state = Some(value);
         self
     }
 }
+
 impl Default for SLOStatus {
     fn default() -> Self {
         Self::new()

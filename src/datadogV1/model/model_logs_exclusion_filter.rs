@@ -26,7 +26,7 @@ impl LogsExclusionFilter {
         }
     }
 
-    pub fn with_query(&mut self, value: String) -> &mut Self {
+    pub fn query(&mut self, value: String) -> &mut Self {
         self.query = Some(value);
         self
     }

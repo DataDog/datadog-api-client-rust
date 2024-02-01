@@ -6,41 +6,84 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// CreateHostTagsOptionalParams is a struct for passing parameters to the method [`TagsAPI::create_host_tags`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct CreateHostTagsOptionalParams {
     /// The source of the tags.
     /// [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>).
     pub source: Option<String>,
 }
 
+impl CreateHostTagsOptionalParams {
+    /// The source of the tags.
+    /// [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>).
+    pub fn source(&mut self, value: String) -> &mut Self {
+        self.source = Some(value);
+        self
+    }
+}
+
 /// DeleteHostTagsOptionalParams is a struct for passing parameters to the method [`TagsAPI::delete_host_tags`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct DeleteHostTagsOptionalParams {
     /// The source of the tags (for example chef, puppet).
     /// [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>).
     pub source: Option<String>,
 }
 
+impl DeleteHostTagsOptionalParams {
+    /// The source of the tags (for example chef, puppet).
+    /// [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>).
+    pub fn source(&mut self, value: String) -> &mut Self {
+        self.source = Some(value);
+        self
+    }
+}
+
 /// GetHostTagsOptionalParams is a struct for passing parameters to the method [`TagsAPI::get_host_tags`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetHostTagsOptionalParams {
     /// Source to filter.
     pub source: Option<String>,
 }
 
+impl GetHostTagsOptionalParams {
+    /// Source to filter.
+    pub fn source(&mut self, value: String) -> &mut Self {
+        self.source = Some(value);
+        self
+    }
+}
+
 /// ListHostTagsOptionalParams is a struct for passing parameters to the method [`TagsAPI::list_host_tags`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListHostTagsOptionalParams {
     /// When specified, filters host list to those tags with the specified source.
     pub source: Option<String>,
 }
 
+impl ListHostTagsOptionalParams {
+    /// When specified, filters host list to those tags with the specified source.
+    pub fn source(&mut self, value: String) -> &mut Self {
+        self.source = Some(value);
+        self
+    }
+}
+
 /// UpdateHostTagsOptionalParams is a struct for passing parameters to the method [`TagsAPI::update_host_tags`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct UpdateHostTagsOptionalParams {
     /// The source of the tags (for example chef, puppet).
     /// [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>)
     pub source: Option<String>,
+}
+
+impl UpdateHostTagsOptionalParams {
+    /// The source of the tags (for example chef, puppet).
+    /// [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>)
+    pub fn source(&mut self, value: String) -> &mut Self {
+        self.source = Some(value);
+        self
+    }
 }
 
 /// CreateHostTagsError is a struct for typed errors of method [`TagsAPI::create_host_tags`]

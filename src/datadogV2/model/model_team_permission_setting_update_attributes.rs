@@ -18,7 +18,7 @@ impl TeamPermissionSettingUpdateAttributes {
         TeamPermissionSettingUpdateAttributes { value: None }
     }
 
-    pub fn with_value(
+    pub fn value(
         &mut self,
         value: crate::datadogV2::model::TeamPermissionSettingValue,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl TeamPermissionSettingUpdateAttributes {
         self
     }
 }
+
 impl Default for TeamPermissionSettingUpdateAttributes {
     fn default() -> Self {
         Self::new()

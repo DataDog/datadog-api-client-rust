@@ -48,17 +48,17 @@ impl LogsURLParser {
         }
     }
 
-    pub fn with_is_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn is_enabled(&mut self, value: bool) -> &mut Self {
         self.is_enabled = Some(value);
         self
     }
 
-    pub fn with_name(&mut self, value: String) -> &mut Self {
+    pub fn name(&mut self, value: String) -> &mut Self {
         self.name = Some(value);
         self
     }
 
-    pub fn with_normalize_ending_slashes(&mut self, value: Option<bool>) -> &mut Self {
+    pub fn normalize_ending_slashes(&mut self, value: Option<bool>) -> &mut Self {
         self.normalize_ending_slashes = Some(value);
         self
     }

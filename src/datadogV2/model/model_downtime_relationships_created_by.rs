@@ -18,7 +18,7 @@ impl DowntimeRelationshipsCreatedBy {
         DowntimeRelationshipsCreatedBy { data: None }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: Option<crate::datadogV2::model::DowntimeRelationshipsCreatedByData>,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl DowntimeRelationshipsCreatedBy {
         self
     }
 }
+
 impl Default for DowntimeRelationshipsCreatedBy {
     fn default() -> Self {
         Self::new()

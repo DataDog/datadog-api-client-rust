@@ -34,17 +34,17 @@ impl SyntheticsGlobalVariableParseTestOptions {
         }
     }
 
-    pub fn with_field(&mut self, value: String) -> &mut Self {
+    pub fn field(&mut self, value: String) -> &mut Self {
         self.field = Some(value);
         self
     }
 
-    pub fn with_local_variable_name(&mut self, value: String) -> &mut Self {
+    pub fn local_variable_name(&mut self, value: String) -> &mut Self {
         self.local_variable_name = Some(value);
         self
     }
 
-    pub fn with_parser(
+    pub fn parser(
         &mut self,
         value: crate::datadogV1::model::SyntheticsVariableParser,
     ) -> &mut Self {

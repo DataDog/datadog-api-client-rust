@@ -19,11 +19,12 @@ impl SyntheticsDeleteTestsPayload {
         SyntheticsDeleteTestsPayload { public_ids: None }
     }
 
-    pub fn with_public_ids(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn public_ids(&mut self, value: Vec<String>) -> &mut Self {
         self.public_ids = Some(value);
         self
     }
 }
+
 impl Default for SyntheticsDeleteTestsPayload {
     fn default() -> Self {
         Self::new()

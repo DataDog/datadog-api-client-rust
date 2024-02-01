@@ -32,26 +32,27 @@ impl SlackIntegrationChannelDisplay {
         }
     }
 
-    pub fn with_message(&mut self, value: bool) -> &mut Self {
+    pub fn message(&mut self, value: bool) -> &mut Self {
         self.message = Some(value);
         self
     }
 
-    pub fn with_notified(&mut self, value: bool) -> &mut Self {
+    pub fn notified(&mut self, value: bool) -> &mut Self {
         self.notified = Some(value);
         self
     }
 
-    pub fn with_snapshot(&mut self, value: bool) -> &mut Self {
+    pub fn snapshot(&mut self, value: bool) -> &mut Self {
         self.snapshot = Some(value);
         self
     }
 
-    pub fn with_tags(&mut self, value: bool) -> &mut Self {
+    pub fn tags(&mut self, value: bool) -> &mut Self {
         self.tags = Some(value);
         self
     }
 }
+
 impl Default for SlackIntegrationChannelDisplay {
     fn default() -> Self {
         Self::new()

@@ -24,7 +24,7 @@ impl SensitiveDataScannerCreateGroupResponse {
         }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: crate::datadogV2::model::SensitiveDataScannerGroupResponse,
     ) -> &mut Self {
@@ -32,7 +32,7 @@ impl SensitiveDataScannerCreateGroupResponse {
         self
     }
 
-    pub fn with_meta(
+    pub fn meta(
         &mut self,
         value: crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly,
     ) -> &mut Self {
@@ -40,6 +40,7 @@ impl SensitiveDataScannerCreateGroupResponse {
         self
     }
 }
+
 impl Default for SensitiveDataScannerCreateGroupResponse {
     fn default() -> Self {
         Self::new()

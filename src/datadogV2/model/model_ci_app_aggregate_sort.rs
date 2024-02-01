@@ -32,7 +32,7 @@ impl CIAppAggregateSort {
         }
     }
 
-    pub fn with_aggregation(
+    pub fn aggregation(
         &mut self,
         value: crate::datadogV2::model::CIAppAggregationFunction,
     ) -> &mut Self {
@@ -40,24 +40,22 @@ impl CIAppAggregateSort {
         self
     }
 
-    pub fn with_metric(&mut self, value: String) -> &mut Self {
+    pub fn metric(&mut self, value: String) -> &mut Self {
         self.metric = Some(value);
         self
     }
 
-    pub fn with_order(&mut self, value: crate::datadogV2::model::CIAppSortOrder) -> &mut Self {
+    pub fn order(&mut self, value: crate::datadogV2::model::CIAppSortOrder) -> &mut Self {
         self.order = Some(value);
         self
     }
 
-    pub fn with_type_(
-        &mut self,
-        value: crate::datadogV2::model::CIAppAggregateSortType,
-    ) -> &mut Self {
+    pub fn type_(&mut self, value: crate::datadogV2::model::CIAppAggregateSortType) -> &mut Self {
         self.type_ = Some(value);
         self
     }
 }
+
 impl Default for CIAppAggregateSort {
     fn default() -> Self {
         Self::new()

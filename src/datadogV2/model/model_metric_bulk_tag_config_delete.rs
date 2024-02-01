@@ -31,7 +31,7 @@ impl MetricBulkTagConfigDelete {
         }
     }
 
-    pub fn with_attributes(
+    pub fn attributes(
         &mut self,
         value: crate::datadogV2::model::MetricBulkTagConfigDeleteAttributes,
     ) -> &mut Self {

@@ -126,25 +126,22 @@ impl SyntheticsTestRequest {
         }
     }
 
-    pub fn with_allow_insecure(&mut self, value: bool) -> &mut Self {
+    pub fn allow_insecure(&mut self, value: bool) -> &mut Self {
         self.allow_insecure = Some(value);
         self
     }
 
-    pub fn with_basic_auth(
-        &mut self,
-        value: crate::datadogV1::model::SyntheticsBasicAuth,
-    ) -> &mut Self {
+    pub fn basic_auth(&mut self, value: crate::datadogV1::model::SyntheticsBasicAuth) -> &mut Self {
         self.basic_auth = Some(value);
         self
     }
 
-    pub fn with_body(&mut self, value: String) -> &mut Self {
+    pub fn body(&mut self, value: String) -> &mut Self {
         self.body = Some(value);
         self
     }
 
-    pub fn with_body_type(
+    pub fn body_type(
         &mut self,
         value: crate::datadogV1::model::SyntheticsTestRequestBodyType,
     ) -> &mut Self {
@@ -152,7 +149,7 @@ impl SyntheticsTestRequest {
         self
     }
 
-    pub fn with_call_type(
+    pub fn call_type(
         &mut self,
         value: crate::datadogV1::model::SyntheticsTestCallType,
     ) -> &mut Self {
@@ -160,7 +157,7 @@ impl SyntheticsTestRequest {
         self
     }
 
-    pub fn with_certificate(
+    pub fn certificate(
         &mut self,
         value: crate::datadogV1::model::SyntheticsTestRequestCertificate,
     ) -> &mut Self {
@@ -168,80 +165,77 @@ impl SyntheticsTestRequest {
         self
     }
 
-    pub fn with_certificate_domains(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn certificate_domains(&mut self, value: Vec<String>) -> &mut Self {
         self.certificate_domains = Some(value);
         self
     }
 
-    pub fn with_compressed_json_descriptor(&mut self, value: String) -> &mut Self {
+    pub fn compressed_json_descriptor(&mut self, value: String) -> &mut Self {
         self.compressed_json_descriptor = Some(value);
         self
     }
 
-    pub fn with_dns_server(&mut self, value: String) -> &mut Self {
+    pub fn dns_server(&mut self, value: String) -> &mut Self {
         self.dns_server = Some(value);
         self
     }
 
-    pub fn with_dns_server_port(&mut self, value: i32) -> &mut Self {
+    pub fn dns_server_port(&mut self, value: i32) -> &mut Self {
         self.dns_server_port = Some(value);
         self
     }
 
-    pub fn with_follow_redirects(&mut self, value: bool) -> &mut Self {
+    pub fn follow_redirects(&mut self, value: bool) -> &mut Self {
         self.follow_redirects = Some(value);
         self
     }
 
-    pub fn with_headers(&mut self, value: std::collections::BTreeMap<String, String>) -> &mut Self {
+    pub fn headers(&mut self, value: std::collections::BTreeMap<String, String>) -> &mut Self {
         self.headers = Some(value);
         self
     }
 
-    pub fn with_host(&mut self, value: String) -> &mut Self {
+    pub fn host(&mut self, value: String) -> &mut Self {
         self.host = Some(value);
         self
     }
 
-    pub fn with_message(&mut self, value: String) -> &mut Self {
+    pub fn message(&mut self, value: String) -> &mut Self {
         self.message = Some(value);
         self
     }
 
-    pub fn with_metadata(
-        &mut self,
-        value: std::collections::BTreeMap<String, String>,
-    ) -> &mut Self {
+    pub fn metadata(&mut self, value: std::collections::BTreeMap<String, String>) -> &mut Self {
         self.metadata = Some(value);
         self
     }
 
-    pub fn with_method(&mut self, value: String) -> &mut Self {
+    pub fn method(&mut self, value: String) -> &mut Self {
         self.method = Some(value);
         self
     }
 
-    pub fn with_no_saving_response_body(&mut self, value: bool) -> &mut Self {
+    pub fn no_saving_response_body(&mut self, value: bool) -> &mut Self {
         self.no_saving_response_body = Some(value);
         self
     }
 
-    pub fn with_number_of_packets(&mut self, value: i32) -> &mut Self {
+    pub fn number_of_packets(&mut self, value: i32) -> &mut Self {
         self.number_of_packets = Some(value);
         self
     }
 
-    pub fn with_persist_cookies(&mut self, value: bool) -> &mut Self {
+    pub fn persist_cookies(&mut self, value: bool) -> &mut Self {
         self.persist_cookies = Some(value);
         self
     }
 
-    pub fn with_port(&mut self, value: i64) -> &mut Self {
+    pub fn port(&mut self, value: i64) -> &mut Self {
         self.port = Some(value);
         self
     }
 
-    pub fn with_proxy(
+    pub fn proxy(
         &mut self,
         value: crate::datadogV1::model::SyntheticsTestRequestProxy,
     ) -> &mut Self {
@@ -249,7 +243,7 @@ impl SyntheticsTestRequest {
         self
     }
 
-    pub fn with_query(
+    pub fn query(
         &mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
     ) -> &mut Self {
@@ -257,31 +251,32 @@ impl SyntheticsTestRequest {
         self
     }
 
-    pub fn with_servername(&mut self, value: String) -> &mut Self {
+    pub fn servername(&mut self, value: String) -> &mut Self {
         self.servername = Some(value);
         self
     }
 
-    pub fn with_service(&mut self, value: String) -> &mut Self {
+    pub fn service(&mut self, value: String) -> &mut Self {
         self.service = Some(value);
         self
     }
 
-    pub fn with_should_track_hops(&mut self, value: bool) -> &mut Self {
+    pub fn should_track_hops(&mut self, value: bool) -> &mut Self {
         self.should_track_hops = Some(value);
         self
     }
 
-    pub fn with_timeout(&mut self, value: f64) -> &mut Self {
+    pub fn timeout(&mut self, value: f64) -> &mut Self {
         self.timeout = Some(value);
         self
     }
 
-    pub fn with_url(&mut self, value: String) -> &mut Self {
+    pub fn url(&mut self, value: String) -> &mut Self {
         self.url = Some(value);
         self
     }
 }
+
 impl Default for SyntheticsTestRequest {
     fn default() -> Self {
         Self::new()

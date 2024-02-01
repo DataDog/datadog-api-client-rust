@@ -29,7 +29,7 @@ impl SyntheticsGlobalVariableValue {
         }
     }
 
-    pub fn with_options(
+    pub fn options(
         &mut self,
         value: crate::datadogV1::model::SyntheticsGlobalVariableOptions,
     ) -> &mut Self {
@@ -37,16 +37,17 @@ impl SyntheticsGlobalVariableValue {
         self
     }
 
-    pub fn with_secure(&mut self, value: bool) -> &mut Self {
+    pub fn secure(&mut self, value: bool) -> &mut Self {
         self.secure = Some(value);
         self
     }
 
-    pub fn with_value(&mut self, value: String) -> &mut Self {
+    pub fn value(&mut self, value: String) -> &mut Self {
         self.value = Some(value);
         self
     }
 }
+
 impl Default for SyntheticsGlobalVariableValue {
     fn default() -> Self {
         Self::new()

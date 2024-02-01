@@ -89,37 +89,37 @@ impl AzureUCConfig {
     }
 
     #[allow(deprecated)]
-    pub fn with_created_at(&mut self, value: String) -> &mut Self {
+    pub fn created_at(&mut self, value: String) -> &mut Self {
         self.created_at = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_error_messages(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn error_messages(&mut self, value: Vec<String>) -> &mut Self {
         self.error_messages = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_id(&mut self, value: i64) -> &mut Self {
+    pub fn id(&mut self, value: i64) -> &mut Self {
         self.id = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_months(&mut self, value: i32) -> &mut Self {
+    pub fn months(&mut self, value: i32) -> &mut Self {
         self.months = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_status_updated_at(&mut self, value: String) -> &mut Self {
+    pub fn status_updated_at(&mut self, value: String) -> &mut Self {
         self.status_updated_at = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn with_updated_at(&mut self, value: String) -> &mut Self {
+    pub fn updated_at(&mut self, value: String) -> &mut Self {
         self.updated_at = Some(value);
         self
     }

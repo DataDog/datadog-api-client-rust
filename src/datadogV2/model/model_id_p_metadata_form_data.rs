@@ -18,11 +18,12 @@ impl IdPMetadataFormData {
         IdPMetadataFormData { idp_file: None }
     }
 
-    pub fn with_idp_file(&mut self, value: Vec<u8>) -> &mut Self {
+    pub fn idp_file(&mut self, value: Vec<u8>) -> &mut Self {
         self.idp_file = Some(value);
         self
     }
 }
+
 impl Default for IdPMetadataFormData {
     fn default() -> Self {
         Self::new()

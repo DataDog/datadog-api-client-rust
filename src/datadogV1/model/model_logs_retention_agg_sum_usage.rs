@@ -32,26 +32,27 @@ impl LogsRetentionAggSumUsage {
         }
     }
 
-    pub fn with_logs_indexed_logs_usage_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn logs_indexed_logs_usage_agg_sum(&mut self, value: i64) -> &mut Self {
         self.logs_indexed_logs_usage_agg_sum = Some(value);
         self
     }
 
-    pub fn with_logs_live_indexed_logs_usage_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn logs_live_indexed_logs_usage_agg_sum(&mut self, value: i64) -> &mut Self {
         self.logs_live_indexed_logs_usage_agg_sum = Some(value);
         self
     }
 
-    pub fn with_logs_rehydrated_indexed_logs_usage_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn logs_rehydrated_indexed_logs_usage_agg_sum(&mut self, value: i64) -> &mut Self {
         self.logs_rehydrated_indexed_logs_usage_agg_sum = Some(value);
         self
     }
 
-    pub fn with_retention(&mut self, value: String) -> &mut Self {
+    pub fn retention(&mut self, value: String) -> &mut Self {
         self.retention = Some(value);
         self
     }
 }
+
 impl Default for LogsRetentionAggSumUsage {
     fn default() -> Self {
         Self::new()

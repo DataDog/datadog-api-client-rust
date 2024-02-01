@@ -7,5 +7,5 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum IncidentIntegrationMetadataResponseIncludedItem {
-    User(crate::datadogV2::model::User),
+    User(Box<crate::datadogV2::model::User>),
 }

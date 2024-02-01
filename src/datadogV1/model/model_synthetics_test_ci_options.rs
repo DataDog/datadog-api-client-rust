@@ -20,7 +20,7 @@ impl SyntheticsTestCiOptions {
         }
     }
 
-    pub fn with_execution_rule(
+    pub fn execution_rule(
         &mut self,
         value: crate::datadogV1::model::SyntheticsTestExecutionRule,
     ) -> &mut Self {
@@ -28,6 +28,7 @@ impl SyntheticsTestCiOptions {
         self
     }
 }
+
 impl Default for SyntheticsTestCiOptions {
     fn default() -> Self {
         Self::new()

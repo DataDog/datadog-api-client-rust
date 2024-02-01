@@ -18,7 +18,7 @@ impl LogsArchiveCreateRequest {
         LogsArchiveCreateRequest { data: None }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: crate::datadogV2::model::LogsArchiveCreateRequestDefinition,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl LogsArchiveCreateRequest {
         self
     }
 }
+
 impl Default for LogsArchiveCreateRequest {
     fn default() -> Self {
         Self::new()

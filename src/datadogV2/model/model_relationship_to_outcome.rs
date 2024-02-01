@@ -18,14 +18,12 @@ impl RelationshipToOutcome {
         RelationshipToOutcome { data: None }
     }
 
-    pub fn with_data(
-        &mut self,
-        value: crate::datadogV2::model::RelationshipToOutcomeData,
-    ) -> &mut Self {
+    pub fn data(&mut self, value: crate::datadogV2::model::RelationshipToOutcomeData) -> &mut Self {
         self.data = Some(value);
         self
     }
 }
+
 impl Default for RelationshipToOutcome {
     fn default() -> Self {
         Self::new()

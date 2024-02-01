@@ -28,7 +28,7 @@ impl ScatterplotTableRequest {
         }
     }
 
-    pub fn with_formulas(
+    pub fn formulas(
         &mut self,
         value: Vec<crate::datadogV1::model::ScatterplotWidgetFormula>,
     ) -> &mut Self {
@@ -36,7 +36,7 @@ impl ScatterplotTableRequest {
         self
     }
 
-    pub fn with_queries(
+    pub fn queries(
         &mut self,
         value: Vec<crate::datadogV1::model::FormulaAndFunctionQueryDefinition>,
     ) -> &mut Self {
@@ -44,7 +44,7 @@ impl ScatterplotTableRequest {
         self
     }
 
-    pub fn with_response_format(
+    pub fn response_format(
         &mut self,
         value: crate::datadogV1::model::FormulaAndFunctionResponseFormat,
     ) -> &mut Self {
@@ -52,6 +52,7 @@ impl ScatterplotTableRequest {
         self
     }
 }
+
 impl Default for ScatterplotTableRequest {
     fn default() -> Self {
         Self::new()

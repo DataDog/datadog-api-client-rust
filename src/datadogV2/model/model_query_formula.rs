@@ -25,7 +25,7 @@ impl QueryFormula {
         }
     }
 
-    pub fn with_limit(&mut self, value: crate::datadogV2::model::FormulaLimit) -> &mut Self {
+    pub fn limit(&mut self, value: crate::datadogV2::model::FormulaLimit) -> &mut Self {
         self.limit = Some(value);
         self
     }

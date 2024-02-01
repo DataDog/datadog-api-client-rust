@@ -18,11 +18,12 @@ impl OrganizationBilling {
         OrganizationBilling { type_: None }
     }
 
-    pub fn with_type_(&mut self, value: String) -> &mut Self {
+    pub fn type_(&mut self, value: String) -> &mut Self {
         self.type_ = Some(value);
         self
     }
 }
+
 impl Default for OrganizationBilling {
     fn default() -> Self {
         Self::new()

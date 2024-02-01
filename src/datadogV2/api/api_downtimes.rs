@@ -6,15 +6,24 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetDowntimeOptionalParams is a struct for passing parameters to the method [`DowntimesAPI::get_downtime`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetDowntimeOptionalParams {
     /// Comma-separated list of resource paths for related resources to include in the response. Supported resource
     /// paths are `created_by` and `monitor`.
     pub include: Option<String>,
 }
 
+impl GetDowntimeOptionalParams {
+    /// Comma-separated list of resource paths for related resources to include in the response. Supported resource
+    /// paths are `created_by` and `monitor`.
+    pub fn include(&mut self, value: String) -> &mut Self {
+        self.include = Some(value);
+        self
+    }
+}
+
 /// ListDowntimesOptionalParams is a struct for passing parameters to the method [`DowntimesAPI::list_downtimes`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListDowntimesOptionalParams {
     /// Only return downtimes that are active when the request is made.
     pub current_only: Option<bool>,
@@ -27,13 +36,50 @@ pub struct ListDowntimesOptionalParams {
     pub page_limit: Option<i64>,
 }
 
+impl ListDowntimesOptionalParams {
+    /// Only return downtimes that are active when the request is made.
+    pub fn current_only(&mut self, value: bool) -> &mut Self {
+        self.current_only = Some(value);
+        self
+    }
+    /// Comma-separated list of resource paths for related resources to include in the response. Supported resource
+    /// paths are `created_by` and `monitor`.
+    pub fn include(&mut self, value: String) -> &mut Self {
+        self.include = Some(value);
+        self
+    }
+    /// Specific offset to use as the beginning of the returned page.
+    pub fn page_offset(&mut self, value: i64) -> &mut Self {
+        self.page_offset = Some(value);
+        self
+    }
+    /// Maximum number of downtimes in the response.
+    pub fn page_limit(&mut self, value: i64) -> &mut Self {
+        self.page_limit = Some(value);
+        self
+    }
+}
+
 /// ListMonitorDowntimesOptionalParams is a struct for passing parameters to the method [`DowntimesAPI::list_monitor_downtimes`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListMonitorDowntimesOptionalParams {
     /// Specific offset to use as the beginning of the returned page.
     pub page_offset: Option<i64>,
     /// Maximum number of downtimes in the response.
     pub page_limit: Option<i64>,
+}
+
+impl ListMonitorDowntimesOptionalParams {
+    /// Specific offset to use as the beginning of the returned page.
+    pub fn page_offset(&mut self, value: i64) -> &mut Self {
+        self.page_offset = Some(value);
+        self
+    }
+    /// Maximum number of downtimes in the response.
+    pub fn page_limit(&mut self, value: i64) -> &mut Self {
+        self.page_limit = Some(value);
+        self
+    }
 }
 
 /// CancelDowntimeError is a struct for typed errors of method [`DowntimesAPI::cancel_downtime`]

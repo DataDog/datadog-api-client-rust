@@ -54,12 +54,12 @@ impl SyntheticsAPIStep {
         }
     }
 
-    pub fn with_allow_failure(&mut self, value: bool) -> &mut Self {
+    pub fn allow_failure(&mut self, value: bool) -> &mut Self {
         self.allow_failure = Some(value);
         self
     }
 
-    pub fn with_extracted_values(
+    pub fn extracted_values(
         &mut self,
         value: Vec<crate::datadogV1::model::SyntheticsParsingOptions>,
     ) -> &mut Self {
@@ -67,12 +67,12 @@ impl SyntheticsAPIStep {
         self
     }
 
-    pub fn with_is_critical(&mut self, value: bool) -> &mut Self {
+    pub fn is_critical(&mut self, value: bool) -> &mut Self {
         self.is_critical = Some(value);
         self
     }
 
-    pub fn with_retry(
+    pub fn retry(
         &mut self,
         value: crate::datadogV1::model::SyntheticsTestOptionsRetry,
     ) -> &mut Self {

@@ -6,7 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListAuthNMappingsOptionalParams is a struct for passing parameters to the method [`AuthNMappingsAPI::list_auth_n_mappings`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListAuthNMappingsOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
@@ -16,6 +16,29 @@ pub struct ListAuthNMappingsOptionalParams {
     pub sort: Option<crate::datadogV2::model::AuthNMappingsSort>,
     /// Filter all mappings by the given string.
     pub filter: Option<String>,
+}
+
+impl ListAuthNMappingsOptionalParams {
+    /// Size for a given page. The maximum allowed value is 100.
+    pub fn page_size(&mut self, value: i64) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Specific page number to return.
+    pub fn page_number(&mut self, value: i64) -> &mut Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// Sort AuthN Mappings depending on the given field.
+    pub fn sort(&mut self, value: crate::datadogV2::model::AuthNMappingsSort) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+    /// Filter all mappings by the given string.
+    pub fn filter(&mut self, value: String) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
 }
 
 /// CreateAuthNMappingError is a struct for typed errors of method [`AuthNMappingsAPI::create_auth_n_mapping`]

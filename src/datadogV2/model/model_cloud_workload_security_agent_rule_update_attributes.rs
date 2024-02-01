@@ -28,21 +28,22 @@ impl CloudWorkloadSecurityAgentRuleUpdateAttributes {
         }
     }
 
-    pub fn with_description(&mut self, value: String) -> &mut Self {
+    pub fn description(&mut self, value: String) -> &mut Self {
         self.description = Some(value);
         self
     }
 
-    pub fn with_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn enabled(&mut self, value: bool) -> &mut Self {
         self.enabled = Some(value);
         self
     }
 
-    pub fn with_expression(&mut self, value: String) -> &mut Self {
+    pub fn expression(&mut self, value: String) -> &mut Self {
         self.expression = Some(value);
         self
     }
 }
+
 impl Default for CloudWorkloadSecurityAgentRuleUpdateAttributes {
     fn default() -> Self {
         Self::new()

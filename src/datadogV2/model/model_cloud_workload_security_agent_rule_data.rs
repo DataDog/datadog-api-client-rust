@@ -28,7 +28,7 @@ impl CloudWorkloadSecurityAgentRuleData {
         }
     }
 
-    pub fn with_attributes(
+    pub fn attributes(
         &mut self,
         value: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleAttributes,
     ) -> &mut Self {
@@ -36,12 +36,12 @@ impl CloudWorkloadSecurityAgentRuleData {
         self
     }
 
-    pub fn with_id(&mut self, value: String) -> &mut Self {
+    pub fn id(&mut self, value: String) -> &mut Self {
         self.id = Some(value);
         self
     }
 
-    pub fn with_type_(
+    pub fn type_(
         &mut self,
         value: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleType,
     ) -> &mut Self {
@@ -49,6 +49,7 @@ impl CloudWorkloadSecurityAgentRuleData {
         self
     }
 }
+
 impl Default for CloudWorkloadSecurityAgentRuleData {
     fn default() -> Self {
         Self::new()

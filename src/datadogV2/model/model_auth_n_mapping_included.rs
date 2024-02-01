@@ -7,6 +7,6 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AuthNMappingIncluded {
-    SAMLAssertionAttribute(crate::datadogV2::model::SAMLAssertionAttribute),
-    Role(crate::datadogV2::model::Role),
+    SAMLAssertionAttribute(Box<crate::datadogV2::model::SAMLAssertionAttribute>),
+    Role(Box<crate::datadogV2::model::Role>),
 }

@@ -55,12 +55,12 @@ impl SharedDashboardUpdateRequest {
         }
     }
 
-    pub fn with_global_time_selectable_enabled(&mut self, value: Option<bool>) -> &mut Self {
+    pub fn global_time_selectable_enabled(&mut self, value: Option<bool>) -> &mut Self {
         self.global_time_selectable_enabled = Some(value);
         self
     }
 
-    pub fn with_selectable_template_vars(
+    pub fn selectable_template_vars(
         &mut self,
         value: Option<Vec<crate::datadogV1::model::SelectableTemplateVariableItems>>,
     ) -> &mut Self {
@@ -68,12 +68,12 @@ impl SharedDashboardUpdateRequest {
         self
     }
 
-    pub fn with_share_list(&mut self, value: Option<Vec<String>>) -> &mut Self {
+    pub fn share_list(&mut self, value: Option<Vec<String>>) -> &mut Self {
         self.share_list = Some(value);
         self
     }
 
-    pub fn with_share_type(
+    pub fn share_type(
         &mut self,
         value: Option<crate::datadogV1::model::DashboardShareType>,
     ) -> &mut Self {

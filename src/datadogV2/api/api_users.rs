@@ -6,7 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListUsersOptionalParams is a struct for passing parameters to the method [`UsersAPI::list_users`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListUsersOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
@@ -25,6 +25,44 @@ pub struct ListUsersOptionalParams {
     /// Comma separated list, with possible values `Active`, `Pending`, and `Disabled`.
     /// Defaults to no filtering.
     pub filter_status: Option<String>,
+}
+
+impl ListUsersOptionalParams {
+    /// Size for a given page. The maximum allowed value is 100.
+    pub fn page_size(&mut self, value: i64) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Specific page number to return.
+    pub fn page_number(&mut self, value: i64) -> &mut Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// User attribute to order results by. Sort order is ascending by default.
+    /// Sort order is descending if the field
+    /// is prefixed by a negative sign, for example `sort=-name`. Options: `name`,
+    /// `modified_at`, `user_count`.
+    pub fn sort(&mut self, value: String) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+    /// Direction of sort. Options: `asc`, `desc`.
+    pub fn sort_dir(&mut self, value: crate::datadogV2::model::QuerySortOrder) -> &mut Self {
+        self.sort_dir = Some(value);
+        self
+    }
+    /// Filter all users by the given string. Defaults to no filtering.
+    pub fn filter(&mut self, value: String) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
+    /// Filter on status attribute.
+    /// Comma separated list, with possible values `Active`, `Pending`, and `Disabled`.
+    /// Defaults to no filtering.
+    pub fn filter_status(&mut self, value: String) -> &mut Self {
+        self.filter_status = Some(value);
+        self
+    }
 }
 
 /// CreateUserError is a struct for typed errors of method [`UsersAPI::create_user`]

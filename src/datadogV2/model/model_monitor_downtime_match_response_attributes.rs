@@ -32,26 +32,27 @@ impl MonitorDowntimeMatchResponseAttributes {
         }
     }
 
-    pub fn with_end(&mut self, value: Option<String>) -> &mut Self {
+    pub fn end(&mut self, value: Option<String>) -> &mut Self {
         self.end = Some(value);
         self
     }
 
-    pub fn with_groups(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn groups(&mut self, value: Vec<String>) -> &mut Self {
         self.groups = Some(value);
         self
     }
 
-    pub fn with_scope(&mut self, value: String) -> &mut Self {
+    pub fn scope(&mut self, value: String) -> &mut Self {
         self.scope = Some(value);
         self
     }
 
-    pub fn with_start(&mut self, value: String) -> &mut Self {
+    pub fn start(&mut self, value: String) -> &mut Self {
         self.start = Some(value);
         self
     }
 }
+
 impl Default for MonitorDowntimeMatchResponseAttributes {
     fn default() -> Self {
         Self::new()

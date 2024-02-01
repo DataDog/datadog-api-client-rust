@@ -24,7 +24,7 @@ impl UsageTopAvgMetricsResponse {
         }
     }
 
-    pub fn with_metadata(
+    pub fn metadata(
         &mut self,
         value: crate::datadogV1::model::UsageTopAvgMetricsMetadata,
     ) -> &mut Self {
@@ -32,7 +32,7 @@ impl UsageTopAvgMetricsResponse {
         self
     }
 
-    pub fn with_usage(
+    pub fn usage(
         &mut self,
         value: Vec<crate::datadogV1::model::UsageTopAvgMetricsHour>,
     ) -> &mut Self {
@@ -40,6 +40,7 @@ impl UsageTopAvgMetricsResponse {
         self
     }
 }
+
 impl Default for UsageTopAvgMetricsResponse {
     fn default() -> Self {
         Self::new()

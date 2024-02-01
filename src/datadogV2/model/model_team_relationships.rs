@@ -24,7 +24,7 @@ impl TeamRelationships {
         }
     }
 
-    pub fn with_team_links(
+    pub fn team_links(
         &mut self,
         value: crate::datadogV2::model::RelationshipToTeamLinks,
     ) -> &mut Self {
@@ -32,7 +32,7 @@ impl TeamRelationships {
         self
     }
 
-    pub fn with_user_team_permissions(
+    pub fn user_team_permissions(
         &mut self,
         value: crate::datadogV2::model::RelationshipToUserTeamPermission,
     ) -> &mut Self {
@@ -40,6 +40,7 @@ impl TeamRelationships {
         self
     }
 }
+
 impl Default for TeamRelationships {
     fn default() -> Self {
         Self::new()

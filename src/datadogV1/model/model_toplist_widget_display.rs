@@ -7,6 +7,6 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ToplistWidgetDisplay {
-    ToplistWidgetStacked(crate::datadogV1::model::ToplistWidgetStacked),
-    ToplistWidgetFlat(crate::datadogV1::model::ToplistWidgetFlat),
+    ToplistWidgetStacked(Box<crate::datadogV1::model::ToplistWidgetStacked>),
+    ToplistWidgetFlat(Box<crate::datadogV1::model::ToplistWidgetFlat>),
 }

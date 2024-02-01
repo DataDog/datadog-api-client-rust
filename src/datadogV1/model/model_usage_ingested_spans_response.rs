@@ -18,7 +18,7 @@ impl UsageIngestedSpansResponse {
         UsageIngestedSpansResponse { usage: None }
     }
 
-    pub fn with_usage(
+    pub fn usage(
         &mut self,
         value: Vec<crate::datadogV1::model::UsageIngestedSpansHour>,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl UsageIngestedSpansResponse {
         self
     }
 }
+
 impl Default for UsageIngestedSpansResponse {
     fn default() -> Self {
         Self::new()

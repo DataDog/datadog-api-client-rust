@@ -24,16 +24,17 @@ impl SyntheticsPrivateLocationCreationResponseResultEncryption {
         }
     }
 
-    pub fn with_id(&mut self, value: String) -> &mut Self {
+    pub fn id(&mut self, value: String) -> &mut Self {
         self.id = Some(value);
         self
     }
 
-    pub fn with_key(&mut self, value: String) -> &mut Self {
+    pub fn key(&mut self, value: String) -> &mut Self {
         self.key = Some(value);
         self
     }
 }
+
 impl Default for SyntheticsPrivateLocationCreationResponseResultEncryption {
     fn default() -> Self {
         Self::new()

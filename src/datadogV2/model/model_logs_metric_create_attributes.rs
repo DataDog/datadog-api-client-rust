@@ -28,12 +28,12 @@ impl LogsMetricCreateAttributes {
         }
     }
 
-    pub fn with_filter(&mut self, value: crate::datadogV2::model::LogsMetricFilter) -> &mut Self {
+    pub fn filter(&mut self, value: crate::datadogV2::model::LogsMetricFilter) -> &mut Self {
         self.filter = Some(value);
         self
     }
 
-    pub fn with_group_by(
+    pub fn group_by(
         &mut self,
         value: Vec<crate::datadogV2::model::LogsMetricGroupBy>,
     ) -> &mut Self {

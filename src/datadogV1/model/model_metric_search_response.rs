@@ -18,7 +18,7 @@ impl MetricSearchResponse {
         MetricSearchResponse { results: None }
     }
 
-    pub fn with_results(
+    pub fn results(
         &mut self,
         value: crate::datadogV1::model::MetricSearchResponseResults,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl MetricSearchResponse {
         self
     }
 }
+
 impl Default for MetricSearchResponse {
     fn default() -> Self {
         Self::new()

@@ -18,14 +18,12 @@ impl NotebooksResponseMeta {
         NotebooksResponseMeta { page: None }
     }
 
-    pub fn with_page(
-        &mut self,
-        value: crate::datadogV1::model::NotebooksResponsePage,
-    ) -> &mut Self {
+    pub fn page(&mut self, value: crate::datadogV1::model::NotebooksResponsePage) -> &mut Self {
         self.page = Some(value);
         self
     }
 }
+
 impl Default for NotebooksResponseMeta {
     fn default() -> Self {
         Self::new()

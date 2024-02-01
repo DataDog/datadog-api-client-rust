@@ -18,11 +18,12 @@ impl CloudCostActivityResponse {
         CloudCostActivityResponse { data: None }
     }
 
-    pub fn with_data(&mut self, value: crate::datadogV2::model::CloudCostActivity) -> &mut Self {
+    pub fn data(&mut self, value: crate::datadogV2::model::CloudCostActivity) -> &mut Self {
         self.data = Some(value);
         self
     }
 }
+
 impl Default for CloudCostActivityResponse {
     fn default() -> Self {
         Self::new()

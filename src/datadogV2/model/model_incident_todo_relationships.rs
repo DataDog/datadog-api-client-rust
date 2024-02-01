@@ -24,7 +24,7 @@ impl IncidentTodoRelationships {
         }
     }
 
-    pub fn with_created_by_user(
+    pub fn created_by_user(
         &mut self,
         value: crate::datadogV2::model::RelationshipToUser,
     ) -> &mut Self {
@@ -32,7 +32,7 @@ impl IncidentTodoRelationships {
         self
     }
 
-    pub fn with_last_modified_by_user(
+    pub fn last_modified_by_user(
         &mut self,
         value: crate::datadogV2::model::RelationshipToUser,
     ) -> &mut Self {
@@ -40,6 +40,7 @@ impl IncidentTodoRelationships {
         self
     }
 }
+
 impl Default for IncidentTodoRelationships {
     fn default() -> Self {
         Self::new()

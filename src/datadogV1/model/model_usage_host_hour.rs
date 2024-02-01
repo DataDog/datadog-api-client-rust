@@ -149,91 +149,92 @@ impl UsageHostHour {
         }
     }
 
-    pub fn with_agent_host_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn agent_host_count(&mut self, value: Option<i64>) -> &mut Self {
         self.agent_host_count = Some(value);
         self
     }
 
-    pub fn with_alibaba_host_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn alibaba_host_count(&mut self, value: Option<i64>) -> &mut Self {
         self.alibaba_host_count = Some(value);
         self
     }
 
-    pub fn with_apm_azure_app_service_host_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn apm_azure_app_service_host_count(&mut self, value: Option<i64>) -> &mut Self {
         self.apm_azure_app_service_host_count = Some(value);
         self
     }
 
-    pub fn with_apm_host_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn apm_host_count(&mut self, value: Option<i64>) -> &mut Self {
         self.apm_host_count = Some(value);
         self
     }
 
-    pub fn with_aws_host_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn aws_host_count(&mut self, value: Option<i64>) -> &mut Self {
         self.aws_host_count = Some(value);
         self
     }
 
-    pub fn with_azure_host_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn azure_host_count(&mut self, value: Option<i64>) -> &mut Self {
         self.azure_host_count = Some(value);
         self
     }
 
-    pub fn with_container_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn container_count(&mut self, value: Option<i64>) -> &mut Self {
         self.container_count = Some(value);
         self
     }
 
-    pub fn with_gcp_host_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn gcp_host_count(&mut self, value: Option<i64>) -> &mut Self {
         self.gcp_host_count = Some(value);
         self
     }
 
-    pub fn with_heroku_host_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn heroku_host_count(&mut self, value: Option<i64>) -> &mut Self {
         self.heroku_host_count = Some(value);
         self
     }
 
-    pub fn with_host_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn host_count(&mut self, value: Option<i64>) -> &mut Self {
         self.host_count = Some(value);
         self
     }
 
-    pub fn with_hour(&mut self, value: Option<String>) -> &mut Self {
+    pub fn hour(&mut self, value: Option<String>) -> &mut Self {
         self.hour = Some(value);
         self
     }
 
-    pub fn with_infra_azure_app_service(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn infra_azure_app_service(&mut self, value: Option<i64>) -> &mut Self {
         self.infra_azure_app_service = Some(value);
         self
     }
 
-    pub fn with_opentelemetry_apm_host_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn opentelemetry_apm_host_count(&mut self, value: Option<i64>) -> &mut Self {
         self.opentelemetry_apm_host_count = Some(value);
         self
     }
 
-    pub fn with_opentelemetry_host_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn opentelemetry_host_count(&mut self, value: Option<i64>) -> &mut Self {
         self.opentelemetry_host_count = Some(value);
         self
     }
 
-    pub fn with_org_name(&mut self, value: String) -> &mut Self {
+    pub fn org_name(&mut self, value: String) -> &mut Self {
         self.org_name = Some(value);
         self
     }
 
-    pub fn with_public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(&mut self, value: String) -> &mut Self {
         self.public_id = Some(value);
         self
     }
 
-    pub fn with_vsphere_host_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn vsphere_host_count(&mut self, value: Option<i64>) -> &mut Self {
         self.vsphere_host_count = Some(value);
         self
     }
 }
+
 impl Default for UsageHostHour {
     fn default() -> Self {
         Self::new()

@@ -28,12 +28,12 @@ impl EventsGroupBy {
         }
     }
 
-    pub fn with_limit(&mut self, value: i32) -> &mut Self {
+    pub fn limit(&mut self, value: i32) -> &mut Self {
         self.limit = Some(value);
         self
     }
 
-    pub fn with_sort(&mut self, value: crate::datadogV2::model::EventsGroupBySort) -> &mut Self {
+    pub fn sort(&mut self, value: crate::datadogV2::model::EventsGroupBySort) -> &mut Self {
         self.sort = Some(value);
         self
     }

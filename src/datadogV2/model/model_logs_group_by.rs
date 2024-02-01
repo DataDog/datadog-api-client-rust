@@ -42,33 +42,27 @@ impl LogsGroupBy {
         }
     }
 
-    pub fn with_histogram(
-        &mut self,
-        value: crate::datadogV2::model::LogsGroupByHistogram,
-    ) -> &mut Self {
+    pub fn histogram(&mut self, value: crate::datadogV2::model::LogsGroupByHistogram) -> &mut Self {
         self.histogram = Some(value);
         self
     }
 
-    pub fn with_limit(&mut self, value: i64) -> &mut Self {
+    pub fn limit(&mut self, value: i64) -> &mut Self {
         self.limit = Some(value);
         self
     }
 
-    pub fn with_missing(
-        &mut self,
-        value: crate::datadogV2::model::LogsGroupByMissing,
-    ) -> &mut Self {
+    pub fn missing(&mut self, value: crate::datadogV2::model::LogsGroupByMissing) -> &mut Self {
         self.missing = Some(value);
         self
     }
 
-    pub fn with_sort(&mut self, value: crate::datadogV2::model::LogsAggregateSort) -> &mut Self {
+    pub fn sort(&mut self, value: crate::datadogV2::model::LogsAggregateSort) -> &mut Self {
         self.sort = Some(value);
         self
     }
 
-    pub fn with_total(&mut self, value: crate::datadogV2::model::LogsGroupByTotal) -> &mut Self {
+    pub fn total(&mut self, value: crate::datadogV2::model::LogsGroupByTotal) -> &mut Self {
         self.total = Some(value);
         self
     }

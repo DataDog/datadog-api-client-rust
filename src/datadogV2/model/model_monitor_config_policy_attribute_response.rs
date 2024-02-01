@@ -24,7 +24,7 @@ impl MonitorConfigPolicyAttributeResponse {
         }
     }
 
-    pub fn with_policy(
+    pub fn policy(
         &mut self,
         value: crate::datadogV2::model::MonitorConfigPolicyPolicy,
     ) -> &mut Self {
@@ -32,7 +32,7 @@ impl MonitorConfigPolicyAttributeResponse {
         self
     }
 
-    pub fn with_policy_type(
+    pub fn policy_type(
         &mut self,
         value: crate::datadogV2::model::MonitorConfigPolicyType,
     ) -> &mut Self {
@@ -40,6 +40,7 @@ impl MonitorConfigPolicyAttributeResponse {
         self
     }
 }
+
 impl Default for MonitorConfigPolicyAttributeResponse {
     fn default() -> Self {
         Self::new()

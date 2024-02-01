@@ -8,7 +8,9 @@ use serde::{Deserialize, Serialize};
 #[serde(untagged)]
 pub enum IncidentAttachmentAttributes {
     IncidentAttachmentPostmortemAttributes(
-        crate::datadogV2::model::IncidentAttachmentPostmortemAttributes,
+        Box<crate::datadogV2::model::IncidentAttachmentPostmortemAttributes>,
     ),
-    IncidentAttachmentLinkAttributes(crate::datadogV2::model::IncidentAttachmentLinkAttributes),
+    IncidentAttachmentLinkAttributes(
+        Box<crate::datadogV2::model::IncidentAttachmentLinkAttributes>,
+    ),
 }

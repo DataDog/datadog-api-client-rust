@@ -28,7 +28,7 @@ impl MetricTagConfiguration {
         }
     }
 
-    pub fn with_attributes(
+    pub fn attributes(
         &mut self,
         value: crate::datadogV2::model::MetricTagConfigurationAttributes,
     ) -> &mut Self {
@@ -36,12 +36,12 @@ impl MetricTagConfiguration {
         self
     }
 
-    pub fn with_id(&mut self, value: String) -> &mut Self {
+    pub fn id(&mut self, value: String) -> &mut Self {
         self.id = Some(value);
         self
     }
 
-    pub fn with_type_(
+    pub fn type_(
         &mut self,
         value: crate::datadogV2::model::MetricTagConfigurationType,
     ) -> &mut Self {
@@ -49,6 +49,7 @@ impl MetricTagConfiguration {
         self
     }
 }
+
 impl Default for MetricTagConfiguration {
     fn default() -> Self {
         Self::new()

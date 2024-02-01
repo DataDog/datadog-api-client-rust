@@ -18,11 +18,12 @@ impl IntakePayloadAccepted {
         IntakePayloadAccepted { errors: None }
     }
 
-    pub fn with_errors(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn errors(&mut self, value: Vec<String>) -> &mut Self {
         self.errors = Some(value);
         self
     }
 }
+
 impl Default for IntakePayloadAccepted {
     fn default() -> Self {
         Self::new()

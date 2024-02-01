@@ -65,12 +65,12 @@ impl RUMApplicationListAttributes {
         }
     }
 
-    pub fn with_hash(&mut self, value: String) -> &mut Self {
+    pub fn hash(&mut self, value: String) -> &mut Self {
         self.hash = Some(value);
         self
     }
 
-    pub fn with_is_active(&mut self, value: bool) -> &mut Self {
+    pub fn is_active(&mut self, value: bool) -> &mut Self {
         self.is_active = Some(value);
         self
     }

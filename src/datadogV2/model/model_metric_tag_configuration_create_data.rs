@@ -31,7 +31,7 @@ impl MetricTagConfigurationCreateData {
         }
     }
 
-    pub fn with_attributes(
+    pub fn attributes(
         &mut self,
         value: crate::datadogV2::model::MetricTagConfigurationCreateAttributes,
     ) -> &mut Self {

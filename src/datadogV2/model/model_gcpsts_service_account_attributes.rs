@@ -44,41 +44,42 @@ impl GCPSTSServiceAccountAttributes {
         }
     }
 
-    pub fn with_account_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn account_tags(&mut self, value: Vec<String>) -> &mut Self {
         self.account_tags = Some(value);
         self
     }
 
-    pub fn with_automute(&mut self, value: bool) -> &mut Self {
+    pub fn automute(&mut self, value: bool) -> &mut Self {
         self.automute = Some(value);
         self
     }
 
-    pub fn with_client_email(&mut self, value: String) -> &mut Self {
+    pub fn client_email(&mut self, value: String) -> &mut Self {
         self.client_email = Some(value);
         self
     }
 
-    pub fn with_host_filters(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn host_filters(&mut self, value: Vec<String>) -> &mut Self {
         self.host_filters = Some(value);
         self
     }
 
-    pub fn with_is_cspm_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn is_cspm_enabled(&mut self, value: bool) -> &mut Self {
         self.is_cspm_enabled = Some(value);
         self
     }
 
-    pub fn with_is_security_command_center_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn is_security_command_center_enabled(&mut self, value: bool) -> &mut Self {
         self.is_security_command_center_enabled = Some(value);
         self
     }
 
-    pub fn with_resource_collection_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn resource_collection_enabled(&mut self, value: bool) -> &mut Self {
         self.resource_collection_enabled = Some(value);
         self
     }
 }
+
 impl Default for GCPSTSServiceAccountAttributes {
     fn default() -> Self {
         Self::new()

@@ -24,15 +24,12 @@ impl SyntheticsCIBatchMetadata {
         }
     }
 
-    pub fn with_ci(
-        &mut self,
-        value: crate::datadogV1::model::SyntheticsCIBatchMetadataCI,
-    ) -> &mut Self {
+    pub fn ci(&mut self, value: crate::datadogV1::model::SyntheticsCIBatchMetadataCI) -> &mut Self {
         self.ci = Some(value);
         self
     }
 
-    pub fn with_git(
+    pub fn git(
         &mut self,
         value: crate::datadogV1::model::SyntheticsCIBatchMetadataGit,
     ) -> &mut Self {
@@ -40,6 +37,7 @@ impl SyntheticsCIBatchMetadata {
         self
     }
 }
+
 impl Default for SyntheticsCIBatchMetadata {
     fn default() -> Self {
         Self::new()

@@ -32,32 +32,27 @@ impl ListPowerpacksResponse {
         }
     }
 
-    pub fn with_data(&mut self, value: Vec<crate::datadogV2::model::PowerpackData>) -> &mut Self {
+    pub fn data(&mut self, value: Vec<crate::datadogV2::model::PowerpackData>) -> &mut Self {
         self.data = Some(value);
         self
     }
 
-    pub fn with_included(&mut self, value: Vec<crate::datadogV2::model::User>) -> &mut Self {
+    pub fn included(&mut self, value: Vec<crate::datadogV2::model::User>) -> &mut Self {
         self.included = Some(value);
         self
     }
 
-    pub fn with_links(
-        &mut self,
-        value: crate::datadogV2::model::PowerpackResponseLinks,
-    ) -> &mut Self {
+    pub fn links(&mut self, value: crate::datadogV2::model::PowerpackResponseLinks) -> &mut Self {
         self.links = Some(value);
         self
     }
 
-    pub fn with_meta(
-        &mut self,
-        value: crate::datadogV2::model::PowerpacksResponseMeta,
-    ) -> &mut Self {
+    pub fn meta(&mut self, value: crate::datadogV2::model::PowerpacksResponseMeta) -> &mut Self {
         self.meta = Some(value);
         self
     }
 }
+
 impl Default for ListPowerpacksResponse {
     fn default() -> Self {
         Self::new()

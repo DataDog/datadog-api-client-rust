@@ -31,7 +31,7 @@ impl IncidentTimelineCellMarkdownCreateAttributes {
         }
     }
 
-    pub fn with_important(&mut self, value: bool) -> &mut Self {
+    pub fn important(&mut self, value: bool) -> &mut Self {
         self.important = Some(value);
         self
     }

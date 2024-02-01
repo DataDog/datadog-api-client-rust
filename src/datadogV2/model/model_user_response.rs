@@ -24,12 +24,12 @@ impl UserResponse {
         }
     }
 
-    pub fn with_data(&mut self, value: crate::datadogV2::model::User) -> &mut Self {
+    pub fn data(&mut self, value: crate::datadogV2::model::User) -> &mut Self {
         self.data = Some(value);
         self
     }
 
-    pub fn with_included(
+    pub fn included(
         &mut self,
         value: Vec<crate::datadogV2::model::UserResponseIncludedItem>,
     ) -> &mut Self {
@@ -37,6 +37,7 @@ impl UserResponse {
         self
     }
 }
+
 impl Default for UserResponse {
     fn default() -> Self {
         Self::new()

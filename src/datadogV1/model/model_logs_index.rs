@@ -44,12 +44,12 @@ impl LogsIndex {
         }
     }
 
-    pub fn with_daily_limit(&mut self, value: i64) -> &mut Self {
+    pub fn daily_limit(&mut self, value: i64) -> &mut Self {
         self.daily_limit = Some(value);
         self
     }
 
-    pub fn with_exclusion_filters(
+    pub fn exclusion_filters(
         &mut self,
         value: Vec<crate::datadogV1::model::LogsExclusion>,
     ) -> &mut Self {
@@ -57,12 +57,12 @@ impl LogsIndex {
         self
     }
 
-    pub fn with_is_rate_limited(&mut self, value: bool) -> &mut Self {
+    pub fn is_rate_limited(&mut self, value: bool) -> &mut Self {
         self.is_rate_limited = Some(value);
         self
     }
 
-    pub fn with_num_retention_days(&mut self, value: i64) -> &mut Self {
+    pub fn num_retention_days(&mut self, value: i64) -> &mut Self {
         self.num_retention_days = Some(value);
         self
     }

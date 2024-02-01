@@ -32,29 +32,27 @@ impl OrganizationCreateResponse {
         }
     }
 
-    pub fn with_api_key(&mut self, value: crate::datadogV1::model::ApiKey) -> &mut Self {
+    pub fn api_key(&mut self, value: crate::datadogV1::model::ApiKey) -> &mut Self {
         self.api_key = Some(value);
         self
     }
 
-    pub fn with_application_key(
-        &mut self,
-        value: crate::datadogV1::model::ApplicationKey,
-    ) -> &mut Self {
+    pub fn application_key(&mut self, value: crate::datadogV1::model::ApplicationKey) -> &mut Self {
         self.application_key = Some(value);
         self
     }
 
-    pub fn with_org(&mut self, value: crate::datadogV1::model::Organization) -> &mut Self {
+    pub fn org(&mut self, value: crate::datadogV1::model::Organization) -> &mut Self {
         self.org = Some(value);
         self
     }
 
-    pub fn with_user(&mut self, value: crate::datadogV1::model::User) -> &mut Self {
+    pub fn user(&mut self, value: crate::datadogV1::model::User) -> &mut Self {
         self.user = Some(value);
         self
     }
 }
+
 impl Default for OrganizationCreateResponse {
     fn default() -> Self {
         Self::new()

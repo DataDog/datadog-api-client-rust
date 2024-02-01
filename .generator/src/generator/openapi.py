@@ -90,11 +90,13 @@ def get_type_for_attribute(schema, attribute, current_name=None):
     return type_to_rust(child_schema, alternative_name=alternative_name)
 
 
-def get_type_for_parameter(parameter, version=None):
+def get_type_for_parameter(parameter, version=None, render_option=None):
     """Return Rust type name for the parameter."""
-    render_option = True
-    if "required" in parameter:
-        render_option = not parameter["required"]
+    if render_option is None:
+        if "required" in parameter:
+            render_option = not parameter["required"]
+        else:
+            render_option = True
     if "content" in parameter:
         assert "in" not in parameter
         for content in parameter["content"].values():

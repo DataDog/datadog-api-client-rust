@@ -18,7 +18,7 @@ impl UsageNetworkHostsResponse {
         UsageNetworkHostsResponse { usage: None }
     }
 
-    pub fn with_usage(
+    pub fn usage(
         &mut self,
         value: Vec<crate::datadogV1::model::UsageNetworkHostsHour>,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl UsageNetworkHostsResponse {
         self
     }
 }
+
 impl Default for UsageNetworkHostsResponse {
     fn default() -> Self {
         Self::new()

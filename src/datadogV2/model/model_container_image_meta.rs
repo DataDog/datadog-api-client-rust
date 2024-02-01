@@ -18,7 +18,7 @@ impl ContainerImageMeta {
         ContainerImageMeta { pagination: None }
     }
 
-    pub fn with_pagination(
+    pub fn pagination(
         &mut self,
         value: crate::datadogV2::model::ContainerImageMetaPage,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl ContainerImageMeta {
         self
     }
 }
+
 impl Default for ContainerImageMeta {
     fn default() -> Self {
         Self::new()

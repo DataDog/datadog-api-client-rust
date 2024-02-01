@@ -52,37 +52,37 @@ impl MetricsQueryResponse {
         }
     }
 
-    pub fn with_error(&mut self, value: String) -> &mut Self {
+    pub fn error(&mut self, value: String) -> &mut Self {
         self.error = Some(value);
         self
     }
 
-    pub fn with_from_date(&mut self, value: i64) -> &mut Self {
+    pub fn from_date(&mut self, value: i64) -> &mut Self {
         self.from_date = Some(value);
         self
     }
 
-    pub fn with_group_by(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn group_by(&mut self, value: Vec<String>) -> &mut Self {
         self.group_by = Some(value);
         self
     }
 
-    pub fn with_message(&mut self, value: String) -> &mut Self {
+    pub fn message(&mut self, value: String) -> &mut Self {
         self.message = Some(value);
         self
     }
 
-    pub fn with_query(&mut self, value: String) -> &mut Self {
+    pub fn query(&mut self, value: String) -> &mut Self {
         self.query = Some(value);
         self
     }
 
-    pub fn with_res_type(&mut self, value: String) -> &mut Self {
+    pub fn res_type(&mut self, value: String) -> &mut Self {
         self.res_type = Some(value);
         self
     }
 
-    pub fn with_series(
+    pub fn series(
         &mut self,
         value: Vec<crate::datadogV1::model::MetricsQueryMetadata>,
     ) -> &mut Self {
@@ -90,16 +90,17 @@ impl MetricsQueryResponse {
         self
     }
 
-    pub fn with_status(&mut self, value: String) -> &mut Self {
+    pub fn status(&mut self, value: String) -> &mut Self {
         self.status = Some(value);
         self
     }
 
-    pub fn with_to_date(&mut self, value: i64) -> &mut Self {
+    pub fn to_date(&mut self, value: i64) -> &mut Self {
         self.to_date = Some(value);
         self
     }
 }
+
 impl Default for MetricsQueryResponse {
     fn default() -> Self {
         Self::new()

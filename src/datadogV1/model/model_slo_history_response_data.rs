@@ -68,25 +68,22 @@ impl SLOHistoryResponseData {
         }
     }
 
-    pub fn with_from_ts(&mut self, value: i64) -> &mut Self {
+    pub fn from_ts(&mut self, value: i64) -> &mut Self {
         self.from_ts = Some(value);
         self
     }
 
-    pub fn with_group_by(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn group_by(&mut self, value: Vec<String>) -> &mut Self {
         self.group_by = Some(value);
         self
     }
 
-    pub fn with_groups(
-        &mut self,
-        value: Vec<crate::datadogV1::model::SLOHistoryMonitor>,
-    ) -> &mut Self {
+    pub fn groups(&mut self, value: Vec<crate::datadogV1::model::SLOHistoryMonitor>) -> &mut Self {
         self.groups = Some(value);
         self
     }
 
-    pub fn with_monitors(
+    pub fn monitors(
         &mut self,
         value: Vec<crate::datadogV1::model::SLOHistoryMonitor>,
     ) -> &mut Self {
@@ -94,17 +91,17 @@ impl SLOHistoryResponseData {
         self
     }
 
-    pub fn with_overall(&mut self, value: crate::datadogV1::model::SLOHistorySLIData) -> &mut Self {
+    pub fn overall(&mut self, value: crate::datadogV1::model::SLOHistorySLIData) -> &mut Self {
         self.overall = Some(value);
         self
     }
 
-    pub fn with_series(&mut self, value: crate::datadogV1::model::SLOHistoryMetrics) -> &mut Self {
+    pub fn series(&mut self, value: crate::datadogV1::model::SLOHistoryMetrics) -> &mut Self {
         self.series = Some(value);
         self
     }
 
-    pub fn with_thresholds(
+    pub fn thresholds(
         &mut self,
         value: std::collections::BTreeMap<String, crate::datadogV1::model::SLOThreshold>,
     ) -> &mut Self {
@@ -112,21 +109,22 @@ impl SLOHistoryResponseData {
         self
     }
 
-    pub fn with_to_ts(&mut self, value: i64) -> &mut Self {
+    pub fn to_ts(&mut self, value: i64) -> &mut Self {
         self.to_ts = Some(value);
         self
     }
 
-    pub fn with_type_(&mut self, value: crate::datadogV1::model::SLOType) -> &mut Self {
+    pub fn type_(&mut self, value: crate::datadogV1::model::SLOType) -> &mut Self {
         self.type_ = Some(value);
         self
     }
 
-    pub fn with_type_id(&mut self, value: crate::datadogV1::model::SLOTypeNumeric) -> &mut Self {
+    pub fn type_id(&mut self, value: crate::datadogV1::model::SLOTypeNumeric) -> &mut Self {
         self.type_id = Some(value);
         self
     }
 }
+
 impl Default for SLOHistoryResponseData {
     fn default() -> Self {
         Self::new()

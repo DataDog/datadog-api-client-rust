@@ -96,27 +96,27 @@ impl Monitor {
         }
     }
 
-    pub fn with_created(&mut self, value: String) -> &mut Self {
+    pub fn created(&mut self, value: String) -> &mut Self {
         self.created = Some(value);
         self
     }
 
-    pub fn with_creator(&mut self, value: crate::datadogV1::model::Creator) -> &mut Self {
+    pub fn creator(&mut self, value: crate::datadogV1::model::Creator) -> &mut Self {
         self.creator = Some(value);
         self
     }
 
-    pub fn with_deleted(&mut self, value: Option<String>) -> &mut Self {
+    pub fn deleted(&mut self, value: Option<String>) -> &mut Self {
         self.deleted = Some(value);
         self
     }
 
-    pub fn with_id(&mut self, value: i64) -> &mut Self {
+    pub fn id(&mut self, value: i64) -> &mut Self {
         self.id = Some(value);
         self
     }
 
-    pub fn with_matching_downtimes(
+    pub fn matching_downtimes(
         &mut self,
         value: Vec<crate::datadogV1::model::MatchingDowntime>,
     ) -> &mut Self {
@@ -124,32 +124,32 @@ impl Monitor {
         self
     }
 
-    pub fn with_message(&mut self, value: String) -> &mut Self {
+    pub fn message(&mut self, value: String) -> &mut Self {
         self.message = Some(value);
         self
     }
 
-    pub fn with_modified(&mut self, value: String) -> &mut Self {
+    pub fn modified(&mut self, value: String) -> &mut Self {
         self.modified = Some(value);
         self
     }
 
-    pub fn with_multi(&mut self, value: bool) -> &mut Self {
+    pub fn multi(&mut self, value: bool) -> &mut Self {
         self.multi = Some(value);
         self
     }
 
-    pub fn with_name(&mut self, value: String) -> &mut Self {
+    pub fn name(&mut self, value: String) -> &mut Self {
         self.name = Some(value);
         self
     }
 
-    pub fn with_options(&mut self, value: crate::datadogV1::model::MonitorOptions) -> &mut Self {
+    pub fn options(&mut self, value: crate::datadogV1::model::MonitorOptions) -> &mut Self {
         self.options = Some(value);
         self
     }
 
-    pub fn with_overall_state(
+    pub fn overall_state(
         &mut self,
         value: crate::datadogV1::model::MonitorOverallStates,
     ) -> &mut Self {
@@ -157,22 +157,22 @@ impl Monitor {
         self
     }
 
-    pub fn with_priority(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn priority(&mut self, value: Option<i64>) -> &mut Self {
         self.priority = Some(value);
         self
     }
 
-    pub fn with_restricted_roles(&mut self, value: Option<Vec<String>>) -> &mut Self {
+    pub fn restricted_roles(&mut self, value: Option<Vec<String>>) -> &mut Self {
         self.restricted_roles = Some(value);
         self
     }
 
-    pub fn with_state(&mut self, value: crate::datadogV1::model::MonitorState) -> &mut Self {
+    pub fn state(&mut self, value: crate::datadogV1::model::MonitorState) -> &mut Self {
         self.state = Some(value);
         self
     }
 
-    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
         self.tags = Some(value);
         self
     }

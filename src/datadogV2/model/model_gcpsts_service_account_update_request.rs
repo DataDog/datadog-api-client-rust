@@ -18,7 +18,7 @@ impl GCPSTSServiceAccountUpdateRequest {
         GCPSTSServiceAccountUpdateRequest { data: None }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: crate::datadogV2::model::GCPSTSServiceAccountUpdateRequestData,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl GCPSTSServiceAccountUpdateRequest {
         self
     }
 }
+
 impl Default for GCPSTSServiceAccountUpdateRequest {
     fn default() -> Self {
         Self::new()

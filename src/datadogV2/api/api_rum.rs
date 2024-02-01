@@ -6,7 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListRUMEventsOptionalParams is a struct for passing parameters to the method [`RUMAPI::list_rum_events`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListRUMEventsOptionalParams {
     /// Search query following RUM syntax.
     pub filter_query: Option<String>,
@@ -20,6 +20,39 @@ pub struct ListRUMEventsOptionalParams {
     pub page_cursor: Option<String>,
     /// Maximum number of events in the response.
     pub page_limit: Option<i32>,
+}
+
+impl ListRUMEventsOptionalParams {
+    /// Search query following RUM syntax.
+    pub fn filter_query(&mut self, value: String) -> &mut Self {
+        self.filter_query = Some(value);
+        self
+    }
+    /// Minimum timestamp for requested events.
+    pub fn filter_from(&mut self, value: String) -> &mut Self {
+        self.filter_from = Some(value);
+        self
+    }
+    /// Maximum timestamp for requested events.
+    pub fn filter_to(&mut self, value: String) -> &mut Self {
+        self.filter_to = Some(value);
+        self
+    }
+    /// Order of events in results.
+    pub fn sort(&mut self, value: crate::datadogV2::model::RUMSort) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+    /// List following results with a cursor provided in the previous query.
+    pub fn page_cursor(&mut self, value: String) -> &mut Self {
+        self.page_cursor = Some(value);
+        self
+    }
+    /// Maximum number of events in the response.
+    pub fn page_limit(&mut self, value: i32) -> &mut Self {
+        self.page_limit = Some(value);
+        self
+    }
 }
 
 /// AggregateRUMEventsError is a struct for typed errors of method [`RUMAPI::aggregate_rum_events`]

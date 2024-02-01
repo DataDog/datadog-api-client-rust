@@ -24,22 +24,17 @@ impl ServiceDefinitionDataAttributes {
         }
     }
 
-    pub fn with_meta(
-        &mut self,
-        value: crate::datadogV2::model::ServiceDefinitionMeta,
-    ) -> &mut Self {
+    pub fn meta(&mut self, value: crate::datadogV2::model::ServiceDefinitionMeta) -> &mut Self {
         self.meta = Some(value);
         self
     }
 
-    pub fn with_schema(
-        &mut self,
-        value: crate::datadogV2::model::ServiceDefinitionSchema,
-    ) -> &mut Self {
+    pub fn schema(&mut self, value: crate::datadogV2::model::ServiceDefinitionSchema) -> &mut Self {
         self.schema = Some(value);
         self
     }
 }
+
 impl Default for ServiceDefinitionDataAttributes {
     fn default() -> Self {
         Self::new()

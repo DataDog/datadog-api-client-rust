@@ -24,7 +24,7 @@ impl SyntheticsTestRequestCertificate {
         }
     }
 
-    pub fn with_cert(
+    pub fn cert(
         &mut self,
         value: crate::datadogV1::model::SyntheticsTestRequestCertificateItem,
     ) -> &mut Self {
@@ -32,7 +32,7 @@ impl SyntheticsTestRequestCertificate {
         self
     }
 
-    pub fn with_key(
+    pub fn key(
         &mut self,
         value: crate::datadogV1::model::SyntheticsTestRequestCertificateItem,
     ) -> &mut Self {
@@ -40,6 +40,7 @@ impl SyntheticsTestRequestCertificate {
         self
     }
 }
+
 impl Default for SyntheticsTestRequestCertificate {
     fn default() -> Self {
         Self::new()

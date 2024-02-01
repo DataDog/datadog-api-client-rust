@@ -8,10 +8,14 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum NotebookCellCreateRequestAttributes {
-    NotebookMarkdownCellAttributes(crate::datadogV1::model::NotebookMarkdownCellAttributes),
-    NotebookTimeseriesCellAttributes(crate::datadogV1::model::NotebookTimeseriesCellAttributes),
-    NotebookToplistCellAttributes(crate::datadogV1::model::NotebookToplistCellAttributes),
-    NotebookHeatMapCellAttributes(crate::datadogV1::model::NotebookHeatMapCellAttributes),
-    NotebookDistributionCellAttributes(crate::datadogV1::model::NotebookDistributionCellAttributes),
-    NotebookLogStreamCellAttributes(crate::datadogV1::model::NotebookLogStreamCellAttributes),
+    NotebookMarkdownCellAttributes(Box<crate::datadogV1::model::NotebookMarkdownCellAttributes>),
+    NotebookTimeseriesCellAttributes(
+        Box<crate::datadogV1::model::NotebookTimeseriesCellAttributes>,
+    ),
+    NotebookToplistCellAttributes(Box<crate::datadogV1::model::NotebookToplistCellAttributes>),
+    NotebookHeatMapCellAttributes(Box<crate::datadogV1::model::NotebookHeatMapCellAttributes>),
+    NotebookDistributionCellAttributes(
+        Box<crate::datadogV1::model::NotebookDistributionCellAttributes>,
+    ),
+    NotebookLogStreamCellAttributes(Box<crate::datadogV1::model::NotebookLogStreamCellAttributes>),
 }

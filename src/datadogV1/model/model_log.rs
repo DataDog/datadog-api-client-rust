@@ -24,16 +24,17 @@ impl Log {
         }
     }
 
-    pub fn with_content(&mut self, value: crate::datadogV1::model::LogContent) -> &mut Self {
+    pub fn content(&mut self, value: crate::datadogV1::model::LogContent) -> &mut Self {
         self.content = Some(value);
         self
     }
 
-    pub fn with_id(&mut self, value: String) -> &mut Self {
+    pub fn id(&mut self, value: String) -> &mut Self {
         self.id = Some(value);
         self
     }
 }
+
 impl Default for Log {
     fn default() -> Self {
         Self::new()

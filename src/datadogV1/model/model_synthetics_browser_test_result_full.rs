@@ -47,7 +47,7 @@ impl SyntheticsBrowserTestResultFull {
         }
     }
 
-    pub fn with_check(
+    pub fn check(
         &mut self,
         value: crate::datadogV1::model::SyntheticsBrowserTestResultFullCheck,
     ) -> &mut Self {
@@ -55,22 +55,22 @@ impl SyntheticsBrowserTestResultFull {
         self
     }
 
-    pub fn with_check_time(&mut self, value: f64) -> &mut Self {
+    pub fn check_time(&mut self, value: f64) -> &mut Self {
         self.check_time = Some(value);
         self
     }
 
-    pub fn with_check_version(&mut self, value: i64) -> &mut Self {
+    pub fn check_version(&mut self, value: i64) -> &mut Self {
         self.check_version = Some(value);
         self
     }
 
-    pub fn with_probe_dc(&mut self, value: String) -> &mut Self {
+    pub fn probe_dc(&mut self, value: String) -> &mut Self {
         self.probe_dc = Some(value);
         self
     }
 
-    pub fn with_result(
+    pub fn result(
         &mut self,
         value: crate::datadogV1::model::SyntheticsBrowserTestResultData,
     ) -> &mut Self {
@@ -78,12 +78,12 @@ impl SyntheticsBrowserTestResultFull {
         self
     }
 
-    pub fn with_result_id(&mut self, value: String) -> &mut Self {
+    pub fn result_id(&mut self, value: String) -> &mut Self {
         self.result_id = Some(value);
         self
     }
 
-    pub fn with_status(
+    pub fn status(
         &mut self,
         value: crate::datadogV1::model::SyntheticsTestMonitorStatus,
     ) -> &mut Self {
@@ -91,6 +91,7 @@ impl SyntheticsBrowserTestResultFull {
         self
     }
 }
+
 impl Default for SyntheticsBrowserTestResultFull {
     fn default() -> Self {
         Self::new()

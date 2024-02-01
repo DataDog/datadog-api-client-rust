@@ -6,12 +6,25 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListDowntimesOptionalParams is a struct for passing parameters to the method [`DowntimesAPI::list_downtimes`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListDowntimesOptionalParams {
     /// Only return downtimes that are active when the request is made.
     pub current_only: Option<bool>,
     /// Return creator information.
     pub with_creator: Option<bool>,
+}
+
+impl ListDowntimesOptionalParams {
+    /// Only return downtimes that are active when the request is made.
+    pub fn current_only(&mut self, value: bool) -> &mut Self {
+        self.current_only = Some(value);
+        self
+    }
+    /// Return creator information.
+    pub fn with_creator(&mut self, value: bool) -> &mut Self {
+        self.with_creator = Some(value);
+        self
+    }
 }
 
 /// CancelDowntimeError is a struct for typed errors of method [`DowntimesAPI::cancel_downtime`]

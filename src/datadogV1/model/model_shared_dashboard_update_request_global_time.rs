@@ -18,7 +18,7 @@ impl SharedDashboardUpdateRequestGlobalTime {
         SharedDashboardUpdateRequestGlobalTime { live_span: None }
     }
 
-    pub fn with_live_span(
+    pub fn live_span(
         &mut self,
         value: crate::datadogV1::model::DashboardGlobalTimeLiveSpan,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl SharedDashboardUpdateRequestGlobalTime {
         self
     }
 }
+
 impl Default for SharedDashboardUpdateRequestGlobalTime {
     fn default() -> Self {
         Self::new()

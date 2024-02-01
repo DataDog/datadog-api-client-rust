@@ -18,7 +18,7 @@ impl SecurityMonitoringSignalsListResponseMeta {
         SecurityMonitoringSignalsListResponseMeta { page: None }
     }
 
-    pub fn with_page(
+    pub fn page(
         &mut self,
         value: crate::datadogV2::model::SecurityMonitoringSignalsListResponseMetaPage,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl SecurityMonitoringSignalsListResponseMeta {
         self
     }
 }
+
 impl Default for SecurityMonitoringSignalsListResponseMeta {
     fn default() -> Self {
         Self::new()

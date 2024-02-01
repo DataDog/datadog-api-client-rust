@@ -24,12 +24,12 @@ impl APIKeyResponse {
         }
     }
 
-    pub fn with_data(&mut self, value: crate::datadogV2::model::FullAPIKey) -> &mut Self {
+    pub fn data(&mut self, value: crate::datadogV2::model::FullAPIKey) -> &mut Self {
         self.data = Some(value);
         self
     }
 
-    pub fn with_included(
+    pub fn included(
         &mut self,
         value: Vec<crate::datadogV2::model::APIKeyResponseIncludedItem>,
     ) -> &mut Self {
@@ -37,6 +37,7 @@ impl APIKeyResponse {
         self
     }
 }
+
 impl Default for APIKeyResponse {
     fn default() -> Self {
         Self::new()

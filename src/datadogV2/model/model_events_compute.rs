@@ -28,12 +28,12 @@ impl EventsCompute {
         }
     }
 
-    pub fn with_interval(&mut self, value: i64) -> &mut Self {
+    pub fn interval(&mut self, value: i64) -> &mut Self {
         self.interval = Some(value);
         self
     }
 
-    pub fn with_metric(&mut self, value: String) -> &mut Self {
+    pub fn metric(&mut self, value: String) -> &mut Self {
         self.metric = Some(value);
         self
     }

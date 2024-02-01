@@ -24,16 +24,17 @@ impl EventListResponse {
         }
     }
 
-    pub fn with_events(&mut self, value: Vec<crate::datadogV1::model::Event>) -> &mut Self {
+    pub fn events(&mut self, value: Vec<crate::datadogV1::model::Event>) -> &mut Self {
         self.events = Some(value);
         self
     }
 
-    pub fn with_status(&mut self, value: String) -> &mut Self {
+    pub fn status(&mut self, value: String) -> &mut Self {
         self.status = Some(value);
         self
     }
 }
+
 impl Default for EventListResponse {
     fn default() -> Self {
         Self::new()

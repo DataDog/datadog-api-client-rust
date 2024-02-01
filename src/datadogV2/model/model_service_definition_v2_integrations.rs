@@ -24,7 +24,7 @@ impl ServiceDefinitionV2Integrations {
         }
     }
 
-    pub fn with_opsgenie(
+    pub fn opsgenie(
         &mut self,
         value: crate::datadogV2::model::ServiceDefinitionV2Opsgenie,
     ) -> &mut Self {
@@ -32,11 +32,12 @@ impl ServiceDefinitionV2Integrations {
         self
     }
 
-    pub fn with_pagerduty(&mut self, value: String) -> &mut Self {
+    pub fn pagerduty(&mut self, value: String) -> &mut Self {
         self.pagerduty = Some(value);
         self
     }
 }
+
 impl Default for ServiceDefinitionV2Integrations {
     fn default() -> Self {
         Self::new()

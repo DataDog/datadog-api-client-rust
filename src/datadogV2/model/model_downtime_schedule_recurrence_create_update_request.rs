@@ -37,7 +37,7 @@ impl DowntimeScheduleRecurrenceCreateUpdateRequest {
         }
     }
 
-    pub fn with_start(&mut self, value: Option<String>) -> &mut Self {
+    pub fn start(&mut self, value: Option<String>) -> &mut Self {
         self.start = Some(value);
         self
     }

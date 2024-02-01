@@ -45,7 +45,7 @@ impl MonitorFormulaAndFunctionEventQueryDefinition {
         }
     }
 
-    pub fn with_group_by(
+    pub fn group_by(
         &mut self,
         value: Vec<crate::datadogV1::model::MonitorFormulaAndFunctionEventQueryGroupBy>,
     ) -> &mut Self {
@@ -53,12 +53,12 @@ impl MonitorFormulaAndFunctionEventQueryDefinition {
         self
     }
 
-    pub fn with_indexes(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn indexes(&mut self, value: Vec<String>) -> &mut Self {
         self.indexes = Some(value);
         self
     }
 
-    pub fn with_search(
+    pub fn search(
         &mut self,
         value: crate::datadogV1::model::MonitorFormulaAndFunctionEventQueryDefinitionSearch,
     ) -> &mut Self {

@@ -24,7 +24,7 @@ impl HourlyUsageAttributionResponse {
         }
     }
 
-    pub fn with_metadata(
+    pub fn metadata(
         &mut self,
         value: crate::datadogV1::model::HourlyUsageAttributionMetadata,
     ) -> &mut Self {
@@ -32,7 +32,7 @@ impl HourlyUsageAttributionResponse {
         self
     }
 
-    pub fn with_usage(
+    pub fn usage(
         &mut self,
         value: Vec<crate::datadogV1::model::HourlyUsageAttributionBody>,
     ) -> &mut Self {
@@ -40,6 +40,7 @@ impl HourlyUsageAttributionResponse {
         self
     }
 }
+
 impl Default for HourlyUsageAttributionResponse {
     fn default() -> Self {
         Self::new()

@@ -28,17 +28,17 @@ impl ContainerImageGroupAttributes {
         }
     }
 
-    pub fn with_count(&mut self, value: i64) -> &mut Self {
+    pub fn count(&mut self, value: i64) -> &mut Self {
         self.count = Some(value);
         self
     }
 
-    pub fn with_name(&mut self, value: String) -> &mut Self {
+    pub fn name(&mut self, value: String) -> &mut Self {
         self.name = Some(value);
         self
     }
 
-    pub fn with_tags(
+    pub fn tags(
         &mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
     ) -> &mut Self {
@@ -46,6 +46,7 @@ impl ContainerImageGroupAttributes {
         self
     }
 }
+
 impl Default for ContainerImageGroupAttributes {
     fn default() -> Self {
         Self::new()

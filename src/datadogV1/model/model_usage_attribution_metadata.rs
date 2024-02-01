@@ -24,7 +24,7 @@ impl UsageAttributionMetadata {
         }
     }
 
-    pub fn with_aggregates(
+    pub fn aggregates(
         &mut self,
         value: Vec<crate::datadogV1::model::UsageAttributionAggregatesBody>,
     ) -> &mut Self {
@@ -32,7 +32,7 @@ impl UsageAttributionMetadata {
         self
     }
 
-    pub fn with_pagination(
+    pub fn pagination(
         &mut self,
         value: crate::datadogV1::model::UsageAttributionPagination,
     ) -> &mut Self {
@@ -40,6 +40,7 @@ impl UsageAttributionMetadata {
         self
     }
 }
+
 impl Default for UsageAttributionMetadata {
     fn default() -> Self {
         Self::new()

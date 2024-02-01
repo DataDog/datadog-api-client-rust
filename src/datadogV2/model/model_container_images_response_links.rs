@@ -36,31 +36,32 @@ impl ContainerImagesResponseLinks {
         }
     }
 
-    pub fn with_first(&mut self, value: String) -> &mut Self {
+    pub fn first(&mut self, value: String) -> &mut Self {
         self.first = Some(value);
         self
     }
 
-    pub fn with_last(&mut self, value: Option<String>) -> &mut Self {
+    pub fn last(&mut self, value: Option<String>) -> &mut Self {
         self.last = Some(value);
         self
     }
 
-    pub fn with_next(&mut self, value: Option<String>) -> &mut Self {
+    pub fn next(&mut self, value: Option<String>) -> &mut Self {
         self.next = Some(value);
         self
     }
 
-    pub fn with_prev(&mut self, value: Option<String>) -> &mut Self {
+    pub fn prev(&mut self, value: Option<String>) -> &mut Self {
         self.prev = Some(value);
         self
     }
 
-    pub fn with_self_(&mut self, value: String) -> &mut Self {
+    pub fn self_(&mut self, value: String) -> &mut Self {
         self.self_ = Some(value);
         self
     }
 }
+
 impl Default for ContainerImagesResponseLinks {
     fn default() -> Self {
         Self::new()

@@ -28,21 +28,22 @@ impl SyntheticsTestOptionsSchedulingTimeframe {
         }
     }
 
-    pub fn with_day(&mut self, value: i32) -> &mut Self {
+    pub fn day(&mut self, value: i32) -> &mut Self {
         self.day = Some(value);
         self
     }
 
-    pub fn with_from(&mut self, value: String) -> &mut Self {
+    pub fn from(&mut self, value: String) -> &mut Self {
         self.from = Some(value);
         self
     }
 
-    pub fn with_to(&mut self, value: String) -> &mut Self {
+    pub fn to(&mut self, value: String) -> &mut Self {
         self.to = Some(value);
         self
     }
 }
+
 impl Default for SyntheticsTestOptionsSchedulingTimeframe {
     fn default() -> Self {
         Self::new()

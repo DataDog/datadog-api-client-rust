@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum TeamIncluded {
-    User(crate::datadogV2::model::User),
-    TeamLink(crate::datadogV2::model::TeamLink),
-    UserTeamPermission(crate::datadogV2::model::UserTeamPermission),
+    User(Box<crate::datadogV2::model::User>),
+    TeamLink(Box<crate::datadogV2::model::TeamLink>),
+    UserTeamPermission(Box<crate::datadogV2::model::UserTeamPermission>),
 }

@@ -18,7 +18,7 @@ impl UsageLogsByIndexResponse {
         UsageLogsByIndexResponse { usage: None }
     }
 
-    pub fn with_usage(
+    pub fn usage(
         &mut self,
         value: Vec<crate::datadogV1::model::UsageLogsByIndexHour>,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl UsageLogsByIndexResponse {
         self
     }
 }
+
 impl Default for UsageLogsByIndexResponse {
     fn default() -> Self {
         Self::new()

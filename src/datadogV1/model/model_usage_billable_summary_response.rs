@@ -18,7 +18,7 @@ impl UsageBillableSummaryResponse {
         UsageBillableSummaryResponse { usage: None }
     }
 
-    pub fn with_usage(
+    pub fn usage(
         &mut self,
         value: Vec<crate::datadogV1::model::UsageBillableSummaryHour>,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl UsageBillableSummaryResponse {
         self
     }
 }
+
 impl Default for UsageBillableSummaryResponse {
     fn default() -> Self {
         Self::new()

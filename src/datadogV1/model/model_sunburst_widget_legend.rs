@@ -7,8 +7,8 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SunburstWidgetLegend {
-    SunburstWidgetLegendTable(crate::datadogV1::model::SunburstWidgetLegendTable),
+    SunburstWidgetLegendTable(Box<crate::datadogV1::model::SunburstWidgetLegendTable>),
     SunburstWidgetLegendInlineAutomatic(
-        crate::datadogV1::model::SunburstWidgetLegendInlineAutomatic,
+        Box<crate::datadogV1::model::SunburstWidgetLegendInlineAutomatic>,
     ),
 }

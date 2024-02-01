@@ -24,7 +24,7 @@ impl LogsGrokParserRules {
         }
     }
 
-    pub fn with_support_rules(&mut self, value: String) -> &mut Self {
+    pub fn support_rules(&mut self, value: String) -> &mut Self {
         self.support_rules = Some(value);
         self
     }

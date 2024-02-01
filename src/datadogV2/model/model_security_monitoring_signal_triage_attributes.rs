@@ -56,17 +56,17 @@ impl SecurityMonitoringSignalTriageAttributes {
         }
     }
 
-    pub fn with_archive_comment(&mut self, value: String) -> &mut Self {
+    pub fn archive_comment(&mut self, value: String) -> &mut Self {
         self.archive_comment = Some(value);
         self
     }
 
-    pub fn with_archive_comment_timestamp(&mut self, value: i64) -> &mut Self {
+    pub fn archive_comment_timestamp(&mut self, value: i64) -> &mut Self {
         self.archive_comment_timestamp = Some(value);
         self
     }
 
-    pub fn with_archive_comment_user(
+    pub fn archive_comment_user(
         &mut self,
         value: crate::datadogV2::model::SecurityMonitoringTriageUser,
     ) -> &mut Self {
@@ -74,7 +74,7 @@ impl SecurityMonitoringSignalTriageAttributes {
         self
     }
 
-    pub fn with_archive_reason(
+    pub fn archive_reason(
         &mut self,
         value: crate::datadogV2::model::SecurityMonitoringSignalArchiveReason,
     ) -> &mut Self {
@@ -82,12 +82,12 @@ impl SecurityMonitoringSignalTriageAttributes {
         self
     }
 
-    pub fn with_state_update_timestamp(&mut self, value: i64) -> &mut Self {
+    pub fn state_update_timestamp(&mut self, value: i64) -> &mut Self {
         self.state_update_timestamp = Some(value);
         self
     }
 
-    pub fn with_state_update_user(
+    pub fn state_update_user(
         &mut self,
         value: crate::datadogV2::model::SecurityMonitoringTriageUser,
     ) -> &mut Self {

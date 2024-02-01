@@ -40,12 +40,12 @@ impl WidgetFormula {
         }
     }
 
-    pub fn with_alias(&mut self, value: String) -> &mut Self {
+    pub fn alias(&mut self, value: String) -> &mut Self {
         self.alias = Some(value);
         self
     }
 
-    pub fn with_cell_display_mode(
+    pub fn cell_display_mode(
         &mut self,
         value: crate::datadogV1::model::TableWidgetCellDisplayMode,
     ) -> &mut Self {
@@ -53,7 +53,7 @@ impl WidgetFormula {
         self
     }
 
-    pub fn with_conditional_formats(
+    pub fn conditional_formats(
         &mut self,
         value: Vec<crate::datadogV1::model::WidgetConditionalFormat>,
     ) -> &mut Self {
@@ -61,12 +61,12 @@ impl WidgetFormula {
         self
     }
 
-    pub fn with_limit(&mut self, value: crate::datadogV1::model::WidgetFormulaLimit) -> &mut Self {
+    pub fn limit(&mut self, value: crate::datadogV1::model::WidgetFormulaLimit) -> &mut Self {
         self.limit = Some(value);
         self
     }
 
-    pub fn with_style(&mut self, value: crate::datadogV1::model::WidgetFormulaStyle) -> &mut Self {
+    pub fn style(&mut self, value: crate::datadogV1::model::WidgetFormulaStyle) -> &mut Self {
         self.style = Some(value);
         self
     }

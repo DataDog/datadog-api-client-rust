@@ -40,12 +40,12 @@ impl NotebookCreateDataAttributes {
         }
     }
 
-    pub fn with_metadata(&mut self, value: crate::datadogV1::model::NotebookMetadata) -> &mut Self {
+    pub fn metadata(&mut self, value: crate::datadogV1::model::NotebookMetadata) -> &mut Self {
         self.metadata = Some(value);
         self
     }
 
-    pub fn with_status(&mut self, value: crate::datadogV1::model::NotebookStatus) -> &mut Self {
+    pub fn status(&mut self, value: crate::datadogV1::model::NotebookStatus) -> &mut Self {
         self.status = Some(value);
         self
     }

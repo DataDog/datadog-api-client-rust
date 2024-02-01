@@ -36,21 +36,22 @@ impl UsageTopAvgMetricsPagination {
         }
     }
 
-    pub fn with_limit(&mut self, value: i64) -> &mut Self {
+    pub fn limit(&mut self, value: i64) -> &mut Self {
         self.limit = Some(value);
         self
     }
 
-    pub fn with_next_record_id(&mut self, value: Option<String>) -> &mut Self {
+    pub fn next_record_id(&mut self, value: Option<String>) -> &mut Self {
         self.next_record_id = Some(value);
         self
     }
 
-    pub fn with_total_number_of_records(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn total_number_of_records(&mut self, value: Option<i64>) -> &mut Self {
         self.total_number_of_records = Some(value);
         self
     }
 }
+
 impl Default for UsageTopAvgMetricsPagination {
     fn default() -> Self {
         Self::new()

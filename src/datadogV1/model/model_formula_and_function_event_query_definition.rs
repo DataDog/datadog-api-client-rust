@@ -48,7 +48,7 @@ impl FormulaAndFunctionEventQueryDefinition {
         }
     }
 
-    pub fn with_group_by(
+    pub fn group_by(
         &mut self,
         value: Vec<crate::datadogV1::model::FormulaAndFunctionEventQueryGroupBy>,
     ) -> &mut Self {
@@ -56,12 +56,12 @@ impl FormulaAndFunctionEventQueryDefinition {
         self
     }
 
-    pub fn with_indexes(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn indexes(&mut self, value: Vec<String>) -> &mut Self {
         self.indexes = Some(value);
         self
     }
 
-    pub fn with_search(
+    pub fn search(
         &mut self,
         value: crate::datadogV1::model::FormulaAndFunctionEventQueryDefinitionSearch,
     ) -> &mut Self {
@@ -69,7 +69,7 @@ impl FormulaAndFunctionEventQueryDefinition {
         self
     }
 
-    pub fn with_storage(&mut self, value: String) -> &mut Self {
+    pub fn storage(&mut self, value: String) -> &mut Self {
         self.storage = Some(value);
         self
     }

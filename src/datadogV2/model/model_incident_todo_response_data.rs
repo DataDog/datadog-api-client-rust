@@ -35,7 +35,7 @@ impl IncidentTodoResponseData {
         }
     }
 
-    pub fn with_attributes(
+    pub fn attributes(
         &mut self,
         value: crate::datadogV2::model::IncidentTodoAttributes,
     ) -> &mut Self {
@@ -43,7 +43,7 @@ impl IncidentTodoResponseData {
         self
     }
 
-    pub fn with_relationships(
+    pub fn relationships(
         &mut self,
         value: crate::datadogV2::model::IncidentTodoRelationships,
     ) -> &mut Self {

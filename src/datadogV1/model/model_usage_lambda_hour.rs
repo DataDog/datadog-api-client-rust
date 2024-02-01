@@ -45,31 +45,32 @@ impl UsageLambdaHour {
         }
     }
 
-    pub fn with_func_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn func_count(&mut self, value: Option<i64>) -> &mut Self {
         self.func_count = Some(value);
         self
     }
 
-    pub fn with_hour(&mut self, value: String) -> &mut Self {
+    pub fn hour(&mut self, value: String) -> &mut Self {
         self.hour = Some(value);
         self
     }
 
-    pub fn with_invocations_sum(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn invocations_sum(&mut self, value: Option<i64>) -> &mut Self {
         self.invocations_sum = Some(value);
         self
     }
 
-    pub fn with_org_name(&mut self, value: String) -> &mut Self {
+    pub fn org_name(&mut self, value: String) -> &mut Self {
         self.org_name = Some(value);
         self
     }
 
-    pub fn with_public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(&mut self, value: String) -> &mut Self {
         self.public_id = Some(value);
         self
     }
 }
+
 impl Default for UsageLambdaHour {
     fn default() -> Self {
         Self::new()

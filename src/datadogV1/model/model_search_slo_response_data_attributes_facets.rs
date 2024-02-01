@@ -56,7 +56,7 @@ impl SearchSLOResponseDataAttributesFacets {
         }
     }
 
-    pub fn with_all_tags(
+    pub fn all_tags(
         &mut self,
         value: Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectString>,
     ) -> &mut Self {
@@ -64,7 +64,7 @@ impl SearchSLOResponseDataAttributesFacets {
         self
     }
 
-    pub fn with_creator_name(
+    pub fn creator_name(
         &mut self,
         value: Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectString>,
     ) -> &mut Self {
@@ -72,7 +72,7 @@ impl SearchSLOResponseDataAttributesFacets {
         self
     }
 
-    pub fn with_env_tags(
+    pub fn env_tags(
         &mut self,
         value: Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectString>,
     ) -> &mut Self {
@@ -80,7 +80,7 @@ impl SearchSLOResponseDataAttributesFacets {
         self
     }
 
-    pub fn with_service_tags(
+    pub fn service_tags(
         &mut self,
         value: Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectString>,
     ) -> &mut Self {
@@ -88,7 +88,7 @@ impl SearchSLOResponseDataAttributesFacets {
         self
     }
 
-    pub fn with_slo_type(
+    pub fn slo_type(
         &mut self,
         value: Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectInt>,
     ) -> &mut Self {
@@ -96,7 +96,7 @@ impl SearchSLOResponseDataAttributesFacets {
         self
     }
 
-    pub fn with_target(
+    pub fn target(
         &mut self,
         value: Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectInt>,
     ) -> &mut Self {
@@ -104,7 +104,7 @@ impl SearchSLOResponseDataAttributesFacets {
         self
     }
 
-    pub fn with_team_tags(
+    pub fn team_tags(
         &mut self,
         value: Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectString>,
     ) -> &mut Self {
@@ -112,7 +112,7 @@ impl SearchSLOResponseDataAttributesFacets {
         self
     }
 
-    pub fn with_timeframe(
+    pub fn timeframe(
         &mut self,
         value: Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectString>,
     ) -> &mut Self {
@@ -120,6 +120,7 @@ impl SearchSLOResponseDataAttributesFacets {
         self
     }
 }
+
 impl Default for SearchSLOResponseDataAttributesFacets {
     fn default() -> Self {
         Self::new()

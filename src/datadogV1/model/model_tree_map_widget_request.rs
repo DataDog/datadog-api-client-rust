@@ -32,20 +32,17 @@ impl TreeMapWidgetRequest {
         }
     }
 
-    pub fn with_formulas(
-        &mut self,
-        value: Vec<crate::datadogV1::model::WidgetFormula>,
-    ) -> &mut Self {
+    pub fn formulas(&mut self, value: Vec<crate::datadogV1::model::WidgetFormula>) -> &mut Self {
         self.formulas = Some(value);
         self
     }
 
-    pub fn with_q(&mut self, value: String) -> &mut Self {
+    pub fn q(&mut self, value: String) -> &mut Self {
         self.q = Some(value);
         self
     }
 
-    pub fn with_queries(
+    pub fn queries(
         &mut self,
         value: Vec<crate::datadogV1::model::FormulaAndFunctionQueryDefinition>,
     ) -> &mut Self {
@@ -53,7 +50,7 @@ impl TreeMapWidgetRequest {
         self
     }
 
-    pub fn with_response_format(
+    pub fn response_format(
         &mut self,
         value: crate::datadogV1::model::FormulaAndFunctionResponseFormat,
     ) -> &mut Self {
@@ -61,6 +58,7 @@ impl TreeMapWidgetRequest {
         self
     }
 }
+
 impl Default for TreeMapWidgetRequest {
     fn default() -> Self {
         Self::new()

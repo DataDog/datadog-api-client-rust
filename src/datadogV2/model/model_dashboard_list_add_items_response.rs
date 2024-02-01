@@ -20,7 +20,7 @@ impl DashboardListAddItemsResponse {
         }
     }
 
-    pub fn with_added_dashboards_to_list(
+    pub fn added_dashboards_to_list(
         &mut self,
         value: Vec<crate::datadogV2::model::DashboardListItemResponse>,
     ) -> &mut Self {
@@ -28,6 +28,7 @@ impl DashboardListAddItemsResponse {
         self
     }
 }
+
 impl Default for DashboardListAddItemsResponse {
     fn default() -> Self {
         Self::new()

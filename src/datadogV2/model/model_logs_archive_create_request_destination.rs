@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum LogsArchiveCreateRequestDestination {
-    LogsArchiveDestinationAzure(crate::datadogV2::model::LogsArchiveDestinationAzure),
-    LogsArchiveDestinationGCS(crate::datadogV2::model::LogsArchiveDestinationGCS),
-    LogsArchiveDestinationS3(crate::datadogV2::model::LogsArchiveDestinationS3),
+    LogsArchiveDestinationAzure(Box<crate::datadogV2::model::LogsArchiveDestinationAzure>),
+    LogsArchiveDestinationGCS(Box<crate::datadogV2::model::LogsArchiveDestinationGCS>),
+    LogsArchiveDestinationS3(Box<crate::datadogV2::model::LogsArchiveDestinationS3>),
 }

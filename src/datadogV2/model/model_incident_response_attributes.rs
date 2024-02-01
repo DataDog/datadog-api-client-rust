@@ -153,52 +153,52 @@ impl IncidentResponseAttributes {
         }
     }
 
-    pub fn with_archived(&mut self, value: Option<String>) -> &mut Self {
+    pub fn archived(&mut self, value: Option<String>) -> &mut Self {
         self.archived = Some(value);
         self
     }
 
-    pub fn with_case_id(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn case_id(&mut self, value: Option<i64>) -> &mut Self {
         self.case_id = Some(value);
         self
     }
 
-    pub fn with_created(&mut self, value: String) -> &mut Self {
+    pub fn created(&mut self, value: String) -> &mut Self {
         self.created = Some(value);
         self
     }
 
-    pub fn with_customer_impact_duration(&mut self, value: i64) -> &mut Self {
+    pub fn customer_impact_duration(&mut self, value: i64) -> &mut Self {
         self.customer_impact_duration = Some(value);
         self
     }
 
-    pub fn with_customer_impact_end(&mut self, value: Option<String>) -> &mut Self {
+    pub fn customer_impact_end(&mut self, value: Option<String>) -> &mut Self {
         self.customer_impact_end = Some(value);
         self
     }
 
-    pub fn with_customer_impact_scope(&mut self, value: Option<String>) -> &mut Self {
+    pub fn customer_impact_scope(&mut self, value: Option<String>) -> &mut Self {
         self.customer_impact_scope = Some(value);
         self
     }
 
-    pub fn with_customer_impact_start(&mut self, value: Option<String>) -> &mut Self {
+    pub fn customer_impact_start(&mut self, value: Option<String>) -> &mut Self {
         self.customer_impact_start = Some(value);
         self
     }
 
-    pub fn with_customer_impacted(&mut self, value: bool) -> &mut Self {
+    pub fn customer_impacted(&mut self, value: bool) -> &mut Self {
         self.customer_impacted = Some(value);
         self
     }
 
-    pub fn with_detected(&mut self, value: Option<String>) -> &mut Self {
+    pub fn detected(&mut self, value: Option<String>) -> &mut Self {
         self.detected = Some(value);
         self
     }
 
-    pub fn with_fields(
+    pub fn fields(
         &mut self,
         value: std::collections::BTreeMap<String, crate::datadogV2::model::IncidentFieldAttributes>,
     ) -> &mut Self {
@@ -206,12 +206,12 @@ impl IncidentResponseAttributes {
         self
     }
 
-    pub fn with_modified(&mut self, value: String) -> &mut Self {
+    pub fn modified(&mut self, value: String) -> &mut Self {
         self.modified = Some(value);
         self
     }
 
-    pub fn with_non_datadog_creator(
+    pub fn non_datadog_creator(
         &mut self,
         value: Option<crate::datadogV2::model::IncidentNonDatadogCreator>,
     ) -> &mut Self {
@@ -219,7 +219,7 @@ impl IncidentResponseAttributes {
         self
     }
 
-    pub fn with_notification_handles(
+    pub fn notification_handles(
         &mut self,
         value: Option<Vec<crate::datadogV2::model::IncidentNotificationHandle>>,
     ) -> &mut Self {
@@ -227,47 +227,47 @@ impl IncidentResponseAttributes {
         self
     }
 
-    pub fn with_public_id(&mut self, value: i64) -> &mut Self {
+    pub fn public_id(&mut self, value: i64) -> &mut Self {
         self.public_id = Some(value);
         self
     }
 
-    pub fn with_resolved(&mut self, value: Option<String>) -> &mut Self {
+    pub fn resolved(&mut self, value: Option<String>) -> &mut Self {
         self.resolved = Some(value);
         self
     }
 
-    pub fn with_severity(&mut self, value: crate::datadogV2::model::IncidentSeverity) -> &mut Self {
+    pub fn severity(&mut self, value: crate::datadogV2::model::IncidentSeverity) -> &mut Self {
         self.severity = Some(value);
         self
     }
 
-    pub fn with_state(&mut self, value: Option<String>) -> &mut Self {
+    pub fn state(&mut self, value: Option<String>) -> &mut Self {
         self.state = Some(value);
         self
     }
 
-    pub fn with_time_to_detect(&mut self, value: i64) -> &mut Self {
+    pub fn time_to_detect(&mut self, value: i64) -> &mut Self {
         self.time_to_detect = Some(value);
         self
     }
 
-    pub fn with_time_to_internal_response(&mut self, value: i64) -> &mut Self {
+    pub fn time_to_internal_response(&mut self, value: i64) -> &mut Self {
         self.time_to_internal_response = Some(value);
         self
     }
 
-    pub fn with_time_to_repair(&mut self, value: i64) -> &mut Self {
+    pub fn time_to_repair(&mut self, value: i64) -> &mut Self {
         self.time_to_repair = Some(value);
         self
     }
 
-    pub fn with_time_to_resolve(&mut self, value: i64) -> &mut Self {
+    pub fn time_to_resolve(&mut self, value: i64) -> &mut Self {
         self.time_to_resolve = Some(value);
         self
     }
 
-    pub fn with_visibility(&mut self, value: Option<String>) -> &mut Self {
+    pub fn visibility(&mut self, value: Option<String>) -> &mut Self {
         self.visibility = Some(value);
         self
     }

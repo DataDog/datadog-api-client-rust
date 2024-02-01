@@ -142,12 +142,12 @@ impl Downtime {
         }
     }
 
-    pub fn with_active(&mut self, value: bool) -> &mut Self {
+    pub fn active(&mut self, value: bool) -> &mut Self {
         self.active = Some(value);
         self
     }
 
-    pub fn with_active_child(
+    pub fn active_child(
         &mut self,
         value: Option<crate::datadogV1::model::DowntimeChild>,
     ) -> &mut Self {
@@ -155,57 +155,57 @@ impl Downtime {
         self
     }
 
-    pub fn with_canceled(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn canceled(&mut self, value: Option<i64>) -> &mut Self {
         self.canceled = Some(value);
         self
     }
 
-    pub fn with_creator_id(&mut self, value: i32) -> &mut Self {
+    pub fn creator_id(&mut self, value: i32) -> &mut Self {
         self.creator_id = Some(value);
         self
     }
 
-    pub fn with_disabled(&mut self, value: bool) -> &mut Self {
+    pub fn disabled(&mut self, value: bool) -> &mut Self {
         self.disabled = Some(value);
         self
     }
 
-    pub fn with_downtime_type(&mut self, value: i32) -> &mut Self {
+    pub fn downtime_type(&mut self, value: i32) -> &mut Self {
         self.downtime_type = Some(value);
         self
     }
 
-    pub fn with_end(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn end(&mut self, value: Option<i64>) -> &mut Self {
         self.end = Some(value);
         self
     }
 
-    pub fn with_id(&mut self, value: i64) -> &mut Self {
+    pub fn id(&mut self, value: i64) -> &mut Self {
         self.id = Some(value);
         self
     }
 
-    pub fn with_message(&mut self, value: Option<String>) -> &mut Self {
+    pub fn message(&mut self, value: Option<String>) -> &mut Self {
         self.message = Some(value);
         self
     }
 
-    pub fn with_monitor_id(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn monitor_id(&mut self, value: Option<i64>) -> &mut Self {
         self.monitor_id = Some(value);
         self
     }
 
-    pub fn with_monitor_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn monitor_tags(&mut self, value: Vec<String>) -> &mut Self {
         self.monitor_tags = Some(value);
         self
     }
 
-    pub fn with_mute_first_recovery_notification(&mut self, value: bool) -> &mut Self {
+    pub fn mute_first_recovery_notification(&mut self, value: bool) -> &mut Self {
         self.mute_first_recovery_notification = Some(value);
         self
     }
 
-    pub fn with_notify_end_states(
+    pub fn notify_end_states(
         &mut self,
         value: Vec<crate::datadogV1::model::NotifyEndState>,
     ) -> &mut Self {
@@ -213,7 +213,7 @@ impl Downtime {
         self
     }
 
-    pub fn with_notify_end_types(
+    pub fn notify_end_types(
         &mut self,
         value: Vec<crate::datadogV1::model::NotifyEndType>,
     ) -> &mut Self {
@@ -221,12 +221,12 @@ impl Downtime {
         self
     }
 
-    pub fn with_parent_id(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn parent_id(&mut self, value: Option<i64>) -> &mut Self {
         self.parent_id = Some(value);
         self
     }
 
-    pub fn with_recurrence(
+    pub fn recurrence(
         &mut self,
         value: Option<crate::datadogV1::model::DowntimeRecurrence>,
     ) -> &mut Self {
@@ -234,26 +234,27 @@ impl Downtime {
         self
     }
 
-    pub fn with_scope(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn scope(&mut self, value: Vec<String>) -> &mut Self {
         self.scope = Some(value);
         self
     }
 
-    pub fn with_start(&mut self, value: i64) -> &mut Self {
+    pub fn start(&mut self, value: i64) -> &mut Self {
         self.start = Some(value);
         self
     }
 
-    pub fn with_timezone(&mut self, value: String) -> &mut Self {
+    pub fn timezone(&mut self, value: String) -> &mut Self {
         self.timezone = Some(value);
         self
     }
 
-    pub fn with_updater_id(&mut self, value: Option<i32>) -> &mut Self {
+    pub fn updater_id(&mut self, value: Option<i32>) -> &mut Self {
         self.updater_id = Some(value);
         self
     }
 }
+
 impl Default for Downtime {
     fn default() -> Self {
         Self::new()

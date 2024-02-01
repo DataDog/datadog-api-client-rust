@@ -18,7 +18,7 @@ impl CloudflareAccountsResponse {
         CloudflareAccountsResponse { data: None }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: Vec<crate::datadogV2::model::CloudflareAccountResponseData>,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl CloudflareAccountsResponse {
         self
     }
 }
+
 impl Default for CloudflareAccountsResponse {
     fn default() -> Self {
         Self::new()

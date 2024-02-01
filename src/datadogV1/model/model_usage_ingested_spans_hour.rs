@@ -36,26 +36,27 @@ impl UsageIngestedSpansHour {
         }
     }
 
-    pub fn with_hour(&mut self, value: String) -> &mut Self {
+    pub fn hour(&mut self, value: String) -> &mut Self {
         self.hour = Some(value);
         self
     }
 
-    pub fn with_ingested_events_bytes(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn ingested_events_bytes(&mut self, value: Option<i64>) -> &mut Self {
         self.ingested_events_bytes = Some(value);
         self
     }
 
-    pub fn with_org_name(&mut self, value: String) -> &mut Self {
+    pub fn org_name(&mut self, value: String) -> &mut Self {
         self.org_name = Some(value);
         self
     }
 
-    pub fn with_public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(&mut self, value: String) -> &mut Self {
         self.public_id = Some(value);
         self
     }
 }
+
 impl Default for UsageIngestedSpansHour {
     fn default() -> Self {
         Self::new()

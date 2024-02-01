@@ -24,7 +24,7 @@ impl IncidentSearchResponseData {
         }
     }
 
-    pub fn with_attributes(
+    pub fn attributes(
         &mut self,
         value: crate::datadogV2::model::IncidentSearchResponseAttributes,
     ) -> &mut Self {
@@ -32,7 +32,7 @@ impl IncidentSearchResponseData {
         self
     }
 
-    pub fn with_type_(
+    pub fn type_(
         &mut self,
         value: crate::datadogV2::model::IncidentSearchResultsType,
     ) -> &mut Self {
@@ -40,6 +40,7 @@ impl IncidentSearchResponseData {
         self
     }
 }
+
 impl Default for IncidentSearchResponseData {
     fn default() -> Self {
         Self::new()

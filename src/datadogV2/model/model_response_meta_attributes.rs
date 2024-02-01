@@ -18,11 +18,12 @@ impl ResponseMetaAttributes {
         ResponseMetaAttributes { page: None }
     }
 
-    pub fn with_page(&mut self, value: crate::datadogV2::model::Pagination) -> &mut Self {
+    pub fn page(&mut self, value: crate::datadogV2::model::Pagination) -> &mut Self {
         self.page = Some(value);
         self
     }
 }
+
 impl Default for ResponseMetaAttributes {
     fn default() -> Self {
         Self::new()

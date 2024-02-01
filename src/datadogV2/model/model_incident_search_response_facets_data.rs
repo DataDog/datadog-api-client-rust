@@ -62,7 +62,7 @@ impl IncidentSearchResponseFacetsData {
         }
     }
 
-    pub fn with_commander(
+    pub fn commander(
         &mut self,
         value: Vec<crate::datadogV2::model::IncidentSearchResponseUserFacetData>,
     ) -> &mut Self {
@@ -70,7 +70,7 @@ impl IncidentSearchResponseFacetsData {
         self
     }
 
-    pub fn with_created_by(
+    pub fn created_by(
         &mut self,
         value: Vec<crate::datadogV2::model::IncidentSearchResponseUserFacetData>,
     ) -> &mut Self {
@@ -78,7 +78,7 @@ impl IncidentSearchResponseFacetsData {
         self
     }
 
-    pub fn with_fields(
+    pub fn fields(
         &mut self,
         value: Vec<crate::datadogV2::model::IncidentSearchResponsePropertyFieldFacetData>,
     ) -> &mut Self {
@@ -86,7 +86,7 @@ impl IncidentSearchResponseFacetsData {
         self
     }
 
-    pub fn with_impact(
+    pub fn impact(
         &mut self,
         value: Vec<crate::datadogV2::model::IncidentSearchResponseFieldFacetData>,
     ) -> &mut Self {
@@ -94,7 +94,7 @@ impl IncidentSearchResponseFacetsData {
         self
     }
 
-    pub fn with_last_modified_by(
+    pub fn last_modified_by(
         &mut self,
         value: Vec<crate::datadogV2::model::IncidentSearchResponseUserFacetData>,
     ) -> &mut Self {
@@ -102,7 +102,7 @@ impl IncidentSearchResponseFacetsData {
         self
     }
 
-    pub fn with_postmortem(
+    pub fn postmortem(
         &mut self,
         value: Vec<crate::datadogV2::model::IncidentSearchResponseFieldFacetData>,
     ) -> &mut Self {
@@ -110,7 +110,7 @@ impl IncidentSearchResponseFacetsData {
         self
     }
 
-    pub fn with_responder(
+    pub fn responder(
         &mut self,
         value: Vec<crate::datadogV2::model::IncidentSearchResponseUserFacetData>,
     ) -> &mut Self {
@@ -118,7 +118,7 @@ impl IncidentSearchResponseFacetsData {
         self
     }
 
-    pub fn with_severity(
+    pub fn severity(
         &mut self,
         value: Vec<crate::datadogV2::model::IncidentSearchResponseFieldFacetData>,
     ) -> &mut Self {
@@ -126,7 +126,7 @@ impl IncidentSearchResponseFacetsData {
         self
     }
 
-    pub fn with_state(
+    pub fn state(
         &mut self,
         value: Vec<crate::datadogV2::model::IncidentSearchResponseFieldFacetData>,
     ) -> &mut Self {
@@ -134,7 +134,7 @@ impl IncidentSearchResponseFacetsData {
         self
     }
 
-    pub fn with_time_to_repair(
+    pub fn time_to_repair(
         &mut self,
         value: Vec<crate::datadogV2::model::IncidentSearchResponseNumericFacetData>,
     ) -> &mut Self {
@@ -142,7 +142,7 @@ impl IncidentSearchResponseFacetsData {
         self
     }
 
-    pub fn with_time_to_resolve(
+    pub fn time_to_resolve(
         &mut self,
         value: Vec<crate::datadogV2::model::IncidentSearchResponseNumericFacetData>,
     ) -> &mut Self {
@@ -150,6 +150,7 @@ impl IncidentSearchResponseFacetsData {
         self
     }
 }
+
 impl Default for IncidentSearchResponseFacetsData {
     fn default() -> Self {
         Self::new()

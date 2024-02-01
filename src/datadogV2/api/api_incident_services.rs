@@ -6,14 +6,22 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetIncidentServiceOptionalParams is a struct for passing parameters to the method [`IncidentServicesAPI::get_incident_service`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetIncidentServiceOptionalParams {
     /// Specifies which types of related objects should be included in the response.
     pub include: Option<crate::datadogV2::model::IncidentRelatedObject>,
 }
 
+impl GetIncidentServiceOptionalParams {
+    /// Specifies which types of related objects should be included in the response.
+    pub fn include(&mut self, value: crate::datadogV2::model::IncidentRelatedObject) -> &mut Self {
+        self.include = Some(value);
+        self
+    }
+}
+
 /// ListIncidentServicesOptionalParams is a struct for passing parameters to the method [`IncidentServicesAPI::list_incident_services`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListIncidentServicesOptionalParams {
     /// Specifies which types of related objects should be included in the response.
     pub include: Option<crate::datadogV2::model::IncidentRelatedObject>,
@@ -23,6 +31,29 @@ pub struct ListIncidentServicesOptionalParams {
     pub page_offset: Option<i64>,
     /// A search query that filters services by name.
     pub filter: Option<String>,
+}
+
+impl ListIncidentServicesOptionalParams {
+    /// Specifies which types of related objects should be included in the response.
+    pub fn include(&mut self, value: crate::datadogV2::model::IncidentRelatedObject) -> &mut Self {
+        self.include = Some(value);
+        self
+    }
+    /// Size for a given page. The maximum allowed value is 100.
+    pub fn page_size(&mut self, value: i64) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Specific offset to use as the beginning of the returned page.
+    pub fn page_offset(&mut self, value: i64) -> &mut Self {
+        self.page_offset = Some(value);
+        self
+    }
+    /// A search query that filters services by name.
+    pub fn filter(&mut self, value: String) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
 }
 
 /// CreateIncidentServiceError is a struct for typed errors of method [`IncidentServicesAPI::create_incident_service`]

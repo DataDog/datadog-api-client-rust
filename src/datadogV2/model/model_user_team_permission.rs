@@ -31,7 +31,7 @@ impl UserTeamPermission {
         }
     }
 
-    pub fn with_attributes(
+    pub fn attributes(
         &mut self,
         value: crate::datadogV2::model::UserTeamPermissionAttributes,
     ) -> &mut Self {

@@ -9,7 +9,7 @@ pub struct {{ name }} {
 {%- set propertyName = attr|variable_name %}
 {%- set required = attr in model.required %}
 {%- set nullable = schema.get("nullable", False)%}
-{%- set dataType = get_type(schema, alternative_name=name + propertyName, render_nullable=nullable, render_option=not required, render_box=True, version=version) %}
+{%- set dataType = get_type(schema, alternative_name=name + propertyName, render_nullable=nullable, render_option=not required, render_box=false, version=version) %}
     {%- if schema.description is defined %}
     {{ schema.description | block_comment }}
     {%- endif %}
@@ -20,14 +20,14 @@ pub struct {{ name }} {
     pub {{propertyName}}: {{dataType}},
 {%- endfor %}
 {%- if model.additionalProperties is defined and model.additionalProperties != False %}
-{%- set dataType = get_type(model.additionalProperties, alternative_name=None, render_nullable=False, render_option=False, render_box=True, version=version) %}
+{%- set dataType = get_type(model.additionalProperties, alternative_name=None, render_nullable=False, render_option=False, render_box=false, version=version) %}
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, {{ dataType }}>,
 {%- endif %}
 }
 
 impl {{ name }} {
-    pub fn new({% for attr, schema in model.get("properties", {}).items() if attr in model.required %}{%- set nullable = schema.get("nullable", False)%}{%- set dataType = get_type(schema, alternative_name=name + attr|variable_name, render_nullable=nullable, render_option=False, render_box=True, version=version) %}{{attr|variable_name}}: {{ dataType }}{%- if not loop.last %}, {% endif %}{% endfor %}) -> {{ name }} {
+    pub fn new({% for attr, schema in model.get("properties", {}).items() if attr in model.required %}{%- set nullable = schema.get("nullable", False)%}{%- set dataType = get_type(schema, alternative_name=name + attr|variable_name, render_nullable=nullable, render_option=False, render_box=false, version=version) %}{{attr|variable_name}}: {{ dataType }}{%- if not loop.last %}, {% endif %}{% endfor %}) -> {{ name }} {
         {%- if get_deprecated(model) %}
         #[allow(deprecated)]
         {%- endif %}
@@ -35,7 +35,7 @@ impl {{ name }} {
             {%- for attr, schema in model.get("properties", {}).items() %}
             {%- set required = attr in model.required %}
             {%- set nullable = schema.get("nullable", False)%}
-            {%- set dataType = get_type(schema, alternative_name=name + attr|variable_name, render_nullable=nullable, render_option=not required, render_box=True, version=version) %}
+            {%- set dataType = get_type(schema, alternative_name=name + attr|variable_name, render_nullable=nullable, render_option=not required, render_box=false, version=version) %}
             {%- if attr in model.get("required", []) %}
             {{ attr|variable_name }},
             {%- else %}
@@ -49,18 +49,18 @@ impl {{ name }} {
     }
     {% for attr, schema in model.get("properties", {}).items() if attr not in model.required %}
     {%- set nullable = schema.get("nullable", False)%}
-    {%- set dataType = get_type(schema, alternative_name=name + attr|variable_name, render_nullable=nullable, render_option=False, render_box=True, version=version) %}
+    {%- set dataType = get_type(schema, alternative_name=name + attr|variable_name, render_nullable=nullable, render_option=False, render_box=false, version=version) %}
     {%- if get_deprecated(model) %}
     #[allow(deprecated)]
     {%- endif %}
-    pub fn with_{{attr|variable_name}}(&mut self, value: {{dataType}}) -> &mut Self {
+    pub fn {{attr|variable_name}}(&mut self, value: {{dataType}}) -> &mut Self {
         self.{{attr|variable_name}} = Some(value);
         self
     }
     {% endfor %}
 }
 
-{%- if not model.required %}
+{% if not model.required %}
 impl Default for {{ name }} {
     fn default() -> Self {
         Self::new()

@@ -18,11 +18,12 @@ impl MetricBulkTagConfigDeleteAttributes {
         MetricBulkTagConfigDeleteAttributes { emails: None }
     }
 
-    pub fn with_emails(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn emails(&mut self, value: Vec<String>) -> &mut Self {
         self.emails = Some(value);
         self
     }
 }
+
 impl Default for MetricBulkTagConfigDeleteAttributes {
     fn default() -> Self {
         Self::new()

@@ -7,13 +7,13 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SplitGraphSourceWidgetDefinition {
-    ChangeWidgetDefinition(crate::datadogV1::model::ChangeWidgetDefinition),
-    GeomapWidgetDefinition(crate::datadogV1::model::GeomapWidgetDefinition),
-    QueryValueWidgetDefinition(crate::datadogV1::model::QueryValueWidgetDefinition),
-    ScatterPlotWidgetDefinition(crate::datadogV1::model::ScatterPlotWidgetDefinition),
-    SunburstWidgetDefinition(crate::datadogV1::model::SunburstWidgetDefinition),
-    TableWidgetDefinition(crate::datadogV1::model::TableWidgetDefinition),
-    TimeseriesWidgetDefinition(crate::datadogV1::model::TimeseriesWidgetDefinition),
-    ToplistWidgetDefinition(crate::datadogV1::model::ToplistWidgetDefinition),
-    TreeMapWidgetDefinition(crate::datadogV1::model::TreeMapWidgetDefinition),
+    ChangeWidgetDefinition(Box<crate::datadogV1::model::ChangeWidgetDefinition>),
+    GeomapWidgetDefinition(Box<crate::datadogV1::model::GeomapWidgetDefinition>),
+    QueryValueWidgetDefinition(Box<crate::datadogV1::model::QueryValueWidgetDefinition>),
+    ScatterPlotWidgetDefinition(Box<crate::datadogV1::model::ScatterPlotWidgetDefinition>),
+    SunburstWidgetDefinition(Box<crate::datadogV1::model::SunburstWidgetDefinition>),
+    TableWidgetDefinition(Box<crate::datadogV1::model::TableWidgetDefinition>),
+    TimeseriesWidgetDefinition(Box<crate::datadogV1::model::TimeseriesWidgetDefinition>),
+    ToplistWidgetDefinition(Box<crate::datadogV1::model::ToplistWidgetDefinition>),
+    TreeMapWidgetDefinition(Box<crate::datadogV1::model::TreeMapWidgetDefinition>),
 }

@@ -28,7 +28,7 @@ impl ProjectedCost {
         }
     }
 
-    pub fn with_attributes(
+    pub fn attributes(
         &mut self,
         value: crate::datadogV2::model::ProjectedCostAttributes,
     ) -> &mut Self {
@@ -36,16 +36,17 @@ impl ProjectedCost {
         self
     }
 
-    pub fn with_id(&mut self, value: String) -> &mut Self {
+    pub fn id(&mut self, value: String) -> &mut Self {
         self.id = Some(value);
         self
     }
 
-    pub fn with_type_(&mut self, value: crate::datadogV2::model::ProjectedCostType) -> &mut Self {
+    pub fn type_(&mut self, value: crate::datadogV2::model::ProjectedCostType) -> &mut Self {
         self.type_ = Some(value);
         self
     }
 }
+
 impl Default for ProjectedCost {
     fn default() -> Self {
         Self::new()

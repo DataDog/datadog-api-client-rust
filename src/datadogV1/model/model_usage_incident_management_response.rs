@@ -18,7 +18,7 @@ impl UsageIncidentManagementResponse {
         UsageIncidentManagementResponse { usage: None }
     }
 
-    pub fn with_usage(
+    pub fn usage(
         &mut self,
         value: Vec<crate::datadogV1::model::UsageIncidentManagementHour>,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl UsageIncidentManagementResponse {
         self
     }
 }
+
 impl Default for UsageIncidentManagementResponse {
     fn default() -> Self {
         Self::new()

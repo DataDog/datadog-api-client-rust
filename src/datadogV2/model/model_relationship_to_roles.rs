@@ -18,7 +18,7 @@ impl RelationshipToRoles {
         RelationshipToRoles { data: None }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: Vec<crate::datadogV2::model::RelationshipToRoleData>,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl RelationshipToRoles {
         self
     }
 }
+
 impl Default for RelationshipToRoles {
     fn default() -> Self {
         Self::new()

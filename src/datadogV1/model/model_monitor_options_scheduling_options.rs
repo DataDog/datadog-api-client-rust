@@ -25,7 +25,7 @@ impl MonitorOptionsSchedulingOptions {
         }
     }
 
-    pub fn with_custom_schedule(
+    pub fn custom_schedule(
         &mut self,
         value: crate::datadogV1::model::MonitorOptionsCustomSchedule,
     ) -> &mut Self {
@@ -33,7 +33,7 @@ impl MonitorOptionsSchedulingOptions {
         self
     }
 
-    pub fn with_evaluation_window(
+    pub fn evaluation_window(
         &mut self,
         value: crate::datadogV1::model::MonitorOptionsSchedulingOptionsEvaluationWindow,
     ) -> &mut Self {
@@ -41,6 +41,7 @@ impl MonitorOptionsSchedulingOptions {
         self
     }
 }
+
 impl Default for MonitorOptionsSchedulingOptions {
     fn default() -> Self {
         Self::new()

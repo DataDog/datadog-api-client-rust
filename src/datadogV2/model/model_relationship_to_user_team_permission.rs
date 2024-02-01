@@ -24,7 +24,7 @@ impl RelationshipToUserTeamPermission {
         }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: crate::datadogV2::model::RelationshipToUserTeamPermissionData,
     ) -> &mut Self {
@@ -32,14 +32,12 @@ impl RelationshipToUserTeamPermission {
         self
     }
 
-    pub fn with_links(
-        &mut self,
-        value: crate::datadogV2::model::TeamRelationshipsLinks,
-    ) -> &mut Self {
+    pub fn links(&mut self, value: crate::datadogV2::model::TeamRelationshipsLinks) -> &mut Self {
         self.links = Some(value);
         self
     }
 }
+
 impl Default for RelationshipToUserTeamPermission {
     fn default() -> Self {
         Self::new()

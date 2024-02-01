@@ -45,27 +45,27 @@ impl LogsListRequest {
         }
     }
 
-    pub fn with_index(&mut self, value: String) -> &mut Self {
+    pub fn index(&mut self, value: String) -> &mut Self {
         self.index = Some(value);
         self
     }
 
-    pub fn with_limit(&mut self, value: i32) -> &mut Self {
+    pub fn limit(&mut self, value: i32) -> &mut Self {
         self.limit = Some(value);
         self
     }
 
-    pub fn with_query(&mut self, value: String) -> &mut Self {
+    pub fn query(&mut self, value: String) -> &mut Self {
         self.query = Some(value);
         self
     }
 
-    pub fn with_sort(&mut self, value: crate::datadogV1::model::LogsSort) -> &mut Self {
+    pub fn sort(&mut self, value: crate::datadogV1::model::LogsSort) -> &mut Self {
         self.sort = Some(value);
         self
     }
 
-    pub fn with_start_at(&mut self, value: String) -> &mut Self {
+    pub fn start_at(&mut self, value: String) -> &mut Self {
         self.start_at = Some(value);
         self
     }

@@ -21,7 +21,7 @@ impl ContainerImageGroupRelationships {
         }
     }
 
-    pub fn with_container_images(
+    pub fn container_images(
         &mut self,
         value: crate::datadogV2::model::ContainerImageGroupImagesRelationshipsLink,
     ) -> &mut Self {
@@ -29,6 +29,7 @@ impl ContainerImageGroupRelationships {
         self
     }
 }
+
 impl Default for ContainerImageGroupRelationships {
     fn default() -> Self {
         Self::new()

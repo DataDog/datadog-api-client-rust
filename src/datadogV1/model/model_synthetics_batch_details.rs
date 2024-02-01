@@ -18,7 +18,7 @@ impl SyntheticsBatchDetails {
         SyntheticsBatchDetails { data: None }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: crate::datadogV1::model::SyntheticsBatchDetailsData,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl SyntheticsBatchDetails {
         self
     }
 }
+
 impl Default for SyntheticsBatchDetails {
     fn default() -> Self {
         Self::new()

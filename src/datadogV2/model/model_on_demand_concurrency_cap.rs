@@ -24,7 +24,7 @@ impl OnDemandConcurrencyCap {
         }
     }
 
-    pub fn with_attributes(
+    pub fn attributes(
         &mut self,
         value: crate::datadogV2::model::OnDemandConcurrencyCapAttributes,
     ) -> &mut Self {
@@ -32,7 +32,7 @@ impl OnDemandConcurrencyCap {
         self
     }
 
-    pub fn with_type_(
+    pub fn type_(
         &mut self,
         value: crate::datadogV2::model::OnDemandConcurrencyCapType,
     ) -> &mut Self {
@@ -40,6 +40,7 @@ impl OnDemandConcurrencyCap {
         self
     }
 }
+
 impl Default for OnDemandConcurrencyCap {
     fn default() -> Self {
         Self::new()

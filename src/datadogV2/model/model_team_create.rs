@@ -31,7 +31,7 @@ impl TeamCreate {
         }
     }
 
-    pub fn with_relationships(
+    pub fn relationships(
         &mut self,
         value: crate::datadogV2::model::TeamCreateRelationships,
     ) -> &mut Self {

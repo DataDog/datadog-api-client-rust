@@ -18,14 +18,12 @@ impl ApplicationKeyRelationships {
         ApplicationKeyRelationships { owned_by: None }
     }
 
-    pub fn with_owned_by(
-        &mut self,
-        value: crate::datadogV2::model::RelationshipToUser,
-    ) -> &mut Self {
+    pub fn owned_by(&mut self, value: crate::datadogV2::model::RelationshipToUser) -> &mut Self {
         self.owned_by = Some(value);
         self
     }
 }
+
 impl Default for ApplicationKeyRelationships {
     fn default() -> Self {
         Self::new()

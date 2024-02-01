@@ -7,5 +7,5 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum MonitorConfigPolicyPolicy {
-    MonitorConfigPolicyTagPolicy(crate::datadogV2::model::MonitorConfigPolicyTagPolicy),
+    MonitorConfigPolicyTagPolicy(Box<crate::datadogV2::model::MonitorConfigPolicyTagPolicy>),
 }

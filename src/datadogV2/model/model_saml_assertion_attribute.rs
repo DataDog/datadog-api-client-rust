@@ -31,7 +31,7 @@ impl SAMLAssertionAttribute {
         }
     }
 
-    pub fn with_attributes(
+    pub fn attributes(
         &mut self,
         value: crate::datadogV2::model::SAMLAssertionAttributeAttributes,
     ) -> &mut Self {

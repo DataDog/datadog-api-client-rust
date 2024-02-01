@@ -32,7 +32,7 @@ impl SensitiveDataScannerGroupUpdate {
         }
     }
 
-    pub fn with_attributes(
+    pub fn attributes(
         &mut self,
         value: crate::datadogV2::model::SensitiveDataScannerGroupAttributes,
     ) -> &mut Self {
@@ -40,12 +40,12 @@ impl SensitiveDataScannerGroupUpdate {
         self
     }
 
-    pub fn with_id(&mut self, value: String) -> &mut Self {
+    pub fn id(&mut self, value: String) -> &mut Self {
         self.id = Some(value);
         self
     }
 
-    pub fn with_relationships(
+    pub fn relationships(
         &mut self,
         value: crate::datadogV2::model::SensitiveDataScannerGroupRelationships,
     ) -> &mut Self {
@@ -53,7 +53,7 @@ impl SensitiveDataScannerGroupUpdate {
         self
     }
 
-    pub fn with_type_(
+    pub fn type_(
         &mut self,
         value: crate::datadogV2::model::SensitiveDataScannerGroupType,
     ) -> &mut Self {
@@ -61,6 +61,7 @@ impl SensitiveDataScannerGroupUpdate {
         self
     }
 }
+
 impl Default for SensitiveDataScannerGroupUpdate {
     fn default() -> Self {
         Self::new()

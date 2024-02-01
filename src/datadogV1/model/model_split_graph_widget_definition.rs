@@ -50,17 +50,17 @@ impl SplitGraphWidgetDefinition {
         }
     }
 
-    pub fn with_has_uniform_y_axes(&mut self, value: bool) -> &mut Self {
+    pub fn has_uniform_y_axes(&mut self, value: bool) -> &mut Self {
         self.has_uniform_y_axes = Some(value);
         self
     }
 
-    pub fn with_time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
+    pub fn time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
         self.time = Some(value);
         self
     }
 
-    pub fn with_title(&mut self, value: String) -> &mut Self {
+    pub fn title(&mut self, value: String) -> &mut Self {
         self.title = Some(value);
         self
     }

@@ -6,7 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// EstimateMetricsOutputSeriesOptionalParams is a struct for passing parameters to the method [`MetricsAPI::estimate_metrics_output_series`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct EstimateMetricsOutputSeriesOptionalParams {
     /// Filtered tag keys that the metric is configured to query with.
     pub filter_groups: Option<String>,
@@ -20,16 +20,53 @@ pub struct EstimateMetricsOutputSeriesOptionalParams {
     pub filter_timespan_h: Option<i32>,
 }
 
+impl EstimateMetricsOutputSeriesOptionalParams {
+    /// Filtered tag keys that the metric is configured to query with.
+    pub fn filter_groups(&mut self, value: String) -> &mut Self {
+        self.filter_groups = Some(value);
+        self
+    }
+    /// The number of hours of look back (from now) to estimate cardinality with.
+    pub fn filter_hours_ago(&mut self, value: i32) -> &mut Self {
+        self.filter_hours_ago = Some(value);
+        self
+    }
+    /// The number of aggregations that a `count`, `rate`, or `gauge` metric is configured to use. Max number of aggregation combos is 9.
+    pub fn filter_num_aggregations(&mut self, value: i32) -> &mut Self {
+        self.filter_num_aggregations = Some(value);
+        self
+    }
+    /// A boolean, for distribution metrics only, to estimate cardinality if the metric includes additional percentile aggregators.
+    pub fn filter_pct(&mut self, value: bool) -> &mut Self {
+        self.filter_pct = Some(value);
+        self
+    }
+    /// A window, in hours, from the look back to estimate cardinality with.
+    pub fn filter_timespan_h(&mut self, value: i32) -> &mut Self {
+        self.filter_timespan_h = Some(value);
+        self
+    }
+}
+
 /// ListActiveMetricConfigurationsOptionalParams is a struct for passing parameters to the method [`MetricsAPI::list_active_metric_configurations`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListActiveMetricConfigurationsOptionalParams {
     /// The number of seconds of look back (from now).
     /// Default value is 604,800 (1 week), minimum value is 7200 (2 hours), maximum value is 2,630,000 (1 month).
     pub window_seconds: Option<i64>,
 }
 
+impl ListActiveMetricConfigurationsOptionalParams {
+    /// The number of seconds of look back (from now).
+    /// Default value is 604,800 (1 week), minimum value is 7200 (2 hours), maximum value is 2,630,000 (1 month).
+    pub fn window_seconds(&mut self, value: i64) -> &mut Self {
+        self.window_seconds = Some(value);
+        self
+    }
+}
+
 /// ListTagConfigurationsOptionalParams is a struct for passing parameters to the method [`MetricsAPI::list_tag_configurations`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListTagConfigurationsOptionalParams {
     /// Filter custom metrics that have configured tags.
     pub filter_configured: Option<bool>,
@@ -51,11 +88,67 @@ pub struct ListTagConfigurationsOptionalParams {
     pub window_seconds: Option<i64>,
 }
 
+impl ListTagConfigurationsOptionalParams {
+    /// Filter custom metrics that have configured tags.
+    pub fn filter_configured(&mut self, value: bool) -> &mut Self {
+        self.filter_configured = Some(value);
+        self
+    }
+    /// Filter tag configurations by configured tags.
+    pub fn filter_tags_configured(&mut self, value: String) -> &mut Self {
+        self.filter_tags_configured = Some(value);
+        self
+    }
+    /// Filter metrics by metric type.
+    pub fn filter_metric_type(
+        &mut self,
+        value: crate::datadogV2::model::MetricTagConfigurationMetricTypes,
+    ) -> &mut Self {
+        self.filter_metric_type = Some(value);
+        self
+    }
+    /// Filter distributions with additional percentile
+    /// aggregations enabled or disabled.
+    pub fn filter_include_percentiles(&mut self, value: bool) -> &mut Self {
+        self.filter_include_percentiles = Some(value);
+        self
+    }
+    /// (Beta) Filter custom metrics that have or have not been queried in the specified window[seconds].
+    /// If no window is provided or the window is less than 2 hours, a default of 2 hours will be applied.
+    pub fn filter_queried(&mut self, value: bool) -> &mut Self {
+        self.filter_queried = Some(value);
+        self
+    }
+    /// Filter metrics that have been submitted with the given tags. Supports boolean and wildcard expressions.
+    /// Can only be combined with the filter[queried] filter.
+    pub fn filter_tags(&mut self, value: String) -> &mut Self {
+        self.filter_tags = Some(value);
+        self
+    }
+    /// The number of seconds of look back (from now) to apply to a filter[tag] or filter[queried] query.
+    /// Default value is 3600 (1 hour), maximum value is 2,592,000 (30 days).
+    pub fn window_seconds(&mut self, value: i64) -> &mut Self {
+        self.window_seconds = Some(value);
+        self
+    }
+}
+
 /// SubmitMetricsOptionalParams is a struct for passing parameters to the method [`MetricsAPI::submit_metrics`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct SubmitMetricsOptionalParams {
     /// HTTP header used to compress the media-type.
     pub content_encoding: Option<crate::datadogV2::model::MetricContentEncoding>,
+}
+
+impl SubmitMetricsOptionalParams {
+    /// HTTP header used to compress the media-type.
+    pub fn content_encoding(
+        &mut self,
+        value: crate::datadogV2::model::MetricContentEncoding,
+    ) -> &mut Self {
+        self.content_encoding = Some(value);
+        self
+    }
 }
 
 /// CreateBulkTagsMetricsConfigurationError is a struct for typed errors of method [`MetricsAPI::create_bulk_tags_metrics_configuration`]

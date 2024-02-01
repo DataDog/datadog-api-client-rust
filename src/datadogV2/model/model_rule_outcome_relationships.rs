@@ -18,14 +18,12 @@ impl RuleOutcomeRelationships {
         RuleOutcomeRelationships { rule: None }
     }
 
-    pub fn with_rule(
-        &mut self,
-        value: crate::datadogV2::model::RelationshipToOutcome,
-    ) -> &mut Self {
+    pub fn rule(&mut self, value: crate::datadogV2::model::RelationshipToOutcome) -> &mut Self {
         self.rule = Some(value);
         self
     }
 }
+
 impl Default for RuleOutcomeRelationships {
     fn default() -> Self {
         Self::new()

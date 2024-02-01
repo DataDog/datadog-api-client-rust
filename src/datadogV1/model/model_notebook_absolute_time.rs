@@ -28,7 +28,7 @@ impl NotebookAbsoluteTime {
         }
     }
 
-    pub fn with_live(&mut self, value: bool) -> &mut Self {
+    pub fn live(&mut self, value: bool) -> &mut Self {
         self.live = Some(value);
         self
     }

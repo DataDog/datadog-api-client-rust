@@ -18,11 +18,12 @@ impl RUMApplicationResponse {
         RUMApplicationResponse { data: None }
     }
 
-    pub fn with_data(&mut self, value: crate::datadogV2::model::RUMApplication) -> &mut Self {
+    pub fn data(&mut self, value: crate::datadogV2::model::RUMApplication) -> &mut Self {
         self.data = Some(value);
         self
     }
 }
+
 impl Default for RUMApplicationResponse {
     fn default() -> Self {
         Self::new()

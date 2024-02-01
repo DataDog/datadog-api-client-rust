@@ -24,7 +24,7 @@ impl ServiceDefinitionV2Dot1Opsgenie {
         }
     }
 
-    pub fn with_region(
+    pub fn region(
         &mut self,
         value: crate::datadogV2::model::ServiceDefinitionV2Dot1OpsgenieRegion,
     ) -> &mut Self {

@@ -18,7 +18,7 @@ impl MetricSuggestedTagsAndAggregationsResponse {
         MetricSuggestedTagsAndAggregationsResponse { data: None }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: crate::datadogV2::model::MetricSuggestedTagsAndAggregations,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl MetricSuggestedTagsAndAggregationsResponse {
         self
     }
 }
+
 impl Default for MetricSuggestedTagsAndAggregationsResponse {
     fn default() -> Self {
         Self::new()

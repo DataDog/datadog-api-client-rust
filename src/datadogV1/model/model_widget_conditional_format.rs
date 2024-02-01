@@ -56,32 +56,32 @@ impl WidgetConditionalFormat {
         }
     }
 
-    pub fn with_custom_bg_color(&mut self, value: String) -> &mut Self {
+    pub fn custom_bg_color(&mut self, value: String) -> &mut Self {
         self.custom_bg_color = Some(value);
         self
     }
 
-    pub fn with_custom_fg_color(&mut self, value: String) -> &mut Self {
+    pub fn custom_fg_color(&mut self, value: String) -> &mut Self {
         self.custom_fg_color = Some(value);
         self
     }
 
-    pub fn with_hide_value(&mut self, value: bool) -> &mut Self {
+    pub fn hide_value(&mut self, value: bool) -> &mut Self {
         self.hide_value = Some(value);
         self
     }
 
-    pub fn with_image_url(&mut self, value: String) -> &mut Self {
+    pub fn image_url(&mut self, value: String) -> &mut Self {
         self.image_url = Some(value);
         self
     }
 
-    pub fn with_metric(&mut self, value: String) -> &mut Self {
+    pub fn metric(&mut self, value: String) -> &mut Self {
         self.metric = Some(value);
         self
     }
 
-    pub fn with_timeframe(&mut self, value: String) -> &mut Self {
+    pub fn timeframe(&mut self, value: String) -> &mut Self {
         self.timeframe = Some(value);
         self
     }

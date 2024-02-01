@@ -34,17 +34,17 @@ impl SensitiveDataScannerTextReplacement {
         }
     }
 
-    pub fn with_number_of_chars(&mut self, value: i64) -> &mut Self {
+    pub fn number_of_chars(&mut self, value: i64) -> &mut Self {
         self.number_of_chars = Some(value);
         self
     }
 
-    pub fn with_replacement_string(&mut self, value: String) -> &mut Self {
+    pub fn replacement_string(&mut self, value: String) -> &mut Self {
         self.replacement_string = Some(value);
         self
     }
 
-    pub fn with_type_(
+    pub fn type_(
         &mut self,
         value: crate::datadogV2::model::SensitiveDataScannerTextReplacementType,
     ) -> &mut Self {
@@ -52,6 +52,7 @@ impl SensitiveDataScannerTextReplacement {
         self
     }
 }
+
 impl Default for SensitiveDataScannerTextReplacement {
     fn default() -> Self {
         Self::new()

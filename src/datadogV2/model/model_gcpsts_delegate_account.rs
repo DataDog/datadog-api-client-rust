@@ -28,7 +28,7 @@ impl GCPSTSDelegateAccount {
         }
     }
 
-    pub fn with_attributes(
+    pub fn attributes(
         &mut self,
         value: crate::datadogV2::model::GCPSTSDelegateAccountAttributes,
     ) -> &mut Self {
@@ -36,12 +36,12 @@ impl GCPSTSDelegateAccount {
         self
     }
 
-    pub fn with_id(&mut self, value: String) -> &mut Self {
+    pub fn id(&mut self, value: String) -> &mut Self {
         self.id = Some(value);
         self
     }
 
-    pub fn with_type_(
+    pub fn type_(
         &mut self,
         value: crate::datadogV2::model::GCPSTSDelegateAccountType,
     ) -> &mut Self {
@@ -49,6 +49,7 @@ impl GCPSTSDelegateAccount {
         self
     }
 }
+
 impl Default for GCPSTSDelegateAccount {
     fn default() -> Self {
         Self::new()

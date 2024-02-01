@@ -18,7 +18,7 @@ impl SpansMetricsResponse {
         SpansMetricsResponse { data: None }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: Vec<crate::datadogV2::model::SpansMetricResponseData>,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl SpansMetricsResponse {
         self
     }
 }
+
 impl Default for SpansMetricsResponse {
     fn default() -> Self {
         Self::new()

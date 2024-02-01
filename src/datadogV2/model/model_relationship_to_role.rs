@@ -18,14 +18,12 @@ impl RelationshipToRole {
         RelationshipToRole { data: None }
     }
 
-    pub fn with_data(
-        &mut self,
-        value: crate::datadogV2::model::RelationshipToRoleData,
-    ) -> &mut Self {
+    pub fn data(&mut self, value: crate::datadogV2::model::RelationshipToRoleData) -> &mut Self {
         self.data = Some(value);
         self
     }
 }
+
 impl Default for RelationshipToRole {
     fn default() -> Self {
         Self::new()

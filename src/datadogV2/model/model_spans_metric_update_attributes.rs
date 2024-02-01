@@ -28,7 +28,7 @@ impl SpansMetricUpdateAttributes {
         }
     }
 
-    pub fn with_compute(
+    pub fn compute(
         &mut self,
         value: crate::datadogV2::model::SpansMetricUpdateCompute,
     ) -> &mut Self {
@@ -36,12 +36,12 @@ impl SpansMetricUpdateAttributes {
         self
     }
 
-    pub fn with_filter(&mut self, value: crate::datadogV2::model::SpansMetricFilter) -> &mut Self {
+    pub fn filter(&mut self, value: crate::datadogV2::model::SpansMetricFilter) -> &mut Self {
         self.filter = Some(value);
         self
     }
 
-    pub fn with_group_by(
+    pub fn group_by(
         &mut self,
         value: Vec<crate::datadogV2::model::SpansMetricGroupBy>,
     ) -> &mut Self {
@@ -49,6 +49,7 @@ impl SpansMetricUpdateAttributes {
         self
     }
 }
+
 impl Default for SpansMetricUpdateAttributes {
     fn default() -> Self {
         Self::new()

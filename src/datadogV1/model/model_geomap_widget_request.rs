@@ -52,36 +52,27 @@ impl GeomapWidgetRequest {
         }
     }
 
-    pub fn with_columns(
-        &mut self,
-        value: Vec<crate::datadogV1::model::ListStreamColumn>,
-    ) -> &mut Self {
+    pub fn columns(&mut self, value: Vec<crate::datadogV1::model::ListStreamColumn>) -> &mut Self {
         self.columns = Some(value);
         self
     }
 
-    pub fn with_formulas(
-        &mut self,
-        value: Vec<crate::datadogV1::model::WidgetFormula>,
-    ) -> &mut Self {
+    pub fn formulas(&mut self, value: Vec<crate::datadogV1::model::WidgetFormula>) -> &mut Self {
         self.formulas = Some(value);
         self
     }
 
-    pub fn with_log_query(
-        &mut self,
-        value: crate::datadogV1::model::LogQueryDefinition,
-    ) -> &mut Self {
+    pub fn log_query(&mut self, value: crate::datadogV1::model::LogQueryDefinition) -> &mut Self {
         self.log_query = Some(value);
         self
     }
 
-    pub fn with_q(&mut self, value: String) -> &mut Self {
+    pub fn q(&mut self, value: String) -> &mut Self {
         self.q = Some(value);
         self
     }
 
-    pub fn with_queries(
+    pub fn queries(
         &mut self,
         value: Vec<crate::datadogV1::model::FormulaAndFunctionQueryDefinition>,
     ) -> &mut Self {
@@ -89,12 +80,12 @@ impl GeomapWidgetRequest {
         self
     }
 
-    pub fn with_query(&mut self, value: crate::datadogV1::model::ListStreamQuery) -> &mut Self {
+    pub fn query(&mut self, value: crate::datadogV1::model::ListStreamQuery) -> &mut Self {
         self.query = Some(value);
         self
     }
 
-    pub fn with_response_format(
+    pub fn response_format(
         &mut self,
         value: crate::datadogV1::model::FormulaAndFunctionResponseFormat,
     ) -> &mut Self {
@@ -102,15 +93,12 @@ impl GeomapWidgetRequest {
         self
     }
 
-    pub fn with_rum_query(
-        &mut self,
-        value: crate::datadogV1::model::LogQueryDefinition,
-    ) -> &mut Self {
+    pub fn rum_query(&mut self, value: crate::datadogV1::model::LogQueryDefinition) -> &mut Self {
         self.rum_query = Some(value);
         self
     }
 
-    pub fn with_security_query(
+    pub fn security_query(
         &mut self,
         value: crate::datadogV1::model::LogQueryDefinition,
     ) -> &mut Self {
@@ -118,6 +106,7 @@ impl GeomapWidgetRequest {
         self
     }
 }
+
 impl Default for GeomapWidgetRequest {
     fn default() -> Self {
         Self::new()

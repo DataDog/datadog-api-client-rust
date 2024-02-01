@@ -36,12 +36,12 @@ impl SyntheticsTriggerCITestsResponse {
         }
     }
 
-    pub fn with_batch_id(&mut self, value: Option<String>) -> &mut Self {
+    pub fn batch_id(&mut self, value: Option<String>) -> &mut Self {
         self.batch_id = Some(value);
         self
     }
 
-    pub fn with_locations(
+    pub fn locations(
         &mut self,
         value: Vec<crate::datadogV1::model::SyntheticsTriggerCITestLocation>,
     ) -> &mut Self {
@@ -49,7 +49,7 @@ impl SyntheticsTriggerCITestsResponse {
         self
     }
 
-    pub fn with_results(
+    pub fn results(
         &mut self,
         value: Vec<crate::datadogV1::model::SyntheticsTriggerCITestRunResult>,
     ) -> &mut Self {
@@ -57,11 +57,12 @@ impl SyntheticsTriggerCITestsResponse {
         self
     }
 
-    pub fn with_triggered_check_ids(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn triggered_check_ids(&mut self, value: Vec<String>) -> &mut Self {
         self.triggered_check_ids = Some(value);
         self
     }
 }
+
 impl Default for SyntheticsTriggerCITestsResponse {
     fn default() -> Self {
         Self::new()

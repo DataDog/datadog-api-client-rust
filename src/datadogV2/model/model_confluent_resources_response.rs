@@ -18,7 +18,7 @@ impl ConfluentResourcesResponse {
         ConfluentResourcesResponse { data: None }
     }
 
-    pub fn with_data(
+    pub fn data(
         &mut self,
         value: Vec<crate::datadogV2::model::ConfluentResourceResponseData>,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl ConfluentResourcesResponse {
         self
     }
 }
+
 impl Default for ConfluentResourcesResponse {
     fn default() -> Self {
         Self::new()

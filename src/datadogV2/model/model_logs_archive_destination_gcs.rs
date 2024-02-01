@@ -36,7 +36,7 @@ impl LogsArchiveDestinationGCS {
         }
     }
 
-    pub fn with_path(&mut self, value: String) -> &mut Self {
+    pub fn path(&mut self, value: String) -> &mut Self {
         self.path = Some(value);
         self
     }

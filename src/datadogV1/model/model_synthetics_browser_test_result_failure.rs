@@ -24,7 +24,7 @@ impl SyntheticsBrowserTestResultFailure {
         }
     }
 
-    pub fn with_code(
+    pub fn code(
         &mut self,
         value: crate::datadogV1::model::SyntheticsBrowserTestFailureCode,
     ) -> &mut Self {
@@ -32,11 +32,12 @@ impl SyntheticsBrowserTestResultFailure {
         self
     }
 
-    pub fn with_message(&mut self, value: String) -> &mut Self {
+    pub fn message(&mut self, value: String) -> &mut Self {
         self.message = Some(value);
         self
     }
 }
+
 impl Default for SyntheticsBrowserTestResultFailure {
     fn default() -> Self {
         Self::new()

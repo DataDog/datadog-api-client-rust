@@ -55,15 +55,12 @@ impl SyntheticsAPITestResultData {
         }
     }
 
-    pub fn with_cert(
-        &mut self,
-        value: crate::datadogV1::model::SyntheticsSSLCertificate,
-    ) -> &mut Self {
+    pub fn cert(&mut self, value: crate::datadogV1::model::SyntheticsSSLCertificate) -> &mut Self {
         self.cert = Some(value);
         self
     }
 
-    pub fn with_event_type(
+    pub fn event_type(
         &mut self,
         value: crate::datadogV1::model::SyntheticsTestProcessStatus,
     ) -> &mut Self {
@@ -71,7 +68,7 @@ impl SyntheticsAPITestResultData {
         self
     }
 
-    pub fn with_failure(
+    pub fn failure(
         &mut self,
         value: crate::datadogV1::model::SyntheticsApiTestResultFailure,
     ) -> &mut Self {
@@ -79,12 +76,12 @@ impl SyntheticsAPITestResultData {
         self
     }
 
-    pub fn with_http_status_code(&mut self, value: i64) -> &mut Self {
+    pub fn http_status_code(&mut self, value: i64) -> &mut Self {
         self.http_status_code = Some(value);
         self
     }
 
-    pub fn with_request_headers(
+    pub fn request_headers(
         &mut self,
         value: std::collections::BTreeMap<
             String,
@@ -95,12 +92,12 @@ impl SyntheticsAPITestResultData {
         self
     }
 
-    pub fn with_response_body(&mut self, value: String) -> &mut Self {
+    pub fn response_body(&mut self, value: String) -> &mut Self {
         self.response_body = Some(value);
         self
     }
 
-    pub fn with_response_headers(
+    pub fn response_headers(
         &mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
     ) -> &mut Self {
@@ -108,16 +105,17 @@ impl SyntheticsAPITestResultData {
         self
     }
 
-    pub fn with_response_size(&mut self, value: i64) -> &mut Self {
+    pub fn response_size(&mut self, value: i64) -> &mut Self {
         self.response_size = Some(value);
         self
     }
 
-    pub fn with_timings(&mut self, value: crate::datadogV1::model::SyntheticsTiming) -> &mut Self {
+    pub fn timings(&mut self, value: crate::datadogV1::model::SyntheticsTiming) -> &mut Self {
         self.timings = Some(value);
         self
     }
 }
+
 impl Default for SyntheticsAPITestResultData {
     fn default() -> Self {
         Self::new()

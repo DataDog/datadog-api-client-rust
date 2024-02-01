@@ -24,16 +24,17 @@ impl IncidentNonDatadogCreator {
         }
     }
 
-    pub fn with_image_48_px(&mut self, value: String) -> &mut Self {
+    pub fn image_48_px(&mut self, value: String) -> &mut Self {
         self.image_48_px = Some(value);
         self
     }
 
-    pub fn with_name(&mut self, value: String) -> &mut Self {
+    pub fn name(&mut self, value: String) -> &mut Self {
         self.name = Some(value);
         self
     }
 }
+
 impl Default for IncidentNonDatadogCreator {
     fn default() -> Self {
         Self::new()

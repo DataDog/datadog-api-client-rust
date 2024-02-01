@@ -26,7 +26,7 @@ impl PowerpackTemplateVariables {
         }
     }
 
-    pub fn with_controlled_by_powerpack(
+    pub fn controlled_by_powerpack(
         &mut self,
         value: Vec<crate::datadogV1::model::PowerpackTemplateVariableContents>,
     ) -> &mut Self {
@@ -34,7 +34,7 @@ impl PowerpackTemplateVariables {
         self
     }
 
-    pub fn with_controlled_externally(
+    pub fn controlled_externally(
         &mut self,
         value: Vec<crate::datadogV1::model::PowerpackTemplateVariableContents>,
     ) -> &mut Self {
@@ -42,6 +42,7 @@ impl PowerpackTemplateVariables {
         self
     }
 }
+
 impl Default for PowerpackTemplateVariables {
     fn default() -> Self {
         Self::new()

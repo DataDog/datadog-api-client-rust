@@ -68,7 +68,7 @@ impl SecurityMonitoringRuleOptions {
         }
     }
 
-    pub fn with_compliance_rule_options(
+    pub fn compliance_rule_options(
         &mut self,
         value: crate::datadogV2::model::CloudConfigurationComplianceRuleOptions,
     ) -> &mut Self {
@@ -76,12 +76,12 @@ impl SecurityMonitoringRuleOptions {
         self
     }
 
-    pub fn with_decrease_criticality_based_on_env(&mut self, value: bool) -> &mut Self {
+    pub fn decrease_criticality_based_on_env(&mut self, value: bool) -> &mut Self {
         self.decrease_criticality_based_on_env = Some(value);
         self
     }
 
-    pub fn with_detection_method(
+    pub fn detection_method(
         &mut self,
         value: crate::datadogV2::model::SecurityMonitoringRuleDetectionMethod,
     ) -> &mut Self {
@@ -89,7 +89,7 @@ impl SecurityMonitoringRuleOptions {
         self
     }
 
-    pub fn with_evaluation_window(
+    pub fn evaluation_window(
         &mut self,
         value: crate::datadogV2::model::SecurityMonitoringRuleEvaluationWindow,
     ) -> &mut Self {
@@ -97,7 +97,7 @@ impl SecurityMonitoringRuleOptions {
         self
     }
 
-    pub fn with_hardcoded_evaluator_type(
+    pub fn hardcoded_evaluator_type(
         &mut self,
         value: crate::datadogV2::model::SecurityMonitoringRuleHardcodedEvaluatorType,
     ) -> &mut Self {
@@ -105,7 +105,7 @@ impl SecurityMonitoringRuleOptions {
         self
     }
 
-    pub fn with_impossible_travel_options(
+    pub fn impossible_travel_options(
         &mut self,
         value: crate::datadogV2::model::SecurityMonitoringRuleImpossibleTravelOptions,
     ) -> &mut Self {
@@ -113,7 +113,7 @@ impl SecurityMonitoringRuleOptions {
         self
     }
 
-    pub fn with_keep_alive(
+    pub fn keep_alive(
         &mut self,
         value: crate::datadogV2::model::SecurityMonitoringRuleKeepAlive,
     ) -> &mut Self {
@@ -121,7 +121,7 @@ impl SecurityMonitoringRuleOptions {
         self
     }
 
-    pub fn with_max_signal_duration(
+    pub fn max_signal_duration(
         &mut self,
         value: crate::datadogV2::model::SecurityMonitoringRuleMaxSignalDuration,
     ) -> &mut Self {
@@ -129,7 +129,7 @@ impl SecurityMonitoringRuleOptions {
         self
     }
 
-    pub fn with_new_value_options(
+    pub fn new_value_options(
         &mut self,
         value: crate::datadogV2::model::SecurityMonitoringRuleNewValueOptions,
     ) -> &mut Self {
@@ -137,7 +137,7 @@ impl SecurityMonitoringRuleOptions {
         self
     }
 
-    pub fn with_third_party_rule_options(
+    pub fn third_party_rule_options(
         &mut self,
         value: crate::datadogV2::model::SecurityMonitoringRuleThirdPartyOptions,
     ) -> &mut Self {
@@ -145,6 +145,7 @@ impl SecurityMonitoringRuleOptions {
         self
     }
 }
+
 impl Default for SecurityMonitoringRuleOptions {
     fn default() -> Self {
         Self::new()

@@ -6,14 +6,22 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// DeleteMonitorOptionalParams is a struct for passing parameters to the method [`MonitorsAPI::delete_monitor`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct DeleteMonitorOptionalParams {
     /// Delete the monitor even if it's referenced by other resources (for example SLO, composite monitor).
     pub force: Option<String>,
 }
 
+impl DeleteMonitorOptionalParams {
+    /// Delete the monitor even if it's referenced by other resources (for example SLO, composite monitor).
+    pub fn force(&mut self, value: String) -> &mut Self {
+        self.force = Some(value);
+        self
+    }
+}
+
 /// GetMonitorOptionalParams is a struct for passing parameters to the method [`MonitorsAPI::get_monitor`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct GetMonitorOptionalParams {
     /// When specified, shows additional information about the group states. Choose one or more from `all`, `alert`, `warn`, and `no data`.
     pub group_states: Option<String>,
@@ -21,8 +29,21 @@ pub struct GetMonitorOptionalParams {
     pub with_downtimes: Option<bool>,
 }
 
+impl GetMonitorOptionalParams {
+    /// When specified, shows additional information about the group states. Choose one or more from `all`, `alert`, `warn`, and `no data`.
+    pub fn group_states(&mut self, value: String) -> &mut Self {
+        self.group_states = Some(value);
+        self
+    }
+    /// If this argument is set to true, then the returned data includes all current active downtimes for the monitor.
+    pub fn with_downtimes(&mut self, value: bool) -> &mut Self {
+        self.with_downtimes = Some(value);
+        self
+    }
+}
+
 /// ListMonitorsOptionalParams is a struct for passing parameters to the method [`MonitorsAPI::list_monitors`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListMonitorsOptionalParams {
     /// When specified, shows additional information about the group states.
     /// Choose one or more from `all`, `alert`, `warn`, and `no data`.
@@ -45,8 +66,54 @@ pub struct ListMonitorsOptionalParams {
     pub page_size: Option<i32>,
 }
 
+impl ListMonitorsOptionalParams {
+    /// When specified, shows additional information about the group states.
+    /// Choose one or more from `all`, `alert`, `warn`, and `no data`.
+    pub fn group_states(&mut self, value: String) -> &mut Self {
+        self.group_states = Some(value);
+        self
+    }
+    /// A string to filter monitors by name.
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+    /// A comma separated list indicating what tags, if any, should be used to filter the list of monitors by scope.
+    /// For example, `host:host0`.
+    pub fn tags(&mut self, value: String) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+    /// A comma separated list indicating what service and/or custom tags, if any, should be used to filter the list of monitors.
+    /// Tags created in the Datadog UI automatically have the service key prepended. For example, `service:my-app`.
+    pub fn monitor_tags(&mut self, value: String) -> &mut Self {
+        self.monitor_tags = Some(value);
+        self
+    }
+    /// If this argument is set to true, then the returned data includes all current active downtimes for each monitor.
+    pub fn with_downtimes(&mut self, value: bool) -> &mut Self {
+        self.with_downtimes = Some(value);
+        self
+    }
+    /// Use this parameter for paginating through large sets of monitors. Start with a value of zero, make a request, set the value to the last ID of result set, and then repeat until the response is empty.
+    pub fn id_offset(&mut self, value: i64) -> &mut Self {
+        self.id_offset = Some(value);
+        self
+    }
+    /// The page to start paginating from. If this argument is not specified, the request returns all monitors without pagination.
+    pub fn page(&mut self, value: i64) -> &mut Self {
+        self.page = Some(value);
+        self
+    }
+    /// The number of monitors to return per page. If the page argument is not specified, the default behavior returns all monitors without a `page_size` limit. However, if page is specified and `page_size` is not, the argument defaults to 100.
+    pub fn page_size(&mut self, value: i32) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+}
+
 /// SearchMonitorGroupsOptionalParams is a struct for passing parameters to the method [`MonitorsAPI::search_monitor_groups`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct SearchMonitorGroupsOptionalParams {
     /// After entering a search query in your [Manage Monitor page][1] use the query parameter value in the
     /// URL of the page as value for this parameter. Consult the dedicated [manage monitor documentation][2]
@@ -69,8 +136,42 @@ pub struct SearchMonitorGroupsOptionalParams {
     pub sort: Option<String>,
 }
 
+impl SearchMonitorGroupsOptionalParams {
+    /// After entering a search query in your [Manage Monitor page][1] use the query parameter value in the
+    /// URL of the page as value for this parameter. Consult the dedicated [manage monitor documentation][2]
+    /// page to learn more.
+    ///
+    /// The query can contain any number of space-separated monitor attributes, for instance `query="type:metric status:alert"`.
+    ///
+    /// [1]: <https://app.datadoghq.com/monitors/manage>
+    /// [2]: /monitors/manage/#find-the-monitors
+    pub fn query(&mut self, value: String) -> &mut Self {
+        self.query = Some(value);
+        self
+    }
+    /// Page to start paginating from.
+    pub fn page(&mut self, value: i64) -> &mut Self {
+        self.page = Some(value);
+        self
+    }
+    /// Number of monitors to return per page.
+    pub fn per_page(&mut self, value: i64) -> &mut Self {
+        self.per_page = Some(value);
+        self
+    }
+    /// String for sort order, composed of field and sort order separate by a comma, for example `name,asc`. Supported sort directions: `asc`, `desc`. Supported fields:
+    ///
+    /// * `name`
+    /// * `status`
+    /// * `tags`
+    pub fn sort(&mut self, value: String) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+}
+
 /// SearchMonitorsOptionalParams is a struct for passing parameters to the method [`MonitorsAPI::search_monitors`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct SearchMonitorsOptionalParams {
     /// After entering a search query in your [Manage Monitor page][1] use the query parameter value in the
     /// URL of the page as value for this parameter. Consult the dedicated [manage monitor documentation][2]
@@ -91,6 +192,40 @@ pub struct SearchMonitorsOptionalParams {
     /// * `status`
     /// * `tags`
     pub sort: Option<String>,
+}
+
+impl SearchMonitorsOptionalParams {
+    /// After entering a search query in your [Manage Monitor page][1] use the query parameter value in the
+    /// URL of the page as value for this parameter. Consult the dedicated [manage monitor documentation][2]
+    /// page to learn more.
+    ///
+    /// The query can contain any number of space-separated monitor attributes, for instance `query="type:metric status:alert"`.
+    ///
+    /// [1]: <https://app.datadoghq.com/monitors/manage>
+    /// [2]: /monitors/manage/#find-the-monitors
+    pub fn query(&mut self, value: String) -> &mut Self {
+        self.query = Some(value);
+        self
+    }
+    /// Page to start paginating from.
+    pub fn page(&mut self, value: i64) -> &mut Self {
+        self.page = Some(value);
+        self
+    }
+    /// Number of monitors to return per page.
+    pub fn per_page(&mut self, value: i64) -> &mut Self {
+        self.per_page = Some(value);
+        self
+    }
+    /// String for sort order, composed of field and sort order separate by a comma, for example `name,asc`. Supported sort directions: `asc`, `desc`. Supported fields:
+    ///
+    /// * `name`
+    /// * `status`
+    /// * `tags`
+    pub fn sort(&mut self, value: String) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
 }
 
 /// CheckCanDeleteMonitorError is a struct for typed errors of method [`MonitorsAPI::check_can_delete_monitor`]

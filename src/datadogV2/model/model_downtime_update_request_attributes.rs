@@ -58,17 +58,17 @@ impl DowntimeUpdateRequestAttributes {
         }
     }
 
-    pub fn with_display_timezone(&mut self, value: Option<String>) -> &mut Self {
+    pub fn display_timezone(&mut self, value: Option<String>) -> &mut Self {
         self.display_timezone = Some(value);
         self
     }
 
-    pub fn with_message(&mut self, value: Option<String>) -> &mut Self {
+    pub fn message(&mut self, value: Option<String>) -> &mut Self {
         self.message = Some(value);
         self
     }
 
-    pub fn with_monitor_identifier(
+    pub fn monitor_identifier(
         &mut self,
         value: crate::datadogV2::model::DowntimeMonitorIdentifier,
     ) -> &mut Self {
@@ -76,12 +76,12 @@ impl DowntimeUpdateRequestAttributes {
         self
     }
 
-    pub fn with_mute_first_recovery_notification(&mut self, value: bool) -> &mut Self {
+    pub fn mute_first_recovery_notification(&mut self, value: bool) -> &mut Self {
         self.mute_first_recovery_notification = Some(value);
         self
     }
 
-    pub fn with_notify_end_states(
+    pub fn notify_end_states(
         &mut self,
         value: Vec<crate::datadogV2::model::DowntimeNotifyEndStateTypes>,
     ) -> &mut Self {
@@ -89,7 +89,7 @@ impl DowntimeUpdateRequestAttributes {
         self
     }
 
-    pub fn with_notify_end_types(
+    pub fn notify_end_types(
         &mut self,
         value: Vec<crate::datadogV2::model::DowntimeNotifyEndStateActions>,
     ) -> &mut Self {
@@ -97,7 +97,7 @@ impl DowntimeUpdateRequestAttributes {
         self
     }
 
-    pub fn with_schedule(
+    pub fn schedule(
         &mut self,
         value: crate::datadogV2::model::DowntimeScheduleUpdateRequest,
     ) -> &mut Self {
@@ -105,11 +105,12 @@ impl DowntimeUpdateRequestAttributes {
         self
     }
 
-    pub fn with_scope(&mut self, value: String) -> &mut Self {
+    pub fn scope(&mut self, value: String) -> &mut Self {
         self.scope = Some(value);
         self
     }
 }
+
 impl Default for DowntimeUpdateRequestAttributes {
     fn default() -> Self {
         Self::new()

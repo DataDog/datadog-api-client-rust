@@ -53,7 +53,7 @@ impl IncidentResponseRelationships {
         }
     }
 
-    pub fn with_attachments(
+    pub fn attachments(
         &mut self,
         value: crate::datadogV2::model::RelationshipToIncidentAttachment,
     ) -> &mut Self {
@@ -61,7 +61,7 @@ impl IncidentResponseRelationships {
         self
     }
 
-    pub fn with_commander_user(
+    pub fn commander_user(
         &mut self,
         value: Option<crate::datadogV2::model::NullableRelationshipToUser>,
     ) -> &mut Self {
@@ -69,7 +69,7 @@ impl IncidentResponseRelationships {
         self
     }
 
-    pub fn with_created_by_user(
+    pub fn created_by_user(
         &mut self,
         value: crate::datadogV2::model::RelationshipToUser,
     ) -> &mut Self {
@@ -77,7 +77,7 @@ impl IncidentResponseRelationships {
         self
     }
 
-    pub fn with_impacts(
+    pub fn impacts(
         &mut self,
         value: crate::datadogV2::model::RelationshipToIncidentImpacts,
     ) -> &mut Self {
@@ -85,7 +85,7 @@ impl IncidentResponseRelationships {
         self
     }
 
-    pub fn with_integrations(
+    pub fn integrations(
         &mut self,
         value: crate::datadogV2::model::RelationshipToIncidentIntegrationMetadatas,
     ) -> &mut Self {
@@ -93,7 +93,7 @@ impl IncidentResponseRelationships {
         self
     }
 
-    pub fn with_last_modified_by_user(
+    pub fn last_modified_by_user(
         &mut self,
         value: crate::datadogV2::model::RelationshipToUser,
     ) -> &mut Self {
@@ -101,7 +101,7 @@ impl IncidentResponseRelationships {
         self
     }
 
-    pub fn with_responders(
+    pub fn responders(
         &mut self,
         value: crate::datadogV2::model::RelationshipToIncidentResponders,
     ) -> &mut Self {
@@ -109,7 +109,7 @@ impl IncidentResponseRelationships {
         self
     }
 
-    pub fn with_user_defined_fields(
+    pub fn user_defined_fields(
         &mut self,
         value: crate::datadogV2::model::RelationshipToIncidentUserDefinedFields,
     ) -> &mut Self {
@@ -117,6 +117,7 @@ impl IncidentResponseRelationships {
         self
     }
 }
+
 impl Default for IncidentResponseRelationships {
     fn default() -> Self {
         Self::new()

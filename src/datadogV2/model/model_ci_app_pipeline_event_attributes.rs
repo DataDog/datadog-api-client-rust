@@ -28,7 +28,7 @@ impl CIAppPipelineEventAttributes {
         }
     }
 
-    pub fn with_attributes(
+    pub fn attributes(
         &mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
     ) -> &mut Self {
@@ -36,19 +36,17 @@ impl CIAppPipelineEventAttributes {
         self
     }
 
-    pub fn with_ci_level(
-        &mut self,
-        value: crate::datadogV2::model::CIAppPipelineLevel,
-    ) -> &mut Self {
+    pub fn ci_level(&mut self, value: crate::datadogV2::model::CIAppPipelineLevel) -> &mut Self {
         self.ci_level = Some(value);
         self
     }
 
-    pub fn with_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
         self.tags = Some(value);
         self
     }
 }
+
 impl Default for CIAppPipelineEventAttributes {
     fn default() -> Self {
         Self::new()

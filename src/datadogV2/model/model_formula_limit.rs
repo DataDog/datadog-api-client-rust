@@ -25,16 +25,17 @@ impl FormulaLimit {
         }
     }
 
-    pub fn with_count(&mut self, value: i32) -> &mut Self {
+    pub fn count(&mut self, value: i32) -> &mut Self {
         self.count = Some(value);
         self
     }
 
-    pub fn with_order(&mut self, value: crate::datadogV2::model::QuerySortOrder) -> &mut Self {
+    pub fn order(&mut self, value: crate::datadogV2::model::QuerySortOrder) -> &mut Self {
         self.order = Some(value);
         self
     }
 }
+
 impl Default for FormulaLimit {
     fn default() -> Self {
         Self::new()

@@ -24,7 +24,7 @@ impl SearchSLOResponseData {
         }
     }
 
-    pub fn with_attributes(
+    pub fn attributes(
         &mut self,
         value: crate::datadogV1::model::SearchSLOResponseDataAttributes,
     ) -> &mut Self {
@@ -32,11 +32,12 @@ impl SearchSLOResponseData {
         self
     }
 
-    pub fn with_type_(&mut self, value: String) -> &mut Self {
+    pub fn type_(&mut self, value: String) -> &mut Self {
         self.type_ = Some(value);
         self
     }
 }
+
 impl Default for SearchSLOResponseData {
     fn default() -> Self {
         Self::new()

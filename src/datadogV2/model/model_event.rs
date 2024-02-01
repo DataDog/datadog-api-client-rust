@@ -32,26 +32,27 @@ impl Event {
         }
     }
 
-    pub fn with_id(&mut self, value: String) -> &mut Self {
+    pub fn id(&mut self, value: String) -> &mut Self {
         self.id = Some(value);
         self
     }
 
-    pub fn with_name(&mut self, value: String) -> &mut Self {
+    pub fn name(&mut self, value: String) -> &mut Self {
         self.name = Some(value);
         self
     }
 
-    pub fn with_source_id(&mut self, value: i64) -> &mut Self {
+    pub fn source_id(&mut self, value: i64) -> &mut Self {
         self.source_id = Some(value);
         self
     }
 
-    pub fn with_type_(&mut self, value: String) -> &mut Self {
+    pub fn type_(&mut self, value: String) -> &mut Self {
         self.type_ = Some(value);
         self
     }
 }
+
 impl Default for Event {
     fn default() -> Self {
         Self::new()

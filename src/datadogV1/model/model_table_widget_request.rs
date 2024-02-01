@@ -92,28 +92,22 @@ impl TableWidgetRequest {
         }
     }
 
-    pub fn with_aggregator(
-        &mut self,
-        value: crate::datadogV1::model::WidgetAggregator,
-    ) -> &mut Self {
+    pub fn aggregator(&mut self, value: crate::datadogV1::model::WidgetAggregator) -> &mut Self {
         self.aggregator = Some(value);
         self
     }
 
-    pub fn with_alias(&mut self, value: String) -> &mut Self {
+    pub fn alias(&mut self, value: String) -> &mut Self {
         self.alias = Some(value);
         self
     }
 
-    pub fn with_apm_query(
-        &mut self,
-        value: crate::datadogV1::model::LogQueryDefinition,
-    ) -> &mut Self {
+    pub fn apm_query(&mut self, value: crate::datadogV1::model::LogQueryDefinition) -> &mut Self {
         self.apm_query = Some(value);
         self
     }
 
-    pub fn with_apm_stats_query(
+    pub fn apm_stats_query(
         &mut self,
         value: crate::datadogV1::model::ApmStatsQueryDefinition,
     ) -> &mut Self {
@@ -121,7 +115,7 @@ impl TableWidgetRequest {
         self
     }
 
-    pub fn with_cell_display_mode(
+    pub fn cell_display_mode(
         &mut self,
         value: Vec<crate::datadogV1::model::TableWidgetCellDisplayMode>,
     ) -> &mut Self {
@@ -129,7 +123,7 @@ impl TableWidgetRequest {
         self
     }
 
-    pub fn with_conditional_formats(
+    pub fn conditional_formats(
         &mut self,
         value: Vec<crate::datadogV1::model::WidgetConditionalFormat>,
     ) -> &mut Self {
@@ -137,36 +131,27 @@ impl TableWidgetRequest {
         self
     }
 
-    pub fn with_event_query(
-        &mut self,
-        value: crate::datadogV1::model::LogQueryDefinition,
-    ) -> &mut Self {
+    pub fn event_query(&mut self, value: crate::datadogV1::model::LogQueryDefinition) -> &mut Self {
         self.event_query = Some(value);
         self
     }
 
-    pub fn with_formulas(
-        &mut self,
-        value: Vec<crate::datadogV1::model::WidgetFormula>,
-    ) -> &mut Self {
+    pub fn formulas(&mut self, value: Vec<crate::datadogV1::model::WidgetFormula>) -> &mut Self {
         self.formulas = Some(value);
         self
     }
 
-    pub fn with_limit(&mut self, value: i64) -> &mut Self {
+    pub fn limit(&mut self, value: i64) -> &mut Self {
         self.limit = Some(value);
         self
     }
 
-    pub fn with_log_query(
-        &mut self,
-        value: crate::datadogV1::model::LogQueryDefinition,
-    ) -> &mut Self {
+    pub fn log_query(&mut self, value: crate::datadogV1::model::LogQueryDefinition) -> &mut Self {
         self.log_query = Some(value);
         self
     }
 
-    pub fn with_network_query(
+    pub fn network_query(
         &mut self,
         value: crate::datadogV1::model::LogQueryDefinition,
     ) -> &mut Self {
@@ -174,12 +159,12 @@ impl TableWidgetRequest {
         self
     }
 
-    pub fn with_order(&mut self, value: crate::datadogV1::model::WidgetSort) -> &mut Self {
+    pub fn order(&mut self, value: crate::datadogV1::model::WidgetSort) -> &mut Self {
         self.order = Some(value);
         self
     }
 
-    pub fn with_process_query(
+    pub fn process_query(
         &mut self,
         value: crate::datadogV1::model::ProcessQueryDefinition,
     ) -> &mut Self {
@@ -187,7 +172,7 @@ impl TableWidgetRequest {
         self
     }
 
-    pub fn with_profile_metrics_query(
+    pub fn profile_metrics_query(
         &mut self,
         value: crate::datadogV1::model::LogQueryDefinition,
     ) -> &mut Self {
@@ -195,12 +180,12 @@ impl TableWidgetRequest {
         self
     }
 
-    pub fn with_q(&mut self, value: String) -> &mut Self {
+    pub fn q(&mut self, value: String) -> &mut Self {
         self.q = Some(value);
         self
     }
 
-    pub fn with_queries(
+    pub fn queries(
         &mut self,
         value: Vec<crate::datadogV1::model::FormulaAndFunctionQueryDefinition>,
     ) -> &mut Self {
@@ -208,7 +193,7 @@ impl TableWidgetRequest {
         self
     }
 
-    pub fn with_response_format(
+    pub fn response_format(
         &mut self,
         value: crate::datadogV1::model::FormulaAndFunctionResponseFormat,
     ) -> &mut Self {
@@ -216,15 +201,12 @@ impl TableWidgetRequest {
         self
     }
 
-    pub fn with_rum_query(
-        &mut self,
-        value: crate::datadogV1::model::LogQueryDefinition,
-    ) -> &mut Self {
+    pub fn rum_query(&mut self, value: crate::datadogV1::model::LogQueryDefinition) -> &mut Self {
         self.rum_query = Some(value);
         self
     }
 
-    pub fn with_security_query(
+    pub fn security_query(
         &mut self,
         value: crate::datadogV1::model::LogQueryDefinition,
     ) -> &mut Self {
@@ -232,6 +214,7 @@ impl TableWidgetRequest {
         self
     }
 }
+
 impl Default for TableWidgetRequest {
     fn default() -> Self {
         Self::new()

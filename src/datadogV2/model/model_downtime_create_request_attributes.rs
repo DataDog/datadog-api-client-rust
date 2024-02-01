@@ -61,22 +61,22 @@ impl DowntimeCreateRequestAttributes {
         }
     }
 
-    pub fn with_display_timezone(&mut self, value: Option<String>) -> &mut Self {
+    pub fn display_timezone(&mut self, value: Option<String>) -> &mut Self {
         self.display_timezone = Some(value);
         self
     }
 
-    pub fn with_message(&mut self, value: Option<String>) -> &mut Self {
+    pub fn message(&mut self, value: Option<String>) -> &mut Self {
         self.message = Some(value);
         self
     }
 
-    pub fn with_mute_first_recovery_notification(&mut self, value: bool) -> &mut Self {
+    pub fn mute_first_recovery_notification(&mut self, value: bool) -> &mut Self {
         self.mute_first_recovery_notification = Some(value);
         self
     }
 
-    pub fn with_notify_end_states(
+    pub fn notify_end_states(
         &mut self,
         value: Vec<crate::datadogV2::model::DowntimeNotifyEndStateTypes>,
     ) -> &mut Self {
@@ -84,7 +84,7 @@ impl DowntimeCreateRequestAttributes {
         self
     }
 
-    pub fn with_notify_end_types(
+    pub fn notify_end_types(
         &mut self,
         value: Vec<crate::datadogV2::model::DowntimeNotifyEndStateActions>,
     ) -> &mut Self {
@@ -92,7 +92,7 @@ impl DowntimeCreateRequestAttributes {
         self
     }
 
-    pub fn with_schedule(
+    pub fn schedule(
         &mut self,
         value: crate::datadogV2::model::DowntimeScheduleCreateRequest,
     ) -> &mut Self {

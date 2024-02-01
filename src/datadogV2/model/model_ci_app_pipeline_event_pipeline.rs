@@ -138,43 +138,37 @@ impl CIAppPipelineEventPipeline {
         }
     }
 
-    pub fn with_error(
-        &mut self,
-        value: Option<crate::datadogV2::model::CIAppCIError>,
-    ) -> &mut Self {
+    pub fn error(&mut self, value: Option<crate::datadogV2::model::CIAppCIError>) -> &mut Self {
         self.error = Some(value);
         self
     }
 
-    pub fn with_git(&mut self, value: Option<crate::datadogV2::model::CIAppGitInfo>) -> &mut Self {
+    pub fn git(&mut self, value: Option<crate::datadogV2::model::CIAppGitInfo>) -> &mut Self {
         self.git = Some(value);
         self
     }
 
-    pub fn with_is_manual(&mut self, value: Option<bool>) -> &mut Self {
+    pub fn is_manual(&mut self, value: Option<bool>) -> &mut Self {
         self.is_manual = Some(value);
         self
     }
 
-    pub fn with_is_resumed(&mut self, value: Option<bool>) -> &mut Self {
+    pub fn is_resumed(&mut self, value: Option<bool>) -> &mut Self {
         self.is_resumed = Some(value);
         self
     }
 
-    pub fn with_metrics(&mut self, value: Option<Vec<String>>) -> &mut Self {
+    pub fn metrics(&mut self, value: Option<Vec<String>>) -> &mut Self {
         self.metrics = Some(value);
         self
     }
 
-    pub fn with_node(
-        &mut self,
-        value: Option<crate::datadogV2::model::CIAppHostInfo>,
-    ) -> &mut Self {
+    pub fn node(&mut self, value: Option<crate::datadogV2::model::CIAppHostInfo>) -> &mut Self {
         self.node = Some(value);
         self
     }
 
-    pub fn with_parameters(
+    pub fn parameters(
         &mut self,
         value: Option<std::collections::BTreeMap<String, String>>,
     ) -> &mut Self {
@@ -182,7 +176,7 @@ impl CIAppPipelineEventPipeline {
         self
     }
 
-    pub fn with_parent_pipeline(
+    pub fn parent_pipeline(
         &mut self,
         value: Option<crate::datadogV2::model::CIAppPipelineEventParentPipeline>,
     ) -> &mut Self {
@@ -190,12 +184,12 @@ impl CIAppPipelineEventPipeline {
         self
     }
 
-    pub fn with_pipeline_id(&mut self, value: String) -> &mut Self {
+    pub fn pipeline_id(&mut self, value: String) -> &mut Self {
         self.pipeline_id = Some(value);
         self
     }
 
-    pub fn with_previous_attempt(
+    pub fn previous_attempt(
         &mut self,
         value: Option<crate::datadogV2::model::CIAppPipelineEventPreviousPipeline>,
     ) -> &mut Self {
@@ -203,12 +197,12 @@ impl CIAppPipelineEventPipeline {
         self
     }
 
-    pub fn with_queue_time(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn queue_time(&mut self, value: Option<i64>) -> &mut Self {
         self.queue_time = Some(value);
         self
     }
 
-    pub fn with_tags(&mut self, value: Option<Vec<String>>) -> &mut Self {
+    pub fn tags(&mut self, value: Option<Vec<String>>) -> &mut Self {
         self.tags = Some(value);
         self
     }

@@ -24,12 +24,12 @@ impl LogsByRetentionMonthlyUsage {
         }
     }
 
-    pub fn with_date(&mut self, value: String) -> &mut Self {
+    pub fn date(&mut self, value: String) -> &mut Self {
         self.date = Some(value);
         self
     }
 
-    pub fn with_usage(
+    pub fn usage(
         &mut self,
         value: Vec<crate::datadogV1::model::LogsRetentionSumUsage>,
     ) -> &mut Self {
@@ -37,6 +37,7 @@ impl LogsByRetentionMonthlyUsage {
         self
     }
 }
+
 impl Default for LogsByRetentionMonthlyUsage {
     fn default() -> Self {
         Self::new()

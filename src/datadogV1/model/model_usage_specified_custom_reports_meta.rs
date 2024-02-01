@@ -18,7 +18,7 @@ impl UsageSpecifiedCustomReportsMeta {
         UsageSpecifiedCustomReportsMeta { page: None }
     }
 
-    pub fn with_page(
+    pub fn page(
         &mut self,
         value: crate::datadogV1::model::UsageSpecifiedCustomReportsPage,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl UsageSpecifiedCustomReportsMeta {
         self
     }
 }
+
 impl Default for UsageSpecifiedCustomReportsMeta {
     fn default() -> Self {
         Self::new()

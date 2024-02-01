@@ -24,16 +24,17 @@ impl ServiceDefinitionV1Org {
         }
     }
 
-    pub fn with_application(&mut self, value: String) -> &mut Self {
+    pub fn application(&mut self, value: String) -> &mut Self {
         self.application = Some(value);
         self
     }
 
-    pub fn with_team(&mut self, value: String) -> &mut Self {
+    pub fn team(&mut self, value: String) -> &mut Self {
         self.team = Some(value);
         self
     }
 }
+
 impl Default for ServiceDefinitionV1Org {
     fn default() -> Self {
         Self::new()

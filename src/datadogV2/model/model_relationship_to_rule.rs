@@ -18,7 +18,7 @@ impl RelationshipToRule {
         RelationshipToRule { scorecard: None }
     }
 
-    pub fn with_scorecard(
+    pub fn scorecard(
         &mut self,
         value: crate::datadogV2::model::RelationshipToRuleData,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl RelationshipToRule {
         self
     }
 }
+
 impl Default for RelationshipToRule {
     fn default() -> Self {
         Self::new()

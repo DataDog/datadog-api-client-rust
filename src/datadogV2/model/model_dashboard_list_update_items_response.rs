@@ -18,7 +18,7 @@ impl DashboardListUpdateItemsResponse {
         DashboardListUpdateItemsResponse { dashboards: None }
     }
 
-    pub fn with_dashboards(
+    pub fn dashboards(
         &mut self,
         value: Vec<crate::datadogV2::model::DashboardListItemResponse>,
     ) -> &mut Self {
@@ -26,6 +26,7 @@ impl DashboardListUpdateItemsResponse {
         self
     }
 }
+
 impl Default for DashboardListUpdateItemsResponse {
     fn default() -> Self {
         Self::new()

@@ -6,12 +6,25 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListPowerpacksOptionalParams is a struct for passing parameters to the method [`PowerpackAPI::list_powerpacks`]
-#[derive(Clone, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct ListPowerpacksOptionalParams {
     /// Maximum number of powerpacks in the response.
     pub page_limit: Option<i64>,
     /// Specific offset to use as the beginning of the returned page.
     pub page_offset: Option<i64>,
+}
+
+impl ListPowerpacksOptionalParams {
+    /// Maximum number of powerpacks in the response.
+    pub fn page_limit(&mut self, value: i64) -> &mut Self {
+        self.page_limit = Some(value);
+        self
+    }
+    /// Specific offset to use as the beginning of the returned page.
+    pub fn page_offset(&mut self, value: i64) -> &mut Self {
+        self.page_offset = Some(value);
+        self
+    }
 }
 
 /// CreatePowerpackError is a struct for typed errors of method [`PowerpackAPI::create_powerpack`]
