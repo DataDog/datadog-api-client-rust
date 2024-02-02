@@ -35,7 +35,6 @@ def option_wrapper(name, option, nullable):
 
 def type_to_rust(schema, alternative_name=None, render_nullable=False, render_option=True, render_box=False, version=None):
     """Return Rust type name for the type."""
-    render_box = False
     # special case for additionalProperties: true
     if schema is True or schema == {}:
         return "serde_json::Value"
