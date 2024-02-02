@@ -3,22 +3,10 @@ repos:
   hooks:
   - id: generate
     name: Generate
-    language: node
+    language: system
     entry: bash -c "./generate.sh"
     files: '^(\.generator/.*|\.pre-commit-config\.yaml|Makefile|\tests/scenarios/features/.*)'
     pass_filenames: false
-  - id: lint
-    name: Lint
-    entry: cargo clippy
-    language: system
-    pass_filenames: false
-    stages: [manual]
-  - id: format
-    name: Format
-    language: rust
-    entry: cargo fmt
-    pass_filenames: false
-    stages: [manual]
   - id: generator
     name: generator
     language: python
@@ -28,3 +16,22 @@ repos:
     pass_filenames: false
     additional_dependencies:
       - "poetry"
+  - id: format
+    name: Format
+    language: rust
+    entry: cargo fmt
+    pass_filenames: false
+    stages: [manual]
+  - id: lint
+    name: Lint
+    entry: cargo check
+    language: system
+    pass_filenames: false
+    stages: [manual]
+  - id: license-check
+    name: Check license file
+    entry: bash -c "scripts/license-check.sh"
+    language: system
+    stages: ["manual"]
+    verbose: true
+    pass_filenames: false
