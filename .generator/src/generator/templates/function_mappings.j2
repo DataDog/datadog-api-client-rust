@@ -53,7 +53,6 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
 {%- set operationParams = operation|parameters|list %}
 fn test_{{version}}_{{ operation['operationId'] | snake_case }}(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world.api_instances.{{version}}_{{ apiName }}.as_ref().expect("api instance not found");
-    {%- if operationParams|length > 0 -%}
     {%- for parameter in operationParams %}
     {%- set schema = parameter[1] | parameter_schema %}
     {%- if parameter[1].required %}
@@ -74,15 +73,17 @@ fn test_{{version}}_{{ operation['operationId'] | snake_case }}(world: &mut Data
     };
     {%- endif %}
     {%- endfor %}
-    let params = datadog{{ version.upper() }}::api::{{ apiName }}::{{ operation['operationId'] }}Params {
-        {%- for param in operationParams %}
-        {{ param[0] | variable_name }},
-        {%- endfor %}
-    };
-    let response = match block_on(api.{{ operation['operationId'] | snake_case}}_with_http_info(params)) {
-    {%- else %}
-    let response = match block_on(api.{{ operation['operationId'] | snake_case}}_with_http_info()) {
+
+    {%- for parameter in operationParams if parameter[1].required != true %}
+    {%- if loop.first %}
+    let params = datadog{{ version.upper() }}::api::{{ apiName }}::{{ operation['operationId'] }}OptionalParams {
     {%- endif %}
+        {{ parameter[0] | variable_name }},
+    {%- if loop.last %}
+    };
+    {%- endif %}
+    {%- endfor %}
+    let response = match block_on(api.{{ operation['operationId'] | snake_case}}_with_http_info({% for name, parameter in operation|parameters if parameter.required == true %}{{name|variable_name}}{% if loop.last %}{% if operation|has_optional %}, {% endif %}{% else %}, {% endif %}{% endfor %}{% if operation|has_optional %}params{% endif %})) {
         Ok(response) => response,
         Err(error) => {
             return match error {
