@@ -1,0 +1,2 @@
+[overrides]
+"openssl-macros" = { origin = "https://github.com/sfackler/rust-openssl" }
