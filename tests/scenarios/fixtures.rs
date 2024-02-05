@@ -83,8 +83,8 @@ pub async fn before_scenario(
     let escaped_filename = NON_ALNUM_RE
         .replace_all(scenario.name.as_str(), "-")
         .to_string();
-    let filename = match escaped_filename.len() > 100 {
-        true => escaped_filename[..100].to_string(),
+    let filename = match escaped_filename.len() > 200 {
+        true => escaped_filename[..200].to_string(),
         false => escaped_filename,
     };
     let mut prefix = "Test".to_string();

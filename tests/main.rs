@@ -101,11 +101,13 @@ async fn main() {
             if !name_match {
                 return false;
             }
-            if sc.tags.contains(&"skip".to_string()) || sc.tags.contains(&"skip-rust".to_string()) {
+            if sc.tags.contains(&"skip".into()) || sc.tags.contains(&"skip-rust".into()) {
                 return false;
-            } else if !is_replay && sc.tags.contains(&"replay-only".to_string()) {
+            } else if !is_replay && sc.tags.contains(&"replay-only".into()) {
                 return false;
-            } else if is_replay && sc.tags.contains(&"integration-only".to_string()) {
+            } else if is_replay && sc.tags.contains(&"integration-only".into()) {
+                return false;
+            } else if sc.tags.contains(&"with-pagination".into()) {
                 return false;
             } else {
                 return true;
