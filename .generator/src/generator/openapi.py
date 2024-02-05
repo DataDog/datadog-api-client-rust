@@ -92,25 +92,16 @@ def get_type_for_attribute(schema, attribute, current_name=None):
 def get_type_for_parameter(parameter, version=None, render_option=None):
     """Return Rust type name for the parameter."""
     if render_option is None:
-        if "required" in parameter:
-            render_option = not parameter["required"]
-        else:
-            render_option = True
+        render_option = not parameter.get("required")
     if "content" in parameter:
         assert "in" not in parameter
         for content in parameter["content"].values():
             return type_to_rust(content["schema"], version=version, render_option=render_option)
     return type_to_rust(parameter.get("schema"), version=version, render_option=render_option)
 
-def has_required(operation):
+def has_optional_parameter(operation):
     for _, parameter in parameters(operation):
-        if parameter.get("required", False) == True:
-            return True
-    return False
-
-def has_optional(operation):
-    for _, parameter in parameters(operation):
-        if parameter.get("required", False) != True:
+        if not parameter.get("required"):
             return True
     return False
 

@@ -9,8 +9,9 @@ use crate::datadog::*;
 {%- set returnType = operation|return_type(version) %}
 {%- set formParameter = operation|form_parameter %}
 {%- set optionalBody = false if "required" in operation.requestBody and operation.requestBody.required else true %}
+{%- set optionalParams = operation|parameters|rejectattr('1.required', 'equalto', true) | list %}
 
-{%- for name, parameter in operation|parameters if parameter.required != true %}
+{%- for name, parameter in optionalParams %}
 {%- if loop.first %}
 /// {{operation.operationId}}OptionalParams is a struct for passing parameters to the method [`{{ structName }}::{{operation.operationId | snake_case}}`]
 #[derive(Clone, Default, Debug)]
@@ -24,7 +25,7 @@ pub struct {{operation.operationId}}OptionalParams {
 }
 {% endif %}
 {%- endfor %}
-{%- for name, parameter in operation|parameters if parameter.required != true %}
+{%- for name, parameter in optionalParams %}
 {%- if loop.first %}
 impl {{operation.operationId}}OptionalParams {
 {%- endif %}
@@ -87,11 +88,12 @@ impl {{ structName }} {
     {%- set httpMethod = method.upper() %}
     {%- set returnType = operation|return_type(version) %}
     {%- set formParameter = operation|form_parameter %}
+    {%- set requiredParams = operation|parameters|selectattr('1.required', 'equalto', true) | list %}
     {% if operation.description is defined %}
     {{ operation.description | block_comment }}
     {%- endif %}
-    pub async fn {{operation.operationId | snake_case}}(&self{% for name, parameter in operation|parameters if parameter.required == true %}, {{name|variable_name}}: {{ get_type_for_parameter(parameter, version) }}{% endfor %}{% if operation|has_optional %}, params: {{operation.operationId}}OptionalParams{% endif %}) -> Result<Option<{% if returnType %}{{returnType}}{% else %}(){% endif %}>, Error<{{operation.operationId}}Error>> {
-        match self.{{operation.operationId | snake_case}}_with_http_info({% for name, parameter in operation|parameters if parameter.required == true %}{{name|variable_name}}{% if loop.last %}{% if operation|has_optional %}, {% endif %}{% else %}, {% endif %}{% endfor %}{% if operation|has_optional %} params{% endif %}).await {
+    pub async fn {{operation.operationId | snake_case}}(&self{% for name, parameter in requiredParams %}, {{name|variable_name}}: {{ get_type_for_parameter(parameter, version) }}{% endfor %}{% if operation|has_optional_parameter %}, params: {{operation.operationId}}OptionalParams{% endif %}) -> Result<Option<{% if returnType %}{{returnType}}{% else %}(){% endif %}>, Error<{{operation.operationId}}Error>> {
+        match self.{{operation.operationId | snake_case}}_with_http_info({% for name, parameter in requiredParams %}{{name|variable_name}}{% if loop.last %}{% if operation|has_optional_parameter %}, {% endif %}{% else %}, {% endif %}{% endfor %}{% if operation|has_optional_parameter %} params{% endif %}).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -100,7 +102,7 @@ impl {{ structName }} {
     {% if operation.description is defined %}
     {{ operation.description | block_comment }}
     {%- endif %}
-    pub async fn {{operation.operationId | snake_case}}_with_http_info(&self{% for name, parameter in operation|parameters if parameter.required == true %}, {{name|variable_name}}: {{ get_type_for_parameter(parameter, version) }}{% endfor %}{% if operation|has_optional %}, params: {{operation.operationId}}OptionalParams{% endif %}) -> Result<ResponseContent<{% if returnType %}{{returnType}}{% else %}(){% endif %}>, Error<{{operation.operationId}}Error>> {
+    pub async fn {{operation.operationId | snake_case}}_with_http_info(&self{% for name, parameter in requiredParams %}, {{name|variable_name}}: {{ get_type_for_parameter(parameter, version) }}{% endfor %}{% if operation|has_optional_parameter %}, params: {{operation.operationId}}OptionalParams{% endif %}) -> Result<ResponseContent<{% if returnType %}{{returnType}}{% else %}(){% endif %}>, Error<{{operation.operationId}}Error>> {
         let local_configuration = &self.config;
 
         {% for name, parameter in operation|parameters if parameter.required != true %}
