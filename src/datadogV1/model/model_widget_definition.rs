@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// [Definition of the widget](<https://docs.datadoghq.com/dashboards/widgets/>).
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum WidgetDefinition {

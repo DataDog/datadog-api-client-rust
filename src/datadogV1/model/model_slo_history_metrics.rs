@@ -7,6 +7,7 @@ use serde_with::skip_serializing_none;
 /// A `metric` based SLO history response.
 ///
 /// This is not included in responses for `monitor` based SLOs.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SLOHistoryMetrics {

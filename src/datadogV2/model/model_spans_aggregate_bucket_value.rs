@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// A bucket value, can be either a timeseries or a single value.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SpansAggregateBucketValue {

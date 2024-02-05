@@ -6,6 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListRUMEventsOptionalParams is a struct for passing parameters to the method [`RUMAPI::list_rum_events`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListRUMEventsOptionalParams {
     /// Search query following RUM syntax.

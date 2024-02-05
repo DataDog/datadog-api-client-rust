@@ -17,6 +17,7 @@ use serde_with::skip_serializing_none;
 ///   Make sure they are properly ordered in case a log could match several queries.
 /// - The names of the categories must be unique.
 /// - Once defined in the Category Processor, you can map categories to log status using the Log Status Remapper.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LogsCategoryProcessor {

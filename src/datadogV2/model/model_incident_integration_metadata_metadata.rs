@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// Incident integration metadata's metadata attribute.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum IncidentIntegrationMetadataMetadata {

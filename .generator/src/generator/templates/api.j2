@@ -14,6 +14,7 @@ use crate::datadog::*;
 {%- for name, parameter in optionalParams %}
 {%- if loop.first %}
 /// {{operation.operationId}}OptionalParams is a struct for passing parameters to the method [`{{ structName }}::{{operation.operationId | snake_case}}`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct {{operation.operationId}}OptionalParams {
 {%- endif %}

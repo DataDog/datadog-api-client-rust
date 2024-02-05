@@ -6,6 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetPublicDashboardInvitationsOptionalParams is a struct for passing parameters to the method [`DashboardsAPI::get_public_dashboard_invitations`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetPublicDashboardInvitationsOptionalParams {
     /// The number of records to return in a single request.
@@ -28,6 +29,7 @@ impl GetPublicDashboardInvitationsOptionalParams {
 }
 
 /// ListDashboardsOptionalParams is a struct for passing parameters to the method [`DashboardsAPI::list_dashboards`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListDashboardsOptionalParams {
     /// When `true`, this query only returns shared custom created

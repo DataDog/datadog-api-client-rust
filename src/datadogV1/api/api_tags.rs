@@ -6,6 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// CreateHostTagsOptionalParams is a struct for passing parameters to the method [`TagsAPI::create_host_tags`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct CreateHostTagsOptionalParams {
     /// The source of the tags.
@@ -23,6 +24,7 @@ impl CreateHostTagsOptionalParams {
 }
 
 /// DeleteHostTagsOptionalParams is a struct for passing parameters to the method [`TagsAPI::delete_host_tags`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct DeleteHostTagsOptionalParams {
     /// The source of the tags (for example chef, puppet).
@@ -40,6 +42,7 @@ impl DeleteHostTagsOptionalParams {
 }
 
 /// GetHostTagsOptionalParams is a struct for passing parameters to the method [`TagsAPI::get_host_tags`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetHostTagsOptionalParams {
     /// Source to filter.
@@ -55,6 +58,7 @@ impl GetHostTagsOptionalParams {
 }
 
 /// ListHostTagsOptionalParams is a struct for passing parameters to the method [`TagsAPI::list_host_tags`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListHostTagsOptionalParams {
     /// When specified, filters host list to those tags with the specified source.
@@ -70,6 +74,7 @@ impl ListHostTagsOptionalParams {
 }
 
 /// UpdateHostTagsOptionalParams is a struct for passing parameters to the method [`TagsAPI::update_host_tags`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct UpdateHostTagsOptionalParams {
     /// The source of the tags (for example chef, puppet).

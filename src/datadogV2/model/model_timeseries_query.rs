@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// An individual timeseries query to one of the basic Datadog data sources.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum TimeseriesQuery {

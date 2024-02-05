@@ -2858,12 +2858,12 @@ fn test_v1_get_daily_custom_reports(
     let sort = _parameters
         .get("sort")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetDailyCustomReportsOptionalParams {
-        page_size,
-        page_number,
-        sort_dir,
-        sort,
-    };
+    let mut params =
+        datadogV1::api::api_usage_metering::GetDailyCustomReportsOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.sort_dir = sort_dir;
+    params.sort = sort;
     let response = match block_on(api.get_daily_custom_reports_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2932,12 +2932,12 @@ fn test_v1_get_monthly_custom_reports(
     let sort = _parameters
         .get("sort")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetMonthlyCustomReportsOptionalParams {
-        page_size,
-        page_number,
-        sort_dir,
-        sort,
-    };
+    let mut params =
+        datadogV1::api::api_usage_metering::GetMonthlyCustomReportsOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.sort_dir = sort_dir;
+    params.sort = sort;
     let response = match block_on(api.get_monthly_custom_reports_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -2995,7 +2995,9 @@ fn test_v1_get_usage_analyzed_logs(world: &mut DatadogWorld, _parameters: &HashM
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetUsageAnalyzedLogsOptionalParams { end_hr };
+    let mut params =
+        datadogV1::api::api_usage_metering::GetUsageAnalyzedLogsOptionalParams::default();
+    params.end_hr = end_hr;
     let response = match block_on(api.get_usage_analyzed_logs_with_http_info(start_hr, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3041,14 +3043,14 @@ fn test_v1_get_usage_attribution(world: &mut DatadogWorld, _parameters: &HashMap
     let limit = _parameters
         .get("limit")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetUsageAttributionOptionalParams {
-        end_month,
-        sort_direction,
-        sort_name,
-        include_descendants,
-        offset,
-        limit,
-    };
+    let mut params =
+        datadogV1::api::api_usage_metering::GetUsageAttributionOptionalParams::default();
+    params.end_month = end_month;
+    params.sort_direction = sort_direction;
+    params.sort_name = sort_name;
+    params.include_descendants = include_descendants;
+    params.offset = offset;
+    params.limit = limit;
     let response =
         match block_on(api.get_usage_attribution_with_http_info(start_month, fields, params)) {
             Ok(response) => response,
@@ -3078,7 +3080,8 @@ fn test_v1_get_usage_audit_logs(world: &mut DatadogWorld, _parameters: &HashMap<
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetUsageAuditLogsOptionalParams { end_hr };
+    let mut params = datadogV1::api::api_usage_metering::GetUsageAuditLogsOptionalParams::default();
+    params.end_hr = end_hr;
     let response = match block_on(api.get_usage_audit_logs_with_http_info(start_hr, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3107,7 +3110,8 @@ fn test_v1_get_usage_lambda(world: &mut DatadogWorld, _parameters: &HashMap<Stri
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetUsageLambdaOptionalParams { end_hr };
+    let mut params = datadogV1::api::api_usage_metering::GetUsageLambdaOptionalParams::default();
+    params.end_hr = end_hr;
     let response = match block_on(api.get_usage_lambda_with_http_info(start_hr, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3138,8 +3142,9 @@ fn test_v1_get_usage_billable_summary(
     let month = _parameters
         .get("month")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params =
-        datadogV1::api::api_usage_metering::GetUsageBillableSummaryOptionalParams { month };
+    let mut params =
+        datadogV1::api::api_usage_metering::GetUsageBillableSummaryOptionalParams::default();
+    params.month = month;
     let response = match block_on(api.get_usage_billable_summary_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3168,7 +3173,8 @@ fn test_v1_get_usage_ci_app(world: &mut DatadogWorld, _parameters: &HashMap<Stri
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetUsageCIAppOptionalParams { end_hr };
+    let mut params = datadogV1::api::api_usage_metering::GetUsageCIAppOptionalParams::default();
+    params.end_hr = end_hr;
     let response = match block_on(api.get_usage_ci_app_with_http_info(start_hr, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3200,10 +3206,8 @@ fn test_v1_get_usage_cloud_security_posture_management(
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params =
-        datadogV1::api::api_usage_metering::GetUsageCloudSecurityPostureManagementOptionalParams {
-            end_hr,
-        };
+    let mut params = datadogV1::api::api_usage_metering::GetUsageCloudSecurityPostureManagementOptionalParams::default();
+    params.end_hr = end_hr;
     let response = match block_on(
         api.get_usage_cloud_security_posture_management_with_http_info(start_hr, params),
     ) {
@@ -3234,7 +3238,8 @@ fn test_v1_get_usage_cws(world: &mut DatadogWorld, _parameters: &HashMap<String,
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetUsageCWSOptionalParams { end_hr };
+    let mut params = datadogV1::api::api_usage_metering::GetUsageCWSOptionalParams::default();
+    params.end_hr = end_hr;
     let response = match block_on(api.get_usage_cws_with_http_info(start_hr, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3263,7 +3268,8 @@ fn test_v1_get_usage_dbm(world: &mut DatadogWorld, _parameters: &HashMap<String,
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetUsageDBMOptionalParams { end_hr };
+    let mut params = datadogV1::api::api_usage_metering::GetUsageDBMOptionalParams::default();
+    params.end_hr = end_hr;
     let response = match block_on(api.get_usage_dbm_with_http_info(start_hr, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3292,7 +3298,8 @@ fn test_v1_get_usage_fargate(world: &mut DatadogWorld, _parameters: &HashMap<Str
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetUsageFargateOptionalParams { end_hr };
+    let mut params = datadogV1::api::api_usage_metering::GetUsageFargateOptionalParams::default();
+    params.end_hr = end_hr;
     let response = match block_on(api.get_usage_fargate_with_http_info(start_hr, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3321,7 +3328,8 @@ fn test_v1_get_usage_hosts(world: &mut DatadogWorld, _parameters: &HashMap<Strin
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetUsageHostsOptionalParams { end_hr };
+    let mut params = datadogV1::api::api_usage_metering::GetUsageHostsOptionalParams::default();
+    params.end_hr = end_hr;
     let response = match block_on(api.get_usage_hosts_with_http_info(start_hr, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3364,12 +3372,12 @@ fn test_v1_get_hourly_usage_attribution(
     let include_descendants = _parameters
         .get("include_descendants")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetHourlyUsageAttributionOptionalParams {
-        end_hr,
-        next_record_id,
-        tag_breakdown_keys,
-        include_descendants,
-    };
+    let mut params =
+        datadogV1::api::api_usage_metering::GetHourlyUsageAttributionOptionalParams::default();
+    params.end_hr = end_hr;
+    params.next_record_id = next_record_id;
+    params.tag_breakdown_keys = tag_breakdown_keys;
+    params.include_descendants = include_descendants;
     let response = match block_on(
         api.get_hourly_usage_attribution_with_http_info(start_hr, usage_type, params),
     ) {
@@ -3400,7 +3408,9 @@ fn test_v1_get_incident_management(world: &mut DatadogWorld, _parameters: &HashM
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetIncidentManagementOptionalParams { end_hr };
+    let mut params =
+        datadogV1::api::api_usage_metering::GetIncidentManagementOptionalParams::default();
+    params.end_hr = end_hr;
     let response = match block_on(api.get_incident_management_with_http_info(start_hr, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3429,7 +3439,9 @@ fn test_v1_get_usage_indexed_spans(world: &mut DatadogWorld, _parameters: &HashM
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetUsageIndexedSpansOptionalParams { end_hr };
+    let mut params =
+        datadogV1::api::api_usage_metering::GetUsageIndexedSpansOptionalParams::default();
+    params.end_hr = end_hr;
     let response = match block_on(api.get_usage_indexed_spans_with_http_info(start_hr, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3458,7 +3470,8 @@ fn test_v1_get_ingested_spans(world: &mut DatadogWorld, _parameters: &HashMap<St
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetIngestedSpansOptionalParams { end_hr };
+    let mut params = datadogV1::api::api_usage_metering::GetIngestedSpansOptionalParams::default();
+    params.end_hr = end_hr;
     let response = match block_on(api.get_ingested_spans_with_http_info(start_hr, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3490,8 +3503,9 @@ fn test_v1_get_usage_internet_of_things(
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params =
-        datadogV1::api::api_usage_metering::GetUsageInternetOfThingsOptionalParams { end_hr };
+    let mut params =
+        datadogV1::api::api_usage_metering::GetUsageInternetOfThingsOptionalParams::default();
+    params.end_hr = end_hr;
     let response = match block_on(api.get_usage_internet_of_things_with_http_info(start_hr, params))
     {
         Ok(response) => response,
@@ -3521,7 +3535,8 @@ fn test_v1_get_usage_logs(world: &mut DatadogWorld, _parameters: &HashMap<String
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetUsageLogsOptionalParams { end_hr };
+    let mut params = datadogV1::api::api_usage_metering::GetUsageLogsOptionalParams::default();
+    params.end_hr = end_hr;
     let response = match block_on(api.get_usage_logs_with_http_info(start_hr, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3553,8 +3568,9 @@ fn test_v1_get_usage_logs_by_retention(
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params =
-        datadogV1::api::api_usage_metering::GetUsageLogsByRetentionOptionalParams { end_hr };
+    let mut params =
+        datadogV1::api::api_usage_metering::GetUsageLogsByRetentionOptionalParams::default();
+    params.end_hr = end_hr;
     let response = match block_on(api.get_usage_logs_by_retention_with_http_info(start_hr, params))
     {
         Ok(response) => response,
@@ -3587,10 +3603,10 @@ fn test_v1_get_usage_logs_by_index(world: &mut DatadogWorld, _parameters: &HashM
     let index_name = _parameters
         .get("index_name")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetUsageLogsByIndexOptionalParams {
-        end_hr,
-        index_name,
-    };
+    let mut params =
+        datadogV1::api::api_usage_metering::GetUsageLogsByIndexOptionalParams::default();
+    params.end_hr = end_hr;
+    params.index_name = index_name;
     let response = match block_on(api.get_usage_logs_by_index_with_http_info(start_hr, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3639,14 +3655,14 @@ fn test_v1_get_monthly_usage_attribution(
     let include_descendants = _parameters
         .get("include_descendants")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetMonthlyUsageAttributionOptionalParams {
-        end_month,
-        sort_direction,
-        sort_name,
-        tag_breakdown_keys,
-        next_record_id,
-        include_descendants,
-    };
+    let mut params =
+        datadogV1::api::api_usage_metering::GetMonthlyUsageAttributionOptionalParams::default();
+    params.end_month = end_month;
+    params.sort_direction = sort_direction;
+    params.sort_name = sort_name;
+    params.tag_breakdown_keys = tag_breakdown_keys;
+    params.next_record_id = next_record_id;
+    params.include_descendants = include_descendants;
     let response = match block_on(api.get_monthly_usage_attribution_with_http_info(
         start_month,
         fields,
@@ -3679,7 +3695,9 @@ fn test_v1_get_usage_network_flows(world: &mut DatadogWorld, _parameters: &HashM
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetUsageNetworkFlowsOptionalParams { end_hr };
+    let mut params =
+        datadogV1::api::api_usage_metering::GetUsageNetworkFlowsOptionalParams::default();
+    params.end_hr = end_hr;
     let response = match block_on(api.get_usage_network_flows_with_http_info(start_hr, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3708,7 +3726,9 @@ fn test_v1_get_usage_network_hosts(world: &mut DatadogWorld, _parameters: &HashM
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetUsageNetworkHostsOptionalParams { end_hr };
+    let mut params =
+        datadogV1::api::api_usage_metering::GetUsageNetworkHostsOptionalParams::default();
+    params.end_hr = end_hr;
     let response = match block_on(api.get_usage_network_hosts_with_http_info(start_hr, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3740,7 +3760,9 @@ fn test_v1_get_usage_online_archive(
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetUsageOnlineArchiveOptionalParams { end_hr };
+    let mut params =
+        datadogV1::api::api_usage_metering::GetUsageOnlineArchiveOptionalParams::default();
+    params.end_hr = end_hr;
     let response = match block_on(api.get_usage_online_archive_with_http_info(start_hr, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3769,7 +3791,8 @@ fn test_v1_get_usage_profiling(world: &mut DatadogWorld, _parameters: &HashMap<S
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetUsageProfilingOptionalParams { end_hr };
+    let mut params = datadogV1::api::api_usage_metering::GetUsageProfilingOptionalParams::default();
+    params.end_hr = end_hr;
     let response = match block_on(api.get_usage_profiling_with_http_info(start_hr, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3798,7 +3821,8 @@ fn test_v1_get_usage_rum_units(world: &mut DatadogWorld, _parameters: &HashMap<S
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetUsageRumUnitsOptionalParams { end_hr };
+    let mut params = datadogV1::api::api_usage_metering::GetUsageRumUnitsOptionalParams::default();
+    params.end_hr = end_hr;
     let response = match block_on(api.get_usage_rum_units_with_http_info(start_hr, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3830,8 +3854,10 @@ fn test_v1_get_usage_rum_sessions(world: &mut DatadogWorld, _parameters: &HashMa
     let type_ = _parameters
         .get("type")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params =
-        datadogV1::api::api_usage_metering::GetUsageRumSessionsOptionalParams { end_hr, type_ };
+    let mut params =
+        datadogV1::api::api_usage_metering::GetUsageRumSessionsOptionalParams::default();
+    params.end_hr = end_hr;
+    params.type_ = type_;
     let response = match block_on(api.get_usage_rum_sessions_with_http_info(start_hr, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3860,7 +3886,8 @@ fn test_v1_get_usage_sds(world: &mut DatadogWorld, _parameters: &HashMap<String,
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetUsageSDSOptionalParams { end_hr };
+    let mut params = datadogV1::api::api_usage_metering::GetUsageSDSOptionalParams::default();
+    params.end_hr = end_hr;
     let response = match block_on(api.get_usage_sds_with_http_info(start_hr, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3889,7 +3916,8 @@ fn test_v1_get_usage_snmp(world: &mut DatadogWorld, _parameters: &HashMap<String
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetUsageSNMPOptionalParams { end_hr };
+    let mut params = datadogV1::api::api_usage_metering::GetUsageSNMPOptionalParams::default();
+    params.end_hr = end_hr;
     let response = match block_on(api.get_usage_snmp_with_http_info(start_hr, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3922,10 +3950,9 @@ fn test_v1_get_usage_summary(world: &mut DatadogWorld, _parameters: &HashMap<Str
     let include_org_details = _parameters
         .get("include_org_details")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetUsageSummaryOptionalParams {
-        end_month,
-        include_org_details,
-    };
+    let mut params = datadogV1::api::api_usage_metering::GetUsageSummaryOptionalParams::default();
+    params.end_month = end_month;
+    params.include_org_details = include_org_details;
     let response = match block_on(api.get_usage_summary_with_http_info(start_month, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3954,7 +3981,9 @@ fn test_v1_get_usage_synthetics(world: &mut DatadogWorld, _parameters: &HashMap<
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetUsageSyntheticsOptionalParams { end_hr };
+    let mut params =
+        datadogV1::api::api_usage_metering::GetUsageSyntheticsOptionalParams::default();
+    params.end_hr = end_hr;
     let response = match block_on(api.get_usage_synthetics_with_http_info(start_hr, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -3986,7 +4015,9 @@ fn test_v1_get_usage_synthetics_api(
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetUsageSyntheticsAPIOptionalParams { end_hr };
+    let mut params =
+        datadogV1::api::api_usage_metering::GetUsageSyntheticsAPIOptionalParams::default();
+    params.end_hr = end_hr;
     let response = match block_on(api.get_usage_synthetics_api_with_http_info(start_hr, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4018,8 +4049,9 @@ fn test_v1_get_usage_synthetics_browser(
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params =
-        datadogV1::api::api_usage_metering::GetUsageSyntheticsBrowserOptionalParams { end_hr };
+    let mut params =
+        datadogV1::api::api_usage_metering::GetUsageSyntheticsBrowserOptionalParams::default();
+    params.end_hr = end_hr;
     let response = match block_on(api.get_usage_synthetics_browser_with_http_info(start_hr, params))
     {
         Ok(response) => response,
@@ -4049,7 +4081,9 @@ fn test_v1_get_usage_timeseries(world: &mut DatadogWorld, _parameters: &HashMap<
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetUsageTimeseriesOptionalParams { end_hr };
+    let mut params =
+        datadogV1::api::api_usage_metering::GetUsageTimeseriesOptionalParams::default();
+    params.end_hr = end_hr;
     let response = match block_on(api.get_usage_timeseries_with_http_info(start_hr, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4092,13 +4126,13 @@ fn test_v1_get_usage_top_avg_metrics(
     let next_record_id = _parameters
         .get("next_record_id")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_usage_metering::GetUsageTopAvgMetricsOptionalParams {
-        month,
-        day,
-        names,
-        limit,
-        next_record_id,
-    };
+    let mut params =
+        datadogV1::api::api_usage_metering::GetUsageTopAvgMetricsOptionalParams::default();
+    params.month = month;
+    params.day = day;
+    params.names = names;
+    params.limit = limit;
+    params.next_record_id = next_record_id;
     let response = match block_on(api.get_usage_top_avg_metrics_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4160,12 +4194,11 @@ fn test_v1_list_dashboards(world: &mut DatadogWorld, _parameters: &HashMap<Strin
     let start = _parameters
         .get("start")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_dashboards::ListDashboardsOptionalParams {
-        filter_shared,
-        filter_deleted,
-        count,
-        start,
-    };
+    let mut params = datadogV1::api::api_dashboards::ListDashboardsOptionalParams::default();
+    params.filter_shared = filter_shared;
+    params.filter_deleted = filter_deleted;
+    params.count = count;
+    params.start = start;
     let response = match block_on(api.list_dashboards_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4381,10 +4414,10 @@ fn test_v1_get_public_dashboard_invitations(
     let page_number = _parameters
         .get("page_number")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_dashboards::GetPublicDashboardInvitationsOptionalParams {
-        page_size,
-        page_number,
-    };
+    let mut params =
+        datadogV1::api::api_dashboards::GetPublicDashboardInvitationsOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
     let response =
         match block_on(api.get_public_dashboard_invitations_with_http_info(token, params)) {
             Ok(response) => response,
@@ -4651,8 +4684,8 @@ fn test_v1_submit_distribution_points(
     let content_encoding = _parameters
         .get("Content-Encoding")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params =
-        datadogV1::api::api_metrics::SubmitDistributionPointsOptionalParams { content_encoding };
+    let mut params = datadogV1::api::api_metrics::SubmitDistributionPointsOptionalParams::default();
+    params.content_encoding = content_encoding;
     let response = match block_on(api.submit_distribution_points_with_http_info(body, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4684,7 +4717,9 @@ fn test_v1_list_active_metrics(world: &mut DatadogWorld, _parameters: &HashMap<S
     let tag_filter = _parameters
         .get("tag_filter")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_metrics::ListActiveMetricsOptionalParams { host, tag_filter };
+    let mut params = datadogV1::api::api_metrics::ListActiveMetricsOptionalParams::default();
+    params.host = host;
+    params.tag_filter = tag_filter;
     let response = match block_on(api.list_active_metrics_with_http_info(from, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4818,7 +4853,8 @@ fn test_v1_submit_metrics(world: &mut DatadogWorld, _parameters: &HashMap<String
     let content_encoding = _parameters
         .get("Content-Encoding")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_metrics::SubmitMetricsOptionalParams { content_encoding };
+    let mut params = datadogV1::api::api_metrics::SubmitMetricsOptionalParams::default();
+    params.content_encoding = content_encoding;
     let response = match block_on(api.submit_metrics_with_http_info(body, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -4849,10 +4885,9 @@ fn test_v1_list_downtimes(world: &mut DatadogWorld, _parameters: &HashMap<String
     let with_creator = _parameters
         .get("with_creator")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_downtimes::ListDowntimesOptionalParams {
-        current_only,
-        with_creator,
-    };
+    let mut params = datadogV1::api::api_downtimes::ListDowntimesOptionalParams::default();
+    params.current_only = current_only;
+    params.with_creator = with_creator;
     let response = match block_on(api.list_downtimes_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5055,14 +5090,13 @@ fn test_v1_list_events(world: &mut DatadogWorld, _parameters: &HashMap<String, V
     let page = _parameters
         .get("page")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_events::ListEventsOptionalParams {
-        priority,
-        sources,
-        tags,
-        unaggregated,
-        exclude_aggregate,
-        page,
-    };
+    let mut params = datadogV1::api::api_events::ListEventsOptionalParams::default();
+    params.priority = priority;
+    params.sources = sources;
+    params.tags = tags;
+    params.unaggregated = unaggregated;
+    params.exclude_aggregate = exclude_aggregate;
+    params.page = page;
     let response = match block_on(api.list_events_with_http_info(start, end, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5157,14 +5191,13 @@ fn test_v1_get_graph_snapshot(world: &mut DatadogWorld, _parameters: &HashMap<St
     let width = _parameters
         .get("width")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_snapshots::GetGraphSnapshotOptionalParams {
-        metric_query,
-        event_query,
-        graph_def,
-        title,
-        height,
-        width,
-    };
+    let mut params = datadogV1::api::api_snapshots::GetGraphSnapshotOptionalParams::default();
+    params.metric_query = metric_query;
+    params.event_query = event_query;
+    params.graph_def = graph_def;
+    params.title = title;
+    params.height = height;
+    params.width = width;
     let response = match block_on(api.get_graph_snapshot_with_http_info(start, end, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5264,16 +5297,15 @@ fn test_v1_list_hosts(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
     let include_hosts_metadata = _parameters
         .get("include_hosts_metadata")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_hosts::ListHostsOptionalParams {
-        filter,
-        sort_field,
-        sort_dir,
-        start,
-        count,
-        from,
-        include_muted_hosts_data,
-        include_hosts_metadata,
-    };
+    let mut params = datadogV1::api::api_hosts::ListHostsOptionalParams::default();
+    params.filter = filter;
+    params.sort_field = sort_field;
+    params.sort_dir = sort_dir;
+    params.start = start;
+    params.count = count;
+    params.from = from;
+    params.include_muted_hosts_data = include_muted_hosts_data;
+    params.include_hosts_metadata = include_hosts_metadata;
     let response = match block_on(api.list_hosts_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5301,7 +5333,8 @@ fn test_v1_get_host_totals(world: &mut DatadogWorld, _parameters: &HashMap<Strin
     let from = _parameters
         .get("from")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_hosts::GetHostTotalsOptionalParams { from };
+    let mut params = datadogV1::api::api_hosts::GetHostTotalsOptionalParams::default();
+    params.from = from;
     let response = match block_on(api.get_host_totals_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5360,11 +5393,10 @@ fn test_v1_list_aws_accounts(world: &mut DatadogWorld, _parameters: &HashMap<Str
     let access_key_id = _parameters
         .get("access_key_id")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_aws_integration::ListAWSAccountsOptionalParams {
-        account_id,
-        role_name,
-        access_key_id,
-    };
+    let mut params = datadogV1::api::api_aws_integration::ListAWSAccountsOptionalParams::default();
+    params.account_id = account_id;
+    params.role_name = role_name;
+    params.access_key_id = access_key_id;
     let response = match block_on(api.list_aws_accounts_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -5424,11 +5456,10 @@ fn test_v1_update_aws_account(world: &mut DatadogWorld, _parameters: &HashMap<St
     let access_key_id = _parameters
         .get("access_key_id")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_aws_integration::UpdateAWSAccountOptionalParams {
-        account_id,
-        role_name,
-        access_key_id,
-    };
+    let mut params = datadogV1::api::api_aws_integration::UpdateAWSAccountOptionalParams::default();
+    params.account_id = account_id;
+    params.role_name = role_name;
+    params.access_key_id = access_key_id;
     let response = match block_on(api.update_aws_account_with_http_info(body, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -6638,10 +6669,9 @@ fn test_v1_submit_log(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
     let ddtags = _parameters
         .get("ddtags")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_logs::SubmitLogOptionalParams {
-        content_encoding,
-        ddtags,
-    };
+    let mut params = datadogV1::api::api_logs::SubmitLogOptionalParams::default();
+    params.content_encoding = content_encoding;
+    params.ddtags = ddtags;
     let response = match block_on(api.submit_log_with_http_info(body, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -7019,16 +7049,15 @@ fn test_v1_list_monitors(world: &mut DatadogWorld, _parameters: &HashMap<String,
     let page_size = _parameters
         .get("page_size")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_monitors::ListMonitorsOptionalParams {
-        group_states,
-        name,
-        tags,
-        monitor_tags,
-        with_downtimes,
-        id_offset,
-        page,
-        page_size,
-    };
+    let mut params = datadogV1::api::api_monitors::ListMonitorsOptionalParams::default();
+    params.group_states = group_states;
+    params.name = name;
+    params.tags = tags;
+    params.monitor_tags = monitor_tags;
+    params.with_downtimes = with_downtimes;
+    params.id_offset = id_offset;
+    params.page = page;
+    params.page_size = page_size;
     let response = match block_on(api.list_monitors_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -7119,12 +7148,11 @@ fn test_v1_search_monitor_groups(world: &mut DatadogWorld, _parameters: &HashMap
     let sort = _parameters
         .get("sort")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_monitors::SearchMonitorGroupsOptionalParams {
-        query,
-        page,
-        per_page,
-        sort,
-    };
+    let mut params = datadogV1::api::api_monitors::SearchMonitorGroupsOptionalParams::default();
+    params.query = query;
+    params.page = page;
+    params.per_page = per_page;
+    params.sort = sort;
     let response = match block_on(api.search_monitor_groups_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -7161,12 +7189,11 @@ fn test_v1_search_monitors(world: &mut DatadogWorld, _parameters: &HashMap<Strin
     let sort = _parameters
         .get("sort")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_monitors::SearchMonitorsOptionalParams {
-        query,
-        page,
-        per_page,
-        sort,
-    };
+    let mut params = datadogV1::api::api_monitors::SearchMonitorsOptionalParams::default();
+    params.query = query;
+    params.page = page;
+    params.per_page = per_page;
+    params.sort = sort;
     let response = match block_on(api.search_monitors_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -7221,7 +7248,8 @@ fn test_v1_delete_monitor(world: &mut DatadogWorld, _parameters: &HashMap<String
     let force = _parameters
         .get("force")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_monitors::DeleteMonitorOptionalParams { force };
+    let mut params = datadogV1::api::api_monitors::DeleteMonitorOptionalParams::default();
+    params.force = force;
     let response = match block_on(api.delete_monitor_with_http_info(monitor_id, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -7254,10 +7282,9 @@ fn test_v1_get_monitor(world: &mut DatadogWorld, _parameters: &HashMap<String, V
     let with_downtimes = _parameters
         .get("with_downtimes")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_monitors::GetMonitorOptionalParams {
-        group_states,
-        with_downtimes,
-    };
+    let mut params = datadogV1::api::api_monitors::GetMonitorOptionalParams::default();
+    params.group_states = group_states;
+    params.with_downtimes = with_downtimes;
     let response = match block_on(api.get_monitor_with_http_info(monitor_id, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -7369,18 +7396,17 @@ fn test_v1_list_notebooks(world: &mut DatadogWorld, _parameters: &HashMap<String
     let type_ = _parameters
         .get("type")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_notebooks::ListNotebooksOptionalParams {
-        author_handle,
-        exclude_author_handle,
-        start,
-        count,
-        sort_field,
-        sort_dir,
-        query,
-        include_cells,
-        is_template,
-        type_,
-    };
+    let mut params = datadogV1::api::api_notebooks::ListNotebooksOptionalParams::default();
+    params.author_handle = author_handle;
+    params.exclude_author_handle = exclude_author_handle;
+    params.start = start;
+    params.count = count;
+    params.sort_field = sort_field;
+    params.sort_dir = sort_dir;
+    params.query = query;
+    params.include_cells = include_cells;
+    params.is_template = is_template;
+    params.type_ = type_;
     let response = match block_on(api.list_notebooks_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -7776,14 +7802,14 @@ fn test_v1_list_sl_os(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
     let offset = _parameters
         .get("offset")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_service_level_objectives::ListSLOsOptionalParams {
-        ids,
-        query,
-        tags_query,
-        metrics_query,
-        limit,
-        offset,
-    };
+    let mut params =
+        datadogV1::api::api_service_level_objectives::ListSLOsOptionalParams::default();
+    params.ids = ids;
+    params.query = query;
+    params.tags_query = tags_query;
+    params.metrics_query = metrics_query;
+    params.limit = limit;
+    params.offset = offset;
     let response = match block_on(api.list_sl_os_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -7898,12 +7924,12 @@ fn test_v1_search_slo(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
     let include_facets = _parameters
         .get("include_facets")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_service_level_objectives::SearchSLOOptionalParams {
-        query,
-        page_size,
-        page_number,
-        include_facets,
-    };
+    let mut params =
+        datadogV1::api::api_service_level_objectives::SearchSLOOptionalParams::default();
+    params.query = query;
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.include_facets = include_facets;
     let response = match block_on(api.search_slo_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -7932,7 +7958,9 @@ fn test_v1_delete_slo(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
     let force = _parameters
         .get("force")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_service_level_objectives::DeleteSLOOptionalParams { force };
+    let mut params =
+        datadogV1::api::api_service_level_objectives::DeleteSLOOptionalParams::default();
+    params.force = force;
     let response = match block_on(api.delete_slo_with_http_info(slo_id, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -7961,9 +7989,8 @@ fn test_v1_get_slo(world: &mut DatadogWorld, _parameters: &HashMap<String, Value
     let with_configured_alert_ids = _parameters
         .get("with_configured_alert_ids")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_service_level_objectives::GetSLOOptionalParams {
-        with_configured_alert_ids,
-    };
+    let mut params = datadogV1::api::api_service_level_objectives::GetSLOOptionalParams::default();
+    params.with_configured_alert_ids = with_configured_alert_ids;
     let response = match block_on(api.get_slo_with_http_info(slo_id, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -8048,10 +8075,10 @@ fn test_v1_get_slo_history(world: &mut DatadogWorld, _parameters: &HashMap<Strin
     let apply_correction = _parameters
         .get("apply_correction")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_service_level_objectives::GetSLOHistoryOptionalParams {
-        target,
-        apply_correction,
-    };
+    let mut params =
+        datadogV1::api::api_service_level_objectives::GetSLOHistoryOptionalParams::default();
+    params.target = target;
+    params.apply_correction = apply_correction;
     let response =
         match block_on(api.get_slo_history_with_http_info(slo_id, from_ts, to_ts, params)) {
             Ok(response) => response,
@@ -8083,11 +8110,9 @@ fn test_v1_list_slo_correction(world: &mut DatadogWorld, _parameters: &HashMap<S
     let limit = _parameters
         .get("limit")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params =
-        datadogV1::api::api_service_level_objective_corrections::ListSLOCorrectionOptionalParams {
-            offset,
-            limit,
-        };
+    let mut params = datadogV1::api::api_service_level_objective_corrections::ListSLOCorrectionOptionalParams::default();
+    params.offset = offset;
+    params.limit = limit;
     let response = match block_on(api.list_slo_correction_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -8403,10 +8428,9 @@ fn test_v1_list_tests(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
     let page_number = _parameters
         .get("page_number")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_synthetics::ListTestsOptionalParams {
-        page_size,
-        page_number,
-    };
+    let mut params = datadogV1::api::api_synthetics::ListTestsOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
     let response = match block_on(api.list_tests_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -8602,11 +8626,11 @@ fn test_v1_get_browser_test_latest_results(
     let probe_dc = _parameters
         .get("probe_dc")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_synthetics::GetBrowserTestLatestResultsOptionalParams {
-        from_ts,
-        to_ts,
-        probe_dc,
-    };
+    let mut params =
+        datadogV1::api::api_synthetics::GetBrowserTestLatestResultsOptionalParams::default();
+    params.from_ts = from_ts;
+    params.to_ts = to_ts;
+    params.probe_dc = probe_dc;
     let response =
         match block_on(api.get_browser_test_latest_results_with_http_info(public_id, params)) {
             Ok(response) => response,
@@ -8798,11 +8822,11 @@ fn test_v1_get_api_test_latest_results(
     let probe_dc = _parameters
         .get("probe_dc")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_synthetics::GetAPITestLatestResultsOptionalParams {
-        from_ts,
-        to_ts,
-        probe_dc,
-    };
+    let mut params =
+        datadogV1::api::api_synthetics::GetAPITestLatestResultsOptionalParams::default();
+    params.from_ts = from_ts;
+    params.to_ts = to_ts;
+    params.probe_dc = probe_dc;
     let response = match block_on(api.get_api_test_latest_results_with_http_info(public_id, params))
     {
         Ok(response) => response,
@@ -9014,7 +9038,8 @@ fn test_v1_list_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<String
     let source = _parameters
         .get("source")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_tags::ListHostTagsOptionalParams { source };
+    let mut params = datadogV1::api::api_tags::ListHostTagsOptionalParams::default();
+    params.source = source;
     let response = match block_on(api.list_host_tags_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -9043,7 +9068,8 @@ fn test_v1_delete_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<Stri
     let source = _parameters
         .get("source")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_tags::DeleteHostTagsOptionalParams { source };
+    let mut params = datadogV1::api::api_tags::DeleteHostTagsOptionalParams::default();
+    params.source = source;
     let response = match block_on(api.delete_host_tags_with_http_info(host_name, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -9072,7 +9098,8 @@ fn test_v1_get_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<String,
     let source = _parameters
         .get("source")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_tags::GetHostTagsOptionalParams { source };
+    let mut params = datadogV1::api::api_tags::GetHostTagsOptionalParams::default();
+    params.source = source;
     let response = match block_on(api.get_host_tags_with_http_info(host_name, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -9102,7 +9129,8 @@ fn test_v1_create_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<Stri
     let source = _parameters
         .get("source")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_tags::CreateHostTagsOptionalParams { source };
+    let mut params = datadogV1::api::api_tags::CreateHostTagsOptionalParams::default();
+    params.source = source;
     let response = match block_on(api.create_host_tags_with_http_info(host_name, body, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -9132,7 +9160,8 @@ fn test_v1_update_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<Stri
     let source = _parameters
         .get("source")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV1::api::api_tags::UpdateHostTagsOptionalParams { source };
+    let mut params = datadogV1::api::api_tags::UpdateHostTagsOptionalParams::default();
+    params.source = source;
     let response = match block_on(api.update_host_tags_with_http_info(host_name, body, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -9342,19 +9371,18 @@ fn test_v2_list_api_keys(world: &mut DatadogWorld, _parameters: &HashMap<String,
     let filter_category = _parameters
         .get("filter[category]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_key_management::ListAPIKeysOptionalParams {
-        page_size,
-        page_number,
-        sort,
-        filter,
-        filter_created_at_start,
-        filter_created_at_end,
-        filter_modified_at_start,
-        filter_modified_at_end,
-        include,
-        filter_remote_config_read_enabled,
-        filter_category,
-    };
+    let mut params = datadogV2::api::api_key_management::ListAPIKeysOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.sort = sort;
+    params.filter = filter;
+    params.filter_created_at_start = filter_created_at_start;
+    params.filter_created_at_end = filter_created_at_end;
+    params.filter_modified_at_start = filter_modified_at_start;
+    params.filter_modified_at_end = filter_modified_at_end;
+    params.include = include;
+    params.filter_remote_config_read_enabled = filter_remote_config_read_enabled;
+    params.filter_category = filter_category;
     let response = match block_on(api.list_api_keys_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -9435,7 +9463,8 @@ fn test_v2_get_api_key(world: &mut DatadogWorld, _parameters: &HashMap<String, V
     let include = _parameters
         .get("include")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_key_management::GetAPIKeyOptionalParams { include };
+    let mut params = datadogV2::api::api_key_management::GetAPIKeyOptionalParams::default();
+    params.include = include;
     let response = match block_on(api.get_api_key_with_http_info(api_key_id, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -9508,15 +9537,15 @@ fn test_v2_list_application_keys(world: &mut DatadogWorld, _parameters: &HashMap
     let include = _parameters
         .get("include")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_key_management::ListApplicationKeysOptionalParams {
-        page_size,
-        page_number,
-        sort,
-        filter,
-        filter_created_at_start,
-        filter_created_at_end,
-        include,
-    };
+    let mut params =
+        datadogV2::api::api_key_management::ListApplicationKeysOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.sort = sort;
+    params.filter = filter;
+    params.filter_created_at_start = filter_created_at_start;
+    params.filter_created_at_end = filter_created_at_end;
+    params.include = include;
     let response = match block_on(api.list_application_keys_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -9572,7 +9601,8 @@ fn test_v2_get_application_key(world: &mut DatadogWorld, _parameters: &HashMap<S
     let include = _parameters
         .get("include")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_key_management::GetApplicationKeyOptionalParams { include };
+    let mut params = datadogV2::api::api_key_management::GetApplicationKeyOptionalParams::default();
+    params.include = include;
     let response = match block_on(api.get_application_key_with_http_info(app_key_id, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -9648,15 +9678,15 @@ fn test_v2_list_current_user_application_keys(
     let include = _parameters
         .get("include")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_key_management::ListCurrentUserApplicationKeysOptionalParams {
-        page_size,
-        page_number,
-        sort,
-        filter,
-        filter_created_at_start,
-        filter_created_at_end,
-        include,
-    };
+    let mut params =
+        datadogV2::api::api_key_management::ListCurrentUserApplicationKeysOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.sort = sort;
+    params.filter = filter;
+    params.filter_created_at_start = filter_created_at_start;
+    params.filter_created_at_end = filter_created_at_end;
+    params.include = include;
     let response = match block_on(api.list_current_user_application_keys_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -10110,14 +10140,13 @@ fn test_v2_list_audit_logs(world: &mut DatadogWorld, _parameters: &HashMap<Strin
     let page_limit = _parameters
         .get("page[limit]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_audit::ListAuditLogsOptionalParams {
-        filter_query,
-        filter_from,
-        filter_to,
-        sort,
-        page_cursor,
-        page_limit,
-    };
+    let mut params = datadogV2::api::api_audit::ListAuditLogsOptionalParams::default();
+    params.filter_query = filter_query;
+    params.filter_from = filter_from;
+    params.filter_to = filter_to;
+    params.sort = sort;
+    params.page_cursor = page_cursor;
+    params.page_limit = page_limit;
     let response = match block_on(api.list_audit_logs_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -10145,7 +10174,8 @@ fn test_v2_search_audit_logs(world: &mut DatadogWorld, _parameters: &HashMap<Str
     let body = _parameters
         .get("body")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_audit::SearchAuditLogsOptionalParams { body };
+    let mut params = datadogV2::api::api_audit::SearchAuditLogsOptionalParams::default();
+    params.body = body;
     let response = match block_on(api.search_audit_logs_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -10182,12 +10212,12 @@ fn test_v2_list_auth_n_mappings(world: &mut DatadogWorld, _parameters: &HashMap<
     let filter = _parameters
         .get("filter")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_auth_n_mappings::ListAuthNMappingsOptionalParams {
-        page_size,
-        page_number,
-        sort,
-        filter,
-    };
+    let mut params =
+        datadogV2::api::api_auth_n_mappings::ListAuthNMappingsOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.sort = sort;
+    params.filter = filter;
     let response = match block_on(api.list_auth_n_mappings_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -10394,15 +10424,15 @@ fn test_v2_list_ci_app_pipeline_events(
     let page_limit = _parameters
         .get("page[limit]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params =
-        datadogV2::api::api_ci_visibility_pipelines::ListCIAppPipelineEventsOptionalParams {
-            filter_query,
-            filter_from,
-            filter_to,
-            sort,
-            page_cursor,
-            page_limit,
-        };
+    let mut params =
+        datadogV2::api::api_ci_visibility_pipelines::ListCIAppPipelineEventsOptionalParams::default(
+        );
+    params.filter_query = filter_query;
+    params.filter_from = filter_from;
+    params.filter_to = filter_to;
+    params.sort = sort;
+    params.page_cursor = page_cursor;
+    params.page_limit = page_limit;
     let response = match block_on(api.list_ci_app_pipeline_events_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -10433,10 +10463,8 @@ fn test_v2_search_ci_app_pipeline_events(
     let body = _parameters
         .get("body")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params =
-        datadogV2::api::api_ci_visibility_pipelines::SearchCIAppPipelineEventsOptionalParams {
-            body,
-        };
+    let mut params = datadogV2::api::api_ci_visibility_pipelines::SearchCIAppPipelineEventsOptionalParams::default();
+    params.body = body;
     let response = match block_on(api.search_ci_app_pipeline_events_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -10507,14 +10535,14 @@ fn test_v2_list_ci_app_test_events(world: &mut DatadogWorld, _parameters: &HashM
     let page_limit = _parameters
         .get("page[limit]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_ci_visibility_tests::ListCIAppTestEventsOptionalParams {
-        filter_query,
-        filter_from,
-        filter_to,
-        sort,
-        page_cursor,
-        page_limit,
-    };
+    let mut params =
+        datadogV2::api::api_ci_visibility_tests::ListCIAppTestEventsOptionalParams::default();
+    params.filter_query = filter_query;
+    params.filter_from = filter_from;
+    params.filter_to = filter_to;
+    params.sort = sort;
+    params.page_cursor = page_cursor;
+    params.page_limit = page_limit;
     let response = match block_on(api.list_ci_app_test_events_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -10545,8 +10573,9 @@ fn test_v2_search_ci_app_test_events(
     let body = _parameters
         .get("body")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params =
-        datadogV2::api::api_ci_visibility_tests::SearchCIAppTestEventsOptionalParams { body };
+    let mut params =
+        datadogV2::api::api_ci_visibility_tests::SearchCIAppTestEventsOptionalParams::default();
+    params.body = body;
     let response = match block_on(api.search_ci_app_test_events_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -10586,13 +10615,13 @@ fn test_v2_list_container_images(world: &mut DatadogWorld, _parameters: &HashMap
     let page_cursor = _parameters
         .get("page[cursor]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_container_images::ListContainerImagesOptionalParams {
-        filter_tags,
-        group_by,
-        sort,
-        page_size,
-        page_cursor,
-    };
+    let mut params =
+        datadogV2::api::api_container_images::ListContainerImagesOptionalParams::default();
+    params.filter_tags = filter_tags;
+    params.group_by = group_by;
+    params.sort = sort;
+    params.page_size = page_size;
+    params.page_cursor = page_cursor;
     let response = match block_on(api.list_container_images_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -10632,13 +10661,12 @@ fn test_v2_list_containers(world: &mut DatadogWorld, _parameters: &HashMap<Strin
     let page_cursor = _parameters
         .get("page[cursor]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_containers::ListContainersOptionalParams {
-        filter_tags,
-        group_by,
-        sort,
-        page_size,
-        page_cursor,
-    };
+    let mut params = datadogV2::api::api_containers::ListContainersOptionalParams::default();
+    params.filter_tags = filter_tags;
+    params.group_by = group_by;
+    params.sort = sort;
+    params.page_size = page_size;
+    params.page_cursor = page_cursor;
     let response = match block_on(api.list_containers_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -11003,13 +11031,13 @@ fn test_v2_get_monthly_cost_attribution(
     let include_descendants = _parameters
         .get("include_descendants")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_usage_metering::GetMonthlyCostAttributionOptionalParams {
-        sort_direction,
-        sort_name,
-        tag_breakdown_keys,
-        next_record_id,
-        include_descendants,
-    };
+    let mut params =
+        datadogV2::api::api_usage_metering::GetMonthlyCostAttributionOptionalParams::default();
+    params.sort_direction = sort_direction;
+    params.sort_name = sort_name;
+    params.tag_breakdown_keys = tag_breakdown_keys;
+    params.next_record_id = next_record_id;
+    params.include_descendants = include_descendants;
     let response = match block_on(api.get_monthly_cost_attribution_with_http_info(
         start_month,
         end_month,
@@ -11046,10 +11074,8 @@ fn test_v2_get_usage_application_security_monitoring(
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params =
-        datadogV2::api::api_usage_metering::GetUsageApplicationSecurityMonitoringOptionalParams {
-            end_hr,
-        };
+    let mut params = datadogV2::api::api_usage_metering::GetUsageApplicationSecurityMonitoringOptionalParams::default();
+    params.end_hr = end_hr;
     let response = match block_on(
         api.get_usage_application_security_monitoring_with_http_info(start_hr, params),
     ) {
@@ -11081,7 +11107,8 @@ fn test_v2_get_cost_by_org(world: &mut DatadogWorld, _parameters: &HashMap<Strin
     let end_month = _parameters
         .get("end_month")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_usage_metering::GetCostByOrgOptionalParams { end_month };
+    let mut params = datadogV2::api::api_usage_metering::GetCostByOrgOptionalParams::default();
+    params.end_month = end_month;
     let response = match block_on(api.get_cost_by_org_with_http_info(start_month, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -11124,13 +11151,13 @@ fn test_v2_get_estimated_cost_by_org(
     let end_date = _parameters
         .get("end_date")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_usage_metering::GetEstimatedCostByOrgOptionalParams {
-        view,
-        start_month,
-        end_month,
-        start_date,
-        end_date,
-    };
+    let mut params =
+        datadogV2::api::api_usage_metering::GetEstimatedCostByOrgOptionalParams::default();
+    params.view = view;
+    params.start_month = start_month;
+    params.end_month = end_month;
+    params.start_date = start_date;
+    params.end_date = end_date;
     let response = match block_on(api.get_estimated_cost_by_org_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -11166,10 +11193,10 @@ fn test_v2_get_historical_cost_by_org(
     let end_month = _parameters
         .get("end_month")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_usage_metering::GetHistoricalCostByOrgOptionalParams {
-        view,
-        end_month,
-    };
+    let mut params =
+        datadogV2::api::api_usage_metering::GetHistoricalCostByOrgOptionalParams::default();
+    params.view = view;
+    params.end_month = end_month;
     let response =
         match block_on(api.get_historical_cost_by_org_with_http_info(start_month, params)) {
             Ok(response) => response,
@@ -11219,14 +11246,13 @@ fn test_v2_get_hourly_usage(world: &mut DatadogWorld, _parameters: &HashMap<Stri
     let page_next_record_id = _parameters
         .get("page[next_record_id]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_usage_metering::GetHourlyUsageOptionalParams {
-        filter_timestamp_end,
-        filter_include_descendants,
-        filter_include_breakdown,
-        filter_versions,
-        page_limit,
-        page_next_record_id,
-    };
+    let mut params = datadogV2::api::api_usage_metering::GetHourlyUsageOptionalParams::default();
+    params.filter_timestamp_end = filter_timestamp_end;
+    params.filter_include_descendants = filter_include_descendants;
+    params.filter_include_breakdown = filter_include_breakdown;
+    params.filter_versions = filter_versions;
+    params.page_limit = page_limit;
+    params.page_next_record_id = page_next_record_id;
     let response = match block_on(api.get_hourly_usage_with_http_info(
         filter_timestamp_start,
         filter_product_families,
@@ -11262,10 +11288,10 @@ fn test_v2_get_usage_lambda_traced_invocations(
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params =
-        datadogV2::api::api_usage_metering::GetUsageLambdaTracedInvocationsOptionalParams {
-            end_hr,
-        };
+    let mut params =
+        datadogV2::api::api_usage_metering::GetUsageLambdaTracedInvocationsOptionalParams::default(
+        );
+    params.end_hr = end_hr;
     let response =
         match block_on(api.get_usage_lambda_traced_invocations_with_http_info(start_hr, params)) {
             Ok(response) => response,
@@ -11298,8 +11324,9 @@ fn test_v2_get_usage_observability_pipelines(
     let end_hr = _parameters
         .get("end_hr")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params =
-        datadogV2::api::api_usage_metering::GetUsageObservabilityPipelinesOptionalParams { end_hr };
+    let mut params =
+        datadogV2::api::api_usage_metering::GetUsageObservabilityPipelinesOptionalParams::default();
+    params.end_hr = end_hr;
     let response =
         match block_on(api.get_usage_observability_pipelines_with_http_info(start_hr, params)) {
             Ok(response) => response,
@@ -11328,7 +11355,8 @@ fn test_v2_get_projected_cost(world: &mut DatadogWorld, _parameters: &HashMap<St
     let view = _parameters
         .get("view")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_usage_metering::GetProjectedCostOptionalParams { view };
+    let mut params = datadogV2::api::api_usage_metering::GetProjectedCostOptionalParams::default();
+    params.view = view;
     let response = match block_on(api.get_projected_cost_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -11537,12 +11565,11 @@ fn test_v2_list_downtimes(world: &mut DatadogWorld, _parameters: &HashMap<String
     let page_limit = _parameters
         .get("page[limit]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_downtimes::ListDowntimesOptionalParams {
-        current_only,
-        include,
-        page_offset,
-        page_limit,
-    };
+    let mut params = datadogV2::api::api_downtimes::ListDowntimesOptionalParams::default();
+    params.current_only = current_only;
+    params.include = include;
+    params.page_offset = page_offset;
+    params.page_limit = page_limit;
     let response = match block_on(api.list_downtimes_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -11623,7 +11650,8 @@ fn test_v2_get_downtime(world: &mut DatadogWorld, _parameters: &HashMap<String, 
     let include = _parameters
         .get("include")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_downtimes::GetDowntimeOptionalParams { include };
+    let mut params = datadogV2::api::api_downtimes::GetDowntimeOptionalParams::default();
+    params.include = include;
     let response = match block_on(api.get_downtime_with_http_info(downtime_id, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -11683,10 +11711,9 @@ fn test_v2_list_monitor_downtimes(world: &mut DatadogWorld, _parameters: &HashMa
     let page_limit = _parameters
         .get("page[limit]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_downtimes::ListMonitorDowntimesOptionalParams {
-        page_offset,
-        page_limit,
-    };
+    let mut params = datadogV2::api::api_downtimes::ListMonitorDowntimesOptionalParams::default();
+    params.page_offset = page_offset;
+    params.page_limit = page_limit;
     let response = match block_on(api.list_monitor_downtimes_with_http_info(monitor_id, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -11729,14 +11756,13 @@ fn test_v2_list_events(world: &mut DatadogWorld, _parameters: &HashMap<String, V
     let page_limit = _parameters
         .get("page[limit]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_events::ListEventsOptionalParams {
-        filter_query,
-        filter_from,
-        filter_to,
-        sort,
-        page_cursor,
-        page_limit,
-    };
+    let mut params = datadogV2::api::api_events::ListEventsOptionalParams::default();
+    params.filter_query = filter_query;
+    params.filter_from = filter_from;
+    params.filter_to = filter_to;
+    params.sort = sort;
+    params.page_cursor = page_cursor;
+    params.page_limit = page_limit;
     let response = match block_on(api.list_events_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -11764,7 +11790,8 @@ fn test_v2_search_events(world: &mut DatadogWorld, _parameters: &HashMap<String,
     let body = _parameters
         .get("body")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_events::SearchEventsOptionalParams { body };
+    let mut params = datadogV2::api::api_events::SearchEventsOptionalParams::default();
+    params.body = body;
     let response = match block_on(api.search_events_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -11798,11 +11825,10 @@ fn test_v2_list_incidents(world: &mut DatadogWorld, _parameters: &HashMap<String
     let page_offset = _parameters
         .get("page[offset]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_incidents::ListIncidentsOptionalParams {
-        include,
-        page_size,
-        page_offset,
-    };
+    let mut params = datadogV2::api::api_incidents::ListIncidentsOptionalParams::default();
+    params.include = include;
+    params.page_size = page_size;
+    params.page_offset = page_offset;
     let response = match block_on(api.list_incidents_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -11865,12 +11891,11 @@ fn test_v2_search_incidents(world: &mut DatadogWorld, _parameters: &HashMap<Stri
     let page_offset = _parameters
         .get("page[offset]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_incidents::SearchIncidentsOptionalParams {
-        include,
-        sort,
-        page_size,
-        page_offset,
-    };
+    let mut params = datadogV2::api::api_incidents::SearchIncidentsOptionalParams::default();
+    params.include = include;
+    params.sort = sort;
+    params.page_size = page_size;
+    params.page_offset = page_offset;
     let response = match block_on(api.search_incidents_with_http_info(query, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -11926,7 +11951,8 @@ fn test_v2_get_incident(world: &mut DatadogWorld, _parameters: &HashMap<String, 
     let include = _parameters
         .get("include")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_incidents::GetIncidentOptionalParams { include };
+    let mut params = datadogV2::api::api_incidents::GetIncidentOptionalParams::default();
+    params.include = include;
     let response = match block_on(api.get_incident_with_http_info(incident_id, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -11957,7 +11983,8 @@ fn test_v2_update_incident(world: &mut DatadogWorld, _parameters: &HashMap<Strin
     let include = _parameters
         .get("include")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_incidents::UpdateIncidentOptionalParams { include };
+    let mut params = datadogV2::api::api_incidents::UpdateIncidentOptionalParams::default();
+    params.include = include;
     let response = match block_on(api.update_incident_with_http_info(incident_id, body, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -11993,10 +12020,10 @@ fn test_v2_list_incident_attachments(
     let filter_attachment_type = _parameters
         .get("filter[attachment_type]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_incidents::ListIncidentAttachmentsOptionalParams {
-        include,
-        filter_attachment_type,
-    };
+    let mut params =
+        datadogV2::api::api_incidents::ListIncidentAttachmentsOptionalParams::default();
+    params.include = include;
+    params.filter_attachment_type = filter_attachment_type;
     let response = match block_on(api.list_incident_attachments_with_http_info(incident_id, params))
     {
         Ok(response) => response,
@@ -12031,7 +12058,9 @@ fn test_v2_update_incident_attachments(
     let include = _parameters
         .get("include")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_incidents::UpdateIncidentAttachmentsOptionalParams { include };
+    let mut params =
+        datadogV2::api::api_incidents::UpdateIncidentAttachmentsOptionalParams::default();
+    params.include = include;
     let response =
         match block_on(api.update_incident_attachments_with_http_info(incident_id, body, params)) {
             Ok(response) => response,
@@ -12487,7 +12516,9 @@ fn test_v2_make_gcpsts_delegate(world: &mut DatadogWorld, _parameters: &HashMap<
     let body = _parameters
         .get("body")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_gcp_integration::MakeGCPSTSDelegateOptionalParams { body };
+    let mut params =
+        datadogV2::api::api_gcp_integration::MakeGCPSTSDelegateOptionalParams::default();
+    params.body = body;
     let response = match block_on(api.make_gcpsts_delegate_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -13522,10 +13553,9 @@ fn test_v2_submit_log(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
     let ddtags = _parameters
         .get("ddtags")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_logs::SubmitLogOptionalParams {
-        content_encoding,
-        ddtags,
-    };
+    let mut params = datadogV2::api::api_logs::SubmitLogOptionalParams::default();
+    params.content_encoding = content_encoding;
+    params.ddtags = ddtags;
     let response = match block_on(api.submit_log_with_http_info(body, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -13599,16 +13629,15 @@ fn test_v2_list_logs_get(world: &mut DatadogWorld, _parameters: &HashMap<String,
     let page_limit = _parameters
         .get("page[limit]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_logs::ListLogsGetOptionalParams {
-        filter_query,
-        filter_indexes,
-        filter_from,
-        filter_to,
-        filter_storage_tier,
-        sort,
-        page_cursor,
-        page_limit,
-    };
+    let mut params = datadogV2::api::api_logs::ListLogsGetOptionalParams::default();
+    params.filter_query = filter_query;
+    params.filter_indexes = filter_indexes;
+    params.filter_from = filter_from;
+    params.filter_to = filter_to;
+    params.filter_storage_tier = filter_storage_tier;
+    params.sort = sort;
+    params.page_cursor = page_cursor;
+    params.page_limit = page_limit;
     let response = match block_on(api.list_logs_get_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -13636,7 +13665,8 @@ fn test_v2_list_logs(world: &mut DatadogWorld, _parameters: &HashMap<String, Val
     let body = _parameters
         .get("body")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_logs::ListLogsOptionalParams { body };
+    let mut params = datadogV2::api::api_logs::ListLogsOptionalParams::default();
+    params.body = body;
     let response = match block_on(api.list_logs_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -14073,15 +14103,14 @@ fn test_v2_list_tag_configurations(world: &mut DatadogWorld, _parameters: &HashM
     let window_seconds = _parameters
         .get("window[seconds]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_metrics::ListTagConfigurationsOptionalParams {
-        filter_configured,
-        filter_tags_configured,
-        filter_metric_type,
-        filter_include_percentiles,
-        filter_queried,
-        filter_tags,
-        window_seconds,
-    };
+    let mut params = datadogV2::api::api_metrics::ListTagConfigurationsOptionalParams::default();
+    params.filter_configured = filter_configured;
+    params.filter_tags_configured = filter_tags_configured;
+    params.filter_metric_type = filter_metric_type;
+    params.filter_include_percentiles = filter_include_percentiles;
+    params.filter_queried = filter_queried;
+    params.filter_tags = filter_tags;
+    params.window_seconds = window_seconds;
     let response = match block_on(api.list_tag_configurations_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -14170,9 +14199,9 @@ fn test_v2_list_active_metric_configurations(
     let window_seconds = _parameters
         .get("window[seconds]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_metrics::ListActiveMetricConfigurationsOptionalParams {
-        window_seconds,
-    };
+    let mut params =
+        datadogV2::api::api_metrics::ListActiveMetricConfigurationsOptionalParams::default();
+    params.window_seconds = window_seconds;
     let response =
         match block_on(api.list_active_metric_configurations_with_http_info(metric_name, params)) {
             Ok(response) => response,
@@ -14247,13 +14276,13 @@ fn test_v2_estimate_metrics_output_series(
     let filter_timespan_h = _parameters
         .get("filter[timespan_h]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_metrics::EstimateMetricsOutputSeriesOptionalParams {
-        filter_groups,
-        filter_hours_ago,
-        filter_num_aggregations,
-        filter_pct,
-        filter_timespan_h,
-    };
+    let mut params =
+        datadogV2::api::api_metrics::EstimateMetricsOutputSeriesOptionalParams::default();
+    params.filter_groups = filter_groups;
+    params.filter_hours_ago = filter_hours_ago;
+    params.filter_num_aggregations = filter_num_aggregations;
+    params.filter_pct = filter_pct;
+    params.filter_timespan_h = filter_timespan_h;
     let response =
         match block_on(api.estimate_metrics_output_series_with_http_info(metric_name, params)) {
             Ok(response) => response,
@@ -14480,7 +14509,8 @@ fn test_v2_submit_metrics(world: &mut DatadogWorld, _parameters: &HashMap<String
     let content_encoding = _parameters
         .get("Content-Encoding")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_metrics::SubmitMetricsOptionalParams { content_encoding };
+    let mut params = datadogV2::api::api_metrics::SubmitMetricsOptionalParams::default();
+    params.content_encoding = content_encoding;
     let response = match block_on(api.submit_metrics_with_http_info(body, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -14685,13 +14715,12 @@ fn test_v2_list_roles(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
     let filter_id = _parameters
         .get("filter[id]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_roles::ListRolesOptionalParams {
-        page_size,
-        page_number,
-        sort,
-        filter,
-        filter_id,
-    };
+    let mut params = datadogV2::api::api_roles::ListRolesOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.sort = sort;
+    params.filter = filter;
+    params.filter_id = filter_id;
     let response = match block_on(api.list_roles_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -14962,12 +14991,11 @@ fn test_v2_list_role_users(world: &mut DatadogWorld, _parameters: &HashMap<Strin
     let filter = _parameters
         .get("filter")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_roles::ListRoleUsersOptionalParams {
-        page_size,
-        page_number,
-        sort,
-        filter,
-    };
+    let mut params = datadogV2::api::api_roles::ListRoleUsersOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.sort = sort;
+    params.filter = filter;
     let response = match block_on(api.list_role_users_with_http_info(role_id, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -15054,20 +15082,19 @@ fn test_v2_list_findings(world: &mut DatadogWorld, _parameters: &HashMap<String,
     let filter_status = _parameters
         .get("filter[status]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_security_monitoring::ListFindingsOptionalParams {
-        page_limit,
-        snapshot_timestamp,
-        page_cursor,
-        filter_tags,
-        filter_evaluation_changed_at,
-        filter_muted,
-        filter_rule_id,
-        filter_rule_name,
-        filter_resource_type,
-        filter_discovery_timestamp,
-        filter_evaluation,
-        filter_status,
-    };
+    let mut params = datadogV2::api::api_security_monitoring::ListFindingsOptionalParams::default();
+    params.page_limit = page_limit;
+    params.snapshot_timestamp = snapshot_timestamp;
+    params.page_cursor = page_cursor;
+    params.filter_tags = filter_tags;
+    params.filter_evaluation_changed_at = filter_evaluation_changed_at;
+    params.filter_muted = filter_muted;
+    params.filter_rule_id = filter_rule_id;
+    params.filter_rule_name = filter_rule_name;
+    params.filter_resource_type = filter_resource_type;
+    params.filter_discovery_timestamp = filter_discovery_timestamp;
+    params.filter_evaluation = filter_evaluation;
+    params.filter_status = filter_status;
     let response = match block_on(api.list_findings_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -15122,8 +15149,8 @@ fn test_v2_get_finding(world: &mut DatadogWorld, _parameters: &HashMap<String, V
     let snapshot_timestamp = _parameters
         .get("snapshot_timestamp")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params =
-        datadogV2::api::api_security_monitoring::GetFindingOptionalParams { snapshot_timestamp };
+    let mut params = datadogV2::api::api_security_monitoring::GetFindingOptionalParams::default();
+    params.snapshot_timestamp = snapshot_timestamp;
     let response = match block_on(api.get_finding_with_http_info(finding_id, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -15286,11 +15313,11 @@ fn test_v2_list_security_monitoring_rules(
     let page_number = _parameters
         .get("page[number]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params =
-        datadogV2::api::api_security_monitoring::ListSecurityMonitoringRulesOptionalParams {
-            page_size,
-            page_number,
-        };
+    let mut params =
+        datadogV2::api::api_security_monitoring::ListSecurityMonitoringRulesOptionalParams::default(
+        );
+    params.page_size = page_size;
+    params.page_number = page_number;
     let response = match block_on(api.list_security_monitoring_rules_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -15450,15 +15477,13 @@ fn test_v2_list_security_monitoring_signals(
     let page_limit = _parameters
         .get("page[limit]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params =
-        datadogV2::api::api_security_monitoring::ListSecurityMonitoringSignalsOptionalParams {
-            filter_query,
-            filter_from,
-            filter_to,
-            sort,
-            page_cursor,
-            page_limit,
-        };
+    let mut params = datadogV2::api::api_security_monitoring::ListSecurityMonitoringSignalsOptionalParams::default();
+    params.filter_query = filter_query;
+    params.filter_from = filter_from;
+    params.filter_to = filter_to;
+    params.sort = sort;
+    params.page_cursor = page_cursor;
+    params.page_limit = page_limit;
     let response = match block_on(api.list_security_monitoring_signals_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -15489,10 +15514,8 @@ fn test_v2_search_security_monitoring_signals(
     let body = _parameters
         .get("body")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params =
-        datadogV2::api::api_security_monitoring::SearchSecurityMonitoringSignalsOptionalParams {
-            body,
-        };
+    let mut params = datadogV2::api::api_security_monitoring::SearchSecurityMonitoringSignalsOptionalParams::default();
+    params.body = body;
     let response = match block_on(api.search_security_monitoring_signals_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -15643,10 +15666,9 @@ fn test_v2_list_powerpacks(world: &mut DatadogWorld, _parameters: &HashMap<Strin
     let page_offset = _parameters
         .get("page[offset]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_powerpack::ListPowerpacksOptionalParams {
-        page_limit,
-        page_offset,
-    };
+    let mut params = datadogV2::api::api_powerpack::ListPowerpacksOptionalParams::default();
+    params.page_limit = page_limit;
+    params.page_offset = page_offset;
     let response = match block_on(api.list_powerpacks_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -15793,14 +15815,13 @@ fn test_v2_list_processes(world: &mut DatadogWorld, _parameters: &HashMap<String
     let page_cursor = _parameters
         .get("page[cursor]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_processes::ListProcessesOptionalParams {
-        search,
-        tags,
-        from,
-        to,
-        page_limit,
-        page_cursor,
-    };
+    let mut params = datadogV2::api::api_processes::ListProcessesOptionalParams::default();
+    params.search = search;
+    params.tags = tags;
+    params.from = from;
+    params.to = to;
+    params.page_limit = page_limit;
+    params.page_cursor = page_cursor;
     let response = match block_on(api.list_processes_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -16078,14 +16099,13 @@ fn test_v2_list_rum_events(world: &mut DatadogWorld, _parameters: &HashMap<Strin
     let page_limit = _parameters
         .get("page[limit]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_rum::ListRUMEventsOptionalParams {
-        filter_query,
-        filter_from,
-        filter_to,
-        sort,
-        page_cursor,
-        page_limit,
-    };
+    let mut params = datadogV2::api::api_rum::ListRUMEventsOptionalParams::default();
+    params.filter_query = filter_query;
+    params.filter_from = filter_from;
+    params.filter_to = filter_to;
+    params.sort = sort;
+    params.page_cursor = page_cursor;
+    params.page_limit = page_limit;
     let response = match block_on(api.list_rum_events_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -16138,7 +16158,8 @@ fn test_v2_upload_id_p_metadata(world: &mut DatadogWorld, _parameters: &HashMap<
     let idp_file = _parameters
         .get("idp_file")
         .and_then(|param| Some(param.as_str().unwrap().as_bytes().to_vec()));
-    let params = datadogV2::api::api_organizations::UploadIdPMetadataOptionalParams { idp_file };
+    let mut params = datadogV2::api::api_organizations::UploadIdPMetadataOptionalParams::default();
+    params.idp_file = idp_file;
     let response = match block_on(api.upload_id_p_metadata_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -16193,18 +16214,18 @@ fn test_v2_list_scorecard_outcomes(world: &mut DatadogWorld, _parameters: &HashM
     let filter_rule_name = _parameters
         .get("filter[rule][name]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_service_scorecards::ListScorecardOutcomesOptionalParams {
-        page_size,
-        page_offset,
-        include,
-        fields_outcome,
-        fields_rule,
-        filter_outcome_service_name,
-        filter_outcome_state,
-        filter_rule_enabled,
-        filter_rule_id,
-        filter_rule_name,
-    };
+    let mut params =
+        datadogV2::api::api_service_scorecards::ListScorecardOutcomesOptionalParams::default();
+    params.page_size = page_size;
+    params.page_offset = page_offset;
+    params.include = include;
+    params.fields_outcome = fields_outcome;
+    params.fields_rule = fields_rule;
+    params.filter_outcome_service_name = filter_outcome_service_name;
+    params.filter_outcome_state = filter_outcome_state;
+    params.filter_rule_enabled = filter_rule_enabled;
+    params.filter_rule_id = filter_rule_id;
+    params.filter_rule_name = filter_rule_name;
     let response = match block_on(api.list_scorecard_outcomes_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -16287,18 +16308,18 @@ fn test_v2_list_scorecard_rules(world: &mut DatadogWorld, _parameters: &HashMap<
     let fields_scorecard = _parameters
         .get("fields[scorecard]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_service_scorecards::ListScorecardRulesOptionalParams {
-        page_size,
-        page_offset,
-        include,
-        filter_rule_id,
-        filter_rule_enabled,
-        filter_rule_custom,
-        filter_rule_name,
-        filter_rule_description,
-        fields_rule,
-        fields_scorecard,
-    };
+    let mut params =
+        datadogV2::api::api_service_scorecards::ListScorecardRulesOptionalParams::default();
+    params.page_size = page_size;
+    params.page_offset = page_offset;
+    params.include = include;
+    params.filter_rule_id = filter_rule_id;
+    params.filter_rule_enabled = filter_rule_enabled;
+    params.filter_rule_custom = filter_rule_custom;
+    params.filter_rule_name = filter_rule_name;
+    params.filter_rule_description = filter_rule_description;
+    params.fields_rule = fields_rule;
+    params.fields_scorecard = fields_scorecard;
     let response = match block_on(api.list_scorecard_rules_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -16824,15 +16845,13 @@ fn test_v2_list_service_account_application_keys(
     let filter_created_at_end = _parameters
         .get("filter[created_at][end]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params =
-        datadogV2::api::api_service_accounts::ListServiceAccountApplicationKeysOptionalParams {
-            page_size,
-            page_number,
-            sort,
-            filter,
-            filter_created_at_start,
-            filter_created_at_end,
-        };
+    let mut params = datadogV2::api::api_service_accounts::ListServiceAccountApplicationKeysOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.sort = sort;
+    params.filter = filter;
+    params.filter_created_at_start = filter_created_at_start;
+    params.filter_created_at_end = filter_created_at_end;
     let response = match block_on(
         api.list_service_account_application_keys_with_http_info(service_account_id, params),
     ) {
@@ -17005,12 +17024,12 @@ fn test_v2_list_incident_services(world: &mut DatadogWorld, _parameters: &HashMa
     let filter = _parameters
         .get("filter")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_incident_services::ListIncidentServicesOptionalParams {
-        include,
-        page_size,
-        page_offset,
-        filter,
-    };
+    let mut params =
+        datadogV2::api::api_incident_services::ListIncidentServicesOptionalParams::default();
+    params.include = include;
+    params.page_size = page_size;
+    params.page_offset = page_offset;
+    params.filter = filter;
     let response = match block_on(api.list_incident_services_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -17091,8 +17110,9 @@ fn test_v2_get_incident_service(world: &mut DatadogWorld, _parameters: &HashMap<
     let include = _parameters
         .get("include")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params =
-        datadogV2::api::api_incident_services::GetIncidentServiceOptionalParams { include };
+    let mut params =
+        datadogV2::api::api_incident_services::GetIncidentServiceOptionalParams::default();
+    params.include = include;
     let response = match block_on(api.get_incident_service_with_http_info(service_id, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -17156,11 +17176,11 @@ fn test_v2_list_service_definitions(
     let schema_version = _parameters
         .get("schema_version")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_service_definition::ListServiceDefinitionsOptionalParams {
-        page_size,
-        page_number,
-        schema_version,
-    };
+    let mut params =
+        datadogV2::api::api_service_definition::ListServiceDefinitionsOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.schema_version = schema_version;
     let response = match block_on(api.list_service_definitions_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -17247,9 +17267,9 @@ fn test_v2_get_service_definition(world: &mut DatadogWorld, _parameters: &HashMa
     let schema_version = _parameters
         .get("schema_version")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_service_definition::GetServiceDefinitionOptionalParams {
-        schema_version,
-    };
+    let mut params =
+        datadogV2::api::api_service_definition::GetServiceDefinitionOptionalParams::default();
+    params.schema_version = schema_version;
     let response = match block_on(api.get_service_definition_with_http_info(service_name, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -17317,14 +17337,13 @@ fn test_v2_list_spans_get(world: &mut DatadogWorld, _parameters: &HashMap<String
     let page_limit = _parameters
         .get("page[limit]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_spans::ListSpansGetOptionalParams {
-        filter_query,
-        filter_from,
-        filter_to,
-        sort,
-        page_cursor,
-        page_limit,
-    };
+    let mut params = datadogV2::api::api_spans::ListSpansGetOptionalParams::default();
+    params.filter_query = filter_query;
+    params.filter_from = filter_from;
+    params.filter_to = filter_to;
+    params.sort = sort;
+    params.page_cursor = page_cursor;
+    params.page_limit = page_limit;
     let response = match block_on(api.list_spans_get_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -17450,15 +17469,14 @@ fn test_v2_list_teams(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
     let fields_team = _parameters
         .get("fields[team]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_teams::ListTeamsOptionalParams {
-        page_number,
-        page_size,
-        sort,
-        include,
-        filter_keyword,
-        filter_me,
-        fields_team,
-    };
+    let mut params = datadogV2::api::api_teams::ListTeamsOptionalParams::default();
+    params.page_number = page_number;
+    params.page_size = page_size;
+    params.sort = sort;
+    params.include = include;
+    params.filter_keyword = filter_keyword;
+    params.filter_me = filter_me;
+    params.fields_team = fields_team;
     let response = match block_on(api.list_teams_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -17727,12 +17745,11 @@ fn test_v2_get_team_memberships(world: &mut DatadogWorld, _parameters: &HashMap<
     let filter_keyword = _parameters
         .get("filter[keyword]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_teams::GetTeamMembershipsOptionalParams {
-        page_size,
-        page_number,
-        sort,
-        filter_keyword,
-    };
+    let mut params = datadogV2::api::api_teams::GetTeamMembershipsOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.sort = sort;
+    params.filter_keyword = filter_keyword;
     let response = match block_on(api.get_team_memberships_with_http_info(team_id, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -17933,12 +17950,11 @@ fn test_v2_list_incident_teams(world: &mut DatadogWorld, _parameters: &HashMap<S
     let filter = _parameters
         .get("filter")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_incident_teams::ListIncidentTeamsOptionalParams {
-        include,
-        page_size,
-        page_offset,
-        filter,
-    };
+    let mut params = datadogV2::api::api_incident_teams::ListIncidentTeamsOptionalParams::default();
+    params.include = include;
+    params.page_size = page_size;
+    params.page_offset = page_offset;
+    params.filter = filter;
     let response = match block_on(api.list_incident_teams_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -18017,7 +18033,8 @@ fn test_v2_get_incident_team(world: &mut DatadogWorld, _parameters: &HashMap<Str
     let include = _parameters
         .get("include")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_incident_teams::GetIncidentTeamOptionalParams { include };
+    let mut params = datadogV2::api::api_incident_teams::GetIncidentTeamOptionalParams::default();
+    params.include = include;
     let response = match block_on(api.get_incident_team_with_http_info(team_id, params)) {
         Ok(response) => response,
         Err(error) => {
@@ -18137,14 +18154,13 @@ fn test_v2_list_users(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
     let filter_status = _parameters
         .get("filter[status]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let params = datadogV2::api::api_users::ListUsersOptionalParams {
-        page_size,
-        page_number,
-        sort,
-        sort_dir,
-        filter,
-        filter_status,
-    };
+    let mut params = datadogV2::api::api_users::ListUsersOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.sort = sort;
+    params.sort_dir = sort_dir;
+    params.filter = filter;
+    params.filter_status = filter_status;
     let response = match block_on(api.list_users_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {

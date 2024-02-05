@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// Service owner's contacts information.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ServiceDefinitionV2Contact {

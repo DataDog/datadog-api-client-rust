@@ -6,6 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListAuditLogsOptionalParams is a struct for passing parameters to the method [`AuditAPI::list_audit_logs`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListAuditLogsOptionalParams {
     /// Search query following Audit Logs syntax.
@@ -56,6 +57,7 @@ impl ListAuditLogsOptionalParams {
 }
 
 /// SearchAuditLogsOptionalParams is a struct for passing parameters to the method [`AuditAPI::search_audit_logs`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct SearchAuditLogsOptionalParams {
     pub body: Option<crate::datadogV2::model::AuditLogsSearchEventsRequest>,

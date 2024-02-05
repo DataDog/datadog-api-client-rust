@@ -6,6 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Global query options that are used during the query.
 /// Only supply timezone or time offset, not both. Otherwise, the query fails.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CIAppQueryOptions {

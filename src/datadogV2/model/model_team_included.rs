@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// Included resources related to the team
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum TeamIncluded {

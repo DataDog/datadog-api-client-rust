@@ -6,6 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Object defining a variable that can be used in your browser test.
 /// See the [Recording Steps documentation](<https://docs.datadoghq.com/synthetics/browser_tests/actions/?tab=testanelementontheactivepage#variables>).
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SyntheticsBrowserVariable {

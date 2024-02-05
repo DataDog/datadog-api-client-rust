@@ -7,6 +7,7 @@ use serde_with::skip_serializing_none;
 /// The list stream visualization displays a table of recent events in your application that
 /// match a search criteria using user-defined columns.
 ///
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ListStreamWidgetDefinition {

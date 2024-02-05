@@ -15,6 +15,7 @@ use serde_with::skip_serializing_none;
 ///
 /// `{ isEnabled: true, applicationId: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", clientTokenId: 12345 }`
 /// RUM data is collected using the specified application.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SyntheticsBrowserTestRumSettings {

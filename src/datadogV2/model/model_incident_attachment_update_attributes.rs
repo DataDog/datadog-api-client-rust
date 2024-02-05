@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// Incident attachment attributes.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum IncidentAttachmentUpdateAttributes {

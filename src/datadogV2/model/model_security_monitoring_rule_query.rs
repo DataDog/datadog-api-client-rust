@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// Query for matching rule.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SecurityMonitoringRuleQuery {

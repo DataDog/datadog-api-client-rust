@@ -6,6 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListContainerImagesOptionalParams is a struct for passing parameters to the method [`ContainerImagesAPI::list_container_images`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListContainerImagesOptionalParams {
     /// Comma-separated list of tags to filter Container Images by.

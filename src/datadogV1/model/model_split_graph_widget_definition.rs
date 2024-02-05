@@ -6,6 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The split graph widget allows you to create repeating units of a graph - one for each value in a group (for example: one per service)
 ///
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SplitGraphWidgetDefinition {

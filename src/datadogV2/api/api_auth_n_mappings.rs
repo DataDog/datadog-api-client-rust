@@ -6,6 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListAuthNMappingsOptionalParams is a struct for passing parameters to the method [`AuthNMappingsAPI::list_auth_n_mappings`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListAuthNMappingsOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.

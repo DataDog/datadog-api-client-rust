@@ -25,6 +25,7 @@ use serde_with::skip_serializing_none;
 ///   the actual value stored for the attribute is `0.123456789`.
 /// - If you need to scale a unit of measure,
 ///   see [Scale Filter](<https://docs.datadoghq.com/logs/log_configuration/parsing/?tab=filter#matcher-and-filter>).
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LogsArithmeticProcessor {

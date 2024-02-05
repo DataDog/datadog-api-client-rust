@@ -6,6 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The status of a request to bulk configure metric tags.
 /// It contains the fields from the original request for reference.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct MetricBulkTagConfigStatus {

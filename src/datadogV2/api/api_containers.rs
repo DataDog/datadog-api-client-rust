@@ -6,6 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListContainersOptionalParams is a struct for passing parameters to the method [`ContainersAPI::list_containers`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListContainersOptionalParams {
     /// Comma-separated list of tags to filter containers by.

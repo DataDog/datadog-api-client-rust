@@ -6,6 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListNotebooksOptionalParams is a struct for passing parameters to the method [`NotebooksAPI::list_notebooks`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListNotebooksOptionalParams {
     /// Return notebooks created by the given `author_handle`.

@@ -17,6 +17,7 @@ use serde_with::skip_serializing_none;
 ///   it is replaced by an empty string or the entire operation is skipped depending on your selection.
 /// - If the target attribute already exists, it is overwritten by the result of the template.
 /// - Results of the template cannot exceed 256 characters.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LogsStringBuilderProcessor {

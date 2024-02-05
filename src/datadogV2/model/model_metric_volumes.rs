@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// Possible response objects for a metric's volume.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum MetricVolumes {

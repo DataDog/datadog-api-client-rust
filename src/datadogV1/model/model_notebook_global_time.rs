@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// Notebook global timeframe.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum NotebookGlobalTime {

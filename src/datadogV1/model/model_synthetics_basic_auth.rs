@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// Object to handle basic authentication when performing the test.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SyntheticsBasicAuth {

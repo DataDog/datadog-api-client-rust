@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// A todo assignee.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum IncidentTodoAssignee {

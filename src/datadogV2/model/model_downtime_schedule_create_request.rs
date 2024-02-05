@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// Schedule for the downtime.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DowntimeScheduleCreateRequest {
