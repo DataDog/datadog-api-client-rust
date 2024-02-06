@@ -1,11 +1,14 @@
 {% include "partial_header.j2" %}
 use std::env;
+use std::collections::HashMap;
+use log::warn;
 
 #[derive(Debug, Clone)]
 pub struct Configuration {
     pub base_path: String,
     pub user_agent: Option<String>,
     pub client: reqwest_middleware::ClientWithMiddleware,
+    pub unstable_operations: Option<HashMap<String, bool>>,
     {%- set authMethods = openapi.security %}
 	{%- if authMethods %}
 	{%- for authMethod in authMethods %}
@@ -24,11 +27,56 @@ impl Configuration {
     pub fn new() -> Configuration {
         Configuration::default()
     }
+
+    pub fn set_unstable_operation_enabled(&mut self, operation: &String, enabled: bool) -> bool {
+        if let Some(unstable_operations) = &mut self.unstable_operations {
+            if unstable_operations.contains_key(operation) {
+                unstable_operations.entry(operation.to_string()).or_insert(enabled);
+                return true;
+            }
+        }
+
+        warn!("Operation {} is not an unstable operation, can't enable/disable", operation);
+        false
+    }
+
+    pub fn is_unstable_operation_enabled(&self, operation: &String) -> bool {
+        if let Some(unstable_operations) = &self.unstable_operations {
+            if unstable_operations.contains_key(operation) {
+                return unstable_operations.get(operation).unwrap().clone();
+            }
+        }
+
+        warn!("Operation {} is not an unstable operation, is always enabled", operation);
+        false
+    }
+
+    pub fn is_unstable_operation(&self, operation: &String) -> bool {
+        if let Some(unstable_operations) = &self.unstable_operations {
+            if unstable_operations.contains_key(operation) {
+                return true;
+            }
+        }
+
+        false
+    }
 }
 
 impl Default for Configuration {
     fn default() -> Self {
         let http_client = reqwest_middleware::ClientBuilder::new(reqwest::Client::new());
+        let unstable_operations = Some(HashMap::from([
+            {%- for version, api in apis.items() %}
+            {%- for operations in api.values() %}
+            {%- for _, _, operation in operations|sort(attribute="2.operationId") %}
+            {%- if "x-unstable" in operation %}
+                ("{{ version }}.{{ operation.operationId | snake_case }}".to_owned(), false),
+            {%- endif %}
+            {%- endfor %}
+            {%- endfor %}
+            {%- endfor %}
+        ]));
+
         Configuration {
             base_path: "https://api.datadoghq.com".to_owned(),
             user_agent: Some(format!(
@@ -39,6 +87,7 @@ impl Default for Configuration {
                 env::consts::ARCH,
             )),
             client: http_client.build(),
+            unstable_operations: unstable_operations,
             {%- set authMethods = openapi.security %}
             {%- if authMethods %}
             {%- for authMethod in authMethods %}

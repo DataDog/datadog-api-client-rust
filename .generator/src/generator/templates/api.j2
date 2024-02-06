@@ -2,6 +2,11 @@
 use reqwest;
 use serde::{Serialize, Deserialize};
 use crate::datadog::*;
+{%- for _, _, operation in operations if "x-unstable" in operation %}
+{%- if loop.first %}
+use log::warn;
+{%- endif %}
+{%- endfor %}
 
 {%- set structName = name.replace(" ", "")+"API" %}
 {% for path, method, operation in operations|sort(attribute="2.operationId", case_sensitive=True) %}
@@ -77,6 +82,20 @@ impl {{ structName }} {
     {{ operation.description | block_comment }}
     {%- endif %}
     pub async fn {{operation.operationId | snake_case}}(&self{% for name, parameter in operation|parameters %}{% if loop.first %}, params: {{operation.operationId}}Params{% endif %}{% endfor %}) -> Result<Option<{% if returnType %}{{returnType}}{% else %}(){% endif %}>, Error<{{operation.operationId}}Error>> {
+        {%- if "x-unstable" in operation %}
+        let operation_id = "{{ version }}.{{ operation.operationId | snake_case }}".to_string();
+        if self.config.is_unstable_operation(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = ResponseContent {
+                status: reqwest::StatusCode::from_u16(0).unwrap(),
+                content: "Operation '{{ version }}.{{ operation.operationId | snake_case }}' is not enabled".to_string(),
+                entity: None,
+            };
+            return Err(Error::ResponseError(local_error));
+        }
+        {%- endif %}
+
         match self.{{operation.operationId | snake_case}}_with_http_info({% for name, parameter in operation|parameters %}{% if loop.first %}params{% endif %}{% endfor %}).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
