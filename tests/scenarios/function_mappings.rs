@@ -91,597 +91,443 @@ pub struct ApiInstances {
 pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
     match api.as_str() {
         "IPRanges" => {
-            if world.api_instances.v1_api_ip_ranges.is_none() {
-                world.api_instances.v1_api_ip_ranges = Some(
-                    datadogV1::api::api_ip_ranges::IPRangesAPI::with_config(world.config.clone()),
-                );
-            }
+            world.api_instances.v1_api_ip_ranges = Some(
+                datadogV1::api::api_ip_ranges::IPRangesAPI::with_config(world.config.clone()),
+            );
         }
         "KeyManagement" => {
-            if world.api_instances.v1_api_key_management.is_none() {
-                world.api_instances.v1_api_key_management = Some(
-                    datadogV1::api::api_key_management::KeyManagementAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
-            if world.api_instances.v2_api_key_management.is_none() {
-                world.api_instances.v2_api_key_management = Some(
-                    datadogV2::api::api_key_management::KeyManagementAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v1_api_key_management = Some(
+                datadogV1::api::api_key_management::KeyManagementAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
+            world.api_instances.v2_api_key_management = Some(
+                datadogV2::api::api_key_management::KeyManagementAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "ServiceChecks" => {
-            if world.api_instances.v1_api_service_checks.is_none() {
-                world.api_instances.v1_api_service_checks = Some(
-                    datadogV1::api::api_service_checks::ServiceChecksAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v1_api_service_checks = Some(
+                datadogV1::api::api_service_checks::ServiceChecksAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "UsageMetering" => {
-            if world.api_instances.v1_api_usage_metering.is_none() {
-                world.api_instances.v1_api_usage_metering = Some(
-                    datadogV1::api::api_usage_metering::UsageMeteringAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
-            if world.api_instances.v2_api_usage_metering.is_none() {
-                world.api_instances.v2_api_usage_metering = Some(
-                    datadogV2::api::api_usage_metering::UsageMeteringAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v1_api_usage_metering = Some(
+                datadogV1::api::api_usage_metering::UsageMeteringAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
+            world.api_instances.v2_api_usage_metering = Some(
+                datadogV2::api::api_usage_metering::UsageMeteringAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "Dashboards" => {
-            if world.api_instances.v1_api_dashboards.is_none() {
-                world.api_instances.v1_api_dashboards =
-                    Some(datadogV1::api::api_dashboards::DashboardsAPI::with_config(
-                        world.config.clone(),
-                    ));
-            }
+            world.api_instances.v1_api_dashboards = Some(
+                datadogV1::api::api_dashboards::DashboardsAPI::with_config(world.config.clone()),
+            );
         }
         "DashboardLists" => {
-            if world.api_instances.v1_api_dashboard_lists.is_none() {
-                world.api_instances.v1_api_dashboard_lists = Some(
-                    datadogV1::api::api_dashboard_lists::DashboardListsAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
-            if world.api_instances.v2_api_dashboard_lists.is_none() {
-                world.api_instances.v2_api_dashboard_lists = Some(
-                    datadogV2::api::api_dashboard_lists::DashboardListsAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v1_api_dashboard_lists = Some(
+                datadogV1::api::api_dashboard_lists::DashboardListsAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
+            world.api_instances.v2_api_dashboard_lists = Some(
+                datadogV2::api::api_dashboard_lists::DashboardListsAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "Metrics" => {
-            if world.api_instances.v1_api_metrics.is_none() {
-                world.api_instances.v1_api_metrics = Some(
-                    datadogV1::api::api_metrics::MetricsAPI::with_config(world.config.clone()),
-                );
-            }
-            if world.api_instances.v2_api_metrics.is_none() {
-                world.api_instances.v2_api_metrics = Some(
-                    datadogV2::api::api_metrics::MetricsAPI::with_config(world.config.clone()),
-                );
-            }
+            world.api_instances.v1_api_metrics = Some(
+                datadogV1::api::api_metrics::MetricsAPI::with_config(world.config.clone()),
+            );
+            world.api_instances.v2_api_metrics = Some(
+                datadogV2::api::api_metrics::MetricsAPI::with_config(world.config.clone()),
+            );
         }
         "Downtimes" => {
-            if world.api_instances.v1_api_downtimes.is_none() {
-                world.api_instances.v1_api_downtimes = Some(
-                    datadogV1::api::api_downtimes::DowntimesAPI::with_config(world.config.clone()),
-                );
-            }
-            if world.api_instances.v2_api_downtimes.is_none() {
-                world.api_instances.v2_api_downtimes = Some(
-                    datadogV2::api::api_downtimes::DowntimesAPI::with_config(world.config.clone()),
-                );
-            }
+            world.api_instances.v1_api_downtimes = Some(
+                datadogV1::api::api_downtimes::DowntimesAPI::with_config(world.config.clone()),
+            );
+            world.api_instances.v2_api_downtimes = Some(
+                datadogV2::api::api_downtimes::DowntimesAPI::with_config(world.config.clone()),
+            );
         }
         "Events" => {
-            if world.api_instances.v1_api_events.is_none() {
-                world.api_instances.v1_api_events = Some(
-                    datadogV1::api::api_events::EventsAPI::with_config(world.config.clone()),
-                );
-            }
-            if world.api_instances.v2_api_events.is_none() {
-                world.api_instances.v2_api_events = Some(
-                    datadogV2::api::api_events::EventsAPI::with_config(world.config.clone()),
-                );
-            }
+            world.api_instances.v1_api_events = Some(
+                datadogV1::api::api_events::EventsAPI::with_config(world.config.clone()),
+            );
+            world.api_instances.v2_api_events = Some(
+                datadogV2::api::api_events::EventsAPI::with_config(world.config.clone()),
+            );
         }
         "Snapshots" => {
-            if world.api_instances.v1_api_snapshots.is_none() {
-                world.api_instances.v1_api_snapshots = Some(
-                    datadogV1::api::api_snapshots::SnapshotsAPI::with_config(world.config.clone()),
-                );
-            }
+            world.api_instances.v1_api_snapshots = Some(
+                datadogV1::api::api_snapshots::SnapshotsAPI::with_config(world.config.clone()),
+            );
         }
         "Hosts" => {
-            if world.api_instances.v1_api_hosts.is_none() {
-                world.api_instances.v1_api_hosts = Some(
-                    datadogV1::api::api_hosts::HostsAPI::with_config(world.config.clone()),
-                );
-            }
+            world.api_instances.v1_api_hosts = Some(
+                datadogV1::api::api_hosts::HostsAPI::with_config(world.config.clone()),
+            );
         }
         "AWSIntegration" => {
-            if world.api_instances.v1_api_aws_integration.is_none() {
-                world.api_instances.v1_api_aws_integration = Some(
-                    datadogV1::api::api_aws_integration::AWSIntegrationAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v1_api_aws_integration = Some(
+                datadogV1::api::api_aws_integration::AWSIntegrationAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "AWSLogsIntegration" => {
-            if world.api_instances.v1_api_aws_logs_integration.is_none() {
-                world.api_instances.v1_api_aws_logs_integration = Some(
-                    datadogV1::api::api_aws_logs_integration::AWSLogsIntegrationAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v1_api_aws_logs_integration = Some(
+                datadogV1::api::api_aws_logs_integration::AWSLogsIntegrationAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "AzureIntegration" => {
-            if world.api_instances.v1_api_azure_integration.is_none() {
-                world.api_instances.v1_api_azure_integration = Some(
-                    datadogV1::api::api_azure_integration::AzureIntegrationAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v1_api_azure_integration = Some(
+                datadogV1::api::api_azure_integration::AzureIntegrationAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "GCPIntegration" => {
-            if world.api_instances.v1_api_gcp_integration.is_none() {
-                world.api_instances.v1_api_gcp_integration = Some(
-                    datadogV1::api::api_gcp_integration::GCPIntegrationAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
-            if world.api_instances.v2_api_gcp_integration.is_none() {
-                world.api_instances.v2_api_gcp_integration = Some(
-                    datadogV2::api::api_gcp_integration::GCPIntegrationAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v1_api_gcp_integration = Some(
+                datadogV1::api::api_gcp_integration::GCPIntegrationAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
+            world.api_instances.v2_api_gcp_integration = Some(
+                datadogV2::api::api_gcp_integration::GCPIntegrationAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "PagerDutyIntegration" => {
-            if world.api_instances.v1_api_pager_duty_integration.is_none() {
-                world.api_instances.v1_api_pager_duty_integration = Some(datadogV1::api::api_pager_duty_integration::PagerDutyIntegrationAPI::with_config(world.config.clone()));
-            }
+            world.api_instances.v1_api_pager_duty_integration = Some(
+                datadogV1::api::api_pager_duty_integration::PagerDutyIntegrationAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "SlackIntegration" => {
-            if world.api_instances.v1_api_slack_integration.is_none() {
-                world.api_instances.v1_api_slack_integration = Some(
-                    datadogV1::api::api_slack_integration::SlackIntegrationAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v1_api_slack_integration = Some(
+                datadogV1::api::api_slack_integration::SlackIntegrationAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "WebhooksIntegration" => {
-            if world.api_instances.v1_api_webhooks_integration.is_none() {
-                world.api_instances.v1_api_webhooks_integration = Some(
-                    datadogV1::api::api_webhooks_integration::WebhooksIntegrationAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v1_api_webhooks_integration = Some(
+                datadogV1::api::api_webhooks_integration::WebhooksIntegrationAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "Logs" => {
-            if world.api_instances.v1_api_logs.is_none() {
-                world.api_instances.v1_api_logs = Some(
-                    datadogV1::api::api_logs::LogsAPI::with_config(world.config.clone()),
-                );
-            }
-            if world.api_instances.v2_api_logs.is_none() {
-                world.api_instances.v2_api_logs = Some(
-                    datadogV2::api::api_logs::LogsAPI::with_config(world.config.clone()),
-                );
-            }
+            world.api_instances.v1_api_logs = Some(datadogV1::api::api_logs::LogsAPI::with_config(
+                world.config.clone(),
+            ));
+            world.api_instances.v2_api_logs = Some(datadogV2::api::api_logs::LogsAPI::with_config(
+                world.config.clone(),
+            ));
         }
         "LogsIndexes" => {
-            if world.api_instances.v1_api_logs_indexes.is_none() {
-                world.api_instances.v1_api_logs_indexes = Some(
-                    datadogV1::api::api_logs_indexes::LogsIndexesAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v1_api_logs_indexes = Some(
+                datadogV1::api::api_logs_indexes::LogsIndexesAPI::with_config(world.config.clone()),
+            );
         }
         "LogsPipelines" => {
-            if world.api_instances.v1_api_logs_pipelines.is_none() {
-                world.api_instances.v1_api_logs_pipelines = Some(
-                    datadogV1::api::api_logs_pipelines::LogsPipelinesAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v1_api_logs_pipelines = Some(
+                datadogV1::api::api_logs_pipelines::LogsPipelinesAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "Monitors" => {
-            if world.api_instances.v1_api_monitors.is_none() {
-                world.api_instances.v1_api_monitors = Some(
-                    datadogV1::api::api_monitors::MonitorsAPI::with_config(world.config.clone()),
-                );
-            }
-            if world.api_instances.v2_api_monitors.is_none() {
-                world.api_instances.v2_api_monitors = Some(
-                    datadogV2::api::api_monitors::MonitorsAPI::with_config(world.config.clone()),
-                );
-            }
+            world.api_instances.v1_api_monitors = Some(
+                datadogV1::api::api_monitors::MonitorsAPI::with_config(world.config.clone()),
+            );
+            world.api_instances.v2_api_monitors = Some(
+                datadogV2::api::api_monitors::MonitorsAPI::with_config(world.config.clone()),
+            );
         }
         "Notebooks" => {
-            if world.api_instances.v1_api_notebooks.is_none() {
-                world.api_instances.v1_api_notebooks = Some(
-                    datadogV1::api::api_notebooks::NotebooksAPI::with_config(world.config.clone()),
-                );
-            }
+            world.api_instances.v1_api_notebooks = Some(
+                datadogV1::api::api_notebooks::NotebooksAPI::with_config(world.config.clone()),
+            );
         }
         "Organizations" => {
-            if world.api_instances.v1_api_organizations.is_none() {
-                world.api_instances.v1_api_organizations = Some(
-                    datadogV1::api::api_organizations::OrganizationsAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
-            if world.api_instances.v2_api_organizations.is_none() {
-                world.api_instances.v2_api_organizations = Some(
-                    datadogV2::api::api_organizations::OrganizationsAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v1_api_organizations = Some(
+                datadogV1::api::api_organizations::OrganizationsAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
+            world.api_instances.v2_api_organizations = Some(
+                datadogV2::api::api_organizations::OrganizationsAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "SecurityMonitoring" => {
-            if world.api_instances.v1_api_security_monitoring.is_none() {
-                world.api_instances.v1_api_security_monitoring = Some(
-                    datadogV1::api::api_security_monitoring::SecurityMonitoringAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
-            if world.api_instances.v2_api_security_monitoring.is_none() {
-                world.api_instances.v2_api_security_monitoring = Some(
-                    datadogV2::api::api_security_monitoring::SecurityMonitoringAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v1_api_security_monitoring = Some(
+                datadogV1::api::api_security_monitoring::SecurityMonitoringAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
+            world.api_instances.v2_api_security_monitoring = Some(
+                datadogV2::api::api_security_monitoring::SecurityMonitoringAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "ServiceLevelObjectives" => {
-            if world
-                .api_instances
-                .v1_api_service_level_objectives
-                .is_none()
-            {
-                world.api_instances.v1_api_service_level_objectives = Some(datadogV1::api::api_service_level_objectives::ServiceLevelObjectivesAPI::with_config(world.config.clone()));
-            }
+            world.api_instances.v1_api_service_level_objectives = Some(datadogV1::api::api_service_level_objectives::ServiceLevelObjectivesAPI::with_config(world.config.clone()));
         }
         "ServiceLevelObjectiveCorrections" => {
-            if world
-                .api_instances
-                .v1_api_service_level_objective_corrections
-                .is_none()
-            {
-                world.api_instances.v1_api_service_level_objective_corrections = Some(datadogV1::api::api_service_level_objective_corrections::ServiceLevelObjectiveCorrectionsAPI::with_config(world.config.clone()));
-            }
+            world.api_instances.v1_api_service_level_objective_corrections = Some(datadogV1::api::api_service_level_objective_corrections::ServiceLevelObjectiveCorrectionsAPI::with_config(world.config.clone()));
         }
         "Synthetics" => {
-            if world.api_instances.v1_api_synthetics.is_none() {
-                world.api_instances.v1_api_synthetics =
-                    Some(datadogV1::api::api_synthetics::SyntheticsAPI::with_config(
-                        world.config.clone(),
-                    ));
-            }
-            if world.api_instances.v2_api_synthetics.is_none() {
-                world.api_instances.v2_api_synthetics =
-                    Some(datadogV2::api::api_synthetics::SyntheticsAPI::with_config(
-                        world.config.clone(),
-                    ));
-            }
+            world.api_instances.v1_api_synthetics = Some(
+                datadogV1::api::api_synthetics::SyntheticsAPI::with_config(world.config.clone()),
+            );
+            world.api_instances.v2_api_synthetics = Some(
+                datadogV2::api::api_synthetics::SyntheticsAPI::with_config(world.config.clone()),
+            );
         }
         "Tags" => {
-            if world.api_instances.v1_api_tags.is_none() {
-                world.api_instances.v1_api_tags = Some(
-                    datadogV1::api::api_tags::TagsAPI::with_config(world.config.clone()),
-                );
-            }
+            world.api_instances.v1_api_tags = Some(datadogV1::api::api_tags::TagsAPI::with_config(
+                world.config.clone(),
+            ));
         }
         "Users" => {
-            if world.api_instances.v1_api_users.is_none() {
-                world.api_instances.v1_api_users = Some(
-                    datadogV1::api::api_users::UsersAPI::with_config(world.config.clone()),
-                );
-            }
-            if world.api_instances.v2_api_users.is_none() {
-                world.api_instances.v2_api_users = Some(
-                    datadogV2::api::api_users::UsersAPI::with_config(world.config.clone()),
-                );
-            }
+            world.api_instances.v1_api_users = Some(
+                datadogV1::api::api_users::UsersAPI::with_config(world.config.clone()),
+            );
+            world.api_instances.v2_api_users = Some(
+                datadogV2::api::api_users::UsersAPI::with_config(world.config.clone()),
+            );
         }
         "Authentication" => {
-            if world.api_instances.v1_api_authentication.is_none() {
-                world.api_instances.v1_api_authentication = Some(
-                    datadogV1::api::api_authentication::AuthenticationAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v1_api_authentication = Some(
+                datadogV1::api::api_authentication::AuthenticationAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "SpansMetrics" => {
-            if world.api_instances.v2_api_spans_metrics.is_none() {
-                world.api_instances.v2_api_spans_metrics = Some(
-                    datadogV2::api::api_spans_metrics::SpansMetricsAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v2_api_spans_metrics = Some(
+                datadogV2::api::api_spans_metrics::SpansMetricsAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "APMRetentionFilters" => {
-            if world.api_instances.v2_api_apm_retention_filters.is_none() {
-                world.api_instances.v2_api_apm_retention_filters = Some(
-                    datadogV2::api::api_apm_retention_filters::APMRetentionFiltersAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v2_api_apm_retention_filters = Some(
+                datadogV2::api::api_apm_retention_filters::APMRetentionFiltersAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "Audit" => {
-            if world.api_instances.v2_api_audit.is_none() {
-                world.api_instances.v2_api_audit = Some(
-                    datadogV2::api::api_audit::AuditAPI::with_config(world.config.clone()),
-                );
-            }
+            world.api_instances.v2_api_audit = Some(
+                datadogV2::api::api_audit::AuditAPI::with_config(world.config.clone()),
+            );
         }
         "AuthNMappings" => {
-            if world.api_instances.v2_api_auth_n_mappings.is_none() {
-                world.api_instances.v2_api_auth_n_mappings = Some(
-                    datadogV2::api::api_auth_n_mappings::AuthNMappingsAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v2_api_auth_n_mappings = Some(
+                datadogV2::api::api_auth_n_mappings::AuthNMappingsAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "CIVisibilityPipelines" => {
-            if world.api_instances.v2_api_ci_visibility_pipelines.is_none() {
-                world.api_instances.v2_api_ci_visibility_pipelines = Some(datadogV2::api::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI::with_config(world.config.clone()));
-            }
+            world.api_instances.v2_api_ci_visibility_pipelines = Some(
+                datadogV2::api::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "CIVisibilityTests" => {
-            if world.api_instances.v2_api_ci_visibility_tests.is_none() {
-                world.api_instances.v2_api_ci_visibility_tests = Some(
-                    datadogV2::api::api_ci_visibility_tests::CIVisibilityTestsAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v2_api_ci_visibility_tests = Some(
+                datadogV2::api::api_ci_visibility_tests::CIVisibilityTestsAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "ContainerImages" => {
-            if world.api_instances.v2_api_container_images.is_none() {
-                world.api_instances.v2_api_container_images = Some(
-                    datadogV2::api::api_container_images::ContainerImagesAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v2_api_container_images = Some(
+                datadogV2::api::api_container_images::ContainerImagesAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "Containers" => {
-            if world.api_instances.v2_api_containers.is_none() {
-                world.api_instances.v2_api_containers =
-                    Some(datadogV2::api::api_containers::ContainersAPI::with_config(
-                        world.config.clone(),
-                    ));
-            }
+            world.api_instances.v2_api_containers = Some(
+                datadogV2::api::api_containers::ContainersAPI::with_config(world.config.clone()),
+            );
         }
         "CloudCostManagement" => {
-            if world.api_instances.v2_api_cloud_cost_management.is_none() {
-                world.api_instances.v2_api_cloud_cost_management = Some(
-                    datadogV2::api::api_cloud_cost_management::CloudCostManagementAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v2_api_cloud_cost_management = Some(
+                datadogV2::api::api_cloud_cost_management::CloudCostManagementAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "DORAMetrics" => {
-            if world.api_instances.v2_api_dora_metrics.is_none() {
-                world.api_instances.v2_api_dora_metrics = Some(
-                    datadogV2::api::api_dora_metrics::DORAMetricsAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v2_api_dora_metrics = Some(
+                datadogV2::api::api_dora_metrics::DORAMetricsAPI::with_config(world.config.clone()),
+            );
         }
         "Incidents" => {
-            if world.api_instances.v2_api_incidents.is_none() {
-                world.api_instances.v2_api_incidents = Some(
-                    datadogV2::api::api_incidents::IncidentsAPI::with_config(world.config.clone()),
-                );
-            }
+            world.api_instances.v2_api_incidents = Some(
+                datadogV2::api::api_incidents::IncidentsAPI::with_config(world.config.clone()),
+            );
         }
         "OpsgenieIntegration" => {
-            if world.api_instances.v2_api_opsgenie_integration.is_none() {
-                world.api_instances.v2_api_opsgenie_integration = Some(
-                    datadogV2::api::api_opsgenie_integration::OpsgenieIntegrationAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v2_api_opsgenie_integration = Some(
+                datadogV2::api::api_opsgenie_integration::OpsgenieIntegrationAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "CloudflareIntegration" => {
-            if world.api_instances.v2_api_cloudflare_integration.is_none() {
-                world.api_instances.v2_api_cloudflare_integration = Some(datadogV2::api::api_cloudflare_integration::CloudflareIntegrationAPI::with_config(world.config.clone()));
-            }
+            world.api_instances.v2_api_cloudflare_integration = Some(
+                datadogV2::api::api_cloudflare_integration::CloudflareIntegrationAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "ConfluentCloud" => {
-            if world.api_instances.v2_api_confluent_cloud.is_none() {
-                world.api_instances.v2_api_confluent_cloud = Some(
-                    datadogV2::api::api_confluent_cloud::ConfluentCloudAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v2_api_confluent_cloud = Some(
+                datadogV2::api::api_confluent_cloud::ConfluentCloudAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "FastlyIntegration" => {
-            if world.api_instances.v2_api_fastly_integration.is_none() {
-                world.api_instances.v2_api_fastly_integration = Some(
-                    datadogV2::api::api_fastly_integration::FastlyIntegrationAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v2_api_fastly_integration = Some(
+                datadogV2::api::api_fastly_integration::FastlyIntegrationAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "OktaIntegration" => {
-            if world.api_instances.v2_api_okta_integration.is_none() {
-                world.api_instances.v2_api_okta_integration = Some(
-                    datadogV2::api::api_okta_integration::OktaIntegrationAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v2_api_okta_integration = Some(
+                datadogV2::api::api_okta_integration::OktaIntegrationAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "IPAllowlist" => {
-            if world.api_instances.v2_api_ip_allowlist.is_none() {
-                world.api_instances.v2_api_ip_allowlist = Some(
-                    datadogV2::api::api_ip_allowlist::IPAllowlistAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v2_api_ip_allowlist = Some(
+                datadogV2::api::api_ip_allowlist::IPAllowlistAPI::with_config(world.config.clone()),
+            );
         }
         "LogsArchives" => {
-            if world.api_instances.v2_api_logs_archives.is_none() {
-                world.api_instances.v2_api_logs_archives = Some(
-                    datadogV2::api::api_logs_archives::LogsArchivesAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v2_api_logs_archives = Some(
+                datadogV2::api::api_logs_archives::LogsArchivesAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "LogsMetrics" => {
-            if world.api_instances.v2_api_logs_metrics.is_none() {
-                world.api_instances.v2_api_logs_metrics = Some(
-                    datadogV2::api::api_logs_metrics::LogsMetricsAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v2_api_logs_metrics = Some(
+                datadogV2::api::api_logs_metrics::LogsMetricsAPI::with_config(world.config.clone()),
+            );
         }
         "Roles" => {
-            if world.api_instances.v2_api_roles.is_none() {
-                world.api_instances.v2_api_roles = Some(
-                    datadogV2::api::api_roles::RolesAPI::with_config(world.config.clone()),
-                );
-            }
+            world.api_instances.v2_api_roles = Some(
+                datadogV2::api::api_roles::RolesAPI::with_config(world.config.clone()),
+            );
         }
         "Powerpack" => {
-            if world.api_instances.v2_api_powerpack.is_none() {
-                world.api_instances.v2_api_powerpack = Some(
-                    datadogV2::api::api_powerpack::PowerpackAPI::with_config(world.config.clone()),
-                );
-            }
+            world.api_instances.v2_api_powerpack = Some(
+                datadogV2::api::api_powerpack::PowerpackAPI::with_config(world.config.clone()),
+            );
         }
         "Processes" => {
-            if world.api_instances.v2_api_processes.is_none() {
-                world.api_instances.v2_api_processes = Some(
-                    datadogV2::api::api_processes::ProcessesAPI::with_config(world.config.clone()),
-                );
-            }
+            world.api_instances.v2_api_processes = Some(
+                datadogV2::api::api_processes::ProcessesAPI::with_config(world.config.clone()),
+            );
         }
         "RestrictionPolicies" => {
-            if world.api_instances.v2_api_restriction_policies.is_none() {
-                world.api_instances.v2_api_restriction_policies = Some(
-                    datadogV2::api::api_restriction_policies::RestrictionPoliciesAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v2_api_restriction_policies = Some(
+                datadogV2::api::api_restriction_policies::RestrictionPoliciesAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "RUM" => {
-            if world.api_instances.v2_api_rum.is_none() {
-                world.api_instances.v2_api_rum = Some(
-                    datadogV2::api::api_rum::RUMAPI::with_config(world.config.clone()),
-                );
-            }
+            world.api_instances.v2_api_rum = Some(datadogV2::api::api_rum::RUMAPI::with_config(
+                world.config.clone(),
+            ));
         }
         "ServiceScorecards" => {
-            if world.api_instances.v2_api_service_scorecards.is_none() {
-                world.api_instances.v2_api_service_scorecards = Some(
-                    datadogV2::api::api_service_scorecards::ServiceScorecardsAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v2_api_service_scorecards = Some(
+                datadogV2::api::api_service_scorecards::ServiceScorecardsAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "CloudWorkloadSecurity" => {
-            if world.api_instances.v2_api_cloud_workload_security.is_none() {
-                world.api_instances.v2_api_cloud_workload_security = Some(datadogV2::api::api_cloud_workload_security::CloudWorkloadSecurityAPI::with_config(world.config.clone()));
-            }
+            world.api_instances.v2_api_cloud_workload_security = Some(
+                datadogV2::api::api_cloud_workload_security::CloudWorkloadSecurityAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "SensitiveDataScanner" => {
-            if world.api_instances.v2_api_sensitive_data_scanner.is_none() {
-                world.api_instances.v2_api_sensitive_data_scanner = Some(datadogV2::api::api_sensitive_data_scanner::SensitiveDataScannerAPI::with_config(world.config.clone()));
-            }
+            world.api_instances.v2_api_sensitive_data_scanner = Some(
+                datadogV2::api::api_sensitive_data_scanner::SensitiveDataScannerAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "ServiceAccounts" => {
-            if world.api_instances.v2_api_service_accounts.is_none() {
-                world.api_instances.v2_api_service_accounts = Some(
-                    datadogV2::api::api_service_accounts::ServiceAccountsAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v2_api_service_accounts = Some(
+                datadogV2::api::api_service_accounts::ServiceAccountsAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "IncidentServices" => {
-            if world.api_instances.v2_api_incident_services.is_none() {
-                world.api_instances.v2_api_incident_services = Some(
-                    datadogV2::api::api_incident_services::IncidentServicesAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v2_api_incident_services = Some(
+                datadogV2::api::api_incident_services::IncidentServicesAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "ServiceDefinition" => {
-            if world.api_instances.v2_api_service_definition.is_none() {
-                world.api_instances.v2_api_service_definition = Some(
-                    datadogV2::api::api_service_definition::ServiceDefinitionAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v2_api_service_definition = Some(
+                datadogV2::api::api_service_definition::ServiceDefinitionAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         "Spans" => {
-            if world.api_instances.v2_api_spans.is_none() {
-                world.api_instances.v2_api_spans = Some(
-                    datadogV2::api::api_spans::SpansAPI::with_config(world.config.clone()),
-                );
-            }
+            world.api_instances.v2_api_spans = Some(
+                datadogV2::api::api_spans::SpansAPI::with_config(world.config.clone()),
+            );
         }
         "Teams" => {
-            if world.api_instances.v2_api_teams.is_none() {
-                world.api_instances.v2_api_teams = Some(
-                    datadogV2::api::api_teams::TeamsAPI::with_config(world.config.clone()),
-                );
-            }
+            world.api_instances.v2_api_teams = Some(
+                datadogV2::api::api_teams::TeamsAPI::with_config(world.config.clone()),
+            );
         }
         "IncidentTeams" => {
-            if world.api_instances.v2_api_incident_teams.is_none() {
-                world.api_instances.v2_api_incident_teams = Some(
-                    datadogV2::api::api_incident_teams::IncidentTeamsAPI::with_config(
-                        world.config.clone(),
-                    ),
-                );
-            }
+            world.api_instances.v2_api_incident_teams = Some(
+                datadogV2::api::api_incident_teams::IncidentTeamsAPI::with_config(
+                    world.config.clone(),
+                ),
+            );
         }
         _ => panic!("{api} API instance not found"),
     }

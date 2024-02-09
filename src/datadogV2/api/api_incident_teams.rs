@@ -2,6 +2,7 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use log::warn;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -151,6 +152,16 @@ impl IncidentTeamsAPI {
         ResponseContent<crate::datadogV2::model::IncidentTeamResponse>,
         Error<CreateIncidentTeamError>,
     > {
+        let operation_id = "v2.create_incident_team".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.create_incident_team' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         // unbox and build parameters
@@ -225,6 +236,16 @@ impl IncidentTeamsAPI {
         &self,
         params: DeleteIncidentTeamParams,
     ) -> Result<ResponseContent<()>, Error<DeleteIncidentTeamError>> {
+        let operation_id = "v2.delete_incident_team".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.delete_incident_team' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         // unbox and build parameters
@@ -300,6 +321,16 @@ impl IncidentTeamsAPI {
         ResponseContent<crate::datadogV2::model::IncidentTeamResponse>,
         Error<GetIncidentTeamError>,
     > {
+        let operation_id = "v2.get_incident_team".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_incident_team' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         // unbox and build parameters
@@ -380,6 +411,16 @@ impl IncidentTeamsAPI {
         ResponseContent<crate::datadogV2::model::IncidentTeamsResponse>,
         Error<ListIncidentTeamsError>,
     > {
+        let operation_id = "v2.list_incident_teams".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_incident_teams' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         // unbox and build parameters
@@ -468,6 +509,16 @@ impl IncidentTeamsAPI {
         ResponseContent<crate::datadogV2::model::IncidentTeamResponse>,
         Error<UpdateIncidentTeamError>,
     > {
+        let operation_id = "v2.update_incident_team".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.update_incident_team' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         // unbox and build parameters

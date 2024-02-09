@@ -2,6 +2,7 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use log::warn;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -1226,6 +1227,16 @@ impl MetricsAPI {
         ResponseContent<crate::datadogV2::model::ScalarFormulaQueryResponse>,
         Error<QueryScalarDataError>,
     > {
+        let operation_id = "v2.query_scalar_data".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.query_scalar_data' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         // unbox and build parameters
@@ -1308,6 +1319,16 @@ impl MetricsAPI {
         ResponseContent<crate::datadogV2::model::TimeseriesFormulaQueryResponse>,
         Error<QueryTimeseriesDataError>,
     > {
+        let operation_id = "v2.query_timeseries_data".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.query_timeseries_data' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         // unbox and build parameters

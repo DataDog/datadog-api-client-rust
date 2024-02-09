@@ -293,9 +293,13 @@ pub fn given_resource_in_system(
             world.api_version,
             operation_id.to_case(Case::Snake)
         );
-        world
-            .config
-            .set_unstable_operation_enabled(&unstable_operation_id, true);
+
+        if world.config.is_unstable_operation(&unstable_operation_id) {
+            world
+                .config
+                .set_unstable_operation_enabled(&unstable_operation_id, true);
+        }
+
         initialize_api_instance(world, api_name);
 
         let test_call = world
@@ -665,9 +669,11 @@ fn build_undo(
                     .to_case(Case::Snake)
             );
 
-            world
-                .config
-                .set_unstable_operation_enabled(&unstable_operation_id, true);
+            if world.config.is_unstable_operation(&unstable_operation_id) {
+                world
+                    .config
+                    .set_unstable_operation_enabled(&unstable_operation_id, true);
+            }
             initialize_api_instance(world, undo_operation.tag.clone().unwrap());
 
             let params = undo.get("parameters").unwrap().as_array().unwrap();

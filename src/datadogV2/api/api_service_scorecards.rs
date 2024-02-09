@@ -2,6 +2,7 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use log::warn;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -173,6 +174,16 @@ impl ServiceScorecardsAPI {
         ResponseContent<crate::datadogV2::model::OutcomesBatchResponse>,
         Error<CreateScorecardOutcomesBatchError>,
     > {
+        let operation_id = "v2.create_scorecard_outcomes_batch".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.create_scorecard_outcomes_batch' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         // unbox and build parameters
@@ -254,6 +265,16 @@ impl ServiceScorecardsAPI {
         ResponseContent<crate::datadogV2::model::CreateRuleResponse>,
         Error<CreateScorecardRuleError>,
     > {
+        let operation_id = "v2.create_scorecard_rule".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.create_scorecard_rule' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         // unbox and build parameters
@@ -328,6 +349,16 @@ impl ServiceScorecardsAPI {
         &self,
         params: DeleteScorecardRuleParams,
     ) -> Result<ResponseContent<()>, Error<DeleteScorecardRuleError>> {
+        let operation_id = "v2.delete_scorecard_rule".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.delete_scorecard_rule' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         // unbox and build parameters
@@ -401,6 +432,16 @@ impl ServiceScorecardsAPI {
         ResponseContent<crate::datadogV2::model::OutcomesResponse>,
         Error<ListScorecardOutcomesError>,
     > {
+        let operation_id = "v2.list_scorecard_outcomes".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_scorecard_outcomes' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         // unbox and build parameters
@@ -523,6 +564,16 @@ impl ServiceScorecardsAPI {
         ResponseContent<crate::datadogV2::model::ListRulesResponse>,
         Error<ListScorecardRulesError>,
     > {
+        let operation_id = "v2.list_scorecard_rules".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_scorecard_rules' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         // unbox and build parameters

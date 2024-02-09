@@ -2,6 +2,7 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use log::warn;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -1003,6 +1004,16 @@ impl SecurityMonitoringAPI {
         params: GetFindingParams,
     ) -> Result<ResponseContent<crate::datadogV2::model::GetFindingResponse>, Error<GetFindingError>>
     {
+        let operation_id = "v2.get_finding".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_finding' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         // unbox and build parameters
@@ -1386,6 +1397,16 @@ impl SecurityMonitoringAPI {
         ResponseContent<crate::datadogV2::model::ListFindingsResponse>,
         Error<ListFindingsError>,
     > {
+        let operation_id = "v2.list_findings".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_findings' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         // unbox and build parameters
@@ -1790,6 +1811,16 @@ impl SecurityMonitoringAPI {
         ResponseContent<crate::datadogV2::model::BulkMuteFindingsResponse>,
         Error<MuteFindingsError>,
     > {
+        let operation_id = "v2.mute_findings".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.mute_findings' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         // unbox and build parameters
