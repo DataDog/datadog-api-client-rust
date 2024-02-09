@@ -11,7 +11,6 @@ use cucumber::{
 };
 use datadog_api_client::datadog::configuration::Configuration;
 use lazy_static::lazy_static;
-use log::debug;
 use minijinja::{Environment, State};
 use regex::Regex;
 use reqwest_middleware::ClientBuilder;
