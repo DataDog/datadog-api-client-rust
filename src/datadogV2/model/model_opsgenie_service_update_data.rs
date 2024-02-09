@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct OpsgenieServiceUpdateData {
     /// The Opsgenie service attributes for an update request.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::OpsgenieServiceUpdateAttributes>,
+    pub attributes: crate::datadogV2::model::OpsgenieServiceUpdateAttributes,
     /// The ID of the Opsgenie service.
     #[serde(rename = "id")]
     pub id: String,
@@ -21,7 +21,7 @@ pub struct OpsgenieServiceUpdateData {
 
 impl OpsgenieServiceUpdateData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::OpsgenieServiceUpdateAttributes>,
+        attributes: crate::datadogV2::model::OpsgenieServiceUpdateAttributes,
         id: String,
         type_: crate::datadogV2::model::OpsgenieServiceType,
     ) -> OpsgenieServiceUpdateData {

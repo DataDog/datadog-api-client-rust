@@ -13,7 +13,7 @@ pub struct MonitorDowntimeMatchResponse {
     pub data: Option<Vec<crate::datadogV2::model::MonitorDowntimeMatchResponseData>>,
     /// Pagination metadata returned by the API.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV2::model::DowntimeMeta>>,
+    pub meta: Option<crate::datadogV2::model::DowntimeMeta>,
 }
 
 impl MonitorDowntimeMatchResponse {
@@ -23,7 +23,21 @@ impl MonitorDowntimeMatchResponse {
             meta: None,
         }
     }
+
+    pub fn data(
+        &mut self,
+        value: Vec<crate::datadogV2::model::MonitorDowntimeMatchResponseData>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn meta(&mut self, value: crate::datadogV2::model::DowntimeMeta) -> &mut Self {
+        self.meta = Some(value);
+        self
+    }
 }
+
 impl Default for MonitorDowntimeMatchResponse {
     fn default() -> Self {
         Self::new()

@@ -43,7 +43,43 @@ impl PermissionAttributes {
             restricted: None,
         }
     }
+
+    pub fn created(&mut self, value: String) -> &mut Self {
+        self.created = Some(value);
+        self
+    }
+
+    pub fn description(&mut self, value: String) -> &mut Self {
+        self.description = Some(value);
+        self
+    }
+
+    pub fn display_name(&mut self, value: String) -> &mut Self {
+        self.display_name = Some(value);
+        self
+    }
+
+    pub fn display_type(&mut self, value: String) -> &mut Self {
+        self.display_type = Some(value);
+        self
+    }
+
+    pub fn group_name(&mut self, value: String) -> &mut Self {
+        self.group_name = Some(value);
+        self
+    }
+
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn restricted(&mut self, value: bool) -> &mut Self {
+        self.restricted = Some(value);
+        self
+    }
 }
+
 impl Default for PermissionAttributes {
     fn default() -> Self {
         Self::new()

@@ -16,7 +16,7 @@ pub struct APIKeysResponse {
     pub included: Option<Vec<crate::datadogV2::model::APIKeyResponseIncludedItem>>,
     /// Additional information related to api keys response.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV2::model::APIKeysResponseMeta>>,
+    pub meta: Option<crate::datadogV2::model::APIKeysResponseMeta>,
 }
 
 impl APIKeysResponse {
@@ -27,7 +27,26 @@ impl APIKeysResponse {
             meta: None,
         }
     }
+
+    pub fn data(&mut self, value: Vec<crate::datadogV2::model::PartialAPIKey>) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn included(
+        &mut self,
+        value: Vec<crate::datadogV2::model::APIKeyResponseIncludedItem>,
+    ) -> &mut Self {
+        self.included = Some(value);
+        self
+    }
+
+    pub fn meta(&mut self, value: crate::datadogV2::model::APIKeysResponseMeta) -> &mut Self {
+        self.meta = Some(value);
+        self
+    }
 }
+
 impl Default for APIKeysResponse {
     fn default() -> Self {
         Self::new()

@@ -6,18 +6,6 @@ use log::warn;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateDORADeploymentParams is a struct for passing parameters to the method [`DORAMetricsAPI::create_dora_deployment`]
-#[derive(Clone, Debug)]
-pub struct CreateDORADeploymentParams {
-    pub body: crate::datadogV2::model::DORADeploymentRequest,
-}
-
-/// CreateDORAIncidentParams is a struct for passing parameters to the method [`DORAMetricsAPI::create_dora_incident`]
-#[derive(Clone, Debug)]
-pub struct CreateDORAIncidentParams {
-    pub body: crate::datadogV2::model::DORAIncidentRequest,
-}
-
 /// CreateDORADeploymentError is a struct for typed errors of method [`DORAMetricsAPI::create_dora_deployment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -67,12 +55,12 @@ impl DORAMetricsAPI {
     /// - Change Failure Rate
     pub async fn create_dora_deployment(
         &self,
-        params: CreateDORADeploymentParams,
+        body: crate::datadogV2::model::DORADeploymentRequest,
     ) -> Result<
         Option<crate::datadogV2::model::DORADeploymentResponse>,
         Error<CreateDORADeploymentError>,
     > {
-        match self.create_dora_deployment_with_http_info(params).await {
+        match self.create_dora_deployment_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -86,7 +74,7 @@ impl DORAMetricsAPI {
     /// - Change Failure Rate
     pub async fn create_dora_deployment_with_http_info(
         &self,
-        params: CreateDORADeploymentParams,
+        body: crate::datadogV2::model::DORADeploymentRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::DORADeploymentResponse>,
         Error<CreateDORADeploymentError>,
@@ -102,9 +90,6 @@ impl DORAMetricsAPI {
         }
 
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -163,10 +148,10 @@ impl DORAMetricsAPI {
     /// - Time to Restore
     pub async fn create_dora_incident(
         &self,
-        params: CreateDORAIncidentParams,
+        body: crate::datadogV2::model::DORAIncidentRequest,
     ) -> Result<Option<crate::datadogV2::model::DORAIncidentResponse>, Error<CreateDORAIncidentError>>
     {
-        match self.create_dora_incident_with_http_info(params).await {
+        match self.create_dora_incident_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -179,7 +164,7 @@ impl DORAMetricsAPI {
     /// - Time to Restore
     pub async fn create_dora_incident_with_http_info(
         &self,
-        params: CreateDORAIncidentParams,
+        body: crate::datadogV2::model::DORAIncidentRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::DORAIncidentResponse>,
         Error<CreateDORAIncidentError>,
@@ -195,9 +180,6 @@ impl DORAMetricsAPI {
         }
 
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

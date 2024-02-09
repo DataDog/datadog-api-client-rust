@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct ScalarResponse {
     /// The object describing a scalar response.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::ScalarFormulaResponseAtrributes>>,
+    pub attributes: Option<crate::datadogV2::model::ScalarFormulaResponseAtrributes>,
     /// The type of the resource. The value should always be scalar_response.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::ScalarFormulaResponseType>,
@@ -23,7 +23,24 @@ impl ScalarResponse {
             type_: None,
         }
     }
+
+    pub fn attributes(
+        &mut self,
+        value: crate::datadogV2::model::ScalarFormulaResponseAtrributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn type_(
+        &mut self,
+        value: crate::datadogV2::model::ScalarFormulaResponseType,
+    ) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
+
 impl Default for ScalarResponse {
     fn default() -> Self {
         Self::new()

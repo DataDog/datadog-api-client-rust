@@ -17,7 +17,13 @@ impl CostByOrgResponse {
     pub fn new() -> CostByOrgResponse {
         CostByOrgResponse { data: None }
     }
+
+    pub fn data(&mut self, value: Vec<crate::datadogV2::model::CostByOrg>) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for CostByOrgResponse {
     fn default() -> Self {
         Self::new()

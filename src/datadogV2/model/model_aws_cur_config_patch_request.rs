@@ -10,13 +10,11 @@ use serde_with::skip_serializing_none;
 pub struct AwsCURConfigPatchRequest {
     /// AWS CUR config Patch data.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::AwsCURConfigPatchData>,
+    pub data: crate::datadogV2::model::AwsCURConfigPatchData,
 }
 
 impl AwsCURConfigPatchRequest {
-    pub fn new(
-        data: Box<crate::datadogV2::model::AwsCURConfigPatchData>,
-    ) -> AwsCURConfigPatchRequest {
+    pub fn new(data: crate::datadogV2::model::AwsCURConfigPatchData) -> AwsCURConfigPatchRequest {
         AwsCURConfigPatchRequest { data }
     }
 }

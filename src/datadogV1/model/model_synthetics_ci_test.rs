@@ -13,7 +13,7 @@ pub struct SyntheticsCITest {
     pub allow_insecure_certificates: Option<bool>,
     /// Object to handle basic authentication when performing the test.
     #[serde(rename = "basicAuth")]
-    pub basic_auth: Option<Box<crate::datadogV1::model::SyntheticsBasicAuth>>,
+    pub basic_auth: Option<crate::datadogV1::model::SyntheticsBasicAuth>,
     /// Body to include in the test.
     #[serde(rename = "body")]
     pub body: Option<String>,
@@ -37,13 +37,13 @@ pub struct SyntheticsCITest {
     pub locations: Option<Vec<String>>,
     /// Metadata for the Synthetic tests run.
     #[serde(rename = "metadata")]
-    pub metadata: Option<Box<crate::datadogV1::model::SyntheticsCIBatchMetadata>>,
+    pub metadata: Option<crate::datadogV1::model::SyntheticsCIBatchMetadata>,
     /// The public ID of the Synthetic test to trigger.
     #[serde(rename = "public_id")]
     pub public_id: String,
     /// Object describing the retry strategy to apply to a Synthetic test.
     #[serde(rename = "retry")]
-    pub retry: Option<Box<crate::datadogV1::model::SyntheticsTestOptionsRetry>>,
+    pub retry: Option<crate::datadogV1::model::SyntheticsTestOptionsRetry>,
     /// Starting URL for the browser test.
     #[serde(rename = "startUrl")]
     pub start_url: Option<String>,
@@ -70,5 +70,79 @@ impl SyntheticsCITest {
             start_url: None,
             variables: None,
         }
+    }
+
+    pub fn allow_insecure_certificates(&mut self, value: bool) -> &mut Self {
+        self.allow_insecure_certificates = Some(value);
+        self
+    }
+
+    pub fn basic_auth(&mut self, value: crate::datadogV1::model::SyntheticsBasicAuth) -> &mut Self {
+        self.basic_auth = Some(value);
+        self
+    }
+
+    pub fn body(&mut self, value: String) -> &mut Self {
+        self.body = Some(value);
+        self
+    }
+
+    pub fn body_type(&mut self, value: String) -> &mut Self {
+        self.body_type = Some(value);
+        self
+    }
+
+    pub fn cookies(&mut self, value: String) -> &mut Self {
+        self.cookies = Some(value);
+        self
+    }
+
+    pub fn device_ids(
+        &mut self,
+        value: Vec<crate::datadogV1::model::SyntheticsDeviceID>,
+    ) -> &mut Self {
+        self.device_ids = Some(value);
+        self
+    }
+
+    pub fn follow_redirects(&mut self, value: bool) -> &mut Self {
+        self.follow_redirects = Some(value);
+        self
+    }
+
+    pub fn headers(&mut self, value: std::collections::BTreeMap<String, String>) -> &mut Self {
+        self.headers = Some(value);
+        self
+    }
+
+    pub fn locations(&mut self, value: Vec<String>) -> &mut Self {
+        self.locations = Some(value);
+        self
+    }
+
+    pub fn metadata(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsCIBatchMetadata,
+    ) -> &mut Self {
+        self.metadata = Some(value);
+        self
+    }
+
+    pub fn retry(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsTestOptionsRetry,
+    ) -> &mut Self {
+        self.retry = Some(value);
+        self
+    }
+
+    pub fn start_url(&mut self, value: String) -> &mut Self {
+        self.start_url = Some(value);
+        self
+    }
+
+    pub fn variables(&mut self, value: std::collections::BTreeMap<String, String>) -> &mut Self {
+        self.variables = Some(value);
+        self
     }
 }

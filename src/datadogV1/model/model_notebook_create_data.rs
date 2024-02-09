@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct NotebookCreateData {
     /// The data attributes of a notebook.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV1::model::NotebookCreateDataAttributes>,
+    pub attributes: crate::datadogV1::model::NotebookCreateDataAttributes,
     /// Type of the Notebook resource.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::NotebookResourceType,
@@ -18,7 +18,7 @@ pub struct NotebookCreateData {
 
 impl NotebookCreateData {
     pub fn new(
-        attributes: Box<crate::datadogV1::model::NotebookCreateDataAttributes>,
+        attributes: crate::datadogV1::model::NotebookCreateDataAttributes,
         type_: crate::datadogV1::model::NotebookResourceType,
     ) -> NotebookCreateData {
         NotebookCreateData { attributes, type_ }

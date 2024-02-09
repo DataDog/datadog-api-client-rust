@@ -5,62 +5,9 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// AddPermissionToRoleParams is a struct for passing parameters to the method [`RolesAPI::add_permission_to_role`]
-#[derive(Clone, Debug)]
-pub struct AddPermissionToRoleParams {
-    /// The unique identifier of the role.
-    pub role_id: String,
-    pub body: crate::datadogV2::model::RelationshipToPermission,
-}
-
-/// AddUserToRoleParams is a struct for passing parameters to the method [`RolesAPI::add_user_to_role`]
-#[derive(Clone, Debug)]
-pub struct AddUserToRoleParams {
-    /// The unique identifier of the role.
-    pub role_id: String,
-    pub body: crate::datadogV2::model::RelationshipToUser,
-}
-
-/// CloneRoleParams is a struct for passing parameters to the method [`RolesAPI::clone_role`]
-#[derive(Clone, Debug)]
-pub struct CloneRoleParams {
-    /// The unique identifier of the role.
-    pub role_id: String,
-    pub body: crate::datadogV2::model::RoleCloneRequest,
-}
-
-/// CreateRoleParams is a struct for passing parameters to the method [`RolesAPI::create_role`]
-#[derive(Clone, Debug)]
-pub struct CreateRoleParams {
-    pub body: crate::datadogV2::model::RoleCreateRequest,
-}
-
-/// DeleteRoleParams is a struct for passing parameters to the method [`RolesAPI::delete_role`]
-#[derive(Clone, Debug)]
-pub struct DeleteRoleParams {
-    /// The unique identifier of the role.
-    pub role_id: String,
-}
-
-/// GetRoleParams is a struct for passing parameters to the method [`RolesAPI::get_role`]
-#[derive(Clone, Debug)]
-pub struct GetRoleParams {
-    /// The unique identifier of the role.
-    pub role_id: String,
-}
-
-/// ListRolePermissionsParams is a struct for passing parameters to the method [`RolesAPI::list_role_permissions`]
-#[derive(Clone, Debug)]
-pub struct ListRolePermissionsParams {
-    /// The unique identifier of the role.
-    pub role_id: String,
-}
-
-/// ListRoleUsersParams is a struct for passing parameters to the method [`RolesAPI::list_role_users`]
-#[derive(Clone, Debug)]
-pub struct ListRoleUsersParams {
-    /// The unique identifier of the role.
-    pub role_id: String,
+/// ListRoleUsersOptionalParams is a struct for passing parameters to the method [`RolesAPI::list_role_users`]
+#[derive(Clone, Default, Debug)]
+pub struct ListRoleUsersOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
     /// Specific page number to return.
@@ -73,9 +20,34 @@ pub struct ListRoleUsersParams {
     pub filter: Option<String>,
 }
 
-/// ListRolesParams is a struct for passing parameters to the method [`RolesAPI::list_roles`]
-#[derive(Clone, Debug)]
-pub struct ListRolesParams {
+impl ListRoleUsersOptionalParams {
+    /// Size for a given page. The maximum allowed value is 100.
+    pub fn page_size(&mut self, value: i64) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Specific page number to return.
+    pub fn page_number(&mut self, value: i64) -> &mut Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// User attribute to order results by. Sort order is **ascending** by default.
+    /// Sort order is **descending** if the field is prefixed by a negative sign,
+    /// for example `sort=-name`. Options: `name`, `email`, `status`.
+    pub fn sort(&mut self, value: String) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+    /// Filter all users by the given string. Defaults to no filtering.
+    pub fn filter(&mut self, value: String) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
+}
+
+/// ListRolesOptionalParams is a struct for passing parameters to the method [`RolesAPI::list_roles`]
+#[derive(Clone, Default, Debug)]
+pub struct ListRolesOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
     /// Specific page number to return.
@@ -90,28 +62,34 @@ pub struct ListRolesParams {
     pub filter_id: Option<String>,
 }
 
-/// RemovePermissionFromRoleParams is a struct for passing parameters to the method [`RolesAPI::remove_permission_from_role`]
-#[derive(Clone, Debug)]
-pub struct RemovePermissionFromRoleParams {
-    /// The unique identifier of the role.
-    pub role_id: String,
-    pub body: crate::datadogV2::model::RelationshipToPermission,
-}
-
-/// RemoveUserFromRoleParams is a struct for passing parameters to the method [`RolesAPI::remove_user_from_role`]
-#[derive(Clone, Debug)]
-pub struct RemoveUserFromRoleParams {
-    /// The unique identifier of the role.
-    pub role_id: String,
-    pub body: crate::datadogV2::model::RelationshipToUser,
-}
-
-/// UpdateRoleParams is a struct for passing parameters to the method [`RolesAPI::update_role`]
-#[derive(Clone, Debug)]
-pub struct UpdateRoleParams {
-    /// The unique identifier of the role.
-    pub role_id: String,
-    pub body: crate::datadogV2::model::RoleUpdateRequest,
+impl ListRolesOptionalParams {
+    /// Size for a given page. The maximum allowed value is 100.
+    pub fn page_size(&mut self, value: i64) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Specific page number to return.
+    pub fn page_number(&mut self, value: i64) -> &mut Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// Sort roles depending on the given field. Sort order is **ascending** by default.
+    /// Sort order is **descending** if the field is prefixed by a negative sign, for example:
+    /// `sort=-name`.
+    pub fn sort(&mut self, value: crate::datadogV2::model::RolesSort) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+    /// Filter all roles by the given string.
+    pub fn filter(&mut self, value: String) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
+    /// Filter all roles by the given list of role IDs.
+    pub fn filter_id(&mut self, value: String) -> &mut Self {
+        self.filter_id = Some(value);
+        self
+    }
 }
 
 /// AddPermissionToRoleError is a struct for typed errors of method [`RolesAPI::add_permission_to_role`]
@@ -275,10 +253,14 @@ impl RolesAPI {
     /// Adds a permission to a role.
     pub async fn add_permission_to_role(
         &self,
-        params: AddPermissionToRoleParams,
+        role_id: String,
+        body: crate::datadogV2::model::RelationshipToPermission,
     ) -> Result<Option<crate::datadogV2::model::PermissionsResponse>, Error<AddPermissionToRoleError>>
     {
-        match self.add_permission_to_role_with_http_info(params).await {
+        match self
+            .add_permission_to_role_with_http_info(role_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -287,16 +269,13 @@ impl RolesAPI {
     /// Adds a permission to a role.
     pub async fn add_permission_to_role_with_http_info(
         &self,
-        params: AddPermissionToRoleParams,
+        role_id: String,
+        body: crate::datadogV2::model::RelationshipToPermission,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::PermissionsResponse>,
         Error<AddPermissionToRoleError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let role_id = params.role_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -358,9 +337,10 @@ impl RolesAPI {
     /// Adds a user to a role.
     pub async fn add_user_to_role(
         &self,
-        params: AddUserToRoleParams,
+        role_id: String,
+        body: crate::datadogV2::model::RelationshipToUser,
     ) -> Result<Option<crate::datadogV2::model::UsersResponse>, Error<AddUserToRoleError>> {
-        match self.add_user_to_role_with_http_info(params).await {
+        match self.add_user_to_role_with_http_info(role_id, body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -369,14 +349,11 @@ impl RolesAPI {
     /// Adds a user to a role.
     pub async fn add_user_to_role_with_http_info(
         &self,
-        params: AddUserToRoleParams,
+        role_id: String,
+        body: crate::datadogV2::model::RelationshipToUser,
     ) -> Result<ResponseContent<crate::datadogV2::model::UsersResponse>, Error<AddUserToRoleError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let role_id = params.role_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -438,9 +415,10 @@ impl RolesAPI {
     /// Clone an existing role
     pub async fn clone_role(
         &self,
-        params: CloneRoleParams,
+        role_id: String,
+        body: crate::datadogV2::model::RoleCloneRequest,
     ) -> Result<Option<crate::datadogV2::model::RoleResponse>, Error<CloneRoleError>> {
-        match self.clone_role_with_http_info(params).await {
+        match self.clone_role_with_http_info(role_id, body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -449,13 +427,10 @@ impl RolesAPI {
     /// Clone an existing role
     pub async fn clone_role_with_http_info(
         &self,
-        params: CloneRoleParams,
+        role_id: String,
+        body: crate::datadogV2::model::RoleCloneRequest,
     ) -> Result<ResponseContent<crate::datadogV2::model::RoleResponse>, Error<CloneRoleError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let role_id = params.role_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -516,9 +491,9 @@ impl RolesAPI {
     /// Create a new role for your organization.
     pub async fn create_role(
         &self,
-        params: CreateRoleParams,
+        body: crate::datadogV2::model::RoleCreateRequest,
     ) -> Result<Option<crate::datadogV2::model::RoleCreateResponse>, Error<CreateRoleError>> {
-        match self.create_role_with_http_info(params).await {
+        match self.create_role_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -527,13 +502,10 @@ impl RolesAPI {
     /// Create a new role for your organization.
     pub async fn create_role_with_http_info(
         &self,
-        params: CreateRoleParams,
+        body: crate::datadogV2::model::RoleCreateRequest,
     ) -> Result<ResponseContent<crate::datadogV2::model::RoleCreateResponse>, Error<CreateRoleError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -588,11 +560,8 @@ impl RolesAPI {
     }
 
     /// Disables a role.
-    pub async fn delete_role(
-        &self,
-        params: DeleteRoleParams,
-    ) -> Result<Option<()>, Error<DeleteRoleError>> {
-        match self.delete_role_with_http_info(params).await {
+    pub async fn delete_role(&self, role_id: String) -> Result<Option<()>, Error<DeleteRoleError>> {
+        match self.delete_role_with_http_info(role_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -601,12 +570,9 @@ impl RolesAPI {
     /// Disables a role.
     pub async fn delete_role_with_http_info(
         &self,
-        params: DeleteRoleParams,
+        role_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteRoleError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let role_id = params.role_id;
 
         let local_client = &local_configuration.client;
 
@@ -658,9 +624,9 @@ impl RolesAPI {
     /// Get a role in the organization specified by the role’s `role_id`.
     pub async fn get_role(
         &self,
-        params: GetRoleParams,
+        role_id: String,
     ) -> Result<Option<crate::datadogV2::model::RoleResponse>, Error<GetRoleError>> {
-        match self.get_role_with_http_info(params).await {
+        match self.get_role_with_http_info(role_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -669,12 +635,9 @@ impl RolesAPI {
     /// Get a role in the organization specified by the role’s `role_id`.
     pub async fn get_role_with_http_info(
         &self,
-        params: GetRoleParams,
+        role_id: String,
     ) -> Result<ResponseContent<crate::datadogV2::model::RoleResponse>, Error<GetRoleError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let role_id = params.role_id;
 
         let local_client = &local_configuration.client;
 
@@ -745,8 +708,6 @@ impl RolesAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v2/permissions", local_configuration.base_path);
@@ -796,10 +757,10 @@ impl RolesAPI {
     /// Returns a list of all permissions for a single role.
     pub async fn list_role_permissions(
         &self,
-        params: ListRolePermissionsParams,
+        role_id: String,
     ) -> Result<Option<crate::datadogV2::model::PermissionsResponse>, Error<ListRolePermissionsError>>
     {
-        match self.list_role_permissions_with_http_info(params).await {
+        match self.list_role_permissions_with_http_info(role_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -808,15 +769,12 @@ impl RolesAPI {
     /// Returns a list of all permissions for a single role.
     pub async fn list_role_permissions_with_http_info(
         &self,
-        params: ListRolePermissionsParams,
+        role_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::PermissionsResponse>,
         Error<ListRolePermissionsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let role_id = params.role_id;
 
         let local_client = &local_configuration.client;
 
@@ -871,9 +829,10 @@ impl RolesAPI {
     /// Gets all users of a role.
     pub async fn list_role_users(
         &self,
-        params: ListRoleUsersParams,
+        role_id: String,
+        params: ListRoleUsersOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::UsersResponse>, Error<ListRoleUsersError>> {
-        match self.list_role_users_with_http_info(params).await {
+        match self.list_role_users_with_http_info(role_id, params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -882,13 +841,13 @@ impl RolesAPI {
     /// Gets all users of a role.
     pub async fn list_role_users_with_http_info(
         &self,
-        params: ListRoleUsersParams,
+        role_id: String,
+        params: ListRoleUsersOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV2::model::UsersResponse>, Error<ListRoleUsersError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let role_id = params.role_id;
+        // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
         let sort = params.sort;
@@ -904,18 +863,21 @@ impl RolesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = page_size {
-            local_req_builder = local_req_builder.query(&[("page[size]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_number {
+        if let Some(ref local_query_param) = page_size {
             local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_str.to_string())]);
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = sort {
-            local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter {
-            local_req_builder = local_req_builder.query(&[("filter", &local_str.to_string())]);
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter {
+            local_req_builder =
+                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -961,7 +923,7 @@ impl RolesAPI {
     /// Returns all roles, including their names and their unique identifiers.
     pub async fn list_roles(
         &self,
-        params: ListRolesParams,
+        params: ListRolesOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::RolesResponse>, Error<ListRolesError>> {
         match self.list_roles_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
@@ -972,12 +934,12 @@ impl RolesAPI {
     /// Returns all roles, including their names and their unique identifiers.
     pub async fn list_roles_with_http_info(
         &self,
-        params: ListRolesParams,
+        params: ListRolesOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV2::model::RolesResponse>, Error<ListRolesError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
         let sort = params.sort;
@@ -990,21 +952,25 @@ impl RolesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = page_size {
-            local_req_builder = local_req_builder.query(&[("page[size]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_number {
+        if let Some(ref local_query_param) = page_size {
             local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_str.to_string())]);
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = sort {
-            local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter {
-            local_req_builder = local_req_builder.query(&[("filter", &local_str.to_string())]);
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_id {
-            local_req_builder = local_req_builder.query(&[("filter[id]", &local_str.to_string())]);
+        if let Some(ref local_query_param) = filter {
+            local_req_builder =
+                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_id {
+            local_req_builder =
+                local_req_builder.query(&[("filter[id]", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -1049,13 +1015,14 @@ impl RolesAPI {
     /// Removes a permission from a role.
     pub async fn remove_permission_from_role(
         &self,
-        params: RemovePermissionFromRoleParams,
+        role_id: String,
+        body: crate::datadogV2::model::RelationshipToPermission,
     ) -> Result<
         Option<crate::datadogV2::model::PermissionsResponse>,
         Error<RemovePermissionFromRoleError>,
     > {
         match self
-            .remove_permission_from_role_with_http_info(params)
+            .remove_permission_from_role_with_http_info(role_id, body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -1066,16 +1033,13 @@ impl RolesAPI {
     /// Removes a permission from a role.
     pub async fn remove_permission_from_role_with_http_info(
         &self,
-        params: RemovePermissionFromRoleParams,
+        role_id: String,
+        body: crate::datadogV2::model::RelationshipToPermission,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::PermissionsResponse>,
         Error<RemovePermissionFromRoleError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let role_id = params.role_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -1137,10 +1101,14 @@ impl RolesAPI {
     /// Removes a user from a role.
     pub async fn remove_user_from_role(
         &self,
-        params: RemoveUserFromRoleParams,
+        role_id: String,
+        body: crate::datadogV2::model::RelationshipToUser,
     ) -> Result<Option<crate::datadogV2::model::UsersResponse>, Error<RemoveUserFromRoleError>>
     {
-        match self.remove_user_from_role_with_http_info(params).await {
+        match self
+            .remove_user_from_role_with_http_info(role_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1149,16 +1117,13 @@ impl RolesAPI {
     /// Removes a user from a role.
     pub async fn remove_user_from_role_with_http_info(
         &self,
-        params: RemoveUserFromRoleParams,
+        role_id: String,
+        body: crate::datadogV2::model::RelationshipToUser,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::UsersResponse>,
         Error<RemoveUserFromRoleError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let role_id = params.role_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -1220,9 +1185,10 @@ impl RolesAPI {
     /// Edit a role. Can only be used with application keys belonging to administrators.
     pub async fn update_role(
         &self,
-        params: UpdateRoleParams,
+        role_id: String,
+        body: crate::datadogV2::model::RoleUpdateRequest,
     ) -> Result<Option<crate::datadogV2::model::RoleUpdateResponse>, Error<UpdateRoleError>> {
-        match self.update_role_with_http_info(params).await {
+        match self.update_role_with_http_info(role_id, body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1231,14 +1197,11 @@ impl RolesAPI {
     /// Edit a role. Can only be used with application keys belonging to administrators.
     pub async fn update_role_with_http_info(
         &self,
-        params: UpdateRoleParams,
+        role_id: String,
+        body: crate::datadogV2::model::RoleUpdateRequest,
     ) -> Result<ResponseContent<crate::datadogV2::model::RoleUpdateResponse>, Error<UpdateRoleError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let role_id = params.role_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

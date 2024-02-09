@@ -35,4 +35,19 @@ impl WidgetMarker {
             value,
         }
     }
+
+    pub fn display_type(&mut self, value: String) -> &mut Self {
+        self.display_type = Some(value);
+        self
+    }
+
+    pub fn label(&mut self, value: String) -> &mut Self {
+        self.label = Some(value);
+        self
+    }
+
+    pub fn time(&mut self, value: String) -> &mut Self {
+        self.time = Some(value);
+        self
+    }
 }

@@ -5,36 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateCloudWorkloadSecurityAgentRuleParams is a struct for passing parameters to the method [`CloudWorkloadSecurityAPI::create_cloud_workload_security_agent_rule`]
-#[derive(Clone, Debug)]
-pub struct CreateCloudWorkloadSecurityAgentRuleParams {
-    /// The definition of the new Agent rule.
-    pub body: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateRequest,
-}
-
-/// DeleteCloudWorkloadSecurityAgentRuleParams is a struct for passing parameters to the method [`CloudWorkloadSecurityAPI::delete_cloud_workload_security_agent_rule`]
-#[derive(Clone, Debug)]
-pub struct DeleteCloudWorkloadSecurityAgentRuleParams {
-    /// The ID of the Agent rule.
-    pub agent_rule_id: String,
-}
-
-/// GetCloudWorkloadSecurityAgentRuleParams is a struct for passing parameters to the method [`CloudWorkloadSecurityAPI::get_cloud_workload_security_agent_rule`]
-#[derive(Clone, Debug)]
-pub struct GetCloudWorkloadSecurityAgentRuleParams {
-    /// The ID of the Agent rule.
-    pub agent_rule_id: String,
-}
-
-/// UpdateCloudWorkloadSecurityAgentRuleParams is a struct for passing parameters to the method [`CloudWorkloadSecurityAPI::update_cloud_workload_security_agent_rule`]
-#[derive(Clone, Debug)]
-pub struct UpdateCloudWorkloadSecurityAgentRuleParams {
-    /// The ID of the Agent rule.
-    pub agent_rule_id: String,
-    /// New definition of the Agent rule.
-    pub body: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleUpdateRequest,
-}
-
 /// CreateCloudWorkloadSecurityAgentRuleError is a struct for typed errors of method [`CloudWorkloadSecurityAPI::create_cloud_workload_security_agent_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -120,13 +90,13 @@ impl CloudWorkloadSecurityAPI {
     /// Create a new Agent rule with the given parameters.
     pub async fn create_cloud_workload_security_agent_rule(
         &self,
-        params: CreateCloudWorkloadSecurityAgentRuleParams,
+        body: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse>,
         Error<CreateCloudWorkloadSecurityAgentRuleError>,
     > {
         match self
-            .create_cloud_workload_security_agent_rule_with_http_info(params)
+            .create_cloud_workload_security_agent_rule_with_http_info(body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -137,15 +107,12 @@ impl CloudWorkloadSecurityAPI {
     /// Create a new Agent rule with the given parameters.
     pub async fn create_cloud_workload_security_agent_rule_with_http_info(
         &self,
-        params: CreateCloudWorkloadSecurityAgentRuleParams,
+        body: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse>,
         Error<CreateCloudWorkloadSecurityAgentRuleError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -207,10 +174,10 @@ impl CloudWorkloadSecurityAPI {
     /// Delete a specific Agent rule.
     pub async fn delete_cloud_workload_security_agent_rule(
         &self,
-        params: DeleteCloudWorkloadSecurityAgentRuleParams,
+        agent_rule_id: String,
     ) -> Result<Option<()>, Error<DeleteCloudWorkloadSecurityAgentRuleError>> {
         match self
-            .delete_cloud_workload_security_agent_rule_with_http_info(params)
+            .delete_cloud_workload_security_agent_rule_with_http_info(agent_rule_id)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -221,12 +188,9 @@ impl CloudWorkloadSecurityAPI {
     /// Delete a specific Agent rule.
     pub async fn delete_cloud_workload_security_agent_rule_with_http_info(
         &self,
-        params: DeleteCloudWorkloadSecurityAgentRuleParams,
+        agent_rule_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteCloudWorkloadSecurityAgentRuleError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let agent_rule_id = params.agent_rule_id;
 
         let local_client = &local_configuration.client;
 
@@ -299,8 +263,6 @@ impl CloudWorkloadSecurityAPI {
     ) -> Result<ResponseContent<Vec<u8>>, Error<DownloadCloudWorkloadPolicyFileError>> {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -352,13 +314,13 @@ impl CloudWorkloadSecurityAPI {
     /// Get the details of a specific Agent rule.
     pub async fn get_cloud_workload_security_agent_rule(
         &self,
-        params: GetCloudWorkloadSecurityAgentRuleParams,
+        agent_rule_id: String,
     ) -> Result<
         Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse>,
         Error<GetCloudWorkloadSecurityAgentRuleError>,
     > {
         match self
-            .get_cloud_workload_security_agent_rule_with_http_info(params)
+            .get_cloud_workload_security_agent_rule_with_http_info(agent_rule_id)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -369,15 +331,12 @@ impl CloudWorkloadSecurityAPI {
     /// Get the details of a specific Agent rule.
     pub async fn get_cloud_workload_security_agent_rule_with_http_info(
         &self,
-        params: GetCloudWorkloadSecurityAgentRuleParams,
+        agent_rule_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse>,
         Error<GetCloudWorkloadSecurityAgentRuleError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let agent_rule_id = params.agent_rule_id;
 
         let local_client = &local_configuration.client;
 
@@ -455,8 +414,6 @@ impl CloudWorkloadSecurityAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -511,13 +468,14 @@ impl CloudWorkloadSecurityAPI {
     /// Returns the Agent rule object when the request is successful.
     pub async fn update_cloud_workload_security_agent_rule(
         &self,
-        params: UpdateCloudWorkloadSecurityAgentRuleParams,
+        agent_rule_id: String,
+        body: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleUpdateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse>,
         Error<UpdateCloudWorkloadSecurityAgentRuleError>,
     > {
         match self
-            .update_cloud_workload_security_agent_rule_with_http_info(params)
+            .update_cloud_workload_security_agent_rule_with_http_info(agent_rule_id, body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -529,16 +487,13 @@ impl CloudWorkloadSecurityAPI {
     /// Returns the Agent rule object when the request is successful.
     pub async fn update_cloud_workload_security_agent_rule_with_http_info(
         &self,
-        params: UpdateCloudWorkloadSecurityAgentRuleParams,
+        agent_rule_id: String,
+        body: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse>,
         Error<UpdateCloudWorkloadSecurityAgentRuleError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let agent_rule_id = params.agent_rule_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

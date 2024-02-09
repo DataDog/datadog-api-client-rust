@@ -10,14 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct UserResponse {
     /// Create, edit, and disable users.
     #[serde(rename = "user")]
-    pub user: Option<Box<crate::datadogV1::model::User>>,
+    pub user: Option<crate::datadogV1::model::User>,
 }
 
 impl UserResponse {
     pub fn new() -> UserResponse {
         UserResponse { user: None }
     }
+
+    pub fn user(&mut self, value: crate::datadogV1::model::User) -> &mut Self {
+        self.user = Some(value);
+        self
+    }
 }
+
 impl Default for UserResponse {
     fn default() -> Self {
         Self::new()

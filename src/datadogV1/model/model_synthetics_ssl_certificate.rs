@@ -25,7 +25,7 @@ pub struct SyntheticsSSLCertificate {
     pub fingerprint256: Option<String>,
     /// Object describing the issuer of a SSL certificate.
     #[serde(rename = "issuer")]
-    pub issuer: Option<Box<crate::datadogV1::model::SyntheticsSSLCertificateIssuer>>,
+    pub issuer: Option<crate::datadogV1::model::SyntheticsSSLCertificateIssuer>,
     /// Modulus associated to the SSL certificate private key.
     #[serde(rename = "modulus")]
     pub modulus: Option<String>,
@@ -37,7 +37,7 @@ pub struct SyntheticsSSLCertificate {
     pub serial_number: Option<String>,
     /// Object describing the SSL certificate used for the test.
     #[serde(rename = "subject")]
-    pub subject: Option<Box<crate::datadogV1::model::SyntheticsSSLCertificateSubject>>,
+    pub subject: Option<crate::datadogV1::model::SyntheticsSSLCertificateSubject>,
     /// Date from which the SSL certificate is valid.
     #[serde(rename = "validFrom")]
     pub valid_from: Option<String>,
@@ -63,7 +63,74 @@ impl SyntheticsSSLCertificate {
             valid_to: None,
         }
     }
+
+    pub fn cipher(&mut self, value: String) -> &mut Self {
+        self.cipher = Some(value);
+        self
+    }
+
+    pub fn exponent(&mut self, value: f64) -> &mut Self {
+        self.exponent = Some(value);
+        self
+    }
+
+    pub fn ext_key_usage(&mut self, value: Vec<String>) -> &mut Self {
+        self.ext_key_usage = Some(value);
+        self
+    }
+
+    pub fn fingerprint(&mut self, value: String) -> &mut Self {
+        self.fingerprint = Some(value);
+        self
+    }
+
+    pub fn fingerprint256(&mut self, value: String) -> &mut Self {
+        self.fingerprint256 = Some(value);
+        self
+    }
+
+    pub fn issuer(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsSSLCertificateIssuer,
+    ) -> &mut Self {
+        self.issuer = Some(value);
+        self
+    }
+
+    pub fn modulus(&mut self, value: String) -> &mut Self {
+        self.modulus = Some(value);
+        self
+    }
+
+    pub fn protocol(&mut self, value: String) -> &mut Self {
+        self.protocol = Some(value);
+        self
+    }
+
+    pub fn serial_number(&mut self, value: String) -> &mut Self {
+        self.serial_number = Some(value);
+        self
+    }
+
+    pub fn subject(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsSSLCertificateSubject,
+    ) -> &mut Self {
+        self.subject = Some(value);
+        self
+    }
+
+    pub fn valid_from(&mut self, value: String) -> &mut Self {
+        self.valid_from = Some(value);
+        self
+    }
+
+    pub fn valid_to(&mut self, value: String) -> &mut Self {
+        self.valid_to = Some(value);
+        self
+    }
 }
+
 impl Default for SyntheticsSSLCertificate {
     fn default() -> Self {
         Self::new()

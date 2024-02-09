@@ -47,7 +47,36 @@ impl WebhooksIntegrationUpdateRequest {
             url: None,
         }
     }
+
+    pub fn custom_headers(&mut self, value: String) -> &mut Self {
+        self.custom_headers = Some(value);
+        self
+    }
+
+    pub fn encode_as(
+        &mut self,
+        value: crate::datadogV1::model::WebhooksIntegrationEncoding,
+    ) -> &mut Self {
+        self.encode_as = Some(value);
+        self
+    }
+
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn payload(&mut self, value: Option<String>) -> &mut Self {
+        self.payload = Some(value);
+        self
+    }
+
+    pub fn url(&mut self, value: String) -> &mut Self {
+        self.url = Some(value);
+        self
+    }
 }
+
 impl Default for WebhooksIntegrationUpdateRequest {
     fn default() -> Self {
         Self::new()

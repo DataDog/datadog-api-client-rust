@@ -19,7 +19,13 @@ impl DashboardDeleteResponse {
             deleted_dashboard_id: None,
         }
     }
+
+    pub fn deleted_dashboard_id(&mut self, value: String) -> &mut Self {
+        self.deleted_dashboard_id = Some(value);
+        self
+    }
 }
+
 impl Default for DashboardDeleteResponse {
     fn default() -> Self {
         Self::new()

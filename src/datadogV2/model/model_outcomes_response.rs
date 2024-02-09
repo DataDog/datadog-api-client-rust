@@ -16,7 +16,7 @@ pub struct OutcomesResponse {
     pub included: Option<Vec<crate::datadogV2::model::OutcomesResponseIncludedItem>>,
     /// Links attributes.
     #[serde(rename = "links")]
-    pub links: Option<Box<crate::datadogV2::model::OutcomesResponseLinks>>,
+    pub links: Option<crate::datadogV2::model::OutcomesResponseLinks>,
 }
 
 impl OutcomesResponse {
@@ -27,7 +27,29 @@ impl OutcomesResponse {
             links: None,
         }
     }
+
+    pub fn data(
+        &mut self,
+        value: Vec<crate::datadogV2::model::OutcomesResponseDataItem>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn included(
+        &mut self,
+        value: Vec<crate::datadogV2::model::OutcomesResponseIncludedItem>,
+    ) -> &mut Self {
+        self.included = Some(value);
+        self
+    }
+
+    pub fn links(&mut self, value: crate::datadogV2::model::OutcomesResponseLinks) -> &mut Self {
+        self.links = Some(value);
+        self
+    }
 }
+
 impl Default for OutcomesResponse {
     fn default() -> Self {
         Self::new()

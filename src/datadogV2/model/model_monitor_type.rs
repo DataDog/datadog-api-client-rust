@@ -59,7 +59,63 @@ impl MonitorType {
             type_: None,
         }
     }
+
+    pub fn created_at(&mut self, value: i64) -> &mut Self {
+        self.created_at = Some(value);
+        self
+    }
+
+    pub fn group_status(&mut self, value: i32) -> &mut Self {
+        self.group_status = Some(value);
+        self
+    }
+
+    pub fn groups(&mut self, value: Vec<String>) -> &mut Self {
+        self.groups = Some(value);
+        self
+    }
+
+    pub fn id(&mut self, value: i64) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn message(&mut self, value: String) -> &mut Self {
+        self.message = Some(value);
+        self
+    }
+
+    pub fn modified(&mut self, value: i64) -> &mut Self {
+        self.modified = Some(value);
+        self
+    }
+
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn query(&mut self, value: String) -> &mut Self {
+        self.query = Some(value);
+        self
+    }
+
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+
+    pub fn templated_name(&mut self, value: String) -> &mut Self {
+        self.templated_name = Some(value);
+        self
+    }
+
+    pub fn type_(&mut self, value: String) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
+
 impl Default for MonitorType {
     fn default() -> Self {
         Self::new()

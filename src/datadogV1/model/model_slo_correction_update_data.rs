@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SLOCorrectionUpdateData {
     /// The attribute object associated with the SLO correction to be updated.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV1::model::SLOCorrectionUpdateRequestAttributes>>,
+    pub attributes: Option<crate::datadogV1::model::SLOCorrectionUpdateRequestAttributes>,
     /// SLO correction resource type.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV1::model::SLOCorrectionType>,
@@ -23,7 +23,21 @@ impl SLOCorrectionUpdateData {
             type_: None,
         }
     }
+
+    pub fn attributes(
+        &mut self,
+        value: crate::datadogV1::model::SLOCorrectionUpdateRequestAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn type_(&mut self, value: crate::datadogV1::model::SLOCorrectionType) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
+
 impl Default for SLOCorrectionUpdateData {
     fn default() -> Self {
         Self::new()

@@ -43,7 +43,38 @@ impl SharedDashboardInvitesDataObjectAttributes {
             share_token: None,
         }
     }
+
+    pub fn created_at(&mut self, value: String) -> &mut Self {
+        self.created_at = Some(value);
+        self
+    }
+
+    pub fn email(&mut self, value: String) -> &mut Self {
+        self.email = Some(value);
+        self
+    }
+
+    pub fn has_session(&mut self, value: bool) -> &mut Self {
+        self.has_session = Some(value);
+        self
+    }
+
+    pub fn invitation_expiry(&mut self, value: String) -> &mut Self {
+        self.invitation_expiry = Some(value);
+        self
+    }
+
+    pub fn session_expiry(&mut self, value: Option<String>) -> &mut Self {
+        self.session_expiry = Some(value);
+        self
+    }
+
+    pub fn share_token(&mut self, value: String) -> &mut Self {
+        self.share_token = Some(value);
+        self
+    }
 }
+
 impl Default for SharedDashboardInvitesDataObjectAttributes {
     fn default() -> Self {
         Self::new()

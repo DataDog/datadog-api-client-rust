@@ -29,7 +29,23 @@ impl GraphSnapshot {
             snapshot_url: None,
         }
     }
+
+    pub fn graph_def(&mut self, value: String) -> &mut Self {
+        self.graph_def = Some(value);
+        self
+    }
+
+    pub fn metric_query(&mut self, value: String) -> &mut Self {
+        self.metric_query = Some(value);
+        self
+    }
+
+    pub fn snapshot_url(&mut self, value: String) -> &mut Self {
+        self.snapshot_url = Some(value);
+        self
+    }
 }
+
 impl Default for GraphSnapshot {
     fn default() -> Self {
         Self::new()

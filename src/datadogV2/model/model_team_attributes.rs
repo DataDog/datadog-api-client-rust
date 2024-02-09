@@ -71,4 +71,54 @@ impl TeamAttributes {
             visible_modules: None,
         }
     }
+
+    pub fn avatar(&mut self, value: Option<String>) -> &mut Self {
+        self.avatar = Some(value);
+        self
+    }
+
+    pub fn banner(&mut self, value: Option<i64>) -> &mut Self {
+        self.banner = Some(value);
+        self
+    }
+
+    pub fn created_at(&mut self, value: String) -> &mut Self {
+        self.created_at = Some(value);
+        self
+    }
+
+    pub fn description(&mut self, value: Option<String>) -> &mut Self {
+        self.description = Some(value);
+        self
+    }
+
+    pub fn hidden_modules(&mut self, value: Vec<String>) -> &mut Self {
+        self.hidden_modules = Some(value);
+        self
+    }
+
+    pub fn link_count(&mut self, value: i32) -> &mut Self {
+        self.link_count = Some(value);
+        self
+    }
+
+    pub fn modified_at(&mut self, value: String) -> &mut Self {
+        self.modified_at = Some(value);
+        self
+    }
+
+    pub fn summary(&mut self, value: Option<String>) -> &mut Self {
+        self.summary = Some(value);
+        self
+    }
+
+    pub fn user_count(&mut self, value: i32) -> &mut Self {
+        self.user_count = Some(value);
+        self
+    }
+
+    pub fn visible_modules(&mut self, value: Vec<String>) -> &mut Self {
+        self.visible_modules = Some(value);
+        self
+    }
 }

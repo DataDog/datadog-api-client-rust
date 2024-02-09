@@ -17,7 +17,13 @@ impl SpansMetricResponseFilter {
     pub fn new() -> SpansMetricResponseFilter {
         SpansMetricResponseFilter { query: None }
     }
+
+    pub fn query(&mut self, value: String) -> &mut Self {
+        self.query = Some(value);
+        self
+    }
 }
+
 impl Default for SpansMetricResponseFilter {
     fn default() -> Self {
         Self::new()

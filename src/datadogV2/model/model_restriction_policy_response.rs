@@ -10,11 +10,11 @@ use serde_with::skip_serializing_none;
 pub struct RestrictionPolicyResponse {
     /// Restriction policy object.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::RestrictionPolicy>,
+    pub data: crate::datadogV2::model::RestrictionPolicy,
 }
 
 impl RestrictionPolicyResponse {
-    pub fn new(data: Box<crate::datadogV2::model::RestrictionPolicy>) -> RestrictionPolicyResponse {
+    pub fn new(data: crate::datadogV2::model::RestrictionPolicy) -> RestrictionPolicyResponse {
         RestrictionPolicyResponse { data }
     }
 }

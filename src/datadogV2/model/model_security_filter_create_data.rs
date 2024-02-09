@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SecurityFilterCreateData {
     /// Object containing the attributes of the security filter to be created.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::SecurityFilterCreateAttributes>,
+    pub attributes: crate::datadogV2::model::SecurityFilterCreateAttributes,
     /// The type of the resource. The value should always be `security_filters`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::SecurityFilterType,
@@ -18,7 +18,7 @@ pub struct SecurityFilterCreateData {
 
 impl SecurityFilterCreateData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::SecurityFilterCreateAttributes>,
+        attributes: crate::datadogV2::model::SecurityFilterCreateAttributes,
         type_: crate::datadogV2::model::SecurityFilterType,
     ) -> SecurityFilterCreateData {
         SecurityFilterCreateData { attributes, type_ }

@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct IncidentSearchResponseAttributes {
     /// Facet data for incidents returned by a search query.
     #[serde(rename = "facets")]
-    pub facets: Box<crate::datadogV2::model::IncidentSearchResponseFacetsData>,
+    pub facets: crate::datadogV2::model::IncidentSearchResponseFacetsData,
     /// Incidents returned by the search.
     #[serde(rename = "incidents")]
     pub incidents: Vec<crate::datadogV2::model::IncidentSearchResponseIncidentsData>,
@@ -21,7 +21,7 @@ pub struct IncidentSearchResponseAttributes {
 
 impl IncidentSearchResponseAttributes {
     pub fn new(
-        facets: Box<crate::datadogV2::model::IncidentSearchResponseFacetsData>,
+        facets: crate::datadogV2::model::IncidentSearchResponseFacetsData,
         incidents: Vec<crate::datadogV2::model::IncidentSearchResponseIncidentsData>,
         total: i32,
     ) -> IncidentSearchResponseAttributes {

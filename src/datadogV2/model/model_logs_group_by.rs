@@ -14,20 +14,20 @@ pub struct LogsGroupBy {
     /// Used to perform a histogram computation (only for measure facets).
     /// Note: at most 100 buckets are allowed, the number of buckets is (max - min)/interval.
     #[serde(rename = "histogram")]
-    pub histogram: Option<Box<crate::datadogV2::model::LogsGroupByHistogram>>,
+    pub histogram: Option<crate::datadogV2::model::LogsGroupByHistogram>,
     /// The maximum buckets to return for this group by. Note: at most 10000 buckets are allowed.
     /// If grouping by multiple facets, the product of limits must not exceed 10000.
     #[serde(rename = "limit")]
     pub limit: Option<i64>,
     /// The value to use for logs that don't have the facet used to group by
     #[serde(rename = "missing")]
-    pub missing: Option<Box<crate::datadogV2::model::LogsGroupByMissing>>,
+    pub missing: Option<crate::datadogV2::model::LogsGroupByMissing>,
     /// A sort rule
     #[serde(rename = "sort")]
-    pub sort: Option<Box<crate::datadogV2::model::LogsAggregateSort>>,
+    pub sort: Option<crate::datadogV2::model::LogsAggregateSort>,
     /// A resulting object to put the given computes in over all the matching records.
     #[serde(rename = "total")]
-    pub total: Option<Box<crate::datadogV2::model::LogsGroupByTotal>>,
+    pub total: Option<crate::datadogV2::model::LogsGroupByTotal>,
 }
 
 impl LogsGroupBy {
@@ -40,5 +40,30 @@ impl LogsGroupBy {
             sort: None,
             total: None,
         }
+    }
+
+    pub fn histogram(&mut self, value: crate::datadogV2::model::LogsGroupByHistogram) -> &mut Self {
+        self.histogram = Some(value);
+        self
+    }
+
+    pub fn limit(&mut self, value: i64) -> &mut Self {
+        self.limit = Some(value);
+        self
+    }
+
+    pub fn missing(&mut self, value: crate::datadogV2::model::LogsGroupByMissing) -> &mut Self {
+        self.missing = Some(value);
+        self
+    }
+
+    pub fn sort(&mut self, value: crate::datadogV2::model::LogsAggregateSort) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+
+    pub fn total(&mut self, value: crate::datadogV2::model::LogsGroupByTotal) -> &mut Self {
+        self.total = Some(value);
+        self
     }
 }

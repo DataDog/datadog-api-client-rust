@@ -17,7 +17,13 @@ impl LogsFilter {
     pub fn new() -> LogsFilter {
         LogsFilter { query: None }
     }
+
+    pub fn query(&mut self, value: String) -> &mut Self {
+        self.query = Some(value);
+        self
+    }
 }
+
 impl Default for LogsFilter {
     fn default() -> Self {
         Self::new()

@@ -36,4 +36,9 @@ impl DowntimeScheduleRecurrenceCreateUpdateRequest {
             additional_properties: std::collections::BTreeMap::new(),
         }
     }
+
+    pub fn start(&mut self, value: Option<String>) -> &mut Self {
+        self.start = Some(value);
+        self
+    }
 }

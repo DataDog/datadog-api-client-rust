@@ -16,7 +16,7 @@ pub struct UsageTopAvgMetricsMetadata {
     pub month: Option<String>,
     /// The metadata for the current pagination.
     #[serde(rename = "pagination")]
-    pub pagination: Option<Box<crate::datadogV1::model::UsageTopAvgMetricsPagination>>,
+    pub pagination: Option<crate::datadogV1::model::UsageTopAvgMetricsPagination>,
 }
 
 impl UsageTopAvgMetricsMetadata {
@@ -27,7 +27,26 @@ impl UsageTopAvgMetricsMetadata {
             pagination: None,
         }
     }
+
+    pub fn day(&mut self, value: String) -> &mut Self {
+        self.day = Some(value);
+        self
+    }
+
+    pub fn month(&mut self, value: String) -> &mut Self {
+        self.month = Some(value);
+        self
+    }
+
+    pub fn pagination(
+        &mut self,
+        value: crate::datadogV1::model::UsageTopAvgMetricsPagination,
+    ) -> &mut Self {
+        self.pagination = Some(value);
+        self
+    }
 }
+
 impl Default for UsageTopAvgMetricsMetadata {
     fn default() -> Self {
         Self::new()

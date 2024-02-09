@@ -18,7 +18,13 @@ impl LogsListResponseLinks {
     pub fn new() -> LogsListResponseLinks {
         LogsListResponseLinks { next: None }
     }
+
+    pub fn next(&mut self, value: String) -> &mut Self {
+        self.next = Some(value);
+        self
+    }
 }
+
 impl Default for LogsListResponseLinks {
     fn default() -> Self {
         Self::new()

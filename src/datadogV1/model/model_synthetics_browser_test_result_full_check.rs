@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct SyntheticsBrowserTestResultFullCheck {
     /// Configuration object for a Synthetic test.
     #[serde(rename = "config")]
-    pub config: Box<crate::datadogV1::model::SyntheticsTestConfig>,
+    pub config: crate::datadogV1::model::SyntheticsTestConfig,
 }
 
 impl SyntheticsBrowserTestResultFullCheck {
     pub fn new(
-        config: Box<crate::datadogV1::model::SyntheticsTestConfig>,
+        config: crate::datadogV1::model::SyntheticsTestConfig,
     ) -> SyntheticsBrowserTestResultFullCheck {
         SyntheticsBrowserTestResultFullCheck { config }
     }

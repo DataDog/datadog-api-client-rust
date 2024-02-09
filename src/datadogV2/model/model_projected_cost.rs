@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct ProjectedCost {
     /// Projected Cost attributes data.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::ProjectedCostAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::ProjectedCostAttributes>,
     /// Unique ID of the response.
     #[serde(rename = "id")]
     pub id: Option<String>,
@@ -27,7 +27,26 @@ impl ProjectedCost {
             type_: None,
         }
     }
+
+    pub fn attributes(
+        &mut self,
+        value: crate::datadogV2::model::ProjectedCostAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn type_(&mut self, value: crate::datadogV2::model::ProjectedCostType) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
+
 impl Default for ProjectedCost {
     fn default() -> Self {
         Self::new()

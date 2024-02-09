@@ -17,7 +17,13 @@ impl TeamRelationshipsLinks {
     pub fn new() -> TeamRelationshipsLinks {
         TeamRelationshipsLinks { related: None }
     }
+
+    pub fn related(&mut self, value: String) -> &mut Self {
+        self.related = Some(value);
+        self
+    }
 }
+
 impl Default for TeamRelationshipsLinks {
     fn default() -> Self {
         Self::new()

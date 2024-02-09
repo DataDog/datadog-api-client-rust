@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct RelationshipToSAMLAssertionAttribute {
     /// Data of AuthN Mapping relationship to SAML Assertion Attribute.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::RelationshipToSAMLAssertionAttributeData>,
+    pub data: crate::datadogV2::model::RelationshipToSAMLAssertionAttributeData,
 }
 
 impl RelationshipToSAMLAssertionAttribute {
     pub fn new(
-        data: Box<crate::datadogV2::model::RelationshipToSAMLAssertionAttributeData>,
+        data: crate::datadogV2::model::RelationshipToSAMLAssertionAttributeData,
     ) -> RelationshipToSAMLAssertionAttribute {
         RelationshipToSAMLAssertionAttribute { data }
     }

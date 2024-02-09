@@ -16,7 +16,7 @@ pub struct LogQueryDefinitionGroupBy {
     pub limit: Option<i64>,
     /// Define a sorting method.
     #[serde(rename = "sort")]
-    pub sort: Option<Box<crate::datadogV1::model::LogQueryDefinitionGroupBySort>>,
+    pub sort: Option<crate::datadogV1::model::LogQueryDefinitionGroupBySort>,
 }
 
 impl LogQueryDefinitionGroupBy {
@@ -26,5 +26,18 @@ impl LogQueryDefinitionGroupBy {
             limit: None,
             sort: None,
         }
+    }
+
+    pub fn limit(&mut self, value: i64) -> &mut Self {
+        self.limit = Some(value);
+        self
+    }
+
+    pub fn sort(
+        &mut self,
+        value: crate::datadogV1::model::LogQueryDefinitionGroupBySort,
+    ) -> &mut Self {
+        self.sort = Some(value);
+        self
     }
 }

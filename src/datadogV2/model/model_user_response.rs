@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct UserResponse {
     /// User object returned by the API.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::User>>,
+    pub data: Option<crate::datadogV2::model::User>,
     /// Array of objects related to the user.
     #[serde(rename = "included")]
     pub included: Option<Vec<crate::datadogV2::model::UserResponseIncludedItem>>,
@@ -23,7 +23,21 @@ impl UserResponse {
             included: None,
         }
     }
+
+    pub fn data(&mut self, value: crate::datadogV2::model::User) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn included(
+        &mut self,
+        value: Vec<crate::datadogV2::model::UserResponseIncludedItem>,
+    ) -> &mut Self {
+        self.included = Some(value);
+        self
+    }
 }
+
 impl Default for UserResponse {
     fn default() -> Self {
         Self::new()

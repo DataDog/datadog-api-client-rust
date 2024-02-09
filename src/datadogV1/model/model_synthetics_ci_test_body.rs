@@ -17,7 +17,13 @@ impl SyntheticsCITestBody {
     pub fn new() -> SyntheticsCITestBody {
         SyntheticsCITestBody { tests: None }
     }
+
+    pub fn tests(&mut self, value: Vec<crate::datadogV1::model::SyntheticsCITest>) -> &mut Self {
+        self.tests = Some(value);
+        self
+    }
 }
+
 impl Default for SyntheticsCITestBody {
     fn default() -> Self {
         Self::new()

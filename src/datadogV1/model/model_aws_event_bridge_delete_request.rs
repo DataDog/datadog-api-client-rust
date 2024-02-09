@@ -27,7 +27,23 @@ impl AWSEventBridgeDeleteRequest {
             region: None,
         }
     }
+
+    pub fn account_id(&mut self, value: String) -> &mut Self {
+        self.account_id = Some(value);
+        self
+    }
+
+    pub fn event_generator_name(&mut self, value: String) -> &mut Self {
+        self.event_generator_name = Some(value);
+        self
+    }
+
+    pub fn region(&mut self, value: String) -> &mut Self {
+        self.region = Some(value);
+        self
+    }
 }
+
 impl Default for AWSEventBridgeDeleteRequest {
     fn default() -> Self {
         Self::new()

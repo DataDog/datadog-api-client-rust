@@ -10,13 +10,13 @@ use serde_with::skip_serializing_none;
 pub struct RoleCreateResponseData {
     /// Attributes of the created role.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::RoleCreateAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::RoleCreateAttributes>,
     /// The unique identifier of the role.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Relationships of the role object returned by the API.
     #[serde(rename = "relationships")]
-    pub relationships: Option<Box<crate::datadogV2::model::RoleResponseRelationships>>,
+    pub relationships: Option<crate::datadogV2::model::RoleResponseRelationships>,
     /// Roles type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::RolesType,
@@ -30,5 +30,26 @@ impl RoleCreateResponseData {
             relationships: None,
             type_,
         }
+    }
+
+    pub fn attributes(
+        &mut self,
+        value: crate::datadogV2::model::RoleCreateAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn relationships(
+        &mut self,
+        value: crate::datadogV2::model::RoleResponseRelationships,
+    ) -> &mut Self {
+        self.relationships = Some(value);
+        self
     }
 }

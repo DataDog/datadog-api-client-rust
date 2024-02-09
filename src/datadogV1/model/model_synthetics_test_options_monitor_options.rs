@@ -21,7 +21,13 @@ impl SyntheticsTestOptionsMonitorOptions {
             renotify_interval: None,
         }
     }
+
+    pub fn renotify_interval(&mut self, value: i64) -> &mut Self {
+        self.renotify_interval = Some(value);
+        self
+    }
 }
+
 impl Default for SyntheticsTestOptionsMonitorOptions {
     fn default() -> Self {
         Self::new()

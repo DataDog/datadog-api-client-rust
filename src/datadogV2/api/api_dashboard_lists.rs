@@ -5,40 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateDashboardListItemsParams is a struct for passing parameters to the method [`DashboardListsAPI::create_dashboard_list_items`]
-#[derive(Clone, Debug)]
-pub struct CreateDashboardListItemsParams {
-    /// ID of the dashboard list to add items to.
-    pub dashboard_list_id: i64,
-    /// Dashboards to add to the dashboard list.
-    pub body: crate::datadogV2::model::DashboardListAddItemsRequest,
-}
-
-/// DeleteDashboardListItemsParams is a struct for passing parameters to the method [`DashboardListsAPI::delete_dashboard_list_items`]
-#[derive(Clone, Debug)]
-pub struct DeleteDashboardListItemsParams {
-    /// ID of the dashboard list to delete items from.
-    pub dashboard_list_id: i64,
-    /// Dashboards to delete from the dashboard list.
-    pub body: crate::datadogV2::model::DashboardListDeleteItemsRequest,
-}
-
-/// GetDashboardListItemsParams is a struct for passing parameters to the method [`DashboardListsAPI::get_dashboard_list_items`]
-#[derive(Clone, Debug)]
-pub struct GetDashboardListItemsParams {
-    /// ID of the dashboard list to get items from.
-    pub dashboard_list_id: i64,
-}
-
-/// UpdateDashboardListItemsParams is a struct for passing parameters to the method [`DashboardListsAPI::update_dashboard_list_items`]
-#[derive(Clone, Debug)]
-pub struct UpdateDashboardListItemsParams {
-    /// ID of the dashboard list to update items from.
-    pub dashboard_list_id: i64,
-    /// New dashboards of the dashboard list.
-    pub body: crate::datadogV2::model::DashboardListUpdateItemsRequest,
-}
-
 /// CreateDashboardListItemsError is a struct for typed errors of method [`DashboardListsAPI::create_dashboard_list_items`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -106,13 +72,14 @@ impl DashboardListsAPI {
     /// Add dashboards to an existing dashboard list.
     pub async fn create_dashboard_list_items(
         &self,
-        params: CreateDashboardListItemsParams,
+        dashboard_list_id: i64,
+        body: crate::datadogV2::model::DashboardListAddItemsRequest,
     ) -> Result<
         Option<crate::datadogV2::model::DashboardListAddItemsResponse>,
         Error<CreateDashboardListItemsError>,
     > {
         match self
-            .create_dashboard_list_items_with_http_info(params)
+            .create_dashboard_list_items_with_http_info(dashboard_list_id, body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -123,16 +90,13 @@ impl DashboardListsAPI {
     /// Add dashboards to an existing dashboard list.
     pub async fn create_dashboard_list_items_with_http_info(
         &self,
-        params: CreateDashboardListItemsParams,
+        dashboard_list_id: i64,
+        body: crate::datadogV2::model::DashboardListAddItemsRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::DashboardListAddItemsResponse>,
         Error<CreateDashboardListItemsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let dashboard_list_id = params.dashboard_list_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -194,13 +158,14 @@ impl DashboardListsAPI {
     /// Delete dashboards from an existing dashboard list.
     pub async fn delete_dashboard_list_items(
         &self,
-        params: DeleteDashboardListItemsParams,
+        dashboard_list_id: i64,
+        body: crate::datadogV2::model::DashboardListDeleteItemsRequest,
     ) -> Result<
         Option<crate::datadogV2::model::DashboardListDeleteItemsResponse>,
         Error<DeleteDashboardListItemsError>,
     > {
         match self
-            .delete_dashboard_list_items_with_http_info(params)
+            .delete_dashboard_list_items_with_http_info(dashboard_list_id, body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -211,16 +176,13 @@ impl DashboardListsAPI {
     /// Delete dashboards from an existing dashboard list.
     pub async fn delete_dashboard_list_items_with_http_info(
         &self,
-        params: DeleteDashboardListItemsParams,
+        dashboard_list_id: i64,
+        body: crate::datadogV2::model::DashboardListDeleteItemsRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::DashboardListDeleteItemsResponse>,
         Error<DeleteDashboardListItemsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let dashboard_list_id = params.dashboard_list_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -282,12 +244,15 @@ impl DashboardListsAPI {
     /// Fetch the dashboard list’s dashboard definitions.
     pub async fn get_dashboard_list_items(
         &self,
-        params: GetDashboardListItemsParams,
+        dashboard_list_id: i64,
     ) -> Result<
         Option<crate::datadogV2::model::DashboardListItems>,
         Error<GetDashboardListItemsError>,
     > {
-        match self.get_dashboard_list_items_with_http_info(params).await {
+        match self
+            .get_dashboard_list_items_with_http_info(dashboard_list_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -296,15 +261,12 @@ impl DashboardListsAPI {
     /// Fetch the dashboard list’s dashboard definitions.
     pub async fn get_dashboard_list_items_with_http_info(
         &self,
-        params: GetDashboardListItemsParams,
+        dashboard_list_id: i64,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::DashboardListItems>,
         Error<GetDashboardListItemsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let dashboard_list_id = params.dashboard_list_id;
 
         let local_client = &local_configuration.client;
 
@@ -359,13 +321,14 @@ impl DashboardListsAPI {
     /// Update dashboards of an existing dashboard list.
     pub async fn update_dashboard_list_items(
         &self,
-        params: UpdateDashboardListItemsParams,
+        dashboard_list_id: i64,
+        body: crate::datadogV2::model::DashboardListUpdateItemsRequest,
     ) -> Result<
         Option<crate::datadogV2::model::DashboardListUpdateItemsResponse>,
         Error<UpdateDashboardListItemsError>,
     > {
         match self
-            .update_dashboard_list_items_with_http_info(params)
+            .update_dashboard_list_items_with_http_info(dashboard_list_id, body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -376,16 +339,13 @@ impl DashboardListsAPI {
     /// Update dashboards of an existing dashboard list.
     pub async fn update_dashboard_list_items_with_http_info(
         &self,
-        params: UpdateDashboardListItemsParams,
+        dashboard_list_id: i64,
+        body: crate::datadogV2::model::DashboardListUpdateItemsRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::DashboardListUpdateItemsResponse>,
         Error<UpdateDashboardListItemsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let dashboard_list_id = params.dashboard_list_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

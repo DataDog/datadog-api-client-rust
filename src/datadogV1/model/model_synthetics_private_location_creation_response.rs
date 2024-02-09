@@ -13,12 +13,11 @@ pub struct SyntheticsPrivateLocationCreationResponse {
     pub config: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// Object containing information about the private location to create.
     #[serde(rename = "private_location")]
-    pub private_location: Option<Box<crate::datadogV1::model::SyntheticsPrivateLocation>>,
+    pub private_location: Option<crate::datadogV1::model::SyntheticsPrivateLocation>,
     /// Public key for the result encryption.
     #[serde(rename = "result_encryption")]
-    pub result_encryption: Option<
-        Box<crate::datadogV1::model::SyntheticsPrivateLocationCreationResponseResultEncryption>,
-    >,
+    pub result_encryption:
+        Option<crate::datadogV1::model::SyntheticsPrivateLocationCreationResponseResultEncryption>,
 }
 
 impl SyntheticsPrivateLocationCreationResponse {
@@ -29,7 +28,32 @@ impl SyntheticsPrivateLocationCreationResponse {
             result_encryption: None,
         }
     }
+
+    pub fn config(
+        &mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> &mut Self {
+        self.config = Some(value);
+        self
+    }
+
+    pub fn private_location(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsPrivateLocation,
+    ) -> &mut Self {
+        self.private_location = Some(value);
+        self
+    }
+
+    pub fn result_encryption(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsPrivateLocationCreationResponseResultEncryption,
+    ) -> &mut Self {
+        self.result_encryption = Some(value);
+        self
+    }
 }
+
 impl Default for SyntheticsPrivateLocationCreationResponse {
     fn default() -> Self {
         Self::new()

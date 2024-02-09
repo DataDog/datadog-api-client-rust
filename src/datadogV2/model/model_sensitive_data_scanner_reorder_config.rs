@@ -14,7 +14,7 @@ pub struct SensitiveDataScannerReorderConfig {
     /// Relationships of the configuration.
     #[serde(rename = "relationships")]
     pub relationships:
-        Option<Box<crate::datadogV2::model::SensitiveDataScannerConfigurationRelationships>>,
+        Option<crate::datadogV2::model::SensitiveDataScannerConfigurationRelationships>,
     /// Sensitive Data Scanner configuration type.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::SensitiveDataScannerConfigurationType>,
@@ -28,7 +28,29 @@ impl SensitiveDataScannerReorderConfig {
             type_: None,
         }
     }
+
+    pub fn id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn relationships(
+        &mut self,
+        value: crate::datadogV2::model::SensitiveDataScannerConfigurationRelationships,
+    ) -> &mut Self {
+        self.relationships = Some(value);
+        self
+    }
+
+    pub fn type_(
+        &mut self,
+        value: crate::datadogV2::model::SensitiveDataScannerConfigurationType,
+    ) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
+
 impl Default for SensitiveDataScannerReorderConfig {
     fn default() -> Self {
         Self::new()

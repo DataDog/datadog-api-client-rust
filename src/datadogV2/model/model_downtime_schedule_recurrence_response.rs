@@ -33,7 +33,23 @@ impl DowntimeScheduleRecurrenceResponse {
             start: None,
         }
     }
+
+    pub fn duration(&mut self, value: String) -> &mut Self {
+        self.duration = Some(value);
+        self
+    }
+
+    pub fn rrule(&mut self, value: String) -> &mut Self {
+        self.rrule = Some(value);
+        self
+    }
+
+    pub fn start(&mut self, value: String) -> &mut Self {
+        self.start = Some(value);
+        self
+    }
 }
+
 impl Default for DowntimeScheduleRecurrenceResponse {
     fn default() -> Self {
         Self::new()

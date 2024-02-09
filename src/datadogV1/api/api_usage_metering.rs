@@ -5,9 +5,9 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// GetDailyCustomReportsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_daily_custom_reports`]
-#[derive(Clone, Debug)]
-pub struct GetDailyCustomReportsParams {
+/// GetDailyCustomReportsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_daily_custom_reports`]
+#[derive(Clone, Default, Debug)]
+pub struct GetDailyCustomReportsOptionalParams {
     /// The number of files to return in the response. `[default=60]`.
     pub page_size: Option<i64>,
     /// The identifier of the first page to return. This parameter is used for the pagination feature `[default=0]`.
@@ -18,13 +18,32 @@ pub struct GetDailyCustomReportsParams {
     pub sort: Option<crate::datadogV1::model::UsageSort>,
 }
 
-/// GetHourlyUsageAttributionParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_hourly_usage_attribution`]
-#[derive(Clone, Debug)]
-pub struct GetHourlyUsageAttributionParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
-    pub start_hr: String,
-    /// Usage type to retrieve.
-    pub usage_type: crate::datadogV1::model::HourlyUsageAttributionUsageType,
+impl GetDailyCustomReportsOptionalParams {
+    /// The number of files to return in the response. `[default=60]`.
+    pub fn page_size(&mut self, value: i64) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// The identifier of the first page to return. This parameter is used for the pagination feature `[default=0]`.
+    pub fn page_number(&mut self, value: i64) -> &mut Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// The direction to sort by: `[desc, asc]`.
+    pub fn sort_dir(&mut self, value: crate::datadogV1::model::UsageSortDirection) -> &mut Self {
+        self.sort_dir = Some(value);
+        self
+    }
+    /// The field to sort by: `[computed_on, size, start_date, end_date]`.
+    pub fn sort(&mut self, value: crate::datadogV1::model::UsageSort) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+}
+
+/// GetHourlyUsageAttributionOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_hourly_usage_attribution`]
+#[derive(Clone, Default, Debug)]
+pub struct GetHourlyUsageAttributionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
@@ -38,29 +57,69 @@ pub struct GetHourlyUsageAttributionParams {
     pub include_descendants: Option<bool>,
 }
 
-/// GetIncidentManagementParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_incident_management`]
-#[derive(Clone, Debug)]
-pub struct GetIncidentManagementParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
-    pub start_hr: String,
+impl GetHourlyUsageAttributionOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+    /// List following results with a next_record_id provided in the previous query.
+    pub fn next_record_id(&mut self, value: String) -> &mut Self {
+        self.next_record_id = Some(value);
+        self
+    }
+    /// Comma separated list of tags used to group usage. If no value is provided the usage will not be broken down by tags.
+    ///
+    /// To see which tags are available, look for the value of `tag_config_source` in the API response.
+    pub fn tag_breakdown_keys(&mut self, value: String) -> &mut Self {
+        self.tag_breakdown_keys = Some(value);
+        self
+    }
+    /// Include child org usage in the response. Defaults to `true`.
+    pub fn include_descendants(&mut self, value: bool) -> &mut Self {
+        self.include_descendants = Some(value);
+        self
+    }
+}
+
+/// GetIncidentManagementOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_incident_management`]
+#[derive(Clone, Default, Debug)]
+pub struct GetIncidentManagementOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
-/// GetIngestedSpansParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_ingested_spans`]
-#[derive(Clone, Debug)]
-pub struct GetIngestedSpansParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
-    pub start_hr: String,
+impl GetIncidentManagementOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
+/// GetIngestedSpansOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_ingested_spans`]
+#[derive(Clone, Default, Debug)]
+pub struct GetIngestedSpansOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
-/// GetMonthlyCustomReportsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_monthly_custom_reports`]
-#[derive(Clone, Debug)]
-pub struct GetMonthlyCustomReportsParams {
+impl GetIngestedSpansOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
+/// GetMonthlyCustomReportsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_monthly_custom_reports`]
+#[derive(Clone, Default, Debug)]
+pub struct GetMonthlyCustomReportsOptionalParams {
     /// The number of files to return in the response `[default=60].`
     pub page_size: Option<i64>,
     /// The identifier of the first page to return. This parameter is used for the pagination feature `[default=0]`.
@@ -71,14 +130,32 @@ pub struct GetMonthlyCustomReportsParams {
     pub sort: Option<crate::datadogV1::model::UsageSort>,
 }
 
-/// GetMonthlyUsageAttributionParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_monthly_usage_attribution`]
-#[derive(Clone, Debug)]
-pub struct GetMonthlyUsageAttributionParams {
-    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage beginning in this month.
-    /// Maximum of 15 months ago.
-    pub start_month: String,
-    /// Comma-separated list of usage types to return, or `*` for all usage types.
-    pub fields: crate::datadogV1::model::MonthlyUsageAttributionSupportedMetrics,
+impl GetMonthlyCustomReportsOptionalParams {
+    /// The number of files to return in the response `[default=60].`
+    pub fn page_size(&mut self, value: i64) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// The identifier of the first page to return. This parameter is used for the pagination feature `[default=0]`.
+    pub fn page_number(&mut self, value: i64) -> &mut Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// The direction to sort by: `[desc, asc]`.
+    pub fn sort_dir(&mut self, value: crate::datadogV1::model::UsageSortDirection) -> &mut Self {
+        self.sort_dir = Some(value);
+        self
+    }
+    /// The field to sort by: `[computed_on, size, start_date, end_date]`.
+    pub fn sort(&mut self, value: crate::datadogV1::model::UsageSort) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+}
+
+/// GetMonthlyUsageAttributionOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_monthly_usage_attribution`]
+#[derive(Clone, Default, Debug)]
+pub struct GetMonthlyUsageAttributionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
     pub end_month: Option<String>,
     /// The direction to sort by: `[desc, asc]`.
@@ -95,38 +172,67 @@ pub struct GetMonthlyUsageAttributionParams {
     pub include_descendants: Option<bool>,
 }
 
-/// GetSpecifiedDailyCustomReportsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_specified_daily_custom_reports`]
-#[derive(Clone, Debug)]
-pub struct GetSpecifiedDailyCustomReportsParams {
-    /// Date of the report in the format `YYYY-MM-DD`.
-    pub report_id: String,
+impl GetMonthlyUsageAttributionOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
+    pub fn end_month(&mut self, value: String) -> &mut Self {
+        self.end_month = Some(value);
+        self
+    }
+    /// The direction to sort by: `[desc, asc]`.
+    pub fn sort_direction(
+        &mut self,
+        value: crate::datadogV1::model::UsageSortDirection,
+    ) -> &mut Self {
+        self.sort_direction = Some(value);
+        self
+    }
+    /// The field to sort by.
+    pub fn sort_name(
+        &mut self,
+        value: crate::datadogV1::model::MonthlyUsageAttributionSupportedMetrics,
+    ) -> &mut Self {
+        self.sort_name = Some(value);
+        self
+    }
+    /// Comma separated list of tag keys used to group usage. If no value is provided the usage will not be broken down by tags.
+    ///
+    /// To see which tags are available, look for the value of `tag_config_source` in the API response.
+    pub fn tag_breakdown_keys(&mut self, value: String) -> &mut Self {
+        self.tag_breakdown_keys = Some(value);
+        self
+    }
+    /// List following results with a next_record_id provided in the previous query.
+    pub fn next_record_id(&mut self, value: String) -> &mut Self {
+        self.next_record_id = Some(value);
+        self
+    }
+    /// Include child org usage in the response. Defaults to `true`.
+    pub fn include_descendants(&mut self, value: bool) -> &mut Self {
+        self.include_descendants = Some(value);
+        self
+    }
 }
 
-/// GetSpecifiedMonthlyCustomReportsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_specified_monthly_custom_reports`]
-#[derive(Clone, Debug)]
-pub struct GetSpecifiedMonthlyCustomReportsParams {
-    /// Date of the report in the format `YYYY-MM-DD`.
-    pub report_id: String,
-}
-
-/// GetUsageAnalyzedLogsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_analyzed_logs`]
-#[derive(Clone, Debug)]
-pub struct GetUsageAnalyzedLogsParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
-    pub start_hr: String,
+/// GetUsageAnalyzedLogsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_analyzed_logs`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageAnalyzedLogsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
-/// GetUsageAttributionParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_attribution`]
-#[derive(Clone, Debug)]
-pub struct GetUsageAttributionParams {
-    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage beginning in this month.
-    /// Maximum of 15 months ago.
-    pub start_month: String,
-    /// Comma-separated list of usage types to return, or `*` for all usage types.
-    pub fields: crate::datadogV1::model::UsageAttributionSupportedMetrics,
+impl GetUsageAnalyzedLogsOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
+/// GetUsageAttributionOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_attribution`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageAttributionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
     pub end_month: Option<String>,
     /// The direction to sort by: `[desc, asc]`.
@@ -141,269 +247,495 @@ pub struct GetUsageAttributionParams {
     pub limit: Option<i64>,
 }
 
-/// GetUsageAuditLogsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_audit_logs`]
-#[derive(Clone, Debug)]
-pub struct GetUsageAuditLogsParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
-    pub start_hr: String,
+impl GetUsageAttributionOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
+    pub fn end_month(&mut self, value: String) -> &mut Self {
+        self.end_month = Some(value);
+        self
+    }
+    /// The direction to sort by: `[desc, asc]`.
+    pub fn sort_direction(
+        &mut self,
+        value: crate::datadogV1::model::UsageSortDirection,
+    ) -> &mut Self {
+        self.sort_direction = Some(value);
+        self
+    }
+    /// The field to sort by.
+    pub fn sort_name(&mut self, value: crate::datadogV1::model::UsageAttributionSort) -> &mut Self {
+        self.sort_name = Some(value);
+        self
+    }
+    /// Include child org usage in the response. Defaults to false.
+    pub fn include_descendants(&mut self, value: bool) -> &mut Self {
+        self.include_descendants = Some(value);
+        self
+    }
+    /// Number of records to skip before beginning to return.
+    pub fn offset(&mut self, value: i64) -> &mut Self {
+        self.offset = Some(value);
+        self
+    }
+    /// Maximum number of records to be returned.
+    pub fn limit(&mut self, value: i64) -> &mut Self {
+        self.limit = Some(value);
+        self
+    }
+}
+
+/// GetUsageAuditLogsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_audit_logs`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageAuditLogsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
-/// GetUsageBillableSummaryParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_billable_summary`]
-#[derive(Clone, Debug)]
-pub struct GetUsageBillableSummaryParams {
+impl GetUsageAuditLogsOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
+/// GetUsageBillableSummaryOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_billable_summary`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageBillableSummaryOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage starting this month.
     pub month: Option<String>,
 }
 
-/// GetUsageCIAppParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_ci_app`]
-#[derive(Clone, Debug)]
-pub struct GetUsageCIAppParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
-    pub start_hr: String,
+impl GetUsageBillableSummaryOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage starting this month.
+    pub fn month(&mut self, value: String) -> &mut Self {
+        self.month = Some(value);
+        self
+    }
+}
+
+/// GetUsageCIAppOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_ci_app`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageCIAppOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
-/// GetUsageCWSParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_cws`]
-#[derive(Clone, Debug)]
-pub struct GetUsageCWSParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
-    pub start_hr: String,
+impl GetUsageCIAppOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
+/// GetUsageCWSOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_cws`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageCWSOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
-/// GetUsageCloudSecurityPostureManagementParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_cloud_security_posture_management`]
-#[derive(Clone, Debug)]
-pub struct GetUsageCloudSecurityPostureManagementParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
-    pub start_hr: String,
+impl GetUsageCWSOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
+/// GetUsageCloudSecurityPostureManagementOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_cloud_security_posture_management`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageCloudSecurityPostureManagementOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
-/// GetUsageDBMParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_dbm`]
-#[derive(Clone, Debug)]
-pub struct GetUsageDBMParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
-    pub start_hr: String,
+impl GetUsageCloudSecurityPostureManagementOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
+/// GetUsageDBMOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_dbm`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageDBMOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
-/// GetUsageFargateParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_fargate`]
-#[derive(Clone, Debug)]
-pub struct GetUsageFargateParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
-    pub start_hr: String,
+impl GetUsageDBMOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
+/// GetUsageFargateOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_fargate`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageFargateOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
     pub end_hr: Option<String>,
 }
 
-/// GetUsageHostsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_hosts`]
-#[derive(Clone, Debug)]
-pub struct GetUsageHostsParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
-    pub start_hr: String,
+impl GetUsageFargateOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
+/// GetUsageHostsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_hosts`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageHostsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
     pub end_hr: Option<String>,
 }
 
-/// GetUsageIndexedSpansParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_indexed_spans`]
-#[derive(Clone, Debug)]
-pub struct GetUsageIndexedSpansParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
-    pub start_hr: String,
+impl GetUsageHostsOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
+/// GetUsageIndexedSpansOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_indexed_spans`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageIndexedSpansOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending **before** this hour.
     pub end_hr: Option<String>,
 }
 
-/// GetUsageInternetOfThingsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_internet_of_things`]
-#[derive(Clone, Debug)]
-pub struct GetUsageInternetOfThingsParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
-    pub start_hr: String,
+impl GetUsageIndexedSpansOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
+/// GetUsageInternetOfThingsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_internet_of_things`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageInternetOfThingsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
-/// GetUsageLambdaParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_lambda`]
-#[derive(Clone, Debug)]
-pub struct GetUsageLambdaParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
-    pub start_hr: String,
+impl GetUsageInternetOfThingsOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
+/// GetUsageLambdaOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_lambda`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageLambdaOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
     pub end_hr: Option<String>,
 }
 
-/// GetUsageLogsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_logs`]
-#[derive(Clone, Debug)]
-pub struct GetUsageLogsParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
-    pub start_hr: String,
+impl GetUsageLambdaOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
+/// GetUsageLogsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_logs`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageLogsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
     pub end_hr: Option<String>,
 }
 
-/// GetUsageLogsByIndexParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_logs_by_index`]
-#[derive(Clone, Debug)]
-pub struct GetUsageLogsByIndexParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
-    pub start_hr: String,
+impl GetUsageLogsOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
+/// GetUsageLogsByIndexOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_logs_by_index`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageLogsByIndexOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
     pub end_hr: Option<String>,
     /// Comma-separated list of log index names.
     pub index_name: Option<Vec<String>>,
 }
 
-/// GetUsageLogsByRetentionParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_logs_by_retention`]
-#[derive(Clone, Debug)]
-pub struct GetUsageLogsByRetentionParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
-    pub start_hr: String,
+impl GetUsageLogsByIndexOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+    /// Comma-separated list of log index names.
+    pub fn index_name(&mut self, value: Vec<String>) -> &mut Self {
+        self.index_name = Some(value);
+        self
+    }
+}
+
+/// GetUsageLogsByRetentionOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_logs_by_retention`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageLogsByRetentionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
-/// GetUsageNetworkFlowsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_network_flows`]
-#[derive(Clone, Debug)]
-pub struct GetUsageNetworkFlowsParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
-    pub start_hr: String,
+impl GetUsageLogsByRetentionOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
+/// GetUsageNetworkFlowsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_network_flows`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageNetworkFlowsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
-/// GetUsageNetworkHostsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_network_hosts`]
-#[derive(Clone, Debug)]
-pub struct GetUsageNetworkHostsParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
-    pub start_hr: String,
+impl GetUsageNetworkFlowsOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
+/// GetUsageNetworkHostsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_network_hosts`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageNetworkHostsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
     pub end_hr: Option<String>,
 }
 
-/// GetUsageOnlineArchiveParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_online_archive`]
-#[derive(Clone, Debug)]
-pub struct GetUsageOnlineArchiveParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
-    pub start_hr: String,
+impl GetUsageNetworkHostsOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
+/// GetUsageOnlineArchiveOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_online_archive`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageOnlineArchiveOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
-/// GetUsageProfilingParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_profiling`]
-#[derive(Clone, Debug)]
-pub struct GetUsageProfilingParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
-    pub start_hr: String,
+impl GetUsageOnlineArchiveOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
+/// GetUsageProfilingOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_profiling`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageProfilingOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
-/// GetUsageRumSessionsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_rum_sessions`]
-#[derive(Clone, Debug)]
-pub struct GetUsageRumSessionsParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
-    pub start_hr: String,
+impl GetUsageProfilingOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
+/// GetUsageRumSessionsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_rum_sessions`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageRumSessionsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
     pub end_hr: Option<String>,
     /// RUM type: `[browser, mobile]`. Defaults to `browser`.
     pub type_: Option<String>,
 }
 
-/// GetUsageRumUnitsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_rum_units`]
-#[derive(Clone, Debug)]
-pub struct GetUsageRumUnitsParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
-    pub start_hr: String,
+impl GetUsageRumSessionsOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+    /// RUM type: `[browser, mobile]`. Defaults to `browser`.
+    pub fn type_(&mut self, value: String) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
+}
+
+/// GetUsageRumUnitsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_rum_units`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageRumUnitsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
     pub end_hr: Option<String>,
 }
 
-/// GetUsageSDSParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_sds`]
-#[derive(Clone, Debug)]
-pub struct GetUsageSDSParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
-    pub start_hr: String,
+impl GetUsageRumUnitsOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
+/// GetUsageSDSOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_sds`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageSDSOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
-/// GetUsageSNMPParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_snmp`]
-#[derive(Clone, Debug)]
-pub struct GetUsageSNMPParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage beginning at this hour.
-    pub start_hr: String,
+impl GetUsageSDSOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
+/// GetUsageSNMPOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_snmp`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageSNMPOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
     pub end_hr: Option<String>,
 }
 
-/// GetUsageSummaryParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_summary`]
-#[derive(Clone, Debug)]
-pub struct GetUsageSummaryParams {
-    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage beginning in this month.
-    /// Maximum of 15 months ago.
-    pub start_month: String,
+impl GetUsageSNMPOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
+    /// **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
+/// GetUsageSummaryOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_summary`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageSummaryOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
     pub end_month: Option<String>,
     /// Include usage summaries for each sub-org.
     pub include_org_details: Option<bool>,
 }
 
-/// GetUsageSyntheticsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_synthetics`]
-#[derive(Clone, Debug)]
-pub struct GetUsageSyntheticsParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
-    pub start_hr: String,
+impl GetUsageSummaryOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
+    pub fn end_month(&mut self, value: String) -> &mut Self {
+        self.end_month = Some(value);
+        self
+    }
+    /// Include usage summaries for each sub-org.
+    pub fn include_org_details(&mut self, value: bool) -> &mut Self {
+        self.include_org_details = Some(value);
+        self
+    }
+}
+
+/// GetUsageSyntheticsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_synthetics`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageSyntheticsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
     pub end_hr: Option<String>,
 }
 
-/// GetUsageSyntheticsAPIParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_synthetics_api`]
-#[derive(Clone, Debug)]
-pub struct GetUsageSyntheticsAPIParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
-    pub start_hr: String,
+impl GetUsageSyntheticsOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
+/// GetUsageSyntheticsAPIOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_synthetics_api`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageSyntheticsAPIOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
     pub end_hr: Option<String>,
 }
 
-/// GetUsageSyntheticsBrowserParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_synthetics_browser`]
-#[derive(Clone, Debug)]
-pub struct GetUsageSyntheticsBrowserParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
-    pub start_hr: String,
+impl GetUsageSyntheticsAPIOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
+/// GetUsageSyntheticsBrowserOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_synthetics_browser`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageSyntheticsBrowserOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
     pub end_hr: Option<String>,
 }
 
-/// GetUsageTimeseriesParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_timeseries`]
-#[derive(Clone, Debug)]
-pub struct GetUsageTimeseriesParams {
-    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage beginning at this hour.
-    pub start_hr: String,
+impl GetUsageSyntheticsBrowserOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
+/// GetUsageTimeseriesOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_timeseries`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageTimeseriesOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
     pub end_hr: Option<String>,
 }
 
-/// GetUsageTopAvgMetricsParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_top_avg_metrics`]
-#[derive(Clone, Debug)]
-pub struct GetUsageTopAvgMetricsParams {
+impl GetUsageTimeseriesOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
+    pub fn end_hr(&mut self, value: String) -> &mut Self {
+        self.end_hr = Some(value);
+        self
+    }
+}
+
+/// GetUsageTopAvgMetricsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_top_avg_metrics`]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageTopAvgMetricsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: [YYYY-MM] for usage beginning at this hour. (Either month or day should be specified, but not both)
     pub month: Option<String>,
     /// Datetime in ISO-8601 format, UTC, precise to day: [YYYY-MM-DD] for usage beginning at this hour. (Either month or day should be specified, but not both)
@@ -414,6 +746,34 @@ pub struct GetUsageTopAvgMetricsParams {
     pub limit: Option<i32>,
     /// List following results with a next_record_id provided in the previous query.
     pub next_record_id: Option<String>,
+}
+
+impl GetUsageTopAvgMetricsOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to month: [YYYY-MM] for usage beginning at this hour. (Either month or day should be specified, but not both)
+    pub fn month(&mut self, value: String) -> &mut Self {
+        self.month = Some(value);
+        self
+    }
+    /// Datetime in ISO-8601 format, UTC, precise to day: [YYYY-MM-DD] for usage beginning at this hour. (Either month or day should be specified, but not both)
+    pub fn day(&mut self, value: String) -> &mut Self {
+        self.day = Some(value);
+        self
+    }
+    /// Comma-separated list of metric names.
+    pub fn names(&mut self, value: Vec<String>) -> &mut Self {
+        self.names = Some(value);
+        self
+    }
+    /// Maximum number of results to return (between 1 and 5000) - defaults to 500 results if limit not specified.
+    pub fn limit(&mut self, value: i32) -> &mut Self {
+        self.limit = Some(value);
+        self
+    }
+    /// List following results with a next_record_id provided in the previous query.
+    pub fn next_record_id(&mut self, value: String) -> &mut Self {
+        self.next_record_id = Some(value);
+        self
+    }
 }
 
 /// GetDailyCustomReportsError is a struct for typed errors of method [`UsageMeteringAPI::get_daily_custom_reports`]
@@ -818,7 +1178,7 @@ impl UsageMeteringAPI {
     /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](<https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/>) for the associated migration guide.
     pub async fn get_daily_custom_reports(
         &self,
-        params: GetDailyCustomReportsParams,
+        params: GetDailyCustomReportsOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::UsageCustomReportsResponse>,
         Error<GetDailyCustomReportsError>,
@@ -834,14 +1194,14 @@ impl UsageMeteringAPI {
     /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](<https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/>) for the associated migration guide.
     pub async fn get_daily_custom_reports_with_http_info(
         &self,
-        params: GetDailyCustomReportsParams,
+        params: GetDailyCustomReportsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageCustomReportsResponse>,
         Error<GetDailyCustomReportsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
         let sort_dir = params.sort_dir;
@@ -856,18 +1216,21 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = page_size {
-            local_req_builder = local_req_builder.query(&[("page[size]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_number {
+        if let Some(ref local_query_param) = page_size {
             local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_str.to_string())]);
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = sort_dir {
-            local_req_builder = local_req_builder.query(&[("sort_dir", &local_str.to_string())]);
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = sort {
-            local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
+        if let Some(ref local_query_param) = sort_dir {
+            local_req_builder =
+                local_req_builder.query(&[("sort_dir", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -927,13 +1290,15 @@ impl UsageMeteringAPI {
     /// ```
     pub async fn get_hourly_usage_attribution(
         &self,
-        params: GetHourlyUsageAttributionParams,
+        start_hr: String,
+        usage_type: crate::datadogV1::model::HourlyUsageAttributionUsageType,
+        params: GetHourlyUsageAttributionOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::HourlyUsageAttributionResponse>,
         Error<GetHourlyUsageAttributionError>,
     > {
         match self
-            .get_hourly_usage_attribution_with_http_info(params)
+            .get_hourly_usage_attribution_with_http_info(start_hr, usage_type, params)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -958,16 +1323,16 @@ impl UsageMeteringAPI {
     /// ```
     pub async fn get_hourly_usage_attribution_with_http_info(
         &self,
-        params: GetHourlyUsageAttributionParams,
+        start_hr: String,
+        usage_type: crate::datadogV1::model::HourlyUsageAttributionUsageType,
+        params: GetHourlyUsageAttributionOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::HourlyUsageAttributionResponse>,
         Error<GetHourlyUsageAttributionError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
-        let usage_type = params.usage_type;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
         let next_record_id = params.next_record_id;
         let tag_breakdown_keys = params.tag_breakdown_keys;
@@ -984,20 +1349,21 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
         local_req_builder = local_req_builder.query(&[("usage_type", &usage_type.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = next_record_id {
+        if let Some(ref local_query_param) = end_hr {
             local_req_builder =
-                local_req_builder.query(&[("next_record_id", &local_str.to_string())]);
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = tag_breakdown_keys {
+        if let Some(ref local_query_param) = next_record_id {
             local_req_builder =
-                local_req_builder.query(&[("tag_breakdown_keys", &local_str.to_string())]);
+                local_req_builder.query(&[("next_record_id", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = include_descendants {
+        if let Some(ref local_query_param) = tag_breakdown_keys {
             local_req_builder =
-                local_req_builder.query(&[("include_descendants", &local_str.to_string())]);
+                local_req_builder.query(&[("tag_breakdown_keys", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include_descendants {
+            local_req_builder =
+                local_req_builder.query(&[("include_descendants", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -1044,12 +1410,16 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_incident_management(
         &self,
-        params: GetIncidentManagementParams,
+        start_hr: String,
+        params: GetIncidentManagementOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::UsageIncidentManagementResponse>,
         Error<GetIncidentManagementError>,
     > {
-        match self.get_incident_management_with_http_info(params).await {
+        match self
+            .get_incident_management_with_http_info(start_hr, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1059,15 +1429,15 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_incident_management_with_http_info(
         &self,
-        params: GetIncidentManagementParams,
+        start_hr: String,
+        params: GetIncidentManagementOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageIncidentManagementResponse>,
         Error<GetIncidentManagementError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -1080,8 +1450,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -1128,12 +1499,16 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_ingested_spans(
         &self,
-        params: GetIngestedSpansParams,
+        start_hr: String,
+        params: GetIngestedSpansOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::UsageIngestedSpansResponse>,
         Error<GetIngestedSpansError>,
     > {
-        match self.get_ingested_spans_with_http_info(params).await {
+        match self
+            .get_ingested_spans_with_http_info(start_hr, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1143,15 +1518,15 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_ingested_spans_with_http_info(
         &self,
-        params: GetIngestedSpansParams,
+        start_hr: String,
+        params: GetIngestedSpansOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageIngestedSpansResponse>,
         Error<GetIngestedSpansError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -1164,8 +1539,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -1213,7 +1589,7 @@ impl UsageMeteringAPI {
     /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](<https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/>) for the associated migration guide.
     pub async fn get_monthly_custom_reports(
         &self,
-        params: GetMonthlyCustomReportsParams,
+        params: GetMonthlyCustomReportsOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::UsageCustomReportsResponse>,
         Error<GetMonthlyCustomReportsError>,
@@ -1229,14 +1605,14 @@ impl UsageMeteringAPI {
     /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](<https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/>) for the associated migration guide.
     pub async fn get_monthly_custom_reports_with_http_info(
         &self,
-        params: GetMonthlyCustomReportsParams,
+        params: GetMonthlyCustomReportsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageCustomReportsResponse>,
         Error<GetMonthlyCustomReportsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
         let sort_dir = params.sort_dir;
@@ -1251,18 +1627,21 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = page_size {
-            local_req_builder = local_req_builder.query(&[("page[size]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_number {
+        if let Some(ref local_query_param) = page_size {
             local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_str.to_string())]);
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = sort_dir {
-            local_req_builder = local_req_builder.query(&[("sort_dir", &local_str.to_string())]);
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = sort {
-            local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
+        if let Some(ref local_query_param) = sort_dir {
+            local_req_builder =
+                local_req_builder.query(&[("sort_dir", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -1322,13 +1701,15 @@ impl UsageMeteringAPI {
     /// ```
     pub async fn get_monthly_usage_attribution(
         &self,
-        params: GetMonthlyUsageAttributionParams,
+        start_month: String,
+        fields: crate::datadogV1::model::MonthlyUsageAttributionSupportedMetrics,
+        params: GetMonthlyUsageAttributionOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::MonthlyUsageAttributionResponse>,
         Error<GetMonthlyUsageAttributionError>,
     > {
         match self
-            .get_monthly_usage_attribution_with_http_info(params)
+            .get_monthly_usage_attribution_with_http_info(start_month, fields, params)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -1353,16 +1734,16 @@ impl UsageMeteringAPI {
     /// ```
     pub async fn get_monthly_usage_attribution_with_http_info(
         &self,
-        params: GetMonthlyUsageAttributionParams,
+        start_month: String,
+        fields: crate::datadogV1::model::MonthlyUsageAttributionSupportedMetrics,
+        params: GetMonthlyUsageAttributionOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::MonthlyUsageAttributionResponse>,
         Error<GetMonthlyUsageAttributionError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_month = params.start_month;
-        let fields = params.fields;
+        // unbox and build optional parameters
         let end_month = params.end_month;
         let sort_direction = params.sort_direction;
         let sort_name = params.sort_name;
@@ -1381,27 +1762,29 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.query(&[("start_month", &start_month.to_string())]);
         local_req_builder = local_req_builder.query(&[("fields", &fields.to_string())]);
-        if let Some(ref local_str) = end_month {
-            local_req_builder = local_req_builder.query(&[("end_month", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = sort_direction {
+        if let Some(ref local_query_param) = end_month {
             local_req_builder =
-                local_req_builder.query(&[("sort_direction", &local_str.to_string())]);
+                local_req_builder.query(&[("end_month", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = sort_name {
-            local_req_builder = local_req_builder.query(&[("sort_name", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = tag_breakdown_keys {
+        if let Some(ref local_query_param) = sort_direction {
             local_req_builder =
-                local_req_builder.query(&[("tag_breakdown_keys", &local_str.to_string())]);
+                local_req_builder.query(&[("sort_direction", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = next_record_id {
+        if let Some(ref local_query_param) = sort_name {
             local_req_builder =
-                local_req_builder.query(&[("next_record_id", &local_str.to_string())]);
+                local_req_builder.query(&[("sort_name", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = include_descendants {
+        if let Some(ref local_query_param) = tag_breakdown_keys {
             local_req_builder =
-                local_req_builder.query(&[("include_descendants", &local_str.to_string())]);
+                local_req_builder.query(&[("tag_breakdown_keys", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = next_record_id {
+            local_req_builder =
+                local_req_builder.query(&[("next_record_id", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include_descendants {
+            local_req_builder =
+                local_req_builder.query(&[("include_descendants", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -1449,13 +1832,13 @@ impl UsageMeteringAPI {
     /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](<https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/>) for the associated migration guide.
     pub async fn get_specified_daily_custom_reports(
         &self,
-        params: GetSpecifiedDailyCustomReportsParams,
+        report_id: String,
     ) -> Result<
         Option<crate::datadogV1::model::UsageSpecifiedCustomReportsResponse>,
         Error<GetSpecifiedDailyCustomReportsError>,
     > {
         match self
-            .get_specified_daily_custom_reports_with_http_info(params)
+            .get_specified_daily_custom_reports_with_http_info(report_id)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -1468,15 +1851,12 @@ impl UsageMeteringAPI {
     /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](<https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/>) for the associated migration guide.
     pub async fn get_specified_daily_custom_reports_with_http_info(
         &self,
-        params: GetSpecifiedDailyCustomReportsParams,
+        report_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageSpecifiedCustomReportsResponse>,
         Error<GetSpecifiedDailyCustomReportsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let report_id = params.report_id;
 
         let local_client = &local_configuration.client;
 
@@ -1533,13 +1913,13 @@ impl UsageMeteringAPI {
     /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](<https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/>) for the associated migration guide.
     pub async fn get_specified_monthly_custom_reports(
         &self,
-        params: GetSpecifiedMonthlyCustomReportsParams,
+        report_id: String,
     ) -> Result<
         Option<crate::datadogV1::model::UsageSpecifiedCustomReportsResponse>,
         Error<GetSpecifiedMonthlyCustomReportsError>,
     > {
         match self
-            .get_specified_monthly_custom_reports_with_http_info(params)
+            .get_specified_monthly_custom_reports_with_http_info(report_id)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -1552,15 +1932,12 @@ impl UsageMeteringAPI {
     /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](<https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/>) for the associated migration guide.
     pub async fn get_specified_monthly_custom_reports_with_http_info(
         &self,
-        params: GetSpecifiedMonthlyCustomReportsParams,
+        report_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageSpecifiedCustomReportsResponse>,
         Error<GetSpecifiedMonthlyCustomReportsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let report_id = params.report_id;
 
         let local_client = &local_configuration.client;
 
@@ -1616,12 +1993,16 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_analyzed_logs(
         &self,
-        params: GetUsageAnalyzedLogsParams,
+        start_hr: String,
+        params: GetUsageAnalyzedLogsOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::UsageAnalyzedLogsResponse>,
         Error<GetUsageAnalyzedLogsError>,
     > {
-        match self.get_usage_analyzed_logs_with_http_info(params).await {
+        match self
+            .get_usage_analyzed_logs_with_http_info(start_hr, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1631,15 +2012,15 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_analyzed_logs_with_http_info(
         &self,
-        params: GetUsageAnalyzedLogsParams,
+        start_hr: String,
+        params: GetUsageAnalyzedLogsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageAnalyzedLogsResponse>,
         Error<GetUsageAnalyzedLogsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -1652,8 +2033,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -1701,12 +2083,17 @@ impl UsageMeteringAPI {
     /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](<https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/>) for the associated migration guide.
     pub async fn get_usage_attribution(
         &self,
-        params: GetUsageAttributionParams,
+        start_month: String,
+        fields: crate::datadogV1::model::UsageAttributionSupportedMetrics,
+        params: GetUsageAttributionOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::UsageAttributionResponse>,
         Error<GetUsageAttributionError>,
     > {
-        match self.get_usage_attribution_with_http_info(params).await {
+        match self
+            .get_usage_attribution_with_http_info(start_month, fields, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1717,16 +2104,16 @@ impl UsageMeteringAPI {
     /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](<https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/>) for the associated migration guide.
     pub async fn get_usage_attribution_with_http_info(
         &self,
-        params: GetUsageAttributionParams,
+        start_month: String,
+        fields: crate::datadogV1::model::UsageAttributionSupportedMetrics,
+        params: GetUsageAttributionOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageAttributionResponse>,
         Error<GetUsageAttributionError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_month = params.start_month;
-        let fields = params.fields;
+        // unbox and build optional parameters
         let end_month = params.end_month;
         let sort_direction = params.sort_direction;
         let sort_name = params.sort_name;
@@ -1742,25 +2129,29 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.query(&[("start_month", &start_month.to_string())]);
         local_req_builder = local_req_builder.query(&[("fields", &fields.to_string())]);
-        if let Some(ref local_str) = end_month {
-            local_req_builder = local_req_builder.query(&[("end_month", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = sort_direction {
+        if let Some(ref local_query_param) = end_month {
             local_req_builder =
-                local_req_builder.query(&[("sort_direction", &local_str.to_string())]);
+                local_req_builder.query(&[("end_month", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = sort_name {
-            local_req_builder = local_req_builder.query(&[("sort_name", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = include_descendants {
+        if let Some(ref local_query_param) = sort_direction {
             local_req_builder =
-                local_req_builder.query(&[("include_descendants", &local_str.to_string())]);
+                local_req_builder.query(&[("sort_direction", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = offset {
-            local_req_builder = local_req_builder.query(&[("offset", &local_str.to_string())]);
+        if let Some(ref local_query_param) = sort_name {
+            local_req_builder =
+                local_req_builder.query(&[("sort_name", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = limit {
-            local_req_builder = local_req_builder.query(&[("limit", &local_str.to_string())]);
+        if let Some(ref local_query_param) = include_descendants {
+            local_req_builder =
+                local_req_builder.query(&[("include_descendants", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = offset {
+            local_req_builder =
+                local_req_builder.query(&[("offset", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = limit {
+            local_req_builder =
+                local_req_builder.query(&[("limit", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -1807,12 +2198,16 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated.
     pub async fn get_usage_audit_logs(
         &self,
-        params: GetUsageAuditLogsParams,
+        start_hr: String,
+        params: GetUsageAuditLogsOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::UsageAuditLogsResponse>,
         Error<GetUsageAuditLogsError>,
     > {
-        match self.get_usage_audit_logs_with_http_info(params).await {
+        match self
+            .get_usage_audit_logs_with_http_info(start_hr, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1822,15 +2217,15 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated.
     pub async fn get_usage_audit_logs_with_http_info(
         &self,
-        params: GetUsageAuditLogsParams,
+        start_hr: String,
+        params: GetUsageAuditLogsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageAuditLogsResponse>,
         Error<GetUsageAuditLogsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -1840,8 +2235,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -1887,7 +2283,7 @@ impl UsageMeteringAPI {
     /// Get billable usage across your account.
     pub async fn get_usage_billable_summary(
         &self,
-        params: GetUsageBillableSummaryParams,
+        params: GetUsageBillableSummaryOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::UsageBillableSummaryResponse>,
         Error<GetUsageBillableSummaryError>,
@@ -1901,14 +2297,14 @@ impl UsageMeteringAPI {
     /// Get billable usage across your account.
     pub async fn get_usage_billable_summary_with_http_info(
         &self,
-        params: GetUsageBillableSummaryParams,
+        params: GetUsageBillableSummaryOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageBillableSummaryResponse>,
         Error<GetUsageBillableSummaryError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let month = params.month;
 
         let local_client = &local_configuration.client;
@@ -1920,8 +2316,9 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = month {
-            local_req_builder = local_req_builder.query(&[("month", &local_str.to_string())]);
+        if let Some(ref local_query_param) = month {
+            local_req_builder =
+                local_req_builder.query(&[("month", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -1968,10 +2365,11 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_ci_app(
         &self,
-        params: GetUsageCIAppParams,
+        start_hr: String,
+        params: GetUsageCIAppOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::UsageCIVisibilityResponse>, Error<GetUsageCIAppError>>
     {
-        match self.get_usage_ci_app_with_http_info(params).await {
+        match self.get_usage_ci_app_with_http_info(start_hr, params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1981,15 +2379,15 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_ci_app_with_http_info(
         &self,
-        params: GetUsageCIAppParams,
+        start_hr: String,
+        params: GetUsageCIAppOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageCIVisibilityResponse>,
         Error<GetUsageCIAppError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -1999,8 +2397,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -2047,9 +2446,10 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_cws(
         &self,
-        params: GetUsageCWSParams,
+        start_hr: String,
+        params: GetUsageCWSOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::UsageCWSResponse>, Error<GetUsageCWSError>> {
-        match self.get_usage_cws_with_http_info(params).await {
+        match self.get_usage_cws_with_http_info(start_hr, params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -2059,13 +2459,13 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_cws_with_http_info(
         &self,
-        params: GetUsageCWSParams,
+        start_hr: String,
+        params: GetUsageCWSOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV1::model::UsageCWSResponse>, Error<GetUsageCWSError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -2075,8 +2475,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -2122,13 +2523,14 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_cloud_security_posture_management(
         &self,
-        params: GetUsageCloudSecurityPostureManagementParams,
+        start_hr: String,
+        params: GetUsageCloudSecurityPostureManagementOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::UsageCloudSecurityPostureManagementResponse>,
         Error<GetUsageCloudSecurityPostureManagementError>,
     > {
         match self
-            .get_usage_cloud_security_posture_management_with_http_info(params)
+            .get_usage_cloud_security_posture_management_with_http_info(start_hr, params)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -2140,15 +2542,15 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_cloud_security_posture_management_with_http_info(
         &self,
-        params: GetUsageCloudSecurityPostureManagementParams,
+        start_hr: String,
+        params: GetUsageCloudSecurityPostureManagementOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageCloudSecurityPostureManagementResponse>,
         Error<GetUsageCloudSecurityPostureManagementError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -2158,8 +2560,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -2207,9 +2610,10 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_dbm(
         &self,
-        params: GetUsageDBMParams,
+        start_hr: String,
+        params: GetUsageDBMOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::UsageDBMResponse>, Error<GetUsageDBMError>> {
-        match self.get_usage_dbm_with_http_info(params).await {
+        match self.get_usage_dbm_with_http_info(start_hr, params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -2219,13 +2623,13 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_dbm_with_http_info(
         &self,
-        params: GetUsageDBMParams,
+        start_hr: String,
+        params: GetUsageDBMOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV1::model::UsageDBMResponse>, Error<GetUsageDBMError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -2235,8 +2639,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -2282,10 +2687,14 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_fargate(
         &self,
-        params: GetUsageFargateParams,
+        start_hr: String,
+        params: GetUsageFargateOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::UsageFargateResponse>, Error<GetUsageFargateError>>
     {
-        match self.get_usage_fargate_with_http_info(params).await {
+        match self
+            .get_usage_fargate_with_http_info(start_hr, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -2295,15 +2704,15 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_fargate_with_http_info(
         &self,
-        params: GetUsageFargateParams,
+        start_hr: String,
+        params: GetUsageFargateOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageFargateResponse>,
         Error<GetUsageFargateError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -2313,8 +2722,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -2361,10 +2771,11 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_hosts(
         &self,
-        params: GetUsageHostsParams,
+        start_hr: String,
+        params: GetUsageHostsOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::UsageHostsResponse>, Error<GetUsageHostsError>>
     {
-        match self.get_usage_hosts_with_http_info(params).await {
+        match self.get_usage_hosts_with_http_info(start_hr, params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -2374,15 +2785,15 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_hosts_with_http_info(
         &self,
-        params: GetUsageHostsParams,
+        start_hr: String,
+        params: GetUsageHostsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageHostsResponse>,
         Error<GetUsageHostsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -2392,8 +2803,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -2440,12 +2852,16 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_indexed_spans(
         &self,
-        params: GetUsageIndexedSpansParams,
+        start_hr: String,
+        params: GetUsageIndexedSpansOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::UsageIndexedSpansResponse>,
         Error<GetUsageIndexedSpansError>,
     > {
-        match self.get_usage_indexed_spans_with_http_info(params).await {
+        match self
+            .get_usage_indexed_spans_with_http_info(start_hr, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -2455,15 +2871,15 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_indexed_spans_with_http_info(
         &self,
-        params: GetUsageIndexedSpansParams,
+        start_hr: String,
+        params: GetUsageIndexedSpansOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageIndexedSpansResponse>,
         Error<GetUsageIndexedSpansError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -2476,8 +2892,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -2524,13 +2941,14 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_internet_of_things(
         &self,
-        params: GetUsageInternetOfThingsParams,
+        start_hr: String,
+        params: GetUsageInternetOfThingsOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::UsageIoTResponse>,
         Error<GetUsageInternetOfThingsError>,
     > {
         match self
-            .get_usage_internet_of_things_with_http_info(params)
+            .get_usage_internet_of_things_with_http_info(start_hr, params)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -2542,15 +2960,15 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_internet_of_things_with_http_info(
         &self,
-        params: GetUsageInternetOfThingsParams,
+        start_hr: String,
+        params: GetUsageInternetOfThingsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageIoTResponse>,
         Error<GetUsageInternetOfThingsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -2560,8 +2978,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -2608,10 +3027,11 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_lambda(
         &self,
-        params: GetUsageLambdaParams,
+        start_hr: String,
+        params: GetUsageLambdaOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::UsageLambdaResponse>, Error<GetUsageLambdaError>>
     {
-        match self.get_usage_lambda_with_http_info(params).await {
+        match self.get_usage_lambda_with_http_info(start_hr, params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -2621,15 +3041,15 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_lambda_with_http_info(
         &self,
-        params: GetUsageLambdaParams,
+        start_hr: String,
+        params: GetUsageLambdaOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageLambdaResponse>,
         Error<GetUsageLambdaError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -2639,8 +3059,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -2687,9 +3108,10 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_logs(
         &self,
-        params: GetUsageLogsParams,
+        start_hr: String,
+        params: GetUsageLogsOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::UsageLogsResponse>, Error<GetUsageLogsError>> {
-        match self.get_usage_logs_with_http_info(params).await {
+        match self.get_usage_logs_with_http_info(start_hr, params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -2699,13 +3121,13 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_logs_with_http_info(
         &self,
-        params: GetUsageLogsParams,
+        start_hr: String,
+        params: GetUsageLogsOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV1::model::UsageLogsResponse>, Error<GetUsageLogsError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -2715,8 +3137,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -2761,12 +3184,16 @@ impl UsageMeteringAPI {
     /// Get hourly usage for logs by index.
     pub async fn get_usage_logs_by_index(
         &self,
-        params: GetUsageLogsByIndexParams,
+        start_hr: String,
+        params: GetUsageLogsByIndexOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::UsageLogsByIndexResponse>,
         Error<GetUsageLogsByIndexError>,
     > {
-        match self.get_usage_logs_by_index_with_http_info(params).await {
+        match self
+            .get_usage_logs_by_index_with_http_info(start_hr, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -2775,15 +3202,15 @@ impl UsageMeteringAPI {
     /// Get hourly usage for logs by index.
     pub async fn get_usage_logs_by_index_with_http_info(
         &self,
-        params: GetUsageLogsByIndexParams,
+        start_hr: String,
+        params: GetUsageLogsByIndexOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageLogsByIndexResponse>,
         Error<GetUsageLogsByIndexError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
         let index_name = params.index_name;
 
@@ -2797,14 +3224,15 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
         if let Some(ref local) = index_name {
             local_req_builder = local_req_builder.query(&[(
                 "index_name",
                 &local
-                    .into_iter()
+                    .iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
                     .join(",")
@@ -2856,13 +3284,14 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_logs_by_retention(
         &self,
-        params: GetUsageLogsByRetentionParams,
+        start_hr: String,
+        params: GetUsageLogsByRetentionOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::UsageLogsByRetentionResponse>,
         Error<GetUsageLogsByRetentionError>,
     > {
         match self
-            .get_usage_logs_by_retention_with_http_info(params)
+            .get_usage_logs_by_retention_with_http_info(start_hr, params)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -2874,15 +3303,15 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_logs_by_retention_with_http_info(
         &self,
-        params: GetUsageLogsByRetentionParams,
+        start_hr: String,
+        params: GetUsageLogsByRetentionOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageLogsByRetentionResponse>,
         Error<GetUsageLogsByRetentionError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -2895,8 +3324,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -2943,12 +3373,16 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_network_flows(
         &self,
-        params: GetUsageNetworkFlowsParams,
+        start_hr: String,
+        params: GetUsageNetworkFlowsOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::UsageNetworkFlowsResponse>,
         Error<GetUsageNetworkFlowsError>,
     > {
-        match self.get_usage_network_flows_with_http_info(params).await {
+        match self
+            .get_usage_network_flows_with_http_info(start_hr, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -2958,15 +3392,15 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_network_flows_with_http_info(
         &self,
-        params: GetUsageNetworkFlowsParams,
+        start_hr: String,
+        params: GetUsageNetworkFlowsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageNetworkFlowsResponse>,
         Error<GetUsageNetworkFlowsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -2979,8 +3413,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -3027,12 +3462,16 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_network_hosts(
         &self,
-        params: GetUsageNetworkHostsParams,
+        start_hr: String,
+        params: GetUsageNetworkHostsOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::UsageNetworkHostsResponse>,
         Error<GetUsageNetworkHostsError>,
     > {
-        match self.get_usage_network_hosts_with_http_info(params).await {
+        match self
+            .get_usage_network_hosts_with_http_info(start_hr, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -3042,15 +3481,15 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_network_hosts_with_http_info(
         &self,
-        params: GetUsageNetworkHostsParams,
+        start_hr: String,
+        params: GetUsageNetworkHostsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageNetworkHostsResponse>,
         Error<GetUsageNetworkHostsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -3063,8 +3502,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -3111,12 +3551,16 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_online_archive(
         &self,
-        params: GetUsageOnlineArchiveParams,
+        start_hr: String,
+        params: GetUsageOnlineArchiveOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::UsageOnlineArchiveResponse>,
         Error<GetUsageOnlineArchiveError>,
     > {
-        match self.get_usage_online_archive_with_http_info(params).await {
+        match self
+            .get_usage_online_archive_with_http_info(start_hr, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -3126,15 +3570,15 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_online_archive_with_http_info(
         &self,
-        params: GetUsageOnlineArchiveParams,
+        start_hr: String,
+        params: GetUsageOnlineArchiveOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageOnlineArchiveResponse>,
         Error<GetUsageOnlineArchiveError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -3147,8 +3591,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -3195,12 +3640,16 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_profiling(
         &self,
-        params: GetUsageProfilingParams,
+        start_hr: String,
+        params: GetUsageProfilingOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::UsageProfilingResponse>,
         Error<GetUsageProfilingError>,
     > {
-        match self.get_usage_profiling_with_http_info(params).await {
+        match self
+            .get_usage_profiling_with_http_info(start_hr, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -3210,15 +3659,15 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_profiling_with_http_info(
         &self,
-        params: GetUsageProfilingParams,
+        start_hr: String,
+        params: GetUsageProfilingOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageProfilingResponse>,
         Error<GetUsageProfilingError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -3228,8 +3677,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -3276,12 +3726,16 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_rum_sessions(
         &self,
-        params: GetUsageRumSessionsParams,
+        start_hr: String,
+        params: GetUsageRumSessionsOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::UsageRumSessionsResponse>,
         Error<GetUsageRumSessionsError>,
     > {
-        match self.get_usage_rum_sessions_with_http_info(params).await {
+        match self
+            .get_usage_rum_sessions_with_http_info(start_hr, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -3291,15 +3745,15 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_rum_sessions_with_http_info(
         &self,
-        params: GetUsageRumSessionsParams,
+        start_hr: String,
+        params: GetUsageRumSessionsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageRumSessionsResponse>,
         Error<GetUsageRumSessionsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
         let type_ = params.type_;
 
@@ -3313,11 +3767,13 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = type_ {
-            local_req_builder = local_req_builder.query(&[("type", &local_str.to_string())]);
+        if let Some(ref local_query_param) = type_ {
+            local_req_builder =
+                local_req_builder.query(&[("type", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -3364,10 +3820,14 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_rum_units(
         &self,
-        params: GetUsageRumUnitsParams,
+        start_hr: String,
+        params: GetUsageRumUnitsOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::UsageRumUnitsResponse>, Error<GetUsageRumUnitsError>>
     {
-        match self.get_usage_rum_units_with_http_info(params).await {
+        match self
+            .get_usage_rum_units_with_http_info(start_hr, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -3377,15 +3837,15 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_rum_units_with_http_info(
         &self,
-        params: GetUsageRumUnitsParams,
+        start_hr: String,
+        params: GetUsageRumUnitsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageRumUnitsResponse>,
         Error<GetUsageRumUnitsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -3395,8 +3855,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -3443,9 +3904,10 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_sds(
         &self,
-        params: GetUsageSDSParams,
+        start_hr: String,
+        params: GetUsageSDSOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::UsageSDSResponse>, Error<GetUsageSDSError>> {
-        match self.get_usage_sds_with_http_info(params).await {
+        match self.get_usage_sds_with_http_info(start_hr, params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -3455,13 +3917,13 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_sds_with_http_info(
         &self,
-        params: GetUsageSDSParams,
+        start_hr: String,
+        params: GetUsageSDSOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV1::model::UsageSDSResponse>, Error<GetUsageSDSError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -3471,8 +3933,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -3518,9 +3981,10 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_snmp(
         &self,
-        params: GetUsageSNMPParams,
+        start_hr: String,
+        params: GetUsageSNMPOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::UsageSNMPResponse>, Error<GetUsageSNMPError>> {
-        match self.get_usage_snmp_with_http_info(params).await {
+        match self.get_usage_snmp_with_http_info(start_hr, params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -3530,13 +3994,13 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_snmp_with_http_info(
         &self,
-        params: GetUsageSNMPParams,
+        start_hr: String,
+        params: GetUsageSNMPOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV1::model::UsageSNMPResponse>, Error<GetUsageSNMPError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -3546,8 +4010,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -3592,10 +4057,14 @@ impl UsageMeteringAPI {
     /// Get all usage across your account.
     pub async fn get_usage_summary(
         &self,
-        params: GetUsageSummaryParams,
+        start_month: String,
+        params: GetUsageSummaryOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::UsageSummaryResponse>, Error<GetUsageSummaryError>>
     {
-        match self.get_usage_summary_with_http_info(params).await {
+        match self
+            .get_usage_summary_with_http_info(start_month, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -3604,15 +4073,15 @@ impl UsageMeteringAPI {
     /// Get all usage across your account.
     pub async fn get_usage_summary_with_http_info(
         &self,
-        params: GetUsageSummaryParams,
+        start_month: String,
+        params: GetUsageSummaryOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageSummaryResponse>,
         Error<GetUsageSummaryError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_month = params.start_month;
+        // unbox and build optional parameters
         let end_month = params.end_month;
         let include_org_details = params.include_org_details;
 
@@ -3623,12 +4092,13 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_month", &start_month.to_string())]);
-        if let Some(ref local_str) = end_month {
-            local_req_builder = local_req_builder.query(&[("end_month", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = include_org_details {
+        if let Some(ref local_query_param) = end_month {
             local_req_builder =
-                local_req_builder.query(&[("include_org_details", &local_str.to_string())]);
+                local_req_builder.query(&[("end_month", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include_org_details {
+            local_req_builder =
+                local_req_builder.query(&[("include_org_details", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -3675,12 +4145,16 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics(
         &self,
-        params: GetUsageSyntheticsParams,
+        start_hr: String,
+        params: GetUsageSyntheticsOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::UsageSyntheticsResponse>,
         Error<GetUsageSyntheticsError>,
     > {
-        match self.get_usage_synthetics_with_http_info(params).await {
+        match self
+            .get_usage_synthetics_with_http_info(start_hr, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -3690,15 +4164,15 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_with_http_info(
         &self,
-        params: GetUsageSyntheticsParams,
+        start_hr: String,
+        params: GetUsageSyntheticsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageSyntheticsResponse>,
         Error<GetUsageSyntheticsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -3708,8 +4182,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -3756,12 +4231,16 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_api(
         &self,
-        params: GetUsageSyntheticsAPIParams,
+        start_hr: String,
+        params: GetUsageSyntheticsAPIOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::UsageSyntheticsAPIResponse>,
         Error<GetUsageSyntheticsAPIError>,
     > {
-        match self.get_usage_synthetics_api_with_http_info(params).await {
+        match self
+            .get_usage_synthetics_api_with_http_info(start_hr, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -3771,15 +4250,15 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_api_with_http_info(
         &self,
-        params: GetUsageSyntheticsAPIParams,
+        start_hr: String,
+        params: GetUsageSyntheticsAPIOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageSyntheticsAPIResponse>,
         Error<GetUsageSyntheticsAPIError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -3792,8 +4271,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -3840,13 +4320,14 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_browser(
         &self,
-        params: GetUsageSyntheticsBrowserParams,
+        start_hr: String,
+        params: GetUsageSyntheticsBrowserOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::UsageSyntheticsBrowserResponse>,
         Error<GetUsageSyntheticsBrowserError>,
     > {
         match self
-            .get_usage_synthetics_browser_with_http_info(params)
+            .get_usage_synthetics_browser_with_http_info(start_hr, params)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -3858,15 +4339,15 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_browser_with_http_info(
         &self,
-        params: GetUsageSyntheticsBrowserParams,
+        start_hr: String,
+        params: GetUsageSyntheticsBrowserOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageSyntheticsBrowserResponse>,
         Error<GetUsageSyntheticsBrowserError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -3879,8 +4360,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -3927,12 +4409,16 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_timeseries(
         &self,
-        params: GetUsageTimeseriesParams,
+        start_hr: String,
+        params: GetUsageTimeseriesOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::UsageTimeseriesResponse>,
         Error<GetUsageTimeseriesError>,
     > {
-        match self.get_usage_timeseries_with_http_info(params).await {
+        match self
+            .get_usage_timeseries_with_http_info(start_hr, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -3942,15 +4428,15 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_timeseries_with_http_info(
         &self,
-        params: GetUsageTimeseriesParams,
+        start_hr: String,
+        params: GetUsageTimeseriesOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageTimeseriesResponse>,
         Error<GetUsageTimeseriesError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start_hr = params.start_hr;
+        // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
@@ -3960,8 +4446,9 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
-        if let Some(ref local_str) = end_hr {
-            local_req_builder = local_req_builder.query(&[("end_hr", &local_str.to_string())]);
+        if let Some(ref local_query_param) = end_hr {
+            local_req_builder =
+                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -4007,7 +4494,7 @@ impl UsageMeteringAPI {
     /// Get all [custom metrics](<https://docs.datadoghq.com/developers/metrics/custom_metrics/>) by hourly average. Use the month parameter to get a month-to-date data resolution or use the day parameter to get a daily resolution. One of the two is required, and only one of the two is allowed.
     pub async fn get_usage_top_avg_metrics(
         &self,
-        params: GetUsageTopAvgMetricsParams,
+        params: GetUsageTopAvgMetricsOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::UsageTopAvgMetricsResponse>,
         Error<GetUsageTopAvgMetricsError>,
@@ -4021,14 +4508,14 @@ impl UsageMeteringAPI {
     /// Get all [custom metrics](<https://docs.datadoghq.com/developers/metrics/custom_metrics/>) by hourly average. Use the month parameter to get a month-to-date data resolution or use the day parameter to get a daily resolution. One of the two is required, and only one of the two is allowed.
     pub async fn get_usage_top_avg_metrics_with_http_info(
         &self,
-        params: GetUsageTopAvgMetricsParams,
+        params: GetUsageTopAvgMetricsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageTopAvgMetricsResponse>,
         Error<GetUsageTopAvgMetricsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let month = params.month;
         let day = params.day;
         let names = params.names;
@@ -4044,29 +4531,31 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = month {
-            local_req_builder = local_req_builder.query(&[("month", &local_str.to_string())]);
+        if let Some(ref local_query_param) = month {
+            local_req_builder =
+                local_req_builder.query(&[("month", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = day {
-            local_req_builder = local_req_builder.query(&[("day", &local_str.to_string())]);
+        if let Some(ref local_query_param) = day {
+            local_req_builder = local_req_builder.query(&[("day", &local_query_param.to_string())]);
         };
         if let Some(ref local) = names {
             local_req_builder = local_req_builder.query(&[(
                 "names",
                 &local
-                    .into_iter()
+                    .iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
                     .join(",")
                     .to_string(),
             )]);
         };
-        if let Some(ref local_str) = limit {
-            local_req_builder = local_req_builder.query(&[("limit", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = next_record_id {
+        if let Some(ref local_query_param) = limit {
             local_req_builder =
-                local_req_builder.query(&[("next_record_id", &local_str.to_string())]);
+                local_req_builder.query(&[("limit", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = next_record_id {
+            local_req_builder =
+                local_req_builder.query(&[("next_record_id", &local_query_param.to_string())]);
         };
 
         // build user agent

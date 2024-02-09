@@ -5,62 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateAPIKeyParams is a struct for passing parameters to the method [`KeyManagementAPI::create_api_key`]
-#[derive(Clone, Debug)]
-pub struct CreateAPIKeyParams {
-    pub body: crate::datadogV1::model::ApiKey,
-}
-
-/// CreateApplicationKeyParams is a struct for passing parameters to the method [`KeyManagementAPI::create_application_key`]
-#[derive(Clone, Debug)]
-pub struct CreateApplicationKeyParams {
-    pub body: crate::datadogV1::model::ApplicationKey,
-}
-
-/// DeleteAPIKeyParams is a struct for passing parameters to the method [`KeyManagementAPI::delete_api_key`]
-#[derive(Clone, Debug)]
-pub struct DeleteAPIKeyParams {
-    /// The specific API key you are working with.
-    pub key: String,
-}
-
-/// DeleteApplicationKeyParams is a struct for passing parameters to the method [`KeyManagementAPI::delete_application_key`]
-#[derive(Clone, Debug)]
-pub struct DeleteApplicationKeyParams {
-    /// The specific APP key you are working with.
-    pub key: String,
-}
-
-/// GetAPIKeyParams is a struct for passing parameters to the method [`KeyManagementAPI::get_api_key`]
-#[derive(Clone, Debug)]
-pub struct GetAPIKeyParams {
-    /// The specific API key you are working with.
-    pub key: String,
-}
-
-/// GetApplicationKeyParams is a struct for passing parameters to the method [`KeyManagementAPI::get_application_key`]
-#[derive(Clone, Debug)]
-pub struct GetApplicationKeyParams {
-    /// The specific APP key you are working with.
-    pub key: String,
-}
-
-/// UpdateAPIKeyParams is a struct for passing parameters to the method [`KeyManagementAPI::update_api_key`]
-#[derive(Clone, Debug)]
-pub struct UpdateAPIKeyParams {
-    /// The specific API key you are working with.
-    pub key: String,
-    pub body: crate::datadogV1::model::ApiKey,
-}
-
-/// UpdateApplicationKeyParams is a struct for passing parameters to the method [`KeyManagementAPI::update_application_key`]
-#[derive(Clone, Debug)]
-pub struct UpdateApplicationKeyParams {
-    /// The specific APP key you are working with.
-    pub key: String,
-    pub body: crate::datadogV1::model::ApplicationKey,
-}
-
 /// CreateAPIKeyError is a struct for typed errors of method [`KeyManagementAPI::create_api_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -188,9 +132,9 @@ impl KeyManagementAPI {
     /// Creates an API key with a given name.
     pub async fn create_api_key(
         &self,
-        params: CreateAPIKeyParams,
+        body: crate::datadogV1::model::ApiKey,
     ) -> Result<Option<crate::datadogV1::model::ApiKeyResponse>, Error<CreateAPIKeyError>> {
-        match self.create_api_key_with_http_info(params).await {
+        match self.create_api_key_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -199,13 +143,10 @@ impl KeyManagementAPI {
     /// Creates an API key with a given name.
     pub async fn create_api_key_with_http_info(
         &self,
-        params: CreateAPIKeyParams,
+        body: crate::datadogV1::model::ApiKey,
     ) -> Result<ResponseContent<crate::datadogV1::model::ApiKeyResponse>, Error<CreateAPIKeyError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -262,12 +203,12 @@ impl KeyManagementAPI {
     /// Create an application key with a given name.
     pub async fn create_application_key(
         &self,
-        params: CreateApplicationKeyParams,
+        body: crate::datadogV1::model::ApplicationKey,
     ) -> Result<
         Option<crate::datadogV1::model::ApplicationKeyResponse>,
         Error<CreateApplicationKeyError>,
     > {
-        match self.create_application_key_with_http_info(params).await {
+        match self.create_application_key_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -276,15 +217,12 @@ impl KeyManagementAPI {
     /// Create an application key with a given name.
     pub async fn create_application_key_with_http_info(
         &self,
-        params: CreateApplicationKeyParams,
+        body: crate::datadogV1::model::ApplicationKey,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::ApplicationKeyResponse>,
         Error<CreateApplicationKeyError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -342,9 +280,9 @@ impl KeyManagementAPI {
     /// Delete a given API key.
     pub async fn delete_api_key(
         &self,
-        params: DeleteAPIKeyParams,
+        key: String,
     ) -> Result<Option<crate::datadogV1::model::ApiKeyResponse>, Error<DeleteAPIKeyError>> {
-        match self.delete_api_key_with_http_info(params).await {
+        match self.delete_api_key_with_http_info(key).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -353,13 +291,10 @@ impl KeyManagementAPI {
     /// Delete a given API key.
     pub async fn delete_api_key_with_http_info(
         &self,
-        params: DeleteAPIKeyParams,
+        key: String,
     ) -> Result<ResponseContent<crate::datadogV1::model::ApiKeyResponse>, Error<DeleteAPIKeyError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let key = params.key;
 
         let local_client = &local_configuration.client;
 
@@ -413,12 +348,12 @@ impl KeyManagementAPI {
     /// Delete a given application key.
     pub async fn delete_application_key(
         &self,
-        params: DeleteApplicationKeyParams,
+        key: String,
     ) -> Result<
         Option<crate::datadogV1::model::ApplicationKeyResponse>,
         Error<DeleteApplicationKeyError>,
     > {
-        match self.delete_application_key_with_http_info(params).await {
+        match self.delete_application_key_with_http_info(key).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -427,15 +362,12 @@ impl KeyManagementAPI {
     /// Delete a given application key.
     pub async fn delete_application_key_with_http_info(
         &self,
-        params: DeleteApplicationKeyParams,
+        key: String,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::ApplicationKeyResponse>,
         Error<DeleteApplicationKeyError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let key = params.key;
 
         let local_client = &local_configuration.client;
 
@@ -490,9 +422,9 @@ impl KeyManagementAPI {
     /// Get a given API key.
     pub async fn get_api_key(
         &self,
-        params: GetAPIKeyParams,
+        key: String,
     ) -> Result<Option<crate::datadogV1::model::ApiKeyResponse>, Error<GetAPIKeyError>> {
-        match self.get_api_key_with_http_info(params).await {
+        match self.get_api_key_with_http_info(key).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -501,13 +433,10 @@ impl KeyManagementAPI {
     /// Get a given API key.
     pub async fn get_api_key_with_http_info(
         &self,
-        params: GetAPIKeyParams,
+        key: String,
     ) -> Result<ResponseContent<crate::datadogV1::model::ApiKeyResponse>, Error<GetAPIKeyError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let key = params.key;
 
         let local_client = &local_configuration.client;
 
@@ -561,12 +490,12 @@ impl KeyManagementAPI {
     /// Get a given application key.
     pub async fn get_application_key(
         &self,
-        params: GetApplicationKeyParams,
+        key: String,
     ) -> Result<
         Option<crate::datadogV1::model::ApplicationKeyResponse>,
         Error<GetApplicationKeyError>,
     > {
-        match self.get_application_key_with_http_info(params).await {
+        match self.get_application_key_with_http_info(key).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -575,15 +504,12 @@ impl KeyManagementAPI {
     /// Get a given application key.
     pub async fn get_application_key_with_http_info(
         &self,
-        params: GetApplicationKeyParams,
+        key: String,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::ApplicationKeyResponse>,
         Error<GetApplicationKeyError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let key = params.key;
 
         let local_client = &local_configuration.client;
 
@@ -652,8 +578,6 @@ impl KeyManagementAPI {
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/api_key", local_configuration.base_path);
@@ -721,8 +645,6 @@ impl KeyManagementAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/application_key", local_configuration.base_path);
@@ -772,9 +694,10 @@ impl KeyManagementAPI {
     /// Edit an API key name.
     pub async fn update_api_key(
         &self,
-        params: UpdateAPIKeyParams,
+        key: String,
+        body: crate::datadogV1::model::ApiKey,
     ) -> Result<Option<crate::datadogV1::model::ApiKeyResponse>, Error<UpdateAPIKeyError>> {
-        match self.update_api_key_with_http_info(params).await {
+        match self.update_api_key_with_http_info(key, body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -783,14 +706,11 @@ impl KeyManagementAPI {
     /// Edit an API key name.
     pub async fn update_api_key_with_http_info(
         &self,
-        params: UpdateAPIKeyParams,
+        key: String,
+        body: crate::datadogV1::model::ApiKey,
     ) -> Result<ResponseContent<crate::datadogV1::model::ApiKeyResponse>, Error<UpdateAPIKeyError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let key = params.key;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -851,12 +771,13 @@ impl KeyManagementAPI {
     /// Edit an application key name.
     pub async fn update_application_key(
         &self,
-        params: UpdateApplicationKeyParams,
+        key: String,
+        body: crate::datadogV1::model::ApplicationKey,
     ) -> Result<
         Option<crate::datadogV1::model::ApplicationKeyResponse>,
         Error<UpdateApplicationKeyError>,
     > {
-        match self.update_application_key_with_http_info(params).await {
+        match self.update_application_key_with_http_info(key, body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -865,16 +786,13 @@ impl KeyManagementAPI {
     /// Edit an application key name.
     pub async fn update_application_key_with_http_info(
         &self,
-        params: UpdateApplicationKeyParams,
+        key: String,
+        body: crate::datadogV1::model::ApplicationKey,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::ApplicationKeyResponse>,
         Error<UpdateApplicationKeyError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let key = params.key;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

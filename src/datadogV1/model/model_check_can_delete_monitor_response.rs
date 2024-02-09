@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct CheckCanDeleteMonitorResponse {
     /// Wrapper object with the list of monitor IDs.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV1::model::CheckCanDeleteMonitorResponseData>,
+    pub data: crate::datadogV1::model::CheckCanDeleteMonitorResponseData,
     /// A mapping of Monitor ID to strings denoting where it's used.
     #[serde(rename = "errors", default, with = "::serde_with::rust::double_option")]
     pub errors: Option<Option<std::collections::BTreeMap<String, Option<Vec<String>>>>>,
@@ -18,8 +18,16 @@ pub struct CheckCanDeleteMonitorResponse {
 
 impl CheckCanDeleteMonitorResponse {
     pub fn new(
-        data: Box<crate::datadogV1::model::CheckCanDeleteMonitorResponseData>,
+        data: crate::datadogV1::model::CheckCanDeleteMonitorResponseData,
     ) -> CheckCanDeleteMonitorResponse {
         CheckCanDeleteMonitorResponse { data, errors: None }
+    }
+
+    pub fn errors(
+        &mut self,
+        value: Option<std::collections::BTreeMap<String, Option<Vec<String>>>>,
+    ) -> &mut Self {
+        self.errors = Some(value);
+        self
     }
 }

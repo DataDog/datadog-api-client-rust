@@ -35,7 +35,33 @@ impl IncidentSearchResponseUserFacetData {
             uuid: None,
         }
     }
+
+    pub fn count(&mut self, value: i32) -> &mut Self {
+        self.count = Some(value);
+        self
+    }
+
+    pub fn email(&mut self, value: String) -> &mut Self {
+        self.email = Some(value);
+        self
+    }
+
+    pub fn handle(&mut self, value: String) -> &mut Self {
+        self.handle = Some(value);
+        self
+    }
+
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn uuid(&mut self, value: String) -> &mut Self {
+        self.uuid = Some(value);
+        self
+    }
 }
+
 impl Default for IncidentSearchResponseUserFacetData {
     fn default() -> Self {
         Self::new()

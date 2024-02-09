@@ -28,7 +28,18 @@ impl DowntimeScheduleOneTimeCreateUpdateRequest {
             additional_properties: std::collections::BTreeMap::new(),
         }
     }
+
+    pub fn end(&mut self, value: Option<String>) -> &mut Self {
+        self.end = Some(value);
+        self
+    }
+
+    pub fn start(&mut self, value: Option<String>) -> &mut Self {
+        self.start = Some(value);
+        self
+    }
 }
+
 impl Default for DowntimeScheduleOneTimeCreateUpdateRequest {
     fn default() -> Self {
         Self::new()

@@ -31,4 +31,14 @@ impl ServiceAccountCreateAttributes {
             title: None,
         }
     }
+
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
+    }
 }

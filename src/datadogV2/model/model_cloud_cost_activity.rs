@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct CloudCostActivity {
     /// Attributes for Cloud Cost activity.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::CloudCostActivityAttributes>,
+    pub attributes: crate::datadogV2::model::CloudCostActivityAttributes,
     /// Type of Cloud Cost Activity.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CloudCostActivityType,
@@ -18,7 +18,7 @@ pub struct CloudCostActivity {
 
 impl CloudCostActivity {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::CloudCostActivityAttributes>,
+        attributes: crate::datadogV2::model::CloudCostActivityAttributes,
         type_: crate::datadogV2::model::CloudCostActivityType,
     ) -> CloudCostActivity {
         CloudCostActivity { attributes, type_ }

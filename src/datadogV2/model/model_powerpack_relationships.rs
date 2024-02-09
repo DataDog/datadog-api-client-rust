@@ -10,14 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct PowerpackRelationships {
     /// Relationship to user.
     #[serde(rename = "author")]
-    pub author: Option<Box<crate::datadogV2::model::RelationshipToUser>>,
+    pub author: Option<crate::datadogV2::model::RelationshipToUser>,
 }
 
 impl PowerpackRelationships {
     pub fn new() -> PowerpackRelationships {
         PowerpackRelationships { author: None }
     }
+
+    pub fn author(&mut self, value: crate::datadogV2::model::RelationshipToUser) -> &mut Self {
+        self.author = Some(value);
+        self
+    }
 }
+
 impl Default for PowerpackRelationships {
     fn default() -> Self {
         Self::new()

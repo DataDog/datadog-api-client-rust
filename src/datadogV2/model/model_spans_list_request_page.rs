@@ -23,7 +23,18 @@ impl SpansListRequestPage {
             limit: None,
         }
     }
+
+    pub fn cursor(&mut self, value: String) -> &mut Self {
+        self.cursor = Some(value);
+        self
+    }
+
+    pub fn limit(&mut self, value: i32) -> &mut Self {
+        self.limit = Some(value);
+        self
+    }
 }
+
 impl Default for SpansListRequestPage {
     fn default() -> Self {
         Self::new()

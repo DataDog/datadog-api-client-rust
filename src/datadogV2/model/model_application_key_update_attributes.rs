@@ -23,7 +23,18 @@ impl ApplicationKeyUpdateAttributes {
             scopes: None,
         }
     }
+
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn scopes(&mut self, value: Option<Vec<String>>) -> &mut Self {
+        self.scopes = Some(value);
+        self
+    }
 }
+
 impl Default for ApplicationKeyUpdateAttributes {
     fn default() -> Self {
         Self::new()

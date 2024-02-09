@@ -23,7 +23,18 @@ impl WidgetFormulaStyle {
             palette_index: None,
         }
     }
+
+    pub fn palette(&mut self, value: String) -> &mut Self {
+        self.palette = Some(value);
+        self
+    }
+
+    pub fn palette_index(&mut self, value: i64) -> &mut Self {
+        self.palette_index = Some(value);
+        self
+    }
 }
+
 impl Default for WidgetFormulaStyle {
     fn default() -> Self {
         Self::new()

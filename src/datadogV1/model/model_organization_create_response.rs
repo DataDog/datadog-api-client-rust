@@ -10,16 +10,16 @@ use serde_with::skip_serializing_none;
 pub struct OrganizationCreateResponse {
     /// Datadog API key.
     #[serde(rename = "api_key")]
-    pub api_key: Option<Box<crate::datadogV1::model::ApiKey>>,
+    pub api_key: Option<crate::datadogV1::model::ApiKey>,
     /// An application key with its associated metadata.
     #[serde(rename = "application_key")]
-    pub application_key: Option<Box<crate::datadogV1::model::ApplicationKey>>,
+    pub application_key: Option<crate::datadogV1::model::ApplicationKey>,
     /// Create, edit, and manage organizations.
     #[serde(rename = "org")]
-    pub org: Option<Box<crate::datadogV1::model::Organization>>,
+    pub org: Option<crate::datadogV1::model::Organization>,
     /// Create, edit, and disable users.
     #[serde(rename = "user")]
-    pub user: Option<Box<crate::datadogV1::model::User>>,
+    pub user: Option<crate::datadogV1::model::User>,
 }
 
 impl OrganizationCreateResponse {
@@ -31,7 +31,28 @@ impl OrganizationCreateResponse {
             user: None,
         }
     }
+
+    pub fn api_key(&mut self, value: crate::datadogV1::model::ApiKey) -> &mut Self {
+        self.api_key = Some(value);
+        self
+    }
+
+    pub fn application_key(&mut self, value: crate::datadogV1::model::ApplicationKey) -> &mut Self {
+        self.application_key = Some(value);
+        self
+    }
+
+    pub fn org(&mut self, value: crate::datadogV1::model::Organization) -> &mut Self {
+        self.org = Some(value);
+        self
+    }
+
+    pub fn user(&mut self, value: crate::datadogV1::model::User) -> &mut Self {
+        self.user = Some(value);
+        self
+    }
 }
+
 impl Default for OrganizationCreateResponse {
     fn default() -> Self {
         Self::new()

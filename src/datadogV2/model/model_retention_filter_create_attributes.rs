@@ -13,7 +13,7 @@ pub struct RetentionFilterCreateAttributes {
     pub enabled: bool,
     /// The spans filter. Spans matching this filter will be indexed and stored.
     #[serde(rename = "filter")]
-    pub filter: Box<crate::datadogV2::model::SpansFilterCreate>,
+    pub filter: crate::datadogV2::model::SpansFilterCreate,
     /// The type of retention filter. The value should always be spans-sampling-processor.
     #[serde(rename = "filter_type")]
     pub filter_type: crate::datadogV2::model::RetentionFilterType,
@@ -29,7 +29,7 @@ pub struct RetentionFilterCreateAttributes {
 impl RetentionFilterCreateAttributes {
     pub fn new(
         enabled: bool,
-        filter: Box<crate::datadogV2::model::SpansFilterCreate>,
+        filter: crate::datadogV2::model::SpansFilterCreate,
         filter_type: crate::datadogV2::model::RetentionFilterType,
         name: String,
         rate: f64,

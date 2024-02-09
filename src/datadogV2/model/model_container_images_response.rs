@@ -13,10 +13,10 @@ pub struct ContainerImagesResponse {
     pub data: Option<Vec<crate::datadogV2::model::ContainerImageItem>>,
     /// Pagination links.
     #[serde(rename = "links")]
-    pub links: Option<Box<crate::datadogV2::model::ContainerImagesResponseLinks>>,
+    pub links: Option<crate::datadogV2::model::ContainerImagesResponseLinks>,
     /// Response metadata object.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV2::model::ContainerImageMeta>>,
+    pub meta: Option<crate::datadogV2::model::ContainerImageMeta>,
 }
 
 impl ContainerImagesResponse {
@@ -27,7 +27,26 @@ impl ContainerImagesResponse {
             meta: None,
         }
     }
+
+    pub fn data(&mut self, value: Vec<crate::datadogV2::model::ContainerImageItem>) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn links(
+        &mut self,
+        value: crate::datadogV2::model::ContainerImagesResponseLinks,
+    ) -> &mut Self {
+        self.links = Some(value);
+        self
+    }
+
+    pub fn meta(&mut self, value: crate::datadogV2::model::ContainerImageMeta) -> &mut Self {
+        self.meta = Some(value);
+        self
+    }
 }
+
 impl Default for ContainerImagesResponse {
     fn default() -> Self {
         Self::new()

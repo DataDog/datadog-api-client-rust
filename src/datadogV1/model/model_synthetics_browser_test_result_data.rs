@@ -16,7 +16,7 @@ pub struct SyntheticsBrowserTestResultData {
     pub browser_version: Option<String>,
     /// Object describing the device used to perform the Synthetic test.
     #[serde(rename = "device")]
-    pub device: Option<Box<crate::datadogV1::model::SyntheticsDevice>>,
+    pub device: Option<crate::datadogV1::model::SyntheticsDevice>,
     /// Global duration in second of the browser test.
     #[serde(rename = "duration")]
     pub duration: Option<f64>,
@@ -25,7 +25,7 @@ pub struct SyntheticsBrowserTestResultData {
     pub error: Option<String>,
     /// The browser test failure details.
     #[serde(rename = "failure")]
-    pub failure: Option<Box<crate::datadogV1::model::SyntheticsBrowserTestResultFailure>>,
+    pub failure: Option<crate::datadogV1::model::SyntheticsBrowserTestResultFailure>,
     /// Whether or not the browser test was conducted.
     #[serde(rename = "passed")]
     pub passed: Option<bool>,
@@ -64,7 +64,74 @@ impl SyntheticsBrowserTestResultData {
             time_to_interactive: None,
         }
     }
+
+    pub fn browser_type(&mut self, value: String) -> &mut Self {
+        self.browser_type = Some(value);
+        self
+    }
+
+    pub fn browser_version(&mut self, value: String) -> &mut Self {
+        self.browser_version = Some(value);
+        self
+    }
+
+    pub fn device(&mut self, value: crate::datadogV1::model::SyntheticsDevice) -> &mut Self {
+        self.device = Some(value);
+        self
+    }
+
+    pub fn duration(&mut self, value: f64) -> &mut Self {
+        self.duration = Some(value);
+        self
+    }
+
+    pub fn error(&mut self, value: String) -> &mut Self {
+        self.error = Some(value);
+        self
+    }
+
+    pub fn failure(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsBrowserTestResultFailure,
+    ) -> &mut Self {
+        self.failure = Some(value);
+        self
+    }
+
+    pub fn passed(&mut self, value: bool) -> &mut Self {
+        self.passed = Some(value);
+        self
+    }
+
+    pub fn received_email_count(&mut self, value: i64) -> &mut Self {
+        self.received_email_count = Some(value);
+        self
+    }
+
+    pub fn start_url(&mut self, value: String) -> &mut Self {
+        self.start_url = Some(value);
+        self
+    }
+
+    pub fn step_details(
+        &mut self,
+        value: Vec<crate::datadogV1::model::SyntheticsStepDetail>,
+    ) -> &mut Self {
+        self.step_details = Some(value);
+        self
+    }
+
+    pub fn thumbnails_bucket_key(&mut self, value: bool) -> &mut Self {
+        self.thumbnails_bucket_key = Some(value);
+        self
+    }
+
+    pub fn time_to_interactive(&mut self, value: f64) -> &mut Self {
+        self.time_to_interactive = Some(value);
+        self
+    }
 }
+
 impl Default for SyntheticsBrowserTestResultData {
     fn default() -> Self {
         Self::new()

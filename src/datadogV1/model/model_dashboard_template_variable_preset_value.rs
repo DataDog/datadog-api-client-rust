@@ -29,7 +29,26 @@ impl DashboardTemplateVariablePresetValue {
             values: None,
         }
     }
+
+    #[allow(deprecated)]
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn value(&mut self, value: String) -> &mut Self {
+        self.value = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn values(&mut self, value: Vec<String>) -> &mut Self {
+        self.values = Some(value);
+        self
+    }
 }
+
 impl Default for DashboardTemplateVariablePresetValue {
     fn default() -> Self {
         Self::new()

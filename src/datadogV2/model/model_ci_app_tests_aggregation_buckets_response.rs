@@ -17,7 +17,16 @@ impl CIAppTestsAggregationBucketsResponse {
     pub fn new() -> CIAppTestsAggregationBucketsResponse {
         CIAppTestsAggregationBucketsResponse { buckets: None }
     }
+
+    pub fn buckets(
+        &mut self,
+        value: Vec<crate::datadogV2::model::CIAppTestsBucketResponse>,
+    ) -> &mut Self {
+        self.buckets = Some(value);
+        self
+    }
 }
+
 impl Default for CIAppTestsAggregationBucketsResponse {
     fn default() -> Self {
         Self::new()

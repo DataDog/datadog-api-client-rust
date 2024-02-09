@@ -10,10 +10,10 @@ use serde_with::skip_serializing_none;
 pub struct SyntheticsTestRequestCertificate {
     /// Define a request certificate.
     #[serde(rename = "cert")]
-    pub cert: Option<Box<crate::datadogV1::model::SyntheticsTestRequestCertificateItem>>,
+    pub cert: Option<crate::datadogV1::model::SyntheticsTestRequestCertificateItem>,
     /// Define a request certificate.
     #[serde(rename = "key")]
-    pub key: Option<Box<crate::datadogV1::model::SyntheticsTestRequestCertificateItem>>,
+    pub key: Option<crate::datadogV1::model::SyntheticsTestRequestCertificateItem>,
 }
 
 impl SyntheticsTestRequestCertificate {
@@ -23,7 +23,24 @@ impl SyntheticsTestRequestCertificate {
             key: None,
         }
     }
+
+    pub fn cert(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsTestRequestCertificateItem,
+    ) -> &mut Self {
+        self.cert = Some(value);
+        self
+    }
+
+    pub fn key(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsTestRequestCertificateItem,
+    ) -> &mut Self {
+        self.key = Some(value);
+        self
+    }
 }
+
 impl Default for SyntheticsTestRequestCertificate {
     fn default() -> Self {
         Self::new()

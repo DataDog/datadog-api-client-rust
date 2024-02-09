@@ -10,14 +10,23 @@ use serde_with::skip_serializing_none;
 pub struct RoleResponseRelationships {
     /// Relationship to multiple permissions objects.
     #[serde(rename = "permissions")]
-    pub permissions: Option<Box<crate::datadogV2::model::RelationshipToPermissions>>,
+    pub permissions: Option<crate::datadogV2::model::RelationshipToPermissions>,
 }
 
 impl RoleResponseRelationships {
     pub fn new() -> RoleResponseRelationships {
         RoleResponseRelationships { permissions: None }
     }
+
+    pub fn permissions(
+        &mut self,
+        value: crate::datadogV2::model::RelationshipToPermissions,
+    ) -> &mut Self {
+        self.permissions = Some(value);
+        self
+    }
 }
+
 impl Default for RoleResponseRelationships {
     fn default() -> Self {
         Self::new()

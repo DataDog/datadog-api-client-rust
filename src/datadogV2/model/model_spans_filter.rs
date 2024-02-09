@@ -17,7 +17,13 @@ impl SpansFilter {
     pub fn new() -> SpansFilter {
         SpansFilter { query: None }
     }
+
+    pub fn query(&mut self, value: String) -> &mut Self {
+        self.query = Some(value);
+        self
+    }
 }
+
 impl Default for SpansFilter {
     fn default() -> Self {
         Self::new()

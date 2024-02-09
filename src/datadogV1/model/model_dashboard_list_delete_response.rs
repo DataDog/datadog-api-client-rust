@@ -19,7 +19,13 @@ impl DashboardListDeleteResponse {
             deleted_dashboard_list_id: None,
         }
     }
+
+    pub fn deleted_dashboard_list_id(&mut self, value: i64) -> &mut Self {
+        self.deleted_dashboard_list_id = Some(value);
+        self
+    }
 }
+
 impl Default for DashboardListDeleteResponse {
     fn default() -> Self {
         Self::new()

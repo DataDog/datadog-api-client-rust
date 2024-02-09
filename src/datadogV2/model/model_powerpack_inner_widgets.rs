@@ -13,7 +13,7 @@ pub struct PowerpackInnerWidgets {
     pub definition: std::collections::BTreeMap<String, serde_json::Value>,
     /// Powerpack inner widget layout.
     #[serde(rename = "layout")]
-    pub layout: Option<Box<crate::datadogV2::model::PowerpackInnerWidgetLayout>>,
+    pub layout: Option<crate::datadogV2::model::PowerpackInnerWidgetLayout>,
 }
 
 impl PowerpackInnerWidgets {
@@ -24,5 +24,13 @@ impl PowerpackInnerWidgets {
             definition,
             layout: None,
         }
+    }
+
+    pub fn layout(
+        &mut self,
+        value: crate::datadogV2::model::PowerpackInnerWidgetLayout,
+    ) -> &mut Self {
+        self.layout = Some(value);
+        self
     }
 }

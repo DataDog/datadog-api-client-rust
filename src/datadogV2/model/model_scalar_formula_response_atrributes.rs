@@ -17,7 +17,13 @@ impl ScalarFormulaResponseAtrributes {
     pub fn new() -> ScalarFormulaResponseAtrributes {
         ScalarFormulaResponseAtrributes { columns: None }
     }
+
+    pub fn columns(&mut self, value: Vec<crate::datadogV2::model::ScalarColumn>) -> &mut Self {
+        self.columns = Some(value);
+        self
+    }
 }
+
 impl Default for ScalarFormulaResponseAtrributes {
     fn default() -> Self {
         Self::new()

@@ -13,10 +13,10 @@ pub struct RUMEventsResponse {
     pub data: Option<Vec<crate::datadogV2::model::RUMEvent>>,
     /// Links attributes.
     #[serde(rename = "links")]
-    pub links: Option<Box<crate::datadogV2::model::RUMResponseLinks>>,
+    pub links: Option<crate::datadogV2::model::RUMResponseLinks>,
     /// The metadata associated with a request.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV2::model::RUMResponseMetadata>>,
+    pub meta: Option<crate::datadogV2::model::RUMResponseMetadata>,
 }
 
 impl RUMEventsResponse {
@@ -27,7 +27,23 @@ impl RUMEventsResponse {
             meta: None,
         }
     }
+
+    pub fn data(&mut self, value: Vec<crate::datadogV2::model::RUMEvent>) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn links(&mut self, value: crate::datadogV2::model::RUMResponseLinks) -> &mut Self {
+        self.links = Some(value);
+        self
+    }
+
+    pub fn meta(&mut self, value: crate::datadogV2::model::RUMResponseMetadata) -> &mut Self {
+        self.meta = Some(value);
+        self
+    }
 }
+
 impl Default for RUMEventsResponse {
     fn default() -> Self {
         Self::new()

@@ -26,10 +26,10 @@ pub struct SyntheticsAPIStep {
     pub name: String,
     /// Object describing the Synthetic test request.
     #[serde(rename = "request")]
-    pub request: Box<crate::datadogV1::model::SyntheticsTestRequest>,
+    pub request: crate::datadogV1::model::SyntheticsTestRequest,
     /// Object describing the retry strategy to apply to a Synthetic test.
     #[serde(rename = "retry")]
-    pub retry: Option<Box<crate::datadogV1::model::SyntheticsTestOptionsRetry>>,
+    pub retry: Option<crate::datadogV1::model::SyntheticsTestOptionsRetry>,
     /// The subtype of the Synthetic multistep API test step, currently only supporting `http`.
     #[serde(rename = "subtype")]
     pub subtype: crate::datadogV1::model::SyntheticsAPIStepSubtype,
@@ -39,7 +39,7 @@ impl SyntheticsAPIStep {
     pub fn new(
         assertions: Vec<crate::datadogV1::model::SyntheticsAssertion>,
         name: String,
-        request: Box<crate::datadogV1::model::SyntheticsTestRequest>,
+        request: crate::datadogV1::model::SyntheticsTestRequest,
         subtype: crate::datadogV1::model::SyntheticsAPIStepSubtype,
     ) -> SyntheticsAPIStep {
         SyntheticsAPIStep {
@@ -52,5 +52,31 @@ impl SyntheticsAPIStep {
             retry: None,
             subtype,
         }
+    }
+
+    pub fn allow_failure(&mut self, value: bool) -> &mut Self {
+        self.allow_failure = Some(value);
+        self
+    }
+
+    pub fn extracted_values(
+        &mut self,
+        value: Vec<crate::datadogV1::model::SyntheticsParsingOptions>,
+    ) -> &mut Self {
+        self.extracted_values = Some(value);
+        self
+    }
+
+    pub fn is_critical(&mut self, value: bool) -> &mut Self {
+        self.is_critical = Some(value);
+        self
+    }
+
+    pub fn retry(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsTestOptionsRetry,
+    ) -> &mut Self {
+        self.retry = Some(value);
+        self
     }
 }

@@ -17,7 +17,16 @@ impl OutcomesBatchAttributes {
     pub fn new() -> OutcomesBatchAttributes {
         OutcomesBatchAttributes { results: None }
     }
+
+    pub fn results(
+        &mut self,
+        value: Vec<crate::datadogV2::model::OutcomesBatchRequestItem>,
+    ) -> &mut Self {
+        self.results = Some(value);
+        self
+    }
 }
+
 impl Default for OutcomesBatchAttributes {
     fn default() -> Self {
         Self::new()

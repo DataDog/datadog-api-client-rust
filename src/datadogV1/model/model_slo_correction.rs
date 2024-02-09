@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SLOCorrection {
     /// The attribute object associated with the SLO correction.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV1::model::SLOCorrectionResponseAttributes>>,
+    pub attributes: Option<crate::datadogV1::model::SLOCorrectionResponseAttributes>,
     /// The ID of the SLO correction.
     #[serde(rename = "id")]
     pub id: Option<String>,
@@ -27,7 +27,26 @@ impl SLOCorrection {
             type_: None,
         }
     }
+
+    pub fn attributes(
+        &mut self,
+        value: crate::datadogV1::model::SLOCorrectionResponseAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn type_(&mut self, value: crate::datadogV1::model::SLOCorrectionType) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
+
 impl Default for SLOCorrection {
     fn default() -> Self {
         Self::new()

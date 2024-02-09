@@ -17,7 +17,16 @@ impl CIAppPipelinesAggregationBucketsResponse {
     pub fn new() -> CIAppPipelinesAggregationBucketsResponse {
         CIAppPipelinesAggregationBucketsResponse { buckets: None }
     }
+
+    pub fn buckets(
+        &mut self,
+        value: Vec<crate::datadogV2::model::CIAppPipelinesBucketResponse>,
+    ) -> &mut Self {
+        self.buckets = Some(value);
+        self
+    }
 }
+
 impl Default for CIAppPipelinesAggregationBucketsResponse {
     fn default() -> Self {
         Self::new()

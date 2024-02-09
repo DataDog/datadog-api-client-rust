@@ -33,4 +33,19 @@ impl SecurityMonitoringThirdPartyRuleCaseCreate {
             status,
         }
     }
+
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn notifications(&mut self, value: Vec<String>) -> &mut Self {
+        self.notifications = Some(value);
+        self
+    }
+
+    pub fn query(&mut self, value: String) -> &mut Self {
+        self.query = Some(value);
+        self
+    }
 }

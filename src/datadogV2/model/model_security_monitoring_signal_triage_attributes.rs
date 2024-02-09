@@ -16,13 +16,13 @@ pub struct SecurityMonitoringSignalTriageAttributes {
     pub archive_comment_timestamp: Option<i64>,
     /// Object representing a given user entity.
     #[serde(rename = "archive_comment_user")]
-    pub archive_comment_user: Option<Box<crate::datadogV2::model::SecurityMonitoringTriageUser>>,
+    pub archive_comment_user: Option<crate::datadogV2::model::SecurityMonitoringTriageUser>,
     /// Reason a signal is archived.
     #[serde(rename = "archive_reason")]
     pub archive_reason: Option<crate::datadogV2::model::SecurityMonitoringSignalArchiveReason>,
     /// Object representing a given user entity.
     #[serde(rename = "assignee")]
-    pub assignee: Box<crate::datadogV2::model::SecurityMonitoringTriageUser>,
+    pub assignee: crate::datadogV2::model::SecurityMonitoringTriageUser,
     /// Array of incidents that are associated with this signal.
     #[serde(rename = "incident_ids")]
     pub incident_ids: Vec<i64>,
@@ -34,12 +34,12 @@ pub struct SecurityMonitoringSignalTriageAttributes {
     pub state_update_timestamp: Option<i64>,
     /// Object representing a given user entity.
     #[serde(rename = "state_update_user")]
-    pub state_update_user: Option<Box<crate::datadogV2::model::SecurityMonitoringTriageUser>>,
+    pub state_update_user: Option<crate::datadogV2::model::SecurityMonitoringTriageUser>,
 }
 
 impl SecurityMonitoringSignalTriageAttributes {
     pub fn new(
-        assignee: Box<crate::datadogV2::model::SecurityMonitoringTriageUser>,
+        assignee: crate::datadogV2::model::SecurityMonitoringTriageUser,
         incident_ids: Vec<i64>,
         state: crate::datadogV2::model::SecurityMonitoringSignalState,
     ) -> SecurityMonitoringSignalTriageAttributes {
@@ -54,5 +54,44 @@ impl SecurityMonitoringSignalTriageAttributes {
             state_update_timestamp: None,
             state_update_user: None,
         }
+    }
+
+    pub fn archive_comment(&mut self, value: String) -> &mut Self {
+        self.archive_comment = Some(value);
+        self
+    }
+
+    pub fn archive_comment_timestamp(&mut self, value: i64) -> &mut Self {
+        self.archive_comment_timestamp = Some(value);
+        self
+    }
+
+    pub fn archive_comment_user(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringTriageUser,
+    ) -> &mut Self {
+        self.archive_comment_user = Some(value);
+        self
+    }
+
+    pub fn archive_reason(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringSignalArchiveReason,
+    ) -> &mut Self {
+        self.archive_reason = Some(value);
+        self
+    }
+
+    pub fn state_update_timestamp(&mut self, value: i64) -> &mut Self {
+        self.state_update_timestamp = Some(value);
+        self
+    }
+
+    pub fn state_update_user(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringTriageUser,
+    ) -> &mut Self {
+        self.state_update_user = Some(value);
+        self
     }
 }

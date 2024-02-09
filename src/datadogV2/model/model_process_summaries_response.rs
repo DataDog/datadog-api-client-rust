@@ -13,7 +13,7 @@ pub struct ProcessSummariesResponse {
     pub data: Option<Vec<crate::datadogV2::model::ProcessSummary>>,
     /// Response metadata object.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV2::model::ProcessSummariesMeta>>,
+    pub meta: Option<crate::datadogV2::model::ProcessSummariesMeta>,
 }
 
 impl ProcessSummariesResponse {
@@ -23,7 +23,18 @@ impl ProcessSummariesResponse {
             meta: None,
         }
     }
+
+    pub fn data(&mut self, value: Vec<crate::datadogV2::model::ProcessSummary>) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn meta(&mut self, value: crate::datadogV2::model::ProcessSummariesMeta) -> &mut Self {
+        self.meta = Some(value);
+        self
+    }
 }
+
 impl Default for ProcessSummariesResponse {
     fn default() -> Self {
         Self::new()

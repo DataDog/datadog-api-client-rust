@@ -5,36 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreatePagerDutyIntegrationServiceParams is a struct for passing parameters to the method [`PagerDutyIntegrationAPI::create_pager_duty_integration_service`]
-#[derive(Clone, Debug)]
-pub struct CreatePagerDutyIntegrationServiceParams {
-    /// Create a new service object request body.
-    pub body: crate::datadogV1::model::PagerDutyService,
-}
-
-/// DeletePagerDutyIntegrationServiceParams is a struct for passing parameters to the method [`PagerDutyIntegrationAPI::delete_pager_duty_integration_service`]
-#[derive(Clone, Debug)]
-pub struct DeletePagerDutyIntegrationServiceParams {
-    /// The service name
-    pub service_name: String,
-}
-
-/// GetPagerDutyIntegrationServiceParams is a struct for passing parameters to the method [`PagerDutyIntegrationAPI::get_pager_duty_integration_service`]
-#[derive(Clone, Debug)]
-pub struct GetPagerDutyIntegrationServiceParams {
-    /// The service name.
-    pub service_name: String,
-}
-
-/// UpdatePagerDutyIntegrationServiceParams is a struct for passing parameters to the method [`PagerDutyIntegrationAPI::update_pager_duty_integration_service`]
-#[derive(Clone, Debug)]
-pub struct UpdatePagerDutyIntegrationServiceParams {
-    /// The service name
-    pub service_name: String,
-    /// Update an existing service object request body.
-    pub body: crate::datadogV1::model::PagerDutyServiceKey,
-}
-
 /// CreatePagerDutyIntegrationServiceError is a struct for typed errors of method [`PagerDutyIntegrationAPI::create_pager_duty_integration_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -100,13 +70,13 @@ impl PagerDutyIntegrationAPI {
     /// Create a new service object in the PagerDuty integration.
     pub async fn create_pager_duty_integration_service(
         &self,
-        params: CreatePagerDutyIntegrationServiceParams,
+        body: crate::datadogV1::model::PagerDutyService,
     ) -> Result<
         Option<crate::datadogV1::model::PagerDutyServiceName>,
         Error<CreatePagerDutyIntegrationServiceError>,
     > {
         match self
-            .create_pager_duty_integration_service_with_http_info(params)
+            .create_pager_duty_integration_service_with_http_info(body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -117,15 +87,12 @@ impl PagerDutyIntegrationAPI {
     /// Create a new service object in the PagerDuty integration.
     pub async fn create_pager_duty_integration_service_with_http_info(
         &self,
-        params: CreatePagerDutyIntegrationServiceParams,
+        body: crate::datadogV1::model::PagerDutyService,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::PagerDutyServiceName>,
         Error<CreatePagerDutyIntegrationServiceError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -186,10 +153,10 @@ impl PagerDutyIntegrationAPI {
     /// Delete a single service object in the Datadog-PagerDuty integration.
     pub async fn delete_pager_duty_integration_service(
         &self,
-        params: DeletePagerDutyIntegrationServiceParams,
+        service_name: String,
     ) -> Result<Option<()>, Error<DeletePagerDutyIntegrationServiceError>> {
         match self
-            .delete_pager_duty_integration_service_with_http_info(params)
+            .delete_pager_duty_integration_service_with_http_info(service_name)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -200,12 +167,9 @@ impl PagerDutyIntegrationAPI {
     /// Delete a single service object in the Datadog-PagerDuty integration.
     pub async fn delete_pager_duty_integration_service_with_http_info(
         &self,
-        params: DeletePagerDutyIntegrationServiceParams,
+        service_name: String,
     ) -> Result<ResponseContent<()>, Error<DeletePagerDutyIntegrationServiceError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let service_name = params.service_name;
 
         let local_client = &local_configuration.client;
 
@@ -258,13 +222,13 @@ impl PagerDutyIntegrationAPI {
     /// Get service name in the Datadog-PagerDuty integration.
     pub async fn get_pager_duty_integration_service(
         &self,
-        params: GetPagerDutyIntegrationServiceParams,
+        service_name: String,
     ) -> Result<
         Option<crate::datadogV1::model::PagerDutyServiceName>,
         Error<GetPagerDutyIntegrationServiceError>,
     > {
         match self
-            .get_pager_duty_integration_service_with_http_info(params)
+            .get_pager_duty_integration_service_with_http_info(service_name)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -275,15 +239,12 @@ impl PagerDutyIntegrationAPI {
     /// Get service name in the Datadog-PagerDuty integration.
     pub async fn get_pager_duty_integration_service_with_http_info(
         &self,
-        params: GetPagerDutyIntegrationServiceParams,
+        service_name: String,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::PagerDutyServiceName>,
         Error<GetPagerDutyIntegrationServiceError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let service_name = params.service_name;
 
         let local_client = &local_configuration.client;
 
@@ -338,10 +299,11 @@ impl PagerDutyIntegrationAPI {
     /// Update a single service object in the Datadog-PagerDuty integration.
     pub async fn update_pager_duty_integration_service(
         &self,
-        params: UpdatePagerDutyIntegrationServiceParams,
+        service_name: String,
+        body: crate::datadogV1::model::PagerDutyServiceKey,
     ) -> Result<Option<()>, Error<UpdatePagerDutyIntegrationServiceError>> {
         match self
-            .update_pager_duty_integration_service_with_http_info(params)
+            .update_pager_duty_integration_service_with_http_info(service_name, body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -352,13 +314,10 @@ impl PagerDutyIntegrationAPI {
     /// Update a single service object in the Datadog-PagerDuty integration.
     pub async fn update_pager_duty_integration_service_with_http_info(
         &self,
-        params: UpdatePagerDutyIntegrationServiceParams,
+        service_name: String,
+        body: crate::datadogV1::model::PagerDutyServiceKey,
     ) -> Result<ResponseContent<()>, Error<UpdatePagerDutyIntegrationServiceError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let service_name = params.service_name;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct NotebookMarkdownCellAttributes {
     /// Text in a notebook is formatted with [Markdown](<https://daringfireball.net/projects/markdown/>), which enables the use of headings, subheadings, links, images, lists, and code blocks.
     #[serde(rename = "definition")]
-    pub definition: Box<crate::datadogV1::model::NotebookMarkdownCellDefinition>,
+    pub definition: crate::datadogV1::model::NotebookMarkdownCellDefinition,
 }
 
 impl NotebookMarkdownCellAttributes {
     pub fn new(
-        definition: Box<crate::datadogV1::model::NotebookMarkdownCellDefinition>,
+        definition: crate::datadogV1::model::NotebookMarkdownCellDefinition,
     ) -> NotebookMarkdownCellAttributes {
         NotebookMarkdownCellAttributes { definition }
     }

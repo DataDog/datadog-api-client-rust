@@ -25,7 +25,7 @@ pub struct CheckStatusWidgetDefinition {
     pub tags: Option<Vec<String>>,
     /// Time setting for the widget.
     #[serde(rename = "time")]
-    pub time: Option<Box<crate::datadogV1::model::WidgetTime>>,
+    pub time: Option<crate::datadogV1::model::WidgetTime>,
     /// Title of the widget.
     #[serde(rename = "title")]
     pub title: Option<String>,
@@ -58,5 +58,40 @@ impl CheckStatusWidgetDefinition {
             title_size: None,
             type_,
         }
+    }
+
+    pub fn group(&mut self, value: String) -> &mut Self {
+        self.group = Some(value);
+        self
+    }
+
+    pub fn group_by(&mut self, value: Vec<String>) -> &mut Self {
+        self.group_by = Some(value);
+        self
+    }
+
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+
+    pub fn time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
+        self.time = Some(value);
+        self
+    }
+
+    pub fn title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
+    }
+
+    pub fn title_align(&mut self, value: crate::datadogV1::model::WidgetTextAlign) -> &mut Self {
+        self.title_align = Some(value);
+        self
+    }
+
+    pub fn title_size(&mut self, value: String) -> &mut Self {
+        self.title_size = Some(value);
+        self
     }
 }

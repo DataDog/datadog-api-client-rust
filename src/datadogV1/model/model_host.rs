@@ -31,10 +31,10 @@ pub struct Host {
     pub last_reported_time: Option<i64>,
     /// Metadata associated with your host.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV1::model::HostMeta>>,
+    pub meta: Option<crate::datadogV1::model::HostMeta>,
     /// Host Metrics collected.
     #[serde(rename = "metrics")]
-    pub metrics: Option<Box<crate::datadogV1::model::HostMetrics>>,
+    pub metrics: Option<crate::datadogV1::model::HostMetrics>,
     /// Timeout of the mute applied to your host.
     #[serde(
         rename = "mute_timeout",
@@ -75,7 +75,81 @@ impl Host {
             up: None,
         }
     }
+
+    pub fn aliases(&mut self, value: Vec<String>) -> &mut Self {
+        self.aliases = Some(value);
+        self
+    }
+
+    pub fn apps(&mut self, value: Vec<String>) -> &mut Self {
+        self.apps = Some(value);
+        self
+    }
+
+    pub fn aws_name(&mut self, value: String) -> &mut Self {
+        self.aws_name = Some(value);
+        self
+    }
+
+    pub fn host_name(&mut self, value: String) -> &mut Self {
+        self.host_name = Some(value);
+        self
+    }
+
+    pub fn id(&mut self, value: i64) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn is_muted(&mut self, value: bool) -> &mut Self {
+        self.is_muted = Some(value);
+        self
+    }
+
+    pub fn last_reported_time(&mut self, value: i64) -> &mut Self {
+        self.last_reported_time = Some(value);
+        self
+    }
+
+    pub fn meta(&mut self, value: crate::datadogV1::model::HostMeta) -> &mut Self {
+        self.meta = Some(value);
+        self
+    }
+
+    pub fn metrics(&mut self, value: crate::datadogV1::model::HostMetrics) -> &mut Self {
+        self.metrics = Some(value);
+        self
+    }
+
+    pub fn mute_timeout(&mut self, value: Option<i64>) -> &mut Self {
+        self.mute_timeout = Some(value);
+        self
+    }
+
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn sources(&mut self, value: Vec<String>) -> &mut Self {
+        self.sources = Some(value);
+        self
+    }
+
+    pub fn tags_by_source(
+        &mut self,
+        value: std::collections::BTreeMap<String, Vec<String>>,
+    ) -> &mut Self {
+        self.tags_by_source = Some(value);
+        self
+    }
+
+    pub fn up(&mut self, value: bool) -> &mut Self {
+        self.up = Some(value);
+        self
+    }
 }
+
 impl Default for Host {
     fn default() -> Self {
         Self::new()

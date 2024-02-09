@@ -12,8 +12,7 @@ pub struct DowntimeScheduleRecurrencesResponse {
     /// this is the previously occurring downtime. For active downtimes, this is the ongoing downtime, and for scheduled
     /// downtimes it is the upcoming downtime.
     #[serde(rename = "current_downtime")]
-    pub current_downtime:
-        Option<Box<crate::datadogV2::model::DowntimeScheduleCurrentDowntimeResponse>>,
+    pub current_downtime: Option<crate::datadogV2::model::DowntimeScheduleCurrentDowntimeResponse>,
     /// A list of downtime recurrences.
     #[serde(rename = "recurrences")]
     pub recurrences: Vec<crate::datadogV2::model::DowntimeScheduleRecurrenceResponse>,
@@ -32,5 +31,18 @@ impl DowntimeScheduleRecurrencesResponse {
             recurrences,
             timezone: None,
         }
+    }
+
+    pub fn current_downtime(
+        &mut self,
+        value: crate::datadogV2::model::DowntimeScheduleCurrentDowntimeResponse,
+    ) -> &mut Self {
+        self.current_downtime = Some(value);
+        self
+    }
+
+    pub fn timezone(&mut self, value: String) -> &mut Self {
+        self.timezone = Some(value);
+        self
     }
 }

@@ -17,7 +17,16 @@ impl ServiceDefinitionsListResponse {
     pub fn new() -> ServiceDefinitionsListResponse {
         ServiceDefinitionsListResponse { data: None }
     }
+
+    pub fn data(
+        &mut self,
+        value: Vec<crate::datadogV2::model::ServiceDefinitionData>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for ServiceDefinitionsListResponse {
     fn default() -> Self {
         Self::new()

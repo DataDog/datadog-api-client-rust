@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct DORADeploymentResponse {
     /// The JSON:API data.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::DORADeploymentResponseData>,
+    pub data: crate::datadogV2::model::DORADeploymentResponseData,
 }
 
 impl DORADeploymentResponse {
     pub fn new(
-        data: Box<crate::datadogV2::model::DORADeploymentResponseData>,
+        data: crate::datadogV2::model::DORADeploymentResponseData,
     ) -> DORADeploymentResponse {
         DORADeploymentResponse { data }
     }

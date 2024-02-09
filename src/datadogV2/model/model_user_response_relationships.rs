@@ -10,16 +10,16 @@ use serde_with::skip_serializing_none;
 pub struct UserResponseRelationships {
     /// Relationship to an organization.
     #[serde(rename = "org")]
-    pub org: Option<Box<crate::datadogV2::model::RelationshipToOrganization>>,
+    pub org: Option<crate::datadogV2::model::RelationshipToOrganization>,
     /// Relationship to organizations.
     #[serde(rename = "other_orgs")]
-    pub other_orgs: Option<Box<crate::datadogV2::model::RelationshipToOrganizations>>,
+    pub other_orgs: Option<crate::datadogV2::model::RelationshipToOrganizations>,
     /// Relationship to users.
     #[serde(rename = "other_users")]
-    pub other_users: Option<Box<crate::datadogV2::model::RelationshipToUsers>>,
+    pub other_users: Option<crate::datadogV2::model::RelationshipToUsers>,
     /// Relationship to roles.
     #[serde(rename = "roles")]
-    pub roles: Option<Box<crate::datadogV2::model::RelationshipToRoles>>,
+    pub roles: Option<crate::datadogV2::model::RelationshipToRoles>,
 }
 
 impl UserResponseRelationships {
@@ -31,7 +31,34 @@ impl UserResponseRelationships {
             roles: None,
         }
     }
+
+    pub fn org(&mut self, value: crate::datadogV2::model::RelationshipToOrganization) -> &mut Self {
+        self.org = Some(value);
+        self
+    }
+
+    pub fn other_orgs(
+        &mut self,
+        value: crate::datadogV2::model::RelationshipToOrganizations,
+    ) -> &mut Self {
+        self.other_orgs = Some(value);
+        self
+    }
+
+    pub fn other_users(
+        &mut self,
+        value: crate::datadogV2::model::RelationshipToUsers,
+    ) -> &mut Self {
+        self.other_users = Some(value);
+        self
+    }
+
+    pub fn roles(&mut self, value: crate::datadogV2::model::RelationshipToRoles) -> &mut Self {
+        self.roles = Some(value);
+        self
+    }
 }
+
 impl Default for UserResponseRelationships {
     fn default() -> Self {
         Self::new()

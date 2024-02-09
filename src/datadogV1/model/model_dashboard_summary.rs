@@ -17,7 +17,16 @@ impl DashboardSummary {
     pub fn new() -> DashboardSummary {
         DashboardSummary { dashboards: None }
     }
+
+    pub fn dashboards(
+        &mut self,
+        value: Vec<crate::datadogV1::model::DashboardSummaryDefinition>,
+    ) -> &mut Self {
+        self.dashboards = Some(value);
+        self
+    }
 }
+
 impl Default for DashboardSummary {
     fn default() -> Self {
         Self::new()

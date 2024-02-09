@@ -17,7 +17,13 @@ impl ProjectedCostResponse {
     pub fn new() -> ProjectedCostResponse {
         ProjectedCostResponse { data: None }
     }
+
+    pub fn data(&mut self, value: Vec<crate::datadogV2::model::ProjectedCost>) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for ProjectedCostResponse {
     fn default() -> Self {
         Self::new()

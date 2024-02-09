@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct OktaAccountUpdateRequestData {
     /// Attributes object for updating an Okta account.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::OktaAccountUpdateRequestAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::OktaAccountUpdateRequestAttributes>,
     /// Account type for an Okta account.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::OktaAccountType>,
@@ -23,7 +23,21 @@ impl OktaAccountUpdateRequestData {
             type_: None,
         }
     }
+
+    pub fn attributes(
+        &mut self,
+        value: crate::datadogV2::model::OktaAccountUpdateRequestAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn type_(&mut self, value: crate::datadogV2::model::OktaAccountType) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
+
 impl Default for OktaAccountUpdateRequestData {
     fn default() -> Self {
         Self::new()

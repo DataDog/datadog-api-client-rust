@@ -55,7 +55,64 @@ impl SyntheticsBatchResult {
             test_type: None,
         }
     }
+
+    pub fn device(&mut self, value: crate::datadogV1::model::SyntheticsDeviceID) -> &mut Self {
+        self.device = Some(value);
+        self
+    }
+
+    pub fn duration(&mut self, value: f64) -> &mut Self {
+        self.duration = Some(value);
+        self
+    }
+
+    pub fn execution_rule(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsTestExecutionRule,
+    ) -> &mut Self {
+        self.execution_rule = Some(value);
+        self
+    }
+
+    pub fn location(&mut self, value: String) -> &mut Self {
+        self.location = Some(value);
+        self
+    }
+
+    pub fn result_id(&mut self, value: String) -> &mut Self {
+        self.result_id = Some(value);
+        self
+    }
+
+    pub fn retries(&mut self, value: f64) -> &mut Self {
+        self.retries = Some(value);
+        self
+    }
+
+    pub fn status(&mut self, value: crate::datadogV1::model::SyntheticsStatus) -> &mut Self {
+        self.status = Some(value);
+        self
+    }
+
+    pub fn test_name(&mut self, value: String) -> &mut Self {
+        self.test_name = Some(value);
+        self
+    }
+
+    pub fn test_public_id(&mut self, value: String) -> &mut Self {
+        self.test_public_id = Some(value);
+        self
+    }
+
+    pub fn test_type(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsTestDetailsType,
+    ) -> &mut Self {
+        self.test_type = Some(value);
+        self
+    }
 }
+
 impl Default for SyntheticsBatchResult {
     fn default() -> Self {
         Self::new()

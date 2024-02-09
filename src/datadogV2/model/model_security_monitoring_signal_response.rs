@@ -10,14 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct SecurityMonitoringSignalResponse {
     /// Object description of a security signal.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::SecurityMonitoringSignal>>,
+    pub data: Option<crate::datadogV2::model::SecurityMonitoringSignal>,
 }
 
 impl SecurityMonitoringSignalResponse {
     pub fn new() -> SecurityMonitoringSignalResponse {
         SecurityMonitoringSignalResponse { data: None }
     }
+
+    pub fn data(&mut self, value: crate::datadogV2::model::SecurityMonitoringSignal) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for SecurityMonitoringSignalResponse {
     fn default() -> Self {
         Self::new()

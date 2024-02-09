@@ -5,32 +5,22 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateGCPSTSAccountParams is a struct for passing parameters to the method [`GCPIntegrationAPI::create_gcpsts_account`]
-#[derive(Clone, Debug)]
-pub struct CreateGCPSTSAccountParams {
-    pub body: crate::datadogV2::model::GCPSTSServiceAccountCreateRequest,
-}
-
-/// DeleteGCPSTSAccountParams is a struct for passing parameters to the method [`GCPIntegrationAPI::delete_gcpsts_account`]
-#[derive(Clone, Debug)]
-pub struct DeleteGCPSTSAccountParams {
-    /// Your GCP STS enabled service account's unique ID.
-    pub account_id: String,
-}
-
-/// MakeGCPSTSDelegateParams is a struct for passing parameters to the method [`GCPIntegrationAPI::make_gcpsts_delegate`]
-#[derive(Clone, Debug)]
-pub struct MakeGCPSTSDelegateParams {
+/// MakeGCPSTSDelegateOptionalParams is a struct for passing parameters to the method [`GCPIntegrationAPI::make_gcpsts_delegate`]
+#[derive(Clone, Default, Debug)]
+pub struct MakeGCPSTSDelegateOptionalParams {
     /// Create a delegate service account within Datadog.
-    pub body: Option<Option<std::collections::BTreeMap<String, serde_json::Value>>>,
+    pub body: Option<std::collections::BTreeMap<String, serde_json::Value>>,
 }
 
-/// UpdateGCPSTSAccountParams is a struct for passing parameters to the method [`GCPIntegrationAPI::update_gcpsts_account`]
-#[derive(Clone, Debug)]
-pub struct UpdateGCPSTSAccountParams {
-    /// Your GCP STS enabled service account's unique ID.
-    pub account_id: String,
-    pub body: crate::datadogV2::model::GCPSTSServiceAccountUpdateRequest,
+impl MakeGCPSTSDelegateOptionalParams {
+    /// Create a delegate service account within Datadog.
+    pub fn body(
+        &mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> &mut Self {
+        self.body = Some(value);
+        self
+    }
 }
 
 /// CreateGCPSTSAccountError is a struct for typed errors of method [`GCPIntegrationAPI::create_gcpsts_account`]
@@ -119,12 +109,12 @@ impl GCPIntegrationAPI {
     /// Create a new entry within Datadog for your STS enabled service account.
     pub async fn create_gcpsts_account(
         &self,
-        params: CreateGCPSTSAccountParams,
+        body: crate::datadogV2::model::GCPSTSServiceAccountCreateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::GCPSTSServiceAccountResponse>,
         Error<CreateGCPSTSAccountError>,
     > {
-        match self.create_gcpsts_account_with_http_info(params).await {
+        match self.create_gcpsts_account_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -133,15 +123,12 @@ impl GCPIntegrationAPI {
     /// Create a new entry within Datadog for your STS enabled service account.
     pub async fn create_gcpsts_account_with_http_info(
         &self,
-        params: CreateGCPSTSAccountParams,
+        body: crate::datadogV2::model::GCPSTSServiceAccountCreateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::GCPSTSServiceAccountResponse>,
         Error<CreateGCPSTSAccountError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -202,9 +189,9 @@ impl GCPIntegrationAPI {
     /// Delete an STS enabled GCP account from within Datadog.
     pub async fn delete_gcpsts_account(
         &self,
-        params: DeleteGCPSTSAccountParams,
+        account_id: String,
     ) -> Result<Option<()>, Error<DeleteGCPSTSAccountError>> {
-        match self.delete_gcpsts_account_with_http_info(params).await {
+        match self.delete_gcpsts_account_with_http_info(account_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -213,12 +200,9 @@ impl GCPIntegrationAPI {
     /// Delete an STS enabled GCP account from within Datadog.
     pub async fn delete_gcpsts_account_with_http_info(
         &self,
-        params: DeleteGCPSTSAccountParams,
+        account_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteGCPSTSAccountError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_id = params.account_id;
 
         let local_client = &local_configuration.client;
 
@@ -289,8 +273,6 @@ impl GCPIntegrationAPI {
         Error<GetGCPSTSDelegateError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
 
         let local_client = &local_configuration.client;
 
@@ -363,8 +345,6 @@ impl GCPIntegrationAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -417,7 +397,7 @@ impl GCPIntegrationAPI {
     /// Create a Datadog GCP principal.
     pub async fn make_gcpsts_delegate(
         &self,
-        params: MakeGCPSTSDelegateParams,
+        params: MakeGCPSTSDelegateOptionalParams,
     ) -> Result<
         Option<crate::datadogV2::model::GCPSTSDelegateAccountResponse>,
         Error<MakeGCPSTSDelegateError>,
@@ -431,14 +411,14 @@ impl GCPIntegrationAPI {
     /// Create a Datadog GCP principal.
     pub async fn make_gcpsts_delegate_with_http_info(
         &self,
-        params: MakeGCPSTSDelegateParams,
+        params: MakeGCPSTSDelegateOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::GCPSTSDelegateAccountResponse>,
         Error<MakeGCPSTSDelegateError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let body = params.body;
 
         let local_client = &local_configuration.client;
@@ -500,12 +480,16 @@ impl GCPIntegrationAPI {
     /// Update an STS enabled service account.
     pub async fn update_gcpsts_account(
         &self,
-        params: UpdateGCPSTSAccountParams,
+        account_id: String,
+        body: crate::datadogV2::model::GCPSTSServiceAccountUpdateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::GCPSTSServiceAccountResponse>,
         Error<UpdateGCPSTSAccountError>,
     > {
-        match self.update_gcpsts_account_with_http_info(params).await {
+        match self
+            .update_gcpsts_account_with_http_info(account_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -514,16 +498,13 @@ impl GCPIntegrationAPI {
     /// Update an STS enabled service account.
     pub async fn update_gcpsts_account_with_http_info(
         &self,
-        params: UpdateGCPSTSAccountParams,
+        account_id: String,
+        body: crate::datadogV2::model::GCPSTSServiceAccountUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::GCPSTSServiceAccountResponse>,
         Error<UpdateGCPSTSAccountError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_id = params.account_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

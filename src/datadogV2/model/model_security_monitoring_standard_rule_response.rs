@@ -14,7 +14,7 @@ pub struct SecurityMonitoringStandardRuleResponse {
     /// How to generate compliance signals. Useful for cloud_configuration rules only.
     #[serde(rename = "complianceSignalOptions")]
     pub compliance_signal_options:
-        Option<Box<crate::datadogV2::model::CloudConfigurationRuleComplianceSignalOptions>>,
+        Option<crate::datadogV2::model::CloudConfigurationRuleComplianceSignalOptions>,
     /// When the rule was created, timestamp in milliseconds.
     #[serde(rename = "createdAt")]
     pub created_at: Option<i64>,
@@ -50,7 +50,7 @@ pub struct SecurityMonitoringStandardRuleResponse {
     pub name: Option<String>,
     /// Options on rules.
     #[serde(rename = "options")]
-    pub options: Option<Box<crate::datadogV2::model::SecurityMonitoringRuleOptions>>,
+    pub options: Option<crate::datadogV2::model::SecurityMonitoringRuleOptions>,
     /// Queries for selecting logs which are part of the rule.
     #[serde(rename = "queries")]
     pub queries: Option<Vec<crate::datadogV2::model::SecurityMonitoringStandardRuleQuery>>,
@@ -97,7 +97,129 @@ impl SecurityMonitoringStandardRuleResponse {
             version: None,
         }
     }
+
+    pub fn cases(
+        &mut self,
+        value: Vec<crate::datadogV2::model::SecurityMonitoringRuleCase>,
+    ) -> &mut Self {
+        self.cases = Some(value);
+        self
+    }
+
+    pub fn compliance_signal_options(
+        &mut self,
+        value: crate::datadogV2::model::CloudConfigurationRuleComplianceSignalOptions,
+    ) -> &mut Self {
+        self.compliance_signal_options = Some(value);
+        self
+    }
+
+    pub fn created_at(&mut self, value: i64) -> &mut Self {
+        self.created_at = Some(value);
+        self
+    }
+
+    pub fn creation_author_id(&mut self, value: i64) -> &mut Self {
+        self.creation_author_id = Some(value);
+        self
+    }
+
+    pub fn deprecation_date(&mut self, value: i64) -> &mut Self {
+        self.deprecation_date = Some(value);
+        self
+    }
+
+    pub fn filters(
+        &mut self,
+        value: Vec<crate::datadogV2::model::SecurityMonitoringFilter>,
+    ) -> &mut Self {
+        self.filters = Some(value);
+        self
+    }
+
+    pub fn has_extended_title(&mut self, value: bool) -> &mut Self {
+        self.has_extended_title = Some(value);
+        self
+    }
+
+    pub fn id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn is_default(&mut self, value: bool) -> &mut Self {
+        self.is_default = Some(value);
+        self
+    }
+
+    pub fn is_deleted(&mut self, value: bool) -> &mut Self {
+        self.is_deleted = Some(value);
+        self
+    }
+
+    pub fn is_enabled(&mut self, value: bool) -> &mut Self {
+        self.is_enabled = Some(value);
+        self
+    }
+
+    pub fn message(&mut self, value: String) -> &mut Self {
+        self.message = Some(value);
+        self
+    }
+
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn options(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringRuleOptions,
+    ) -> &mut Self {
+        self.options = Some(value);
+        self
+    }
+
+    pub fn queries(
+        &mut self,
+        value: Vec<crate::datadogV2::model::SecurityMonitoringStandardRuleQuery>,
+    ) -> &mut Self {
+        self.queries = Some(value);
+        self
+    }
+
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+
+    pub fn third_party_cases(
+        &mut self,
+        value: Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRuleCase>,
+    ) -> &mut Self {
+        self.third_party_cases = Some(value);
+        self
+    }
+
+    pub fn type_(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringRuleTypeRead,
+    ) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
+
+    pub fn update_author_id(&mut self, value: i64) -> &mut Self {
+        self.update_author_id = Some(value);
+        self
+    }
+
+    pub fn version(&mut self, value: i64) -> &mut Self {
+        self.version = Some(value);
+        self
+    }
 }
+
 impl Default for SecurityMonitoringStandardRuleResponse {
     fn default() -> Self {
         Self::new()

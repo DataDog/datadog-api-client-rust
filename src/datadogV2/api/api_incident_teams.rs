@@ -6,32 +6,24 @@ use log::warn;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateIncidentTeamParams is a struct for passing parameters to the method [`IncidentTeamsAPI::create_incident_team`]
-#[derive(Clone, Debug)]
-pub struct CreateIncidentTeamParams {
-    /// Incident Team Payload.
-    pub body: crate::datadogV2::model::IncidentTeamCreateRequest,
-}
-
-/// DeleteIncidentTeamParams is a struct for passing parameters to the method [`IncidentTeamsAPI::delete_incident_team`]
-#[derive(Clone, Debug)]
-pub struct DeleteIncidentTeamParams {
-    /// The ID of the incident team.
-    pub team_id: String,
-}
-
-/// GetIncidentTeamParams is a struct for passing parameters to the method [`IncidentTeamsAPI::get_incident_team`]
-#[derive(Clone, Debug)]
-pub struct GetIncidentTeamParams {
-    /// The ID of the incident team.
-    pub team_id: String,
+/// GetIncidentTeamOptionalParams is a struct for passing parameters to the method [`IncidentTeamsAPI::get_incident_team`]
+#[derive(Clone, Default, Debug)]
+pub struct GetIncidentTeamOptionalParams {
     /// Specifies which types of related objects should be included in the response.
     pub include: Option<crate::datadogV2::model::IncidentRelatedObject>,
 }
 
-/// ListIncidentTeamsParams is a struct for passing parameters to the method [`IncidentTeamsAPI::list_incident_teams`]
-#[derive(Clone, Debug)]
-pub struct ListIncidentTeamsParams {
+impl GetIncidentTeamOptionalParams {
+    /// Specifies which types of related objects should be included in the response.
+    pub fn include(&mut self, value: crate::datadogV2::model::IncidentRelatedObject) -> &mut Self {
+        self.include = Some(value);
+        self
+    }
+}
+
+/// ListIncidentTeamsOptionalParams is a struct for passing parameters to the method [`IncidentTeamsAPI::list_incident_teams`]
+#[derive(Clone, Default, Debug)]
+pub struct ListIncidentTeamsOptionalParams {
     /// Specifies which types of related objects should be included in the response.
     pub include: Option<crate::datadogV2::model::IncidentRelatedObject>,
     /// Size for a given page. The maximum allowed value is 100.
@@ -42,13 +34,27 @@ pub struct ListIncidentTeamsParams {
     pub filter: Option<String>,
 }
 
-/// UpdateIncidentTeamParams is a struct for passing parameters to the method [`IncidentTeamsAPI::update_incident_team`]
-#[derive(Clone, Debug)]
-pub struct UpdateIncidentTeamParams {
-    /// The ID of the incident team.
-    pub team_id: String,
-    /// Incident Team Payload.
-    pub body: crate::datadogV2::model::IncidentTeamUpdateRequest,
+impl ListIncidentTeamsOptionalParams {
+    /// Specifies which types of related objects should be included in the response.
+    pub fn include(&mut self, value: crate::datadogV2::model::IncidentRelatedObject) -> &mut Self {
+        self.include = Some(value);
+        self
+    }
+    /// Size for a given page. The maximum allowed value is 100.
+    pub fn page_size(&mut self, value: i64) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Specific offset to use as the beginning of the returned page.
+    pub fn page_offset(&mut self, value: i64) -> &mut Self {
+        self.page_offset = Some(value);
+        self
+    }
+    /// A search query that filters teams by name.
+    pub fn filter(&mut self, value: String) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
 }
 
 /// CreateIncidentTeamError is a struct for typed errors of method [`IncidentTeamsAPI::create_incident_team`]
@@ -135,10 +141,10 @@ impl IncidentTeamsAPI {
     /// Creates a new incident team.
     pub async fn create_incident_team(
         &self,
-        params: CreateIncidentTeamParams,
+        body: crate::datadogV2::model::IncidentTeamCreateRequest,
     ) -> Result<Option<crate::datadogV2::model::IncidentTeamResponse>, Error<CreateIncidentTeamError>>
     {
-        match self.create_incident_team_with_http_info(params).await {
+        match self.create_incident_team_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -147,7 +153,7 @@ impl IncidentTeamsAPI {
     /// Creates a new incident team.
     pub async fn create_incident_team_with_http_info(
         &self,
-        params: CreateIncidentTeamParams,
+        body: crate::datadogV2::model::IncidentTeamCreateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::IncidentTeamResponse>,
         Error<CreateIncidentTeamError>,
@@ -163,9 +169,6 @@ impl IncidentTeamsAPI {
         }
 
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -223,9 +226,9 @@ impl IncidentTeamsAPI {
     /// Deletes an existing incident team.
     pub async fn delete_incident_team(
         &self,
-        params: DeleteIncidentTeamParams,
+        team_id: String,
     ) -> Result<Option<()>, Error<DeleteIncidentTeamError>> {
-        match self.delete_incident_team_with_http_info(params).await {
+        match self.delete_incident_team_with_http_info(team_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -234,7 +237,7 @@ impl IncidentTeamsAPI {
     /// Deletes an existing incident team.
     pub async fn delete_incident_team_with_http_info(
         &self,
-        params: DeleteIncidentTeamParams,
+        team_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteIncidentTeamError>> {
         let operation_id = "v2.delete_incident_team".to_string();
         if self.config.is_unstable_operation_enabled(&operation_id) {
@@ -247,9 +250,6 @@ impl IncidentTeamsAPI {
         }
 
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let team_id = params.team_id;
 
         let local_client = &local_configuration.client;
 
@@ -303,10 +303,11 @@ impl IncidentTeamsAPI {
     /// the included attribute will contain the users related to these incident teams.
     pub async fn get_incident_team(
         &self,
-        params: GetIncidentTeamParams,
+        team_id: String,
+        params: GetIncidentTeamOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::IncidentTeamResponse>, Error<GetIncidentTeamError>>
     {
-        match self.get_incident_team_with_http_info(params).await {
+        match self.get_incident_team_with_http_info(team_id, params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -316,7 +317,8 @@ impl IncidentTeamsAPI {
     /// the included attribute will contain the users related to these incident teams.
     pub async fn get_incident_team_with_http_info(
         &self,
-        params: GetIncidentTeamParams,
+        team_id: String,
+        params: GetIncidentTeamOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::IncidentTeamResponse>,
         Error<GetIncidentTeamError>,
@@ -333,8 +335,7 @@ impl IncidentTeamsAPI {
 
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let team_id = params.team_id;
+        // unbox and build optional parameters
         let include = params.include;
 
         let local_client = &local_configuration.client;
@@ -347,8 +348,9 @@ impl IncidentTeamsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = include {
-            local_req_builder = local_req_builder.query(&[("include", &local_str.to_string())]);
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -394,7 +396,7 @@ impl IncidentTeamsAPI {
     /// Get all incident teams for the requesting user's organization. If the `include[users]` query parameter is provided, the included attribute will contain the users related to these incident teams.
     pub async fn list_incident_teams(
         &self,
-        params: ListIncidentTeamsParams,
+        params: ListIncidentTeamsOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::IncidentTeamsResponse>, Error<ListIncidentTeamsError>>
     {
         match self.list_incident_teams_with_http_info(params).await {
@@ -406,7 +408,7 @@ impl IncidentTeamsAPI {
     /// Get all incident teams for the requesting user's organization. If the `include[users]` query parameter is provided, the included attribute will contain the users related to these incident teams.
     pub async fn list_incident_teams_with_http_info(
         &self,
-        params: ListIncidentTeamsParams,
+        params: ListIncidentTeamsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::IncidentTeamsResponse>,
         Error<ListIncidentTeamsError>,
@@ -423,7 +425,7 @@ impl IncidentTeamsAPI {
 
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let include = params.include;
         let page_size = params.page_size;
         let page_offset = params.page_offset;
@@ -435,18 +437,21 @@ impl IncidentTeamsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = include {
-            local_req_builder = local_req_builder.query(&[("include", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_size {
-            local_req_builder = local_req_builder.query(&[("page[size]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_offset {
+        if let Some(ref local_query_param) = include {
             local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_str.to_string())]);
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter {
-            local_req_builder = local_req_builder.query(&[("filter", &local_str.to_string())]);
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_offset {
+            local_req_builder =
+                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter {
+            local_req_builder =
+                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -492,10 +497,14 @@ impl IncidentTeamsAPI {
     /// Updates an existing incident team. Only provide the attributes which should be updated as this request is a partial update.
     pub async fn update_incident_team(
         &self,
-        params: UpdateIncidentTeamParams,
+        team_id: String,
+        body: crate::datadogV2::model::IncidentTeamUpdateRequest,
     ) -> Result<Option<crate::datadogV2::model::IncidentTeamResponse>, Error<UpdateIncidentTeamError>>
     {
-        match self.update_incident_team_with_http_info(params).await {
+        match self
+            .update_incident_team_with_http_info(team_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -504,7 +513,8 @@ impl IncidentTeamsAPI {
     /// Updates an existing incident team. Only provide the attributes which should be updated as this request is a partial update.
     pub async fn update_incident_team_with_http_info(
         &self,
-        params: UpdateIncidentTeamParams,
+        team_id: String,
+        body: crate::datadogV2::model::IncidentTeamUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::IncidentTeamResponse>,
         Error<UpdateIncidentTeamError>,
@@ -520,10 +530,6 @@ impl IncidentTeamsAPI {
         }
 
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let team_id = params.team_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

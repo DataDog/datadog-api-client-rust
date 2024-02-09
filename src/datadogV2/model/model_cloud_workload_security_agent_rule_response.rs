@@ -10,14 +10,23 @@ use serde_with::skip_serializing_none;
 pub struct CloudWorkloadSecurityAgentRuleResponse {
     /// Object for a single Agent rule.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleData>>,
+    pub data: Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleData>,
 }
 
 impl CloudWorkloadSecurityAgentRuleResponse {
     pub fn new() -> CloudWorkloadSecurityAgentRuleResponse {
         CloudWorkloadSecurityAgentRuleResponse { data: None }
     }
+
+    pub fn data(
+        &mut self,
+        value: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleData,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for CloudWorkloadSecurityAgentRuleResponse {
     fn default() -> Self {
         Self::new()

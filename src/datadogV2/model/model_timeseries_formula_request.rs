@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct TimeseriesFormulaRequest {
     /// The object describing a timeseries formula request.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::TimeseriesFormulaRequestAttributes>,
+    pub attributes: crate::datadogV2::model::TimeseriesFormulaRequestAttributes,
     /// The type of the resource. The value should always be timeseries_request.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::TimeseriesFormulaRequestType,
@@ -18,7 +18,7 @@ pub struct TimeseriesFormulaRequest {
 
 impl TimeseriesFormulaRequest {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::TimeseriesFormulaRequestAttributes>,
+        attributes: crate::datadogV2::model::TimeseriesFormulaRequestAttributes,
         type_: crate::datadogV2::model::TimeseriesFormulaRequestType,
     ) -> TimeseriesFormulaRequest {
         TimeseriesFormulaRequest { attributes, type_ }

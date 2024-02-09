@@ -27,4 +27,12 @@ impl SyntheticsBasicAuthWeb {
             username,
         }
     }
+
+    pub fn type_(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsBasicAuthWebType,
+    ) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }

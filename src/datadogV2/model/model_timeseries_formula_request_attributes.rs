@@ -42,4 +42,14 @@ impl TimeseriesFormulaRequestAttributes {
             to,
         }
     }
+
+    pub fn formulas(&mut self, value: Vec<crate::datadogV2::model::QueryFormula>) -> &mut Self {
+        self.formulas = Some(value);
+        self
+    }
+
+    pub fn interval(&mut self, value: i64) -> &mut Self {
+        self.interval = Some(value);
+        self
+    }
 }

@@ -18,7 +18,13 @@ impl LogsResponseMetadataPage {
     pub fn new() -> LogsResponseMetadataPage {
         LogsResponseMetadataPage { after: None }
     }
+
+    pub fn after(&mut self, value: String) -> &mut Self {
+        self.after = Some(value);
+        self
+    }
 }
+
 impl Default for LogsResponseMetadataPage {
     fn default() -> Self {
         Self::new()

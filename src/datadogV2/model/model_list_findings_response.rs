@@ -13,13 +13,13 @@ pub struct ListFindingsResponse {
     pub data: Vec<crate::datadogV2::model::Finding>,
     /// Metadata for pagination.
     #[serde(rename = "meta")]
-    pub meta: Box<crate::datadogV2::model::ListFindingsMeta>,
+    pub meta: crate::datadogV2::model::ListFindingsMeta,
 }
 
 impl ListFindingsResponse {
     pub fn new(
         data: Vec<crate::datadogV2::model::Finding>,
-        meta: Box<crate::datadogV2::model::ListFindingsMeta>,
+        meta: crate::datadogV2::model::ListFindingsMeta,
     ) -> ListFindingsResponse {
         ListFindingsResponse { data, meta }
     }

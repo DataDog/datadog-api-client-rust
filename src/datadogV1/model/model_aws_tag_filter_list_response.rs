@@ -17,7 +17,13 @@ impl AWSTagFilterListResponse {
     pub fn new() -> AWSTagFilterListResponse {
         AWSTagFilterListResponse { filters: None }
     }
+
+    pub fn filters(&mut self, value: Vec<crate::datadogV1::model::AWSTagFilter>) -> &mut Self {
+        self.filters = Some(value);
+        self
+    }
 }
+
 impl Default for AWSTagFilterListResponse {
     fn default() -> Self {
         Self::new()

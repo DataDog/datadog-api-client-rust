@@ -16,7 +16,7 @@ pub struct SyntheticsAPITestResultShort {
     pub probe_dc: Option<String>,
     /// Result of the last API test run.
     #[serde(rename = "result")]
-    pub result: Option<Box<crate::datadogV1::model::SyntheticsAPITestResultShortResult>>,
+    pub result: Option<crate::datadogV1::model::SyntheticsAPITestResultShortResult>,
     /// ID of the API test result.
     #[serde(rename = "result_id")]
     pub result_id: Option<String>,
@@ -38,7 +38,39 @@ impl SyntheticsAPITestResultShort {
             status: None,
         }
     }
+
+    pub fn check_time(&mut self, value: f64) -> &mut Self {
+        self.check_time = Some(value);
+        self
+    }
+
+    pub fn probe_dc(&mut self, value: String) -> &mut Self {
+        self.probe_dc = Some(value);
+        self
+    }
+
+    pub fn result(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsAPITestResultShortResult,
+    ) -> &mut Self {
+        self.result = Some(value);
+        self
+    }
+
+    pub fn result_id(&mut self, value: String) -> &mut Self {
+        self.result_id = Some(value);
+        self
+    }
+
+    pub fn status(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsTestMonitorStatus,
+    ) -> &mut Self {
+        self.status = Some(value);
+        self
+    }
 }
+
 impl Default for SyntheticsAPITestResultShort {
     fn default() -> Self {
         Self::new()

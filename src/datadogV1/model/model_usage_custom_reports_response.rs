@@ -13,7 +13,7 @@ pub struct UsageCustomReportsResponse {
     pub data: Option<Vec<crate::datadogV1::model::UsageCustomReportsData>>,
     /// The object containing document metadata.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV1::model::UsageCustomReportsMeta>>,
+    pub meta: Option<crate::datadogV1::model::UsageCustomReportsMeta>,
 }
 
 impl UsageCustomReportsResponse {
@@ -23,7 +23,21 @@ impl UsageCustomReportsResponse {
             meta: None,
         }
     }
+
+    pub fn data(
+        &mut self,
+        value: Vec<crate::datadogV1::model::UsageCustomReportsData>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn meta(&mut self, value: crate::datadogV1::model::UsageCustomReportsMeta) -> &mut Self {
+        self.meta = Some(value);
+        self
+    }
 }
+
 impl Default for UsageCustomReportsResponse {
     fn default() -> Self {
         Self::new()

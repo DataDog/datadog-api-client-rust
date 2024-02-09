@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct FunnelWidgetRequest {
     /// Updated funnel widget.
     #[serde(rename = "query")]
-    pub query: Box<crate::datadogV1::model::FunnelQuery>,
+    pub query: crate::datadogV1::model::FunnelQuery,
     /// Widget request type.
     #[serde(rename = "request_type")]
     pub request_type: crate::datadogV1::model::FunnelRequestType,
@@ -18,7 +18,7 @@ pub struct FunnelWidgetRequest {
 
 impl FunnelWidgetRequest {
     pub fn new(
-        query: Box<crate::datadogV1::model::FunnelQuery>,
+        query: crate::datadogV1::model::FunnelQuery,
         request_type: crate::datadogV1::model::FunnelRequestType,
     ) -> FunnelWidgetRequest {
         FunnelWidgetRequest {

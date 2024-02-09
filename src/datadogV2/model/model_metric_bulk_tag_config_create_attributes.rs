@@ -29,7 +29,23 @@ impl MetricBulkTagConfigCreateAttributes {
             tags: None,
         }
     }
+
+    pub fn emails(&mut self, value: Vec<String>) -> &mut Self {
+        self.emails = Some(value);
+        self
+    }
+
+    pub fn exclude_tags_mode(&mut self, value: bool) -> &mut Self {
+        self.exclude_tags_mode = Some(value);
+        self
+    }
+
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
 }
+
 impl Default for MetricBulkTagConfigCreateAttributes {
     fn default() -> Self {
         Self::new()

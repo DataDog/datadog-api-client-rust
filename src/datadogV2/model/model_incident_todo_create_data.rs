@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct IncidentTodoCreateData {
     /// Incident todo's attributes.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::IncidentTodoAttributes>,
+    pub attributes: crate::datadogV2::model::IncidentTodoAttributes,
     /// Todo resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::IncidentTodoType,
@@ -18,7 +18,7 @@ pub struct IncidentTodoCreateData {
 
 impl IncidentTodoCreateData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::IncidentTodoAttributes>,
+        attributes: crate::datadogV2::model::IncidentTodoAttributes,
         type_: crate::datadogV2::model::IncidentTodoType,
     ) -> IncidentTodoCreateData {
         IncidentTodoCreateData { attributes, type_ }

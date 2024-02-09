@@ -13,7 +13,7 @@ pub struct NotebooksResponse {
     pub data: Option<Vec<crate::datadogV1::model::NotebooksResponseData>>,
     /// Searches metadata returned by the API.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV1::model::NotebooksResponseMeta>>,
+    pub meta: Option<crate::datadogV1::model::NotebooksResponseMeta>,
 }
 
 impl NotebooksResponse {
@@ -23,7 +23,21 @@ impl NotebooksResponse {
             meta: None,
         }
     }
+
+    pub fn data(
+        &mut self,
+        value: Vec<crate::datadogV1::model::NotebooksResponseData>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn meta(&mut self, value: crate::datadogV1::model::NotebooksResponseMeta) -> &mut Self {
+        self.meta = Some(value);
+        self
+    }
 }
+
 impl Default for NotebooksResponse {
     fn default() -> Self {
         Self::new()

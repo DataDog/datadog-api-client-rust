@@ -23,4 +23,9 @@ impl PowerpackTemplateVariable {
             name,
         }
     }
+
+    pub fn defaults(&mut self, value: Vec<String>) -> &mut Self {
+        self.defaults = Some(value);
+        self
+    }
 }

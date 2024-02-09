@@ -35,7 +35,28 @@ impl UsageIoTHour {
             public_id: None,
         }
     }
+
+    pub fn hour(&mut self, value: String) -> &mut Self {
+        self.hour = Some(value);
+        self
+    }
+
+    pub fn iot_device_count(&mut self, value: Option<i64>) -> &mut Self {
+        self.iot_device_count = Some(value);
+        self
+    }
+
+    pub fn org_name(&mut self, value: String) -> &mut Self {
+        self.org_name = Some(value);
+        self
+    }
+
+    pub fn public_id(&mut self, value: String) -> &mut Self {
+        self.public_id = Some(value);
+        self
+    }
 }
+
 impl Default for UsageIoTHour {
     fn default() -> Self {
         Self::new()

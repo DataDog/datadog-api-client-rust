@@ -15,7 +15,7 @@ use serde_with::skip_serializing_none;
 pub struct SLOBulkDeleteResponse {
     /// An array of service level objective objects.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV1::model::SLOBulkDeleteResponseData>>,
+    pub data: Option<crate::datadogV1::model::SLOBulkDeleteResponseData>,
     /// Array of errors object returned.
     #[serde(rename = "errors")]
     pub errors: Option<Vec<crate::datadogV1::model::SLOBulkDeleteError>>,
@@ -28,7 +28,18 @@ impl SLOBulkDeleteResponse {
             errors: None,
         }
     }
+
+    pub fn data(&mut self, value: crate::datadogV1::model::SLOBulkDeleteResponseData) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn errors(&mut self, value: Vec<crate::datadogV1::model::SLOBulkDeleteError>) -> &mut Self {
+        self.errors = Some(value);
+        self
+    }
 }
+
 impl Default for SLOBulkDeleteResponse {
     fn default() -> Self {
         Self::new()

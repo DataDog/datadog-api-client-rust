@@ -43,4 +43,24 @@ impl SyntheticsBrowserVariable {
             type_,
         }
     }
+
+    pub fn example(&mut self, value: String) -> &mut Self {
+        self.example = Some(value);
+        self
+    }
+
+    pub fn id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn pattern(&mut self, value: String) -> &mut Self {
+        self.pattern = Some(value);
+        self
+    }
+
+    pub fn secure(&mut self, value: bool) -> &mut Self {
+        self.secure = Some(value);
+        self
+    }
 }

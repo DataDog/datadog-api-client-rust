@@ -10,13 +10,13 @@ use serde_with::skip_serializing_none;
 pub struct ScatterPlotWidgetDefinitionRequests {
     /// Scatterplot request containing formulas and functions.
     #[serde(rename = "table")]
-    pub table: Option<Box<crate::datadogV1::model::ScatterplotTableRequest>>,
+    pub table: Option<crate::datadogV1::model::ScatterplotTableRequest>,
     /// Updated scatter plot.
     #[serde(rename = "x")]
-    pub x: Option<Box<crate::datadogV1::model::ScatterPlotRequest>>,
+    pub x: Option<crate::datadogV1::model::ScatterPlotRequest>,
     /// Updated scatter plot.
     #[serde(rename = "y")]
-    pub y: Option<Box<crate::datadogV1::model::ScatterPlotRequest>>,
+    pub y: Option<crate::datadogV1::model::ScatterPlotRequest>,
 }
 
 impl ScatterPlotWidgetDefinitionRequests {
@@ -27,7 +27,23 @@ impl ScatterPlotWidgetDefinitionRequests {
             y: None,
         }
     }
+
+    pub fn table(&mut self, value: crate::datadogV1::model::ScatterplotTableRequest) -> &mut Self {
+        self.table = Some(value);
+        self
+    }
+
+    pub fn x(&mut self, value: crate::datadogV1::model::ScatterPlotRequest) -> &mut Self {
+        self.x = Some(value);
+        self
+    }
+
+    pub fn y(&mut self, value: crate::datadogV1::model::ScatterPlotRequest) -> &mut Self {
+        self.y = Some(value);
+        self
+    }
 }
+
 impl Default for ScatterPlotWidgetDefinitionRequests {
     fn default() -> Self {
         Self::new()

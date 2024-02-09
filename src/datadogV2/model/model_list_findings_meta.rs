@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct ListFindingsMeta {
     /// Pagination and findings count information.
     #[serde(rename = "page")]
-    pub page: Option<Box<crate::datadogV2::model::ListFindingsPage>>,
+    pub page: Option<crate::datadogV2::model::ListFindingsPage>,
     /// The point in time corresponding to the listed findings.
     #[serde(rename = "snapshot_timestamp")]
     pub snapshot_timestamp: Option<i64>,
@@ -23,7 +23,18 @@ impl ListFindingsMeta {
             snapshot_timestamp: None,
         }
     }
+
+    pub fn page(&mut self, value: crate::datadogV2::model::ListFindingsPage) -> &mut Self {
+        self.page = Some(value);
+        self
+    }
+
+    pub fn snapshot_timestamp(&mut self, value: i64) -> &mut Self {
+        self.snapshot_timestamp = Some(value);
+        self
+    }
 }
+
 impl Default for ListFindingsMeta {
     fn default() -> Self {
         Self::new()

@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct AWSRelatedAccount {
     /// Attributes for an AWS related account.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::AWSRelatedAccountAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::AWSRelatedAccountAttributes>,
     /// The AWS account ID.
     #[serde(rename = "id")]
     pub id: String,
@@ -29,5 +29,13 @@ impl AWSRelatedAccount {
             id,
             type_,
         }
+    }
+
+    pub fn attributes(
+        &mut self,
+        value: crate::datadogV2::model::AWSRelatedAccountAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
     }
 }

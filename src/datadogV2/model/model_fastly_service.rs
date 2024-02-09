@@ -20,4 +20,9 @@ impl FastlyService {
     pub fn new(id: String) -> FastlyService {
         FastlyService { id, tags: None }
     }
+
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
 }

@@ -10,13 +10,13 @@ use serde_with::skip_serializing_none;
 pub struct CreateRuleResponseData {
     /// Details of a rule.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::RuleAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::RuleAttributes>,
     /// The unique ID for a scorecard rule.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Scorecard create rule response relationship.
     #[serde(rename = "relationships")]
-    pub relationships: Option<Box<crate::datadogV2::model::RelationshipToRule>>,
+    pub relationships: Option<crate::datadogV2::model::RelationshipToRule>,
     /// The JSON:API type for scorecard rules.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::RuleType>,
@@ -31,7 +31,31 @@ impl CreateRuleResponseData {
             type_: None,
         }
     }
+
+    pub fn attributes(&mut self, value: crate::datadogV2::model::RuleAttributes) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn relationships(
+        &mut self,
+        value: crate::datadogV2::model::RelationshipToRule,
+    ) -> &mut Self {
+        self.relationships = Some(value);
+        self
+    }
+
+    pub fn type_(&mut self, value: crate::datadogV2::model::RuleType) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
+
 impl Default for CreateRuleResponseData {
     fn default() -> Self {
         Self::new()

@@ -17,7 +17,13 @@ impl EventsSearch {
     pub fn new() -> EventsSearch {
         EventsSearch { query: None }
     }
+
+    pub fn query(&mut self, value: String) -> &mut Self {
+        self.query = Some(value);
+        self
+    }
 }
+
 impl Default for EventsSearch {
     fn default() -> Self {
         Self::new()

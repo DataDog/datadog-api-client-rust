@@ -5,54 +5,85 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateHostTagsParams is a struct for passing parameters to the method [`TagsAPI::create_host_tags`]
-#[derive(Clone, Debug)]
-pub struct CreateHostTagsParams {
-    /// This endpoint allows you to add new tags to a host, optionally specifying where the tags came from.
-    pub host_name: String,
-    /// Update host tags request body.
-    pub body: crate::datadogV1::model::HostTags,
+/// CreateHostTagsOptionalParams is a struct for passing parameters to the method [`TagsAPI::create_host_tags`]
+#[derive(Clone, Default, Debug)]
+pub struct CreateHostTagsOptionalParams {
     /// The source of the tags.
     /// [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>).
     pub source: Option<String>,
 }
 
-/// DeleteHostTagsParams is a struct for passing parameters to the method [`TagsAPI::delete_host_tags`]
-#[derive(Clone, Debug)]
-pub struct DeleteHostTagsParams {
-    /// This endpoint allows you to remove all user-assigned tags for a single host.
-    pub host_name: String,
+impl CreateHostTagsOptionalParams {
+    /// The source of the tags.
+    /// [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>).
+    pub fn source(&mut self, value: String) -> &mut Self {
+        self.source = Some(value);
+        self
+    }
+}
+
+/// DeleteHostTagsOptionalParams is a struct for passing parameters to the method [`TagsAPI::delete_host_tags`]
+#[derive(Clone, Default, Debug)]
+pub struct DeleteHostTagsOptionalParams {
     /// The source of the tags (for example chef, puppet).
     /// [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>).
     pub source: Option<String>,
 }
 
-/// GetHostTagsParams is a struct for passing parameters to the method [`TagsAPI::get_host_tags`]
-#[derive(Clone, Debug)]
-pub struct GetHostTagsParams {
-    /// When specified, filters list of tags to those tags with the specified source.
-    pub host_name: String,
+impl DeleteHostTagsOptionalParams {
+    /// The source of the tags (for example chef, puppet).
+    /// [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>).
+    pub fn source(&mut self, value: String) -> &mut Self {
+        self.source = Some(value);
+        self
+    }
+}
+
+/// GetHostTagsOptionalParams is a struct for passing parameters to the method [`TagsAPI::get_host_tags`]
+#[derive(Clone, Default, Debug)]
+pub struct GetHostTagsOptionalParams {
     /// Source to filter.
     pub source: Option<String>,
 }
 
-/// ListHostTagsParams is a struct for passing parameters to the method [`TagsAPI::list_host_tags`]
-#[derive(Clone, Debug)]
-pub struct ListHostTagsParams {
+impl GetHostTagsOptionalParams {
+    /// Source to filter.
+    pub fn source(&mut self, value: String) -> &mut Self {
+        self.source = Some(value);
+        self
+    }
+}
+
+/// ListHostTagsOptionalParams is a struct for passing parameters to the method [`TagsAPI::list_host_tags`]
+#[derive(Clone, Default, Debug)]
+pub struct ListHostTagsOptionalParams {
     /// When specified, filters host list to those tags with the specified source.
     pub source: Option<String>,
 }
 
-/// UpdateHostTagsParams is a struct for passing parameters to the method [`TagsAPI::update_host_tags`]
-#[derive(Clone, Debug)]
-pub struct UpdateHostTagsParams {
-    /// This endpoint allows you to update/replace all in an integration source with those supplied in the request.
-    pub host_name: String,
-    /// Add tags to host
-    pub body: crate::datadogV1::model::HostTags,
+impl ListHostTagsOptionalParams {
+    /// When specified, filters host list to those tags with the specified source.
+    pub fn source(&mut self, value: String) -> &mut Self {
+        self.source = Some(value);
+        self
+    }
+}
+
+/// UpdateHostTagsOptionalParams is a struct for passing parameters to the method [`TagsAPI::update_host_tags`]
+#[derive(Clone, Default, Debug)]
+pub struct UpdateHostTagsOptionalParams {
     /// The source of the tags (for example chef, puppet).
     /// [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>)
     pub source: Option<String>,
+}
+
+impl UpdateHostTagsOptionalParams {
+    /// The source of the tags (for example chef, puppet).
+    /// [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>)
+    pub fn source(&mut self, value: String) -> &mut Self {
+        self.source = Some(value);
+        self
+    }
 }
 
 /// CreateHostTagsError is a struct for typed errors of method [`TagsAPI::create_host_tags`]
@@ -130,9 +161,14 @@ impl TagsAPI {
     /// optionally specifying where these tags come from.
     pub async fn create_host_tags(
         &self,
-        params: CreateHostTagsParams,
+        host_name: String,
+        body: crate::datadogV1::model::HostTags,
+        params: CreateHostTagsOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::HostTags>, Error<CreateHostTagsError>> {
-        match self.create_host_tags_with_http_info(params).await {
+        match self
+            .create_host_tags_with_http_info(host_name, body, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -142,14 +178,14 @@ impl TagsAPI {
     /// optionally specifying where these tags come from.
     pub async fn create_host_tags_with_http_info(
         &self,
-        params: CreateHostTagsParams,
+        host_name: String,
+        body: crate::datadogV1::model::HostTags,
+        params: CreateHostTagsOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV1::model::HostTags>, Error<CreateHostTagsError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let host_name = params.host_name;
-        let body = params.body;
+        // unbox and build optional parameters
         let source = params.source;
 
         let local_client = &local_configuration.client;
@@ -162,8 +198,9 @@ impl TagsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
-        if let Some(ref local_str) = source {
-            local_req_builder = local_req_builder.query(&[("source", &local_str.to_string())]);
+        if let Some(ref local_query_param) = source {
+            local_req_builder =
+                local_req_builder.query(&[("source", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -217,9 +254,13 @@ impl TagsAPI {
     /// for a single host.
     pub async fn delete_host_tags(
         &self,
-        params: DeleteHostTagsParams,
+        host_name: String,
+        params: DeleteHostTagsOptionalParams,
     ) -> Result<Option<()>, Error<DeleteHostTagsError>> {
-        match self.delete_host_tags_with_http_info(params).await {
+        match self
+            .delete_host_tags_with_http_info(host_name, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -229,12 +270,12 @@ impl TagsAPI {
     /// for a single host.
     pub async fn delete_host_tags_with_http_info(
         &self,
-        params: DeleteHostTagsParams,
+        host_name: String,
+        params: DeleteHostTagsOptionalParams,
     ) -> Result<ResponseContent<()>, Error<DeleteHostTagsError>> {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let host_name = params.host_name;
+        // unbox and build optional parameters
         let source = params.source;
 
         let local_client = &local_configuration.client;
@@ -247,8 +288,9 @@ impl TagsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
-        if let Some(ref local_str) = source {
-            local_req_builder = local_req_builder.query(&[("source", &local_str.to_string())]);
+        if let Some(ref local_query_param) = source {
+            local_req_builder =
+                local_req_builder.query(&[("source", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -292,9 +334,10 @@ impl TagsAPI {
     /// Return the list of tags that apply to a given host.
     pub async fn get_host_tags(
         &self,
-        params: GetHostTagsParams,
+        host_name: String,
+        params: GetHostTagsOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::HostTags>, Error<GetHostTagsError>> {
-        match self.get_host_tags_with_http_info(params).await {
+        match self.get_host_tags_with_http_info(host_name, params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -303,12 +346,12 @@ impl TagsAPI {
     /// Return the list of tags that apply to a given host.
     pub async fn get_host_tags_with_http_info(
         &self,
-        params: GetHostTagsParams,
+        host_name: String,
+        params: GetHostTagsOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV1::model::HostTags>, Error<GetHostTagsError>> {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let host_name = params.host_name;
+        // unbox and build optional parameters
         let source = params.source;
 
         let local_client = &local_configuration.client;
@@ -321,8 +364,9 @@ impl TagsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = source {
-            local_req_builder = local_req_builder.query(&[("source", &local_str.to_string())]);
+        if let Some(ref local_query_param) = source {
+            local_req_builder =
+                local_req_builder.query(&[("source", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -367,7 +411,7 @@ impl TagsAPI {
     /// Return a mapping of tags to hosts for your whole infrastructure.
     pub async fn list_host_tags(
         &self,
-        params: ListHostTagsParams,
+        params: ListHostTagsOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::TagToHosts>, Error<ListHostTagsError>> {
         match self.list_host_tags_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
@@ -378,12 +422,12 @@ impl TagsAPI {
     /// Return a mapping of tags to hosts for your whole infrastructure.
     pub async fn list_host_tags_with_http_info(
         &self,
-        params: ListHostTagsParams,
+        params: ListHostTagsOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV1::model::TagToHosts>, Error<ListHostTagsError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let source = params.source;
 
         let local_client = &local_configuration.client;
@@ -392,8 +436,9 @@ impl TagsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = source {
-            local_req_builder = local_req_builder.query(&[("source", &local_str.to_string())]);
+        if let Some(ref local_query_param) = source {
+            local_req_builder =
+                local_req_builder.query(&[("source", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -439,9 +484,14 @@ impl TagsAPI {
     /// an integration source with those supplied in the request.
     pub async fn update_host_tags(
         &self,
-        params: UpdateHostTagsParams,
+        host_name: String,
+        body: crate::datadogV1::model::HostTags,
+        params: UpdateHostTagsOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::HostTags>, Error<UpdateHostTagsError>> {
-        match self.update_host_tags_with_http_info(params).await {
+        match self
+            .update_host_tags_with_http_info(host_name, body, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -451,14 +501,14 @@ impl TagsAPI {
     /// an integration source with those supplied in the request.
     pub async fn update_host_tags_with_http_info(
         &self,
-        params: UpdateHostTagsParams,
+        host_name: String,
+        body: crate::datadogV1::model::HostTags,
+        params: UpdateHostTagsOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV1::model::HostTags>, Error<UpdateHostTagsError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let host_name = params.host_name;
-        let body = params.body;
+        // unbox and build optional parameters
         let source = params.source;
 
         let local_client = &local_configuration.client;
@@ -471,8 +521,9 @@ impl TagsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
-        if let Some(ref local_str) = source {
-            local_req_builder = local_req_builder.query(&[("source", &local_str.to_string())]);
+        if let Some(ref local_query_param) = source {
+            local_req_builder =
+                local_req_builder.query(&[("source", &local_query_param.to_string())]);
         };
 
         // build user agent

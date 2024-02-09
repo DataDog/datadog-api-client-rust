@@ -10,13 +10,13 @@ use serde_with::skip_serializing_none;
 pub struct BulkMuteFindingsRequestData {
     /// The mute properties to be updated.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::BulkMuteFindingsRequestAttributes>,
+    pub attributes: crate::datadogV2::model::BulkMuteFindingsRequestAttributes,
     /// UUID to identify the request
     #[serde(rename = "id")]
     pub id: String,
     /// Meta object containing the findings to be updated.
     #[serde(rename = "meta")]
-    pub meta: Box<crate::datadogV2::model::BulkMuteFindingsRequestMeta>,
+    pub meta: crate::datadogV2::model::BulkMuteFindingsRequestMeta,
     /// The JSON:API type for findings.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::FindingType,
@@ -24,9 +24,9 @@ pub struct BulkMuteFindingsRequestData {
 
 impl BulkMuteFindingsRequestData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::BulkMuteFindingsRequestAttributes>,
+        attributes: crate::datadogV2::model::BulkMuteFindingsRequestAttributes,
         id: String,
-        meta: Box<crate::datadogV2::model::BulkMuteFindingsRequestMeta>,
+        meta: crate::datadogV2::model::BulkMuteFindingsRequestMeta,
         type_: crate::datadogV2::model::FindingType,
     ) -> BulkMuteFindingsRequestData {
         BulkMuteFindingsRequestData {

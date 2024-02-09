@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct RoleClone {
     /// Attributes required to create a new role by cloning an existing one.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::RoleCloneAttributes>,
+    pub attributes: crate::datadogV2::model::RoleCloneAttributes,
     /// Roles type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::RolesType,
@@ -18,7 +18,7 @@ pub struct RoleClone {
 
 impl RoleClone {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::RoleCloneAttributes>,
+        attributes: crate::datadogV2::model::RoleCloneAttributes,
         type_: crate::datadogV2::model::RolesType,
     ) -> RoleClone {
         RoleClone { attributes, type_ }

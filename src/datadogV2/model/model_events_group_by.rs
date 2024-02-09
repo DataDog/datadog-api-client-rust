@@ -16,7 +16,7 @@ pub struct EventsGroupBy {
     pub limit: Option<i32>,
     /// The dimension by which to sort a query's results.
     #[serde(rename = "sort")]
-    pub sort: Option<Box<crate::datadogV2::model::EventsGroupBySort>>,
+    pub sort: Option<crate::datadogV2::model::EventsGroupBySort>,
 }
 
 impl EventsGroupBy {
@@ -26,5 +26,15 @@ impl EventsGroupBy {
             limit: None,
             sort: None,
         }
+    }
+
+    pub fn limit(&mut self, value: i32) -> &mut Self {
+        self.limit = Some(value);
+        self
+    }
+
+    pub fn sort(&mut self, value: crate::datadogV2::model::EventsGroupBySort) -> &mut Self {
+        self.sort = Some(value);
+        self
     }
 }

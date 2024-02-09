@@ -10,13 +10,13 @@ use serde_with::skip_serializing_none;
 pub struct RUMAnalyticsAggregateResponse {
     /// The query results.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::RUMAggregationBucketsResponse>>,
+    pub data: Option<crate::datadogV2::model::RUMAggregationBucketsResponse>,
     /// Links attributes.
     #[serde(rename = "links")]
-    pub links: Option<Box<crate::datadogV2::model::RUMResponseLinks>>,
+    pub links: Option<crate::datadogV2::model::RUMResponseLinks>,
     /// The metadata associated with a request.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV2::model::RUMResponseMetadata>>,
+    pub meta: Option<crate::datadogV2::model::RUMResponseMetadata>,
 }
 
 impl RUMAnalyticsAggregateResponse {
@@ -27,7 +27,26 @@ impl RUMAnalyticsAggregateResponse {
             meta: None,
         }
     }
+
+    pub fn data(
+        &mut self,
+        value: crate::datadogV2::model::RUMAggregationBucketsResponse,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn links(&mut self, value: crate::datadogV2::model::RUMResponseLinks) -> &mut Self {
+        self.links = Some(value);
+        self
+    }
+
+    pub fn meta(&mut self, value: crate::datadogV2::model::RUMResponseMetadata) -> &mut Self {
+        self.meta = Some(value);
+        self
+    }
 }
+
 impl Default for RUMAnalyticsAggregateResponse {
     fn default() -> Self {
         Self::new()

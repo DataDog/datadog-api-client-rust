@@ -13,11 +13,11 @@ pub struct CIAppPipelineEventStep {
     pub end: String,
     /// Contains information of the CI error.
     #[serde(rename = "error", default, with = "::serde_with::rust::double_option")]
-    pub error: Option<Option<Box<crate::datadogV2::model::CIAppCIError>>>,
+    pub error: Option<Option<crate::datadogV2::model::CIAppCIError>>,
     /// If pipelines are triggered due to actions to a Git repository, then all payloads must contain this.
     /// Note that either `tag` or `branch` has to be provided, but not both.
     #[serde(rename = "git", default, with = "::serde_with::rust::double_option")]
-    pub git: Option<Option<Box<crate::datadogV2::model::CIAppGitInfo>>>,
+    pub git: Option<Option<crate::datadogV2::model::CIAppGitInfo>>,
     /// UUID for the step. It has to be unique within each pipeline execution.
     #[serde(rename = "id")]
     pub id: String,
@@ -46,7 +46,7 @@ pub struct CIAppPipelineEventStep {
     pub name: String,
     /// Contains information of the host running the pipeline, stage, job, or step.
     #[serde(rename = "node", default, with = "::serde_with::rust::double_option")]
-    pub node: Option<Option<Box<crate::datadogV2::model::CIAppHostInfo>>>,
+    pub node: Option<Option<crate::datadogV2::model::CIAppHostInfo>>,
     /// A map of key-value parameters or environment variables that were defined for the pipeline.
     #[serde(
         rename = "parameters",
@@ -120,5 +120,63 @@ impl CIAppPipelineEventStep {
             tags: None,
             url: None,
         }
+    }
+
+    pub fn error(&mut self, value: Option<crate::datadogV2::model::CIAppCIError>) -> &mut Self {
+        self.error = Some(value);
+        self
+    }
+
+    pub fn git(&mut self, value: Option<crate::datadogV2::model::CIAppGitInfo>) -> &mut Self {
+        self.git = Some(value);
+        self
+    }
+
+    pub fn job_id(&mut self, value: Option<String>) -> &mut Self {
+        self.job_id = Some(value);
+        self
+    }
+
+    pub fn job_name(&mut self, value: Option<String>) -> &mut Self {
+        self.job_name = Some(value);
+        self
+    }
+
+    pub fn metrics(&mut self, value: Option<Vec<String>>) -> &mut Self {
+        self.metrics = Some(value);
+        self
+    }
+
+    pub fn node(&mut self, value: Option<crate::datadogV2::model::CIAppHostInfo>) -> &mut Self {
+        self.node = Some(value);
+        self
+    }
+
+    pub fn parameters(
+        &mut self,
+        value: Option<std::collections::BTreeMap<String, String>>,
+    ) -> &mut Self {
+        self.parameters = Some(value);
+        self
+    }
+
+    pub fn stage_id(&mut self, value: Option<String>) -> &mut Self {
+        self.stage_id = Some(value);
+        self
+    }
+
+    pub fn stage_name(&mut self, value: Option<String>) -> &mut Self {
+        self.stage_name = Some(value);
+        self
+    }
+
+    pub fn tags(&mut self, value: Option<Vec<String>>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+
+    pub fn url(&mut self, value: Option<String>) -> &mut Self {
+        self.url = Some(value);
+        self
     }
 }

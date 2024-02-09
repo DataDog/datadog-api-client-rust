@@ -10,14 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct UserRelationships {
     /// Relationship to roles.
     #[serde(rename = "roles")]
-    pub roles: Option<Box<crate::datadogV2::model::RelationshipToRoles>>,
+    pub roles: Option<crate::datadogV2::model::RelationshipToRoles>,
 }
 
 impl UserRelationships {
     pub fn new() -> UserRelationships {
         UserRelationships { roles: None }
     }
+
+    pub fn roles(&mut self, value: crate::datadogV2::model::RelationshipToRoles) -> &mut Self {
+        self.roles = Some(value);
+        self
+    }
 }
+
 impl Default for UserRelationships {
     fn default() -> Self {
         Self::new()

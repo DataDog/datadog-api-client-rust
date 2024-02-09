@@ -24,7 +24,18 @@ impl CIAppQueryOptions {
             timezone: None,
         }
     }
+
+    pub fn time_offset(&mut self, value: i64) -> &mut Self {
+        self.time_offset = Some(value);
+        self
+    }
+
+    pub fn timezone(&mut self, value: String) -> &mut Self {
+        self.timezone = Some(value);
+        self
+    }
 }
+
 impl Default for CIAppQueryOptions {
     fn default() -> Self {
         Self::new()

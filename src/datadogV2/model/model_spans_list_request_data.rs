@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SpansListRequestData {
     /// The object containing all the query parameters.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::SpansListRequestAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::SpansListRequestAttributes>,
     /// The type of resource. The value should always be search_request.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::SpansListRequestType>,
@@ -23,7 +23,21 @@ impl SpansListRequestData {
             type_: None,
         }
     }
+
+    pub fn attributes(
+        &mut self,
+        value: crate::datadogV2::model::SpansListRequestAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn type_(&mut self, value: crate::datadogV2::model::SpansListRequestType) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
+
 impl Default for SpansListRequestData {
     fn default() -> Self {
         Self::new()

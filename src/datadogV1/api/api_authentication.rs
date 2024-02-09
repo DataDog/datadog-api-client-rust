@@ -57,8 +57,6 @@ impl AuthenticationAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/validate", local_configuration.base_path);

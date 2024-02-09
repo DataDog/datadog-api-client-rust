@@ -10,14 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct MetricAllTagsResponse {
     /// Object for a single metric's indexed tags.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::MetricAllTags>>,
+    pub data: Option<crate::datadogV2::model::MetricAllTags>,
 }
 
 impl MetricAllTagsResponse {
     pub fn new() -> MetricAllTagsResponse {
         MetricAllTagsResponse { data: None }
     }
+
+    pub fn data(&mut self, value: crate::datadogV2::model::MetricAllTags) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for MetricAllTagsResponse {
     fn default() -> Self {
         Self::new()

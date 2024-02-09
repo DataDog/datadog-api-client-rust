@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct NullableRelationshipToUser {
     /// Relationship to user object.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::NullableRelationshipToUserData>>,
+    pub data: Option<crate::datadogV2::model::NullableRelationshipToUserData>,
 }
 
 impl NullableRelationshipToUser {
     pub fn new(
-        data: Option<Box<crate::datadogV2::model::NullableRelationshipToUserData>>,
+        data: Option<crate::datadogV2::model::NullableRelationshipToUserData>,
     ) -> NullableRelationshipToUser {
         NullableRelationshipToUser { data }
     }

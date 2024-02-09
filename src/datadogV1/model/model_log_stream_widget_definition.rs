@@ -32,10 +32,10 @@ pub struct LogStreamWidgetDefinition {
     pub show_message_column: Option<bool>,
     /// Which column and order to sort by
     #[serde(rename = "sort")]
-    pub sort: Option<Box<crate::datadogV1::model::WidgetFieldSort>>,
+    pub sort: Option<crate::datadogV1::model::WidgetFieldSort>,
     /// Time setting for the widget.
     #[serde(rename = "time")]
-    pub time: Option<Box<crate::datadogV1::model::WidgetTime>>,
+    pub time: Option<crate::datadogV1::model::WidgetTime>,
     /// Title of the widget.
     #[serde(rename = "title")]
     pub title: Option<String>,
@@ -70,5 +70,80 @@ impl LogStreamWidgetDefinition {
             title_size: None,
             type_,
         }
+    }
+
+    #[allow(deprecated)]
+    pub fn columns(&mut self, value: Vec<String>) -> &mut Self {
+        self.columns = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn indexes(&mut self, value: Vec<String>) -> &mut Self {
+        self.indexes = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn logset(&mut self, value: String) -> &mut Self {
+        self.logset = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn message_display(
+        &mut self,
+        value: crate::datadogV1::model::WidgetMessageDisplay,
+    ) -> &mut Self {
+        self.message_display = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn query(&mut self, value: String) -> &mut Self {
+        self.query = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn show_date_column(&mut self, value: bool) -> &mut Self {
+        self.show_date_column = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn show_message_column(&mut self, value: bool) -> &mut Self {
+        self.show_message_column = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn sort(&mut self, value: crate::datadogV1::model::WidgetFieldSort) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
+        self.time = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn title_align(&mut self, value: crate::datadogV1::model::WidgetTextAlign) -> &mut Self {
+        self.title_align = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn title_size(&mut self, value: String) -> &mut Self {
+        self.title_size = Some(value);
+        self
     }
 }

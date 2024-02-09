@@ -52,4 +52,29 @@ impl SLOCorrectionCreateRequestAttributes {
             timezone: None,
         }
     }
+
+    pub fn description(&mut self, value: String) -> &mut Self {
+        self.description = Some(value);
+        self
+    }
+
+    pub fn duration(&mut self, value: i64) -> &mut Self {
+        self.duration = Some(value);
+        self
+    }
+
+    pub fn end(&mut self, value: i64) -> &mut Self {
+        self.end = Some(value);
+        self
+    }
+
+    pub fn rrule(&mut self, value: String) -> &mut Self {
+        self.rrule = Some(value);
+        self
+    }
+
+    pub fn timezone(&mut self, value: String) -> &mut Self {
+        self.timezone = Some(value);
+        self
+    }
 }

@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct RUMApplicationUpdate {
     /// RUM application update attributes.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::RUMApplicationUpdateAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::RUMApplicationUpdateAttributes>,
     /// RUM application ID.
     #[serde(rename = "id")]
     pub id: String,
@@ -29,5 +29,13 @@ impl RUMApplicationUpdate {
             id,
             type_,
         }
+    }
+
+    pub fn attributes(
+        &mut self,
+        value: crate::datadogV2::model::RUMApplicationUpdateAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
     }
 }

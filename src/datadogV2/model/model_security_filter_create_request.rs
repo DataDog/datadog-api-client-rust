@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct SecurityFilterCreateRequest {
     /// Object for a single security filter.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::SecurityFilterCreateData>,
+    pub data: crate::datadogV2::model::SecurityFilterCreateData,
 }
 
 impl SecurityFilterCreateRequest {
     pub fn new(
-        data: Box<crate::datadogV2::model::SecurityFilterCreateData>,
+        data: crate::datadogV2::model::SecurityFilterCreateData,
     ) -> SecurityFilterCreateRequest {
         SecurityFilterCreateRequest { data }
     }

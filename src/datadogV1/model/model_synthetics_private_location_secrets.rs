@@ -11,11 +11,11 @@ pub struct SyntheticsPrivateLocationSecrets {
     /// Authentication part of the secrets.
     #[serde(rename = "authentication")]
     pub authentication:
-        Option<Box<crate::datadogV1::model::SyntheticsPrivateLocationSecretsAuthentication>>,
+        Option<crate::datadogV1::model::SyntheticsPrivateLocationSecretsAuthentication>,
     /// Private key for the private location.
     #[serde(rename = "config_decryption")]
     pub config_decryption:
-        Option<Box<crate::datadogV1::model::SyntheticsPrivateLocationSecretsConfigDecryption>>,
+        Option<crate::datadogV1::model::SyntheticsPrivateLocationSecretsConfigDecryption>,
 }
 
 impl SyntheticsPrivateLocationSecrets {
@@ -25,7 +25,24 @@ impl SyntheticsPrivateLocationSecrets {
             config_decryption: None,
         }
     }
+
+    pub fn authentication(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsPrivateLocationSecretsAuthentication,
+    ) -> &mut Self {
+        self.authentication = Some(value);
+        self
+    }
+
+    pub fn config_decryption(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsPrivateLocationSecretsConfigDecryption,
+    ) -> &mut Self {
+        self.config_decryption = Some(value);
+        self
+    }
 }
+
 impl Default for SyntheticsPrivateLocationSecrets {
     fn default() -> Self {
         Self::new()

@@ -23,7 +23,18 @@ impl SearchSLOResponseDataAttributesFacetsObjectString {
             name: None,
         }
     }
+
+    pub fn count(&mut self, value: i64) -> &mut Self {
+        self.count = Some(value);
+        self
+    }
+
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
 }
+
 impl Default for SearchSLOResponseDataAttributesFacetsObjectString {
     fn default() -> Self {
         Self::new()

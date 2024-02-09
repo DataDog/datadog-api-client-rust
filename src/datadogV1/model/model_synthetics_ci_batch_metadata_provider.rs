@@ -17,7 +17,13 @@ impl SyntheticsCIBatchMetadataProvider {
     pub fn new() -> SyntheticsCIBatchMetadataProvider {
         SyntheticsCIBatchMetadataProvider { name: None }
     }
+
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
 }
+
 impl Default for SyntheticsCIBatchMetadataProvider {
     fn default() -> Self {
         Self::new()

@@ -23,7 +23,18 @@ impl SLORawErrorBudgetRemaining {
             value: None,
         }
     }
+
+    pub fn unit(&mut self, value: String) -> &mut Self {
+        self.unit = Some(value);
+        self
+    }
+
+    pub fn value(&mut self, value: f64) -> &mut Self {
+        self.value = Some(value);
+        self
+    }
 }
+
 impl Default for SLORawErrorBudgetRemaining {
     fn default() -> Self {
         Self::new()

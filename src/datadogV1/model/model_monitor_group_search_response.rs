@@ -10,13 +10,13 @@ use serde_with::skip_serializing_none;
 pub struct MonitorGroupSearchResponse {
     /// The counts of monitor groups per different criteria.
     #[serde(rename = "counts")]
-    pub counts: Option<Box<crate::datadogV1::model::MonitorGroupSearchResponseCounts>>,
+    pub counts: Option<crate::datadogV1::model::MonitorGroupSearchResponseCounts>,
     /// The list of found monitor groups.
     #[serde(rename = "groups")]
     pub groups: Option<Vec<crate::datadogV1::model::MonitorGroupSearchResult>>,
     /// Metadata about the response.
     #[serde(rename = "metadata")]
-    pub metadata: Option<Box<crate::datadogV1::model::MonitorSearchResponseMetadata>>,
+    pub metadata: Option<crate::datadogV1::model::MonitorSearchResponseMetadata>,
 }
 
 impl MonitorGroupSearchResponse {
@@ -27,7 +27,32 @@ impl MonitorGroupSearchResponse {
             metadata: None,
         }
     }
+
+    pub fn counts(
+        &mut self,
+        value: crate::datadogV1::model::MonitorGroupSearchResponseCounts,
+    ) -> &mut Self {
+        self.counts = Some(value);
+        self
+    }
+
+    pub fn groups(
+        &mut self,
+        value: Vec<crate::datadogV1::model::MonitorGroupSearchResult>,
+    ) -> &mut Self {
+        self.groups = Some(value);
+        self
+    }
+
+    pub fn metadata(
+        &mut self,
+        value: crate::datadogV1::model::MonitorSearchResponseMetadata,
+    ) -> &mut Self {
+        self.metadata = Some(value);
+        self
+    }
 }
+
 impl Default for MonitorGroupSearchResponse {
     fn default() -> Self {
         Self::new()

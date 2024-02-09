@@ -11,7 +11,7 @@ pub struct SecurityMonitoringSignal {
     /// The object containing all signal attributes and their
     /// associated values.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::SecurityMonitoringSignalAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::SecurityMonitoringSignalAttributes>,
     /// The unique ID of the security signal.
     #[serde(rename = "id")]
     pub id: Option<String>,
@@ -28,7 +28,29 @@ impl SecurityMonitoringSignal {
             type_: None,
         }
     }
+
+    pub fn attributes(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringSignalAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn type_(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringSignalType,
+    ) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
+
 impl Default for SecurityMonitoringSignal {
     fn default() -> Self {
         Self::new()

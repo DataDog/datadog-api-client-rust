@@ -17,7 +17,13 @@ impl LogsMetricResponseFilter {
     pub fn new() -> LogsMetricResponseFilter {
         LogsMetricResponseFilter { query: None }
     }
+
+    pub fn query(&mut self, value: String) -> &mut Self {
+        self.query = Some(value);
+        self
+    }
 }
+
 impl Default for LogsMetricResponseFilter {
     fn default() -> Self {
         Self::new()

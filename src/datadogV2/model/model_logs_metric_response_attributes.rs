@@ -10,10 +10,10 @@ use serde_with::skip_serializing_none;
 pub struct LogsMetricResponseAttributes {
     /// The compute rule to compute the log-based metric.
     #[serde(rename = "compute")]
-    pub compute: Option<Box<crate::datadogV2::model::LogsMetricResponseCompute>>,
+    pub compute: Option<crate::datadogV2::model::LogsMetricResponseCompute>,
     /// The log-based metric filter. Logs matching this filter will be aggregated in this metric.
     #[serde(rename = "filter")]
-    pub filter: Option<Box<crate::datadogV2::model::LogsMetricResponseFilter>>,
+    pub filter: Option<crate::datadogV2::model::LogsMetricResponseFilter>,
     /// The rules for the group by.
     #[serde(rename = "group_by")]
     pub group_by: Option<Vec<crate::datadogV2::model::LogsMetricResponseGroupBy>>,
@@ -27,7 +27,32 @@ impl LogsMetricResponseAttributes {
             group_by: None,
         }
     }
+
+    pub fn compute(
+        &mut self,
+        value: crate::datadogV2::model::LogsMetricResponseCompute,
+    ) -> &mut Self {
+        self.compute = Some(value);
+        self
+    }
+
+    pub fn filter(
+        &mut self,
+        value: crate::datadogV2::model::LogsMetricResponseFilter,
+    ) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
+
+    pub fn group_by(
+        &mut self,
+        value: Vec<crate::datadogV2::model::LogsMetricResponseGroupBy>,
+    ) -> &mut Self {
+        self.group_by = Some(value);
+        self
+    }
 }
+
 impl Default for LogsMetricResponseAttributes {
     fn default() -> Self {
         Self::new()

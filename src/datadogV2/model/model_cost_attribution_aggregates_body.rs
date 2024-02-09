@@ -27,7 +27,23 @@ impl CostAttributionAggregatesBody {
             value: None,
         }
     }
+
+    pub fn agg_type(&mut self, value: String) -> &mut Self {
+        self.agg_type = Some(value);
+        self
+    }
+
+    pub fn field(&mut self, value: String) -> &mut Self {
+        self.field = Some(value);
+        self
+    }
+
+    pub fn value(&mut self, value: f64) -> &mut Self {
+        self.value = Some(value);
+        self
+    }
 }
+
 impl Default for CostAttributionAggregatesBody {
     fn default() -> Self {
         Self::new()

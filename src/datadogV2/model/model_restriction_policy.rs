@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct RestrictionPolicy {
     /// Restriction policy attributes.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::RestrictionPolicyAttributes>,
+    pub attributes: crate::datadogV2::model::RestrictionPolicyAttributes,
     /// The identifier, always equivalent to the value specified in the `resource_id` path parameter.
     #[serde(rename = "id")]
     pub id: String,
@@ -21,7 +21,7 @@ pub struct RestrictionPolicy {
 
 impl RestrictionPolicy {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::RestrictionPolicyAttributes>,
+        attributes: crate::datadogV2::model::RestrictionPolicyAttributes,
         id: String,
         type_: crate::datadogV2::model::RestrictionPolicyType,
     ) -> RestrictionPolicy {

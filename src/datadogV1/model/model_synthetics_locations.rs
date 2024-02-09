@@ -17,7 +17,16 @@ impl SyntheticsLocations {
     pub fn new() -> SyntheticsLocations {
         SyntheticsLocations { locations: None }
     }
+
+    pub fn locations(
+        &mut self,
+        value: Vec<crate::datadogV1::model::SyntheticsLocation>,
+    ) -> &mut Self {
+        self.locations = Some(value);
+        self
+    }
 }
+
 impl Default for SyntheticsLocations {
     fn default() -> Self {
         Self::new()

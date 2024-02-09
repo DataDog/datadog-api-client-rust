@@ -10,11 +10,11 @@ use serde_with::skip_serializing_none;
 pub struct UserCreateRequest {
     /// Object to create a user.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::UserCreateData>,
+    pub data: crate::datadogV2::model::UserCreateData,
 }
 
 impl UserCreateRequest {
-    pub fn new(data: Box<crate::datadogV2::model::UserCreateData>) -> UserCreateRequest {
+    pub fn new(data: crate::datadogV2::model::UserCreateData) -> UserCreateRequest {
         UserCreateRequest { data }
     }
 }

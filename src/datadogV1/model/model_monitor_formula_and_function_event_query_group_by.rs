@@ -16,7 +16,7 @@ pub struct MonitorFormulaAndFunctionEventQueryGroupBy {
     pub limit: Option<i64>,
     /// Options for sorting group by results.
     #[serde(rename = "sort")]
-    pub sort: Option<Box<crate::datadogV1::model::MonitorFormulaAndFunctionEventQueryGroupBySort>>,
+    pub sort: Option<crate::datadogV1::model::MonitorFormulaAndFunctionEventQueryGroupBySort>,
 }
 
 impl MonitorFormulaAndFunctionEventQueryGroupBy {
@@ -26,5 +26,18 @@ impl MonitorFormulaAndFunctionEventQueryGroupBy {
             limit: None,
             sort: None,
         }
+    }
+
+    pub fn limit(&mut self, value: i64) -> &mut Self {
+        self.limit = Some(value);
+        self
+    }
+
+    pub fn sort(
+        &mut self,
+        value: crate::datadogV1::model::MonitorFormulaAndFunctionEventQueryGroupBySort,
+    ) -> &mut Self {
+        self.sort = Some(value);
+        self
     }
 }

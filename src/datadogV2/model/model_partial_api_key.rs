@@ -10,13 +10,13 @@ use serde_with::skip_serializing_none;
 pub struct PartialAPIKey {
     /// Attributes of a partial API key.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::PartialAPIKeyAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::PartialAPIKeyAttributes>,
     /// ID of the API key.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Resources related to the API key.
     #[serde(rename = "relationships")]
-    pub relationships: Option<Box<crate::datadogV2::model::APIKeyRelationships>>,
+    pub relationships: Option<crate::datadogV2::model::APIKeyRelationships>,
     /// API Keys resource type.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::APIKeysType>,
@@ -31,7 +31,34 @@ impl PartialAPIKey {
             type_: None,
         }
     }
+
+    pub fn attributes(
+        &mut self,
+        value: crate::datadogV2::model::PartialAPIKeyAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn relationships(
+        &mut self,
+        value: crate::datadogV2::model::APIKeyRelationships,
+    ) -> &mut Self {
+        self.relationships = Some(value);
+        self
+    }
+
+    pub fn type_(&mut self, value: crate::datadogV2::model::APIKeysType) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
+
 impl Default for PartialAPIKey {
     fn default() -> Self {
         Self::new()

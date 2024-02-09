@@ -10,14 +10,23 @@ use serde_with::skip_serializing_none;
 pub struct LogsArchiveOrder {
     /// The definition of an archive order.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::LogsArchiveOrderDefinition>>,
+    pub data: Option<crate::datadogV2::model::LogsArchiveOrderDefinition>,
 }
 
 impl LogsArchiveOrder {
     pub fn new() -> LogsArchiveOrder {
         LogsArchiveOrder { data: None }
     }
+
+    pub fn data(
+        &mut self,
+        value: crate::datadogV2::model::LogsArchiveOrderDefinition,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for LogsArchiveOrder {
     fn default() -> Self {
         Self::new()

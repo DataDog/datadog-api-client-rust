@@ -5,41 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CheckAWSLogsLambdaAsyncParams is a struct for passing parameters to the method [`AWSLogsIntegrationAPI::check_aws_logs_lambda_async`]
-#[derive(Clone, Debug)]
-pub struct CheckAWSLogsLambdaAsyncParams {
-    /// Check AWS Log Lambda Async request body.
-    pub body: crate::datadogV1::model::AWSAccountAndLambdaRequest,
-}
-
-/// CheckAWSLogsServicesAsyncParams is a struct for passing parameters to the method [`AWSLogsIntegrationAPI::check_aws_logs_services_async`]
-#[derive(Clone, Debug)]
-pub struct CheckAWSLogsServicesAsyncParams {
-    /// Check AWS Logs Async Services request body.
-    pub body: crate::datadogV1::model::AWSLogsServicesRequest,
-}
-
-/// CreateAWSLambdaARNParams is a struct for passing parameters to the method [`AWSLogsIntegrationAPI::create_aws_lambda_arn`]
-#[derive(Clone, Debug)]
-pub struct CreateAWSLambdaARNParams {
-    /// AWS Log Lambda Async request body.
-    pub body: crate::datadogV1::model::AWSAccountAndLambdaRequest,
-}
-
-/// DeleteAWSLambdaARNParams is a struct for passing parameters to the method [`AWSLogsIntegrationAPI::delete_aws_lambda_arn`]
-#[derive(Clone, Debug)]
-pub struct DeleteAWSLambdaARNParams {
-    /// Delete AWS Lambda ARN request body.
-    pub body: crate::datadogV1::model::AWSAccountAndLambdaRequest,
-}
-
-/// EnableAWSLogServicesParams is a struct for passing parameters to the method [`AWSLogsIntegrationAPI::enable_aws_log_services`]
-#[derive(Clone, Debug)]
-pub struct EnableAWSLogServicesParams {
-    /// Enable AWS Log Services request body.
-    pub body: crate::datadogV1::model::AWSLogsServicesRequest,
-}
-
 /// CheckAWSLogsLambdaAsyncError is a struct for typed errors of method [`AWSLogsIntegrationAPI::check_aws_logs_lambda_async`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -140,15 +105,12 @@ impl AWSLogsIntegrationAPI {
     /// - Returns a status of 'error' if the Lambda does not exist.
     pub async fn check_aws_logs_lambda_async(
         &self,
-        params: CheckAWSLogsLambdaAsyncParams,
+        body: crate::datadogV1::model::AWSAccountAndLambdaRequest,
     ) -> Result<
         Option<crate::datadogV1::model::AWSLogsAsyncResponse>,
         Error<CheckAWSLogsLambdaAsyncError>,
     > {
-        match self
-            .check_aws_logs_lambda_async_with_http_info(params)
-            .await
-        {
+        match self.check_aws_logs_lambda_async_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -164,15 +126,12 @@ impl AWSLogsIntegrationAPI {
     /// - Returns a status of 'error' if the Lambda does not exist.
     pub async fn check_aws_logs_lambda_async_with_http_info(
         &self,
-        params: CheckAWSLogsLambdaAsyncParams,
+        body: crate::datadogV1::model::AWSAccountAndLambdaRequest,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::AWSLogsAsyncResponse>,
         Error<CheckAWSLogsLambdaAsyncError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -242,13 +201,13 @@ impl AWSLogsIntegrationAPI {
     /// - Returns a status of `error` if the Lambda does not exist.
     pub async fn check_aws_logs_services_async(
         &self,
-        params: CheckAWSLogsServicesAsyncParams,
+        body: crate::datadogV1::model::AWSLogsServicesRequest,
     ) -> Result<
         Option<crate::datadogV1::model::AWSLogsAsyncResponse>,
         Error<CheckAWSLogsServicesAsyncError>,
     > {
         match self
-            .check_aws_logs_services_async_with_http_info(params)
+            .check_aws_logs_services_async_with_http_info(body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -268,15 +227,12 @@ impl AWSLogsIntegrationAPI {
     /// - Returns a status of `error` if the Lambda does not exist.
     pub async fn check_aws_logs_services_async_with_http_info(
         &self,
-        params: CheckAWSLogsServicesAsyncParams,
+        body: crate::datadogV1::model::AWSLogsServicesRequest,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::AWSLogsAsyncResponse>,
         Error<CheckAWSLogsServicesAsyncError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -337,12 +293,12 @@ impl AWSLogsIntegrationAPI {
     /// Attach the Lambda ARN of the Lambda created for the Datadog-AWS log collection to your AWS account ID to enable log collection.
     pub async fn create_aws_lambda_arn(
         &self,
-        params: CreateAWSLambdaARNParams,
+        body: crate::datadogV1::model::AWSAccountAndLambdaRequest,
     ) -> Result<
         Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<CreateAWSLambdaARNError>,
     > {
-        match self.create_aws_lambda_arn_with_http_info(params).await {
+        match self.create_aws_lambda_arn_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -351,15 +307,12 @@ impl AWSLogsIntegrationAPI {
     /// Attach the Lambda ARN of the Lambda created for the Datadog-AWS log collection to your AWS account ID to enable log collection.
     pub async fn create_aws_lambda_arn_with_http_info(
         &self,
-        params: CreateAWSLambdaARNParams,
+        body: crate::datadogV1::model::AWSAccountAndLambdaRequest,
     ) -> Result<
         ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<CreateAWSLambdaARNError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -420,12 +373,12 @@ impl AWSLogsIntegrationAPI {
     /// Delete a Datadog-AWS logs configuration by removing the specific Lambda ARN associated with a given AWS account.
     pub async fn delete_aws_lambda_arn(
         &self,
-        params: DeleteAWSLambdaARNParams,
+        body: crate::datadogV1::model::AWSAccountAndLambdaRequest,
     ) -> Result<
         Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<DeleteAWSLambdaARNError>,
     > {
-        match self.delete_aws_lambda_arn_with_http_info(params).await {
+        match self.delete_aws_lambda_arn_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -434,15 +387,12 @@ impl AWSLogsIntegrationAPI {
     /// Delete a Datadog-AWS logs configuration by removing the specific Lambda ARN associated with a given AWS account.
     pub async fn delete_aws_lambda_arn_with_http_info(
         &self,
-        params: DeleteAWSLambdaARNParams,
+        body: crate::datadogV1::model::AWSAccountAndLambdaRequest,
     ) -> Result<
         ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<DeleteAWSLambdaARNError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -503,12 +453,12 @@ impl AWSLogsIntegrationAPI {
     /// Enable automatic log collection for a list of services. This should be run after running `CreateAWSLambdaARN` to save the configuration.
     pub async fn enable_aws_log_services(
         &self,
-        params: EnableAWSLogServicesParams,
+        body: crate::datadogV1::model::AWSLogsServicesRequest,
     ) -> Result<
         Option<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<EnableAWSLogServicesError>,
     > {
-        match self.enable_aws_log_services_with_http_info(params).await {
+        match self.enable_aws_log_services_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -517,15 +467,12 @@ impl AWSLogsIntegrationAPI {
     /// Enable automatic log collection for a list of services. This should be run after running `CreateAWSLambdaARN` to save the configuration.
     pub async fn enable_aws_log_services_with_http_info(
         &self,
-        params: EnableAWSLogServicesParams,
+        body: crate::datadogV1::model::AWSLogsServicesRequest,
     ) -> Result<
         ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<EnableAWSLogServicesError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -605,8 +552,6 @@ impl AWSLogsIntegrationAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -677,8 +622,6 @@ impl AWSLogsIntegrationAPI {
         Error<ListAWSLogsServicesError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
 
         let local_client = &local_configuration.client;
 

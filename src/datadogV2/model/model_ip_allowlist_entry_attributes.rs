@@ -31,7 +31,28 @@ impl IPAllowlistEntryAttributes {
             note: None,
         }
     }
+
+    pub fn cidr_block(&mut self, value: String) -> &mut Self {
+        self.cidr_block = Some(value);
+        self
+    }
+
+    pub fn created_at(&mut self, value: String) -> &mut Self {
+        self.created_at = Some(value);
+        self
+    }
+
+    pub fn modified_at(&mut self, value: String) -> &mut Self {
+        self.modified_at = Some(value);
+        self
+    }
+
+    pub fn note(&mut self, value: String) -> &mut Self {
+        self.note = Some(value);
+        self
+    }
 }
+
 impl Default for IPAllowlistEntryAttributes {
     fn default() -> Self {
         Self::new()

@@ -16,13 +16,13 @@ pub struct SunburstWidgetDefinition {
     pub hide_total: Option<bool>,
     /// Configuration of the legend.
     #[serde(rename = "legend")]
-    pub legend: Option<Box<crate::datadogV1::model::SunburstWidgetLegend>>,
+    pub legend: Option<crate::datadogV1::model::SunburstWidgetLegend>,
     /// List of sunburst widget requests.
     #[serde(rename = "requests")]
     pub requests: Vec<crate::datadogV1::model::SunburstWidgetRequest>,
     /// Time setting for the widget.
     #[serde(rename = "time")]
-    pub time: Option<Box<crate::datadogV1::model::WidgetTime>>,
+    pub time: Option<crate::datadogV1::model::WidgetTime>,
     /// Title of your widget.
     #[serde(rename = "title")]
     pub title: Option<String>,
@@ -53,5 +53,43 @@ impl SunburstWidgetDefinition {
             title_size: None,
             type_,
         }
+    }
+
+    pub fn custom_links(
+        &mut self,
+        value: Vec<crate::datadogV1::model::WidgetCustomLink>,
+    ) -> &mut Self {
+        self.custom_links = Some(value);
+        self
+    }
+
+    pub fn hide_total(&mut self, value: bool) -> &mut Self {
+        self.hide_total = Some(value);
+        self
+    }
+
+    pub fn legend(&mut self, value: crate::datadogV1::model::SunburstWidgetLegend) -> &mut Self {
+        self.legend = Some(value);
+        self
+    }
+
+    pub fn time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
+        self.time = Some(value);
+        self
+    }
+
+    pub fn title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
+    }
+
+    pub fn title_align(&mut self, value: crate::datadogV1::model::WidgetTextAlign) -> &mut Self {
+        self.title_align = Some(value);
+        self
+    }
+
+    pub fn title_size(&mut self, value: String) -> &mut Self {
+        self.title_size = Some(value);
+        self
     }
 }

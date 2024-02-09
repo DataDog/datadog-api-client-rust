@@ -27,4 +27,9 @@ impl ServiceDefinitionV2Doc {
             url,
         }
     }
+
+    pub fn provider(&mut self, value: String) -> &mut Self {
+        self.provider = Some(value);
+        self
+    }
 }

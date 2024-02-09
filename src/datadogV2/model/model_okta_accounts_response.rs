@@ -17,7 +17,16 @@ impl OktaAccountsResponse {
     pub fn new() -> OktaAccountsResponse {
         OktaAccountsResponse { data: None }
     }
+
+    pub fn data(
+        &mut self,
+        value: Vec<crate::datadogV2::model::OktaAccountResponseData>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for OktaAccountsResponse {
     fn default() -> Self {
         Self::new()

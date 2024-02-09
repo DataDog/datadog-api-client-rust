@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct LogsArchiveCreateRequestDefinition {
     /// The attributes associated with the archive.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::LogsArchiveCreateRequestAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::LogsArchiveCreateRequestAttributes>,
     /// The type of the resource. The value should always be archives.
     #[serde(rename = "type")]
     pub type_: String,
@@ -22,5 +22,13 @@ impl LogsArchiveCreateRequestDefinition {
             attributes: None,
             type_,
         }
+    }
+
+    pub fn attributes(
+        &mut self,
+        value: crate::datadogV2::model::LogsArchiveCreateRequestAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
     }
 }

@@ -10,11 +10,11 @@ use serde_with::skip_serializing_none;
 pub struct APIKeyUpdateRequest {
     /// Object used to update an API key.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::APIKeyUpdateData>,
+    pub data: crate::datadogV2::model::APIKeyUpdateData,
 }
 
 impl APIKeyUpdateRequest {
-    pub fn new(data: Box<crate::datadogV2::model::APIKeyUpdateData>) -> APIKeyUpdateRequest {
+    pub fn new(data: crate::datadogV2::model::APIKeyUpdateData) -> APIKeyUpdateRequest {
         APIKeyUpdateRequest { data }
     }
 }

@@ -17,7 +17,13 @@ impl OutcomesResponseLinks {
     pub fn new() -> OutcomesResponseLinks {
         OutcomesResponseLinks { next: None }
     }
+
+    pub fn next(&mut self, value: String) -> &mut Self {
+        self.next = Some(value);
+        self
+    }
 }
+
 impl Default for OutcomesResponseLinks {
     fn default() -> Self {
         Self::new()

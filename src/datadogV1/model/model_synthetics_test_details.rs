@@ -10,10 +10,10 @@ use serde_with::skip_serializing_none;
 pub struct SyntheticsTestDetails {
     /// Configuration object for a Synthetic test.
     #[serde(rename = "config")]
-    pub config: Option<Box<crate::datadogV1::model::SyntheticsTestConfig>>,
+    pub config: Option<crate::datadogV1::model::SyntheticsTestConfig>,
     /// Object describing the creator of the shared element.
     #[serde(rename = "creator")]
-    pub creator: Option<Box<crate::datadogV1::model::Creator>>,
+    pub creator: Option<crate::datadogV1::model::Creator>,
     /// Array of locations used to run the test.
     #[serde(rename = "locations")]
     pub locations: Option<Vec<String>>,
@@ -28,7 +28,7 @@ pub struct SyntheticsTestDetails {
     pub name: Option<String>,
     /// Object describing the extra options for a Synthetic test.
     #[serde(rename = "options")]
-    pub options: Option<Box<crate::datadogV1::model::SyntheticsTestOptions>>,
+    pub options: Option<crate::datadogV1::model::SyntheticsTestOptions>,
     /// The test public ID.
     #[serde(rename = "public_id")]
     pub public_id: Option<String>,
@@ -69,7 +69,82 @@ impl SyntheticsTestDetails {
             type_: None,
         }
     }
+
+    pub fn config(&mut self, value: crate::datadogV1::model::SyntheticsTestConfig) -> &mut Self {
+        self.config = Some(value);
+        self
+    }
+
+    pub fn creator(&mut self, value: crate::datadogV1::model::Creator) -> &mut Self {
+        self.creator = Some(value);
+        self
+    }
+
+    pub fn locations(&mut self, value: Vec<String>) -> &mut Self {
+        self.locations = Some(value);
+        self
+    }
+
+    pub fn message(&mut self, value: String) -> &mut Self {
+        self.message = Some(value);
+        self
+    }
+
+    pub fn monitor_id(&mut self, value: i64) -> &mut Self {
+        self.monitor_id = Some(value);
+        self
+    }
+
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn options(&mut self, value: crate::datadogV1::model::SyntheticsTestOptions) -> &mut Self {
+        self.options = Some(value);
+        self
+    }
+
+    pub fn public_id(&mut self, value: String) -> &mut Self {
+        self.public_id = Some(value);
+        self
+    }
+
+    pub fn status(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsTestPauseStatus,
+    ) -> &mut Self {
+        self.status = Some(value);
+        self
+    }
+
+    pub fn steps(&mut self, value: Vec<crate::datadogV1::model::SyntheticsStep>) -> &mut Self {
+        self.steps = Some(value);
+        self
+    }
+
+    pub fn subtype(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsTestDetailsSubType,
+    ) -> &mut Self {
+        self.subtype = Some(value);
+        self
+    }
+
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+
+    pub fn type_(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsTestDetailsType,
+    ) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
+
 impl Default for SyntheticsTestDetails {
     fn default() -> Self {
         Self::new()

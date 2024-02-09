@@ -13,7 +13,7 @@ pub struct PowerpackAttributes {
     pub description: Option<String>,
     /// Powerpack group widget definition object.
     #[serde(rename = "group_widget")]
-    pub group_widget: Box<crate::datadogV2::model::PowerpackGroupWidget>,
+    pub group_widget: crate::datadogV2::model::PowerpackGroupWidget,
     /// Name of the powerpack.
     #[serde(rename = "name")]
     pub name: String,
@@ -27,7 +27,7 @@ pub struct PowerpackAttributes {
 
 impl PowerpackAttributes {
     pub fn new(
-        group_widget: Box<crate::datadogV2::model::PowerpackGroupWidget>,
+        group_widget: crate::datadogV2::model::PowerpackGroupWidget,
         name: String,
     ) -> PowerpackAttributes {
         PowerpackAttributes {
@@ -37,5 +37,23 @@ impl PowerpackAttributes {
             tags: None,
             template_variables: None,
         }
+    }
+
+    pub fn description(&mut self, value: String) -> &mut Self {
+        self.description = Some(value);
+        self
+    }
+
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+
+    pub fn template_variables(
+        &mut self,
+        value: Vec<crate::datadogV2::model::PowerpackTemplateVariable>,
+    ) -> &mut Self {
+        self.template_variables = Some(value);
+        self
     }
 }

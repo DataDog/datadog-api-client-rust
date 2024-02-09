@@ -9,33 +9,48 @@ use log::warn;
 {%- endfor %}
 
 {%- set structName = name.replace(" ", "")+"API" %}
-{% for path, method, operation in operations|sort(attribute="2.operationId", case_sensitive=True) %}
+{% for path, method, operation in operations|sort(attribute="2.operationId", case_sensitive=true) %}
 {%- set httpMethod = method.upper() %}
 {%- set returnType = operation|return_type(version) %}
 {%- set formParameter = operation|form_parameter %}
-{%- set optionalBody = False if "required" in operation.requestBody and operation.requestBody.required else True %}
+{%- set optionalBody = false if "required" in operation.requestBody and operation.requestBody.required else true %}
+{%- set optionalParams = operation|parameters|rejectattr('1.required', 'equalto', true) | list %}
 
-{%- for name, parameter in operation|parameters %}
+{%- for name, parameter in optionalParams %}
 {%- if loop.first %}
-/// {{ operation.operationId }}Params is a struct for passing parameters to the method [`{{ structName }}::{{operation.operationId | snake_case}}`]
-#[derive(Clone, Debug)]
-pub struct {{operation.operationId}}Params {
+/// {{operation.operationId}}OptionalParams is a struct for passing parameters to the method [`{{ structName }}::{{operation.operationId | snake_case}}`]
+#[derive(Clone, Default, Debug)]
+pub struct {{operation.operationId}}OptionalParams {
 {%- endif %}
     {%- if parameter.description is defined %}
     {{parameter.description | block_comment}}
     {%- endif %}
-	{%- if optionalBody and name == operation.get("x-codegen-request-body-name", "body") %}
-    pub {{name|variable_name}}: Option<{{ get_type_for_parameter(parameter, version) }}>,
-    {%- else %}
     pub {{name|variable_name}}: {{ get_type_for_parameter(parameter, version) }},
+{%- if loop.last %}
+}
+{% endif %}
+{%- endfor %}
+{%- for name, parameter in optionalParams %}
+{%- if loop.first %}
+impl {{operation.operationId}}OptionalParams {
+{%- endif %}
+    {%- if parameter.description is defined %}
+    {{parameter.description | block_comment}}
     {%- endif %}
+    {%- if get_deprecated(model) %}
+    #[allow(deprecated)]
+    {%- endif %}
+    pub fn {{name|variable_name}}(&mut self, value: {{get_type_for_parameter(parameter, version, render_option=false)}}) -> &mut Self {
+        self.{{name|variable_name}} = Some(value);
+        self
+    }
 {%- if loop.last %}
 }
 {% endif %}
 {%- endfor %}
 {%- endfor %}
 
-{% for path, method, operation in operations|sort(attribute="2.operationId", case_sensitive=True) %}
+{% for path, method, operation in operations|sort(attribute="2.operationId", case_sensitive=true) %}
 {%- set httpMethod = method.upper() %}
 {%- set returnType = operation|return_type(version) %}
 {%- set formParameter = operation|form_parameter %}
@@ -74,15 +89,16 @@ impl {{ structName }} {
         Self { config }
     }
 
-    {% for path, method, operation in operations|sort(attribute="2.operationId", case_sensitive=True) %}
+    {% for path, method, operation in operations|sort(attribute="2.operationId", case_sensitive=true) %}
     {%- set httpMethod = method.upper() %}
     {%- set returnType = operation|return_type(version) %}
     {%- set formParameter = operation|form_parameter %}
+    {%- set requiredParams = operation|parameters|selectattr('1.required', 'equalto', true) | list %}
     {% if operation.description is defined %}
     {{ operation.description | block_comment }}
     {%- endif %}
-    pub async fn {{operation.operationId | snake_case}}(&self{% for name, parameter in operation|parameters %}{% if loop.first %}, params: {{operation.operationId}}Params{% endif %}{% endfor %}) -> Result<Option<{% if returnType %}{{returnType}}{% else %}(){% endif %}>, Error<{{operation.operationId}}Error>> {
-        match self.{{operation.operationId | snake_case}}_with_http_info({% for name, parameter in operation|parameters %}{% if loop.first %}params{% endif %}{% endfor %}).await {
+    pub async fn {{operation.operationId | snake_case}}(&self{% for name, parameter in requiredParams %}, {{name|variable_name}}: {{ get_type_for_parameter(parameter, version) }}{% endfor %}{% if operation|has_optional_parameter %}, params: {{operation.operationId}}OptionalParams{% endif %}) -> Result<Option<{% if returnType %}{{returnType}}{% else %}(){% endif %}>, Error<{{operation.operationId}}Error>> {
+        match self.{{operation.operationId | snake_case}}_with_http_info({% for name, parameter in requiredParams %}{{name|variable_name}}{% if loop.last %}{% if operation|has_optional_parameter %}, {% endif %}{% else %}, {% endif %}{% endfor %}{% if operation|has_optional_parameter %} params{% endif %}).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -91,7 +107,8 @@ impl {{ structName }} {
     {% if operation.description is defined %}
     {{ operation.description | block_comment }}
     {%- endif %}
-    pub async fn {{operation.operationId | snake_case}}_with_http_info(&self{% for name, parameter in operation|parameters %}{% if loop.first %}, params: {{operation.operationId}}Params{% endif %}{% endfor %}) -> Result<ResponseContent<{% if returnType %}{{returnType}}{% else %}(){% endif %}>, Error<{{operation.operationId}}Error>> {
+
+    pub async fn {{operation.operationId | snake_case}}_with_http_info(&self{% for name, parameter in requiredParams %}, {{name|variable_name}}: {{ get_type_for_parameter(parameter, version) }}{% endfor %}{% if operation|has_optional_parameter %}, params: {{operation.operationId}}OptionalParams{% endif %}) -> Result<ResponseContent<{% if returnType %}{{returnType}}{% else %}(){% endif %}>, Error<{{operation.operationId}}Error>> {
         {%- if "x-unstable" in operation %}
         let operation_id = "{{ version }}.{{ operation.operationId | snake_case }}".to_string();
         if self.config.is_unstable_operation_enabled(&operation_id) {
@@ -106,8 +123,10 @@ impl {{ structName }} {
 
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        {%- for name, parameter in operation|parameters %}
+        {% for name, parameter in operation|parameters if parameter.required != true %}
+        {%- if loop.first %}
+        // unbox and build optional parameters
+        {%- endif %}
         let {{name|variable_name}} = params.{{name|variable_name}};
         {%- endfor %}
 
@@ -128,16 +147,16 @@ impl {{ structName }} {
         {% for name, parameter in operation|parameters if parameter.in == "query" %}
         {%- set schema = parameter | parameter_schema %}
         {%- if parameter.required and schema.type == "array" %}
-        local_req_builder = local_req_builder.query(&[("{{name}}", &{{name|variable_name}}.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
+        local_req_builder = local_req_builder.query(&[("{{name}}", &{{name|variable_name}}.iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
         {%- elif not parameter.required and schema.type == "array" %}
         if let Some(ref local) = {{name|variable_name}} {
-            local_req_builder = local_req_builder.query(&[("{{name}}", &local.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
+            local_req_builder = local_req_builder.query(&[("{{name}}", &local.iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
         };
         {%- elif parameter.required %}
         local_req_builder = local_req_builder.query(&[("{{name}}", &{{name|variable_name}}.to_string())]);
         {%- else %}
-        if let Some(ref local_str) = {{name|variable_name}} {
-            local_req_builder = local_req_builder.query(&[("{{name}}", &local_str.to_string())]);
+        if let Some(ref local_query_param) = {{name|variable_name}} {
+            local_req_builder = local_req_builder.query(&[("{{name}}", &local_query_param.to_string())]);
         };
         {%- endif %}
         {%- endfor %}

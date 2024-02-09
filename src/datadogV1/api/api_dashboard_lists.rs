@@ -5,36 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateDashboardListParams is a struct for passing parameters to the method [`DashboardListsAPI::create_dashboard_list`]
-#[derive(Clone, Debug)]
-pub struct CreateDashboardListParams {
-    /// Create a dashboard list request body.
-    pub body: crate::datadogV1::model::DashboardList,
-}
-
-/// DeleteDashboardListParams is a struct for passing parameters to the method [`DashboardListsAPI::delete_dashboard_list`]
-#[derive(Clone, Debug)]
-pub struct DeleteDashboardListParams {
-    /// ID of the dashboard list to delete.
-    pub list_id: i64,
-}
-
-/// GetDashboardListParams is a struct for passing parameters to the method [`DashboardListsAPI::get_dashboard_list`]
-#[derive(Clone, Debug)]
-pub struct GetDashboardListParams {
-    /// ID of the dashboard list to fetch.
-    pub list_id: i64,
-}
-
-/// UpdateDashboardListParams is a struct for passing parameters to the method [`DashboardListsAPI::update_dashboard_list`]
-#[derive(Clone, Debug)]
-pub struct UpdateDashboardListParams {
-    /// ID of the dashboard list to update.
-    pub list_id: i64,
-    /// Update a dashboard list request body.
-    pub body: crate::datadogV1::model::DashboardList,
-}
-
 /// CreateDashboardListError is a struct for typed errors of method [`DashboardListsAPI::create_dashboard_list`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -109,10 +79,10 @@ impl DashboardListsAPI {
     /// Create an empty dashboard list.
     pub async fn create_dashboard_list(
         &self,
-        params: CreateDashboardListParams,
+        body: crate::datadogV1::model::DashboardList,
     ) -> Result<Option<crate::datadogV1::model::DashboardList>, Error<CreateDashboardListError>>
     {
-        match self.create_dashboard_list_with_http_info(params).await {
+        match self.create_dashboard_list_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -121,15 +91,12 @@ impl DashboardListsAPI {
     /// Create an empty dashboard list.
     pub async fn create_dashboard_list_with_http_info(
         &self,
-        params: CreateDashboardListParams,
+        body: crate::datadogV1::model::DashboardList,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::DashboardList>,
         Error<CreateDashboardListError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -190,12 +157,12 @@ impl DashboardListsAPI {
     /// Delete a dashboard list.
     pub async fn delete_dashboard_list(
         &self,
-        params: DeleteDashboardListParams,
+        list_id: i64,
     ) -> Result<
         Option<crate::datadogV1::model::DashboardListDeleteResponse>,
         Error<DeleteDashboardListError>,
     > {
-        match self.delete_dashboard_list_with_http_info(params).await {
+        match self.delete_dashboard_list_with_http_info(list_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -204,15 +171,12 @@ impl DashboardListsAPI {
     /// Delete a dashboard list.
     pub async fn delete_dashboard_list_with_http_info(
         &self,
-        params: DeleteDashboardListParams,
+        list_id: i64,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::DashboardListDeleteResponse>,
         Error<DeleteDashboardListError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let list_id = params.list_id;
 
         let local_client = &local_configuration.client;
 
@@ -267,9 +231,9 @@ impl DashboardListsAPI {
     /// Fetch an existing dashboard list's definition.
     pub async fn get_dashboard_list(
         &self,
-        params: GetDashboardListParams,
+        list_id: i64,
     ) -> Result<Option<crate::datadogV1::model::DashboardList>, Error<GetDashboardListError>> {
-        match self.get_dashboard_list_with_http_info(params).await {
+        match self.get_dashboard_list_with_http_info(list_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -278,13 +242,10 @@ impl DashboardListsAPI {
     /// Fetch an existing dashboard list's definition.
     pub async fn get_dashboard_list_with_http_info(
         &self,
-        params: GetDashboardListParams,
+        list_id: i64,
     ) -> Result<ResponseContent<crate::datadogV1::model::DashboardList>, Error<GetDashboardListError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let list_id = params.list_id;
 
         let local_client = &local_configuration.client;
 
@@ -358,8 +319,6 @@ impl DashboardListsAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -412,10 +371,14 @@ impl DashboardListsAPI {
     /// Update the name of a dashboard list.
     pub async fn update_dashboard_list(
         &self,
-        params: UpdateDashboardListParams,
+        list_id: i64,
+        body: crate::datadogV1::model::DashboardList,
     ) -> Result<Option<crate::datadogV1::model::DashboardList>, Error<UpdateDashboardListError>>
     {
-        match self.update_dashboard_list_with_http_info(params).await {
+        match self
+            .update_dashboard_list_with_http_info(list_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -424,16 +387,13 @@ impl DashboardListsAPI {
     /// Update the name of a dashboard list.
     pub async fn update_dashboard_list_with_http_info(
         &self,
-        params: UpdateDashboardListParams,
+        list_id: i64,
+        body: crate::datadogV1::model::DashboardList,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::DashboardList>,
         Error<UpdateDashboardListError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let list_id = params.list_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

@@ -5,81 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateConfluentAccountParams is a struct for passing parameters to the method [`ConfluentCloudAPI::create_confluent_account`]
-#[derive(Clone, Debug)]
-pub struct CreateConfluentAccountParams {
-    /// Confluent payload
-    pub body: crate::datadogV2::model::ConfluentAccountCreateRequest,
-}
-
-/// CreateConfluentResourceParams is a struct for passing parameters to the method [`ConfluentCloudAPI::create_confluent_resource`]
-#[derive(Clone, Debug)]
-pub struct CreateConfluentResourceParams {
-    /// Confluent Account id.
-    pub account_id: String,
-    /// Confluent payload
-    pub body: crate::datadogV2::model::ConfluentResourceRequest,
-}
-
-/// DeleteConfluentAccountParams is a struct for passing parameters to the method [`ConfluentCloudAPI::delete_confluent_account`]
-#[derive(Clone, Debug)]
-pub struct DeleteConfluentAccountParams {
-    /// Confluent Account id.
-    pub account_id: String,
-}
-
-/// DeleteConfluentResourceParams is a struct for passing parameters to the method [`ConfluentCloudAPI::delete_confluent_resource`]
-#[derive(Clone, Debug)]
-pub struct DeleteConfluentResourceParams {
-    /// Confluent Account id.
-    pub account_id: String,
-    /// Confluent Account Resource ID.
-    pub resource_id: String,
-}
-
-/// GetConfluentAccountParams is a struct for passing parameters to the method [`ConfluentCloudAPI::get_confluent_account`]
-#[derive(Clone, Debug)]
-pub struct GetConfluentAccountParams {
-    /// Confluent Account id.
-    pub account_id: String,
-}
-
-/// GetConfluentResourceParams is a struct for passing parameters to the method [`ConfluentCloudAPI::get_confluent_resource`]
-#[derive(Clone, Debug)]
-pub struct GetConfluentResourceParams {
-    /// Confluent Account id.
-    pub account_id: String,
-    /// Confluent Account Resource ID.
-    pub resource_id: String,
-}
-
-/// ListConfluentResourceParams is a struct for passing parameters to the method [`ConfluentCloudAPI::list_confluent_resource`]
-#[derive(Clone, Debug)]
-pub struct ListConfluentResourceParams {
-    /// Confluent Account id.
-    pub account_id: String,
-}
-
-/// UpdateConfluentAccountParams is a struct for passing parameters to the method [`ConfluentCloudAPI::update_confluent_account`]
-#[derive(Clone, Debug)]
-pub struct UpdateConfluentAccountParams {
-    /// Confluent Account id.
-    pub account_id: String,
-    /// Confluent payload
-    pub body: crate::datadogV2::model::ConfluentAccountUpdateRequest,
-}
-
-/// UpdateConfluentResourceParams is a struct for passing parameters to the method [`ConfluentCloudAPI::update_confluent_resource`]
-#[derive(Clone, Debug)]
-pub struct UpdateConfluentResourceParams {
-    /// Confluent Account id.
-    pub account_id: String,
-    /// Confluent Account Resource ID.
-    pub resource_id: String,
-    /// Confluent payload
-    pub body: crate::datadogV2::model::ConfluentResourceRequest,
-}
-
 /// CreateConfluentAccountError is a struct for typed errors of method [`ConfluentCloudAPI::create_confluent_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -214,12 +139,12 @@ impl ConfluentCloudAPI {
     /// Create a Confluent account.
     pub async fn create_confluent_account(
         &self,
-        params: CreateConfluentAccountParams,
+        body: crate::datadogV2::model::ConfluentAccountCreateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::ConfluentAccountResponse>,
         Error<CreateConfluentAccountError>,
     > {
-        match self.create_confluent_account_with_http_info(params).await {
+        match self.create_confluent_account_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -228,15 +153,12 @@ impl ConfluentCloudAPI {
     /// Create a Confluent account.
     pub async fn create_confluent_account_with_http_info(
         &self,
-        params: CreateConfluentAccountParams,
+        body: crate::datadogV2::model::ConfluentAccountCreateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::ConfluentAccountResponse>,
         Error<CreateConfluentAccountError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -297,12 +219,16 @@ impl ConfluentCloudAPI {
     /// Create a Confluent resource for the account associated with the provided ID.
     pub async fn create_confluent_resource(
         &self,
-        params: CreateConfluentResourceParams,
+        account_id: String,
+        body: crate::datadogV2::model::ConfluentResourceRequest,
     ) -> Result<
         Option<crate::datadogV2::model::ConfluentResourceResponse>,
         Error<CreateConfluentResourceError>,
     > {
-        match self.create_confluent_resource_with_http_info(params).await {
+        match self
+            .create_confluent_resource_with_http_info(account_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -311,16 +237,13 @@ impl ConfluentCloudAPI {
     /// Create a Confluent resource for the account associated with the provided ID.
     pub async fn create_confluent_resource_with_http_info(
         &self,
-        params: CreateConfluentResourceParams,
+        account_id: String,
+        body: crate::datadogV2::model::ConfluentResourceRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::ConfluentResourceResponse>,
         Error<CreateConfluentResourceError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_id = params.account_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -382,9 +305,12 @@ impl ConfluentCloudAPI {
     /// Delete a Confluent account with the provided account ID.
     pub async fn delete_confluent_account(
         &self,
-        params: DeleteConfluentAccountParams,
+        account_id: String,
     ) -> Result<Option<()>, Error<DeleteConfluentAccountError>> {
-        match self.delete_confluent_account_with_http_info(params).await {
+        match self
+            .delete_confluent_account_with_http_info(account_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -393,12 +319,9 @@ impl ConfluentCloudAPI {
     /// Delete a Confluent account with the provided account ID.
     pub async fn delete_confluent_account_with_http_info(
         &self,
-        params: DeleteConfluentAccountParams,
+        account_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteConfluentAccountError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_id = params.account_id;
 
         let local_client = &local_configuration.client;
 
@@ -451,9 +374,13 @@ impl ConfluentCloudAPI {
     /// Delete a Confluent resource with the provided resource id for the account associated with the provided account ID.
     pub async fn delete_confluent_resource(
         &self,
-        params: DeleteConfluentResourceParams,
+        account_id: String,
+        resource_id: String,
     ) -> Result<Option<()>, Error<DeleteConfluentResourceError>> {
-        match self.delete_confluent_resource_with_http_info(params).await {
+        match self
+            .delete_confluent_resource_with_http_info(account_id, resource_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -462,13 +389,10 @@ impl ConfluentCloudAPI {
     /// Delete a Confluent resource with the provided resource id for the account associated with the provided account ID.
     pub async fn delete_confluent_resource_with_http_info(
         &self,
-        params: DeleteConfluentResourceParams,
+        account_id: String,
+        resource_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteConfluentResourceError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_id = params.account_id;
-        let resource_id = params.resource_id;
 
         let local_client = &local_configuration.client;
 
@@ -522,12 +446,12 @@ impl ConfluentCloudAPI {
     /// Get the Confluent account with the provided account ID.
     pub async fn get_confluent_account(
         &self,
-        params: GetConfluentAccountParams,
+        account_id: String,
     ) -> Result<
         Option<crate::datadogV2::model::ConfluentAccountResponse>,
         Error<GetConfluentAccountError>,
     > {
-        match self.get_confluent_account_with_http_info(params).await {
+        match self.get_confluent_account_with_http_info(account_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -536,15 +460,12 @@ impl ConfluentCloudAPI {
     /// Get the Confluent account with the provided account ID.
     pub async fn get_confluent_account_with_http_info(
         &self,
-        params: GetConfluentAccountParams,
+        account_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::ConfluentAccountResponse>,
         Error<GetConfluentAccountError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_id = params.account_id;
 
         let local_client = &local_configuration.client;
 
@@ -599,12 +520,16 @@ impl ConfluentCloudAPI {
     /// Get a Confluent resource with the provided resource id for the account associated with the provided account ID.
     pub async fn get_confluent_resource(
         &self,
-        params: GetConfluentResourceParams,
+        account_id: String,
+        resource_id: String,
     ) -> Result<
         Option<crate::datadogV2::model::ConfluentResourceResponse>,
         Error<GetConfluentResourceError>,
     > {
-        match self.get_confluent_resource_with_http_info(params).await {
+        match self
+            .get_confluent_resource_with_http_info(account_id, resource_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -613,16 +538,13 @@ impl ConfluentCloudAPI {
     /// Get a Confluent resource with the provided resource id for the account associated with the provided account ID.
     pub async fn get_confluent_resource_with_http_info(
         &self,
-        params: GetConfluentResourceParams,
+        account_id: String,
+        resource_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::ConfluentResourceResponse>,
         Error<GetConfluentResourceError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_id = params.account_id;
-        let resource_id = params.resource_id;
 
         let local_client = &local_configuration.client;
 
@@ -697,8 +619,6 @@ impl ConfluentCloudAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -751,12 +671,15 @@ impl ConfluentCloudAPI {
     /// Get a Confluent resource for the account associated with the provided ID.
     pub async fn list_confluent_resource(
         &self,
-        params: ListConfluentResourceParams,
+        account_id: String,
     ) -> Result<
         Option<crate::datadogV2::model::ConfluentResourcesResponse>,
         Error<ListConfluentResourceError>,
     > {
-        match self.list_confluent_resource_with_http_info(params).await {
+        match self
+            .list_confluent_resource_with_http_info(account_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -765,15 +688,12 @@ impl ConfluentCloudAPI {
     /// Get a Confluent resource for the account associated with the provided ID.
     pub async fn list_confluent_resource_with_http_info(
         &self,
-        params: ListConfluentResourceParams,
+        account_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::ConfluentResourcesResponse>,
         Error<ListConfluentResourceError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_id = params.account_id;
 
         let local_client = &local_configuration.client;
 
@@ -828,12 +748,16 @@ impl ConfluentCloudAPI {
     /// Update the Confluent account with the provided account ID.
     pub async fn update_confluent_account(
         &self,
-        params: UpdateConfluentAccountParams,
+        account_id: String,
+        body: crate::datadogV2::model::ConfluentAccountUpdateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::ConfluentAccountResponse>,
         Error<UpdateConfluentAccountError>,
     > {
-        match self.update_confluent_account_with_http_info(params).await {
+        match self
+            .update_confluent_account_with_http_info(account_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -842,16 +766,13 @@ impl ConfluentCloudAPI {
     /// Update the Confluent account with the provided account ID.
     pub async fn update_confluent_account_with_http_info(
         &self,
-        params: UpdateConfluentAccountParams,
+        account_id: String,
+        body: crate::datadogV2::model::ConfluentAccountUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::ConfluentAccountResponse>,
         Error<UpdateConfluentAccountError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_id = params.account_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -913,12 +834,17 @@ impl ConfluentCloudAPI {
     /// Update a Confluent resource with the provided resource id for the account associated with the provided account ID.
     pub async fn update_confluent_resource(
         &self,
-        params: UpdateConfluentResourceParams,
+        account_id: String,
+        resource_id: String,
+        body: crate::datadogV2::model::ConfluentResourceRequest,
     ) -> Result<
         Option<crate::datadogV2::model::ConfluentResourceResponse>,
         Error<UpdateConfluentResourceError>,
     > {
-        match self.update_confluent_resource_with_http_info(params).await {
+        match self
+            .update_confluent_resource_with_http_info(account_id, resource_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -927,17 +853,14 @@ impl ConfluentCloudAPI {
     /// Update a Confluent resource with the provided resource id for the account associated with the provided account ID.
     pub async fn update_confluent_resource_with_http_info(
         &self,
-        params: UpdateConfluentResourceParams,
+        account_id: String,
+        resource_id: String,
+        body: crate::datadogV2::model::ConfluentResourceRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::ConfluentResourceResponse>,
         Error<UpdateConfluentResourceError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_id = params.account_id;
-        let resource_id = params.resource_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

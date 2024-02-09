@@ -10,14 +10,23 @@ use serde_with::skip_serializing_none;
 pub struct DowntimeRelationshipsCreatedBy {
     /// Data for the user who created the downtime.
     #[serde(rename = "data", default, with = "::serde_with::rust::double_option")]
-    pub data: Option<Option<Box<crate::datadogV2::model::DowntimeRelationshipsCreatedByData>>>,
+    pub data: Option<Option<crate::datadogV2::model::DowntimeRelationshipsCreatedByData>>,
 }
 
 impl DowntimeRelationshipsCreatedBy {
     pub fn new() -> DowntimeRelationshipsCreatedBy {
         DowntimeRelationshipsCreatedBy { data: None }
     }
+
+    pub fn data(
+        &mut self,
+        value: Option<crate::datadogV2::model::DowntimeRelationshipsCreatedByData>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for DowntimeRelationshipsCreatedBy {
     fn default() -> Self {
         Self::new()

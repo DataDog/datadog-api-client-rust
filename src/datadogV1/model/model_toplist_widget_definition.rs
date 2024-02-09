@@ -16,10 +16,10 @@ pub struct ToplistWidgetDefinition {
     pub requests: Vec<crate::datadogV1::model::ToplistWidgetRequest>,
     /// Style customization for a top list widget.
     #[serde(rename = "style")]
-    pub style: Option<Box<crate::datadogV1::model::ToplistWidgetStyle>>,
+    pub style: Option<crate::datadogV1::model::ToplistWidgetStyle>,
     /// Time setting for the widget.
     #[serde(rename = "time")]
-    pub time: Option<Box<crate::datadogV1::model::WidgetTime>>,
+    pub time: Option<crate::datadogV1::model::WidgetTime>,
     /// Title of your widget.
     #[serde(rename = "title")]
     pub title: Option<String>,
@@ -49,5 +49,38 @@ impl ToplistWidgetDefinition {
             title_size: None,
             type_,
         }
+    }
+
+    pub fn custom_links(
+        &mut self,
+        value: Vec<crate::datadogV1::model::WidgetCustomLink>,
+    ) -> &mut Self {
+        self.custom_links = Some(value);
+        self
+    }
+
+    pub fn style(&mut self, value: crate::datadogV1::model::ToplistWidgetStyle) -> &mut Self {
+        self.style = Some(value);
+        self
+    }
+
+    pub fn time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
+        self.time = Some(value);
+        self
+    }
+
+    pub fn title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
+    }
+
+    pub fn title_align(&mut self, value: crate::datadogV1::model::WidgetTextAlign) -> &mut Self {
+        self.title_align = Some(value);
+        self
+    }
+
+    pub fn title_size(&mut self, value: String) -> &mut Self {
+        self.title_size = Some(value);
+        self
     }
 }

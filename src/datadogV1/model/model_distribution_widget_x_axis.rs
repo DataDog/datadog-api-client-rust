@@ -31,7 +31,28 @@ impl DistributionWidgetXAxis {
             scale: None,
         }
     }
+
+    pub fn include_zero(&mut self, value: bool) -> &mut Self {
+        self.include_zero = Some(value);
+        self
+    }
+
+    pub fn max(&mut self, value: String) -> &mut Self {
+        self.max = Some(value);
+        self
+    }
+
+    pub fn min(&mut self, value: String) -> &mut Self {
+        self.min = Some(value);
+        self
+    }
+
+    pub fn scale(&mut self, value: String) -> &mut Self {
+        self.scale = Some(value);
+        self
+    }
 }
+
 impl Default for DistributionWidgetXAxis {
     fn default() -> Self {
         Self::new()

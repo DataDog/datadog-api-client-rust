@@ -23,4 +23,9 @@ impl SecurityMonitoringSignalIncidentsUpdateAttributes {
             version: None,
         }
     }
+
+    pub fn version(&mut self, value: i64) -> &mut Self {
+        self.version = Some(value);
+        self
+    }
 }

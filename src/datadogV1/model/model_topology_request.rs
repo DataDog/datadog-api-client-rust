@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct TopologyRequest {
     /// Query to service-based topology data sources like the service map or data streams.
     #[serde(rename = "query")]
-    pub query: Option<Box<crate::datadogV1::model::TopologyQuery>>,
+    pub query: Option<crate::datadogV1::model::TopologyQuery>,
     /// Widget request type.
     #[serde(rename = "request_type")]
     pub request_type: Option<crate::datadogV1::model::TopologyRequestType>,
@@ -23,7 +23,21 @@ impl TopologyRequest {
             request_type: None,
         }
     }
+
+    pub fn query(&mut self, value: crate::datadogV1::model::TopologyQuery) -> &mut Self {
+        self.query = Some(value);
+        self
+    }
+
+    pub fn request_type(
+        &mut self,
+        value: crate::datadogV1::model::TopologyRequestType,
+    ) -> &mut Self {
+        self.request_type = Some(value);
+        self
+    }
 }
+
 impl Default for TopologyRequest {
     fn default() -> Self {
         Self::new()

@@ -28,7 +28,26 @@ impl SpansMetricResponseCompute {
             path: None,
         }
     }
+
+    pub fn aggregation_type(
+        &mut self,
+        value: crate::datadogV2::model::SpansMetricComputeAggregationType,
+    ) -> &mut Self {
+        self.aggregation_type = Some(value);
+        self
+    }
+
+    pub fn include_percentiles(&mut self, value: bool) -> &mut Self {
+        self.include_percentiles = Some(value);
+        self
+    }
+
+    pub fn path(&mut self, value: String) -> &mut Self {
+        self.path = Some(value);
+        self
+    }
 }
+
 impl Default for SpansMetricResponseCompute {
     fn default() -> Self {
         Self::new()

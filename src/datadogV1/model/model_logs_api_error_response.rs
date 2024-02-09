@@ -10,14 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct LogsAPIErrorResponse {
     /// Error returned by the Logs API
     #[serde(rename = "error")]
-    pub error: Option<Box<crate::datadogV1::model::LogsAPIError>>,
+    pub error: Option<crate::datadogV1::model::LogsAPIError>,
 }
 
 impl LogsAPIErrorResponse {
     pub fn new() -> LogsAPIErrorResponse {
         LogsAPIErrorResponse { error: None }
     }
+
+    pub fn error(&mut self, value: crate::datadogV1::model::LogsAPIError) -> &mut Self {
+        self.error = Some(value);
+        self
+    }
 }
+
 impl Default for LogsAPIErrorResponse {
     fn default() -> Self {
         Self::new()

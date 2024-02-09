@@ -27,4 +27,9 @@ impl ConfluentAccountUpdateRequestAttributes {
             tags: None,
         }
     }
+
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
 }

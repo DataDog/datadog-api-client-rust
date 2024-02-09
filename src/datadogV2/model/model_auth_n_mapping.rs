@@ -10,13 +10,13 @@ use serde_with::skip_serializing_none;
 pub struct AuthNMapping {
     /// Attributes of AuthN Mapping.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::AuthNMappingAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::AuthNMappingAttributes>,
     /// ID of the AuthN Mapping.
     #[serde(rename = "id")]
     pub id: String,
     /// All relationships associated with AuthN Mapping.
     #[serde(rename = "relationships")]
-    pub relationships: Option<Box<crate::datadogV2::model::AuthNMappingRelationships>>,
+    pub relationships: Option<crate::datadogV2::model::AuthNMappingRelationships>,
     /// AuthN Mappings resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::AuthNMappingsType,
@@ -30,5 +30,21 @@ impl AuthNMapping {
             relationships: None,
             type_,
         }
+    }
+
+    pub fn attributes(
+        &mut self,
+        value: crate::datadogV2::model::AuthNMappingAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn relationships(
+        &mut self,
+        value: crate::datadogV2::model::AuthNMappingRelationships,
+    ) -> &mut Self {
+        self.relationships = Some(value);
+        self
     }
 }

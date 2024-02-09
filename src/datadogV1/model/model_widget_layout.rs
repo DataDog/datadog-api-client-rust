@@ -36,4 +36,9 @@ impl WidgetLayout {
             y,
         }
     }
+
+    pub fn is_column_break(&mut self, value: bool) -> &mut Self {
+        self.is_column_break = Some(value);
+        self
+    }
 }

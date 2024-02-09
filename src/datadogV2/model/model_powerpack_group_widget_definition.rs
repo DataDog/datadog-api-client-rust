@@ -39,4 +39,14 @@ impl PowerpackGroupWidgetDefinition {
             widgets,
         }
     }
+
+    pub fn show_title(&mut self, value: bool) -> &mut Self {
+        self.show_title = Some(value);
+        self
+    }
+
+    pub fn title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
+    }
 }

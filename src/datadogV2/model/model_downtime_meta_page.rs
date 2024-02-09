@@ -19,7 +19,13 @@ impl DowntimeMetaPage {
             total_filtered_count: None,
         }
     }
+
+    pub fn total_filtered_count(&mut self, value: i64) -> &mut Self {
+        self.total_filtered_count = Some(value);
+        self
+    }
 }
+
 impl Default for DowntimeMetaPage {
     fn default() -> Self {
         Self::new()

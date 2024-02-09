@@ -23,7 +23,24 @@ impl MonitorGroupSearchResponseCounts {
             type_: None,
         }
     }
+
+    pub fn status(
+        &mut self,
+        value: Vec<crate::datadogV1::model::MonitorSearchCountItem>,
+    ) -> &mut Self {
+        self.status = Some(value);
+        self
+    }
+
+    pub fn type_(
+        &mut self,
+        value: Vec<crate::datadogV1::model::MonitorSearchCountItem>,
+    ) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
+
 impl Default for MonitorGroupSearchResponseCounts {
     fn default() -> Self {
         Self::new()

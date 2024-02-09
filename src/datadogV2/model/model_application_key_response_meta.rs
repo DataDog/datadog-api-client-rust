@@ -13,7 +13,7 @@ pub struct ApplicationKeyResponseMeta {
     pub max_allowed_per_user: Option<i64>,
     /// Additional information related to the application key response.
     #[serde(rename = "page")]
-    pub page: Option<Box<crate::datadogV2::model::ApplicationKeyResponseMetaPage>>,
+    pub page: Option<crate::datadogV2::model::ApplicationKeyResponseMetaPage>,
 }
 
 impl ApplicationKeyResponseMeta {
@@ -23,7 +23,21 @@ impl ApplicationKeyResponseMeta {
             page: None,
         }
     }
+
+    pub fn max_allowed_per_user(&mut self, value: i64) -> &mut Self {
+        self.max_allowed_per_user = Some(value);
+        self
+    }
+
+    pub fn page(
+        &mut self,
+        value: crate::datadogV2::model::ApplicationKeyResponseMetaPage,
+    ) -> &mut Self {
+        self.page = Some(value);
+        self
+    }
 }
+
 impl Default for ApplicationKeyResponseMeta {
     fn default() -> Self {
         Self::new()

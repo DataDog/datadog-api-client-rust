@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct IncidentServiceCreateRequest {
     /// Incident Service payload for create requests.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::IncidentServiceCreateData>,
+    pub data: crate::datadogV2::model::IncidentServiceCreateData,
 }
 
 impl IncidentServiceCreateRequest {
     pub fn new(
-        data: Box<crate::datadogV2::model::IncidentServiceCreateData>,
+        data: crate::datadogV2::model::IncidentServiceCreateData,
     ) -> IncidentServiceCreateRequest {
         IncidentServiceCreateRequest { data }
     }

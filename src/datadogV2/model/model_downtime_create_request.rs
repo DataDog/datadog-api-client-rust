@@ -10,13 +10,11 @@ use serde_with::skip_serializing_none;
 pub struct DowntimeCreateRequest {
     /// Object to create a downtime.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::DowntimeCreateRequestData>,
+    pub data: crate::datadogV2::model::DowntimeCreateRequestData,
 }
 
 impl DowntimeCreateRequest {
-    pub fn new(
-        data: Box<crate::datadogV2::model::DowntimeCreateRequestData>,
-    ) -> DowntimeCreateRequest {
+    pub fn new(data: crate::datadogV2::model::DowntimeCreateRequestData) -> DowntimeCreateRequest {
         DowntimeCreateRequest { data }
     }
 }

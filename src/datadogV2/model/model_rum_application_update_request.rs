@@ -10,13 +10,11 @@ use serde_with::skip_serializing_none;
 pub struct RUMApplicationUpdateRequest {
     /// RUM application update.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::RUMApplicationUpdate>,
+    pub data: crate::datadogV2::model::RUMApplicationUpdate,
 }
 
 impl RUMApplicationUpdateRequest {
-    pub fn new(
-        data: Box<crate::datadogV2::model::RUMApplicationUpdate>,
-    ) -> RUMApplicationUpdateRequest {
+    pub fn new(data: crate::datadogV2::model::RUMApplicationUpdate) -> RUMApplicationUpdateRequest {
         RUMApplicationUpdateRequest { data }
     }
 }

@@ -20,4 +20,9 @@ impl SyntheticsTestRequestProxy {
     pub fn new(url: String) -> SyntheticsTestRequestProxy {
         SyntheticsTestRequestProxy { headers: None, url }
     }
+
+    pub fn headers(&mut self, value: std::collections::BTreeMap<String, String>) -> &mut Self {
+        self.headers = Some(value);
+        self
+    }
 }

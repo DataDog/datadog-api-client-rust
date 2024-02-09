@@ -11,7 +11,7 @@ pub struct IncidentAttachmentPostmortemAttributes {
     /// The postmortem attachment.
     #[serde(rename = "attachment")]
     pub attachment:
-        Box<crate::datadogV2::model::IncidentAttachmentsPostmortemAttributesAttachmentObject>,
+        crate::datadogV2::model::IncidentAttachmentsPostmortemAttributesAttachmentObject,
     /// The type of postmortem attachment attributes.
     #[serde(rename = "attachment_type")]
     pub attachment_type: crate::datadogV2::model::IncidentAttachmentPostmortemAttachmentType,
@@ -19,9 +19,7 @@ pub struct IncidentAttachmentPostmortemAttributes {
 
 impl IncidentAttachmentPostmortemAttributes {
     pub fn new(
-        attachment: Box<
-            crate::datadogV2::model::IncidentAttachmentsPostmortemAttributesAttachmentObject,
-        >,
+        attachment: crate::datadogV2::model::IncidentAttachmentsPostmortemAttributesAttachmentObject,
         attachment_type: crate::datadogV2::model::IncidentAttachmentPostmortemAttachmentType,
     ) -> IncidentAttachmentPostmortemAttributes {
         IncidentAttachmentPostmortemAttributes {

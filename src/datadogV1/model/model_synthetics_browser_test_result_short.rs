@@ -16,7 +16,7 @@ pub struct SyntheticsBrowserTestResultShort {
     pub probe_dc: Option<String>,
     /// Object with the result of the last browser test run.
     #[serde(rename = "result")]
-    pub result: Option<Box<crate::datadogV1::model::SyntheticsBrowserTestResultShortResult>>,
+    pub result: Option<crate::datadogV1::model::SyntheticsBrowserTestResultShortResult>,
     /// ID of the browser test result.
     #[serde(rename = "result_id")]
     pub result_id: Option<String>,
@@ -38,7 +38,39 @@ impl SyntheticsBrowserTestResultShort {
             status: None,
         }
     }
+
+    pub fn check_time(&mut self, value: f64) -> &mut Self {
+        self.check_time = Some(value);
+        self
+    }
+
+    pub fn probe_dc(&mut self, value: String) -> &mut Self {
+        self.probe_dc = Some(value);
+        self
+    }
+
+    pub fn result(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsBrowserTestResultShortResult,
+    ) -> &mut Self {
+        self.result = Some(value);
+        self
+    }
+
+    pub fn result_id(&mut self, value: String) -> &mut Self {
+        self.result_id = Some(value);
+        self
+    }
+
+    pub fn status(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsTestMonitorStatus,
+    ) -> &mut Self {
+        self.status = Some(value);
+        self
+    }
 }
+
 impl Default for SyntheticsBrowserTestResultShort {
     fn default() -> Self {
         Self::new()

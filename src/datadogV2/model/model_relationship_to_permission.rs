@@ -10,14 +10,23 @@ use serde_with::skip_serializing_none;
 pub struct RelationshipToPermission {
     /// Relationship to permission object.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::RelationshipToPermissionData>>,
+    pub data: Option<crate::datadogV2::model::RelationshipToPermissionData>,
 }
 
 impl RelationshipToPermission {
     pub fn new() -> RelationshipToPermission {
         RelationshipToPermission { data: None }
     }
+
+    pub fn data(
+        &mut self,
+        value: crate::datadogV2::model::RelationshipToPermissionData,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for RelationshipToPermission {
     fn default() -> Self {
         Self::new()

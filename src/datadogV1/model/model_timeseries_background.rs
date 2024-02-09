@@ -13,11 +13,16 @@ pub struct TimeseriesBackground {
     pub type_: crate::datadogV1::model::TimeseriesBackgroundType,
     /// Axis controls for the widget.
     #[serde(rename = "yaxis")]
-    pub yaxis: Option<Box<crate::datadogV1::model::WidgetAxis>>,
+    pub yaxis: Option<crate::datadogV1::model::WidgetAxis>,
 }
 
 impl TimeseriesBackground {
     pub fn new(type_: crate::datadogV1::model::TimeseriesBackgroundType) -> TimeseriesBackground {
         TimeseriesBackground { type_, yaxis: None }
+    }
+
+    pub fn yaxis(&mut self, value: crate::datadogV1::model::WidgetAxis) -> &mut Self {
+        self.yaxis = Some(value);
+        self
     }
 }

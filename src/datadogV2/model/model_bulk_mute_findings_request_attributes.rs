@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct BulkMuteFindingsRequestAttributes {
     /// Object containing the new mute properties of the findings.
     #[serde(rename = "mute")]
-    pub mute: Box<crate::datadogV2::model::BulkMuteFindingsRequestProperties>,
+    pub mute: crate::datadogV2::model::BulkMuteFindingsRequestProperties,
 }
 
 impl BulkMuteFindingsRequestAttributes {
     pub fn new(
-        mute: Box<crate::datadogV2::model::BulkMuteFindingsRequestProperties>,
+        mute: crate::datadogV2::model::BulkMuteFindingsRequestProperties,
     ) -> BulkMuteFindingsRequestAttributes {
         BulkMuteFindingsRequestAttributes { mute }
     }

@@ -13,7 +13,7 @@ pub struct LogsArchiveDestinationAzure {
     pub container: String,
     /// The Azure archive's integration destination.
     #[serde(rename = "integration")]
-    pub integration: Box<crate::datadogV2::model::LogsArchiveIntegrationAzure>,
+    pub integration: crate::datadogV2::model::LogsArchiveIntegrationAzure,
     /// The archive path.
     #[serde(rename = "path")]
     pub path: Option<String>,
@@ -31,7 +31,7 @@ pub struct LogsArchiveDestinationAzure {
 impl LogsArchiveDestinationAzure {
     pub fn new(
         container: String,
-        integration: Box<crate::datadogV2::model::LogsArchiveIntegrationAzure>,
+        integration: crate::datadogV2::model::LogsArchiveIntegrationAzure,
         storage_account: String,
         type_: crate::datadogV2::model::LogsArchiveDestinationAzureType,
     ) -> LogsArchiveDestinationAzure {
@@ -43,5 +43,15 @@ impl LogsArchiveDestinationAzure {
             storage_account,
             type_,
         }
+    }
+
+    pub fn path(&mut self, value: String) -> &mut Self {
+        self.path = Some(value);
+        self
+    }
+
+    pub fn region(&mut self, value: String) -> &mut Self {
+        self.region = Some(value);
+        self
     }
 }

@@ -17,7 +17,13 @@ impl ServiceDefinitionV2Dot1Pagerduty {
     pub fn new() -> ServiceDefinitionV2Dot1Pagerduty {
         ServiceDefinitionV2Dot1Pagerduty { service_url: None }
     }
+
+    pub fn service_url(&mut self, value: String) -> &mut Self {
+        self.service_url = Some(value);
+        self
+    }
 }
+
 impl Default for ServiceDefinitionV2Dot1Pagerduty {
     fn default() -> Self {
         Self::new()

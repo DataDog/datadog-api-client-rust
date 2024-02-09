@@ -13,13 +13,13 @@ pub struct OutcomesBatchResponse {
     pub data: Vec<crate::datadogV2::model::OutcomesResponseDataItem>,
     /// Metadata pertaining to the bulk operation.
     #[serde(rename = "meta")]
-    pub meta: Box<crate::datadogV2::model::OutcomesBatchResponseMeta>,
+    pub meta: crate::datadogV2::model::OutcomesBatchResponseMeta,
 }
 
 impl OutcomesBatchResponse {
     pub fn new(
         data: Vec<crate::datadogV2::model::OutcomesResponseDataItem>,
-        meta: Box<crate::datadogV2::model::OutcomesBatchResponseMeta>,
+        meta: crate::datadogV2::model::OutcomesBatchResponseMeta,
     ) -> OutcomesBatchResponse {
         OutcomesBatchResponse { data, meta }
     }

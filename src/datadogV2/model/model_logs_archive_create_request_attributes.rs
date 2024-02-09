@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct LogsArchiveCreateRequestAttributes {
     /// An archive's destination.
     #[serde(rename = "destination")]
-    pub destination: Box<crate::datadogV2::model::LogsArchiveCreateRequestDestination>,
+    pub destination: crate::datadogV2::model::LogsArchiveCreateRequestDestination,
     /// To store the tags in the archive, set the value "true".
     /// If it is set to "false", the tags will be deleted when the logs are sent to the archive.
     #[serde(rename = "include_tags")]
@@ -35,7 +35,7 @@ pub struct LogsArchiveCreateRequestAttributes {
 
 impl LogsArchiveCreateRequestAttributes {
     pub fn new(
-        destination: Box<crate::datadogV2::model::LogsArchiveCreateRequestDestination>,
+        destination: crate::datadogV2::model::LogsArchiveCreateRequestDestination,
         name: String,
         query: String,
     ) -> LogsArchiveCreateRequestAttributes {
@@ -47,5 +47,20 @@ impl LogsArchiveCreateRequestAttributes {
             rehydration_max_scan_size_in_gb: None,
             rehydration_tags: None,
         }
+    }
+
+    pub fn include_tags(&mut self, value: bool) -> &mut Self {
+        self.include_tags = Some(value);
+        self
+    }
+
+    pub fn rehydration_max_scan_size_in_gb(&mut self, value: Option<i64>) -> &mut Self {
+        self.rehydration_max_scan_size_in_gb = Some(value);
+        self
+    }
+
+    pub fn rehydration_tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.rehydration_tags = Some(value);
+        self
     }
 }

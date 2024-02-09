@@ -13,10 +13,10 @@ pub struct AzureUCConfigPostRequestAttributes {
     pub account_id: String,
     /// Bill config.
     #[serde(rename = "actual_bill_config")]
-    pub actual_bill_config: Box<crate::datadogV2::model::BillConfig>,
+    pub actual_bill_config: crate::datadogV2::model::BillConfig,
     /// Bill config.
     #[serde(rename = "amortized_bill_config")]
-    pub amortized_bill_config: Box<crate::datadogV2::model::BillConfig>,
+    pub amortized_bill_config: crate::datadogV2::model::BillConfig,
     /// The client ID of the azure account.
     #[serde(rename = "client_id")]
     pub client_id: String,
@@ -31,8 +31,8 @@ pub struct AzureUCConfigPostRequestAttributes {
 impl AzureUCConfigPostRequestAttributes {
     pub fn new(
         account_id: String,
-        actual_bill_config: Box<crate::datadogV2::model::BillConfig>,
-        amortized_bill_config: Box<crate::datadogV2::model::BillConfig>,
+        actual_bill_config: crate::datadogV2::model::BillConfig,
+        amortized_bill_config: crate::datadogV2::model::BillConfig,
         client_id: String,
         scope: String,
     ) -> AzureUCConfigPostRequestAttributes {
@@ -44,5 +44,10 @@ impl AzureUCConfigPostRequestAttributes {
             is_enabled: None,
             scope,
         }
+    }
+
+    pub fn is_enabled(&mut self, value: bool) -> &mut Self {
+        self.is_enabled = Some(value);
+        self
     }
 }

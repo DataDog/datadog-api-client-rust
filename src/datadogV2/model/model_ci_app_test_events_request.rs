@@ -10,14 +10,14 @@ use serde_with::skip_serializing_none;
 pub struct CIAppTestEventsRequest {
     /// The search and filter query settings.
     #[serde(rename = "filter")]
-    pub filter: Option<Box<crate::datadogV2::model::CIAppTestsQueryFilter>>,
+    pub filter: Option<crate::datadogV2::model::CIAppTestsQueryFilter>,
     /// Global query options that are used during the query.
     /// Only supply timezone or time offset, not both. Otherwise, the query fails.
     #[serde(rename = "options")]
-    pub options: Option<Box<crate::datadogV2::model::CIAppQueryOptions>>,
+    pub options: Option<crate::datadogV2::model::CIAppQueryOptions>,
     /// Paging attributes for listing events.
     #[serde(rename = "page")]
-    pub page: Option<Box<crate::datadogV2::model::CIAppQueryPageOptions>>,
+    pub page: Option<crate::datadogV2::model::CIAppQueryPageOptions>,
     /// Sort parameters when querying events.
     #[serde(rename = "sort")]
     pub sort: Option<crate::datadogV2::model::CIAppSort>,
@@ -32,7 +32,28 @@ impl CIAppTestEventsRequest {
             sort: None,
         }
     }
+
+    pub fn filter(&mut self, value: crate::datadogV2::model::CIAppTestsQueryFilter) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
+
+    pub fn options(&mut self, value: crate::datadogV2::model::CIAppQueryOptions) -> &mut Self {
+        self.options = Some(value);
+        self
+    }
+
+    pub fn page(&mut self, value: crate::datadogV2::model::CIAppQueryPageOptions) -> &mut Self {
+        self.page = Some(value);
+        self
+    }
+
+    pub fn sort(&mut self, value: crate::datadogV2::model::CIAppSort) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
 }
+
 impl Default for CIAppTestEventsRequest {
     fn default() -> Self {
         Self::new()

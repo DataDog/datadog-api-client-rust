@@ -61,7 +61,54 @@ impl IncidentUpdateAttributes {
             title: None,
         }
     }
+
+    pub fn customer_impact_end(&mut self, value: Option<String>) -> &mut Self {
+        self.customer_impact_end = Some(value);
+        self
+    }
+
+    pub fn customer_impact_scope(&mut self, value: String) -> &mut Self {
+        self.customer_impact_scope = Some(value);
+        self
+    }
+
+    pub fn customer_impact_start(&mut self, value: Option<String>) -> &mut Self {
+        self.customer_impact_start = Some(value);
+        self
+    }
+
+    pub fn customer_impacted(&mut self, value: bool) -> &mut Self {
+        self.customer_impacted = Some(value);
+        self
+    }
+
+    pub fn detected(&mut self, value: Option<String>) -> &mut Self {
+        self.detected = Some(value);
+        self
+    }
+
+    pub fn fields(
+        &mut self,
+        value: std::collections::BTreeMap<String, crate::datadogV2::model::IncidentFieldAttributes>,
+    ) -> &mut Self {
+        self.fields = Some(value);
+        self
+    }
+
+    pub fn notification_handles(
+        &mut self,
+        value: Vec<crate::datadogV2::model::IncidentNotificationHandle>,
+    ) -> &mut Self {
+        self.notification_handles = Some(value);
+        self
+    }
+
+    pub fn title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
+    }
 }
+
 impl Default for IncidentUpdateAttributes {
     fn default() -> Self {
         Self::new()

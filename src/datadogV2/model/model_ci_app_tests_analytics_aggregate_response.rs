@@ -10,13 +10,13 @@ use serde_with::skip_serializing_none;
 pub struct CIAppTestsAnalyticsAggregateResponse {
     /// The query results.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::CIAppTestsAggregationBucketsResponse>>,
+    pub data: Option<crate::datadogV2::model::CIAppTestsAggregationBucketsResponse>,
     /// Links attributes.
     #[serde(rename = "links")]
-    pub links: Option<Box<crate::datadogV2::model::CIAppResponseLinks>>,
+    pub links: Option<crate::datadogV2::model::CIAppResponseLinks>,
     /// The metadata associated with a request.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV2::model::CIAppResponseMetadataWithPagination>>,
+    pub meta: Option<crate::datadogV2::model::CIAppResponseMetadataWithPagination>,
 }
 
 impl CIAppTestsAnalyticsAggregateResponse {
@@ -27,7 +27,29 @@ impl CIAppTestsAnalyticsAggregateResponse {
             meta: None,
         }
     }
+
+    pub fn data(
+        &mut self,
+        value: crate::datadogV2::model::CIAppTestsAggregationBucketsResponse,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn links(&mut self, value: crate::datadogV2::model::CIAppResponseLinks) -> &mut Self {
+        self.links = Some(value);
+        self
+    }
+
+    pub fn meta(
+        &mut self,
+        value: crate::datadogV2::model::CIAppResponseMetadataWithPagination,
+    ) -> &mut Self {
+        self.meta = Some(value);
+        self
+    }
 }
+
 impl Default for CIAppTestsAnalyticsAggregateResponse {
     fn default() -> Self {
         Self::new()

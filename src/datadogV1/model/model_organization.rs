@@ -11,7 +11,7 @@ pub struct Organization {
     /// A JSON array of billing type.
     #[deprecated]
     #[serde(rename = "billing")]
-    pub billing: Option<Box<crate::datadogV1::model::OrganizationBilling>>,
+    pub billing: Option<crate::datadogV1::model::OrganizationBilling>,
     /// Date of the organization creation.
     #[serde(rename = "created")]
     pub created: Option<String>,
@@ -26,11 +26,11 @@ pub struct Organization {
     pub public_id: Option<String>,
     /// A JSON array of settings.
     #[serde(rename = "settings")]
-    pub settings: Option<Box<crate::datadogV1::model::OrganizationSettings>>,
+    pub settings: Option<crate::datadogV1::model::OrganizationSettings>,
     /// Subscription definition.
     #[deprecated]
     #[serde(rename = "subscription")]
-    pub subscription: Option<Box<crate::datadogV1::model::OrganizationSubscription>>,
+    pub subscription: Option<crate::datadogV1::model::OrganizationSubscription>,
     /// Only available for MSP customers. Allows child organizations to be created on a trial plan.
     #[serde(rename = "trial")]
     pub trial: Option<bool>,
@@ -50,7 +50,59 @@ impl Organization {
             trial: None,
         }
     }
+
+    #[allow(deprecated)]
+    pub fn billing(&mut self, value: crate::datadogV1::model::OrganizationBilling) -> &mut Self {
+        self.billing = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn created(&mut self, value: String) -> &mut Self {
+        self.created = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn description(&mut self, value: String) -> &mut Self {
+        self.description = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn public_id(&mut self, value: String) -> &mut Self {
+        self.public_id = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn settings(&mut self, value: crate::datadogV1::model::OrganizationSettings) -> &mut Self {
+        self.settings = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn subscription(
+        &mut self,
+        value: crate::datadogV1::model::OrganizationSubscription,
+    ) -> &mut Self {
+        self.subscription = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn trial(&mut self, value: bool) -> &mut Self {
+        self.trial = Some(value);
+        self
+    }
 }
+
 impl Default for Organization {
     fn default() -> Self {
         Self::new()

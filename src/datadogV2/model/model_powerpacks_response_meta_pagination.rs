@@ -51,7 +51,48 @@ impl PowerpacksResponseMetaPagination {
             type_: None,
         }
     }
+
+    pub fn first_offset(&mut self, value: i64) -> &mut Self {
+        self.first_offset = Some(value);
+        self
+    }
+
+    pub fn last_offset(&mut self, value: Option<i64>) -> &mut Self {
+        self.last_offset = Some(value);
+        self
+    }
+
+    pub fn limit(&mut self, value: i64) -> &mut Self {
+        self.limit = Some(value);
+        self
+    }
+
+    pub fn next_offset(&mut self, value: i64) -> &mut Self {
+        self.next_offset = Some(value);
+        self
+    }
+
+    pub fn offset(&mut self, value: i64) -> &mut Self {
+        self.offset = Some(value);
+        self
+    }
+
+    pub fn prev_offset(&mut self, value: i64) -> &mut Self {
+        self.prev_offset = Some(value);
+        self
+    }
+
+    pub fn total(&mut self, value: i64) -> &mut Self {
+        self.total = Some(value);
+        self
+    }
+
+    pub fn type_(&mut self, value: String) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
+
 impl Default for PowerpacksResponseMetaPagination {
     fn default() -> Self {
         Self::new()

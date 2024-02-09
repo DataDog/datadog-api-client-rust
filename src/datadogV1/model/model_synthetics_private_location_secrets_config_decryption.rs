@@ -17,7 +17,13 @@ impl SyntheticsPrivateLocationSecretsConfigDecryption {
     pub fn new() -> SyntheticsPrivateLocationSecretsConfigDecryption {
         SyntheticsPrivateLocationSecretsConfigDecryption { key: None }
     }
+
+    pub fn key(&mut self, value: String) -> &mut Self {
+        self.key = Some(value);
+        self
+    }
 }
+
 impl Default for SyntheticsPrivateLocationSecretsConfigDecryption {
     fn default() -> Self {
         Self::new()

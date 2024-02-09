@@ -31,4 +31,19 @@ impl ConfluentAccountResourceAttributes {
             tags: None,
         }
     }
+
+    pub fn enable_custom_metrics(&mut self, value: bool) -> &mut Self {
+        self.enable_custom_metrics = Some(value);
+        self
+    }
+
+    pub fn id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
 }

@@ -17,7 +17,16 @@ impl BulkMuteFindingsRequestMeta {
     pub fn new() -> BulkMuteFindingsRequestMeta {
         BulkMuteFindingsRequestMeta { findings: None }
     }
+
+    pub fn findings(
+        &mut self,
+        value: Vec<crate::datadogV2::model::BulkMuteFindingsRequestMetaFindings>,
+    ) -> &mut Self {
+        self.findings = Some(value);
+        self
+    }
 }
+
 impl Default for BulkMuteFindingsRequestMeta {
     fn default() -> Self {
         Self::new()

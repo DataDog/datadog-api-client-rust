@@ -23,7 +23,18 @@ impl OutcomesResponseIncludedRuleAttributes {
             scorecard_name: None,
         }
     }
+
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn scorecard_name(&mut self, value: String) -> &mut Self {
+        self.scorecard_name = Some(value);
+        self
+    }
 }
+
 impl Default for OutcomesResponseIncludedRuleAttributes {
     fn default() -> Self {
         Self::new()

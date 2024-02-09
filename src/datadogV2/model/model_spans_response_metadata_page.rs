@@ -18,7 +18,13 @@ impl SpansResponseMetadataPage {
     pub fn new() -> SpansResponseMetadataPage {
         SpansResponseMetadataPage { after: None }
     }
+
+    pub fn after(&mut self, value: String) -> &mut Self {
+        self.after = Some(value);
+        self
+    }
 }
+
 impl Default for SpansResponseMetadataPage {
     fn default() -> Self {
         Self::new()

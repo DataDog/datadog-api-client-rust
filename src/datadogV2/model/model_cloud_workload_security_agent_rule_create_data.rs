@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct CloudWorkloadSecurityAgentRuleCreateData {
     /// Create a new Cloud Workload Security Agent rule.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateAttributes>,
+    pub attributes: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateAttributes,
     /// The type of the resource. The value should always be `agent_rule`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleType,
@@ -18,7 +18,7 @@ pub struct CloudWorkloadSecurityAgentRuleCreateData {
 
 impl CloudWorkloadSecurityAgentRuleCreateData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateAttributes>,
+        attributes: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateAttributes,
         type_: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleType,
     ) -> CloudWorkloadSecurityAgentRuleCreateData {
         CloudWorkloadSecurityAgentRuleCreateData { attributes, type_ }

@@ -17,7 +17,13 @@ impl ContainerImageGroupRelationshipsLinks {
     pub fn new() -> ContainerImageGroupRelationshipsLinks {
         ContainerImageGroupRelationshipsLinks { related: None }
     }
+
+    pub fn related(&mut self, value: String) -> &mut Self {
+        self.related = Some(value);
+        self
+    }
 }
+
 impl Default for ContainerImageGroupRelationshipsLinks {
     fn default() -> Self {
         Self::new()

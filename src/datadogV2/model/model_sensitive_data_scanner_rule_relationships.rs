@@ -10,11 +10,10 @@ use serde_with::skip_serializing_none;
 pub struct SensitiveDataScannerRuleRelationships {
     /// A scanning group data.
     #[serde(rename = "group")]
-    pub group: Option<Box<crate::datadogV2::model::SensitiveDataScannerGroupData>>,
+    pub group: Option<crate::datadogV2::model::SensitiveDataScannerGroupData>,
     /// A standard pattern.
     #[serde(rename = "standard_pattern")]
-    pub standard_pattern:
-        Option<Box<crate::datadogV2::model::SensitiveDataScannerStandardPatternData>>,
+    pub standard_pattern: Option<crate::datadogV2::model::SensitiveDataScannerStandardPatternData>,
 }
 
 impl SensitiveDataScannerRuleRelationships {
@@ -24,7 +23,24 @@ impl SensitiveDataScannerRuleRelationships {
             standard_pattern: None,
         }
     }
+
+    pub fn group(
+        &mut self,
+        value: crate::datadogV2::model::SensitiveDataScannerGroupData,
+    ) -> &mut Self {
+        self.group = Some(value);
+        self
+    }
+
+    pub fn standard_pattern(
+        &mut self,
+        value: crate::datadogV2::model::SensitiveDataScannerStandardPatternData,
+    ) -> &mut Self {
+        self.standard_pattern = Some(value);
+        self
+    }
 }
+
 impl Default for SensitiveDataScannerRuleRelationships {
     fn default() -> Self {
         Self::new()

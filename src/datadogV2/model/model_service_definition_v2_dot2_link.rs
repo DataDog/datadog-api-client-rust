@@ -31,4 +31,9 @@ impl ServiceDefinitionV2Dot2Link {
             url,
         }
     }
+
+    pub fn provider(&mut self, value: String) -> &mut Self {
+        self.provider = Some(value);
+        self
+    }
 }

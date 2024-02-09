@@ -17,7 +17,16 @@ impl LogsByRetentionOrgs {
     pub fn new() -> LogsByRetentionOrgs {
         LogsByRetentionOrgs { usage: None }
     }
+
+    pub fn usage(
+        &mut self,
+        value: Vec<crate::datadogV1::model::LogsByRetentionOrgUsage>,
+    ) -> &mut Self {
+        self.usage = Some(value);
+        self
+    }
 }
+
 impl Default for LogsByRetentionOrgs {
     fn default() -> Self {
         Self::new()

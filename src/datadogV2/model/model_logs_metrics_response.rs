@@ -17,7 +17,16 @@ impl LogsMetricsResponse {
     pub fn new() -> LogsMetricsResponse {
         LogsMetricsResponse { data: None }
     }
+
+    pub fn data(
+        &mut self,
+        value: Vec<crate::datadogV2::model::LogsMetricResponseData>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for LogsMetricsResponse {
     fn default() -> Self {
         Self::new()

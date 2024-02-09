@@ -23,7 +23,7 @@ pub struct LogsIndexUpdateRequest {
     pub exclusion_filters: Option<Vec<crate::datadogV1::model::LogsExclusion>>,
     /// Filter for logs.
     #[serde(rename = "filter")]
-    pub filter: Box<crate::datadogV1::model::LogsFilter>,
+    pub filter: crate::datadogV1::model::LogsFilter,
     /// The number of days before logs are deleted from this index. Available values depend on
     /// retention plans specified in your organization's contract/subscriptions.
     ///
@@ -34,7 +34,7 @@ pub struct LogsIndexUpdateRequest {
 }
 
 impl LogsIndexUpdateRequest {
-    pub fn new(filter: Box<crate::datadogV1::model::LogsFilter>) -> LogsIndexUpdateRequest {
+    pub fn new(filter: crate::datadogV1::model::LogsFilter) -> LogsIndexUpdateRequest {
         LogsIndexUpdateRequest {
             daily_limit: None,
             disable_daily_limit: None,
@@ -42,5 +42,28 @@ impl LogsIndexUpdateRequest {
             filter,
             num_retention_days: None,
         }
+    }
+
+    pub fn daily_limit(&mut self, value: i64) -> &mut Self {
+        self.daily_limit = Some(value);
+        self
+    }
+
+    pub fn disable_daily_limit(&mut self, value: bool) -> &mut Self {
+        self.disable_daily_limit = Some(value);
+        self
+    }
+
+    pub fn exclusion_filters(
+        &mut self,
+        value: Vec<crate::datadogV1::model::LogsExclusion>,
+    ) -> &mut Self {
+        self.exclusion_filters = Some(value);
+        self
+    }
+
+    pub fn num_retention_days(&mut self, value: i64) -> &mut Self {
+        self.num_retention_days = Some(value);
+        self
     }
 }

@@ -27,7 +27,23 @@ impl HostMuteSettings {
             override_: None,
         }
     }
+
+    pub fn end(&mut self, value: i64) -> &mut Self {
+        self.end = Some(value);
+        self
+    }
+
+    pub fn message(&mut self, value: String) -> &mut Self {
+        self.message = Some(value);
+        self
+    }
+
+    pub fn override_(&mut self, value: bool) -> &mut Self {
+        self.override_ = Some(value);
+        self
+    }
 }
+
 impl Default for HostMuteSettings {
     fn default() -> Self {
         Self::new()

@@ -31,7 +31,28 @@ impl ApiKey {
             name: None,
         }
     }
+
+    pub fn created(&mut self, value: String) -> &mut Self {
+        self.created = Some(value);
+        self
+    }
+
+    pub fn created_by(&mut self, value: String) -> &mut Self {
+        self.created_by = Some(value);
+        self
+    }
+
+    pub fn key(&mut self, value: String) -> &mut Self {
+        self.key = Some(value);
+        self
+    }
+
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
 }
+
 impl Default for ApiKey {
     fn default() -> Self {
         Self::new()

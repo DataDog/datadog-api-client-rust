@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct SensitiveDataScannerGroupDeleteRequest {
     /// Meta payload containing information about the API.
     #[serde(rename = "meta")]
-    pub meta: Box<crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly>,
+    pub meta: crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly,
 }
 
 impl SensitiveDataScannerGroupDeleteRequest {
     pub fn new(
-        meta: Box<crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly>,
+        meta: crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly,
     ) -> SensitiveDataScannerGroupDeleteRequest {
         SensitiveDataScannerGroupDeleteRequest { meta }
     }

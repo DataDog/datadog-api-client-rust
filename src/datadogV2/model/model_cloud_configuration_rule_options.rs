@@ -12,15 +12,12 @@ pub struct CloudConfigurationRuleOptions {
     /// Fields `resourceType` and `regoRule` are mandatory when managing custom `cloud_configuration` rules.
     ///
     #[serde(rename = "complianceRuleOptions")]
-    pub compliance_rule_options:
-        Box<crate::datadogV2::model::CloudConfigurationComplianceRuleOptions>,
+    pub compliance_rule_options: crate::datadogV2::model::CloudConfigurationComplianceRuleOptions,
 }
 
 impl CloudConfigurationRuleOptions {
     pub fn new(
-        compliance_rule_options: Box<
-            crate::datadogV2::model::CloudConfigurationComplianceRuleOptions,
-        >,
+        compliance_rule_options: crate::datadogV2::model::CloudConfigurationComplianceRuleOptions,
     ) -> CloudConfigurationRuleOptions {
         CloudConfigurationRuleOptions {
             compliance_rule_options,

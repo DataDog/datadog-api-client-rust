@@ -5,43 +5,9 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateServiceAccountParams is a struct for passing parameters to the method [`ServiceAccountsAPI::create_service_account`]
-#[derive(Clone, Debug)]
-pub struct CreateServiceAccountParams {
-    pub body: crate::datadogV2::model::ServiceAccountCreateRequest,
-}
-
-/// CreateServiceAccountApplicationKeyParams is a struct for passing parameters to the method [`ServiceAccountsAPI::create_service_account_application_key`]
-#[derive(Clone, Debug)]
-pub struct CreateServiceAccountApplicationKeyParams {
-    /// The ID of the service account.
-    pub service_account_id: String,
-    pub body: crate::datadogV2::model::ApplicationKeyCreateRequest,
-}
-
-/// DeleteServiceAccountApplicationKeyParams is a struct for passing parameters to the method [`ServiceAccountsAPI::delete_service_account_application_key`]
-#[derive(Clone, Debug)]
-pub struct DeleteServiceAccountApplicationKeyParams {
-    /// The ID of the service account.
-    pub service_account_id: String,
-    /// The ID of the application key.
-    pub app_key_id: String,
-}
-
-/// GetServiceAccountApplicationKeyParams is a struct for passing parameters to the method [`ServiceAccountsAPI::get_service_account_application_key`]
-#[derive(Clone, Debug)]
-pub struct GetServiceAccountApplicationKeyParams {
-    /// The ID of the service account.
-    pub service_account_id: String,
-    /// The ID of the application key.
-    pub app_key_id: String,
-}
-
-/// ListServiceAccountApplicationKeysParams is a struct for passing parameters to the method [`ServiceAccountsAPI::list_service_account_application_keys`]
-#[derive(Clone, Debug)]
-pub struct ListServiceAccountApplicationKeysParams {
-    /// The ID of the service account.
-    pub service_account_id: String,
+/// ListServiceAccountApplicationKeysOptionalParams is a struct for passing parameters to the method [`ServiceAccountsAPI::list_service_account_application_keys`]
+#[derive(Clone, Default, Debug)]
+pub struct ListServiceAccountApplicationKeysOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
     /// Specific page number to return.
@@ -58,14 +24,39 @@ pub struct ListServiceAccountApplicationKeysParams {
     pub filter_created_at_end: Option<String>,
 }
 
-/// UpdateServiceAccountApplicationKeyParams is a struct for passing parameters to the method [`ServiceAccountsAPI::update_service_account_application_key`]
-#[derive(Clone, Debug)]
-pub struct UpdateServiceAccountApplicationKeyParams {
-    /// The ID of the service account.
-    pub service_account_id: String,
-    /// The ID of the application key.
-    pub app_key_id: String,
-    pub body: crate::datadogV2::model::ApplicationKeyUpdateRequest,
+impl ListServiceAccountApplicationKeysOptionalParams {
+    /// Size for a given page. The maximum allowed value is 100.
+    pub fn page_size(&mut self, value: i64) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Specific page number to return.
+    pub fn page_number(&mut self, value: i64) -> &mut Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// Application key attribute used to sort results. Sort order is ascending
+    /// by default. In order to specify a descending sort, prefix the
+    /// attribute with a minus sign.
+    pub fn sort(&mut self, value: crate::datadogV2::model::ApplicationKeysSort) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+    /// Filter application keys by the specified string.
+    pub fn filter(&mut self, value: String) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
+    /// Only include application keys created on or after the specified date.
+    pub fn filter_created_at_start(&mut self, value: String) -> &mut Self {
+        self.filter_created_at_start = Some(value);
+        self
+    }
+    /// Only include application keys created on or before the specified date.
+    pub fn filter_created_at_end(&mut self, value: String) -> &mut Self {
+        self.filter_created_at_end = Some(value);
+        self
+    }
 }
 
 /// CreateServiceAccountError is a struct for typed errors of method [`ServiceAccountsAPI::create_service_account`]
@@ -154,10 +145,10 @@ impl ServiceAccountsAPI {
     /// Create a service account for your organization.
     pub async fn create_service_account(
         &self,
-        params: CreateServiceAccountParams,
+        body: crate::datadogV2::model::ServiceAccountCreateRequest,
     ) -> Result<Option<crate::datadogV2::model::UserResponse>, Error<CreateServiceAccountError>>
     {
-        match self.create_service_account_with_http_info(params).await {
+        match self.create_service_account_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -166,15 +157,12 @@ impl ServiceAccountsAPI {
     /// Create a service account for your organization.
     pub async fn create_service_account_with_http_info(
         &self,
-        params: CreateServiceAccountParams,
+        body: crate::datadogV2::model::ServiceAccountCreateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::UserResponse>,
         Error<CreateServiceAccountError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -232,13 +220,14 @@ impl ServiceAccountsAPI {
     /// Create an application key for this service account.
     pub async fn create_service_account_application_key(
         &self,
-        params: CreateServiceAccountApplicationKeyParams,
+        service_account_id: String,
+        body: crate::datadogV2::model::ApplicationKeyCreateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::ApplicationKeyResponse>,
         Error<CreateServiceAccountApplicationKeyError>,
     > {
         match self
-            .create_service_account_application_key_with_http_info(params)
+            .create_service_account_application_key_with_http_info(service_account_id, body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -249,16 +238,13 @@ impl ServiceAccountsAPI {
     /// Create an application key for this service account.
     pub async fn create_service_account_application_key_with_http_info(
         &self,
-        params: CreateServiceAccountApplicationKeyParams,
+        service_account_id: String,
+        body: crate::datadogV2::model::ApplicationKeyCreateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::ApplicationKeyResponse>,
         Error<CreateServiceAccountApplicationKeyError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let service_account_id = params.service_account_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -320,10 +306,11 @@ impl ServiceAccountsAPI {
     /// Delete an application key owned by this service account.
     pub async fn delete_service_account_application_key(
         &self,
-        params: DeleteServiceAccountApplicationKeyParams,
+        service_account_id: String,
+        app_key_id: String,
     ) -> Result<Option<()>, Error<DeleteServiceAccountApplicationKeyError>> {
         match self
-            .delete_service_account_application_key_with_http_info(params)
+            .delete_service_account_application_key_with_http_info(service_account_id, app_key_id)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -334,13 +321,10 @@ impl ServiceAccountsAPI {
     /// Delete an application key owned by this service account.
     pub async fn delete_service_account_application_key_with_http_info(
         &self,
-        params: DeleteServiceAccountApplicationKeyParams,
+        service_account_id: String,
+        app_key_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteServiceAccountApplicationKeyError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let service_account_id = params.service_account_id;
-        let app_key_id = params.app_key_id;
 
         let local_client = &local_configuration.client;
 
@@ -394,13 +378,14 @@ impl ServiceAccountsAPI {
     /// Get an application key owned by this service account.
     pub async fn get_service_account_application_key(
         &self,
-        params: GetServiceAccountApplicationKeyParams,
+        service_account_id: String,
+        app_key_id: String,
     ) -> Result<
         Option<crate::datadogV2::model::PartialApplicationKeyResponse>,
         Error<GetServiceAccountApplicationKeyError>,
     > {
         match self
-            .get_service_account_application_key_with_http_info(params)
+            .get_service_account_application_key_with_http_info(service_account_id, app_key_id)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -411,16 +396,13 @@ impl ServiceAccountsAPI {
     /// Get an application key owned by this service account.
     pub async fn get_service_account_application_key_with_http_info(
         &self,
-        params: GetServiceAccountApplicationKeyParams,
+        service_account_id: String,
+        app_key_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::PartialApplicationKeyResponse>,
         Error<GetServiceAccountApplicationKeyError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let service_account_id = params.service_account_id;
-        let app_key_id = params.app_key_id;
 
         let local_client = &local_configuration.client;
 
@@ -476,13 +458,14 @@ impl ServiceAccountsAPI {
     /// List all application keys available for this service account.
     pub async fn list_service_account_application_keys(
         &self,
-        params: ListServiceAccountApplicationKeysParams,
+        service_account_id: String,
+        params: ListServiceAccountApplicationKeysOptionalParams,
     ) -> Result<
         Option<crate::datadogV2::model::ListApplicationKeysResponse>,
         Error<ListServiceAccountApplicationKeysError>,
     > {
         match self
-            .list_service_account_application_keys_with_http_info(params)
+            .list_service_account_application_keys_with_http_info(service_account_id, params)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -493,15 +476,15 @@ impl ServiceAccountsAPI {
     /// List all application keys available for this service account.
     pub async fn list_service_account_application_keys_with_http_info(
         &self,
-        params: ListServiceAccountApplicationKeysParams,
+        service_account_id: String,
+        params: ListServiceAccountApplicationKeysOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::ListApplicationKeysResponse>,
         Error<ListServiceAccountApplicationKeysError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let service_account_id = params.service_account_id;
+        // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
         let sort = params.sort;
@@ -519,26 +502,29 @@ impl ServiceAccountsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = page_size {
-            local_req_builder = local_req_builder.query(&[("page[size]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_number {
+        if let Some(ref local_query_param) = page_size {
             local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_str.to_string())]);
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = sort {
-            local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = filter {
-            local_req_builder = local_req_builder.query(&[("filter", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = filter_created_at_start {
+        if let Some(ref local_query_param) = page_number {
             local_req_builder =
-                local_req_builder.query(&[("filter[created_at][start]", &local_str.to_string())]);
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_created_at_end {
+        if let Some(ref local_query_param) = sort {
             local_req_builder =
-                local_req_builder.query(&[("filter[created_at][end]", &local_str.to_string())]);
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter {
+            local_req_builder =
+                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_created_at_start {
+            local_req_builder = local_req_builder
+                .query(&[("filter[created_at][start]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_created_at_end {
+            local_req_builder = local_req_builder
+                .query(&[("filter[created_at][end]", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -584,13 +570,19 @@ impl ServiceAccountsAPI {
     /// Edit an application key owned by this service account.
     pub async fn update_service_account_application_key(
         &self,
-        params: UpdateServiceAccountApplicationKeyParams,
+        service_account_id: String,
+        app_key_id: String,
+        body: crate::datadogV2::model::ApplicationKeyUpdateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::PartialApplicationKeyResponse>,
         Error<UpdateServiceAccountApplicationKeyError>,
     > {
         match self
-            .update_service_account_application_key_with_http_info(params)
+            .update_service_account_application_key_with_http_info(
+                service_account_id,
+                app_key_id,
+                body,
+            )
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -601,17 +593,14 @@ impl ServiceAccountsAPI {
     /// Edit an application key owned by this service account.
     pub async fn update_service_account_application_key_with_http_info(
         &self,
-        params: UpdateServiceAccountApplicationKeyParams,
+        service_account_id: String,
+        app_key_id: String,
+        body: crate::datadogV2::model::ApplicationKeyUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::PartialApplicationKeyResponse>,
         Error<UpdateServiceAccountApplicationKeyError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let service_account_id = params.service_account_id;
-        let app_key_id = params.app_key_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

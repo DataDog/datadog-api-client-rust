@@ -27,7 +27,26 @@ impl CIAppEventAttributes {
             test_level: None,
         }
     }
+
+    pub fn attributes(
+        &mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+
+    pub fn test_level(&mut self, value: crate::datadogV2::model::CIAppTestLevel) -> &mut Self {
+        self.test_level = Some(value);
+        self
+    }
 }
+
 impl Default for CIAppEventAttributes {
     fn default() -> Self {
         Self::new()

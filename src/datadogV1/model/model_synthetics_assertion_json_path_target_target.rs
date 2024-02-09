@@ -27,7 +27,23 @@ impl SyntheticsAssertionJSONPathTargetTarget {
             target_value: None,
         }
     }
+
+    pub fn json_path(&mut self, value: String) -> &mut Self {
+        self.json_path = Some(value);
+        self
+    }
+
+    pub fn operator(&mut self, value: String) -> &mut Self {
+        self.operator = Some(value);
+        self
+    }
+
+    pub fn target_value(&mut self, value: serde_json::Value) -> &mut Self {
+        self.target_value = Some(value);
+        self
+    }
 }
+
 impl Default for SyntheticsAssertionJSONPathTargetTarget {
     fn default() -> Self {
         Self::new()

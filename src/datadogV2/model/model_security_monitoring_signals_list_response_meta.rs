@@ -10,14 +10,23 @@ use serde_with::skip_serializing_none;
 pub struct SecurityMonitoringSignalsListResponseMeta {
     /// Paging attributes.
     #[serde(rename = "page")]
-    pub page: Option<Box<crate::datadogV2::model::SecurityMonitoringSignalsListResponseMetaPage>>,
+    pub page: Option<crate::datadogV2::model::SecurityMonitoringSignalsListResponseMetaPage>,
 }
 
 impl SecurityMonitoringSignalsListResponseMeta {
     pub fn new() -> SecurityMonitoringSignalsListResponseMeta {
         SecurityMonitoringSignalsListResponseMeta { page: None }
     }
+
+    pub fn page(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringSignalsListResponseMetaPage,
+    ) -> &mut Self {
+        self.page = Some(value);
+        self
+    }
 }
+
 impl Default for SecurityMonitoringSignalsListResponseMeta {
     fn default() -> Self {
         Self::new()

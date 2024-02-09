@@ -13,7 +13,7 @@ pub struct DORADeploymentRequestAttributes {
     pub finished_at: i64,
     /// Git info for DORA Metrics events.
     #[serde(rename = "git")]
-    pub git: Option<Box<crate::datadogV2::model::DORAGitInfo>>,
+    pub git: Option<crate::datadogV2::model::DORAGitInfo>,
     /// Deployment ID.
     #[serde(rename = "id")]
     pub id: Option<String>,
@@ -42,5 +42,20 @@ impl DORADeploymentRequestAttributes {
             started_at,
             version: None,
         }
+    }
+
+    pub fn git(&mut self, value: crate::datadogV2::model::DORAGitInfo) -> &mut Self {
+        self.git = Some(value);
+        self
+    }
+
+    pub fn id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn version(&mut self, value: String) -> &mut Self {
+        self.version = Some(value);
+        self
     }
 }

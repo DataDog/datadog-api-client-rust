@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct CloudflareAccountCreateRequestData {
     /// Attributes object for creating a Cloudflare account.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::CloudflareAccountCreateRequestAttributes>,
+    pub attributes: crate::datadogV2::model::CloudflareAccountCreateRequestAttributes,
     /// The JSON:API type for this API. Should always be `cloudflare-accounts`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CloudflareAccountType,
@@ -18,7 +18,7 @@ pub struct CloudflareAccountCreateRequestData {
 
 impl CloudflareAccountCreateRequestData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::CloudflareAccountCreateRequestAttributes>,
+        attributes: crate::datadogV2::model::CloudflareAccountCreateRequestAttributes,
         type_: crate::datadogV2::model::CloudflareAccountType,
     ) -> CloudflareAccountCreateRequestData {
         CloudflareAccountCreateRequestData { attributes, type_ }

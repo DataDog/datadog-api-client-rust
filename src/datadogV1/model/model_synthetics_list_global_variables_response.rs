@@ -17,7 +17,16 @@ impl SyntheticsListGlobalVariablesResponse {
     pub fn new() -> SyntheticsListGlobalVariablesResponse {
         SyntheticsListGlobalVariablesResponse { variables: None }
     }
+
+    pub fn variables(
+        &mut self,
+        value: Vec<crate::datadogV1::model::SyntheticsGlobalVariable>,
+    ) -> &mut Self {
+        self.variables = Some(value);
+        self
+    }
 }
+
 impl Default for SyntheticsListGlobalVariablesResponse {
     fn default() -> Self {
         Self::new()

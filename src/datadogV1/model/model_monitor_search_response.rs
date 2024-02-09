@@ -10,10 +10,10 @@ use serde_with::skip_serializing_none;
 pub struct MonitorSearchResponse {
     /// The counts of monitors per different criteria.
     #[serde(rename = "counts")]
-    pub counts: Option<Box<crate::datadogV1::model::MonitorSearchResponseCounts>>,
+    pub counts: Option<crate::datadogV1::model::MonitorSearchResponseCounts>,
     /// Metadata about the response.
     #[serde(rename = "metadata")]
-    pub metadata: Option<Box<crate::datadogV1::model::MonitorSearchResponseMetadata>>,
+    pub metadata: Option<crate::datadogV1::model::MonitorSearchResponseMetadata>,
     /// The list of found monitors.
     #[serde(rename = "monitors")]
     pub monitors: Option<Vec<crate::datadogV1::model::MonitorSearchResult>>,
@@ -27,7 +27,32 @@ impl MonitorSearchResponse {
             monitors: None,
         }
     }
+
+    pub fn counts(
+        &mut self,
+        value: crate::datadogV1::model::MonitorSearchResponseCounts,
+    ) -> &mut Self {
+        self.counts = Some(value);
+        self
+    }
+
+    pub fn metadata(
+        &mut self,
+        value: crate::datadogV1::model::MonitorSearchResponseMetadata,
+    ) -> &mut Self {
+        self.metadata = Some(value);
+        self
+    }
+
+    pub fn monitors(
+        &mut self,
+        value: Vec<crate::datadogV1::model::MonitorSearchResult>,
+    ) -> &mut Self {
+        self.monitors = Some(value);
+        self
+    }
 }
+
 impl Default for MonitorSearchResponse {
     fn default() -> Self {
         Self::new()

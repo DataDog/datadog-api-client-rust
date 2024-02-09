@@ -55,4 +55,19 @@ impl LogsLookupProcessor {
             type_,
         }
     }
+
+    pub fn default_lookup(&mut self, value: String) -> &mut Self {
+        self.default_lookup = Some(value);
+        self
+    }
+
+    pub fn is_enabled(&mut self, value: bool) -> &mut Self {
+        self.is_enabled = Some(value);
+        self
+    }
+
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
 }

@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct FastlyAccountResponseData {
     /// Attributes object of a Fastly account.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::FastlyAccounResponseAttributes>,
+    pub attributes: crate::datadogV2::model::FastlyAccounResponseAttributes,
     /// The ID of the Fastly account, a hash of the account name.
     #[serde(rename = "id")]
     pub id: String,
@@ -21,7 +21,7 @@ pub struct FastlyAccountResponseData {
 
 impl FastlyAccountResponseData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::FastlyAccounResponseAttributes>,
+        attributes: crate::datadogV2::model::FastlyAccounResponseAttributes,
         id: String,
         type_: crate::datadogV2::model::FastlyAccountType,
     ) -> FastlyAccountResponseData {

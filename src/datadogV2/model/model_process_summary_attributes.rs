@@ -47,7 +47,48 @@ impl ProcessSummaryAttributes {
             user: None,
         }
     }
+
+    pub fn cmdline(&mut self, value: String) -> &mut Self {
+        self.cmdline = Some(value);
+        self
+    }
+
+    pub fn host(&mut self, value: String) -> &mut Self {
+        self.host = Some(value);
+        self
+    }
+
+    pub fn pid(&mut self, value: i64) -> &mut Self {
+        self.pid = Some(value);
+        self
+    }
+
+    pub fn ppid(&mut self, value: i64) -> &mut Self {
+        self.ppid = Some(value);
+        self
+    }
+
+    pub fn start(&mut self, value: String) -> &mut Self {
+        self.start = Some(value);
+        self
+    }
+
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+
+    pub fn timestamp(&mut self, value: String) -> &mut Self {
+        self.timestamp = Some(value);
+        self
+    }
+
+    pub fn user(&mut self, value: String) -> &mut Self {
+        self.user = Some(value);
+        self
+    }
 }
+
 impl Default for ProcessSummaryAttributes {
     fn default() -> Self {
         Self::new()

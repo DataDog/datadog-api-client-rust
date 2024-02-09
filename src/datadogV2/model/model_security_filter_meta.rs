@@ -17,7 +17,13 @@ impl SecurityFilterMeta {
     pub fn new() -> SecurityFilterMeta {
         SecurityFilterMeta { warning: None }
     }
+
+    pub fn warning(&mut self, value: String) -> &mut Self {
+        self.warning = Some(value);
+        self
+    }
 }
+
 impl Default for SecurityFilterMeta {
     fn default() -> Self {
         Self::new()

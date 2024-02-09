@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct IncidentIntegrationMetadataResponse {
     /// Incident integration metadata from a response.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::IncidentIntegrationMetadataResponseData>,
+    pub data: crate::datadogV2::model::IncidentIntegrationMetadataResponseData,
     /// Included related resources that the user requested.
     #[serde(rename = "included")]
     pub included:
@@ -19,11 +19,19 @@ pub struct IncidentIntegrationMetadataResponse {
 
 impl IncidentIntegrationMetadataResponse {
     pub fn new(
-        data: Box<crate::datadogV2::model::IncidentIntegrationMetadataResponseData>,
+        data: crate::datadogV2::model::IncidentIntegrationMetadataResponseData,
     ) -> IncidentIntegrationMetadataResponse {
         IncidentIntegrationMetadataResponse {
             data,
             included: None,
         }
+    }
+
+    pub fn included(
+        &mut self,
+        value: Vec<crate::datadogV2::model::IncidentIntegrationMetadataResponseIncludedItem>,
+    ) -> &mut Self {
+        self.included = Some(value);
+        self
     }
 }

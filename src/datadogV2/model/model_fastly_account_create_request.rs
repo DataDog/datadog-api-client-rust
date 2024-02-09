@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct FastlyAccountCreateRequest {
     /// Data object for creating a Fastly account.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::FastlyAccountCreateRequestData>,
+    pub data: crate::datadogV2::model::FastlyAccountCreateRequestData,
 }
 
 impl FastlyAccountCreateRequest {
     pub fn new(
-        data: Box<crate::datadogV2::model::FastlyAccountCreateRequestData>,
+        data: crate::datadogV2::model::FastlyAccountCreateRequestData,
     ) -> FastlyAccountCreateRequest {
         FastlyAccountCreateRequest { data }
     }

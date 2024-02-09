@@ -17,7 +17,13 @@ impl OrgDowngradedResponse {
     pub fn new() -> OrgDowngradedResponse {
         OrgDowngradedResponse { message: None }
     }
+
+    pub fn message(&mut self, value: String) -> &mut Self {
+        self.message = Some(value);
+        self
+    }
 }
+
 impl Default for OrgDowngradedResponse {
     fn default() -> Self {
         Self::new()

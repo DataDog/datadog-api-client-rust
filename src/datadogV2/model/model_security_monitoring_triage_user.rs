@@ -35,4 +35,24 @@ impl SecurityMonitoringTriageUser {
             uuid,
         }
     }
+
+    pub fn handle(&mut self, value: String) -> &mut Self {
+        self.handle = Some(value);
+        self
+    }
+
+    pub fn icon(&mut self, value: String) -> &mut Self {
+        self.icon = Some(value);
+        self
+    }
+
+    pub fn id(&mut self, value: i64) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn name(&mut self, value: Option<String>) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
 }

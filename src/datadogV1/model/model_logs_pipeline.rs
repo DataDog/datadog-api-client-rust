@@ -14,7 +14,7 @@ use serde_with::skip_serializing_none;
 pub struct LogsPipeline {
     /// Filter for logs.
     #[serde(rename = "filter")]
-    pub filter: Option<Box<crate::datadogV1::model::LogsFilter>>,
+    pub filter: Option<crate::datadogV1::model::LogsFilter>,
     /// ID of the pipeline.
     #[serde(rename = "id")]
     pub id: Option<String>,
@@ -46,5 +46,35 @@ impl LogsPipeline {
             processors: None,
             type_: None,
         }
+    }
+
+    pub fn filter(&mut self, value: crate::datadogV1::model::LogsFilter) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
+
+    pub fn id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn is_enabled(&mut self, value: bool) -> &mut Self {
+        self.is_enabled = Some(value);
+        self
+    }
+
+    pub fn is_read_only(&mut self, value: bool) -> &mut Self {
+        self.is_read_only = Some(value);
+        self
+    }
+
+    pub fn processors(&mut self, value: Vec<crate::datadogV1::model::LogsProcessor>) -> &mut Self {
+        self.processors = Some(value);
+        self
+    }
+
+    pub fn type_(&mut self, value: String) -> &mut Self {
+        self.type_ = Some(value);
+        self
     }
 }

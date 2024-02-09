@@ -10,14 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct GCPSTSServiceAccountCreateRequest {
     /// Additional metadata on your generated service account.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::GCPSTSServiceAccountData>>,
+    pub data: Option<crate::datadogV2::model::GCPSTSServiceAccountData>,
 }
 
 impl GCPSTSServiceAccountCreateRequest {
     pub fn new() -> GCPSTSServiceAccountCreateRequest {
         GCPSTSServiceAccountCreateRequest { data: None }
     }
+
+    pub fn data(&mut self, value: crate::datadogV2::model::GCPSTSServiceAccountData) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for GCPSTSServiceAccountCreateRequest {
     fn default() -> Self {
         Self::new()

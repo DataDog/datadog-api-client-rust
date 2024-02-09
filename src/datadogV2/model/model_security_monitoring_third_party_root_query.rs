@@ -23,7 +23,18 @@ impl SecurityMonitoringThirdPartyRootQuery {
             query: None,
         }
     }
+
+    pub fn group_by_fields(&mut self, value: Vec<String>) -> &mut Self {
+        self.group_by_fields = Some(value);
+        self
+    }
+
+    pub fn query(&mut self, value: String) -> &mut Self {
+        self.query = Some(value);
+        self
+    }
 }
+
 impl Default for SecurityMonitoringThirdPartyRootQuery {
     fn default() -> Self {
         Self::new()

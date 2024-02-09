@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct OktaAccount {
     /// Attributes object for an Okta account.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::OktaAccountAttributes>,
+    pub attributes: crate::datadogV2::model::OktaAccountAttributes,
     /// The ID of the Okta account, a UUID hash of the account name.
     #[serde(rename = "id")]
     pub id: Option<String>,
@@ -21,7 +21,7 @@ pub struct OktaAccount {
 
 impl OktaAccount {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::OktaAccountAttributes>,
+        attributes: crate::datadogV2::model::OktaAccountAttributes,
         type_: crate::datadogV2::model::OktaAccountType,
     ) -> OktaAccount {
         OktaAccount {
@@ -29,5 +29,10 @@ impl OktaAccount {
             id: None,
             type_,
         }
+    }
+
+    pub fn id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
     }
 }

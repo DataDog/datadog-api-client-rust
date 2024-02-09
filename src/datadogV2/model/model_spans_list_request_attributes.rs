@@ -10,14 +10,14 @@ use serde_with::skip_serializing_none;
 pub struct SpansListRequestAttributes {
     /// The search and filter query settings.
     #[serde(rename = "filter")]
-    pub filter: Option<Box<crate::datadogV2::model::SpansQueryFilter>>,
+    pub filter: Option<crate::datadogV2::model::SpansQueryFilter>,
     /// Global query options that are used during the query.
     /// Note: You should only supply timezone or time offset but not both otherwise the query will fail.
     #[serde(rename = "options")]
-    pub options: Option<Box<crate::datadogV2::model::SpansQueryOptions>>,
+    pub options: Option<crate::datadogV2::model::SpansQueryOptions>,
     /// Paging attributes for listing spans.
     #[serde(rename = "page")]
-    pub page: Option<Box<crate::datadogV2::model::SpansListRequestPage>>,
+    pub page: Option<crate::datadogV2::model::SpansListRequestPage>,
     /// Sort parameters when querying spans.
     #[serde(rename = "sort")]
     pub sort: Option<crate::datadogV2::model::SpansSort>,
@@ -32,7 +32,28 @@ impl SpansListRequestAttributes {
             sort: None,
         }
     }
+
+    pub fn filter(&mut self, value: crate::datadogV2::model::SpansQueryFilter) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
+
+    pub fn options(&mut self, value: crate::datadogV2::model::SpansQueryOptions) -> &mut Self {
+        self.options = Some(value);
+        self
+    }
+
+    pub fn page(&mut self, value: crate::datadogV2::model::SpansListRequestPage) -> &mut Self {
+        self.page = Some(value);
+        self
+    }
+
+    pub fn sort(&mut self, value: crate::datadogV2::model::SpansSort) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
 }
+
 impl Default for SpansListRequestAttributes {
     fn default() -> Self {
         Self::new()

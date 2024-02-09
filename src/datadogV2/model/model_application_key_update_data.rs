@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct ApplicationKeyUpdateData {
     /// Attributes used to update an application Key.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::ApplicationKeyUpdateAttributes>,
+    pub attributes: crate::datadogV2::model::ApplicationKeyUpdateAttributes,
     /// ID of the application key.
     #[serde(rename = "id")]
     pub id: String,
@@ -21,7 +21,7 @@ pub struct ApplicationKeyUpdateData {
 
 impl ApplicationKeyUpdateData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::ApplicationKeyUpdateAttributes>,
+        attributes: crate::datadogV2::model::ApplicationKeyUpdateAttributes,
         id: String,
         type_: crate::datadogV2::model::ApplicationKeysType,
     ) -> ApplicationKeyUpdateData {

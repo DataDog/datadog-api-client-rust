@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct OktaAccountUpdateRequest {
     /// Data object for updating an Okta account.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::OktaAccountUpdateRequestData>,
+    pub data: crate::datadogV2::model::OktaAccountUpdateRequestData,
 }
 
 impl OktaAccountUpdateRequest {
     pub fn new(
-        data: Box<crate::datadogV2::model::OktaAccountUpdateRequestData>,
+        data: crate::datadogV2::model::OktaAccountUpdateRequestData,
     ) -> OktaAccountUpdateRequest {
         OktaAccountUpdateRequest { data }
     }

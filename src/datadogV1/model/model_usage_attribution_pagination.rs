@@ -35,7 +35,33 @@ impl UsageAttributionPagination {
             total_number_of_records: None,
         }
     }
+
+    pub fn limit(&mut self, value: i64) -> &mut Self {
+        self.limit = Some(value);
+        self
+    }
+
+    pub fn offset(&mut self, value: i64) -> &mut Self {
+        self.offset = Some(value);
+        self
+    }
+
+    pub fn sort_direction(&mut self, value: String) -> &mut Self {
+        self.sort_direction = Some(value);
+        self
+    }
+
+    pub fn sort_name(&mut self, value: String) -> &mut Self {
+        self.sort_name = Some(value);
+        self
+    }
+
+    pub fn total_number_of_records(&mut self, value: i64) -> &mut Self {
+        self.total_number_of_records = Some(value);
+        self
+    }
 }
+
 impl Default for UsageAttributionPagination {
     fn default() -> Self {
         Self::new()

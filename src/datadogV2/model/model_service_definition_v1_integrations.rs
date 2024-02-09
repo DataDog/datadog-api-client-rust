@@ -17,7 +17,13 @@ impl ServiceDefinitionV1Integrations {
     pub fn new() -> ServiceDefinitionV1Integrations {
         ServiceDefinitionV1Integrations { pagerduty: None }
     }
+
+    pub fn pagerduty(&mut self, value: String) -> &mut Self {
+        self.pagerduty = Some(value);
+        self
+    }
 }
+
 impl Default for ServiceDefinitionV1Integrations {
     fn default() -> Self {
         Self::new()

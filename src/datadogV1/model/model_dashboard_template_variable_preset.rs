@@ -24,7 +24,21 @@ impl DashboardTemplateVariablePreset {
             template_variables: None,
         }
     }
+
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn template_variables(
+        &mut self,
+        value: Vec<crate::datadogV1::model::DashboardTemplateVariablePresetValue>,
+    ) -> &mut Self {
+        self.template_variables = Some(value);
+        self
+    }
 }
+
 impl Default for DashboardTemplateVariablePreset {
     fn default() -> Self {
         Self::new()

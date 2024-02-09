@@ -71,7 +71,53 @@ impl UsageRumSessionsHour {
             session_count_reactnative: None,
         }
     }
+
+    pub fn hour(&mut self, value: String) -> &mut Self {
+        self.hour = Some(value);
+        self
+    }
+
+    pub fn org_name(&mut self, value: String) -> &mut Self {
+        self.org_name = Some(value);
+        self
+    }
+
+    pub fn public_id(&mut self, value: String) -> &mut Self {
+        self.public_id = Some(value);
+        self
+    }
+
+    pub fn replay_session_count(&mut self, value: i64) -> &mut Self {
+        self.replay_session_count = Some(value);
+        self
+    }
+
+    pub fn session_count(&mut self, value: Option<i64>) -> &mut Self {
+        self.session_count = Some(value);
+        self
+    }
+
+    pub fn session_count_android(&mut self, value: Option<i64>) -> &mut Self {
+        self.session_count_android = Some(value);
+        self
+    }
+
+    pub fn session_count_flutter(&mut self, value: Option<i64>) -> &mut Self {
+        self.session_count_flutter = Some(value);
+        self
+    }
+
+    pub fn session_count_ios(&mut self, value: Option<i64>) -> &mut Self {
+        self.session_count_ios = Some(value);
+        self
+    }
+
+    pub fn session_count_reactnative(&mut self, value: Option<i64>) -> &mut Self {
+        self.session_count_reactnative = Some(value);
+        self
+    }
 }
+
 impl Default for UsageRumSessionsHour {
     fn default() -> Self {
         Self::new()

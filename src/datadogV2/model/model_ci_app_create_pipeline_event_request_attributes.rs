@@ -13,7 +13,7 @@ pub struct CIAppCreatePipelineEventRequestAttributes {
     pub env: Option<String>,
     /// Details of the CI pipeline event.
     #[serde(rename = "resource")]
-    pub resource: Box<crate::datadogV2::model::CIAppCreatePipelineEventRequestAttributesResource>,
+    pub resource: crate::datadogV2::model::CIAppCreatePipelineEventRequestAttributesResource,
     /// If the CI provider is SaaS, use this to differentiate between instances.
     #[serde(rename = "service")]
     pub service: Option<String>,
@@ -21,12 +21,22 @@ pub struct CIAppCreatePipelineEventRequestAttributes {
 
 impl CIAppCreatePipelineEventRequestAttributes {
     pub fn new(
-        resource: Box<crate::datadogV2::model::CIAppCreatePipelineEventRequestAttributesResource>,
+        resource: crate::datadogV2::model::CIAppCreatePipelineEventRequestAttributesResource,
     ) -> CIAppCreatePipelineEventRequestAttributes {
         CIAppCreatePipelineEventRequestAttributes {
             env: None,
             resource,
             service: None,
         }
+    }
+
+    pub fn env(&mut self, value: String) -> &mut Self {
+        self.env = Some(value);
+        self
+    }
+
+    pub fn service(&mut self, value: String) -> &mut Self {
+        self.service = Some(value);
+        self
     }
 }

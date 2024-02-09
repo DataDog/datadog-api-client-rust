@@ -63,7 +63,43 @@ impl UsageCIVisibilityHour {
             public_id: None,
         }
     }
+
+    pub fn ci_pipeline_indexed_spans(&mut self, value: Option<i64>) -> &mut Self {
+        self.ci_pipeline_indexed_spans = Some(value);
+        self
+    }
+
+    pub fn ci_test_indexed_spans(&mut self, value: Option<i64>) -> &mut Self {
+        self.ci_test_indexed_spans = Some(value);
+        self
+    }
+
+    pub fn ci_visibility_itr_committers(&mut self, value: Option<i64>) -> &mut Self {
+        self.ci_visibility_itr_committers = Some(value);
+        self
+    }
+
+    pub fn ci_visibility_pipeline_committers(&mut self, value: Option<i64>) -> &mut Self {
+        self.ci_visibility_pipeline_committers = Some(value);
+        self
+    }
+
+    pub fn ci_visibility_test_committers(&mut self, value: Option<i64>) -> &mut Self {
+        self.ci_visibility_test_committers = Some(value);
+        self
+    }
+
+    pub fn org_name(&mut self, value: String) -> &mut Self {
+        self.org_name = Some(value);
+        self
+    }
+
+    pub fn public_id(&mut self, value: String) -> &mut Self {
+        self.public_id = Some(value);
+        self
+    }
 }
+
 impl Default for UsageCIVisibilityHour {
     fn default() -> Self {
         Self::new()
