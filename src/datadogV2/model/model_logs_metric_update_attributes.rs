@@ -10,10 +10,10 @@ use serde_with::skip_serializing_none;
 pub struct LogsMetricUpdateAttributes {
     /// The compute rule to compute the log-based metric.
     #[serde(rename = "compute")]
-    pub compute: Option<Box<crate::datadogV2::model::LogsMetricUpdateCompute>>,
+    pub compute: Option<crate::datadogV2::model::LogsMetricUpdateCompute>,
     /// The log-based metric filter. Logs matching this filter will be aggregated in this metric.
     #[serde(rename = "filter")]
-    pub filter: Option<Box<crate::datadogV2::model::LogsMetricFilter>>,
+    pub filter: Option<crate::datadogV2::model::LogsMetricFilter>,
     /// The rules for the group by.
     #[serde(rename = "group_by")]
     pub group_by: Option<Vec<crate::datadogV2::model::LogsMetricGroupBy>>,
@@ -27,7 +27,29 @@ impl LogsMetricUpdateAttributes {
             group_by: None,
         }
     }
+
+    pub fn compute(
+        &mut self,
+        value: crate::datadogV2::model::LogsMetricUpdateCompute,
+    ) -> &mut Self {
+        self.compute = Some(value);
+        self
+    }
+
+    pub fn filter(&mut self, value: crate::datadogV2::model::LogsMetricFilter) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
+
+    pub fn group_by(
+        &mut self,
+        value: Vec<crate::datadogV2::model::LogsMetricGroupBy>,
+    ) -> &mut Self {
+        self.group_by = Some(value);
+        self
+    }
 }
+
 impl Default for LogsMetricUpdateAttributes {
     fn default() -> Self {
         Self::new()

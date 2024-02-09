@@ -27,7 +27,26 @@ impl TimeseriesResponseAttributes {
             values: None,
         }
     }
+
+    pub fn series(
+        &mut self,
+        value: Vec<crate::datadogV2::model::TimeseriesResponseSeries>,
+    ) -> &mut Self {
+        self.series = Some(value);
+        self
+    }
+
+    pub fn times(&mut self, value: Vec<i64>) -> &mut Self {
+        self.times = Some(value);
+        self
+    }
+
+    pub fn values(&mut self, value: Vec<Vec<Option<f64>>>) -> &mut Self {
+        self.values = Some(value);
+        self
+    }
 }
+
 impl Default for TimeseriesResponseAttributes {
     fn default() -> Self {
         Self::new()

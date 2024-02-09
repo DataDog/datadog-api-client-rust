@@ -5,30 +5,9 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateScorecardOutcomesBatchParams is a struct for passing parameters to the method [`ServiceScorecardsAPI::create_scorecard_outcomes_batch`]
-#[derive(Clone, Debug)]
-pub struct CreateScorecardOutcomesBatchParams {
-    /// Set of scorecard outcomes.
-    pub body: crate::datadogV2::model::OutcomesBatchRequest,
-}
-
-/// CreateScorecardRuleParams is a struct for passing parameters to the method [`ServiceScorecardsAPI::create_scorecard_rule`]
-#[derive(Clone, Debug)]
-pub struct CreateScorecardRuleParams {
-    /// Rule attributes.
-    pub body: crate::datadogV2::model::CreateRuleRequest,
-}
-
-/// DeleteScorecardRuleParams is a struct for passing parameters to the method [`ServiceScorecardsAPI::delete_scorecard_rule`]
-#[derive(Clone, Debug)]
-pub struct DeleteScorecardRuleParams {
-    /// The ID of the rule/scorecard.
-    pub rule_id: String,
-}
-
-/// ListScorecardOutcomesParams is a struct for passing parameters to the method [`ServiceScorecardsAPI::list_scorecard_outcomes`]
-#[derive(Clone, Debug)]
-pub struct ListScorecardOutcomesParams {
+/// ListScorecardOutcomesOptionalParams is a struct for passing parameters to the method [`ServiceScorecardsAPI::list_scorecard_outcomes`]
+#[derive(Clone, Default, Debug)]
+pub struct ListScorecardOutcomesOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
     /// Specific offset to use as the beginning of the returned page.
@@ -51,9 +30,62 @@ pub struct ListScorecardOutcomesParams {
     pub filter_rule_name: Option<String>,
 }
 
-/// ListScorecardRulesParams is a struct for passing parameters to the method [`ServiceScorecardsAPI::list_scorecard_rules`]
-#[derive(Clone, Debug)]
-pub struct ListScorecardRulesParams {
+impl ListScorecardOutcomesOptionalParams {
+    /// Size for a given page. The maximum allowed value is 100.
+    pub fn page_size(&mut self, value: i64) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Specific offset to use as the beginning of the returned page.
+    pub fn page_offset(&mut self, value: i64) -> &mut Self {
+        self.page_offset = Some(value);
+        self
+    }
+    /// Include related rule details in the response.
+    pub fn include(&mut self, value: String) -> &mut Self {
+        self.include = Some(value);
+        self
+    }
+    /// Return only specified values in the outcome attributes.
+    pub fn fields_outcome(&mut self, value: String) -> &mut Self {
+        self.fields_outcome = Some(value);
+        self
+    }
+    /// Return only specified values in the included rule details.
+    pub fn fields_rule(&mut self, value: String) -> &mut Self {
+        self.fields_rule = Some(value);
+        self
+    }
+    /// Filter the outcomes on a specific service name.
+    pub fn filter_outcome_service_name(&mut self, value: String) -> &mut Self {
+        self.filter_outcome_service_name = Some(value);
+        self
+    }
+    /// Filter the outcomes by a specific state.
+    pub fn filter_outcome_state(&mut self, value: String) -> &mut Self {
+        self.filter_outcome_state = Some(value);
+        self
+    }
+    /// Filter outcomes on whether a rule is enabled/disabled.
+    pub fn filter_rule_enabled(&mut self, value: bool) -> &mut Self {
+        self.filter_rule_enabled = Some(value);
+        self
+    }
+    /// Filter outcomes based on rule ID.
+    pub fn filter_rule_id(&mut self, value: String) -> &mut Self {
+        self.filter_rule_id = Some(value);
+        self
+    }
+    /// Filter outcomes based on rule name.
+    pub fn filter_rule_name(&mut self, value: String) -> &mut Self {
+        self.filter_rule_name = Some(value);
+        self
+    }
+}
+
+/// ListScorecardRulesOptionalParams is a struct for passing parameters to the method [`ServiceScorecardsAPI::list_scorecard_rules`]
+#[derive(Clone, Default, Debug)]
+pub struct ListScorecardRulesOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
     /// Specific offset to use as the beginning of the returned page.
@@ -74,6 +106,59 @@ pub struct ListScorecardRulesParams {
     pub fields_rule: Option<String>,
     /// Return only specific fields in the included response for scorecard attributes.
     pub fields_scorecard: Option<String>,
+}
+
+impl ListScorecardRulesOptionalParams {
+    /// Size for a given page. The maximum allowed value is 100.
+    pub fn page_size(&mut self, value: i64) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Specific offset to use as the beginning of the returned page.
+    pub fn page_offset(&mut self, value: i64) -> &mut Self {
+        self.page_offset = Some(value);
+        self
+    }
+    /// Include related scorecard details in the response.
+    pub fn include(&mut self, value: String) -> &mut Self {
+        self.include = Some(value);
+        self
+    }
+    /// Filter the rules on a rule ID.
+    pub fn filter_rule_id(&mut self, value: String) -> &mut Self {
+        self.filter_rule_id = Some(value);
+        self
+    }
+    /// Filter for enabled rules only.
+    pub fn filter_rule_enabled(&mut self, value: bool) -> &mut Self {
+        self.filter_rule_enabled = Some(value);
+        self
+    }
+    /// Filter for custom rules only.
+    pub fn filter_rule_custom(&mut self, value: bool) -> &mut Self {
+        self.filter_rule_custom = Some(value);
+        self
+    }
+    /// Filter rules on the rule name.
+    pub fn filter_rule_name(&mut self, value: String) -> &mut Self {
+        self.filter_rule_name = Some(value);
+        self
+    }
+    /// Filter rules on the rule description.
+    pub fn filter_rule_description(&mut self, value: String) -> &mut Self {
+        self.filter_rule_description = Some(value);
+        self
+    }
+    /// Return only specific fields in the response for rule attributes.
+    pub fn fields_rule(&mut self, value: String) -> &mut Self {
+        self.fields_rule = Some(value);
+        self
+    }
+    /// Return only specific fields in the included response for scorecard attributes.
+    pub fn fields_scorecard(&mut self, value: String) -> &mut Self {
+        self.fields_scorecard = Some(value);
+        self
+    }
 }
 
 /// CreateScorecardOutcomesBatchError is a struct for typed errors of method [`ServiceScorecardsAPI::create_scorecard_outcomes_batch`]
@@ -151,13 +236,13 @@ impl ServiceScorecardsAPI {
     /// Sets multiple service-rule outcomes in a single batched request.
     pub async fn create_scorecard_outcomes_batch(
         &self,
-        params: CreateScorecardOutcomesBatchParams,
+        body: crate::datadogV2::model::OutcomesBatchRequest,
     ) -> Result<
         Option<crate::datadogV2::model::OutcomesBatchResponse>,
         Error<CreateScorecardOutcomesBatchError>,
     > {
         match self
-            .create_scorecard_outcomes_batch_with_http_info(params)
+            .create_scorecard_outcomes_batch_with_http_info(body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -168,15 +253,12 @@ impl ServiceScorecardsAPI {
     /// Sets multiple service-rule outcomes in a single batched request.
     pub async fn create_scorecard_outcomes_batch_with_http_info(
         &self,
-        params: CreateScorecardOutcomesBatchParams,
+        body: crate::datadogV2::model::OutcomesBatchRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::OutcomesBatchResponse>,
         Error<CreateScorecardOutcomesBatchError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -237,10 +319,10 @@ impl ServiceScorecardsAPI {
     /// Creates a new rule.
     pub async fn create_scorecard_rule(
         &self,
-        params: CreateScorecardRuleParams,
+        body: crate::datadogV2::model::CreateRuleRequest,
     ) -> Result<Option<crate::datadogV2::model::CreateRuleResponse>, Error<CreateScorecardRuleError>>
     {
-        match self.create_scorecard_rule_with_http_info(params).await {
+        match self.create_scorecard_rule_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -249,15 +331,12 @@ impl ServiceScorecardsAPI {
     /// Creates a new rule.
     pub async fn create_scorecard_rule_with_http_info(
         &self,
-        params: CreateScorecardRuleParams,
+        body: crate::datadogV2::model::CreateRuleRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::CreateRuleResponse>,
         Error<CreateScorecardRuleError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -315,9 +394,9 @@ impl ServiceScorecardsAPI {
     /// Deletes a single rule.
     pub async fn delete_scorecard_rule(
         &self,
-        params: DeleteScorecardRuleParams,
+        rule_id: String,
     ) -> Result<Option<()>, Error<DeleteScorecardRuleError>> {
-        match self.delete_scorecard_rule_with_http_info(params).await {
+        match self.delete_scorecard_rule_with_http_info(rule_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -326,12 +405,9 @@ impl ServiceScorecardsAPI {
     /// Deletes a single rule.
     pub async fn delete_scorecard_rule_with_http_info(
         &self,
-        params: DeleteScorecardRuleParams,
+        rule_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteScorecardRuleError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let rule_id = params.rule_id;
 
         let local_client = &local_configuration.client;
 
@@ -384,7 +460,7 @@ impl ServiceScorecardsAPI {
     /// Fetches all rule outcomes.
     pub async fn list_scorecard_outcomes(
         &self,
-        params: ListScorecardOutcomesParams,
+        params: ListScorecardOutcomesOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::OutcomesResponse>, Error<ListScorecardOutcomesError>>
     {
         match self.list_scorecard_outcomes_with_http_info(params).await {
@@ -396,14 +472,14 @@ impl ServiceScorecardsAPI {
     /// Fetches all rule outcomes.
     pub async fn list_scorecard_outcomes_with_http_info(
         &self,
-        params: ListScorecardOutcomesParams,
+        params: ListScorecardOutcomesOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::OutcomesResponse>,
         Error<ListScorecardOutcomesError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let page_size = params.page_size;
         let page_offset = params.page_offset;
         let include = params.include;
@@ -424,43 +500,47 @@ impl ServiceScorecardsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = page_size {
-            local_req_builder = local_req_builder.query(&[("page[size]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_offset {
+        if let Some(ref local_query_param) = page_size {
             local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_str.to_string())]);
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = include {
-            local_req_builder = local_req_builder.query(&[("include", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = fields_outcome {
+        if let Some(ref local_query_param) = page_offset {
             local_req_builder =
-                local_req_builder.query(&[("fields[outcome]", &local_str.to_string())]);
+                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = fields_rule {
+        if let Some(ref local_query_param) = include {
             local_req_builder =
-                local_req_builder.query(&[("fields[rule]", &local_str.to_string())]);
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_outcome_service_name {
+        if let Some(ref local_query_param) = fields_outcome {
+            local_req_builder =
+                local_req_builder.query(&[("fields[outcome]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = fields_rule {
+            local_req_builder =
+                local_req_builder.query(&[("fields[rule]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_outcome_service_name {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[outcome][service_name]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_outcome_state {
             local_req_builder = local_req_builder
-                .query(&[("filter[outcome][service_name]", &local_str.to_string())]);
+                .query(&[("filter[outcome][state]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_outcome_state {
-            local_req_builder =
-                local_req_builder.query(&[("filter[outcome][state]", &local_str.to_string())]);
+        if let Some(ref local_query_param) = filter_rule_enabled {
+            local_req_builder = local_req_builder
+                .query(&[("filter[rule][enabled]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_rule_enabled {
+        if let Some(ref local_query_param) = filter_rule_id {
             local_req_builder =
-                local_req_builder.query(&[("filter[rule][enabled]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[rule][id]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_rule_id {
+        if let Some(ref local_query_param) = filter_rule_name {
             local_req_builder =
-                local_req_builder.query(&[("filter[rule][id]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = filter_rule_name {
-            local_req_builder =
-                local_req_builder.query(&[("filter[rule][name]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[rule][name]", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -506,7 +586,7 @@ impl ServiceScorecardsAPI {
     /// Fetch all rules.
     pub async fn list_scorecard_rules(
         &self,
-        params: ListScorecardRulesParams,
+        params: ListScorecardRulesOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::ListRulesResponse>, Error<ListScorecardRulesError>>
     {
         match self.list_scorecard_rules_with_http_info(params).await {
@@ -518,14 +598,14 @@ impl ServiceScorecardsAPI {
     /// Fetch all rules.
     pub async fn list_scorecard_rules_with_http_info(
         &self,
-        params: ListScorecardRulesParams,
+        params: ListScorecardRulesOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::ListRulesResponse>,
         Error<ListScorecardRulesError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let page_size = params.page_size;
         let page_offset = params.page_offset;
         let include = params.include;
@@ -543,43 +623,45 @@ impl ServiceScorecardsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = page_size {
-            local_req_builder = local_req_builder.query(&[("page[size]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_offset {
+        if let Some(ref local_query_param) = page_size {
             local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_str.to_string())]);
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = include {
-            local_req_builder = local_req_builder.query(&[("include", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = filter_rule_id {
+        if let Some(ref local_query_param) = page_offset {
             local_req_builder =
-                local_req_builder.query(&[("filter[rule][id]", &local_str.to_string())]);
+                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_rule_enabled {
+        if let Some(ref local_query_param) = include {
             local_req_builder =
-                local_req_builder.query(&[("filter[rule][enabled]", &local_str.to_string())]);
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_rule_custom {
+        if let Some(ref local_query_param) = filter_rule_id {
             local_req_builder =
-                local_req_builder.query(&[("filter[rule][custom]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[rule][id]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_rule_name {
-            local_req_builder =
-                local_req_builder.query(&[("filter[rule][name]", &local_str.to_string())]);
+        if let Some(ref local_query_param) = filter_rule_enabled {
+            local_req_builder = local_req_builder
+                .query(&[("filter[rule][enabled]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_rule_description {
-            local_req_builder =
-                local_req_builder.query(&[("filter[rule][description]", &local_str.to_string())]);
+        if let Some(ref local_query_param) = filter_rule_custom {
+            local_req_builder = local_req_builder
+                .query(&[("filter[rule][custom]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = fields_rule {
+        if let Some(ref local_query_param) = filter_rule_name {
             local_req_builder =
-                local_req_builder.query(&[("fields[rule]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[rule][name]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = fields_scorecard {
+        if let Some(ref local_query_param) = filter_rule_description {
+            local_req_builder = local_req_builder
+                .query(&[("filter[rule][description]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = fields_rule {
             local_req_builder =
-                local_req_builder.query(&[("fields[scorecard]", &local_str.to_string())]);
+                local_req_builder.query(&[("fields[rule]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = fields_scorecard {
+            local_req_builder =
+                local_req_builder.query(&[("fields[scorecard]", &local_query_param.to_string())]);
         };
 
         // build user agent

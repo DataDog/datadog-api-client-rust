@@ -10,10 +10,10 @@ use serde_with::skip_serializing_none;
 pub struct SensitiveDataScannerRuleCreate {
     /// Attributes of the Sensitive Data Scanner rule.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::SensitiveDataScannerRuleAttributes>,
+    pub attributes: crate::datadogV2::model::SensitiveDataScannerRuleAttributes,
     /// Relationships of a scanning rule.
     #[serde(rename = "relationships")]
-    pub relationships: Box<crate::datadogV2::model::SensitiveDataScannerRuleRelationships>,
+    pub relationships: crate::datadogV2::model::SensitiveDataScannerRuleRelationships,
     /// Sensitive Data Scanner rule type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::SensitiveDataScannerRuleType,
@@ -21,8 +21,8 @@ pub struct SensitiveDataScannerRuleCreate {
 
 impl SensitiveDataScannerRuleCreate {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::SensitiveDataScannerRuleAttributes>,
-        relationships: Box<crate::datadogV2::model::SensitiveDataScannerRuleRelationships>,
+        attributes: crate::datadogV2::model::SensitiveDataScannerRuleAttributes,
+        relationships: crate::datadogV2::model::SensitiveDataScannerRuleRelationships,
         type_: crate::datadogV2::model::SensitiveDataScannerRuleType,
     ) -> SensitiveDataScannerRuleCreate {
         SensitiveDataScannerRuleCreate {

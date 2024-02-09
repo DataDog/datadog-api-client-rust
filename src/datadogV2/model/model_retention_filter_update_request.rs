@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct RetentionFilterUpdateRequest {
     /// The body of the retention filter to be updated.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::RetentionFilterUpdateData>,
+    pub data: crate::datadogV2::model::RetentionFilterUpdateData,
 }
 
 impl RetentionFilterUpdateRequest {
     pub fn new(
-        data: Box<crate::datadogV2::model::RetentionFilterUpdateData>,
+        data: crate::datadogV2::model::RetentionFilterUpdateData,
     ) -> RetentionFilterUpdateRequest {
         RetentionFilterUpdateRequest { data }
     }

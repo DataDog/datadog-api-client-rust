@@ -10,13 +10,11 @@ use serde_with::skip_serializing_none;
 pub struct LogsMetricUpdateRequest {
     /// The new log-based metric properties.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::LogsMetricUpdateData>,
+    pub data: crate::datadogV2::model::LogsMetricUpdateData,
 }
 
 impl LogsMetricUpdateRequest {
-    pub fn new(
-        data: Box<crate::datadogV2::model::LogsMetricUpdateData>,
-    ) -> LogsMetricUpdateRequest {
+    pub fn new(data: crate::datadogV2::model::LogsMetricUpdateData) -> LogsMetricUpdateRequest {
         LogsMetricUpdateRequest { data }
     }
 }

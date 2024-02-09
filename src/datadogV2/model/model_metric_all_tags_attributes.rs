@@ -17,7 +17,13 @@ impl MetricAllTagsAttributes {
     pub fn new() -> MetricAllTagsAttributes {
         MetricAllTagsAttributes { tags: None }
     }
+
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
 }
+
 impl Default for MetricAllTagsAttributes {
     fn default() -> Self {
         Self::new()

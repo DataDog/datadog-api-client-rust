@@ -5,16 +5,24 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// GetHostTotalsParams is a struct for passing parameters to the method [`HostsAPI::get_host_totals`]
-#[derive(Clone, Debug)]
-pub struct GetHostTotalsParams {
+/// GetHostTotalsOptionalParams is a struct for passing parameters to the method [`HostsAPI::get_host_totals`]
+#[derive(Clone, Default, Debug)]
+pub struct GetHostTotalsOptionalParams {
     /// Number of seconds from which you want to get total number of active hosts.
     pub from: Option<i64>,
 }
 
-/// ListHostsParams is a struct for passing parameters to the method [`HostsAPI::list_hosts`]
-#[derive(Clone, Debug)]
-pub struct ListHostsParams {
+impl GetHostTotalsOptionalParams {
+    /// Number of seconds from which you want to get total number of active hosts.
+    pub fn from(&mut self, value: i64) -> &mut Self {
+        self.from = Some(value);
+        self
+    }
+}
+
+/// ListHostsOptionalParams is a struct for passing parameters to the method [`HostsAPI::list_hosts`]
+#[derive(Clone, Default, Debug)]
+pub struct ListHostsOptionalParams {
     /// String to filter search results.
     pub filter: Option<String>,
     /// Sort hosts by this field.
@@ -33,20 +41,47 @@ pub struct ListHostsParams {
     pub include_hosts_metadata: Option<bool>,
 }
 
-/// MuteHostParams is a struct for passing parameters to the method [`HostsAPI::mute_host`]
-#[derive(Clone, Debug)]
-pub struct MuteHostParams {
-    /// Name of the host to mute.
-    pub host_name: String,
-    /// Mute a host request body.
-    pub body: crate::datadogV1::model::HostMuteSettings,
-}
-
-/// UnmuteHostParams is a struct for passing parameters to the method [`HostsAPI::unmute_host`]
-#[derive(Clone, Debug)]
-pub struct UnmuteHostParams {
-    /// Name of the host to unmute.
-    pub host_name: String,
+impl ListHostsOptionalParams {
+    /// String to filter search results.
+    pub fn filter(&mut self, value: String) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
+    /// Sort hosts by this field.
+    pub fn sort_field(&mut self, value: String) -> &mut Self {
+        self.sort_field = Some(value);
+        self
+    }
+    /// Direction of sort. Options include `asc` and `desc`.
+    pub fn sort_dir(&mut self, value: String) -> &mut Self {
+        self.sort_dir = Some(value);
+        self
+    }
+    /// Host result to start search from.
+    pub fn start(&mut self, value: i64) -> &mut Self {
+        self.start = Some(value);
+        self
+    }
+    /// Number of hosts to return. Max 1000.
+    pub fn count(&mut self, value: i64) -> &mut Self {
+        self.count = Some(value);
+        self
+    }
+    /// Number of seconds since UNIX epoch from which you want to search your hosts.
+    pub fn from(&mut self, value: i64) -> &mut Self {
+        self.from = Some(value);
+        self
+    }
+    /// Include information on the muted status of hosts and when the mute expires.
+    pub fn include_muted_hosts_data(&mut self, value: bool) -> &mut Self {
+        self.include_muted_hosts_data = Some(value);
+        self
+    }
+    /// Include additional metadata about the hosts (agent_version, machine, platform, processor, etc.).
+    pub fn include_hosts_metadata(&mut self, value: bool) -> &mut Self {
+        self.include_hosts_metadata = Some(value);
+        self
+    }
 }
 
 /// GetHostTotalsError is a struct for typed errors of method [`HostsAPI::get_host_totals`]
@@ -114,7 +149,7 @@ impl HostsAPI {
     /// Active means the host has reported in the past hour, and up means it has reported in the past two hours.
     pub async fn get_host_totals(
         &self,
-        params: GetHostTotalsParams,
+        params: GetHostTotalsOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::HostTotals>, Error<GetHostTotalsError>> {
         match self.get_host_totals_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
@@ -126,12 +161,12 @@ impl HostsAPI {
     /// Active means the host has reported in the past hour, and up means it has reported in the past two hours.
     pub async fn get_host_totals_with_http_info(
         &self,
-        params: GetHostTotalsParams,
+        params: GetHostTotalsOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV1::model::HostTotals>, Error<GetHostTotalsError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let from = params.from;
 
         let local_client = &local_configuration.client;
@@ -140,8 +175,9 @@ impl HostsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = from {
-            local_req_builder = local_req_builder.query(&[("from", &local_str.to_string())]);
+        if let Some(ref local_query_param) = from {
+            local_req_builder =
+                local_req_builder.query(&[("from", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -190,7 +226,7 @@ impl HostsAPI {
     /// Results are paginated with a max of 1000 results at a time.
     pub async fn list_hosts(
         &self,
-        params: ListHostsParams,
+        params: ListHostsOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::HostListResponse>, Error<ListHostsError>> {
         match self.list_hosts_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
@@ -204,12 +240,12 @@ impl HostsAPI {
     /// Results are paginated with a max of 1000 results at a time.
     pub async fn list_hosts_with_http_info(
         &self,
-        params: ListHostsParams,
+        params: ListHostsOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV1::model::HostListResponse>, Error<ListHostsError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let filter = params.filter;
         let sort_field = params.sort_field;
         let sort_dir = params.sort_dir;
@@ -225,31 +261,37 @@ impl HostsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = filter {
-            local_req_builder = local_req_builder.query(&[("filter", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = sort_field {
-            local_req_builder = local_req_builder.query(&[("sort_field", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = sort_dir {
-            local_req_builder = local_req_builder.query(&[("sort_dir", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = start {
-            local_req_builder = local_req_builder.query(&[("start", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = count {
-            local_req_builder = local_req_builder.query(&[("count", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = from {
-            local_req_builder = local_req_builder.query(&[("from", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = include_muted_hosts_data {
+        if let Some(ref local_query_param) = filter {
             local_req_builder =
-                local_req_builder.query(&[("include_muted_hosts_data", &local_str.to_string())]);
+                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = include_hosts_metadata {
+        if let Some(ref local_query_param) = sort_field {
             local_req_builder =
-                local_req_builder.query(&[("include_hosts_metadata", &local_str.to_string())]);
+                local_req_builder.query(&[("sort_field", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort_dir {
+            local_req_builder =
+                local_req_builder.query(&[("sort_dir", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = start {
+            local_req_builder =
+                local_req_builder.query(&[("start", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = count {
+            local_req_builder =
+                local_req_builder.query(&[("count", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = from {
+            local_req_builder =
+                local_req_builder.query(&[("from", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include_muted_hosts_data {
+            local_req_builder = local_req_builder
+                .query(&[("include_muted_hosts_data", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include_hosts_metadata {
+            local_req_builder = local_req_builder
+                .query(&[("include_hosts_metadata", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -294,9 +336,10 @@ impl HostsAPI {
     /// Mute a host. **Note:** This creates a [Downtime V2](<https://docs.datadoghq.com/api/latest/downtimes/#schedule-a-downtime>) for the host.
     pub async fn mute_host(
         &self,
-        params: MuteHostParams,
+        host_name: String,
+        body: crate::datadogV1::model::HostMuteSettings,
     ) -> Result<Option<crate::datadogV1::model::HostMuteResponse>, Error<MuteHostError>> {
-        match self.mute_host_with_http_info(params).await {
+        match self.mute_host_with_http_info(host_name, body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -305,14 +348,11 @@ impl HostsAPI {
     /// Mute a host. **Note:** This creates a [Downtime V2](<https://docs.datadoghq.com/api/latest/downtimes/#schedule-a-downtime>) for the host.
     pub async fn mute_host_with_http_info(
         &self,
-        params: MuteHostParams,
+        host_name: String,
+        body: crate::datadogV1::model::HostMuteSettings,
     ) -> Result<ResponseContent<crate::datadogV1::model::HostMuteResponse>, Error<MuteHostError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let host_name = params.host_name;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -373,9 +413,9 @@ impl HostsAPI {
     /// Unmutes a host. This endpoint takes no JSON arguments.
     pub async fn unmute_host(
         &self,
-        params: UnmuteHostParams,
+        host_name: String,
     ) -> Result<Option<crate::datadogV1::model::HostMuteResponse>, Error<UnmuteHostError>> {
-        match self.unmute_host_with_http_info(params).await {
+        match self.unmute_host_with_http_info(host_name).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -384,13 +424,10 @@ impl HostsAPI {
     /// Unmutes a host. This endpoint takes no JSON arguments.
     pub async fn unmute_host_with_http_info(
         &self,
-        params: UnmuteHostParams,
+        host_name: String,
     ) -> Result<ResponseContent<crate::datadogV1::model::HostMuteResponse>, Error<UnmuteHostError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let host_name = params.host_name;
 
         let local_client = &local_configuration.client;
 

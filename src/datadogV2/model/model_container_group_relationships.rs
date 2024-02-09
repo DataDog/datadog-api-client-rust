@@ -10,14 +10,23 @@ use serde_with::skip_serializing_none;
 pub struct ContainerGroupRelationships {
     /// Relationships to Containers inside a Container Group.
     #[serde(rename = "containers")]
-    pub containers: Option<Box<crate::datadogV2::model::ContainerGroupRelationshipsLink>>,
+    pub containers: Option<crate::datadogV2::model::ContainerGroupRelationshipsLink>,
 }
 
 impl ContainerGroupRelationships {
     pub fn new() -> ContainerGroupRelationships {
         ContainerGroupRelationships { containers: None }
     }
+
+    pub fn containers(
+        &mut self,
+        value: crate::datadogV2::model::ContainerGroupRelationshipsLink,
+    ) -> &mut Self {
+        self.containers = Some(value);
+        self
+    }
 }
+
 impl Default for ContainerGroupRelationships {
     fn default() -> Self {
         Self::new()

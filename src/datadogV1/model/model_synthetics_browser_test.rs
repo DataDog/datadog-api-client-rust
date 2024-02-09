@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SyntheticsBrowserTest {
     /// Configuration object for a Synthetic browser test.
     #[serde(rename = "config")]
-    pub config: Box<crate::datadogV1::model::SyntheticsBrowserTestConfig>,
+    pub config: crate::datadogV1::model::SyntheticsBrowserTestConfig,
     /// Array of locations used to run the test.
     #[serde(rename = "locations")]
     pub locations: Vec<String>,
@@ -25,7 +25,7 @@ pub struct SyntheticsBrowserTest {
     pub name: String,
     /// Object describing the extra options for a Synthetic test.
     #[serde(rename = "options")]
-    pub options: Box<crate::datadogV1::model::SyntheticsTestOptions>,
+    pub options: crate::datadogV1::model::SyntheticsTestOptions,
     /// The public ID of the test.
     #[serde(rename = "public_id")]
     pub public_id: Option<String>,
@@ -46,11 +46,11 @@ pub struct SyntheticsBrowserTest {
 
 impl SyntheticsBrowserTest {
     pub fn new(
-        config: Box<crate::datadogV1::model::SyntheticsBrowserTestConfig>,
+        config: crate::datadogV1::model::SyntheticsBrowserTestConfig,
         locations: Vec<String>,
         message: String,
         name: String,
-        options: Box<crate::datadogV1::model::SyntheticsTestOptions>,
+        options: crate::datadogV1::model::SyntheticsTestOptions,
         type_: crate::datadogV1::model::SyntheticsBrowserTestType,
     ) -> SyntheticsBrowserTest {
         SyntheticsBrowserTest {
@@ -66,5 +66,33 @@ impl SyntheticsBrowserTest {
             tags: None,
             type_,
         }
+    }
+
+    pub fn monitor_id(&mut self, value: i64) -> &mut Self {
+        self.monitor_id = Some(value);
+        self
+    }
+
+    pub fn public_id(&mut self, value: String) -> &mut Self {
+        self.public_id = Some(value);
+        self
+    }
+
+    pub fn status(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsTestPauseStatus,
+    ) -> &mut Self {
+        self.status = Some(value);
+        self
+    }
+
+    pub fn steps(&mut self, value: Vec<crate::datadogV1::model::SyntheticsStep>) -> &mut Self {
+        self.steps = Some(value);
+        self
+    }
+
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
     }
 }

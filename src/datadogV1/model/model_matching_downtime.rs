@@ -33,4 +33,19 @@ impl MatchingDowntime {
             start: None,
         }
     }
+
+    pub fn end(&mut self, value: Option<i64>) -> &mut Self {
+        self.end = Some(value);
+        self
+    }
+
+    pub fn scope(&mut self, value: Vec<String>) -> &mut Self {
+        self.scope = Some(value);
+        self
+    }
+
+    pub fn start(&mut self, value: i64) -> &mut Self {
+        self.start = Some(value);
+        self
+    }
 }

@@ -11,14 +11,20 @@ pub struct MetricBulkTagConfigResponse {
     /// The status of a request to bulk configure metric tags.
     /// It contains the fields from the original request for reference.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::MetricBulkTagConfigStatus>>,
+    pub data: Option<crate::datadogV2::model::MetricBulkTagConfigStatus>,
 }
 
 impl MetricBulkTagConfigResponse {
     pub fn new() -> MetricBulkTagConfigResponse {
         MetricBulkTagConfigResponse { data: None }
     }
+
+    pub fn data(&mut self, value: crate::datadogV2::model::MetricBulkTagConfigStatus) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for MetricBulkTagConfigResponse {
     fn default() -> Self {
         Self::new()

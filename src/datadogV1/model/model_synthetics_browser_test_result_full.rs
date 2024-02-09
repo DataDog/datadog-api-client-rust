@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SyntheticsBrowserTestResultFull {
     /// Object describing the browser test configuration.
     #[serde(rename = "check")]
-    pub check: Option<Box<crate::datadogV1::model::SyntheticsBrowserTestResultFullCheck>>,
+    pub check: Option<crate::datadogV1::model::SyntheticsBrowserTestResultFullCheck>,
     /// When the browser test was conducted.
     #[serde(rename = "check_time")]
     pub check_time: Option<f64>,
@@ -22,7 +22,7 @@ pub struct SyntheticsBrowserTestResultFull {
     pub probe_dc: Option<String>,
     /// Object containing results for your Synthetic browser test.
     #[serde(rename = "result")]
-    pub result: Option<Box<crate::datadogV1::model::SyntheticsBrowserTestResultData>>,
+    pub result: Option<crate::datadogV1::model::SyntheticsBrowserTestResultData>,
     /// ID of the browser test result.
     #[serde(rename = "result_id")]
     pub result_id: Option<String>,
@@ -46,7 +46,52 @@ impl SyntheticsBrowserTestResultFull {
             status: None,
         }
     }
+
+    pub fn check(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsBrowserTestResultFullCheck,
+    ) -> &mut Self {
+        self.check = Some(value);
+        self
+    }
+
+    pub fn check_time(&mut self, value: f64) -> &mut Self {
+        self.check_time = Some(value);
+        self
+    }
+
+    pub fn check_version(&mut self, value: i64) -> &mut Self {
+        self.check_version = Some(value);
+        self
+    }
+
+    pub fn probe_dc(&mut self, value: String) -> &mut Self {
+        self.probe_dc = Some(value);
+        self
+    }
+
+    pub fn result(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsBrowserTestResultData,
+    ) -> &mut Self {
+        self.result = Some(value);
+        self
+    }
+
+    pub fn result_id(&mut self, value: String) -> &mut Self {
+        self.result_id = Some(value);
+        self
+    }
+
+    pub fn status(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsTestMonitorStatus,
+    ) -> &mut Self {
+        self.status = Some(value);
+        self
+    }
 }
+
 impl Default for SyntheticsBrowserTestResultFull {
     fn default() -> Self {
         Self::new()

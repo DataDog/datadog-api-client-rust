@@ -10,14 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct TeamLinkResponse {
     /// Team link
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::TeamLink>>,
+    pub data: Option<crate::datadogV2::model::TeamLink>,
 }
 
 impl TeamLinkResponse {
     pub fn new() -> TeamLinkResponse {
         TeamLinkResponse { data: None }
     }
+
+    pub fn data(&mut self, value: crate::datadogV2::model::TeamLink) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for TeamLinkResponse {
     fn default() -> Self {
         Self::new()

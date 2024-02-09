@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct AzureUCConfigPair {
     /// Attributes for Azure config pair.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::AzureUCConfigPairAttributes>,
+    pub attributes: crate::datadogV2::model::AzureUCConfigPairAttributes,
     /// The ID of Cloud Cost Management account.
     #[serde(rename = "id")]
     pub id: Option<i64>,
@@ -21,7 +21,7 @@ pub struct AzureUCConfigPair {
 
 impl AzureUCConfigPair {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::AzureUCConfigPairAttributes>,
+        attributes: crate::datadogV2::model::AzureUCConfigPairAttributes,
         type_: crate::datadogV2::model::AzureUCConfigPairType,
     ) -> AzureUCConfigPair {
         AzureUCConfigPair {
@@ -29,5 +29,10 @@ impl AzureUCConfigPair {
             id: None,
             type_,
         }
+    }
+
+    pub fn id(&mut self, value: i64) -> &mut Self {
+        self.id = Some(value);
+        self
     }
 }

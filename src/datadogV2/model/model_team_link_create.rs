@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct TeamLinkCreate {
     /// Team link attributes
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::TeamLinkAttributes>,
+    pub attributes: crate::datadogV2::model::TeamLinkAttributes,
     /// Team link type
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::TeamLinkType,
@@ -18,7 +18,7 @@ pub struct TeamLinkCreate {
 
 impl TeamLinkCreate {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::TeamLinkAttributes>,
+        attributes: crate::datadogV2::model::TeamLinkAttributes,
         type_: crate::datadogV2::model::TeamLinkType,
     ) -> TeamLinkCreate {
         TeamLinkCreate { attributes, type_ }

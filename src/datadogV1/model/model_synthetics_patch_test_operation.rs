@@ -27,7 +27,26 @@ impl SyntheticsPatchTestOperation {
             value: None,
         }
     }
+
+    pub fn op(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsPatchTestOperationName,
+    ) -> &mut Self {
+        self.op = Some(value);
+        self
+    }
+
+    pub fn path(&mut self, value: String) -> &mut Self {
+        self.path = Some(value);
+        self
+    }
+
+    pub fn value(&mut self, value: serde_json::Value) -> &mut Self {
+        self.value = Some(value);
+        self
+    }
 }
+
 impl Default for SyntheticsPatchTestOperation {
     fn default() -> Self {
         Self::new()

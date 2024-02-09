@@ -10,14 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct UsageCustomReportsMeta {
     /// The object containing page total count.
     #[serde(rename = "page")]
-    pub page: Option<Box<crate::datadogV1::model::UsageCustomReportsPage>>,
+    pub page: Option<crate::datadogV1::model::UsageCustomReportsPage>,
 }
 
 impl UsageCustomReportsMeta {
     pub fn new() -> UsageCustomReportsMeta {
         UsageCustomReportsMeta { page: None }
     }
+
+    pub fn page(&mut self, value: crate::datadogV1::model::UsageCustomReportsPage) -> &mut Self {
+        self.page = Some(value);
+        self
+    }
 }
+
 impl Default for UsageCustomReportsMeta {
     fn default() -> Self {
         Self::new()

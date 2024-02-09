@@ -27,7 +27,23 @@ impl SyntheticsAssertionXPathTargetTarget {
             x_path: None,
         }
     }
+
+    pub fn operator(&mut self, value: String) -> &mut Self {
+        self.operator = Some(value);
+        self
+    }
+
+    pub fn target_value(&mut self, value: serde_json::Value) -> &mut Self {
+        self.target_value = Some(value);
+        self
+    }
+
+    pub fn x_path(&mut self, value: String) -> &mut Self {
+        self.x_path = Some(value);
+        self
+    }
 }
+
 impl Default for SyntheticsAssertionXPathTargetTarget {
     fn default() -> Self {
         Self::new()

@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct CloudflareAccountUpdateRequestData {
     /// Attributes object for updating a Cloudflare account.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::CloudflareAccountUpdateRequestAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::CloudflareAccountUpdateRequestAttributes>,
     /// The JSON:API type for this API. Should always be `cloudflare-accounts`.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::CloudflareAccountType>,
@@ -23,7 +23,21 @@ impl CloudflareAccountUpdateRequestData {
             type_: None,
         }
     }
+
+    pub fn attributes(
+        &mut self,
+        value: crate::datadogV2::model::CloudflareAccountUpdateRequestAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn type_(&mut self, value: crate::datadogV2::model::CloudflareAccountType) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
+
 impl Default for CloudflareAccountUpdateRequestData {
     fn default() -> Self {
         Self::new()

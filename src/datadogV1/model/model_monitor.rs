@@ -13,7 +13,7 @@ pub struct Monitor {
     pub created: Option<String>,
     /// Object describing the creator of the shared element.
     #[serde(rename = "creator")]
-    pub creator: Option<Box<crate::datadogV1::model::Creator>>,
+    pub creator: Option<crate::datadogV1::model::Creator>,
     /// Whether or not the monitor is deleted. (Always `null`)
     #[serde(
         rename = "deleted",
@@ -41,7 +41,7 @@ pub struct Monitor {
     pub name: Option<String>,
     /// List of options associated with your monitor.
     #[serde(rename = "options")]
-    pub options: Option<Box<crate::datadogV1::model::MonitorOptions>>,
+    pub options: Option<crate::datadogV1::model::MonitorOptions>,
     /// The different states your monitor can be in.
     #[serde(rename = "overall_state")]
     pub overall_state: Option<crate::datadogV1::model::MonitorOverallStates>,
@@ -64,7 +64,7 @@ pub struct Monitor {
     pub restricted_roles: Option<Option<Vec<String>>>,
     /// Wrapper object with the different monitor states.
     #[serde(rename = "state")]
-    pub state: Option<Box<crate::datadogV1::model::MonitorState>>,
+    pub state: Option<crate::datadogV1::model::MonitorState>,
     /// Tags associated to your monitor.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
@@ -94,5 +94,86 @@ impl Monitor {
             tags: None,
             type_,
         }
+    }
+
+    pub fn created(&mut self, value: String) -> &mut Self {
+        self.created = Some(value);
+        self
+    }
+
+    pub fn creator(&mut self, value: crate::datadogV1::model::Creator) -> &mut Self {
+        self.creator = Some(value);
+        self
+    }
+
+    pub fn deleted(&mut self, value: Option<String>) -> &mut Self {
+        self.deleted = Some(value);
+        self
+    }
+
+    pub fn id(&mut self, value: i64) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn matching_downtimes(
+        &mut self,
+        value: Vec<crate::datadogV1::model::MatchingDowntime>,
+    ) -> &mut Self {
+        self.matching_downtimes = Some(value);
+        self
+    }
+
+    pub fn message(&mut self, value: String) -> &mut Self {
+        self.message = Some(value);
+        self
+    }
+
+    pub fn modified(&mut self, value: String) -> &mut Self {
+        self.modified = Some(value);
+        self
+    }
+
+    pub fn multi(&mut self, value: bool) -> &mut Self {
+        self.multi = Some(value);
+        self
+    }
+
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn options(&mut self, value: crate::datadogV1::model::MonitorOptions) -> &mut Self {
+        self.options = Some(value);
+        self
+    }
+
+    pub fn overall_state(
+        &mut self,
+        value: crate::datadogV1::model::MonitorOverallStates,
+    ) -> &mut Self {
+        self.overall_state = Some(value);
+        self
+    }
+
+    pub fn priority(&mut self, value: Option<i64>) -> &mut Self {
+        self.priority = Some(value);
+        self
+    }
+
+    pub fn restricted_roles(&mut self, value: Option<Vec<String>>) -> &mut Self {
+        self.restricted_roles = Some(value);
+        self
+    }
+
+    pub fn state(&mut self, value: crate::datadogV1::model::MonitorState) -> &mut Self {
+        self.state = Some(value);
+        self
+    }
+
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
     }
 }

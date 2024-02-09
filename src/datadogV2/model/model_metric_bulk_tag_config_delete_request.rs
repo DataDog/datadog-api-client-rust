@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct MetricBulkTagConfigDeleteRequest {
     /// Request object to bulk delete all tag configurations for metrics matching the given prefix.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::MetricBulkTagConfigDelete>,
+    pub data: crate::datadogV2::model::MetricBulkTagConfigDelete,
 }
 
 impl MetricBulkTagConfigDeleteRequest {
     pub fn new(
-        data: Box<crate::datadogV2::model::MetricBulkTagConfigDelete>,
+        data: crate::datadogV2::model::MetricBulkTagConfigDelete,
     ) -> MetricBulkTagConfigDeleteRequest {
         MetricBulkTagConfigDeleteRequest { data }
     }

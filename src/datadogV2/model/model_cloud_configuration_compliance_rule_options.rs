@@ -17,7 +17,7 @@ pub struct CloudConfigurationComplianceRuleOptions {
     pub complex_rule: Option<bool>,
     /// Rule details.
     #[serde(rename = "regoRule")]
-    pub rego_rule: Option<Box<crate::datadogV2::model::CloudConfigurationRegoRule>>,
+    pub rego_rule: Option<crate::datadogV2::model::CloudConfigurationRegoRule>,
     /// Main resource type to be checked by the rule. It should be specified again in `regoRule.resourceTypes`.
     ///
     #[serde(rename = "resourceType")]
@@ -35,7 +35,26 @@ impl CloudConfigurationComplianceRuleOptions {
             additional_properties: std::collections::BTreeMap::new(),
         }
     }
+
+    pub fn complex_rule(&mut self, value: bool) -> &mut Self {
+        self.complex_rule = Some(value);
+        self
+    }
+
+    pub fn rego_rule(
+        &mut self,
+        value: crate::datadogV2::model::CloudConfigurationRegoRule,
+    ) -> &mut Self {
+        self.rego_rule = Some(value);
+        self
+    }
+
+    pub fn resource_type(&mut self, value: String) -> &mut Self {
+        self.resource_type = Some(value);
+        self
+    }
 }
+
 impl Default for CloudConfigurationComplianceRuleOptions {
     fn default() -> Self {
         Self::new()

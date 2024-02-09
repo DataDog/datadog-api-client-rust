@@ -35,7 +35,7 @@ pub struct SensitiveDataScannerRuleAttributes {
     pub tags: Option<Vec<String>>,
     /// Object describing how the scanned event will be replaced.
     #[serde(rename = "text_replacement")]
-    pub text_replacement: Option<Box<crate::datadogV2::model::SensitiveDataScannerTextReplacement>>,
+    pub text_replacement: Option<crate::datadogV2::model::SensitiveDataScannerTextReplacement>,
 }
 
 impl SensitiveDataScannerRuleAttributes {
@@ -52,7 +52,56 @@ impl SensitiveDataScannerRuleAttributes {
             text_replacement: None,
         }
     }
+
+    pub fn description(&mut self, value: String) -> &mut Self {
+        self.description = Some(value);
+        self
+    }
+
+    pub fn excluded_namespaces(&mut self, value: Vec<String>) -> &mut Self {
+        self.excluded_namespaces = Some(value);
+        self
+    }
+
+    pub fn is_enabled(&mut self, value: bool) -> &mut Self {
+        self.is_enabled = Some(value);
+        self
+    }
+
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn namespaces(&mut self, value: Vec<String>) -> &mut Self {
+        self.namespaces = Some(value);
+        self
+    }
+
+    pub fn pattern(&mut self, value: String) -> &mut Self {
+        self.pattern = Some(value);
+        self
+    }
+
+    pub fn priority(&mut self, value: i64) -> &mut Self {
+        self.priority = Some(value);
+        self
+    }
+
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+
+    pub fn text_replacement(
+        &mut self,
+        value: crate::datadogV2::model::SensitiveDataScannerTextReplacement,
+    ) -> &mut Self {
+        self.text_replacement = Some(value);
+        self
+    }
 }
+
 impl Default for SensitiveDataScannerRuleAttributes {
     fn default() -> Self {
         Self::new()

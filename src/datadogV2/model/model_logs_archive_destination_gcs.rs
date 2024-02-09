@@ -13,7 +13,7 @@ pub struct LogsArchiveDestinationGCS {
     pub bucket: String,
     /// The GCS archive's integration destination.
     #[serde(rename = "integration")]
-    pub integration: Box<crate::datadogV2::model::LogsArchiveIntegrationGCS>,
+    pub integration: crate::datadogV2::model::LogsArchiveIntegrationGCS,
     /// The archive path.
     #[serde(rename = "path")]
     pub path: Option<String>,
@@ -25,7 +25,7 @@ pub struct LogsArchiveDestinationGCS {
 impl LogsArchiveDestinationGCS {
     pub fn new(
         bucket: String,
-        integration: Box<crate::datadogV2::model::LogsArchiveIntegrationGCS>,
+        integration: crate::datadogV2::model::LogsArchiveIntegrationGCS,
         type_: crate::datadogV2::model::LogsArchiveDestinationGCSType,
     ) -> LogsArchiveDestinationGCS {
         LogsArchiveDestinationGCS {
@@ -34,5 +34,10 @@ impl LogsArchiveDestinationGCS {
             path: None,
             type_,
         }
+    }
+
+    pub fn path(&mut self, value: String) -> &mut Self {
+        self.path = Some(value);
+        self
     }
 }

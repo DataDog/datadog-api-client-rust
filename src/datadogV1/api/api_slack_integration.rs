@@ -5,51 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateSlackIntegrationChannelParams is a struct for passing parameters to the method [`SlackIntegrationAPI::create_slack_integration_channel`]
-#[derive(Clone, Debug)]
-pub struct CreateSlackIntegrationChannelParams {
-    /// Your Slack account name.
-    pub account_name: String,
-    /// Payload describing Slack channel to be created
-    pub body: crate::datadogV1::model::SlackIntegrationChannel,
-}
-
-/// GetSlackIntegrationChannelParams is a struct for passing parameters to the method [`SlackIntegrationAPI::get_slack_integration_channel`]
-#[derive(Clone, Debug)]
-pub struct GetSlackIntegrationChannelParams {
-    /// Your Slack account name.
-    pub account_name: String,
-    /// The name of the Slack channel being operated on.
-    pub channel_name: String,
-}
-
-/// GetSlackIntegrationChannelsParams is a struct for passing parameters to the method [`SlackIntegrationAPI::get_slack_integration_channels`]
-#[derive(Clone, Debug)]
-pub struct GetSlackIntegrationChannelsParams {
-    /// Your Slack account name.
-    pub account_name: String,
-}
-
-/// RemoveSlackIntegrationChannelParams is a struct for passing parameters to the method [`SlackIntegrationAPI::remove_slack_integration_channel`]
-#[derive(Clone, Debug)]
-pub struct RemoveSlackIntegrationChannelParams {
-    /// Your Slack account name.
-    pub account_name: String,
-    /// The name of the Slack channel being operated on.
-    pub channel_name: String,
-}
-
-/// UpdateSlackIntegrationChannelParams is a struct for passing parameters to the method [`SlackIntegrationAPI::update_slack_integration_channel`]
-#[derive(Clone, Debug)]
-pub struct UpdateSlackIntegrationChannelParams {
-    /// Your Slack account name.
-    pub account_name: String,
-    /// The name of the Slack channel being operated on.
-    pub channel_name: String,
-    /// Payload describing fields and values to be updated.
-    pub body: crate::datadogV1::model::SlackIntegrationChannel,
-}
-
 /// CreateSlackIntegrationChannelError is a struct for typed errors of method [`SlackIntegrationAPI::create_slack_integration_channel`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -129,13 +84,14 @@ impl SlackIntegrationAPI {
     /// Add a channel to your Datadog-Slack integration.
     pub async fn create_slack_integration_channel(
         &self,
-        params: CreateSlackIntegrationChannelParams,
+        account_name: String,
+        body: crate::datadogV1::model::SlackIntegrationChannel,
     ) -> Result<
         Option<crate::datadogV1::model::SlackIntegrationChannel>,
         Error<CreateSlackIntegrationChannelError>,
     > {
         match self
-            .create_slack_integration_channel_with_http_info(params)
+            .create_slack_integration_channel_with_http_info(account_name, body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -146,16 +102,13 @@ impl SlackIntegrationAPI {
     /// Add a channel to your Datadog-Slack integration.
     pub async fn create_slack_integration_channel_with_http_info(
         &self,
-        params: CreateSlackIntegrationChannelParams,
+        account_name: String,
+        body: crate::datadogV1::model::SlackIntegrationChannel,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SlackIntegrationChannel>,
         Error<CreateSlackIntegrationChannelError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_name = params.account_name;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -217,13 +170,14 @@ impl SlackIntegrationAPI {
     /// Get a channel configured for your Datadog-Slack integration.
     pub async fn get_slack_integration_channel(
         &self,
-        params: GetSlackIntegrationChannelParams,
+        account_name: String,
+        channel_name: String,
     ) -> Result<
         Option<crate::datadogV1::model::SlackIntegrationChannel>,
         Error<GetSlackIntegrationChannelError>,
     > {
         match self
-            .get_slack_integration_channel_with_http_info(params)
+            .get_slack_integration_channel_with_http_info(account_name, channel_name)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -234,16 +188,13 @@ impl SlackIntegrationAPI {
     /// Get a channel configured for your Datadog-Slack integration.
     pub async fn get_slack_integration_channel_with_http_info(
         &self,
-        params: GetSlackIntegrationChannelParams,
+        account_name: String,
+        channel_name: String,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SlackIntegrationChannel>,
         Error<GetSlackIntegrationChannelError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_name = params.account_name;
-        let channel_name = params.channel_name;
 
         let local_client = &local_configuration.client;
 
@@ -300,13 +251,13 @@ impl SlackIntegrationAPI {
     /// Get a list of all channels configured for your Datadog-Slack integration.
     pub async fn get_slack_integration_channels(
         &self,
-        params: GetSlackIntegrationChannelsParams,
+        account_name: String,
     ) -> Result<
         Option<Vec<crate::datadogV1::model::SlackIntegrationChannel>>,
         Error<GetSlackIntegrationChannelsError>,
     > {
         match self
-            .get_slack_integration_channels_with_http_info(params)
+            .get_slack_integration_channels_with_http_info(account_name)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -317,15 +268,12 @@ impl SlackIntegrationAPI {
     /// Get a list of all channels configured for your Datadog-Slack integration.
     pub async fn get_slack_integration_channels_with_http_info(
         &self,
-        params: GetSlackIntegrationChannelsParams,
+        account_name: String,
     ) -> Result<
         ResponseContent<Vec<crate::datadogV1::model::SlackIntegrationChannel>>,
         Error<GetSlackIntegrationChannelsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_name = params.account_name;
 
         let local_client = &local_configuration.client;
 
@@ -380,10 +328,11 @@ impl SlackIntegrationAPI {
     /// Remove a channel from your Datadog-Slack integration.
     pub async fn remove_slack_integration_channel(
         &self,
-        params: RemoveSlackIntegrationChannelParams,
+        account_name: String,
+        channel_name: String,
     ) -> Result<Option<()>, Error<RemoveSlackIntegrationChannelError>> {
         match self
-            .remove_slack_integration_channel_with_http_info(params)
+            .remove_slack_integration_channel_with_http_info(account_name, channel_name)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -394,13 +343,10 @@ impl SlackIntegrationAPI {
     /// Remove a channel from your Datadog-Slack integration.
     pub async fn remove_slack_integration_channel_with_http_info(
         &self,
-        params: RemoveSlackIntegrationChannelParams,
+        account_name: String,
+        channel_name: String,
     ) -> Result<ResponseContent<()>, Error<RemoveSlackIntegrationChannelError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_name = params.account_name;
-        let channel_name = params.channel_name;
 
         let local_client = &local_configuration.client;
 
@@ -455,13 +401,15 @@ impl SlackIntegrationAPI {
     /// Update a channel used in your Datadog-Slack integration.
     pub async fn update_slack_integration_channel(
         &self,
-        params: UpdateSlackIntegrationChannelParams,
+        account_name: String,
+        channel_name: String,
+        body: crate::datadogV1::model::SlackIntegrationChannel,
     ) -> Result<
         Option<crate::datadogV1::model::SlackIntegrationChannel>,
         Error<UpdateSlackIntegrationChannelError>,
     > {
         match self
-            .update_slack_integration_channel_with_http_info(params)
+            .update_slack_integration_channel_with_http_info(account_name, channel_name, body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -472,17 +420,14 @@ impl SlackIntegrationAPI {
     /// Update a channel used in your Datadog-Slack integration.
     pub async fn update_slack_integration_channel_with_http_info(
         &self,
-        params: UpdateSlackIntegrationChannelParams,
+        account_name: String,
+        channel_name: String,
+        body: crate::datadogV1::model::SlackIntegrationChannel,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SlackIntegrationChannel>,
         Error<UpdateSlackIntegrationChannelError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_name = params.account_name;
-        let channel_name = params.channel_name;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

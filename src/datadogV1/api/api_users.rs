@@ -5,36 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateUserParams is a struct for passing parameters to the method [`UsersAPI::create_user`]
-#[derive(Clone, Debug)]
-pub struct CreateUserParams {
-    /// User object that needs to be created.
-    pub body: crate::datadogV1::model::User,
-}
-
-/// DisableUserParams is a struct for passing parameters to the method [`UsersAPI::disable_user`]
-#[derive(Clone, Debug)]
-pub struct DisableUserParams {
-    /// The handle of the user.
-    pub user_handle: String,
-}
-
-/// GetUserParams is a struct for passing parameters to the method [`UsersAPI::get_user`]
-#[derive(Clone, Debug)]
-pub struct GetUserParams {
-    /// The ID of the user.
-    pub user_handle: String,
-}
-
-/// UpdateUserParams is a struct for passing parameters to the method [`UsersAPI::update_user`]
-#[derive(Clone, Debug)]
-pub struct UpdateUserParams {
-    /// The ID of the user.
-    pub user_handle: String,
-    /// Description of the update.
-    pub body: crate::datadogV1::model::User,
-}
-
 /// CreateUserError is a struct for typed errors of method [`UsersAPI::create_user`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -114,9 +84,9 @@ impl UsersAPI {
     /// if application keys belong to administrators.
     pub async fn create_user(
         &self,
-        params: CreateUserParams,
+        body: crate::datadogV1::model::User,
     ) -> Result<Option<crate::datadogV1::model::UserResponse>, Error<CreateUserError>> {
-        match self.create_user_with_http_info(params).await {
+        match self.create_user_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -128,13 +98,10 @@ impl UsersAPI {
     /// if application keys belong to administrators.
     pub async fn create_user_with_http_info(
         &self,
-        params: CreateUserParams,
+        body: crate::datadogV1::model::User,
     ) -> Result<ResponseContent<crate::datadogV1::model::UserResponse>, Error<CreateUserError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -194,9 +161,9 @@ impl UsersAPI {
     /// administrators.
     pub async fn disable_user(
         &self,
-        params: DisableUserParams,
+        user_handle: String,
     ) -> Result<Option<crate::datadogV1::model::UserDisableResponse>, Error<DisableUserError>> {
-        match self.disable_user_with_http_info(params).await {
+        match self.disable_user_with_http_info(user_handle).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -208,15 +175,12 @@ impl UsersAPI {
     /// administrators.
     pub async fn disable_user_with_http_info(
         &self,
-        params: DisableUserParams,
+        user_handle: String,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UserDisableResponse>,
         Error<DisableUserError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let user_handle = params.user_handle;
 
         let local_client = &local_configuration.client;
 
@@ -270,9 +234,9 @@ impl UsersAPI {
     /// Get a user's details.
     pub async fn get_user(
         &self,
-        params: GetUserParams,
+        user_handle: String,
     ) -> Result<Option<crate::datadogV1::model::UserResponse>, Error<GetUserError>> {
-        match self.get_user_with_http_info(params).await {
+        match self.get_user_with_http_info(user_handle).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -281,12 +245,9 @@ impl UsersAPI {
     /// Get a user's details.
     pub async fn get_user_with_http_info(
         &self,
-        params: GetUserParams,
+        user_handle: String,
     ) -> Result<ResponseContent<crate::datadogV1::model::UserResponse>, Error<GetUserError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let user_handle = params.user_handle;
 
         let local_client = &local_configuration.client;
 
@@ -354,8 +315,6 @@ impl UsersAPI {
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v1/user", local_configuration.base_path);
@@ -406,9 +365,10 @@ impl UsersAPI {
     /// **Note**: It can only be used with application keys belonging to administrators.
     pub async fn update_user(
         &self,
-        params: UpdateUserParams,
+        user_handle: String,
+        body: crate::datadogV1::model::User,
     ) -> Result<Option<crate::datadogV1::model::UserResponse>, Error<UpdateUserError>> {
-        match self.update_user_with_http_info(params).await {
+        match self.update_user_with_http_info(user_handle, body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -419,14 +379,11 @@ impl UsersAPI {
     /// **Note**: It can only be used with application keys belonging to administrators.
     pub async fn update_user_with_http_info(
         &self,
-        params: UpdateUserParams,
+        user_handle: String,
+        body: crate::datadogV1::model::User,
     ) -> Result<ResponseContent<crate::datadogV1::model::UserResponse>, Error<UpdateUserError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let user_handle = params.user_handle;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

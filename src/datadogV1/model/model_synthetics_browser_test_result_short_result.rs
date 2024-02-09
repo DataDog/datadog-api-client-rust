@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SyntheticsBrowserTestResultShortResult {
     /// Object describing the device used to perform the Synthetic test.
     #[serde(rename = "device")]
-    pub device: Option<Box<crate::datadogV1::model::SyntheticsDevice>>,
+    pub device: Option<crate::datadogV1::model::SyntheticsDevice>,
     /// Length in milliseconds of the browser test run.
     #[serde(rename = "duration")]
     pub duration: Option<f64>,
@@ -35,7 +35,33 @@ impl SyntheticsBrowserTestResultShortResult {
             step_count_total: None,
         }
     }
+
+    pub fn device(&mut self, value: crate::datadogV1::model::SyntheticsDevice) -> &mut Self {
+        self.device = Some(value);
+        self
+    }
+
+    pub fn duration(&mut self, value: f64) -> &mut Self {
+        self.duration = Some(value);
+        self
+    }
+
+    pub fn error_count(&mut self, value: i64) -> &mut Self {
+        self.error_count = Some(value);
+        self
+    }
+
+    pub fn step_count_completed(&mut self, value: i64) -> &mut Self {
+        self.step_count_completed = Some(value);
+        self
+    }
+
+    pub fn step_count_total(&mut self, value: i64) -> &mut Self {
+        self.step_count_total = Some(value);
+        self
+    }
 }
+
 impl Default for SyntheticsBrowserTestResultShortResult {
     fn default() -> Self {
         Self::new()

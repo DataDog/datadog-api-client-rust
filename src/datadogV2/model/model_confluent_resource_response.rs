@@ -10,14 +10,23 @@ use serde_with::skip_serializing_none;
 pub struct ConfluentResourceResponse {
     /// Confluent Cloud resource data.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::ConfluentResourceResponseData>>,
+    pub data: Option<crate::datadogV2::model::ConfluentResourceResponseData>,
 }
 
 impl ConfluentResourceResponse {
     pub fn new() -> ConfluentResourceResponse {
         ConfluentResourceResponse { data: None }
     }
+
+    pub fn data(
+        &mut self,
+        value: crate::datadogV2::model::ConfluentResourceResponseData,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for ConfluentResourceResponse {
     fn default() -> Self {
         Self::new()

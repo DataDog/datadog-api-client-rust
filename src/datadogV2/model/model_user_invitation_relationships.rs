@@ -10,13 +10,11 @@ use serde_with::skip_serializing_none;
 pub struct UserInvitationRelationships {
     /// Relationship to user.
     #[serde(rename = "user")]
-    pub user: Box<crate::datadogV2::model::RelationshipToUser>,
+    pub user: crate::datadogV2::model::RelationshipToUser,
 }
 
 impl UserInvitationRelationships {
-    pub fn new(
-        user: Box<crate::datadogV2::model::RelationshipToUser>,
-    ) -> UserInvitationRelationships {
+    pub fn new(user: crate::datadogV2::model::RelationshipToUser) -> UserInvitationRelationships {
         UserInvitationRelationships { user }
     }
 }

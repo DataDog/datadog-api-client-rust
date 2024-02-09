@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct ApplicationKeyCreateData {
     /// Attributes used to create an application Key.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::ApplicationKeyCreateAttributes>,
+    pub attributes: crate::datadogV2::model::ApplicationKeyCreateAttributes,
     /// Application Keys resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ApplicationKeysType,
@@ -18,7 +18,7 @@ pub struct ApplicationKeyCreateData {
 
 impl ApplicationKeyCreateData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::ApplicationKeyCreateAttributes>,
+        attributes: crate::datadogV2::model::ApplicationKeyCreateAttributes,
         type_: crate::datadogV2::model::ApplicationKeysType,
     ) -> ApplicationKeyCreateData {
         ApplicationKeyCreateData { attributes, type_ }

@@ -10,14 +10,23 @@ use serde_with::skip_serializing_none;
 pub struct LogsArchiveCreateRequest {
     /// The definition of an archive.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::LogsArchiveCreateRequestDefinition>>,
+    pub data: Option<crate::datadogV2::model::LogsArchiveCreateRequestDefinition>,
 }
 
 impl LogsArchiveCreateRequest {
     pub fn new() -> LogsArchiveCreateRequest {
         LogsArchiveCreateRequest { data: None }
     }
+
+    pub fn data(
+        &mut self,
+        value: crate::datadogV2::model::LogsArchiveCreateRequestDefinition,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for LogsArchiveCreateRequest {
     fn default() -> Self {
         Self::new()

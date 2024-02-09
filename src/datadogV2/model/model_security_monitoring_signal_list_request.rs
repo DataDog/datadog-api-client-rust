@@ -10,10 +10,10 @@ use serde_with::skip_serializing_none;
 pub struct SecurityMonitoringSignalListRequest {
     /// Search filters for listing security signals.
     #[serde(rename = "filter")]
-    pub filter: Option<Box<crate::datadogV2::model::SecurityMonitoringSignalListRequestFilter>>,
+    pub filter: Option<crate::datadogV2::model::SecurityMonitoringSignalListRequestFilter>,
     /// The paging attributes for listing security signals.
     #[serde(rename = "page")]
-    pub page: Option<Box<crate::datadogV2::model::SecurityMonitoringSignalListRequestPage>>,
+    pub page: Option<crate::datadogV2::model::SecurityMonitoringSignalListRequestPage>,
     /// The sort parameters used for querying security signals.
     #[serde(rename = "sort")]
     pub sort: Option<crate::datadogV2::model::SecurityMonitoringSignalsSort>,
@@ -27,7 +27,32 @@ impl SecurityMonitoringSignalListRequest {
             sort: None,
         }
     }
+
+    pub fn filter(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringSignalListRequestFilter,
+    ) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
+
+    pub fn page(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringSignalListRequestPage,
+    ) -> &mut Self {
+        self.page = Some(value);
+        self
+    }
+
+    pub fn sort(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringSignalsSort,
+    ) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
 }
+
 impl Default for SecurityMonitoringSignalListRequest {
     fn default() -> Self {
         Self::new()

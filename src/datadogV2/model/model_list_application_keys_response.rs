@@ -16,7 +16,7 @@ pub struct ListApplicationKeysResponse {
     pub included: Option<Vec<crate::datadogV2::model::ApplicationKeyResponseIncludedItem>>,
     /// Additional information related to the application key response.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV2::model::ApplicationKeyResponseMeta>>,
+    pub meta: Option<crate::datadogV2::model::ApplicationKeyResponseMeta>,
 }
 
 impl ListApplicationKeysResponse {
@@ -27,7 +27,32 @@ impl ListApplicationKeysResponse {
             meta: None,
         }
     }
+
+    pub fn data(
+        &mut self,
+        value: Vec<crate::datadogV2::model::PartialApplicationKey>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn included(
+        &mut self,
+        value: Vec<crate::datadogV2::model::ApplicationKeyResponseIncludedItem>,
+    ) -> &mut Self {
+        self.included = Some(value);
+        self
+    }
+
+    pub fn meta(
+        &mut self,
+        value: crate::datadogV2::model::ApplicationKeyResponseMeta,
+    ) -> &mut Self {
+        self.meta = Some(value);
+        self
+    }
 }
+
 impl Default for ListApplicationKeysResponse {
     fn default() -> Self {
         Self::new()

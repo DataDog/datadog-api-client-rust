@@ -31,7 +31,40 @@ impl MonitorSearchResponseCounts {
             type_: None,
         }
     }
+
+    pub fn muted(
+        &mut self,
+        value: Vec<crate::datadogV1::model::MonitorSearchCountItem>,
+    ) -> &mut Self {
+        self.muted = Some(value);
+        self
+    }
+
+    pub fn status(
+        &mut self,
+        value: Vec<crate::datadogV1::model::MonitorSearchCountItem>,
+    ) -> &mut Self {
+        self.status = Some(value);
+        self
+    }
+
+    pub fn tag(
+        &mut self,
+        value: Vec<crate::datadogV1::model::MonitorSearchCountItem>,
+    ) -> &mut Self {
+        self.tag = Some(value);
+        self
+    }
+
+    pub fn type_(
+        &mut self,
+        value: Vec<crate::datadogV1::model::MonitorSearchCountItem>,
+    ) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
+
 impl Default for MonitorSearchResponseCounts {
     fn default() -> Self {
         Self::new()

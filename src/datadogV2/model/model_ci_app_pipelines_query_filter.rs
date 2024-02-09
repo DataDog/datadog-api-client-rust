@@ -27,7 +27,23 @@ impl CIAppPipelinesQueryFilter {
             to: None,
         }
     }
+
+    pub fn from(&mut self, value: String) -> &mut Self {
+        self.from = Some(value);
+        self
+    }
+
+    pub fn query(&mut self, value: String) -> &mut Self {
+        self.query = Some(value);
+        self
+    }
+
+    pub fn to(&mut self, value: String) -> &mut Self {
+        self.to = Some(value);
+        self
+    }
 }
+
 impl Default for CIAppPipelinesQueryFilter {
     fn default() -> Self {
         Self::new()

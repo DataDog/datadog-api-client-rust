@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct MonitorFormulaAndFunctionEventQueryDefinition {
     /// Compute options.
     #[serde(rename = "compute")]
-    pub compute: Box<crate::datadogV1::model::MonitorFormulaAndFunctionEventQueryDefinitionCompute>,
+    pub compute: crate::datadogV1::model::MonitorFormulaAndFunctionEventQueryDefinitionCompute,
     /// Data source for event platform-based queries.
     #[serde(rename = "data_source")]
     pub data_source: crate::datadogV1::model::MonitorFormulaAndFunctionEventsDataSource,
@@ -26,12 +26,12 @@ pub struct MonitorFormulaAndFunctionEventQueryDefinition {
     /// Search options.
     #[serde(rename = "search")]
     pub search:
-        Option<Box<crate::datadogV1::model::MonitorFormulaAndFunctionEventQueryDefinitionSearch>>,
+        Option<crate::datadogV1::model::MonitorFormulaAndFunctionEventQueryDefinitionSearch>,
 }
 
 impl MonitorFormulaAndFunctionEventQueryDefinition {
     pub fn new(
-        compute: Box<crate::datadogV1::model::MonitorFormulaAndFunctionEventQueryDefinitionCompute>,
+        compute: crate::datadogV1::model::MonitorFormulaAndFunctionEventQueryDefinitionCompute,
         data_source: crate::datadogV1::model::MonitorFormulaAndFunctionEventsDataSource,
         name: String,
     ) -> MonitorFormulaAndFunctionEventQueryDefinition {
@@ -43,5 +43,26 @@ impl MonitorFormulaAndFunctionEventQueryDefinition {
             name,
             search: None,
         }
+    }
+
+    pub fn group_by(
+        &mut self,
+        value: Vec<crate::datadogV1::model::MonitorFormulaAndFunctionEventQueryGroupBy>,
+    ) -> &mut Self {
+        self.group_by = Some(value);
+        self
+    }
+
+    pub fn indexes(&mut self, value: Vec<String>) -> &mut Self {
+        self.indexes = Some(value);
+        self
+    }
+
+    pub fn search(
+        &mut self,
+        value: crate::datadogV1::model::MonitorFormulaAndFunctionEventQueryDefinitionSearch,
+    ) -> &mut Self {
+        self.search = Some(value);
+        self
     }
 }

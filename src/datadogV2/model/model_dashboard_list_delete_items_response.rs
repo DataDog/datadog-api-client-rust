@@ -20,7 +20,16 @@ impl DashboardListDeleteItemsResponse {
             deleted_dashboards_from_list: None,
         }
     }
+
+    pub fn deleted_dashboards_from_list(
+        &mut self,
+        value: Vec<crate::datadogV2::model::DashboardListItemResponse>,
+    ) -> &mut Self {
+        self.deleted_dashboards_from_list = Some(value);
+        self
+    }
 }
+
 impl Default for DashboardListDeleteItemsResponse {
     fn default() -> Self {
         Self::new()

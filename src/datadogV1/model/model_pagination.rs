@@ -23,7 +23,18 @@ impl Pagination {
             total_filtered_count: None,
         }
     }
+
+    pub fn total_count(&mut self, value: i64) -> &mut Self {
+        self.total_count = Some(value);
+        self
+    }
+
+    pub fn total_filtered_count(&mut self, value: i64) -> &mut Self {
+        self.total_filtered_count = Some(value);
+        self
+    }
 }
+
 impl Default for Pagination {
     fn default() -> Self {
         Self::new()

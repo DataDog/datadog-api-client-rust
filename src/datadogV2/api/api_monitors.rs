@@ -5,36 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateMonitorConfigPolicyParams is a struct for passing parameters to the method [`MonitorsAPI::create_monitor_config_policy`]
-#[derive(Clone, Debug)]
-pub struct CreateMonitorConfigPolicyParams {
-    /// Create a monitor configuration policy request body.
-    pub body: crate::datadogV2::model::MonitorConfigPolicyCreateRequest,
-}
-
-/// DeleteMonitorConfigPolicyParams is a struct for passing parameters to the method [`MonitorsAPI::delete_monitor_config_policy`]
-#[derive(Clone, Debug)]
-pub struct DeleteMonitorConfigPolicyParams {
-    /// ID of the monitor configuration policy.
-    pub policy_id: String,
-}
-
-/// GetMonitorConfigPolicyParams is a struct for passing parameters to the method [`MonitorsAPI::get_monitor_config_policy`]
-#[derive(Clone, Debug)]
-pub struct GetMonitorConfigPolicyParams {
-    /// ID of the monitor configuration policy.
-    pub policy_id: String,
-}
-
-/// UpdateMonitorConfigPolicyParams is a struct for passing parameters to the method [`MonitorsAPI::update_monitor_config_policy`]
-#[derive(Clone, Debug)]
-pub struct UpdateMonitorConfigPolicyParams {
-    /// ID of the monitor configuration policy.
-    pub policy_id: String,
-    /// Description of the update.
-    pub body: crate::datadogV2::model::MonitorConfigPolicyEditRequest,
-}
-
 /// CreateMonitorConfigPolicyError is a struct for typed errors of method [`MonitorsAPI::create_monitor_config_policy`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -110,15 +80,12 @@ impl MonitorsAPI {
     /// Create a monitor configuration policy.
     pub async fn create_monitor_config_policy(
         &self,
-        params: CreateMonitorConfigPolicyParams,
+        body: crate::datadogV2::model::MonitorConfigPolicyCreateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::MonitorConfigPolicyResponse>,
         Error<CreateMonitorConfigPolicyError>,
     > {
-        match self
-            .create_monitor_config_policy_with_http_info(params)
-            .await
-        {
+        match self.create_monitor_config_policy_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -127,15 +94,12 @@ impl MonitorsAPI {
     /// Create a monitor configuration policy.
     pub async fn create_monitor_config_policy_with_http_info(
         &self,
-        params: CreateMonitorConfigPolicyParams,
+        body: crate::datadogV2::model::MonitorConfigPolicyCreateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::MonitorConfigPolicyResponse>,
         Error<CreateMonitorConfigPolicyError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -193,10 +157,10 @@ impl MonitorsAPI {
     /// Delete a monitor configuration policy.
     pub async fn delete_monitor_config_policy(
         &self,
-        params: DeleteMonitorConfigPolicyParams,
+        policy_id: String,
     ) -> Result<Option<()>, Error<DeleteMonitorConfigPolicyError>> {
         match self
-            .delete_monitor_config_policy_with_http_info(params)
+            .delete_monitor_config_policy_with_http_info(policy_id)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -207,12 +171,9 @@ impl MonitorsAPI {
     /// Delete a monitor configuration policy.
     pub async fn delete_monitor_config_policy_with_http_info(
         &self,
-        params: DeleteMonitorConfigPolicyParams,
+        policy_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteMonitorConfigPolicyError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let policy_id = params.policy_id;
 
         let local_client = &local_configuration.client;
 
@@ -265,12 +226,15 @@ impl MonitorsAPI {
     /// Get a monitor configuration policy by `policy_id`.
     pub async fn get_monitor_config_policy(
         &self,
-        params: GetMonitorConfigPolicyParams,
+        policy_id: String,
     ) -> Result<
         Option<crate::datadogV2::model::MonitorConfigPolicyResponse>,
         Error<GetMonitorConfigPolicyError>,
     > {
-        match self.get_monitor_config_policy_with_http_info(params).await {
+        match self
+            .get_monitor_config_policy_with_http_info(policy_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -279,15 +243,12 @@ impl MonitorsAPI {
     /// Get a monitor configuration policy by `policy_id`.
     pub async fn get_monitor_config_policy_with_http_info(
         &self,
-        params: GetMonitorConfigPolicyParams,
+        policy_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::MonitorConfigPolicyResponse>,
         Error<GetMonitorConfigPolicyError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let policy_id = params.policy_id;
 
         let local_client = &local_configuration.client;
 
@@ -361,8 +322,6 @@ impl MonitorsAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v2/monitor/policy", local_configuration.base_path);
@@ -412,13 +371,14 @@ impl MonitorsAPI {
     /// Edit a monitor configuration policy.
     pub async fn update_monitor_config_policy(
         &self,
-        params: UpdateMonitorConfigPolicyParams,
+        policy_id: String,
+        body: crate::datadogV2::model::MonitorConfigPolicyEditRequest,
     ) -> Result<
         Option<crate::datadogV2::model::MonitorConfigPolicyResponse>,
         Error<UpdateMonitorConfigPolicyError>,
     > {
         match self
-            .update_monitor_config_policy_with_http_info(params)
+            .update_monitor_config_policy_with_http_info(policy_id, body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -429,16 +389,13 @@ impl MonitorsAPI {
     /// Edit a monitor configuration policy.
     pub async fn update_monitor_config_policy_with_http_info(
         &self,
-        params: UpdateMonitorConfigPolicyParams,
+        policy_id: String,
+        body: crate::datadogV2::model::MonitorConfigPolicyEditRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::MonitorConfigPolicyResponse>,
         Error<UpdateMonitorConfigPolicyError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let policy_id = params.policy_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

@@ -16,7 +16,7 @@ pub struct SyntheticsAssertionJSONPathTarget {
     pub property: Option<String>,
     /// Composed target for `validatesJSONPath` operator.
     #[serde(rename = "target")]
-    pub target: Option<Box<crate::datadogV1::model::SyntheticsAssertionJSONPathTargetTarget>>,
+    pub target: Option<crate::datadogV1::model::SyntheticsAssertionJSONPathTargetTarget>,
     /// Type of the assertion.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::SyntheticsAssertionType,
@@ -33,5 +33,18 @@ impl SyntheticsAssertionJSONPathTarget {
             target: None,
             type_,
         }
+    }
+
+    pub fn property(&mut self, value: String) -> &mut Self {
+        self.property = Some(value);
+        self
+    }
+
+    pub fn target(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsAssertionJSONPathTargetTarget,
+    ) -> &mut Self {
+        self.target = Some(value);
+        self
     }
 }

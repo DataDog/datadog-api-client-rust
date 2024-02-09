@@ -5,77 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateFastlyAccountParams is a struct for passing parameters to the method [`FastlyIntegrationAPI::create_fastly_account`]
-#[derive(Clone, Debug)]
-pub struct CreateFastlyAccountParams {
-    pub body: crate::datadogV2::model::FastlyAccountCreateRequest,
-}
-
-/// CreateFastlyServiceParams is a struct for passing parameters to the method [`FastlyIntegrationAPI::create_fastly_service`]
-#[derive(Clone, Debug)]
-pub struct CreateFastlyServiceParams {
-    /// Fastly Account id.
-    pub account_id: String,
-    pub body: crate::datadogV2::model::FastlyServiceRequest,
-}
-
-/// DeleteFastlyAccountParams is a struct for passing parameters to the method [`FastlyIntegrationAPI::delete_fastly_account`]
-#[derive(Clone, Debug)]
-pub struct DeleteFastlyAccountParams {
-    /// Fastly Account id.
-    pub account_id: String,
-}
-
-/// DeleteFastlyServiceParams is a struct for passing parameters to the method [`FastlyIntegrationAPI::delete_fastly_service`]
-#[derive(Clone, Debug)]
-pub struct DeleteFastlyServiceParams {
-    /// Fastly Account id.
-    pub account_id: String,
-    /// Fastly Service ID.
-    pub service_id: String,
-}
-
-/// GetFastlyAccountParams is a struct for passing parameters to the method [`FastlyIntegrationAPI::get_fastly_account`]
-#[derive(Clone, Debug)]
-pub struct GetFastlyAccountParams {
-    /// Fastly Account id.
-    pub account_id: String,
-}
-
-/// GetFastlyServiceParams is a struct for passing parameters to the method [`FastlyIntegrationAPI::get_fastly_service`]
-#[derive(Clone, Debug)]
-pub struct GetFastlyServiceParams {
-    /// Fastly Account id.
-    pub account_id: String,
-    /// Fastly Service ID.
-    pub service_id: String,
-}
-
-/// ListFastlyServicesParams is a struct for passing parameters to the method [`FastlyIntegrationAPI::list_fastly_services`]
-#[derive(Clone, Debug)]
-pub struct ListFastlyServicesParams {
-    /// Fastly Account id.
-    pub account_id: String,
-}
-
-/// UpdateFastlyAccountParams is a struct for passing parameters to the method [`FastlyIntegrationAPI::update_fastly_account`]
-#[derive(Clone, Debug)]
-pub struct UpdateFastlyAccountParams {
-    /// Fastly Account id.
-    pub account_id: String,
-    pub body: crate::datadogV2::model::FastlyAccountUpdateRequest,
-}
-
-/// UpdateFastlyServiceParams is a struct for passing parameters to the method [`FastlyIntegrationAPI::update_fastly_service`]
-#[derive(Clone, Debug)]
-pub struct UpdateFastlyServiceParams {
-    /// Fastly Account id.
-    pub account_id: String,
-    /// Fastly Service ID.
-    pub service_id: String,
-    pub body: crate::datadogV2::model::FastlyServiceRequest,
-}
-
 /// CreateFastlyAccountError is a struct for typed errors of method [`FastlyIntegrationAPI::create_fastly_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -210,12 +139,12 @@ impl FastlyIntegrationAPI {
     /// Create a Fastly account.
     pub async fn create_fastly_account(
         &self,
-        params: CreateFastlyAccountParams,
+        body: crate::datadogV2::model::FastlyAccountCreateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::FastlyAccountResponse>,
         Error<CreateFastlyAccountError>,
     > {
-        match self.create_fastly_account_with_http_info(params).await {
+        match self.create_fastly_account_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -224,15 +153,12 @@ impl FastlyIntegrationAPI {
     /// Create a Fastly account.
     pub async fn create_fastly_account_with_http_info(
         &self,
-        params: CreateFastlyAccountParams,
+        body: crate::datadogV2::model::FastlyAccountCreateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::FastlyAccountResponse>,
         Error<CreateFastlyAccountError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -293,12 +219,16 @@ impl FastlyIntegrationAPI {
     /// Create a Fastly service for an account.
     pub async fn create_fastly_service(
         &self,
-        params: CreateFastlyServiceParams,
+        account_id: String,
+        body: crate::datadogV2::model::FastlyServiceRequest,
     ) -> Result<
         Option<crate::datadogV2::model::FastlyServiceResponse>,
         Error<CreateFastlyServiceError>,
     > {
-        match self.create_fastly_service_with_http_info(params).await {
+        match self
+            .create_fastly_service_with_http_info(account_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -307,16 +237,13 @@ impl FastlyIntegrationAPI {
     /// Create a Fastly service for an account.
     pub async fn create_fastly_service_with_http_info(
         &self,
-        params: CreateFastlyServiceParams,
+        account_id: String,
+        body: crate::datadogV2::model::FastlyServiceRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::FastlyServiceResponse>,
         Error<CreateFastlyServiceError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_id = params.account_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -378,9 +305,9 @@ impl FastlyIntegrationAPI {
     /// Delete a Fastly account.
     pub async fn delete_fastly_account(
         &self,
-        params: DeleteFastlyAccountParams,
+        account_id: String,
     ) -> Result<Option<()>, Error<DeleteFastlyAccountError>> {
-        match self.delete_fastly_account_with_http_info(params).await {
+        match self.delete_fastly_account_with_http_info(account_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -389,12 +316,9 @@ impl FastlyIntegrationAPI {
     /// Delete a Fastly account.
     pub async fn delete_fastly_account_with_http_info(
         &self,
-        params: DeleteFastlyAccountParams,
+        account_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteFastlyAccountError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_id = params.account_id;
 
         let local_client = &local_configuration.client;
 
@@ -447,9 +371,13 @@ impl FastlyIntegrationAPI {
     /// Delete a Fastly service for an account.
     pub async fn delete_fastly_service(
         &self,
-        params: DeleteFastlyServiceParams,
+        account_id: String,
+        service_id: String,
     ) -> Result<Option<()>, Error<DeleteFastlyServiceError>> {
-        match self.delete_fastly_service_with_http_info(params).await {
+        match self
+            .delete_fastly_service_with_http_info(account_id, service_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -458,13 +386,10 @@ impl FastlyIntegrationAPI {
     /// Delete a Fastly service for an account.
     pub async fn delete_fastly_service_with_http_info(
         &self,
-        params: DeleteFastlyServiceParams,
+        account_id: String,
+        service_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteFastlyServiceError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_id = params.account_id;
-        let service_id = params.service_id;
 
         let local_client = &local_configuration.client;
 
@@ -518,10 +443,10 @@ impl FastlyIntegrationAPI {
     /// Get a Fastly account.
     pub async fn get_fastly_account(
         &self,
-        params: GetFastlyAccountParams,
+        account_id: String,
     ) -> Result<Option<crate::datadogV2::model::FastlyAccountResponse>, Error<GetFastlyAccountError>>
     {
-        match self.get_fastly_account_with_http_info(params).await {
+        match self.get_fastly_account_with_http_info(account_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -530,15 +455,12 @@ impl FastlyIntegrationAPI {
     /// Get a Fastly account.
     pub async fn get_fastly_account_with_http_info(
         &self,
-        params: GetFastlyAccountParams,
+        account_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::FastlyAccountResponse>,
         Error<GetFastlyAccountError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_id = params.account_id;
 
         let local_client = &local_configuration.client;
 
@@ -593,10 +515,14 @@ impl FastlyIntegrationAPI {
     /// Get a Fastly service for an account.
     pub async fn get_fastly_service(
         &self,
-        params: GetFastlyServiceParams,
+        account_id: String,
+        service_id: String,
     ) -> Result<Option<crate::datadogV2::model::FastlyServiceResponse>, Error<GetFastlyServiceError>>
     {
-        match self.get_fastly_service_with_http_info(params).await {
+        match self
+            .get_fastly_service_with_http_info(account_id, service_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -605,16 +531,13 @@ impl FastlyIntegrationAPI {
     /// Get a Fastly service for an account.
     pub async fn get_fastly_service_with_http_info(
         &self,
-        params: GetFastlyServiceParams,
+        account_id: String,
+        service_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::FastlyServiceResponse>,
         Error<GetFastlyServiceError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_id = params.account_id;
-        let service_id = params.service_id;
 
         let local_client = &local_configuration.client;
 
@@ -689,8 +612,6 @@ impl FastlyIntegrationAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -743,12 +664,12 @@ impl FastlyIntegrationAPI {
     /// List Fastly services for an account.
     pub async fn list_fastly_services(
         &self,
-        params: ListFastlyServicesParams,
+        account_id: String,
     ) -> Result<
         Option<crate::datadogV2::model::FastlyServicesResponse>,
         Error<ListFastlyServicesError>,
     > {
-        match self.list_fastly_services_with_http_info(params).await {
+        match self.list_fastly_services_with_http_info(account_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -757,15 +678,12 @@ impl FastlyIntegrationAPI {
     /// List Fastly services for an account.
     pub async fn list_fastly_services_with_http_info(
         &self,
-        params: ListFastlyServicesParams,
+        account_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::FastlyServicesResponse>,
         Error<ListFastlyServicesError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_id = params.account_id;
 
         let local_client = &local_configuration.client;
 
@@ -820,12 +738,16 @@ impl FastlyIntegrationAPI {
     /// Update a Fastly account.
     pub async fn update_fastly_account(
         &self,
-        params: UpdateFastlyAccountParams,
+        account_id: String,
+        body: crate::datadogV2::model::FastlyAccountUpdateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::FastlyAccountResponse>,
         Error<UpdateFastlyAccountError>,
     > {
-        match self.update_fastly_account_with_http_info(params).await {
+        match self
+            .update_fastly_account_with_http_info(account_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -834,16 +756,13 @@ impl FastlyIntegrationAPI {
     /// Update a Fastly account.
     pub async fn update_fastly_account_with_http_info(
         &self,
-        params: UpdateFastlyAccountParams,
+        account_id: String,
+        body: crate::datadogV2::model::FastlyAccountUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::FastlyAccountResponse>,
         Error<UpdateFastlyAccountError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_id = params.account_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -905,12 +824,17 @@ impl FastlyIntegrationAPI {
     /// Update a Fastly service for an account.
     pub async fn update_fastly_service(
         &self,
-        params: UpdateFastlyServiceParams,
+        account_id: String,
+        service_id: String,
+        body: crate::datadogV2::model::FastlyServiceRequest,
     ) -> Result<
         Option<crate::datadogV2::model::FastlyServiceResponse>,
         Error<UpdateFastlyServiceError>,
     > {
-        match self.update_fastly_service_with_http_info(params).await {
+        match self
+            .update_fastly_service_with_http_info(account_id, service_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -919,17 +843,14 @@ impl FastlyIntegrationAPI {
     /// Update a Fastly service for an account.
     pub async fn update_fastly_service_with_http_info(
         &self,
-        params: UpdateFastlyServiceParams,
+        account_id: String,
+        service_id: String,
+        body: crate::datadogV2::model::FastlyServiceRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::FastlyServiceResponse>,
         Error<UpdateFastlyServiceError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_id = params.account_id;
-        let service_id = params.service_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

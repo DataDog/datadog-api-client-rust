@@ -10,14 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct ProcessSummariesMeta {
     /// Paging attributes.
     #[serde(rename = "page")]
-    pub page: Option<Box<crate::datadogV2::model::ProcessSummariesMetaPage>>,
+    pub page: Option<crate::datadogV2::model::ProcessSummariesMetaPage>,
 }
 
 impl ProcessSummariesMeta {
     pub fn new() -> ProcessSummariesMeta {
         ProcessSummariesMeta { page: None }
     }
+
+    pub fn page(&mut self, value: crate::datadogV2::model::ProcessSummariesMetaPage) -> &mut Self {
+        self.page = Some(value);
+        self
+    }
 }
+
 impl Default for ProcessSummariesMeta {
     fn default() -> Self {
         Self::new()

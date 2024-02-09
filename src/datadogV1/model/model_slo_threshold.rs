@@ -44,4 +44,19 @@ impl SLOThreshold {
             warning_display: None,
         }
     }
+
+    pub fn target_display(&mut self, value: String) -> &mut Self {
+        self.target_display = Some(value);
+        self
+    }
+
+    pub fn warning(&mut self, value: f64) -> &mut Self {
+        self.warning = Some(value);
+        self
+    }
+
+    pub fn warning_display(&mut self, value: String) -> &mut Self {
+        self.warning_display = Some(value);
+        self
+    }
 }

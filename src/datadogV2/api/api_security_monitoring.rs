@@ -5,93 +5,24 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateSecurityFilterParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::create_security_filter`]
-#[derive(Clone, Debug)]
-pub struct CreateSecurityFilterParams {
-    /// The definition of the new security filter.
-    pub body: crate::datadogV2::model::SecurityFilterCreateRequest,
-}
-
-/// CreateSecurityMonitoringRuleParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::create_security_monitoring_rule`]
-#[derive(Clone, Debug)]
-pub struct CreateSecurityMonitoringRuleParams {
-    pub body: crate::datadogV2::model::SecurityMonitoringRuleCreatePayload,
-}
-
-/// DeleteSecurityFilterParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::delete_security_filter`]
-#[derive(Clone, Debug)]
-pub struct DeleteSecurityFilterParams {
-    /// The ID of the security filter.
-    pub security_filter_id: String,
-}
-
-/// DeleteSecurityMonitoringRuleParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::delete_security_monitoring_rule`]
-#[derive(Clone, Debug)]
-pub struct DeleteSecurityMonitoringRuleParams {
-    /// The ID of the rule.
-    pub rule_id: String,
-}
-
-/// EditSecurityMonitoringSignalAssigneeParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::edit_security_monitoring_signal_assignee`]
-#[derive(Clone, Debug)]
-pub struct EditSecurityMonitoringSignalAssigneeParams {
-    /// The ID of the signal.
-    pub signal_id: String,
-    /// Attributes describing the signal update.
-    pub body: crate::datadogV2::model::SecurityMonitoringSignalAssigneeUpdateRequest,
-}
-
-/// EditSecurityMonitoringSignalIncidentsParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::edit_security_monitoring_signal_incidents`]
-#[derive(Clone, Debug)]
-pub struct EditSecurityMonitoringSignalIncidentsParams {
-    /// The ID of the signal.
-    pub signal_id: String,
-    /// Attributes describing the signal update.
-    pub body: crate::datadogV2::model::SecurityMonitoringSignalIncidentsUpdateRequest,
-}
-
-/// EditSecurityMonitoringSignalStateParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::edit_security_monitoring_signal_state`]
-#[derive(Clone, Debug)]
-pub struct EditSecurityMonitoringSignalStateParams {
-    /// The ID of the signal.
-    pub signal_id: String,
-    /// Attributes describing the signal update.
-    pub body: crate::datadogV2::model::SecurityMonitoringSignalStateUpdateRequest,
-}
-
-/// GetFindingParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::get_finding`]
-#[derive(Clone, Debug)]
-pub struct GetFindingParams {
-    /// The ID of the finding.
-    pub finding_id: String,
+/// GetFindingOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::get_finding`]
+#[derive(Clone, Default, Debug)]
+pub struct GetFindingOptionalParams {
     /// Return the finding for a given snapshot of time (Unix ms).
     pub snapshot_timestamp: Option<i64>,
 }
 
-/// GetSecurityFilterParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::get_security_filter`]
-#[derive(Clone, Debug)]
-pub struct GetSecurityFilterParams {
-    /// The ID of the security filter.
-    pub security_filter_id: String,
+impl GetFindingOptionalParams {
+    /// Return the finding for a given snapshot of time (Unix ms).
+    pub fn snapshot_timestamp(&mut self, value: i64) -> &mut Self {
+        self.snapshot_timestamp = Some(value);
+        self
+    }
 }
 
-/// GetSecurityMonitoringRuleParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::get_security_monitoring_rule`]
-#[derive(Clone, Debug)]
-pub struct GetSecurityMonitoringRuleParams {
-    /// The ID of the rule.
-    pub rule_id: String,
-}
-
-/// GetSecurityMonitoringSignalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::get_security_monitoring_signal`]
-#[derive(Clone, Debug)]
-pub struct GetSecurityMonitoringSignalParams {
-    /// The ID of the signal.
-    pub signal_id: String,
-}
-
-/// ListFindingsParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_findings`]
-#[derive(Clone, Debug)]
-pub struct ListFindingsParams {
+/// ListFindingsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_findings`]
+#[derive(Clone, Default, Debug)]
+pub struct ListFindingsOptionalParams {
     /// Limit the number of findings returned. Must be <= 1000.
     pub page_limit: Option<i64>,
     /// Return findings for a given snapshot of time (Unix ms).
@@ -118,18 +49,97 @@ pub struct ListFindingsParams {
     pub filter_status: Option<crate::datadogV2::model::FindingStatus>,
 }
 
-/// ListSecurityMonitoringRulesParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_security_monitoring_rules`]
-#[derive(Clone, Debug)]
-pub struct ListSecurityMonitoringRulesParams {
+impl ListFindingsOptionalParams {
+    /// Limit the number of findings returned. Must be <= 1000.
+    pub fn page_limit(&mut self, value: i64) -> &mut Self {
+        self.page_limit = Some(value);
+        self
+    }
+    /// Return findings for a given snapshot of time (Unix ms).
+    pub fn snapshot_timestamp(&mut self, value: i64) -> &mut Self {
+        self.snapshot_timestamp = Some(value);
+        self
+    }
+    /// Return the next page of findings pointed to by the cursor.
+    pub fn page_cursor(&mut self, value: String) -> &mut Self {
+        self.page_cursor = Some(value);
+        self
+    }
+    /// Return findings that have these associated tags (repeatable).
+    pub fn filter_tags(&mut self, value: String) -> &mut Self {
+        self.filter_tags = Some(value);
+        self
+    }
+    /// Return findings that have changed from pass to fail or vice versa on a specified date (Unix ms) or date range (using comparison operators).
+    pub fn filter_evaluation_changed_at(&mut self, value: String) -> &mut Self {
+        self.filter_evaluation_changed_at = Some(value);
+        self
+    }
+    /// Set to `true` to return findings that are muted. Set to `false` to return unmuted findings.
+    pub fn filter_muted(&mut self, value: bool) -> &mut Self {
+        self.filter_muted = Some(value);
+        self
+    }
+    /// Return findings for the specified rule ID.
+    pub fn filter_rule_id(&mut self, value: String) -> &mut Self {
+        self.filter_rule_id = Some(value);
+        self
+    }
+    /// Return findings for the specified rule.
+    pub fn filter_rule_name(&mut self, value: String) -> &mut Self {
+        self.filter_rule_name = Some(value);
+        self
+    }
+    /// Return only findings for the specified resource type.
+    pub fn filter_resource_type(&mut self, value: String) -> &mut Self {
+        self.filter_resource_type = Some(value);
+        self
+    }
+    /// Return findings that were found on a specified date (Unix ms) or date range (using comparison operators).
+    pub fn filter_discovery_timestamp(&mut self, value: String) -> &mut Self {
+        self.filter_discovery_timestamp = Some(value);
+        self
+    }
+    /// Return only `pass` or `fail` findings.
+    pub fn filter_evaluation(
+        &mut self,
+        value: crate::datadogV2::model::FindingEvaluation,
+    ) -> &mut Self {
+        self.filter_evaluation = Some(value);
+        self
+    }
+    /// Return only findings with the specified status.
+    pub fn filter_status(&mut self, value: crate::datadogV2::model::FindingStatus) -> &mut Self {
+        self.filter_status = Some(value);
+        self
+    }
+}
+
+/// ListSecurityMonitoringRulesOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_security_monitoring_rules`]
+#[derive(Clone, Default, Debug)]
+pub struct ListSecurityMonitoringRulesOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
     /// Specific page number to return.
     pub page_number: Option<i64>,
 }
 
-/// ListSecurityMonitoringSignalsParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_security_monitoring_signals`]
-#[derive(Clone, Debug)]
-pub struct ListSecurityMonitoringSignalsParams {
+impl ListSecurityMonitoringRulesOptionalParams {
+    /// Size for a given page. The maximum allowed value is 100.
+    pub fn page_size(&mut self, value: i64) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Specific page number to return.
+    pub fn page_number(&mut self, value: i64) -> &mut Self {
+        self.page_number = Some(value);
+        self
+    }
+}
+
+/// ListSecurityMonitoringSignalsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_security_monitoring_signals`]
+#[derive(Clone, Default, Debug)]
+pub struct ListSecurityMonitoringSignalsOptionalParams {
     /// The search query for security signals.
     pub filter_query: Option<String>,
     /// The minimum timestamp for requested security signals.
@@ -144,44 +154,56 @@ pub struct ListSecurityMonitoringSignalsParams {
     pub page_limit: Option<i32>,
 }
 
-/// MuteFindingsParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::mute_findings`]
-#[derive(Clone, Debug)]
-pub struct MuteFindingsParams {
-    /// ### Attributes
-    ///
-    /// All findings are updated with the same attributes. The request body must include at least two attributes: `muted` and `reason`.
-    /// The allowed reasons depend on whether the finding is being muted or unmuted:
-    ///   - To mute a finding: `PENDING_FIX`, `FALSE_POSITIVE`, `ACCEPTED_RISK`, `OTHER`.
-    ///   - To unmute a finding : `NO_PENDING_FIX`, `HUMAN_ERROR`, `NO_LONGER_ACCEPTED_RISK`, `OTHER`.
-    ///
-    /// ### Meta
-    ///
-    /// The request body must include a list of the finding IDs to be updated.
-    ///
-    pub body: crate::datadogV2::model::BulkMuteFindingsRequest,
+impl ListSecurityMonitoringSignalsOptionalParams {
+    /// The search query for security signals.
+    pub fn filter_query(&mut self, value: String) -> &mut Self {
+        self.filter_query = Some(value);
+        self
+    }
+    /// The minimum timestamp for requested security signals.
+    pub fn filter_from(&mut self, value: String) -> &mut Self {
+        self.filter_from = Some(value);
+        self
+    }
+    /// The maximum timestamp for requested security signals.
+    pub fn filter_to(&mut self, value: String) -> &mut Self {
+        self.filter_to = Some(value);
+        self
+    }
+    /// The order of the security signals in results.
+    pub fn sort(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringSignalsSort,
+    ) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+    /// A list of results using the cursor provided in the previous query.
+    pub fn page_cursor(&mut self, value: String) -> &mut Self {
+        self.page_cursor = Some(value);
+        self
+    }
+    /// The maximum number of security signals in the response.
+    pub fn page_limit(&mut self, value: i32) -> &mut Self {
+        self.page_limit = Some(value);
+        self
+    }
 }
 
-/// SearchSecurityMonitoringSignalsParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::search_security_monitoring_signals`]
-#[derive(Clone, Debug)]
-pub struct SearchSecurityMonitoringSignalsParams {
-    pub body: Option<Option<crate::datadogV2::model::SecurityMonitoringSignalListRequest>>,
+/// SearchSecurityMonitoringSignalsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::search_security_monitoring_signals`]
+#[derive(Clone, Default, Debug)]
+pub struct SearchSecurityMonitoringSignalsOptionalParams {
+    pub body: Option<crate::datadogV2::model::SecurityMonitoringSignalListRequest>,
 }
 
-/// UpdateSecurityFilterParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::update_security_filter`]
-#[derive(Clone, Debug)]
-pub struct UpdateSecurityFilterParams {
-    /// The ID of the security filter.
-    pub security_filter_id: String,
-    /// New definition of the security filter.
-    pub body: crate::datadogV2::model::SecurityFilterUpdateRequest,
-}
-
-/// UpdateSecurityMonitoringRuleParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::update_security_monitoring_rule`]
-#[derive(Clone, Debug)]
-pub struct UpdateSecurityMonitoringRuleParams {
-    /// The ID of the rule.
-    pub rule_id: String,
-    pub body: crate::datadogV2::model::SecurityMonitoringRuleUpdatePayload,
+impl SearchSecurityMonitoringSignalsOptionalParams {
+    pub fn body(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringSignalListRequest,
+    ) -> &mut Self {
+        self.body = Some(value);
+        self
+    }
 }
 
 /// CreateSecurityFilterError is a struct for typed errors of method [`SecurityMonitoringAPI::create_security_filter`]
@@ -409,12 +431,12 @@ impl SecurityMonitoringAPI {
     /// for more examples.
     pub async fn create_security_filter(
         &self,
-        params: CreateSecurityFilterParams,
+        body: crate::datadogV2::model::SecurityFilterCreateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::SecurityFilterResponse>,
         Error<CreateSecurityFilterError>,
     > {
-        match self.create_security_filter_with_http_info(params).await {
+        match self.create_security_filter_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -426,15 +448,12 @@ impl SecurityMonitoringAPI {
     /// for more examples.
     pub async fn create_security_filter_with_http_info(
         &self,
-        params: CreateSecurityFilterParams,
+        body: crate::datadogV2::model::SecurityFilterCreateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::SecurityFilterResponse>,
         Error<CreateSecurityFilterError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -495,13 +514,13 @@ impl SecurityMonitoringAPI {
     /// Create a detection rule.
     pub async fn create_security_monitoring_rule(
         &self,
-        params: CreateSecurityMonitoringRuleParams,
+        body: crate::datadogV2::model::SecurityMonitoringRuleCreatePayload,
     ) -> Result<
         Option<crate::datadogV2::model::SecurityMonitoringRuleResponse>,
         Error<CreateSecurityMonitoringRuleError>,
     > {
         match self
-            .create_security_monitoring_rule_with_http_info(params)
+            .create_security_monitoring_rule_with_http_info(body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -512,15 +531,12 @@ impl SecurityMonitoringAPI {
     /// Create a detection rule.
     pub async fn create_security_monitoring_rule_with_http_info(
         &self,
-        params: CreateSecurityMonitoringRuleParams,
+        body: crate::datadogV2::model::SecurityMonitoringRuleCreatePayload,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::SecurityMonitoringRuleResponse>,
         Error<CreateSecurityMonitoringRuleError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -581,9 +597,12 @@ impl SecurityMonitoringAPI {
     /// Delete a specific security filter.
     pub async fn delete_security_filter(
         &self,
-        params: DeleteSecurityFilterParams,
+        security_filter_id: String,
     ) -> Result<Option<()>, Error<DeleteSecurityFilterError>> {
-        match self.delete_security_filter_with_http_info(params).await {
+        match self
+            .delete_security_filter_with_http_info(security_filter_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -592,12 +611,9 @@ impl SecurityMonitoringAPI {
     /// Delete a specific security filter.
     pub async fn delete_security_filter_with_http_info(
         &self,
-        params: DeleteSecurityFilterParams,
+        security_filter_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteSecurityFilterError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let security_filter_id = params.security_filter_id;
 
         let local_client = &local_configuration.client;
 
@@ -650,10 +666,10 @@ impl SecurityMonitoringAPI {
     /// Delete an existing rule. Default rules cannot be deleted.
     pub async fn delete_security_monitoring_rule(
         &self,
-        params: DeleteSecurityMonitoringRuleParams,
+        rule_id: String,
     ) -> Result<Option<()>, Error<DeleteSecurityMonitoringRuleError>> {
         match self
-            .delete_security_monitoring_rule_with_http_info(params)
+            .delete_security_monitoring_rule_with_http_info(rule_id)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -664,12 +680,9 @@ impl SecurityMonitoringAPI {
     /// Delete an existing rule. Default rules cannot be deleted.
     pub async fn delete_security_monitoring_rule_with_http_info(
         &self,
-        params: DeleteSecurityMonitoringRuleParams,
+        rule_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteSecurityMonitoringRuleError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let rule_id = params.rule_id;
 
         let local_client = &local_configuration.client;
 
@@ -722,13 +735,14 @@ impl SecurityMonitoringAPI {
     /// Modify the triage assignee of a security signal.
     pub async fn edit_security_monitoring_signal_assignee(
         &self,
-        params: EditSecurityMonitoringSignalAssigneeParams,
+        signal_id: String,
+        body: crate::datadogV2::model::SecurityMonitoringSignalAssigneeUpdateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::SecurityMonitoringSignalTriageUpdateResponse>,
         Error<EditSecurityMonitoringSignalAssigneeError>,
     > {
         match self
-            .edit_security_monitoring_signal_assignee_with_http_info(params)
+            .edit_security_monitoring_signal_assignee_with_http_info(signal_id, body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -739,16 +753,13 @@ impl SecurityMonitoringAPI {
     /// Modify the triage assignee of a security signal.
     pub async fn edit_security_monitoring_signal_assignee_with_http_info(
         &self,
-        params: EditSecurityMonitoringSignalAssigneeParams,
+        signal_id: String,
+        body: crate::datadogV2::model::SecurityMonitoringSignalAssigneeUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::SecurityMonitoringSignalTriageUpdateResponse>,
         Error<EditSecurityMonitoringSignalAssigneeError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let signal_id = params.signal_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -811,13 +822,14 @@ impl SecurityMonitoringAPI {
     /// Change the related incidents for a security signal.
     pub async fn edit_security_monitoring_signal_incidents(
         &self,
-        params: EditSecurityMonitoringSignalIncidentsParams,
+        signal_id: String,
+        body: crate::datadogV2::model::SecurityMonitoringSignalIncidentsUpdateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::SecurityMonitoringSignalTriageUpdateResponse>,
         Error<EditSecurityMonitoringSignalIncidentsError>,
     > {
         match self
-            .edit_security_monitoring_signal_incidents_with_http_info(params)
+            .edit_security_monitoring_signal_incidents_with_http_info(signal_id, body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -828,16 +840,13 @@ impl SecurityMonitoringAPI {
     /// Change the related incidents for a security signal.
     pub async fn edit_security_monitoring_signal_incidents_with_http_info(
         &self,
-        params: EditSecurityMonitoringSignalIncidentsParams,
+        signal_id: String,
+        body: crate::datadogV2::model::SecurityMonitoringSignalIncidentsUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::SecurityMonitoringSignalTriageUpdateResponse>,
         Error<EditSecurityMonitoringSignalIncidentsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let signal_id = params.signal_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -900,13 +909,14 @@ impl SecurityMonitoringAPI {
     /// Change the triage state of a security signal.
     pub async fn edit_security_monitoring_signal_state(
         &self,
-        params: EditSecurityMonitoringSignalStateParams,
+        signal_id: String,
+        body: crate::datadogV2::model::SecurityMonitoringSignalStateUpdateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::SecurityMonitoringSignalTriageUpdateResponse>,
         Error<EditSecurityMonitoringSignalStateError>,
     > {
         match self
-            .edit_security_monitoring_signal_state_with_http_info(params)
+            .edit_security_monitoring_signal_state_with_http_info(signal_id, body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -917,16 +927,13 @@ impl SecurityMonitoringAPI {
     /// Change the triage state of a security signal.
     pub async fn edit_security_monitoring_signal_state_with_http_info(
         &self,
-        params: EditSecurityMonitoringSignalStateParams,
+        signal_id: String,
+        body: crate::datadogV2::model::SecurityMonitoringSignalStateUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::SecurityMonitoringSignalTriageUpdateResponse>,
         Error<EditSecurityMonitoringSignalStateError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let signal_id = params.signal_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -989,9 +996,10 @@ impl SecurityMonitoringAPI {
     /// Returns a single finding with message and resource configuration.
     pub async fn get_finding(
         &self,
-        params: GetFindingParams,
+        finding_id: String,
+        params: GetFindingOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::GetFindingResponse>, Error<GetFindingError>> {
-        match self.get_finding_with_http_info(params).await {
+        match self.get_finding_with_http_info(finding_id, params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1000,13 +1008,13 @@ impl SecurityMonitoringAPI {
     /// Returns a single finding with message and resource configuration.
     pub async fn get_finding_with_http_info(
         &self,
-        params: GetFindingParams,
+        finding_id: String,
+        params: GetFindingOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV2::model::GetFindingResponse>, Error<GetFindingError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let finding_id = params.finding_id;
+        // unbox and build optional parameters
         let snapshot_timestamp = params.snapshot_timestamp;
 
         let local_client = &local_configuration.client;
@@ -1019,9 +1027,9 @@ impl SecurityMonitoringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = snapshot_timestamp {
+        if let Some(ref local_query_param) = snapshot_timestamp {
             local_req_builder =
-                local_req_builder.query(&[("snapshot_timestamp", &local_str.to_string())]);
+                local_req_builder.query(&[("snapshot_timestamp", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -1069,12 +1077,15 @@ impl SecurityMonitoringAPI {
     /// for more examples.
     pub async fn get_security_filter(
         &self,
-        params: GetSecurityFilterParams,
+        security_filter_id: String,
     ) -> Result<
         Option<crate::datadogV2::model::SecurityFilterResponse>,
         Error<GetSecurityFilterError>,
     > {
-        match self.get_security_filter_with_http_info(params).await {
+        match self
+            .get_security_filter_with_http_info(security_filter_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1086,15 +1097,12 @@ impl SecurityMonitoringAPI {
     /// for more examples.
     pub async fn get_security_filter_with_http_info(
         &self,
-        params: GetSecurityFilterParams,
+        security_filter_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::SecurityFilterResponse>,
         Error<GetSecurityFilterError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let security_filter_id = params.security_filter_id;
 
         let local_client = &local_configuration.client;
 
@@ -1149,13 +1157,13 @@ impl SecurityMonitoringAPI {
     /// Get a rule's details.
     pub async fn get_security_monitoring_rule(
         &self,
-        params: GetSecurityMonitoringRuleParams,
+        rule_id: String,
     ) -> Result<
         Option<crate::datadogV2::model::SecurityMonitoringRuleResponse>,
         Error<GetSecurityMonitoringRuleError>,
     > {
         match self
-            .get_security_monitoring_rule_with_http_info(params)
+            .get_security_monitoring_rule_with_http_info(rule_id)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -1166,15 +1174,12 @@ impl SecurityMonitoringAPI {
     /// Get a rule's details.
     pub async fn get_security_monitoring_rule_with_http_info(
         &self,
-        params: GetSecurityMonitoringRuleParams,
+        rule_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::SecurityMonitoringRuleResponse>,
         Error<GetSecurityMonitoringRuleError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let rule_id = params.rule_id;
 
         let local_client = &local_configuration.client;
 
@@ -1229,13 +1234,13 @@ impl SecurityMonitoringAPI {
     /// Get a signal's details.
     pub async fn get_security_monitoring_signal(
         &self,
-        params: GetSecurityMonitoringSignalParams,
+        signal_id: String,
     ) -> Result<
         Option<crate::datadogV2::model::SecurityMonitoringSignalResponse>,
         Error<GetSecurityMonitoringSignalError>,
     > {
         match self
-            .get_security_monitoring_signal_with_http_info(params)
+            .get_security_monitoring_signal_with_http_info(signal_id)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -1246,15 +1251,12 @@ impl SecurityMonitoringAPI {
     /// Get a signal's details.
     pub async fn get_security_monitoring_signal_with_http_info(
         &self,
-        params: GetSecurityMonitoringSignalParams,
+        signal_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::SecurityMonitoringSignalResponse>,
         Error<GetSecurityMonitoringSignalError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let signal_id = params.signal_id;
 
         let local_client = &local_configuration.client;
 
@@ -1339,7 +1341,7 @@ impl SecurityMonitoringAPI {
     ///
     pub async fn list_findings(
         &self,
-        params: ListFindingsParams,
+        params: ListFindingsOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::ListFindingsResponse>, Error<ListFindingsError>>
     {
         match self.list_findings_with_http_info(params).await {
@@ -1381,14 +1383,14 @@ impl SecurityMonitoringAPI {
     ///
     pub async fn list_findings_with_http_info(
         &self,
-        params: ListFindingsParams,
+        params: ListFindingsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::ListFindingsResponse>,
         Error<ListFindingsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let page_limit = params.page_limit;
         let snapshot_timestamp = params.snapshot_timestamp;
         let page_cursor = params.page_cursor;
@@ -1411,52 +1413,57 @@ impl SecurityMonitoringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = page_limit {
-            local_req_builder = local_req_builder.query(&[("page[limit]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = snapshot_timestamp {
+        if let Some(ref local_query_param) = page_limit {
             local_req_builder =
-                local_req_builder.query(&[("snapshot_timestamp", &local_str.to_string())]);
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = page_cursor {
+        if let Some(ref local_query_param) = snapshot_timestamp {
             local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_str.to_string())]);
+                local_req_builder.query(&[("snapshot_timestamp", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_tags {
+        if let Some(ref local_query_param) = page_cursor {
             local_req_builder =
-                local_req_builder.query(&[("filter[tags]", &local_str.to_string())]);
+                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_evaluation_changed_at {
+        if let Some(ref local_query_param) = filter_tags {
+            local_req_builder =
+                local_req_builder.query(&[("filter[tags]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_evaluation_changed_at {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[evaluation_changed_at]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_muted {
+            local_req_builder =
+                local_req_builder.query(&[("filter[muted]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_rule_id {
+            local_req_builder =
+                local_req_builder.query(&[("filter[rule_id]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_rule_name {
+            local_req_builder =
+                local_req_builder.query(&[("filter[rule_name]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_resource_type {
             local_req_builder = local_req_builder
-                .query(&[("filter[evaluation_changed_at]", &local_str.to_string())]);
+                .query(&[("filter[resource_type]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_muted {
-            local_req_builder =
-                local_req_builder.query(&[("filter[muted]", &local_str.to_string())]);
+        if let Some(ref local_query_param) = filter_discovery_timestamp {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[discovery_timestamp]",
+                &local_query_param.to_string(),
+            )]);
         };
-        if let Some(ref local_str) = filter_rule_id {
+        if let Some(ref local_query_param) = filter_evaluation {
             local_req_builder =
-                local_req_builder.query(&[("filter[rule_id]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[evaluation]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_rule_name {
+        if let Some(ref local_query_param) = filter_status {
             local_req_builder =
-                local_req_builder.query(&[("filter[rule_name]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = filter_resource_type {
-            local_req_builder =
-                local_req_builder.query(&[("filter[resource_type]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = filter_discovery_timestamp {
-            local_req_builder =
-                local_req_builder.query(&[("filter[discovery_timestamp]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = filter_evaluation {
-            local_req_builder =
-                local_req_builder.query(&[("filter[evaluation]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = filter_status {
-            local_req_builder =
-                local_req_builder.query(&[("filter[status]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[status]", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -1520,8 +1527,6 @@ impl SecurityMonitoringAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -1574,7 +1579,7 @@ impl SecurityMonitoringAPI {
     /// List rules.
     pub async fn list_security_monitoring_rules(
         &self,
-        params: ListSecurityMonitoringRulesParams,
+        params: ListSecurityMonitoringRulesOptionalParams,
     ) -> Result<
         Option<crate::datadogV2::model::SecurityMonitoringListRulesResponse>,
         Error<ListSecurityMonitoringRulesError>,
@@ -1591,14 +1596,14 @@ impl SecurityMonitoringAPI {
     /// List rules.
     pub async fn list_security_monitoring_rules_with_http_info(
         &self,
-        params: ListSecurityMonitoringRulesParams,
+        params: ListSecurityMonitoringRulesOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::SecurityMonitoringListRulesResponse>,
         Error<ListSecurityMonitoringRulesError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
 
@@ -1611,12 +1616,13 @@ impl SecurityMonitoringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = page_size {
-            local_req_builder = local_req_builder.query(&[("page[size]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_number {
+        if let Some(ref local_query_param) = page_size {
             local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_str.to_string())]);
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -1664,7 +1670,7 @@ impl SecurityMonitoringAPI {
     /// security signals.
     pub async fn list_security_monitoring_signals(
         &self,
-        params: ListSecurityMonitoringSignalsParams,
+        params: ListSecurityMonitoringSignalsOptionalParams,
     ) -> Result<
         Option<crate::datadogV2::model::SecurityMonitoringSignalsListResponse>,
         Error<ListSecurityMonitoringSignalsError>,
@@ -1683,14 +1689,14 @@ impl SecurityMonitoringAPI {
     /// security signals.
     pub async fn list_security_monitoring_signals_with_http_info(
         &self,
-        params: ListSecurityMonitoringSignalsParams,
+        params: ListSecurityMonitoringSignalsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::SecurityMonitoringSignalsListResponse>,
         Error<ListSecurityMonitoringSignalsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let filter_query = params.filter_query;
         let filter_from = params.filter_from;
         let filter_to = params.filter_to;
@@ -1707,26 +1713,29 @@ impl SecurityMonitoringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = filter_query {
+        if let Some(ref local_query_param) = filter_query {
             local_req_builder =
-                local_req_builder.query(&[("filter[query]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_from {
+        if let Some(ref local_query_param) = filter_from {
             local_req_builder =
-                local_req_builder.query(&[("filter[from]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[from]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_to {
-            local_req_builder = local_req_builder.query(&[("filter[to]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = sort {
-            local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_cursor {
+        if let Some(ref local_query_param) = filter_to {
             local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[to]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = page_limit {
-            local_req_builder = local_req_builder.query(&[("page[limit]", &local_str.to_string())]);
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_cursor {
+            local_req_builder =
+                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -1773,10 +1782,10 @@ impl SecurityMonitoringAPI {
     /// Mute or unmute findings.
     pub async fn mute_findings(
         &self,
-        params: MuteFindingsParams,
+        body: crate::datadogV2::model::BulkMuteFindingsRequest,
     ) -> Result<Option<crate::datadogV2::model::BulkMuteFindingsResponse>, Error<MuteFindingsError>>
     {
-        match self.mute_findings_with_http_info(params).await {
+        match self.mute_findings_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1785,15 +1794,12 @@ impl SecurityMonitoringAPI {
     /// Mute or unmute findings.
     pub async fn mute_findings_with_http_info(
         &self,
-        params: MuteFindingsParams,
+        body: crate::datadogV2::model::BulkMuteFindingsRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::BulkMuteFindingsResponse>,
         Error<MuteFindingsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -1855,7 +1861,7 @@ impl SecurityMonitoringAPI {
     /// security signals.
     pub async fn search_security_monitoring_signals(
         &self,
-        params: SearchSecurityMonitoringSignalsParams,
+        params: SearchSecurityMonitoringSignalsOptionalParams,
     ) -> Result<
         Option<crate::datadogV2::model::SecurityMonitoringSignalsListResponse>,
         Error<SearchSecurityMonitoringSignalsError>,
@@ -1874,14 +1880,14 @@ impl SecurityMonitoringAPI {
     /// security signals.
     pub async fn search_security_monitoring_signals_with_http_info(
         &self,
-        params: SearchSecurityMonitoringSignalsParams,
+        params: SearchSecurityMonitoringSignalsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::SecurityMonitoringSignalsListResponse>,
         Error<SearchSecurityMonitoringSignalsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let body = params.body;
 
         let local_client = &local_configuration.client;
@@ -1945,12 +1951,16 @@ impl SecurityMonitoringAPI {
     /// Returns the security filter object when the request is successful.
     pub async fn update_security_filter(
         &self,
-        params: UpdateSecurityFilterParams,
+        security_filter_id: String,
+        body: crate::datadogV2::model::SecurityFilterUpdateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::SecurityFilterResponse>,
         Error<UpdateSecurityFilterError>,
     > {
-        match self.update_security_filter_with_http_info(params).await {
+        match self
+            .update_security_filter_with_http_info(security_filter_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1960,16 +1970,13 @@ impl SecurityMonitoringAPI {
     /// Returns the security filter object when the request is successful.
     pub async fn update_security_filter_with_http_info(
         &self,
-        params: UpdateSecurityFilterParams,
+        security_filter_id: String,
+        body: crate::datadogV2::model::SecurityFilterUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::SecurityFilterResponse>,
         Error<UpdateSecurityFilterError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let security_filter_id = params.security_filter_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -2033,13 +2040,14 @@ impl SecurityMonitoringAPI {
     /// Default rules can only be updated to be enabled and to change notifications.
     pub async fn update_security_monitoring_rule(
         &self,
-        params: UpdateSecurityMonitoringRuleParams,
+        rule_id: String,
+        body: crate::datadogV2::model::SecurityMonitoringRuleUpdatePayload,
     ) -> Result<
         Option<crate::datadogV2::model::SecurityMonitoringRuleResponse>,
         Error<UpdateSecurityMonitoringRuleError>,
     > {
         match self
-            .update_security_monitoring_rule_with_http_info(params)
+            .update_security_monitoring_rule_with_http_info(rule_id, body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -2052,16 +2060,13 @@ impl SecurityMonitoringAPI {
     /// Default rules can only be updated to be enabled and to change notifications.
     pub async fn update_security_monitoring_rule_with_http_info(
         &self,
-        params: UpdateSecurityMonitoringRuleParams,
+        rule_id: String,
+        body: crate::datadogV2::model::SecurityMonitoringRuleUpdatePayload,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::SecurityMonitoringRuleResponse>,
         Error<UpdateSecurityMonitoringRuleError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let rule_id = params.rule_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

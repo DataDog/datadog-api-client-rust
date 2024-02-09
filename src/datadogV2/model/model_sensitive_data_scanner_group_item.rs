@@ -23,7 +23,21 @@ impl SensitiveDataScannerGroupItem {
             type_: None,
         }
     }
+
+    pub fn id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn type_(
+        &mut self,
+        value: crate::datadogV2::model::SensitiveDataScannerGroupType,
+    ) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
+
 impl Default for SensitiveDataScannerGroupItem {
     fn default() -> Self {
         Self::new()

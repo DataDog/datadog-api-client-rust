@@ -10,10 +10,10 @@ use serde_with::skip_serializing_none;
 pub struct UserCreateData {
     /// Attributes of the created user.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::UserCreateAttributes>,
+    pub attributes: crate::datadogV2::model::UserCreateAttributes,
     /// Relationships of the user object.
     #[serde(rename = "relationships")]
-    pub relationships: Option<Box<crate::datadogV2::model::UserRelationships>>,
+    pub relationships: Option<crate::datadogV2::model::UserRelationships>,
     /// Users resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::UsersType,
@@ -21,7 +21,7 @@ pub struct UserCreateData {
 
 impl UserCreateData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::UserCreateAttributes>,
+        attributes: crate::datadogV2::model::UserCreateAttributes,
         type_: crate::datadogV2::model::UsersType,
     ) -> UserCreateData {
         UserCreateData {
@@ -29,5 +29,13 @@ impl UserCreateData {
             relationships: None,
             type_,
         }
+    }
+
+    pub fn relationships(
+        &mut self,
+        value: crate::datadogV2::model::UserRelationships,
+    ) -> &mut Self {
+        self.relationships = Some(value);
+        self
     }
 }

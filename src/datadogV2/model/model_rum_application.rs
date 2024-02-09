@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct RUMApplication {
     /// RUM application attributes.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::RUMApplicationAttributes>,
+    pub attributes: crate::datadogV2::model::RUMApplicationAttributes,
     /// RUM application ID.
     #[serde(rename = "id")]
     pub id: String,
@@ -21,7 +21,7 @@ pub struct RUMApplication {
 
 impl RUMApplication {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::RUMApplicationAttributes>,
+        attributes: crate::datadogV2::model::RUMApplicationAttributes,
         id: String,
         type_: crate::datadogV2::model::RUMApplicationType,
     ) -> RUMApplication {

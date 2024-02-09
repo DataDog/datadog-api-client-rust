@@ -23,4 +23,12 @@ impl ServiceDefinitionV2Opsgenie {
             service_url,
         }
     }
+
+    pub fn region(
+        &mut self,
+        value: crate::datadogV2::model::ServiceDefinitionV2OpsgenieRegion,
+    ) -> &mut Self {
+        self.region = Some(value);
+        self
+    }
 }

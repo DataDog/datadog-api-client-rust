@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct MetricTagConfigurationCreateRequest {
     /// Object for a single metric to be configure tags on.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::MetricTagConfigurationCreateData>,
+    pub data: crate::datadogV2::model::MetricTagConfigurationCreateData,
 }
 
 impl MetricTagConfigurationCreateRequest {
     pub fn new(
-        data: Box<crate::datadogV2::model::MetricTagConfigurationCreateData>,
+        data: crate::datadogV2::model::MetricTagConfigurationCreateData,
     ) -> MetricTagConfigurationCreateRequest {
         MetricTagConfigurationCreateRequest { data }
     }

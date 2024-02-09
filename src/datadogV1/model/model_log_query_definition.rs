@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct LogQueryDefinition {
     /// Define computation for a log query.
     #[serde(rename = "compute")]
-    pub compute: Option<Box<crate::datadogV1::model::LogsQueryCompute>>,
+    pub compute: Option<crate::datadogV1::model::LogsQueryCompute>,
     /// List of tag prefixes to group by in the case of a cluster check.
     #[serde(rename = "group_by")]
     pub group_by: Option<Vec<crate::datadogV1::model::LogQueryDefinitionGroupBy>>,
@@ -22,7 +22,7 @@ pub struct LogQueryDefinition {
     pub multi_compute: Option<Vec<crate::datadogV1::model::LogsQueryCompute>>,
     /// The query being made on the logs.
     #[serde(rename = "search")]
-    pub search: Option<Box<crate::datadogV1::model::LogQueryDefinitionSearch>>,
+    pub search: Option<crate::datadogV1::model::LogQueryDefinitionSearch>,
 }
 
 impl LogQueryDefinition {
@@ -35,7 +35,42 @@ impl LogQueryDefinition {
             search: None,
         }
     }
+
+    pub fn compute(&mut self, value: crate::datadogV1::model::LogsQueryCompute) -> &mut Self {
+        self.compute = Some(value);
+        self
+    }
+
+    pub fn group_by(
+        &mut self,
+        value: Vec<crate::datadogV1::model::LogQueryDefinitionGroupBy>,
+    ) -> &mut Self {
+        self.group_by = Some(value);
+        self
+    }
+
+    pub fn index(&mut self, value: String) -> &mut Self {
+        self.index = Some(value);
+        self
+    }
+
+    pub fn multi_compute(
+        &mut self,
+        value: Vec<crate::datadogV1::model::LogsQueryCompute>,
+    ) -> &mut Self {
+        self.multi_compute = Some(value);
+        self
+    }
+
+    pub fn search(
+        &mut self,
+        value: crate::datadogV1::model::LogQueryDefinitionSearch,
+    ) -> &mut Self {
+        self.search = Some(value);
+        self
+    }
 }
+
 impl Default for LogQueryDefinition {
     fn default() -> Self {
         Self::new()

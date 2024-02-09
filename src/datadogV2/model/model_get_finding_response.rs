@@ -10,11 +10,11 @@ use serde_with::skip_serializing_none;
 pub struct GetFindingResponse {
     /// A single finding with with message and resource configuration.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::DetailedFinding>,
+    pub data: crate::datadogV2::model::DetailedFinding,
 }
 
 impl GetFindingResponse {
-    pub fn new(data: Box<crate::datadogV2::model::DetailedFinding>) -> GetFindingResponse {
+    pub fn new(data: crate::datadogV2::model::DetailedFinding) -> GetFindingResponse {
         GetFindingResponse { data }
     }
 }

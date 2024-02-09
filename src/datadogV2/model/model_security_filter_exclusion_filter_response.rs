@@ -23,7 +23,18 @@ impl SecurityFilterExclusionFilterResponse {
             query: None,
         }
     }
+
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn query(&mut self, value: String) -> &mut Self {
+        self.query = Some(value);
+        self
+    }
 }
+
 impl Default for SecurityFilterExclusionFilterResponse {
     fn default() -> Self {
         Self::new()

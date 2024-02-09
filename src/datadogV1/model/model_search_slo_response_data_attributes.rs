@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SearchSLOResponseDataAttributes {
     /// Facets
     #[serde(rename = "facets")]
-    pub facets: Option<Box<crate::datadogV1::model::SearchSLOResponseDataAttributesFacets>>,
+    pub facets: Option<crate::datadogV1::model::SearchSLOResponseDataAttributesFacets>,
     /// SLOs
     #[serde(rename = "slos")]
     pub slos: Option<Vec<crate::datadogV1::model::SearchServiceLevelObjective>>,
@@ -23,7 +23,24 @@ impl SearchSLOResponseDataAttributes {
             slos: None,
         }
     }
+
+    pub fn facets(
+        &mut self,
+        value: crate::datadogV1::model::SearchSLOResponseDataAttributesFacets,
+    ) -> &mut Self {
+        self.facets = Some(value);
+        self
+    }
+
+    pub fn slos(
+        &mut self,
+        value: Vec<crate::datadogV1::model::SearchServiceLevelObjective>,
+    ) -> &mut Self {
+        self.slos = Some(value);
+        self
+    }
 }
+
 impl Default for SearchSLOResponseDataAttributes {
     fn default() -> Self {
         Self::new()

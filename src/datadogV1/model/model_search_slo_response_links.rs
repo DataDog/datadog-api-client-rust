@@ -35,7 +35,33 @@ impl SearchSLOResponseLinks {
             self_: None,
         }
     }
+
+    pub fn first(&mut self, value: String) -> &mut Self {
+        self.first = Some(value);
+        self
+    }
+
+    pub fn last(&mut self, value: Option<String>) -> &mut Self {
+        self.last = Some(value);
+        self
+    }
+
+    pub fn next(&mut self, value: String) -> &mut Self {
+        self.next = Some(value);
+        self
+    }
+
+    pub fn prev(&mut self, value: Option<String>) -> &mut Self {
+        self.prev = Some(value);
+        self
+    }
+
+    pub fn self_(&mut self, value: String) -> &mut Self {
+        self.self_ = Some(value);
+        self
+    }
 }
+
 impl Default for SearchSLOResponseLinks {
     fn default() -> Self {
         Self::new()

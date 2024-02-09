@@ -10,14 +10,23 @@ use serde_with::skip_serializing_none;
 pub struct TeamUpdateRelationships {
     /// Relationship between a team and a team link
     #[serde(rename = "team_links")]
-    pub team_links: Option<Box<crate::datadogV2::model::RelationshipToTeamLinks>>,
+    pub team_links: Option<crate::datadogV2::model::RelationshipToTeamLinks>,
 }
 
 impl TeamUpdateRelationships {
     pub fn new() -> TeamUpdateRelationships {
         TeamUpdateRelationships { team_links: None }
     }
+
+    pub fn team_links(
+        &mut self,
+        value: crate::datadogV2::model::RelationshipToTeamLinks,
+    ) -> &mut Self {
+        self.team_links = Some(value);
+        self
+    }
 }
+
 impl Default for TeamUpdateRelationships {
     fn default() -> Self {
         Self::new()

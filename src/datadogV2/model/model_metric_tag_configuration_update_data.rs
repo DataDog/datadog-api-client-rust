@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct MetricTagConfigurationUpdateData {
     /// Object containing the definition of a metric tag configuration to be updated.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::MetricTagConfigurationUpdateAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::MetricTagConfigurationUpdateAttributes>,
     /// The metric name for this resource.
     #[serde(rename = "id")]
     pub id: String,
@@ -29,5 +29,13 @@ impl MetricTagConfigurationUpdateData {
             id,
             type_,
         }
+    }
+
+    pub fn attributes(
+        &mut self,
+        value: crate::datadogV2::model::MetricTagConfigurationUpdateAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
     }
 }

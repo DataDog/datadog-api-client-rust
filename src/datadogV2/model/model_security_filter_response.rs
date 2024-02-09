@@ -10,10 +10,10 @@ use serde_with::skip_serializing_none;
 pub struct SecurityFilterResponse {
     /// The security filter's properties.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::SecurityFilter>>,
+    pub data: Option<crate::datadogV2::model::SecurityFilter>,
     /// Optional metadata associated to the response.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV2::model::SecurityFilterMeta>>,
+    pub meta: Option<crate::datadogV2::model::SecurityFilterMeta>,
 }
 
 impl SecurityFilterResponse {
@@ -23,7 +23,18 @@ impl SecurityFilterResponse {
             meta: None,
         }
     }
+
+    pub fn data(&mut self, value: crate::datadogV2::model::SecurityFilter) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn meta(&mut self, value: crate::datadogV2::model::SecurityFilterMeta) -> &mut Self {
+        self.meta = Some(value);
+        self
+    }
 }
+
 impl Default for SecurityFilterResponse {
     fn default() -> Self {
         Self::new()

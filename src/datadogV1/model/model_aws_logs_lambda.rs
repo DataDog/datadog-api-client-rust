@@ -17,7 +17,13 @@ impl AWSLogsLambda {
     pub fn new() -> AWSLogsLambda {
         AWSLogsLambda { arn: None }
     }
+
+    pub fn arn(&mut self, value: String) -> &mut Self {
+        self.arn = Some(value);
+        self
+    }
 }
+
 impl Default for AWSLogsLambda {
     fn default() -> Self {
         Self::new()

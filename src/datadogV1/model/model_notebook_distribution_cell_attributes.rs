@@ -12,21 +12,21 @@ pub struct NotebookDistributionCellAttributes {
     /// aggregated across one or several tags, such as hosts.
     /// Unlike the heat map, a distribution graph’s x-axis is quantity rather than time.
     #[serde(rename = "definition")]
-    pub definition: Box<crate::datadogV1::model::DistributionWidgetDefinition>,
+    pub definition: crate::datadogV1::model::DistributionWidgetDefinition,
     /// The size of the graph.
     #[serde(rename = "graph_size")]
     pub graph_size: Option<crate::datadogV1::model::NotebookGraphSize>,
     /// Object describing how to split the graph to display multiple visualizations per request.
     #[serde(rename = "split_by")]
-    pub split_by: Option<Box<crate::datadogV1::model::NotebookSplitBy>>,
+    pub split_by: Option<crate::datadogV1::model::NotebookSplitBy>,
     /// Timeframe for the notebook cell. When 'null', the notebook global time is used.
     #[serde(rename = "time", default, with = "::serde_with::rust::double_option")]
-    pub time: Option<Option<Box<crate::datadogV1::model::NotebookCellTime>>>,
+    pub time: Option<Option<crate::datadogV1::model::NotebookCellTime>>,
 }
 
 impl NotebookDistributionCellAttributes {
     pub fn new(
-        definition: Box<crate::datadogV1::model::DistributionWidgetDefinition>,
+        definition: crate::datadogV1::model::DistributionWidgetDefinition,
     ) -> NotebookDistributionCellAttributes {
         NotebookDistributionCellAttributes {
             definition,
@@ -34,5 +34,20 @@ impl NotebookDistributionCellAttributes {
             split_by: None,
             time: None,
         }
+    }
+
+    pub fn graph_size(&mut self, value: crate::datadogV1::model::NotebookGraphSize) -> &mut Self {
+        self.graph_size = Some(value);
+        self
+    }
+
+    pub fn split_by(&mut self, value: crate::datadogV1::model::NotebookSplitBy) -> &mut Self {
+        self.split_by = Some(value);
+        self
+    }
+
+    pub fn time(&mut self, value: Option<crate::datadogV1::model::NotebookCellTime>) -> &mut Self {
+        self.time = Some(value);
+        self
     }
 }

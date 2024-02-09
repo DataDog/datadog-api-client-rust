@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct ConfluentResourceRequestData {
     /// Attributes object for updating a Confluent resource.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::ConfluentResourceRequestAttributes>,
+    pub attributes: crate::datadogV2::model::ConfluentResourceRequestAttributes,
     /// The ID associated with a Confluent resource.
     #[serde(rename = "id")]
     pub id: String,
@@ -21,7 +21,7 @@ pub struct ConfluentResourceRequestData {
 
 impl ConfluentResourceRequestData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::ConfluentResourceRequestAttributes>,
+        attributes: crate::datadogV2::model::ConfluentResourceRequestAttributes,
         id: String,
         type_: crate::datadogV2::model::ConfluentResourceType,
     ) -> ConfluentResourceRequestData {

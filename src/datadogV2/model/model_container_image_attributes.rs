@@ -61,7 +61,7 @@ pub struct ContainerImageAttributes {
     pub tags: Option<Vec<String>>,
     /// Vulnerability counts associated with the Container Image.
     #[serde(rename = "vulnerability_count")]
-    pub vulnerability_count: Option<Box<crate::datadogV2::model::ContainerImageVulnerabilities>>,
+    pub vulnerability_count: Option<crate::datadogV2::model::ContainerImageVulnerabilities>,
 }
 
 impl ContainerImageAttributes {
@@ -86,7 +86,99 @@ impl ContainerImageAttributes {
             vulnerability_count: None,
         }
     }
+
+    pub fn container_count(&mut self, value: i64) -> &mut Self {
+        self.container_count = Some(value);
+        self
+    }
+
+    pub fn image_flavors(
+        &mut self,
+        value: Vec<crate::datadogV2::model::ContainerImageFlavor>,
+    ) -> &mut Self {
+        self.image_flavors = Some(value);
+        self
+    }
+
+    pub fn image_tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.image_tags = Some(value);
+        self
+    }
+
+    pub fn images_built_at(&mut self, value: Vec<String>) -> &mut Self {
+        self.images_built_at = Some(value);
+        self
+    }
+
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn os_architectures(&mut self, value: Vec<String>) -> &mut Self {
+        self.os_architectures = Some(value);
+        self
+    }
+
+    pub fn os_names(&mut self, value: Vec<String>) -> &mut Self {
+        self.os_names = Some(value);
+        self
+    }
+
+    pub fn os_versions(&mut self, value: Vec<String>) -> &mut Self {
+        self.os_versions = Some(value);
+        self
+    }
+
+    pub fn published_at(&mut self, value: String) -> &mut Self {
+        self.published_at = Some(value);
+        self
+    }
+
+    pub fn registry(&mut self, value: String) -> &mut Self {
+        self.registry = Some(value);
+        self
+    }
+
+    pub fn repo_digest(&mut self, value: String) -> &mut Self {
+        self.repo_digest = Some(value);
+        self
+    }
+
+    pub fn repository(&mut self, value: String) -> &mut Self {
+        self.repository = Some(value);
+        self
+    }
+
+    pub fn short_image(&mut self, value: String) -> &mut Self {
+        self.short_image = Some(value);
+        self
+    }
+
+    pub fn sizes(&mut self, value: Vec<i64>) -> &mut Self {
+        self.sizes = Some(value);
+        self
+    }
+
+    pub fn sources(&mut self, value: Vec<String>) -> &mut Self {
+        self.sources = Some(value);
+        self
+    }
+
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+
+    pub fn vulnerability_count(
+        &mut self,
+        value: crate::datadogV2::model::ContainerImageVulnerabilities,
+    ) -> &mut Self {
+        self.vulnerability_count = Some(value);
+        self
+    }
 }
+
 impl Default for ContainerImageAttributes {
     fn default() -> Self {
         Self::new()

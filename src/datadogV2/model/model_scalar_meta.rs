@@ -20,7 +20,13 @@ impl ScalarMeta {
     pub fn new() -> ScalarMeta {
         ScalarMeta { unit: None }
     }
+
+    pub fn unit(&mut self, value: Option<Vec<Option<crate::datadogV2::model::Unit>>>) -> &mut Self {
+        self.unit = Some(value);
+        self
+    }
 }
+
 impl Default for ScalarMeta {
     fn default() -> Self {
         Self::new()

@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct MonitorConfigPolicyCreateRequest {
     /// A monitor configuration policy data.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::MonitorConfigPolicyCreateData>,
+    pub data: crate::datadogV2::model::MonitorConfigPolicyCreateData,
 }
 
 impl MonitorConfigPolicyCreateRequest {
     pub fn new(
-        data: Box<crate::datadogV2::model::MonitorConfigPolicyCreateData>,
+        data: crate::datadogV2::model::MonitorConfigPolicyCreateData,
     ) -> MonitorConfigPolicyCreateRequest {
         MonitorConfigPolicyCreateRequest { data }
     }

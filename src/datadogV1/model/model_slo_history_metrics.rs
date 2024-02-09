@@ -13,7 +13,7 @@ pub struct SLOHistoryMetrics {
     /// A representation of `metric` based SLO time series for the provided queries.
     /// This is the same response type from `batch_query` endpoint.
     #[serde(rename = "denominator")]
-    pub denominator: Box<crate::datadogV1::model::SLOHistoryMetricsSeries>,
+    pub denominator: crate::datadogV1::model::SLOHistoryMetricsSeries,
     /// The aggregated query interval for the series data. It's implicit based on the query time window.
     #[serde(rename = "interval")]
     pub interval: i64,
@@ -23,7 +23,7 @@ pub struct SLOHistoryMetrics {
     /// A representation of `metric` based SLO time series for the provided queries.
     /// This is the same response type from `batch_query` endpoint.
     #[serde(rename = "numerator")]
-    pub numerator: Box<crate::datadogV1::model::SLOHistoryMetricsSeries>,
+    pub numerator: crate::datadogV1::model::SLOHistoryMetricsSeries,
     /// The combined numerator and denominator query CSV.
     #[serde(rename = "query")]
     pub query: String,
@@ -40,9 +40,9 @@ pub struct SLOHistoryMetrics {
 
 impl SLOHistoryMetrics {
     pub fn new(
-        denominator: Box<crate::datadogV1::model::SLOHistoryMetricsSeries>,
+        denominator: crate::datadogV1::model::SLOHistoryMetricsSeries,
         interval: i64,
-        numerator: Box<crate::datadogV1::model::SLOHistoryMetricsSeries>,
+        numerator: crate::datadogV1::model::SLOHistoryMetricsSeries,
         query: String,
         res_type: String,
         resp_version: i64,
@@ -58,5 +58,10 @@ impl SLOHistoryMetrics {
             resp_version,
             times,
         }
+    }
+
+    pub fn message(&mut self, value: String) -> &mut Self {
+        self.message = Some(value);
+        self
     }
 }

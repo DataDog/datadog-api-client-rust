@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SharedDashboardInvitesDataObject {
     /// Attributes of the shared dashboard invitation
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV1::model::SharedDashboardInvitesDataObjectAttributes>,
+    pub attributes: crate::datadogV1::model::SharedDashboardInvitesDataObjectAttributes,
     /// Type for shared dashboard invitation request body.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::DashboardInviteType,
@@ -18,7 +18,7 @@ pub struct SharedDashboardInvitesDataObject {
 
 impl SharedDashboardInvitesDataObject {
     pub fn new(
-        attributes: Box<crate::datadogV1::model::SharedDashboardInvitesDataObjectAttributes>,
+        attributes: crate::datadogV1::model::SharedDashboardInvitesDataObjectAttributes,
         type_: crate::datadogV1::model::DashboardInviteType,
     ) -> SharedDashboardInvitesDataObject {
         SharedDashboardInvitesDataObject { attributes, type_ }

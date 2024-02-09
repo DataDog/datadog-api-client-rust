@@ -10,14 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct CloudCostActivityResponse {
     /// Cloud Cost Activity.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::CloudCostActivity>>,
+    pub data: Option<crate::datadogV2::model::CloudCostActivity>,
 }
 
 impl CloudCostActivityResponse {
     pub fn new() -> CloudCostActivityResponse {
         CloudCostActivityResponse { data: None }
     }
+
+    pub fn data(&mut self, value: crate::datadogV2::model::CloudCostActivity) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for CloudCostActivityResponse {
     fn default() -> Self {
         Self::new()

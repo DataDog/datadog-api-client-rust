@@ -27,4 +27,14 @@ impl ConfluentResourceRequestAttributes {
             tags: None,
         }
     }
+
+    pub fn enable_custom_metrics(&mut self, value: bool) -> &mut Self {
+        self.enable_custom_metrics = Some(value);
+        self
+    }
+
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
 }

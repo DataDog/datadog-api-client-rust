@@ -23,7 +23,18 @@ impl AWSLogsAsyncError {
             message: None,
         }
     }
+
+    pub fn code(&mut self, value: String) -> &mut Self {
+        self.code = Some(value);
+        self
+    }
+
+    pub fn message(&mut self, value: String) -> &mut Self {
+        self.message = Some(value);
+        self
+    }
 }
+
 impl Default for AWSLogsAsyncError {
     fn default() -> Self {
         Self::new()

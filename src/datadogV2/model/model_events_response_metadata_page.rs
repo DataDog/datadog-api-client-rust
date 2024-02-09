@@ -18,7 +18,13 @@ impl EventsResponseMetadataPage {
     pub fn new() -> EventsResponseMetadataPage {
         EventsResponseMetadataPage { after: None }
     }
+
+    pub fn after(&mut self, value: String) -> &mut Self {
+        self.after = Some(value);
+        self
+    }
 }
+
 impl Default for EventsResponseMetadataPage {
     fn default() -> Self {
         Self::new()

@@ -23,7 +23,18 @@ impl HostTotals {
             total_up: None,
         }
     }
+
+    pub fn total_active(&mut self, value: i64) -> &mut Self {
+        self.total_active = Some(value);
+        self
+    }
+
+    pub fn total_up(&mut self, value: i64) -> &mut Self {
+        self.total_up = Some(value);
+        self
+    }
 }
+
 impl Default for HostTotals {
     fn default() -> Self {
         Self::new()

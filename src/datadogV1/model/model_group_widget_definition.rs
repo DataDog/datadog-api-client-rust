@@ -51,4 +51,29 @@ impl GroupWidgetDefinition {
             widgets,
         }
     }
+
+    pub fn background_color(&mut self, value: String) -> &mut Self {
+        self.background_color = Some(value);
+        self
+    }
+
+    pub fn banner_img(&mut self, value: String) -> &mut Self {
+        self.banner_img = Some(value);
+        self
+    }
+
+    pub fn show_title(&mut self, value: bool) -> &mut Self {
+        self.show_title = Some(value);
+        self
+    }
+
+    pub fn title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
+    }
+
+    pub fn title_align(&mut self, value: crate::datadogV1::model::WidgetTextAlign) -> &mut Self {
+        self.title_align = Some(value);
+        self
+    }
 }

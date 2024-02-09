@@ -23,7 +23,18 @@ impl IncidentSearchResponseNumericFacetDataAggregates {
             min: None,
         }
     }
+
+    pub fn max(&mut self, value: Option<f64>) -> &mut Self {
+        self.max = Some(value);
+        self
+    }
+
+    pub fn min(&mut self, value: Option<f64>) -> &mut Self {
+        self.min = Some(value);
+        self
+    }
 }
+
 impl Default for IncidentSearchResponseNumericFacetDataAggregates {
     fn default() -> Self {
         Self::new()

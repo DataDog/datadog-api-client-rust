@@ -39,7 +39,38 @@ impl FindingMute {
             uuid: None,
         }
     }
+
+    pub fn description(&mut self, value: String) -> &mut Self {
+        self.description = Some(value);
+        self
+    }
+
+    pub fn expiration_date(&mut self, value: i64) -> &mut Self {
+        self.expiration_date = Some(value);
+        self
+    }
+
+    pub fn muted(&mut self, value: bool) -> &mut Self {
+        self.muted = Some(value);
+        self
+    }
+
+    pub fn reason(&mut self, value: crate::datadogV2::model::FindingMuteReason) -> &mut Self {
+        self.reason = Some(value);
+        self
+    }
+
+    pub fn start_date(&mut self, value: i64) -> &mut Self {
+        self.start_date = Some(value);
+        self
+    }
+
+    pub fn uuid(&mut self, value: String) -> &mut Self {
+        self.uuid = Some(value);
+        self
+    }
 }
+
 impl Default for FindingMute {
     fn default() -> Self {
         Self::new()

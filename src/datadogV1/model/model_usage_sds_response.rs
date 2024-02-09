@@ -17,7 +17,13 @@ impl UsageSDSResponse {
     pub fn new() -> UsageSDSResponse {
         UsageSDSResponse { usage: None }
     }
+
+    pub fn usage(&mut self, value: Vec<crate::datadogV1::model::UsageSDSHour>) -> &mut Self {
+        self.usage = Some(value);
+        self
+    }
 }
+
 impl Default for UsageSDSResponse {
     fn default() -> Self {
         Self::new()

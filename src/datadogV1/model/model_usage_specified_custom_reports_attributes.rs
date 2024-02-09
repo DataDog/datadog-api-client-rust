@@ -39,7 +39,38 @@ impl UsageSpecifiedCustomReportsAttributes {
             tags: None,
         }
     }
+
+    pub fn computed_on(&mut self, value: String) -> &mut Self {
+        self.computed_on = Some(value);
+        self
+    }
+
+    pub fn end_date(&mut self, value: String) -> &mut Self {
+        self.end_date = Some(value);
+        self
+    }
+
+    pub fn location(&mut self, value: String) -> &mut Self {
+        self.location = Some(value);
+        self
+    }
+
+    pub fn size(&mut self, value: i64) -> &mut Self {
+        self.size = Some(value);
+        self
+    }
+
+    pub fn start_date(&mut self, value: String) -> &mut Self {
+        self.start_date = Some(value);
+        self
+    }
+
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
 }
+
 impl Default for UsageSpecifiedCustomReportsAttributes {
     fn default() -> Self {
         Self::new()

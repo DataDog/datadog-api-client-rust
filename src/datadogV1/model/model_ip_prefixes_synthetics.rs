@@ -31,7 +31,34 @@ impl IPPrefixesSynthetics {
             prefixes_ipv6_by_location: None,
         }
     }
+
+    pub fn prefixes_ipv4(&mut self, value: Vec<String>) -> &mut Self {
+        self.prefixes_ipv4 = Some(value);
+        self
+    }
+
+    pub fn prefixes_ipv4_by_location(
+        &mut self,
+        value: std::collections::BTreeMap<String, Vec<String>>,
+    ) -> &mut Self {
+        self.prefixes_ipv4_by_location = Some(value);
+        self
+    }
+
+    pub fn prefixes_ipv6(&mut self, value: Vec<String>) -> &mut Self {
+        self.prefixes_ipv6 = Some(value);
+        self
+    }
+
+    pub fn prefixes_ipv6_by_location(
+        &mut self,
+        value: std::collections::BTreeMap<String, Vec<String>>,
+    ) -> &mut Self {
+        self.prefixes_ipv6_by_location = Some(value);
+        self
+    }
 }
+
 impl Default for IPPrefixesSynthetics {
     fn default() -> Self {
         Self::new()

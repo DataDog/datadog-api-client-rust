@@ -17,7 +17,13 @@ impl UsageAuditLogsResponse {
     pub fn new() -> UsageAuditLogsResponse {
         UsageAuditLogsResponse { usage: None }
     }
+
+    pub fn usage(&mut self, value: Vec<crate::datadogV1::model::UsageAuditLogsHour>) -> &mut Self {
+        self.usage = Some(value);
+        self
+    }
 }
+
 impl Default for UsageAuditLogsResponse {
     fn default() -> Self {
         Self::new()

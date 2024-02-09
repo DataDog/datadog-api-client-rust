@@ -10,11 +10,11 @@ use serde_with::skip_serializing_none;
 pub struct TeamLinkCreateRequest {
     /// Team link create
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::TeamLinkCreate>,
+    pub data: crate::datadogV2::model::TeamLinkCreate,
 }
 
 impl TeamLinkCreateRequest {
-    pub fn new(data: Box<crate::datadogV2::model::TeamLinkCreate>) -> TeamLinkCreateRequest {
+    pub fn new(data: crate::datadogV2::model::TeamLinkCreate) -> TeamLinkCreateRequest {
         TeamLinkCreateRequest { data }
     }
 }

@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct CloudflareAccountCreateRequest {
     /// Data object for creating a Cloudflare account.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::CloudflareAccountCreateRequestData>,
+    pub data: crate::datadogV2::model::CloudflareAccountCreateRequestData,
 }
 
 impl CloudflareAccountCreateRequest {
     pub fn new(
-        data: Box<crate::datadogV2::model::CloudflareAccountCreateRequestData>,
+        data: crate::datadogV2::model::CloudflareAccountCreateRequestData,
     ) -> CloudflareAccountCreateRequest {
         CloudflareAccountCreateRequest { data }
     }

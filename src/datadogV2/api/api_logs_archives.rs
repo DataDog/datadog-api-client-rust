@@ -5,66 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// AddReadRoleToArchiveParams is a struct for passing parameters to the method [`LogsArchivesAPI::add_read_role_to_archive`]
-#[derive(Clone, Debug)]
-pub struct AddReadRoleToArchiveParams {
-    /// The ID of the archive.
-    pub archive_id: String,
-    pub body: crate::datadogV2::model::RelationshipToRole,
-}
-
-/// CreateLogsArchiveParams is a struct for passing parameters to the method [`LogsArchivesAPI::create_logs_archive`]
-#[derive(Clone, Debug)]
-pub struct CreateLogsArchiveParams {
-    /// The definition of the new archive.
-    pub body: crate::datadogV2::model::LogsArchiveCreateRequest,
-}
-
-/// DeleteLogsArchiveParams is a struct for passing parameters to the method [`LogsArchivesAPI::delete_logs_archive`]
-#[derive(Clone, Debug)]
-pub struct DeleteLogsArchiveParams {
-    /// The ID of the archive.
-    pub archive_id: String,
-}
-
-/// GetLogsArchiveParams is a struct for passing parameters to the method [`LogsArchivesAPI::get_logs_archive`]
-#[derive(Clone, Debug)]
-pub struct GetLogsArchiveParams {
-    /// The ID of the archive.
-    pub archive_id: String,
-}
-
-/// ListArchiveReadRolesParams is a struct for passing parameters to the method [`LogsArchivesAPI::list_archive_read_roles`]
-#[derive(Clone, Debug)]
-pub struct ListArchiveReadRolesParams {
-    /// The ID of the archive.
-    pub archive_id: String,
-}
-
-/// RemoveRoleFromArchiveParams is a struct for passing parameters to the method [`LogsArchivesAPI::remove_role_from_archive`]
-#[derive(Clone, Debug)]
-pub struct RemoveRoleFromArchiveParams {
-    /// The ID of the archive.
-    pub archive_id: String,
-    pub body: crate::datadogV2::model::RelationshipToRole,
-}
-
-/// UpdateLogsArchiveParams is a struct for passing parameters to the method [`LogsArchivesAPI::update_logs_archive`]
-#[derive(Clone, Debug)]
-pub struct UpdateLogsArchiveParams {
-    /// The ID of the archive.
-    pub archive_id: String,
-    /// New definition of the archive.
-    pub body: crate::datadogV2::model::LogsArchiveCreateRequest,
-}
-
-/// UpdateLogsArchiveOrderParams is a struct for passing parameters to the method [`LogsArchivesAPI::update_logs_archive_order`]
-#[derive(Clone, Debug)]
-pub struct UpdateLogsArchiveOrderParams {
-    /// An object containing the new ordered list of archive IDs.
-    pub body: crate::datadogV2::model::LogsArchiveOrder,
-}
-
 /// AddReadRoleToArchiveError is a struct for typed errors of method [`LogsArchivesAPI::add_read_role_to_archive`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -194,9 +134,13 @@ impl LogsArchivesAPI {
     /// Adds a read role to an archive. ([Roles API](<https://docs.datadoghq.com/api/v2/roles/>))
     pub async fn add_read_role_to_archive(
         &self,
-        params: AddReadRoleToArchiveParams,
+        archive_id: String,
+        body: crate::datadogV2::model::RelationshipToRole,
     ) -> Result<Option<()>, Error<AddReadRoleToArchiveError>> {
-        match self.add_read_role_to_archive_with_http_info(params).await {
+        match self
+            .add_read_role_to_archive_with_http_info(archive_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -205,13 +149,10 @@ impl LogsArchivesAPI {
     /// Adds a read role to an archive. ([Roles API](<https://docs.datadoghq.com/api/v2/roles/>))
     pub async fn add_read_role_to_archive_with_http_info(
         &self,
-        params: AddReadRoleToArchiveParams,
+        archive_id: String,
+        body: crate::datadogV2::model::RelationshipToRole,
     ) -> Result<ResponseContent<()>, Error<AddReadRoleToArchiveError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let archive_id = params.archive_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -271,9 +212,9 @@ impl LogsArchivesAPI {
     /// Create an archive in your organization.
     pub async fn create_logs_archive(
         &self,
-        params: CreateLogsArchiveParams,
+        body: crate::datadogV2::model::LogsArchiveCreateRequest,
     ) -> Result<Option<crate::datadogV2::model::LogsArchive>, Error<CreateLogsArchiveError>> {
-        match self.create_logs_archive_with_http_info(params).await {
+        match self.create_logs_archive_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -282,13 +223,10 @@ impl LogsArchivesAPI {
     /// Create an archive in your organization.
     pub async fn create_logs_archive_with_http_info(
         &self,
-        params: CreateLogsArchiveParams,
+        body: crate::datadogV2::model::LogsArchiveCreateRequest,
     ) -> Result<ResponseContent<crate::datadogV2::model::LogsArchive>, Error<CreateLogsArchiveError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -349,9 +287,9 @@ impl LogsArchivesAPI {
     /// Delete a given archive from your organization.
     pub async fn delete_logs_archive(
         &self,
-        params: DeleteLogsArchiveParams,
+        archive_id: String,
     ) -> Result<Option<()>, Error<DeleteLogsArchiveError>> {
-        match self.delete_logs_archive_with_http_info(params).await {
+        match self.delete_logs_archive_with_http_info(archive_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -360,12 +298,9 @@ impl LogsArchivesAPI {
     /// Delete a given archive from your organization.
     pub async fn delete_logs_archive_with_http_info(
         &self,
-        params: DeleteLogsArchiveParams,
+        archive_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteLogsArchiveError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let archive_id = params.archive_id;
 
         let local_client = &local_configuration.client;
 
@@ -418,9 +353,9 @@ impl LogsArchivesAPI {
     /// Get a specific archive from your organization.
     pub async fn get_logs_archive(
         &self,
-        params: GetLogsArchiveParams,
+        archive_id: String,
     ) -> Result<Option<crate::datadogV2::model::LogsArchive>, Error<GetLogsArchiveError>> {
-        match self.get_logs_archive_with_http_info(params).await {
+        match self.get_logs_archive_with_http_info(archive_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -429,13 +364,10 @@ impl LogsArchivesAPI {
     /// Get a specific archive from your organization.
     pub async fn get_logs_archive_with_http_info(
         &self,
-        params: GetLogsArchiveParams,
+        archive_id: String,
     ) -> Result<ResponseContent<crate::datadogV2::model::LogsArchive>, Error<GetLogsArchiveError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let archive_id = params.archive_id;
 
         let local_client = &local_configuration.client;
 
@@ -509,8 +441,6 @@ impl LogsArchivesAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -563,10 +493,13 @@ impl LogsArchivesAPI {
     /// Returns all read roles a given archive is restricted to.
     pub async fn list_archive_read_roles(
         &self,
-        params: ListArchiveReadRolesParams,
+        archive_id: String,
     ) -> Result<Option<crate::datadogV2::model::RolesResponse>, Error<ListArchiveReadRolesError>>
     {
-        match self.list_archive_read_roles_with_http_info(params).await {
+        match self
+            .list_archive_read_roles_with_http_info(archive_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -575,15 +508,12 @@ impl LogsArchivesAPI {
     /// Returns all read roles a given archive is restricted to.
     pub async fn list_archive_read_roles_with_http_info(
         &self,
-        params: ListArchiveReadRolesParams,
+        archive_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::RolesResponse>,
         Error<ListArchiveReadRolesError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let archive_id = params.archive_id;
 
         let local_client = &local_configuration.client;
 
@@ -652,8 +582,6 @@ impl LogsArchivesAPI {
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -706,9 +634,13 @@ impl LogsArchivesAPI {
     /// Removes a role from an archive. ([Roles API](<https://docs.datadoghq.com/api/v2/roles/>))
     pub async fn remove_role_from_archive(
         &self,
-        params: RemoveRoleFromArchiveParams,
+        archive_id: String,
+        body: crate::datadogV2::model::RelationshipToRole,
     ) -> Result<Option<()>, Error<RemoveRoleFromArchiveError>> {
-        match self.remove_role_from_archive_with_http_info(params).await {
+        match self
+            .remove_role_from_archive_with_http_info(archive_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -717,13 +649,10 @@ impl LogsArchivesAPI {
     /// Removes a role from an archive. ([Roles API](<https://docs.datadoghq.com/api/v2/roles/>))
     pub async fn remove_role_from_archive_with_http_info(
         &self,
-        params: RemoveRoleFromArchiveParams,
+        archive_id: String,
+        body: crate::datadogV2::model::RelationshipToRole,
     ) -> Result<ResponseContent<()>, Error<RemoveRoleFromArchiveError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let archive_id = params.archive_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -786,9 +715,13 @@ impl LogsArchivesAPI {
     /// your current configuration with the new one sent to your Datadog organization.
     pub async fn update_logs_archive(
         &self,
-        params: UpdateLogsArchiveParams,
+        archive_id: String,
+        body: crate::datadogV2::model::LogsArchiveCreateRequest,
     ) -> Result<Option<crate::datadogV2::model::LogsArchive>, Error<UpdateLogsArchiveError>> {
-        match self.update_logs_archive_with_http_info(params).await {
+        match self
+            .update_logs_archive_with_http_info(archive_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -800,14 +733,11 @@ impl LogsArchivesAPI {
     /// your current configuration with the new one sent to your Datadog organization.
     pub async fn update_logs_archive_with_http_info(
         &self,
-        params: UpdateLogsArchiveParams,
+        archive_id: String,
+        body: crate::datadogV2::model::LogsArchiveCreateRequest,
     ) -> Result<ResponseContent<crate::datadogV2::model::LogsArchive>, Error<UpdateLogsArchiveError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let archive_id = params.archive_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -873,10 +803,10 @@ impl LogsArchivesAPI {
     /// with the new one.
     pub async fn update_logs_archive_order(
         &self,
-        params: UpdateLogsArchiveOrderParams,
+        body: crate::datadogV2::model::LogsArchiveOrder,
     ) -> Result<Option<crate::datadogV2::model::LogsArchiveOrder>, Error<UpdateLogsArchiveOrderError>>
     {
-        match self.update_logs_archive_order_with_http_info(params).await {
+        match self.update_logs_archive_order_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -889,15 +819,12 @@ impl LogsArchivesAPI {
     /// with the new one.
     pub async fn update_logs_archive_order_with_http_info(
         &self,
-        params: UpdateLogsArchiveOrderParams,
+        body: crate::datadogV2::model::LogsArchiveOrder,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::LogsArchiveOrder>,
         Error<UpdateLogsArchiveOrderError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

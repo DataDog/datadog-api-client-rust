@@ -19,10 +19,10 @@ pub struct GeomapWidgetDefinition {
     pub requests: Vec<crate::datadogV1::model::GeomapWidgetRequest>,
     /// The style to apply to the widget.
     #[serde(rename = "style")]
-    pub style: Box<crate::datadogV1::model::GeomapWidgetDefinitionStyle>,
+    pub style: crate::datadogV1::model::GeomapWidgetDefinitionStyle,
     /// Time setting for the widget.
     #[serde(rename = "time")]
-    pub time: Option<Box<crate::datadogV1::model::WidgetTime>>,
+    pub time: Option<crate::datadogV1::model::WidgetTime>,
     /// The title of your widget.
     #[serde(rename = "title")]
     pub title: Option<String>,
@@ -37,15 +37,15 @@ pub struct GeomapWidgetDefinition {
     pub type_: crate::datadogV1::model::GeomapWidgetDefinitionType,
     /// The view of the world that the map should render.
     #[serde(rename = "view")]
-    pub view: Box<crate::datadogV1::model::GeomapWidgetDefinitionView>,
+    pub view: crate::datadogV1::model::GeomapWidgetDefinitionView,
 }
 
 impl GeomapWidgetDefinition {
     pub fn new(
         requests: Vec<crate::datadogV1::model::GeomapWidgetRequest>,
-        style: Box<crate::datadogV1::model::GeomapWidgetDefinitionStyle>,
+        style: crate::datadogV1::model::GeomapWidgetDefinitionStyle,
         type_: crate::datadogV1::model::GeomapWidgetDefinitionType,
-        view: Box<crate::datadogV1::model::GeomapWidgetDefinitionView>,
+        view: crate::datadogV1::model::GeomapWidgetDefinitionView,
     ) -> GeomapWidgetDefinition {
         GeomapWidgetDefinition {
             custom_links: None,
@@ -58,5 +58,33 @@ impl GeomapWidgetDefinition {
             type_,
             view,
         }
+    }
+
+    pub fn custom_links(
+        &mut self,
+        value: Vec<crate::datadogV1::model::WidgetCustomLink>,
+    ) -> &mut Self {
+        self.custom_links = Some(value);
+        self
+    }
+
+    pub fn time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
+        self.time = Some(value);
+        self
+    }
+
+    pub fn title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
+    }
+
+    pub fn title_align(&mut self, value: crate::datadogV1::model::WidgetTextAlign) -> &mut Self {
+        self.title_align = Some(value);
+        self
+    }
+
+    pub fn title_size(&mut self, value: String) -> &mut Self {
+        self.title_size = Some(value);
+        self
     }
 }

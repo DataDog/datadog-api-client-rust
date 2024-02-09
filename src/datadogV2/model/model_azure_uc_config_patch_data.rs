@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct AzureUCConfigPatchData {
     /// Attributes for Azure config Patch Request.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::AzureUCConfigPatchRequestAttributes>,
+    pub attributes: crate::datadogV2::model::AzureUCConfigPatchRequestAttributes,
     /// Type of Azure config Patch Request.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::AzureUCConfigPatchRequestType,
@@ -18,7 +18,7 @@ pub struct AzureUCConfigPatchData {
 
 impl AzureUCConfigPatchData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::AzureUCConfigPatchRequestAttributes>,
+        attributes: crate::datadogV2::model::AzureUCConfigPatchRequestAttributes,
         type_: crate::datadogV2::model::AzureUCConfigPatchRequestType,
     ) -> AzureUCConfigPatchData {
         AzureUCConfigPatchData { attributes, type_ }

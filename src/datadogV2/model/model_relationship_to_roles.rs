@@ -17,7 +17,16 @@ impl RelationshipToRoles {
     pub fn new() -> RelationshipToRoles {
         RelationshipToRoles { data: None }
     }
+
+    pub fn data(
+        &mut self,
+        value: Vec<crate::datadogV2::model::RelationshipToRoleData>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for RelationshipToRoles {
     fn default() -> Self {
         Self::new()

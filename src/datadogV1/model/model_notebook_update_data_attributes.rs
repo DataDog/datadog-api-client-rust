@@ -13,7 +13,7 @@ pub struct NotebookUpdateDataAttributes {
     pub cells: Vec<crate::datadogV1::model::NotebookUpdateCell>,
     /// Metadata associated with the notebook.
     #[serde(rename = "metadata")]
-    pub metadata: Option<Box<crate::datadogV1::model::NotebookMetadata>>,
+    pub metadata: Option<crate::datadogV1::model::NotebookMetadata>,
     /// The name of the notebook.
     #[serde(rename = "name")]
     pub name: String,
@@ -22,14 +22,14 @@ pub struct NotebookUpdateDataAttributes {
     pub status: Option<crate::datadogV1::model::NotebookStatus>,
     /// Notebook global timeframe.
     #[serde(rename = "time")]
-    pub time: Box<crate::datadogV1::model::NotebookGlobalTime>,
+    pub time: crate::datadogV1::model::NotebookGlobalTime,
 }
 
 impl NotebookUpdateDataAttributes {
     pub fn new(
         cells: Vec<crate::datadogV1::model::NotebookUpdateCell>,
         name: String,
-        time: Box<crate::datadogV1::model::NotebookGlobalTime>,
+        time: crate::datadogV1::model::NotebookGlobalTime,
     ) -> NotebookUpdateDataAttributes {
         NotebookUpdateDataAttributes {
             cells,
@@ -38,5 +38,15 @@ impl NotebookUpdateDataAttributes {
             status: None,
             time,
         }
+    }
+
+    pub fn metadata(&mut self, value: crate::datadogV1::model::NotebookMetadata) -> &mut Self {
+        self.metadata = Some(value);
+        self
+    }
+
+    pub fn status(&mut self, value: crate::datadogV1::model::NotebookStatus) -> &mut Self {
+        self.status = Some(value);
+        self
     }
 }

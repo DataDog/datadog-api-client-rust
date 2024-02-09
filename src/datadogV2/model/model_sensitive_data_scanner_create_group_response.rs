@@ -10,10 +10,10 @@ use serde_with::skip_serializing_none;
 pub struct SensitiveDataScannerCreateGroupResponse {
     /// Response data related to the creation of a group.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::SensitiveDataScannerGroupResponse>>,
+    pub data: Option<crate::datadogV2::model::SensitiveDataScannerGroupResponse>,
     /// Meta payload containing information about the API.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly>>,
+    pub meta: Option<crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly>,
 }
 
 impl SensitiveDataScannerCreateGroupResponse {
@@ -23,7 +23,24 @@ impl SensitiveDataScannerCreateGroupResponse {
             meta: None,
         }
     }
+
+    pub fn data(
+        &mut self,
+        value: crate::datadogV2::model::SensitiveDataScannerGroupResponse,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn meta(
+        &mut self,
+        value: crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly,
+    ) -> &mut Self {
+        self.meta = Some(value);
+        self
+    }
 }
+
 impl Default for SensitiveDataScannerCreateGroupResponse {
     fn default() -> Self {
         Self::new()

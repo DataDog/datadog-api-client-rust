@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SpansAggregateBucket {
     /// A bucket values.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::SpansAggregateBucketAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::SpansAggregateBucketAttributes>,
     /// ID of the spans aggregate.
     #[serde(rename = "id")]
     pub id: Option<String>,
@@ -27,7 +27,26 @@ impl SpansAggregateBucket {
             type_: None,
         }
     }
+
+    pub fn attributes(
+        &mut self,
+        value: crate::datadogV2::model::SpansAggregateBucketAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn type_(&mut self, value: crate::datadogV2::model::SpansAggregateBucketType) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
+
 impl Default for SpansAggregateBucket {
     fn default() -> Self {
         Self::new()

@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct DORADeploymentRequestData {
     /// Attributes to create a DORA deployment event.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::DORADeploymentRequestAttributes>,
+    pub attributes: crate::datadogV2::model::DORADeploymentRequestAttributes,
 }
 
 impl DORADeploymentRequestData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::DORADeploymentRequestAttributes>,
+        attributes: crate::datadogV2::model::DORADeploymentRequestAttributes,
     ) -> DORADeploymentRequestData {
         DORADeploymentRequestData { attributes }
     }

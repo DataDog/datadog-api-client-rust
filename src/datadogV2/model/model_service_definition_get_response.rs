@@ -10,14 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct ServiceDefinitionGetResponse {
     /// Service definition data.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::ServiceDefinitionData>>,
+    pub data: Option<crate::datadogV2::model::ServiceDefinitionData>,
 }
 
 impl ServiceDefinitionGetResponse {
     pub fn new() -> ServiceDefinitionGetResponse {
         ServiceDefinitionGetResponse { data: None }
     }
+
+    pub fn data(&mut self, value: crate::datadogV2::model::ServiceDefinitionData) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for ServiceDefinitionGetResponse {
     fn default() -> Self {
         Self::new()

@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct IncidentSearchResponseNumericFacetData {
     /// Aggregate information for numeric incident data.
     #[serde(rename = "aggregates")]
-    pub aggregates: Box<crate::datadogV2::model::IncidentSearchResponseNumericFacetDataAggregates>,
+    pub aggregates: crate::datadogV2::model::IncidentSearchResponseNumericFacetDataAggregates,
     /// Name of the incident property field.
     #[serde(rename = "name")]
     pub name: String,
@@ -18,7 +18,7 @@ pub struct IncidentSearchResponseNumericFacetData {
 
 impl IncidentSearchResponseNumericFacetData {
     pub fn new(
-        aggregates: Box<crate::datadogV2::model::IncidentSearchResponseNumericFacetDataAggregates>,
+        aggregates: crate::datadogV2::model::IncidentSearchResponseNumericFacetDataAggregates,
         name: String,
     ) -> IncidentSearchResponseNumericFacetData {
         IncidentSearchResponseNumericFacetData { aggregates, name }

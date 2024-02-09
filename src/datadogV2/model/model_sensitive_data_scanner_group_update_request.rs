@@ -10,16 +10,16 @@ use serde_with::skip_serializing_none;
 pub struct SensitiveDataScannerGroupUpdateRequest {
     /// Data related to the update of a group.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::SensitiveDataScannerGroupUpdate>,
+    pub data: crate::datadogV2::model::SensitiveDataScannerGroupUpdate,
     /// Meta payload containing information about the API.
     #[serde(rename = "meta")]
-    pub meta: Box<crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly>,
+    pub meta: crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly,
 }
 
 impl SensitiveDataScannerGroupUpdateRequest {
     pub fn new(
-        data: Box<crate::datadogV2::model::SensitiveDataScannerGroupUpdate>,
-        meta: Box<crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly>,
+        data: crate::datadogV2::model::SensitiveDataScannerGroupUpdate,
+        meta: crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly,
     ) -> SensitiveDataScannerGroupUpdateRequest {
         SensitiveDataScannerGroupUpdateRequest { data, meta }
     }

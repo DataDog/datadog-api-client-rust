@@ -13,7 +13,7 @@ pub struct IncidentTimelineCellMarkdownCreateAttributes {
     pub cell_type: crate::datadogV2::model::IncidentTimelineCellMarkdownContentType,
     /// The Markdown timeline cell contents.
     #[serde(rename = "content")]
-    pub content: Box<crate::datadogV2::model::IncidentTimelineCellMarkdownCreateAttributesContent>,
+    pub content: crate::datadogV2::model::IncidentTimelineCellMarkdownCreateAttributesContent,
     /// A flag indicating whether the timeline cell is important and should be highlighted.
     #[serde(rename = "important")]
     pub important: Option<bool>,
@@ -22,12 +22,17 @@ pub struct IncidentTimelineCellMarkdownCreateAttributes {
 impl IncidentTimelineCellMarkdownCreateAttributes {
     pub fn new(
         cell_type: crate::datadogV2::model::IncidentTimelineCellMarkdownContentType,
-        content: Box<crate::datadogV2::model::IncidentTimelineCellMarkdownCreateAttributesContent>,
+        content: crate::datadogV2::model::IncidentTimelineCellMarkdownCreateAttributesContent,
     ) -> IncidentTimelineCellMarkdownCreateAttributes {
         IncidentTimelineCellMarkdownCreateAttributes {
             cell_type,
             content,
             important: None,
         }
+    }
+
+    pub fn important(&mut self, value: bool) -> &mut Self {
+        self.important = Some(value);
+        self
     }
 }

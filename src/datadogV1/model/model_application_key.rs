@@ -27,7 +27,23 @@ impl ApplicationKey {
             owner: None,
         }
     }
+
+    pub fn hash(&mut self, value: String) -> &mut Self {
+        self.hash = Some(value);
+        self
+    }
+
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn owner(&mut self, value: String) -> &mut Self {
+        self.owner = Some(value);
+        self
+    }
 }
+
 impl Default for ApplicationKey {
     fn default() -> Self {
         Self::new()

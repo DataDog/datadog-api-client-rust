@@ -10,14 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct ResponseMetaAttributes {
     /// Pagination object.
     #[serde(rename = "page")]
-    pub page: Option<Box<crate::datadogV2::model::Pagination>>,
+    pub page: Option<crate::datadogV2::model::Pagination>,
 }
 
 impl ResponseMetaAttributes {
     pub fn new() -> ResponseMetaAttributes {
         ResponseMetaAttributes { page: None }
     }
+
+    pub fn page(&mut self, value: crate::datadogV2::model::Pagination) -> &mut Self {
+        self.page = Some(value);
+        self
+    }
 }
+
 impl Default for ResponseMetaAttributes {
     fn default() -> Self {
         Self::new()

@@ -10,10 +10,10 @@ use serde_with::skip_serializing_none;
 pub struct IncidentIntegrationRelationships {
     /// Relationship to user.
     #[serde(rename = "created_by_user")]
-    pub created_by_user: Option<Box<crate::datadogV2::model::RelationshipToUser>>,
+    pub created_by_user: Option<crate::datadogV2::model::RelationshipToUser>,
     /// Relationship to user.
     #[serde(rename = "last_modified_by_user")]
-    pub last_modified_by_user: Option<Box<crate::datadogV2::model::RelationshipToUser>>,
+    pub last_modified_by_user: Option<crate::datadogV2::model::RelationshipToUser>,
 }
 
 impl IncidentIntegrationRelationships {
@@ -23,7 +23,24 @@ impl IncidentIntegrationRelationships {
             last_modified_by_user: None,
         }
     }
+
+    pub fn created_by_user(
+        &mut self,
+        value: crate::datadogV2::model::RelationshipToUser,
+    ) -> &mut Self {
+        self.created_by_user = Some(value);
+        self
+    }
+
+    pub fn last_modified_by_user(
+        &mut self,
+        value: crate::datadogV2::model::RelationshipToUser,
+    ) -> &mut Self {
+        self.last_modified_by_user = Some(value);
+        self
+    }
 }
+
 impl Default for IncidentIntegrationRelationships {
     fn default() -> Self {
         Self::new()

@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct LogsMetricUpdateData {
     /// The log-based metric properties that will be updated.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::LogsMetricUpdateAttributes>,
+    pub attributes: crate::datadogV2::model::LogsMetricUpdateAttributes,
     /// The type of the resource. The value should always be logs_metrics.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::LogsMetricType,
@@ -18,7 +18,7 @@ pub struct LogsMetricUpdateData {
 
 impl LogsMetricUpdateData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::LogsMetricUpdateAttributes>,
+        attributes: crate::datadogV2::model::LogsMetricUpdateAttributes,
         type_: crate::datadogV2::model::LogsMetricType,
     ) -> LogsMetricUpdateData {
         LogsMetricUpdateData { attributes, type_ }

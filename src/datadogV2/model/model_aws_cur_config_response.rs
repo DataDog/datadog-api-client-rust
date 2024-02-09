@@ -10,14 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct AwsCURConfigResponse {
     /// AWS CUR config.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::AwsCURConfig>>,
+    pub data: Option<crate::datadogV2::model::AwsCURConfig>,
 }
 
 impl AwsCURConfigResponse {
     pub fn new() -> AwsCURConfigResponse {
         AwsCURConfigResponse { data: None }
     }
+
+    pub fn data(&mut self, value: crate::datadogV2::model::AwsCURConfig) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for AwsCURConfigResponse {
     fn default() -> Self {
         Self::new()

@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct FormulaAndFunctionEventQueryDefinition {
     /// Compute options.
     #[serde(rename = "compute")]
-    pub compute: Box<crate::datadogV1::model::FormulaAndFunctionEventQueryDefinitionCompute>,
+    pub compute: crate::datadogV1::model::FormulaAndFunctionEventQueryDefinitionCompute,
     /// Data source for event platform-based queries.
     #[serde(rename = "data_source")]
     pub data_source: crate::datadogV1::model::FormulaAndFunctionEventsDataSource,
@@ -25,7 +25,7 @@ pub struct FormulaAndFunctionEventQueryDefinition {
     pub name: String,
     /// Search options.
     #[serde(rename = "search")]
-    pub search: Option<Box<crate::datadogV1::model::FormulaAndFunctionEventQueryDefinitionSearch>>,
+    pub search: Option<crate::datadogV1::model::FormulaAndFunctionEventQueryDefinitionSearch>,
     /// Option for storage location. Feature in Private Beta.
     #[serde(rename = "storage")]
     pub storage: Option<String>,
@@ -33,7 +33,7 @@ pub struct FormulaAndFunctionEventQueryDefinition {
 
 impl FormulaAndFunctionEventQueryDefinition {
     pub fn new(
-        compute: Box<crate::datadogV1::model::FormulaAndFunctionEventQueryDefinitionCompute>,
+        compute: crate::datadogV1::model::FormulaAndFunctionEventQueryDefinitionCompute,
         data_source: crate::datadogV1::model::FormulaAndFunctionEventsDataSource,
         name: String,
     ) -> FormulaAndFunctionEventQueryDefinition {
@@ -46,5 +46,31 @@ impl FormulaAndFunctionEventQueryDefinition {
             search: None,
             storage: None,
         }
+    }
+
+    pub fn group_by(
+        &mut self,
+        value: Vec<crate::datadogV1::model::FormulaAndFunctionEventQueryGroupBy>,
+    ) -> &mut Self {
+        self.group_by = Some(value);
+        self
+    }
+
+    pub fn indexes(&mut self, value: Vec<String>) -> &mut Self {
+        self.indexes = Some(value);
+        self
+    }
+
+    pub fn search(
+        &mut self,
+        value: crate::datadogV1::model::FormulaAndFunctionEventQueryDefinitionSearch,
+    ) -> &mut Self {
+        self.search = Some(value);
+        self
+    }
+
+    pub fn storage(&mut self, value: String) -> &mut Self {
+        self.storage = Some(value);
+        self
     }
 }

@@ -14,7 +14,7 @@ pub struct QueryFormula {
     /// Message for specifying limits to the number of values returned by a query.
     /// This limit is only for scalar queries and has no effect on timeseries queries.
     #[serde(rename = "limit")]
-    pub limit: Option<Box<crate::datadogV2::model::FormulaLimit>>,
+    pub limit: Option<crate::datadogV2::model::FormulaLimit>,
 }
 
 impl QueryFormula {
@@ -23,5 +23,10 @@ impl QueryFormula {
             formula,
             limit: None,
         }
+    }
+
+    pub fn limit(&mut self, value: crate::datadogV2::model::FormulaLimit) -> &mut Self {
+        self.limit = Some(value);
+        self
     }
 }

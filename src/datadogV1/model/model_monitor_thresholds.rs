@@ -55,7 +55,38 @@ impl MonitorThresholds {
             warning_recovery: None,
         }
     }
+
+    pub fn critical(&mut self, value: f64) -> &mut Self {
+        self.critical = Some(value);
+        self
+    }
+
+    pub fn critical_recovery(&mut self, value: Option<f64>) -> &mut Self {
+        self.critical_recovery = Some(value);
+        self
+    }
+
+    pub fn ok(&mut self, value: Option<f64>) -> &mut Self {
+        self.ok = Some(value);
+        self
+    }
+
+    pub fn unknown(&mut self, value: Option<f64>) -> &mut Self {
+        self.unknown = Some(value);
+        self
+    }
+
+    pub fn warning(&mut self, value: Option<f64>) -> &mut Self {
+        self.warning = Some(value);
+        self
+    }
+
+    pub fn warning_recovery(&mut self, value: Option<f64>) -> &mut Self {
+        self.warning_recovery = Some(value);
+        self
+    }
 }
+
 impl Default for MonitorThresholds {
     fn default() -> Self {
         Self::new()

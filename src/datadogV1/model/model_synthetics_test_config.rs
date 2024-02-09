@@ -16,7 +16,7 @@ pub struct SyntheticsTestConfig {
     pub config_variables: Option<Vec<crate::datadogV1::model::SyntheticsConfigVariable>>,
     /// Object describing the Synthetic test request.
     #[serde(rename = "request")]
-    pub request: Option<Box<crate::datadogV1::model::SyntheticsTestRequest>>,
+    pub request: Option<crate::datadogV1::model::SyntheticsTestRequest>,
     /// Browser tests only - array of variables used for the test steps.
     #[serde(rename = "variables")]
     pub variables: Option<Vec<crate::datadogV1::model::SyntheticsBrowserVariable>>,
@@ -31,7 +31,37 @@ impl SyntheticsTestConfig {
             variables: None,
         }
     }
+
+    pub fn assertions(
+        &mut self,
+        value: Vec<crate::datadogV1::model::SyntheticsAssertion>,
+    ) -> &mut Self {
+        self.assertions = Some(value);
+        self
+    }
+
+    pub fn config_variables(
+        &mut self,
+        value: Vec<crate::datadogV1::model::SyntheticsConfigVariable>,
+    ) -> &mut Self {
+        self.config_variables = Some(value);
+        self
+    }
+
+    pub fn request(&mut self, value: crate::datadogV1::model::SyntheticsTestRequest) -> &mut Self {
+        self.request = Some(value);
+        self
+    }
+
+    pub fn variables(
+        &mut self,
+        value: Vec<crate::datadogV1::model::SyntheticsBrowserVariable>,
+    ) -> &mut Self {
+        self.variables = Some(value);
+        self
+    }
 }
+
 impl Default for SyntheticsTestConfig {
     fn default() -> Self {
         Self::new()

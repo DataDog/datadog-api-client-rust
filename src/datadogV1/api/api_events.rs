@@ -5,27 +5,9 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateEventParams is a struct for passing parameters to the method [`EventsAPI::create_event`]
-#[derive(Clone, Debug)]
-pub struct CreateEventParams {
-    /// Event request object
-    pub body: crate::datadogV1::model::EventCreateRequest,
-}
-
-/// GetEventParams is a struct for passing parameters to the method [`EventsAPI::get_event`]
-#[derive(Clone, Debug)]
-pub struct GetEventParams {
-    /// The ID of the event.
-    pub event_id: i64,
-}
-
-/// ListEventsParams is a struct for passing parameters to the method [`EventsAPI::list_events`]
-#[derive(Clone, Debug)]
-pub struct ListEventsParams {
-    /// POSIX timestamp.
-    pub start: i64,
-    /// POSIX timestamp.
-    pub end: i64,
+/// ListEventsOptionalParams is a struct for passing parameters to the method [`EventsAPI::list_events`]
+#[derive(Clone, Default, Debug)]
+pub struct ListEventsOptionalParams {
     /// Priority of your events, either `low` or `normal`.
     pub priority: Option<crate::datadogV1::model::EventPriority>,
     /// A comma separated string of sources.
@@ -42,6 +24,43 @@ pub struct ListEventsParams {
     /// By default 1000 results are returned per request. Set page to the number of the page to return with `0` being the first page. The page parameter can only be used
     /// when either unaggregated or exclude_aggregate is set to `true.`
     pub page: Option<i32>,
+}
+
+impl ListEventsOptionalParams {
+    /// Priority of your events, either `low` or `normal`.
+    pub fn priority(&mut self, value: crate::datadogV1::model::EventPriority) -> &mut Self {
+        self.priority = Some(value);
+        self
+    }
+    /// A comma separated string of sources.
+    pub fn sources(&mut self, value: String) -> &mut Self {
+        self.sources = Some(value);
+        self
+    }
+    /// A comma separated list indicating what tags, if any, should be used to filter the list of events.
+    pub fn tags(&mut self, value: String) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+    /// Set unaggregated to `true` to return all events within the specified [`start`,`end`] timeframe.
+    /// Otherwise if an event is aggregated to a parent event with a timestamp outside of the timeframe,
+    /// it won't be available in the output. Aggregated events with `is_aggregate=true` in the response will still be returned unless exclude_aggregate is set to `true.`
+    pub fn unaggregated(&mut self, value: bool) -> &mut Self {
+        self.unaggregated = Some(value);
+        self
+    }
+    /// Set `exclude_aggregate` to `true` to only return unaggregated events where `is_aggregate=false` in the response. If the `exclude_aggregate` parameter is set to `true`,
+    /// then the unaggregated parameter is ignored and will be `true` by default.
+    pub fn exclude_aggregate(&mut self, value: bool) -> &mut Self {
+        self.exclude_aggregate = Some(value);
+        self
+    }
+    /// By default 1000 results are returned per request. Set page to the number of the page to return with `0` being the first page. The page parameter can only be used
+    /// when either unaggregated or exclude_aggregate is set to `true.`
+    pub fn page(&mut self, value: i32) -> &mut Self {
+        self.page = Some(value);
+        self
+    }
 }
 
 /// CreateEventError is a struct for typed errors of method [`EventsAPI::create_event`]
@@ -98,9 +117,9 @@ impl EventsAPI {
     /// Tag them, set priority and event aggregate them with other events.
     pub async fn create_event(
         &self,
-        params: CreateEventParams,
+        body: crate::datadogV1::model::EventCreateRequest,
     ) -> Result<Option<crate::datadogV1::model::EventCreateResponse>, Error<CreateEventError>> {
-        match self.create_event_with_http_info(params).await {
+        match self.create_event_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -110,15 +129,12 @@ impl EventsAPI {
     /// Tag them, set priority and event aggregate them with other events.
     pub async fn create_event_with_http_info(
         &self,
-        params: CreateEventParams,
+        body: crate::datadogV1::model::EventCreateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::EventCreateResponse>,
         Error<CreateEventError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -175,9 +191,9 @@ impl EventsAPI {
     /// you may see characters such as `%`,`\`,`n` in your output.
     pub async fn get_event(
         &self,
-        params: GetEventParams,
+        event_id: i64,
     ) -> Result<Option<crate::datadogV1::model::EventResponse>, Error<GetEventError>> {
-        match self.get_event_with_http_info(params).await {
+        match self.get_event_with_http_info(event_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -189,12 +205,9 @@ impl EventsAPI {
     /// you may see characters such as `%`,`\`,`n` in your output.
     pub async fn get_event_with_http_info(
         &self,
-        params: GetEventParams,
+        event_id: i64,
     ) -> Result<ResponseContent<crate::datadogV1::model::EventResponse>, Error<GetEventError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let event_id = params.event_id;
 
         let local_client = &local_configuration.client;
 
@@ -256,9 +269,11 @@ impl EventsAPI {
     /// paginate the results. You can also use the page parameter to specify which set of `1000` results to return.
     pub async fn list_events(
         &self,
-        params: ListEventsParams,
+        start: i64,
+        end: i64,
+        params: ListEventsOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::EventListResponse>, Error<ListEventsError>> {
-        match self.list_events_with_http_info(params).await {
+        match self.list_events_with_http_info(start, end, params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -275,14 +290,14 @@ impl EventsAPI {
     /// paginate the results. You can also use the page parameter to specify which set of `1000` results to return.
     pub async fn list_events_with_http_info(
         &self,
-        params: ListEventsParams,
+        start: i64,
+        end: i64,
+        params: ListEventsOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV1::model::EventListResponse>, Error<ListEventsError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start = params.start;
-        let end = params.end;
+        // unbox and build optional parameters
         let priority = params.priority;
         let sources = params.sources;
         let tags = params.tags;
@@ -298,25 +313,29 @@ impl EventsAPI {
 
         local_req_builder = local_req_builder.query(&[("start", &start.to_string())]);
         local_req_builder = local_req_builder.query(&[("end", &end.to_string())]);
-        if let Some(ref local_str) = priority {
-            local_req_builder = local_req_builder.query(&[("priority", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = sources {
-            local_req_builder = local_req_builder.query(&[("sources", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = tags {
-            local_req_builder = local_req_builder.query(&[("tags", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = unaggregated {
+        if let Some(ref local_query_param) = priority {
             local_req_builder =
-                local_req_builder.query(&[("unaggregated", &local_str.to_string())]);
+                local_req_builder.query(&[("priority", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = exclude_aggregate {
+        if let Some(ref local_query_param) = sources {
             local_req_builder =
-                local_req_builder.query(&[("exclude_aggregate", &local_str.to_string())]);
+                local_req_builder.query(&[("sources", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = page {
-            local_req_builder = local_req_builder.query(&[("page", &local_str.to_string())]);
+        if let Some(ref local_query_param) = tags {
+            local_req_builder =
+                local_req_builder.query(&[("tags", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = unaggregated {
+            local_req_builder =
+                local_req_builder.query(&[("unaggregated", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = exclude_aggregate {
+            local_req_builder =
+                local_req_builder.query(&[("exclude_aggregate", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page {
+            local_req_builder =
+                local_req_builder.query(&[("page", &local_query_param.to_string())]);
         };
 
         // build user agent

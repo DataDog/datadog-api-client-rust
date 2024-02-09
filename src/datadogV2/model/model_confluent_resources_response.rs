@@ -17,7 +17,16 @@ impl ConfluentResourcesResponse {
     pub fn new() -> ConfluentResourcesResponse {
         ConfluentResourcesResponse { data: None }
     }
+
+    pub fn data(
+        &mut self,
+        value: Vec<crate::datadogV2::model::ConfluentResourceResponseData>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for ConfluentResourcesResponse {
     fn default() -> Self {
         Self::new()

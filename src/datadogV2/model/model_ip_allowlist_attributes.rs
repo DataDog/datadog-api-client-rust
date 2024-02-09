@@ -23,7 +23,18 @@ impl IPAllowlistAttributes {
             entries: None,
         }
     }
+
+    pub fn enabled(&mut self, value: bool) -> &mut Self {
+        self.enabled = Some(value);
+        self
+    }
+
+    pub fn entries(&mut self, value: Vec<crate::datadogV2::model::IPAllowlistEntry>) -> &mut Self {
+        self.entries = Some(value);
+        self
+    }
 }
+
 impl Default for IPAllowlistAttributes {
     fn default() -> Self {
         Self::new()

@@ -10,10 +10,10 @@ use serde_with::skip_serializing_none;
 pub struct HostMapWidgetDefinitionRequests {
     /// Updated host map.
     #[serde(rename = "fill")]
-    pub fill: Option<Box<crate::datadogV1::model::HostMapRequest>>,
+    pub fill: Option<crate::datadogV1::model::HostMapRequest>,
     /// Updated host map.
     #[serde(rename = "size")]
-    pub size: Option<Box<crate::datadogV1::model::HostMapRequest>>,
+    pub size: Option<crate::datadogV1::model::HostMapRequest>,
 }
 
 impl HostMapWidgetDefinitionRequests {
@@ -23,7 +23,18 @@ impl HostMapWidgetDefinitionRequests {
             size: None,
         }
     }
+
+    pub fn fill(&mut self, value: crate::datadogV1::model::HostMapRequest) -> &mut Self {
+        self.fill = Some(value);
+        self
+    }
+
+    pub fn size(&mut self, value: crate::datadogV1::model::HostMapRequest) -> &mut Self {
+        self.size = Some(value);
+        self
+    }
 }
+
 impl Default for HostMapWidgetDefinitionRequests {
     fn default() -> Self {
         Self::new()

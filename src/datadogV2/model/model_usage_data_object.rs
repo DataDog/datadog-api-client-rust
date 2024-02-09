@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct UsageDataObject {
     /// Usage attributes data.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::UsageAttributesObject>>,
+    pub attributes: Option<crate::datadogV2::model::UsageAttributesObject>,
     /// Unique ID of the response.
     #[serde(rename = "id")]
     pub id: Option<String>,
@@ -27,7 +27,26 @@ impl UsageDataObject {
             type_: None,
         }
     }
+
+    pub fn attributes(
+        &mut self,
+        value: crate::datadogV2::model::UsageAttributesObject,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn type_(&mut self, value: crate::datadogV2::model::UsageTimeSeriesType) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
+
 impl Default for UsageDataObject {
     fn default() -> Self {
         Self::new()

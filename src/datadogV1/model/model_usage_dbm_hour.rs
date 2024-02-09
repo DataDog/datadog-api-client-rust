@@ -43,7 +43,33 @@ impl UsageDBMHour {
             public_id: None,
         }
     }
+
+    pub fn dbm_host_count(&mut self, value: Option<i64>) -> &mut Self {
+        self.dbm_host_count = Some(value);
+        self
+    }
+
+    pub fn dbm_queries_count(&mut self, value: Option<i64>) -> &mut Self {
+        self.dbm_queries_count = Some(value);
+        self
+    }
+
+    pub fn hour(&mut self, value: String) -> &mut Self {
+        self.hour = Some(value);
+        self
+    }
+
+    pub fn org_name(&mut self, value: String) -> &mut Self {
+        self.org_name = Some(value);
+        self
+    }
+
+    pub fn public_id(&mut self, value: String) -> &mut Self {
+        self.public_id = Some(value);
+        self
+    }
 }
+
 impl Default for UsageDBMHour {
     fn default() -> Self {
         Self::new()

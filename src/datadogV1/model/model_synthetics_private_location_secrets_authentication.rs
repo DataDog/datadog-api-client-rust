@@ -23,7 +23,18 @@ impl SyntheticsPrivateLocationSecretsAuthentication {
             key: None,
         }
     }
+
+    pub fn id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn key(&mut self, value: String) -> &mut Self {
+        self.key = Some(value);
+        self
+    }
 }
+
 impl Default for SyntheticsPrivateLocationSecretsAuthentication {
     fn default() -> Self {
         Self::new()

@@ -31,7 +31,31 @@ impl AWSEventBridgeCreateResponse {
             status: None,
         }
     }
+
+    pub fn event_source_name(&mut self, value: String) -> &mut Self {
+        self.event_source_name = Some(value);
+        self
+    }
+
+    pub fn has_bus(&mut self, value: bool) -> &mut Self {
+        self.has_bus = Some(value);
+        self
+    }
+
+    pub fn region(&mut self, value: String) -> &mut Self {
+        self.region = Some(value);
+        self
+    }
+
+    pub fn status(
+        &mut self,
+        value: crate::datadogV1::model::AWSEventBridgeCreateStatus,
+    ) -> &mut Self {
+        self.status = Some(value);
+        self
+    }
 }
+
 impl Default for AWSEventBridgeCreateResponse {
     fn default() -> Self {
         Self::new()

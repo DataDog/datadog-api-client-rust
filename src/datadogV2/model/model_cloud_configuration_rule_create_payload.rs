@@ -15,7 +15,7 @@ pub struct CloudConfigurationRuleCreatePayload {
     /// How to generate compliance signals. Useful for cloud_configuration rules only.
     #[serde(rename = "complianceSignalOptions")]
     pub compliance_signal_options:
-        Box<crate::datadogV2::model::CloudConfigurationRuleComplianceSignalOptions>,
+        crate::datadogV2::model::CloudConfigurationRuleComplianceSignalOptions,
     /// Additional queries to filter matched events before they are processed.
     #[serde(rename = "filters")]
     pub filters: Option<Vec<crate::datadogV2::model::SecurityMonitoringFilter>>,
@@ -30,7 +30,7 @@ pub struct CloudConfigurationRuleCreatePayload {
     pub name: String,
     /// Options on cloud configuration rules.
     #[serde(rename = "options")]
-    pub options: Box<crate::datadogV2::model::CloudConfigurationRuleOptions>,
+    pub options: crate::datadogV2::model::CloudConfigurationRuleOptions,
     /// Tags for generated findings and signals.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
@@ -42,13 +42,11 @@ pub struct CloudConfigurationRuleCreatePayload {
 impl CloudConfigurationRuleCreatePayload {
     pub fn new(
         cases: Vec<crate::datadogV2::model::CloudConfigurationRuleCaseCreate>,
-        compliance_signal_options: Box<
-            crate::datadogV2::model::CloudConfigurationRuleComplianceSignalOptions,
-        >,
+        compliance_signal_options: crate::datadogV2::model::CloudConfigurationRuleComplianceSignalOptions,
         is_enabled: bool,
         message: String,
         name: String,
-        options: Box<crate::datadogV2::model::CloudConfigurationRuleOptions>,
+        options: crate::datadogV2::model::CloudConfigurationRuleOptions,
     ) -> CloudConfigurationRuleCreatePayload {
         CloudConfigurationRuleCreatePayload {
             cases,
@@ -61,5 +59,26 @@ impl CloudConfigurationRuleCreatePayload {
             tags: None,
             type_: None,
         }
+    }
+
+    pub fn filters(
+        &mut self,
+        value: Vec<crate::datadogV2::model::SecurityMonitoringFilter>,
+    ) -> &mut Self {
+        self.filters = Some(value);
+        self
+    }
+
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+
+    pub fn type_(
+        &mut self,
+        value: crate::datadogV2::model::CloudConfigurationRuleType,
+    ) -> &mut Self {
+        self.type_ = Some(value);
+        self
     }
 }

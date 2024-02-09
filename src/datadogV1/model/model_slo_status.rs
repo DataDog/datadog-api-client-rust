@@ -33,7 +33,7 @@ pub struct SLOStatus {
         with = "::serde_with::rust::double_option"
     )]
     pub raw_error_budget_remaining:
-        Option<Option<Box<crate::datadogV1::model::SLORawErrorBudgetRemaining>>>,
+        Option<Option<crate::datadogV1::model::SLORawErrorBudgetRemaining>>,
     /// The current service level indicator (SLI) of the SLO, also known as 'status'. This is a percentage value from 0-100 (inclusive).
     #[serde(rename = "sli", default, with = "::serde_with::rust::double_option")]
     pub sli: Option<Option<f64>>,
@@ -61,7 +61,46 @@ impl SLOStatus {
             state: None,
         }
     }
+
+    pub fn calculation_error(&mut self, value: Option<String>) -> &mut Self {
+        self.calculation_error = Some(value);
+        self
+    }
+
+    pub fn error_budget_remaining(&mut self, value: Option<f64>) -> &mut Self {
+        self.error_budget_remaining = Some(value);
+        self
+    }
+
+    pub fn indexed_at(&mut self, value: i64) -> &mut Self {
+        self.indexed_at = Some(value);
+        self
+    }
+
+    pub fn raw_error_budget_remaining(
+        &mut self,
+        value: Option<crate::datadogV1::model::SLORawErrorBudgetRemaining>,
+    ) -> &mut Self {
+        self.raw_error_budget_remaining = Some(value);
+        self
+    }
+
+    pub fn sli(&mut self, value: Option<f64>) -> &mut Self {
+        self.sli = Some(value);
+        self
+    }
+
+    pub fn span_precision(&mut self, value: Option<i64>) -> &mut Self {
+        self.span_precision = Some(value);
+        self
+    }
+
+    pub fn state(&mut self, value: crate::datadogV1::model::SLOState) -> &mut Self {
+        self.state = Some(value);
+        self
+    }
 }
+
 impl Default for SLOStatus {
     fn default() -> Self {
         Self::new()

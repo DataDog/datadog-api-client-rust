@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SyntheticsTriggerTest {
     /// Metadata for the Synthetic tests run.
     #[serde(rename = "metadata")]
-    pub metadata: Option<Box<crate::datadogV1::model::SyntheticsCIBatchMetadata>>,
+    pub metadata: Option<crate::datadogV1::model::SyntheticsCIBatchMetadata>,
     /// The public ID of the Synthetic test to trigger.
     #[serde(rename = "public_id")]
     pub public_id: String,
@@ -22,5 +22,13 @@ impl SyntheticsTriggerTest {
             metadata: None,
             public_id,
         }
+    }
+
+    pub fn metadata(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsCIBatchMetadata,
+    ) -> &mut Self {
+        self.metadata = Some(value);
+        self
     }
 }

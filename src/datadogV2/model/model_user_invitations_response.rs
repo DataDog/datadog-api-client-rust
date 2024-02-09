@@ -17,7 +17,16 @@ impl UserInvitationsResponse {
     pub fn new() -> UserInvitationsResponse {
         UserInvitationsResponse { data: None }
     }
+
+    pub fn data(
+        &mut self,
+        value: Vec<crate::datadogV2::model::UserInvitationResponseData>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for UserInvitationsResponse {
     fn default() -> Self {
         Self::new()

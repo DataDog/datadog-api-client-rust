@@ -16,7 +16,7 @@ pub struct SyntheticsAssertionXPathTarget {
     pub property: Option<String>,
     /// Composed target for `validatesXPath` operator.
     #[serde(rename = "target")]
-    pub target: Option<Box<crate::datadogV1::model::SyntheticsAssertionXPathTargetTarget>>,
+    pub target: Option<crate::datadogV1::model::SyntheticsAssertionXPathTargetTarget>,
     /// Type of the assertion.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::SyntheticsAssertionType,
@@ -33,5 +33,18 @@ impl SyntheticsAssertionXPathTarget {
             target: None,
             type_,
         }
+    }
+
+    pub fn property(&mut self, value: String) -> &mut Self {
+        self.property = Some(value);
+        self
+    }
+
+    pub fn target(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsAssertionXPathTargetTarget,
+    ) -> &mut Self {
+        self.target = Some(value);
+        self
     }
 }

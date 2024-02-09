@@ -28,4 +28,9 @@ impl LogsListRequestTime {
             to,
         }
     }
+
+    pub fn timezone(&mut self, value: String) -> &mut Self {
+        self.timezone = Some(value);
+        self
+    }
 }

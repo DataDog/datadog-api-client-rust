@@ -23,7 +23,18 @@ impl AWSTagFilter {
             tag_filter_str: None,
         }
     }
+
+    pub fn namespace(&mut self, value: crate::datadogV1::model::AWSNamespace) -> &mut Self {
+        self.namespace = Some(value);
+        self
+    }
+
+    pub fn tag_filter_str(&mut self, value: String) -> &mut Self {
+        self.tag_filter_str = Some(value);
+        self
+    }
 }
+
 impl Default for AWSTagFilter {
     fn default() -> Self {
         Self::new()

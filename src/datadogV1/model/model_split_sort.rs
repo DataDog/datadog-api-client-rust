@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SplitSort {
     /// Defines the metric and aggregation used as the sort value.
     #[serde(rename = "compute")]
-    pub compute: Option<Box<crate::datadogV1::model::SplitConfigSortCompute>>,
+    pub compute: Option<crate::datadogV1::model::SplitConfigSortCompute>,
     /// Widget sorting methods.
     #[serde(rename = "order")]
     pub order: crate::datadogV1::model::WidgetSort,
@@ -22,5 +22,10 @@ impl SplitSort {
             compute: None,
             order,
         }
+    }
+
+    pub fn compute(&mut self, value: crate::datadogV1::model::SplitConfigSortCompute) -> &mut Self {
+        self.compute = Some(value);
+        self
     }
 }

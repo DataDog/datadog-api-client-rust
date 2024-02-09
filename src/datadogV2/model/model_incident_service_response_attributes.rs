@@ -27,7 +27,23 @@ impl IncidentServiceResponseAttributes {
             name: None,
         }
     }
+
+    pub fn created(&mut self, value: String) -> &mut Self {
+        self.created = Some(value);
+        self
+    }
+
+    pub fn modified(&mut self, value: String) -> &mut Self {
+        self.modified = Some(value);
+        self
+    }
+
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
 }
+
 impl Default for IncidentServiceResponseAttributes {
     fn default() -> Self {
         Self::new()

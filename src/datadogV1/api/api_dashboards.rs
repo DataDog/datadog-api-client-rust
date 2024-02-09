@@ -5,78 +5,31 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateDashboardParams is a struct for passing parameters to the method [`DashboardsAPI::create_dashboard`]
-#[derive(Clone, Debug)]
-pub struct CreateDashboardParams {
-    /// Create a dashboard request body.
-    pub body: crate::datadogV1::model::Dashboard,
-}
-
-/// CreatePublicDashboardParams is a struct for passing parameters to the method [`DashboardsAPI::create_public_dashboard`]
-#[derive(Clone, Debug)]
-pub struct CreatePublicDashboardParams {
-    /// Create a shared dashboard request body.
-    pub body: crate::datadogV1::model::SharedDashboard,
-}
-
-/// DeleteDashboardParams is a struct for passing parameters to the method [`DashboardsAPI::delete_dashboard`]
-#[derive(Clone, Debug)]
-pub struct DeleteDashboardParams {
-    /// The ID of the dashboard.
-    pub dashboard_id: String,
-}
-
-/// DeleteDashboardsParams is a struct for passing parameters to the method [`DashboardsAPI::delete_dashboards`]
-#[derive(Clone, Debug)]
-pub struct DeleteDashboardsParams {
-    /// Delete dashboards request body.
-    pub body: crate::datadogV1::model::DashboardBulkDeleteRequest,
-}
-
-/// DeletePublicDashboardParams is a struct for passing parameters to the method [`DashboardsAPI::delete_public_dashboard`]
-#[derive(Clone, Debug)]
-pub struct DeletePublicDashboardParams {
-    /// The token of the shared dashboard.
-    pub token: String,
-}
-
-/// DeletePublicDashboardInvitationParams is a struct for passing parameters to the method [`DashboardsAPI::delete_public_dashboard_invitation`]
-#[derive(Clone, Debug)]
-pub struct DeletePublicDashboardInvitationParams {
-    /// The token of the shared dashboard.
-    pub token: String,
-    /// Shared Dashboard Invitation deletion request body.
-    pub body: crate::datadogV1::model::SharedDashboardInvites,
-}
-
-/// GetDashboardParams is a struct for passing parameters to the method [`DashboardsAPI::get_dashboard`]
-#[derive(Clone, Debug)]
-pub struct GetDashboardParams {
-    /// The ID of the dashboard.
-    pub dashboard_id: String,
-}
-
-/// GetPublicDashboardParams is a struct for passing parameters to the method [`DashboardsAPI::get_public_dashboard`]
-#[derive(Clone, Debug)]
-pub struct GetPublicDashboardParams {
-    /// The token of the shared dashboard. Generated when a dashboard is shared.
-    pub token: String,
-}
-
-/// GetPublicDashboardInvitationsParams is a struct for passing parameters to the method [`DashboardsAPI::get_public_dashboard_invitations`]
-#[derive(Clone, Debug)]
-pub struct GetPublicDashboardInvitationsParams {
-    /// Token of the shared dashboard for which to fetch invitations.
-    pub token: String,
+/// GetPublicDashboardInvitationsOptionalParams is a struct for passing parameters to the method [`DashboardsAPI::get_public_dashboard_invitations`]
+#[derive(Clone, Default, Debug)]
+pub struct GetPublicDashboardInvitationsOptionalParams {
     /// The number of records to return in a single request.
     pub page_size: Option<i64>,
     /// The page to access (base 0).
     pub page_number: Option<i64>,
 }
 
-/// ListDashboardsParams is a struct for passing parameters to the method [`DashboardsAPI::list_dashboards`]
-#[derive(Clone, Debug)]
-pub struct ListDashboardsParams {
+impl GetPublicDashboardInvitationsOptionalParams {
+    /// The number of records to return in a single request.
+    pub fn page_size(&mut self, value: i64) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// The page to access (base 0).
+    pub fn page_number(&mut self, value: i64) -> &mut Self {
+        self.page_number = Some(value);
+        self
+    }
+}
+
+/// ListDashboardsOptionalParams is a struct for passing parameters to the method [`DashboardsAPI::list_dashboards`]
+#[derive(Clone, Default, Debug)]
+pub struct ListDashboardsOptionalParams {
     /// When `true`, this query only returns shared custom created
     /// or cloned dashboards.
     pub filter_shared: Option<bool>,
@@ -89,38 +42,29 @@ pub struct ListDashboardsParams {
     pub start: Option<i64>,
 }
 
-/// RestoreDashboardsParams is a struct for passing parameters to the method [`DashboardsAPI::restore_dashboards`]
-#[derive(Clone, Debug)]
-pub struct RestoreDashboardsParams {
-    /// Restore dashboards request body.
-    pub body: crate::datadogV1::model::DashboardRestoreRequest,
-}
-
-/// SendPublicDashboardInvitationParams is a struct for passing parameters to the method [`DashboardsAPI::send_public_dashboard_invitation`]
-#[derive(Clone, Debug)]
-pub struct SendPublicDashboardInvitationParams {
-    /// The token of the shared dashboard.
-    pub token: String,
-    /// Shared Dashboard Invitation request body.
-    pub body: crate::datadogV1::model::SharedDashboardInvites,
-}
-
-/// UpdateDashboardParams is a struct for passing parameters to the method [`DashboardsAPI::update_dashboard`]
-#[derive(Clone, Debug)]
-pub struct UpdateDashboardParams {
-    /// The ID of the dashboard.
-    pub dashboard_id: String,
-    /// Update Dashboard request body.
-    pub body: crate::datadogV1::model::Dashboard,
-}
-
-/// UpdatePublicDashboardParams is a struct for passing parameters to the method [`DashboardsAPI::update_public_dashboard`]
-#[derive(Clone, Debug)]
-pub struct UpdatePublicDashboardParams {
-    /// The token of the shared dashboard.
-    pub token: String,
-    /// Update Dashboard request body.
-    pub body: crate::datadogV1::model::SharedDashboardUpdateRequest,
+impl ListDashboardsOptionalParams {
+    /// When `true`, this query only returns shared custom created
+    /// or cloned dashboards.
+    pub fn filter_shared(&mut self, value: bool) -> &mut Self {
+        self.filter_shared = Some(value);
+        self
+    }
+    /// When `true`, this query returns only deleted custom-created
+    /// or cloned dashboards. This parameter is incompatible with `filter[shared]`.
+    pub fn filter_deleted(&mut self, value: bool) -> &mut Self {
+        self.filter_deleted = Some(value);
+        self
+    }
+    /// The maximum number of dashboards returned in the list.
+    pub fn count(&mut self, value: i64) -> &mut Self {
+        self.count = Some(value);
+        self
+    }
+    /// The specific offset to use as the beginning of the returned response.
+    pub fn start(&mut self, value: i64) -> &mut Self {
+        self.start = Some(value);
+        self
+    }
 }
 
 /// CreateDashboardError is a struct for typed errors of method [`DashboardsAPI::create_dashboard`]
@@ -293,9 +237,9 @@ impl DashboardsAPI {
     /// Refer to the following [documentation](<https://docs.datadoghq.com/developers/metrics/type_modifiers/?tab=count#in-application-modifiers>) for more information on these modifiers.
     pub async fn create_dashboard(
         &self,
-        params: CreateDashboardParams,
+        body: crate::datadogV1::model::Dashboard,
     ) -> Result<Option<crate::datadogV1::model::Dashboard>, Error<CreateDashboardError>> {
-        match self.create_dashboard_with_http_info(params).await {
+        match self.create_dashboard_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -305,13 +249,10 @@ impl DashboardsAPI {
     /// Refer to the following [documentation](<https://docs.datadoghq.com/developers/metrics/type_modifiers/?tab=count#in-application-modifiers>) for more information on these modifiers.
     pub async fn create_dashboard_with_http_info(
         &self,
-        params: CreateDashboardParams,
+        body: crate::datadogV1::model::Dashboard,
     ) -> Result<ResponseContent<crate::datadogV1::model::Dashboard>, Error<CreateDashboardError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -369,10 +310,10 @@ impl DashboardsAPI {
     /// Share a specified private dashboard, generating a URL at which it can be publicly viewed.
     pub async fn create_public_dashboard(
         &self,
-        params: CreatePublicDashboardParams,
+        body: crate::datadogV1::model::SharedDashboard,
     ) -> Result<Option<crate::datadogV1::model::SharedDashboard>, Error<CreatePublicDashboardError>>
     {
-        match self.create_public_dashboard_with_http_info(params).await {
+        match self.create_public_dashboard_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -381,15 +322,12 @@ impl DashboardsAPI {
     /// Share a specified private dashboard, generating a URL at which it can be publicly viewed.
     pub async fn create_public_dashboard_with_http_info(
         &self,
-        params: CreatePublicDashboardParams,
+        body: crate::datadogV1::model::SharedDashboard,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SharedDashboard>,
         Error<CreatePublicDashboardError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -447,10 +385,10 @@ impl DashboardsAPI {
     /// Delete a dashboard using the specified ID.
     pub async fn delete_dashboard(
         &self,
-        params: DeleteDashboardParams,
+        dashboard_id: String,
     ) -> Result<Option<crate::datadogV1::model::DashboardDeleteResponse>, Error<DeleteDashboardError>>
     {
-        match self.delete_dashboard_with_http_info(params).await {
+        match self.delete_dashboard_with_http_info(dashboard_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -459,15 +397,12 @@ impl DashboardsAPI {
     /// Delete a dashboard using the specified ID.
     pub async fn delete_dashboard_with_http_info(
         &self,
-        params: DeleteDashboardParams,
+        dashboard_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::DashboardDeleteResponse>,
         Error<DeleteDashboardError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let dashboard_id = params.dashboard_id;
 
         let local_client = &local_configuration.client;
 
@@ -522,9 +457,9 @@ impl DashboardsAPI {
     /// Delete dashboards using the specified IDs. If there are any failures, no dashboards will be deleted (partial success is not allowed).
     pub async fn delete_dashboards(
         &self,
-        params: DeleteDashboardsParams,
+        body: crate::datadogV1::model::DashboardBulkDeleteRequest,
     ) -> Result<Option<()>, Error<DeleteDashboardsError>> {
-        match self.delete_dashboards_with_http_info(params).await {
+        match self.delete_dashboards_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -533,12 +468,9 @@ impl DashboardsAPI {
     /// Delete dashboards using the specified IDs. If there are any failures, no dashboards will be deleted (partial success is not allowed).
     pub async fn delete_dashboards_with_http_info(
         &self,
-        params: DeleteDashboardsParams,
+        body: crate::datadogV1::model::DashboardBulkDeleteRequest,
     ) -> Result<ResponseContent<()>, Error<DeleteDashboardsError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -594,12 +526,12 @@ impl DashboardsAPI {
     /// Revoke the public URL for a dashboard (rendering it private) associated with the specified token.
     pub async fn delete_public_dashboard(
         &self,
-        params: DeletePublicDashboardParams,
+        token: String,
     ) -> Result<
         Option<crate::datadogV1::model::DeleteSharedDashboardResponse>,
         Error<DeletePublicDashboardError>,
     > {
-        match self.delete_public_dashboard_with_http_info(params).await {
+        match self.delete_public_dashboard_with_http_info(token).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -608,15 +540,12 @@ impl DashboardsAPI {
     /// Revoke the public URL for a dashboard (rendering it private) associated with the specified token.
     pub async fn delete_public_dashboard_with_http_info(
         &self,
-        params: DeletePublicDashboardParams,
+        token: String,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::DeleteSharedDashboardResponse>,
         Error<DeletePublicDashboardError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let token = params.token;
 
         let local_client = &local_configuration.client;
 
@@ -671,10 +600,11 @@ impl DashboardsAPI {
     /// Revoke previously sent invitation emails and active sessions used to access a given shared dashboard for specific email addresses.
     pub async fn delete_public_dashboard_invitation(
         &self,
-        params: DeletePublicDashboardInvitationParams,
+        token: String,
+        body: crate::datadogV1::model::SharedDashboardInvites,
     ) -> Result<Option<()>, Error<DeletePublicDashboardInvitationError>> {
         match self
-            .delete_public_dashboard_invitation_with_http_info(params)
+            .delete_public_dashboard_invitation_with_http_info(token, body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -685,13 +615,10 @@ impl DashboardsAPI {
     /// Revoke previously sent invitation emails and active sessions used to access a given shared dashboard for specific email addresses.
     pub async fn delete_public_dashboard_invitation_with_http_info(
         &self,
-        params: DeletePublicDashboardInvitationParams,
+        token: String,
+        body: crate::datadogV1::model::SharedDashboardInvites,
     ) -> Result<ResponseContent<()>, Error<DeletePublicDashboardInvitationError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let token = params.token;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -751,9 +678,9 @@ impl DashboardsAPI {
     /// Get a dashboard using the specified ID.
     pub async fn get_dashboard(
         &self,
-        params: GetDashboardParams,
+        dashboard_id: String,
     ) -> Result<Option<crate::datadogV1::model::Dashboard>, Error<GetDashboardError>> {
-        match self.get_dashboard_with_http_info(params).await {
+        match self.get_dashboard_with_http_info(dashboard_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -762,12 +689,9 @@ impl DashboardsAPI {
     /// Get a dashboard using the specified ID.
     pub async fn get_dashboard_with_http_info(
         &self,
-        params: GetDashboardParams,
+        dashboard_id: String,
     ) -> Result<ResponseContent<crate::datadogV1::model::Dashboard>, Error<GetDashboardError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let dashboard_id = params.dashboard_id;
 
         let local_client = &local_configuration.client;
 
@@ -821,10 +745,10 @@ impl DashboardsAPI {
     /// Fetch an existing shared dashboard's sharing metadata associated with the specified token.
     pub async fn get_public_dashboard(
         &self,
-        params: GetPublicDashboardParams,
+        token: String,
     ) -> Result<Option<crate::datadogV1::model::SharedDashboard>, Error<GetPublicDashboardError>>
     {
-        match self.get_public_dashboard_with_http_info(params).await {
+        match self.get_public_dashboard_with_http_info(token).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -833,15 +757,12 @@ impl DashboardsAPI {
     /// Fetch an existing shared dashboard's sharing metadata associated with the specified token.
     pub async fn get_public_dashboard_with_http_info(
         &self,
-        params: GetPublicDashboardParams,
+        token: String,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SharedDashboard>,
         Error<GetPublicDashboardError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let token = params.token;
 
         let local_client = &local_configuration.client;
 
@@ -896,13 +817,14 @@ impl DashboardsAPI {
     /// Describe the invitations that exist for the given shared dashboard (paginated).
     pub async fn get_public_dashboard_invitations(
         &self,
-        params: GetPublicDashboardInvitationsParams,
+        token: String,
+        params: GetPublicDashboardInvitationsOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::SharedDashboardInvites>,
         Error<GetPublicDashboardInvitationsError>,
     > {
         match self
-            .get_public_dashboard_invitations_with_http_info(params)
+            .get_public_dashboard_invitations_with_http_info(token, params)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -913,15 +835,15 @@ impl DashboardsAPI {
     /// Describe the invitations that exist for the given shared dashboard (paginated).
     pub async fn get_public_dashboard_invitations_with_http_info(
         &self,
-        params: GetPublicDashboardInvitationsParams,
+        token: String,
+        params: GetPublicDashboardInvitationsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SharedDashboardInvites>,
         Error<GetPublicDashboardInvitationsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let token = params.token;
+        // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
 
@@ -935,11 +857,13 @@ impl DashboardsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = page_size {
-            local_req_builder = local_req_builder.query(&[("page_size", &local_str.to_string())]);
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page_size", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = page_number {
-            local_req_builder = local_req_builder.query(&[("page_number", &local_str.to_string())]);
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page_number", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -988,7 +912,7 @@ impl DashboardsAPI {
     /// This query will not return preset dashboards.
     pub async fn list_dashboards(
         &self,
-        params: ListDashboardsParams,
+        params: ListDashboardsOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::DashboardSummary>, Error<ListDashboardsError>> {
         match self.list_dashboards_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
@@ -1002,14 +926,14 @@ impl DashboardsAPI {
     /// This query will not return preset dashboards.
     pub async fn list_dashboards_with_http_info(
         &self,
-        params: ListDashboardsParams,
+        params: ListDashboardsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::DashboardSummary>,
         Error<ListDashboardsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let filter_shared = params.filter_shared;
         let filter_deleted = params.filter_deleted;
         let count = params.count;
@@ -1021,19 +945,21 @@ impl DashboardsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = filter_shared {
+        if let Some(ref local_query_param) = filter_shared {
             local_req_builder =
-                local_req_builder.query(&[("filter[shared]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[shared]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_deleted {
+        if let Some(ref local_query_param) = filter_deleted {
             local_req_builder =
-                local_req_builder.query(&[("filter[deleted]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[deleted]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = count {
-            local_req_builder = local_req_builder.query(&[("count", &local_str.to_string())]);
+        if let Some(ref local_query_param) = count {
+            local_req_builder =
+                local_req_builder.query(&[("count", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = start {
-            local_req_builder = local_req_builder.query(&[("start", &local_str.to_string())]);
+        if let Some(ref local_query_param) = start {
+            local_req_builder =
+                local_req_builder.query(&[("start", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -1079,9 +1005,9 @@ impl DashboardsAPI {
     /// Restore dashboards using the specified IDs. If there are any failures, no dashboards will be restored (partial success is not allowed).
     pub async fn restore_dashboards(
         &self,
-        params: RestoreDashboardsParams,
+        body: crate::datadogV1::model::DashboardRestoreRequest,
     ) -> Result<Option<()>, Error<RestoreDashboardsError>> {
-        match self.restore_dashboards_with_http_info(params).await {
+        match self.restore_dashboards_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1090,12 +1016,9 @@ impl DashboardsAPI {
     /// Restore dashboards using the specified IDs. If there are any failures, no dashboards will be restored (partial success is not allowed).
     pub async fn restore_dashboards_with_http_info(
         &self,
-        params: RestoreDashboardsParams,
+        body: crate::datadogV1::model::DashboardRestoreRequest,
     ) -> Result<ResponseContent<()>, Error<RestoreDashboardsError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -1151,13 +1074,14 @@ impl DashboardsAPI {
     /// Send emails to specified email addresses containing links to access a given authenticated shared dashboard. Email addresses must already belong to the authenticated shared dashboard's share_list.
     pub async fn send_public_dashboard_invitation(
         &self,
-        params: SendPublicDashboardInvitationParams,
+        token: String,
+        body: crate::datadogV1::model::SharedDashboardInvites,
     ) -> Result<
         Option<crate::datadogV1::model::SharedDashboardInvites>,
         Error<SendPublicDashboardInvitationError>,
     > {
         match self
-            .send_public_dashboard_invitation_with_http_info(params)
+            .send_public_dashboard_invitation_with_http_info(token, body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -1168,16 +1092,13 @@ impl DashboardsAPI {
     /// Send emails to specified email addresses containing links to access a given authenticated shared dashboard. Email addresses must already belong to the authenticated shared dashboard's share_list.
     pub async fn send_public_dashboard_invitation_with_http_info(
         &self,
-        params: SendPublicDashboardInvitationParams,
+        token: String,
+        body: crate::datadogV1::model::SharedDashboardInvites,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SharedDashboardInvites>,
         Error<SendPublicDashboardInvitationError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let token = params.token;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -1239,9 +1160,13 @@ impl DashboardsAPI {
     /// Update a dashboard using the specified ID.
     pub async fn update_dashboard(
         &self,
-        params: UpdateDashboardParams,
+        dashboard_id: String,
+        body: crate::datadogV1::model::Dashboard,
     ) -> Result<Option<crate::datadogV1::model::Dashboard>, Error<UpdateDashboardError>> {
-        match self.update_dashboard_with_http_info(params).await {
+        match self
+            .update_dashboard_with_http_info(dashboard_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1250,14 +1175,11 @@ impl DashboardsAPI {
     /// Update a dashboard using the specified ID.
     pub async fn update_dashboard_with_http_info(
         &self,
-        params: UpdateDashboardParams,
+        dashboard_id: String,
+        body: crate::datadogV1::model::Dashboard,
     ) -> Result<ResponseContent<crate::datadogV1::model::Dashboard>, Error<UpdateDashboardError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let dashboard_id = params.dashboard_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -1319,10 +1241,14 @@ impl DashboardsAPI {
     /// Update a shared dashboard associated with the specified token.
     pub async fn update_public_dashboard(
         &self,
-        params: UpdatePublicDashboardParams,
+        token: String,
+        body: crate::datadogV1::model::SharedDashboardUpdateRequest,
     ) -> Result<Option<crate::datadogV1::model::SharedDashboard>, Error<UpdatePublicDashboardError>>
     {
-        match self.update_public_dashboard_with_http_info(params).await {
+        match self
+            .update_public_dashboard_with_http_info(token, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1331,16 +1257,13 @@ impl DashboardsAPI {
     /// Update a shared dashboard associated with the specified token.
     pub async fn update_public_dashboard_with_http_info(
         &self,
-        params: UpdatePublicDashboardParams,
+        token: String,
+        body: crate::datadogV1::model::SharedDashboardUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SharedDashboard>,
         Error<UpdatePublicDashboardError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let token = params.token;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

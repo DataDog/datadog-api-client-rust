@@ -17,7 +17,16 @@ impl SensitiveDataScannerGroupList {
     pub fn new() -> SensitiveDataScannerGroupList {
         SensitiveDataScannerGroupList { data: None }
     }
+
+    pub fn data(
+        &mut self,
+        value: Vec<crate::datadogV2::model::SensitiveDataScannerGroupItem>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for SensitiveDataScannerGroupList {
     fn default() -> Self {
         Self::new()

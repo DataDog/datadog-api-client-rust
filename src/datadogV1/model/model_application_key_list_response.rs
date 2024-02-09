@@ -19,7 +19,16 @@ impl ApplicationKeyListResponse {
             application_keys: None,
         }
     }
+
+    pub fn application_keys(
+        &mut self,
+        value: Vec<crate::datadogV1::model::ApplicationKey>,
+    ) -> &mut Self {
+        self.application_keys = Some(value);
+        self
+    }
 }
+
 impl Default for ApplicationKeyListResponse {
     fn default() -> Self {
         Self::new()

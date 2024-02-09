@@ -81,7 +81,88 @@ impl GCPAccount {
             type_: None,
         }
     }
+
+    pub fn auth_provider_x509_cert_url(&mut self, value: String) -> &mut Self {
+        self.auth_provider_x509_cert_url = Some(value);
+        self
+    }
+
+    pub fn auth_uri(&mut self, value: String) -> &mut Self {
+        self.auth_uri = Some(value);
+        self
+    }
+
+    pub fn automute(&mut self, value: bool) -> &mut Self {
+        self.automute = Some(value);
+        self
+    }
+
+    pub fn client_email(&mut self, value: String) -> &mut Self {
+        self.client_email = Some(value);
+        self
+    }
+
+    pub fn client_id(&mut self, value: String) -> &mut Self {
+        self.client_id = Some(value);
+        self
+    }
+
+    pub fn client_x509_cert_url(&mut self, value: String) -> &mut Self {
+        self.client_x509_cert_url = Some(value);
+        self
+    }
+
+    pub fn errors(&mut self, value: Vec<String>) -> &mut Self {
+        self.errors = Some(value);
+        self
+    }
+
+    pub fn host_filters(&mut self, value: String) -> &mut Self {
+        self.host_filters = Some(value);
+        self
+    }
+
+    pub fn is_cspm_enabled(&mut self, value: bool) -> &mut Self {
+        self.is_cspm_enabled = Some(value);
+        self
+    }
+
+    pub fn is_security_command_center_enabled(&mut self, value: bool) -> &mut Self {
+        self.is_security_command_center_enabled = Some(value);
+        self
+    }
+
+    pub fn private_key(&mut self, value: String) -> &mut Self {
+        self.private_key = Some(value);
+        self
+    }
+
+    pub fn private_key_id(&mut self, value: String) -> &mut Self {
+        self.private_key_id = Some(value);
+        self
+    }
+
+    pub fn project_id(&mut self, value: String) -> &mut Self {
+        self.project_id = Some(value);
+        self
+    }
+
+    pub fn resource_collection_enabled(&mut self, value: bool) -> &mut Self {
+        self.resource_collection_enabled = Some(value);
+        self
+    }
+
+    pub fn token_uri(&mut self, value: String) -> &mut Self {
+        self.token_uri = Some(value);
+        self
+    }
+
+    pub fn type_(&mut self, value: String) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
+
 impl Default for GCPAccount {
     fn default() -> Self {
         Self::new()

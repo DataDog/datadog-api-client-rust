@@ -10,14 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct Powerpack {
     /// Powerpack data object.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::PowerpackData>>,
+    pub data: Option<crate::datadogV2::model::PowerpackData>,
 }
 
 impl Powerpack {
     pub fn new() -> Powerpack {
         Powerpack { data: None }
     }
+
+    pub fn data(&mut self, value: crate::datadogV2::model::PowerpackData) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for Powerpack {
     fn default() -> Self {
         Self::new()

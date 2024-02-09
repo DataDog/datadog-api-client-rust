@@ -17,7 +17,16 @@ impl DashboardGlobalTime {
     pub fn new() -> DashboardGlobalTime {
         DashboardGlobalTime { live_span: None }
     }
+
+    pub fn live_span(
+        &mut self,
+        value: crate::datadogV1::model::DashboardGlobalTimeLiveSpan,
+    ) -> &mut Self {
+        self.live_span = Some(value);
+        self
+    }
 }
+
 impl Default for DashboardGlobalTime {
     fn default() -> Self {
         Self::new()

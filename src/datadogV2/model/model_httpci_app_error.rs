@@ -27,7 +27,23 @@ impl HTTPCIAppError {
             title: None,
         }
     }
+
+    pub fn detail(&mut self, value: String) -> &mut Self {
+        self.detail = Some(value);
+        self
+    }
+
+    pub fn status(&mut self, value: String) -> &mut Self {
+        self.status = Some(value);
+        self
+    }
+
+    pub fn title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
+    }
 }
+
 impl Default for HTTPCIAppError {
     fn default() -> Self {
         Self::new()

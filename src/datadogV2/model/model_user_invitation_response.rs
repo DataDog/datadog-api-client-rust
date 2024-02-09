@@ -10,14 +10,23 @@ use serde_with::skip_serializing_none;
 pub struct UserInvitationResponse {
     /// Object of a user invitation returned by the API.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::UserInvitationResponseData>>,
+    pub data: Option<crate::datadogV2::model::UserInvitationResponseData>,
 }
 
 impl UserInvitationResponse {
     pub fn new() -> UserInvitationResponse {
         UserInvitationResponse { data: None }
     }
+
+    pub fn data(
+        &mut self,
+        value: crate::datadogV2::model::UserInvitationResponseData,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for UserInvitationResponse {
     fn default() -> Self {
         Self::new()

@@ -23,7 +23,21 @@ impl SecurityMonitoringFilter {
             query: None,
         }
     }
+
+    pub fn action(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringFilterAction,
+    ) -> &mut Self {
+        self.action = Some(value);
+        self
+    }
+
+    pub fn query(&mut self, value: String) -> &mut Self {
+        self.query = Some(value);
+        self
+    }
 }
+
 impl Default for SecurityMonitoringFilter {
     fn default() -> Self {
         Self::new()

@@ -49,4 +49,22 @@ impl WebhooksIntegration {
             url,
         }
     }
+
+    pub fn custom_headers(&mut self, value: Option<String>) -> &mut Self {
+        self.custom_headers = Some(value);
+        self
+    }
+
+    pub fn encode_as(
+        &mut self,
+        value: crate::datadogV1::model::WebhooksIntegrationEncoding,
+    ) -> &mut Self {
+        self.encode_as = Some(value);
+        self
+    }
+
+    pub fn payload(&mut self, value: Option<String>) -> &mut Self {
+        self.payload = Some(value);
+        self
+    }
 }

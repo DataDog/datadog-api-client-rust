@@ -5,76 +5,9 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateGlobalVariableParams is a struct for passing parameters to the method [`SyntheticsAPI::create_global_variable`]
-#[derive(Clone, Debug)]
-pub struct CreateGlobalVariableParams {
-    /// Details of the global variable to create.
-    pub body: crate::datadogV1::model::SyntheticsGlobalVariable,
-}
-
-/// CreatePrivateLocationParams is a struct for passing parameters to the method [`SyntheticsAPI::create_private_location`]
-#[derive(Clone, Debug)]
-pub struct CreatePrivateLocationParams {
-    /// Details of the private location to create.
-    pub body: crate::datadogV1::model::SyntheticsPrivateLocation,
-}
-
-/// CreateSyntheticsAPITestParams is a struct for passing parameters to the method [`SyntheticsAPI::create_synthetics_api_test`]
-#[derive(Clone, Debug)]
-pub struct CreateSyntheticsAPITestParams {
-    /// Details of the test to create.
-    pub body: crate::datadogV1::model::SyntheticsAPITest,
-}
-
-/// CreateSyntheticsBrowserTestParams is a struct for passing parameters to the method [`SyntheticsAPI::create_synthetics_browser_test`]
-#[derive(Clone, Debug)]
-pub struct CreateSyntheticsBrowserTestParams {
-    /// Details of the test to create.
-    pub body: crate::datadogV1::model::SyntheticsBrowserTest,
-}
-
-/// DeleteGlobalVariableParams is a struct for passing parameters to the method [`SyntheticsAPI::delete_global_variable`]
-#[derive(Clone, Debug)]
-pub struct DeleteGlobalVariableParams {
-    /// The ID of the global variable.
-    pub variable_id: String,
-}
-
-/// DeletePrivateLocationParams is a struct for passing parameters to the method [`SyntheticsAPI::delete_private_location`]
-#[derive(Clone, Debug)]
-pub struct DeletePrivateLocationParams {
-    /// The ID of the private location.
-    pub location_id: String,
-}
-
-/// DeleteTestsParams is a struct for passing parameters to the method [`SyntheticsAPI::delete_tests`]
-#[derive(Clone, Debug)]
-pub struct DeleteTestsParams {
-    /// Public ID list of the Synthetic tests to be deleted.
-    pub body: crate::datadogV1::model::SyntheticsDeleteTestsPayload,
-}
-
-/// EditGlobalVariableParams is a struct for passing parameters to the method [`SyntheticsAPI::edit_global_variable`]
-#[derive(Clone, Debug)]
-pub struct EditGlobalVariableParams {
-    /// The ID of the global variable.
-    pub variable_id: String,
-    /// Details of the global variable to update.
-    pub body: crate::datadogV1::model::SyntheticsGlobalVariable,
-}
-
-/// GetAPITestParams is a struct for passing parameters to the method [`SyntheticsAPI::get_api_test`]
-#[derive(Clone, Debug)]
-pub struct GetAPITestParams {
-    /// The public ID of the test to get details from.
-    pub public_id: String,
-}
-
-/// GetAPITestLatestResultsParams is a struct for passing parameters to the method [`SyntheticsAPI::get_api_test_latest_results`]
-#[derive(Clone, Debug)]
-pub struct GetAPITestLatestResultsParams {
-    /// The public ID of the test for which to search results for.
-    pub public_id: String,
+/// GetAPITestLatestResultsOptionalParams is a struct for passing parameters to the method [`SyntheticsAPI::get_api_test_latest_results`]
+#[derive(Clone, Default, Debug)]
+pub struct GetAPITestLatestResultsOptionalParams {
     /// Timestamp in milliseconds from which to start querying results.
     pub from_ts: Option<i64>,
     /// Timestamp in milliseconds up to which to query results.
@@ -83,28 +16,27 @@ pub struct GetAPITestLatestResultsParams {
     pub probe_dc: Option<Vec<String>>,
 }
 
-/// GetAPITestResultParams is a struct for passing parameters to the method [`SyntheticsAPI::get_api_test_result`]
-#[derive(Clone, Debug)]
-pub struct GetAPITestResultParams {
-    /// The public ID of the API test to which the target result belongs.
-    pub public_id: String,
-    /// The ID of the result to get.
-    pub result_id: String,
+impl GetAPITestLatestResultsOptionalParams {
+    /// Timestamp in milliseconds from which to start querying results.
+    pub fn from_ts(&mut self, value: i64) -> &mut Self {
+        self.from_ts = Some(value);
+        self
+    }
+    /// Timestamp in milliseconds up to which to query results.
+    pub fn to_ts(&mut self, value: i64) -> &mut Self {
+        self.to_ts = Some(value);
+        self
+    }
+    /// Locations for which to query results.
+    pub fn probe_dc(&mut self, value: Vec<String>) -> &mut Self {
+        self.probe_dc = Some(value);
+        self
+    }
 }
 
-/// GetBrowserTestParams is a struct for passing parameters to the method [`SyntheticsAPI::get_browser_test`]
-#[derive(Clone, Debug)]
-pub struct GetBrowserTestParams {
-    /// The public ID of the test to get details from.
-    pub public_id: String,
-}
-
-/// GetBrowserTestLatestResultsParams is a struct for passing parameters to the method [`SyntheticsAPI::get_browser_test_latest_results`]
-#[derive(Clone, Debug)]
-pub struct GetBrowserTestLatestResultsParams {
-    /// The public ID of the browser test for which to search results
-    /// for.
-    pub public_id: String,
+/// GetBrowserTestLatestResultsOptionalParams is a struct for passing parameters to the method [`SyntheticsAPI::get_browser_test_latest_results`]
+#[derive(Clone, Default, Debug)]
+pub struct GetBrowserTestLatestResultsOptionalParams {
     /// Timestamp in milliseconds from which to start querying results.
     pub from_ts: Option<i64>,
     /// Timestamp in milliseconds up to which to query results.
@@ -113,110 +45,44 @@ pub struct GetBrowserTestLatestResultsParams {
     pub probe_dc: Option<Vec<String>>,
 }
 
-/// GetBrowserTestResultParams is a struct for passing parameters to the method [`SyntheticsAPI::get_browser_test_result`]
-#[derive(Clone, Debug)]
-pub struct GetBrowserTestResultParams {
-    /// The public ID of the browser test to which the target result
-    /// belongs.
-    pub public_id: String,
-    /// The ID of the result to get.
-    pub result_id: String,
+impl GetBrowserTestLatestResultsOptionalParams {
+    /// Timestamp in milliseconds from which to start querying results.
+    pub fn from_ts(&mut self, value: i64) -> &mut Self {
+        self.from_ts = Some(value);
+        self
+    }
+    /// Timestamp in milliseconds up to which to query results.
+    pub fn to_ts(&mut self, value: i64) -> &mut Self {
+        self.to_ts = Some(value);
+        self
+    }
+    /// Locations for which to query results.
+    pub fn probe_dc(&mut self, value: Vec<String>) -> &mut Self {
+        self.probe_dc = Some(value);
+        self
+    }
 }
 
-/// GetGlobalVariableParams is a struct for passing parameters to the method [`SyntheticsAPI::get_global_variable`]
-#[derive(Clone, Debug)]
-pub struct GetGlobalVariableParams {
-    /// The ID of the global variable.
-    pub variable_id: String,
-}
-
-/// GetPrivateLocationParams is a struct for passing parameters to the method [`SyntheticsAPI::get_private_location`]
-#[derive(Clone, Debug)]
-pub struct GetPrivateLocationParams {
-    /// The ID of the private location.
-    pub location_id: String,
-}
-
-/// GetSyntheticsCIBatchParams is a struct for passing parameters to the method [`SyntheticsAPI::get_synthetics_ci_batch`]
-#[derive(Clone, Debug)]
-pub struct GetSyntheticsCIBatchParams {
-    /// The ID of the batch.
-    pub batch_id: String,
-}
-
-/// GetTestParams is a struct for passing parameters to the method [`SyntheticsAPI::get_test`]
-#[derive(Clone, Debug)]
-pub struct GetTestParams {
-    /// The public ID of the test to get details from.
-    pub public_id: String,
-}
-
-/// ListTestsParams is a struct for passing parameters to the method [`SyntheticsAPI::list_tests`]
-#[derive(Clone, Debug)]
-pub struct ListTestsParams {
+/// ListTestsOptionalParams is a struct for passing parameters to the method [`SyntheticsAPI::list_tests`]
+#[derive(Clone, Default, Debug)]
+pub struct ListTestsOptionalParams {
     /// Used for pagination. The number of tests returned in the page.
     pub page_size: Option<i64>,
     /// Used for pagination. Which page you want to retrieve. Starts at zero.
     pub page_number: Option<i64>,
 }
 
-/// PatchTestParams is a struct for passing parameters to the method [`SyntheticsAPI::patch_test`]
-#[derive(Clone, Debug)]
-pub struct PatchTestParams {
-    /// The public ID of the test to patch.
-    pub public_id: String,
-    /// [JSON Patch](<https://jsonpatch.com/>) compliant list of operations
-    pub body: crate::datadogV1::model::SyntheticsPatchTestBody,
-}
-
-/// TriggerCITestsParams is a struct for passing parameters to the method [`SyntheticsAPI::trigger_ci_tests`]
-#[derive(Clone, Debug)]
-pub struct TriggerCITestsParams {
-    /// Details of the test to trigger.
-    pub body: crate::datadogV1::model::SyntheticsCITestBody,
-}
-
-/// TriggerTestsParams is a struct for passing parameters to the method [`SyntheticsAPI::trigger_tests`]
-#[derive(Clone, Debug)]
-pub struct TriggerTestsParams {
-    /// The identifiers of the tests to trigger.
-    pub body: crate::datadogV1::model::SyntheticsTriggerBody,
-}
-
-/// UpdateAPITestParams is a struct for passing parameters to the method [`SyntheticsAPI::update_api_test`]
-#[derive(Clone, Debug)]
-pub struct UpdateAPITestParams {
-    /// The public ID of the test to get details from.
-    pub public_id: String,
-    /// New test details to be saved.
-    pub body: crate::datadogV1::model::SyntheticsAPITest,
-}
-
-/// UpdateBrowserTestParams is a struct for passing parameters to the method [`SyntheticsAPI::update_browser_test`]
-#[derive(Clone, Debug)]
-pub struct UpdateBrowserTestParams {
-    /// The public ID of the test to edit.
-    pub public_id: String,
-    /// New test details to be saved.
-    pub body: crate::datadogV1::model::SyntheticsBrowserTest,
-}
-
-/// UpdatePrivateLocationParams is a struct for passing parameters to the method [`SyntheticsAPI::update_private_location`]
-#[derive(Clone, Debug)]
-pub struct UpdatePrivateLocationParams {
-    /// The ID of the private location.
-    pub location_id: String,
-    /// Details of the private location to be updated.
-    pub body: crate::datadogV1::model::SyntheticsPrivateLocation,
-}
-
-/// UpdateTestPauseStatusParams is a struct for passing parameters to the method [`SyntheticsAPI::update_test_pause_status`]
-#[derive(Clone, Debug)]
-pub struct UpdateTestPauseStatusParams {
-    /// The public ID of the Synthetic test to update.
-    pub public_id: String,
-    /// Status to set the given Synthetic test to.
-    pub body: crate::datadogV1::model::SyntheticsUpdateTestPauseStatusPayload,
+impl ListTestsOptionalParams {
+    /// Used for pagination. The number of tests returned in the page.
+    pub fn page_size(&mut self, value: i64) -> &mut Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Used for pagination. Which page you want to retrieve. Starts at zero.
+    pub fn page_number(&mut self, value: i64) -> &mut Self {
+        self.page_number = Some(value);
+        self
+    }
 }
 
 /// CreateGlobalVariableError is a struct for typed errors of method [`SyntheticsAPI::create_global_variable`]
@@ -530,12 +396,12 @@ impl SyntheticsAPI {
     /// Create a Synthetic global variable.
     pub async fn create_global_variable(
         &self,
-        params: CreateGlobalVariableParams,
+        body: crate::datadogV1::model::SyntheticsGlobalVariable,
     ) -> Result<
         Option<crate::datadogV1::model::SyntheticsGlobalVariable>,
         Error<CreateGlobalVariableError>,
     > {
-        match self.create_global_variable_with_http_info(params).await {
+        match self.create_global_variable_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -544,15 +410,12 @@ impl SyntheticsAPI {
     /// Create a Synthetic global variable.
     pub async fn create_global_variable_with_http_info(
         &self,
-        params: CreateGlobalVariableParams,
+        body: crate::datadogV1::model::SyntheticsGlobalVariable,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SyntheticsGlobalVariable>,
         Error<CreateGlobalVariableError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -613,12 +476,12 @@ impl SyntheticsAPI {
     /// Create a new Synthetic private location.
     pub async fn create_private_location(
         &self,
-        params: CreatePrivateLocationParams,
+        body: crate::datadogV1::model::SyntheticsPrivateLocation,
     ) -> Result<
         Option<crate::datadogV1::model::SyntheticsPrivateLocationCreationResponse>,
         Error<CreatePrivateLocationError>,
     > {
-        match self.create_private_location_with_http_info(params).await {
+        match self.create_private_location_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -627,15 +490,12 @@ impl SyntheticsAPI {
     /// Create a new Synthetic private location.
     pub async fn create_private_location_with_http_info(
         &self,
-        params: CreatePrivateLocationParams,
+        body: crate::datadogV1::model::SyntheticsPrivateLocation,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SyntheticsPrivateLocationCreationResponse>,
         Error<CreatePrivateLocationError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -697,12 +557,12 @@ impl SyntheticsAPI {
     /// Create a Synthetic API test.
     pub async fn create_synthetics_api_test(
         &self,
-        params: CreateSyntheticsAPITestParams,
+        body: crate::datadogV1::model::SyntheticsAPITest,
     ) -> Result<
         Option<crate::datadogV1::model::SyntheticsAPITest>,
         Error<CreateSyntheticsAPITestError>,
     > {
-        match self.create_synthetics_api_test_with_http_info(params).await {
+        match self.create_synthetics_api_test_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -711,15 +571,12 @@ impl SyntheticsAPI {
     /// Create a Synthetic API test.
     pub async fn create_synthetics_api_test_with_http_info(
         &self,
-        params: CreateSyntheticsAPITestParams,
+        body: crate::datadogV1::model::SyntheticsAPITest,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SyntheticsAPITest>,
         Error<CreateSyntheticsAPITestError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -780,13 +637,13 @@ impl SyntheticsAPI {
     /// Create a Synthetic browser test.
     pub async fn create_synthetics_browser_test(
         &self,
-        params: CreateSyntheticsBrowserTestParams,
+        body: crate::datadogV1::model::SyntheticsBrowserTest,
     ) -> Result<
         Option<crate::datadogV1::model::SyntheticsBrowserTest>,
         Error<CreateSyntheticsBrowserTestError>,
     > {
         match self
-            .create_synthetics_browser_test_with_http_info(params)
+            .create_synthetics_browser_test_with_http_info(body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -797,15 +654,12 @@ impl SyntheticsAPI {
     /// Create a Synthetic browser test.
     pub async fn create_synthetics_browser_test_with_http_info(
         &self,
-        params: CreateSyntheticsBrowserTestParams,
+        body: crate::datadogV1::model::SyntheticsBrowserTest,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SyntheticsBrowserTest>,
         Error<CreateSyntheticsBrowserTestError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -866,9 +720,12 @@ impl SyntheticsAPI {
     /// Delete a Synthetic global variable.
     pub async fn delete_global_variable(
         &self,
-        params: DeleteGlobalVariableParams,
+        variable_id: String,
     ) -> Result<Option<()>, Error<DeleteGlobalVariableError>> {
-        match self.delete_global_variable_with_http_info(params).await {
+        match self
+            .delete_global_variable_with_http_info(variable_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -877,12 +734,9 @@ impl SyntheticsAPI {
     /// Delete a Synthetic global variable.
     pub async fn delete_global_variable_with_http_info(
         &self,
-        params: DeleteGlobalVariableParams,
+        variable_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteGlobalVariableError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let variable_id = params.variable_id;
 
         let local_client = &local_configuration.client;
 
@@ -935,9 +789,12 @@ impl SyntheticsAPI {
     /// Delete a Synthetic private location.
     pub async fn delete_private_location(
         &self,
-        params: DeletePrivateLocationParams,
+        location_id: String,
     ) -> Result<Option<()>, Error<DeletePrivateLocationError>> {
-        match self.delete_private_location_with_http_info(params).await {
+        match self
+            .delete_private_location_with_http_info(location_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -946,12 +803,9 @@ impl SyntheticsAPI {
     /// Delete a Synthetic private location.
     pub async fn delete_private_location_with_http_info(
         &self,
-        params: DeletePrivateLocationParams,
+        location_id: String,
     ) -> Result<ResponseContent<()>, Error<DeletePrivateLocationError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let location_id = params.location_id;
 
         let local_client = &local_configuration.client;
 
@@ -1004,12 +858,12 @@ impl SyntheticsAPI {
     /// Delete multiple Synthetic tests by ID.
     pub async fn delete_tests(
         &self,
-        params: DeleteTestsParams,
+        body: crate::datadogV1::model::SyntheticsDeleteTestsPayload,
     ) -> Result<
         Option<crate::datadogV1::model::SyntheticsDeleteTestsResponse>,
         Error<DeleteTestsError>,
     > {
-        match self.delete_tests_with_http_info(params).await {
+        match self.delete_tests_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1018,15 +872,12 @@ impl SyntheticsAPI {
     /// Delete multiple Synthetic tests by ID.
     pub async fn delete_tests_with_http_info(
         &self,
-        params: DeleteTestsParams,
+        body: crate::datadogV1::model::SyntheticsDeleteTestsPayload,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SyntheticsDeleteTestsResponse>,
         Error<DeleteTestsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -1086,12 +937,16 @@ impl SyntheticsAPI {
     /// Edit a Synthetic global variable.
     pub async fn edit_global_variable(
         &self,
-        params: EditGlobalVariableParams,
+        variable_id: String,
+        body: crate::datadogV1::model::SyntheticsGlobalVariable,
     ) -> Result<
         Option<crate::datadogV1::model::SyntheticsGlobalVariable>,
         Error<EditGlobalVariableError>,
     > {
-        match self.edit_global_variable_with_http_info(params).await {
+        match self
+            .edit_global_variable_with_http_info(variable_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1100,16 +955,13 @@ impl SyntheticsAPI {
     /// Edit a Synthetic global variable.
     pub async fn edit_global_variable_with_http_info(
         &self,
-        params: EditGlobalVariableParams,
+        variable_id: String,
+        body: crate::datadogV1::model::SyntheticsGlobalVariable,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SyntheticsGlobalVariable>,
         Error<EditGlobalVariableError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let variable_id = params.variable_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -1172,9 +1024,9 @@ impl SyntheticsAPI {
     /// a Synthetic API test.
     pub async fn get_api_test(
         &self,
-        params: GetAPITestParams,
+        public_id: String,
     ) -> Result<Option<crate::datadogV1::model::SyntheticsAPITest>, Error<GetAPITestError>> {
-        match self.get_api_test_with_http_info(params).await {
+        match self.get_api_test_with_http_info(public_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1184,13 +1036,10 @@ impl SyntheticsAPI {
     /// a Synthetic API test.
     pub async fn get_api_test_with_http_info(
         &self,
-        params: GetAPITestParams,
+        public_id: String,
     ) -> Result<ResponseContent<crate::datadogV1::model::SyntheticsAPITest>, Error<GetAPITestError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let public_id = params.public_id;
 
         let local_client = &local_configuration.client;
 
@@ -1244,13 +1093,14 @@ impl SyntheticsAPI {
     /// Get the last 150 test results summaries for a given Synthetic API test.
     pub async fn get_api_test_latest_results(
         &self,
-        params: GetAPITestLatestResultsParams,
+        public_id: String,
+        params: GetAPITestLatestResultsOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::SyntheticsGetAPITestLatestResultsResponse>,
         Error<GetAPITestLatestResultsError>,
     > {
         match self
-            .get_api_test_latest_results_with_http_info(params)
+            .get_api_test_latest_results_with_http_info(public_id, params)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -1261,15 +1111,15 @@ impl SyntheticsAPI {
     /// Get the last 150 test results summaries for a given Synthetic API test.
     pub async fn get_api_test_latest_results_with_http_info(
         &self,
-        params: GetAPITestLatestResultsParams,
+        public_id: String,
+        params: GetAPITestLatestResultsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SyntheticsGetAPITestLatestResultsResponse>,
         Error<GetAPITestLatestResultsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let public_id = params.public_id;
+        // unbox and build optional parameters
         let from_ts = params.from_ts;
         let to_ts = params.to_ts;
         let probe_dc = params.probe_dc;
@@ -1284,17 +1134,19 @@ impl SyntheticsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = from_ts {
-            local_req_builder = local_req_builder.query(&[("from_ts", &local_str.to_string())]);
+        if let Some(ref local_query_param) = from_ts {
+            local_req_builder =
+                local_req_builder.query(&[("from_ts", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = to_ts {
-            local_req_builder = local_req_builder.query(&[("to_ts", &local_str.to_string())]);
+        if let Some(ref local_query_param) = to_ts {
+            local_req_builder =
+                local_req_builder.query(&[("to_ts", &local_query_param.to_string())]);
         };
         if let Some(ref local) = probe_dc {
             local_req_builder = local_req_builder.query(&[(
                 "probe_dc",
                 &local
-                    .into_iter()
+                    .iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
                     .join(",")
@@ -1346,12 +1198,16 @@ impl SyntheticsAPI {
     /// Get a specific full result from a given Synthetic API test.
     pub async fn get_api_test_result(
         &self,
-        params: GetAPITestResultParams,
+        public_id: String,
+        result_id: String,
     ) -> Result<
         Option<crate::datadogV1::model::SyntheticsAPITestResultFull>,
         Error<GetAPITestResultError>,
     > {
-        match self.get_api_test_result_with_http_info(params).await {
+        match self
+            .get_api_test_result_with_http_info(public_id, result_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1360,16 +1216,13 @@ impl SyntheticsAPI {
     /// Get a specific full result from a given Synthetic API test.
     pub async fn get_api_test_result_with_http_info(
         &self,
-        params: GetAPITestResultParams,
+        public_id: String,
+        result_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SyntheticsAPITestResultFull>,
         Error<GetAPITestResultError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let public_id = params.public_id;
-        let result_id = params.result_id;
 
         let local_client = &local_configuration.client;
 
@@ -1426,10 +1279,10 @@ impl SyntheticsAPI {
     /// a Synthetic browser test.
     pub async fn get_browser_test(
         &self,
-        params: GetBrowserTestParams,
+        public_id: String,
     ) -> Result<Option<crate::datadogV1::model::SyntheticsBrowserTest>, Error<GetBrowserTestError>>
     {
-        match self.get_browser_test_with_http_info(params).await {
+        match self.get_browser_test_with_http_info(public_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1439,15 +1292,12 @@ impl SyntheticsAPI {
     /// a Synthetic browser test.
     pub async fn get_browser_test_with_http_info(
         &self,
-        params: GetBrowserTestParams,
+        public_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SyntheticsBrowserTest>,
         Error<GetBrowserTestError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let public_id = params.public_id;
 
         let local_client = &local_configuration.client;
 
@@ -1502,13 +1352,14 @@ impl SyntheticsAPI {
     /// Get the last 150 test results summaries for a given Synthetic browser test.
     pub async fn get_browser_test_latest_results(
         &self,
-        params: GetBrowserTestLatestResultsParams,
+        public_id: String,
+        params: GetBrowserTestLatestResultsOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::SyntheticsGetBrowserTestLatestResultsResponse>,
         Error<GetBrowserTestLatestResultsError>,
     > {
         match self
-            .get_browser_test_latest_results_with_http_info(params)
+            .get_browser_test_latest_results_with_http_info(public_id, params)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -1519,15 +1370,15 @@ impl SyntheticsAPI {
     /// Get the last 150 test results summaries for a given Synthetic browser test.
     pub async fn get_browser_test_latest_results_with_http_info(
         &self,
-        params: GetBrowserTestLatestResultsParams,
+        public_id: String,
+        params: GetBrowserTestLatestResultsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SyntheticsGetBrowserTestLatestResultsResponse>,
         Error<GetBrowserTestLatestResultsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let public_id = params.public_id;
+        // unbox and build optional parameters
         let from_ts = params.from_ts;
         let to_ts = params.to_ts;
         let probe_dc = params.probe_dc;
@@ -1542,17 +1393,19 @@ impl SyntheticsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = from_ts {
-            local_req_builder = local_req_builder.query(&[("from_ts", &local_str.to_string())]);
+        if let Some(ref local_query_param) = from_ts {
+            local_req_builder =
+                local_req_builder.query(&[("from_ts", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = to_ts {
-            local_req_builder = local_req_builder.query(&[("to_ts", &local_str.to_string())]);
+        if let Some(ref local_query_param) = to_ts {
+            local_req_builder =
+                local_req_builder.query(&[("to_ts", &local_query_param.to_string())]);
         };
         if let Some(ref local) = probe_dc {
             local_req_builder = local_req_builder.query(&[(
                 "probe_dc",
                 &local
-                    .into_iter()
+                    .iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
                     .join(",")
@@ -1604,12 +1457,16 @@ impl SyntheticsAPI {
     /// Get a specific full result from a given Synthetic browser test.
     pub async fn get_browser_test_result(
         &self,
-        params: GetBrowserTestResultParams,
+        public_id: String,
+        result_id: String,
     ) -> Result<
         Option<crate::datadogV1::model::SyntheticsBrowserTestResultFull>,
         Error<GetBrowserTestResultError>,
     > {
-        match self.get_browser_test_result_with_http_info(params).await {
+        match self
+            .get_browser_test_result_with_http_info(public_id, result_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1618,16 +1475,13 @@ impl SyntheticsAPI {
     /// Get a specific full result from a given Synthetic browser test.
     pub async fn get_browser_test_result_with_http_info(
         &self,
-        params: GetBrowserTestResultParams,
+        public_id: String,
+        result_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SyntheticsBrowserTestResultFull>,
         Error<GetBrowserTestResultError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let public_id = params.public_id;
-        let result_id = params.result_id;
 
         let local_client = &local_configuration.client;
 
@@ -1683,12 +1537,12 @@ impl SyntheticsAPI {
     /// Get the detailed configuration of a global variable.
     pub async fn get_global_variable(
         &self,
-        params: GetGlobalVariableParams,
+        variable_id: String,
     ) -> Result<
         Option<crate::datadogV1::model::SyntheticsGlobalVariable>,
         Error<GetGlobalVariableError>,
     > {
-        match self.get_global_variable_with_http_info(params).await {
+        match self.get_global_variable_with_http_info(variable_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1697,15 +1551,12 @@ impl SyntheticsAPI {
     /// Get the detailed configuration of a global variable.
     pub async fn get_global_variable_with_http_info(
         &self,
-        params: GetGlobalVariableParams,
+        variable_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SyntheticsGlobalVariable>,
         Error<GetGlobalVariableError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let variable_id = params.variable_id;
 
         let local_client = &local_configuration.client;
 
@@ -1760,12 +1611,12 @@ impl SyntheticsAPI {
     /// Get a Synthetic private location.
     pub async fn get_private_location(
         &self,
-        params: GetPrivateLocationParams,
+        location_id: String,
     ) -> Result<
         Option<crate::datadogV1::model::SyntheticsPrivateLocation>,
         Error<GetPrivateLocationError>,
     > {
-        match self.get_private_location_with_http_info(params).await {
+        match self.get_private_location_with_http_info(location_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1774,15 +1625,12 @@ impl SyntheticsAPI {
     /// Get a Synthetic private location.
     pub async fn get_private_location_with_http_info(
         &self,
-        params: GetPrivateLocationParams,
+        location_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SyntheticsPrivateLocation>,
         Error<GetPrivateLocationError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let location_id = params.location_id;
 
         let local_client = &local_configuration.client;
 
@@ -1837,12 +1685,12 @@ impl SyntheticsAPI {
     /// Get a batch's updated details.
     pub async fn get_synthetics_ci_batch(
         &self,
-        params: GetSyntheticsCIBatchParams,
+        batch_id: String,
     ) -> Result<
         Option<crate::datadogV1::model::SyntheticsBatchDetails>,
         Error<GetSyntheticsCIBatchError>,
     > {
-        match self.get_synthetics_ci_batch_with_http_info(params).await {
+        match self.get_synthetics_ci_batch_with_http_info(batch_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1851,15 +1699,12 @@ impl SyntheticsAPI {
     /// Get a batch's updated details.
     pub async fn get_synthetics_ci_batch_with_http_info(
         &self,
-        params: GetSyntheticsCIBatchParams,
+        batch_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SyntheticsBatchDetails>,
         Error<GetSyntheticsCIBatchError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let batch_id = params.batch_id;
 
         let local_client = &local_configuration.client;
 
@@ -1927,8 +1772,6 @@ impl SyntheticsAPI {
     ) -> Result<ResponseContent<Vec<String>>, Error<GetSyntheticsDefaultLocationsError>> {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -1980,9 +1823,9 @@ impl SyntheticsAPI {
     /// Get the detailed configuration associated with a Synthetic test.
     pub async fn get_test(
         &self,
-        params: GetTestParams,
+        public_id: String,
     ) -> Result<Option<crate::datadogV1::model::SyntheticsTestDetails>, Error<GetTestError>> {
-        match self.get_test_with_http_info(params).await {
+        match self.get_test_with_http_info(public_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -1991,13 +1834,10 @@ impl SyntheticsAPI {
     /// Get the detailed configuration associated with a Synthetic test.
     pub async fn get_test_with_http_info(
         &self,
-        params: GetTestParams,
+        public_id: String,
     ) -> Result<ResponseContent<crate::datadogV1::model::SyntheticsTestDetails>, Error<GetTestError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let public_id = params.public_id;
 
         let local_client = &local_configuration.client;
 
@@ -2069,8 +1909,6 @@ impl SyntheticsAPI {
         Error<ListGlobalVariablesError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
 
         let local_client = &local_configuration.client;
 
@@ -2144,8 +1982,6 @@ impl SyntheticsAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -2198,7 +2034,7 @@ impl SyntheticsAPI {
     /// Get the list of all Synthetic tests.
     pub async fn list_tests(
         &self,
-        params: ListTestsParams,
+        params: ListTestsOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::SyntheticsListTestsResponse>, Error<ListTestsError>>
     {
         match self.list_tests_with_http_info(params).await {
@@ -2210,14 +2046,14 @@ impl SyntheticsAPI {
     /// Get the list of all Synthetic tests.
     pub async fn list_tests_with_http_info(
         &self,
-        params: ListTestsParams,
+        params: ListTestsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SyntheticsListTestsResponse>,
         Error<ListTestsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
 
@@ -2227,11 +2063,13 @@ impl SyntheticsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = page_size {
-            local_req_builder = local_req_builder.query(&[("page_size", &local_str.to_string())]);
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page_size", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = page_number {
-            local_req_builder = local_req_builder.query(&[("page_number", &local_str.to_string())]);
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page_number", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -2276,9 +2114,10 @@ impl SyntheticsAPI {
     /// Patch the configuration of a Synthetic test with partial data.
     pub async fn patch_test(
         &self,
-        params: PatchTestParams,
+        public_id: String,
+        body: crate::datadogV1::model::SyntheticsPatchTestBody,
     ) -> Result<Option<crate::datadogV1::model::SyntheticsTestDetails>, Error<PatchTestError>> {
-        match self.patch_test_with_http_info(params).await {
+        match self.patch_test_with_http_info(public_id, body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -2287,16 +2126,13 @@ impl SyntheticsAPI {
     /// Patch the configuration of a Synthetic test with partial data.
     pub async fn patch_test_with_http_info(
         &self,
-        params: PatchTestParams,
+        public_id: String,
+        body: crate::datadogV1::model::SyntheticsPatchTestBody,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SyntheticsTestDetails>,
         Error<PatchTestError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let public_id = params.public_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -2357,12 +2193,12 @@ impl SyntheticsAPI {
     /// Trigger a set of Synthetic tests for continuous integration.
     pub async fn trigger_ci_tests(
         &self,
-        params: TriggerCITestsParams,
+        body: crate::datadogV1::model::SyntheticsCITestBody,
     ) -> Result<
         Option<crate::datadogV1::model::SyntheticsTriggerCITestsResponse>,
         Error<TriggerCITestsError>,
     > {
-        match self.trigger_ci_tests_with_http_info(params).await {
+        match self.trigger_ci_tests_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -2371,15 +2207,12 @@ impl SyntheticsAPI {
     /// Trigger a set of Synthetic tests for continuous integration.
     pub async fn trigger_ci_tests_with_http_info(
         &self,
-        params: TriggerCITestsParams,
+        body: crate::datadogV1::model::SyntheticsCITestBody,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SyntheticsTriggerCITestsResponse>,
         Error<TriggerCITestsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -2440,12 +2273,12 @@ impl SyntheticsAPI {
     /// Trigger a set of Synthetic tests.
     pub async fn trigger_tests(
         &self,
-        params: TriggerTestsParams,
+        body: crate::datadogV1::model::SyntheticsTriggerBody,
     ) -> Result<
         Option<crate::datadogV1::model::SyntheticsTriggerCITestsResponse>,
         Error<TriggerTestsError>,
     > {
-        match self.trigger_tests_with_http_info(params).await {
+        match self.trigger_tests_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -2454,15 +2287,12 @@ impl SyntheticsAPI {
     /// Trigger a set of Synthetic tests.
     pub async fn trigger_tests_with_http_info(
         &self,
-        params: TriggerTestsParams,
+        body: crate::datadogV1::model::SyntheticsTriggerBody,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SyntheticsTriggerCITestsResponse>,
         Error<TriggerTestsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -2522,9 +2352,10 @@ impl SyntheticsAPI {
     /// Edit the configuration of a Synthetic API test.
     pub async fn update_api_test(
         &self,
-        params: UpdateAPITestParams,
+        public_id: String,
+        body: crate::datadogV1::model::SyntheticsAPITest,
     ) -> Result<Option<crate::datadogV1::model::SyntheticsAPITest>, Error<UpdateAPITestError>> {
-        match self.update_api_test_with_http_info(params).await {
+        match self.update_api_test_with_http_info(public_id, body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -2533,16 +2364,13 @@ impl SyntheticsAPI {
     /// Edit the configuration of a Synthetic API test.
     pub async fn update_api_test_with_http_info(
         &self,
-        params: UpdateAPITestParams,
+        public_id: String,
+        body: crate::datadogV1::model::SyntheticsAPITest,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SyntheticsAPITest>,
         Error<UpdateAPITestError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let public_id = params.public_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -2604,10 +2432,14 @@ impl SyntheticsAPI {
     /// Edit the configuration of a Synthetic browser test.
     pub async fn update_browser_test(
         &self,
-        params: UpdateBrowserTestParams,
+        public_id: String,
+        body: crate::datadogV1::model::SyntheticsBrowserTest,
     ) -> Result<Option<crate::datadogV1::model::SyntheticsBrowserTest>, Error<UpdateBrowserTestError>>
     {
-        match self.update_browser_test_with_http_info(params).await {
+        match self
+            .update_browser_test_with_http_info(public_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -2616,16 +2448,13 @@ impl SyntheticsAPI {
     /// Edit the configuration of a Synthetic browser test.
     pub async fn update_browser_test_with_http_info(
         &self,
-        params: UpdateBrowserTestParams,
+        public_id: String,
+        body: crate::datadogV1::model::SyntheticsBrowserTest,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SyntheticsBrowserTest>,
         Error<UpdateBrowserTestError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let public_id = params.public_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -2687,12 +2516,16 @@ impl SyntheticsAPI {
     /// Edit a Synthetic private location.
     pub async fn update_private_location(
         &self,
-        params: UpdatePrivateLocationParams,
+        location_id: String,
+        body: crate::datadogV1::model::SyntheticsPrivateLocation,
     ) -> Result<
         Option<crate::datadogV1::model::SyntheticsPrivateLocation>,
         Error<UpdatePrivateLocationError>,
     > {
-        match self.update_private_location_with_http_info(params).await {
+        match self
+            .update_private_location_with_http_info(location_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -2701,16 +2534,13 @@ impl SyntheticsAPI {
     /// Edit a Synthetic private location.
     pub async fn update_private_location_with_http_info(
         &self,
-        params: UpdatePrivateLocationParams,
+        location_id: String,
+        body: crate::datadogV1::model::SyntheticsPrivateLocation,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::SyntheticsPrivateLocation>,
         Error<UpdatePrivateLocationError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let location_id = params.location_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -2772,9 +2602,13 @@ impl SyntheticsAPI {
     /// Pause or start a Synthetic test by changing the status.
     pub async fn update_test_pause_status(
         &self,
-        params: UpdateTestPauseStatusParams,
+        public_id: String,
+        body: crate::datadogV1::model::SyntheticsUpdateTestPauseStatusPayload,
     ) -> Result<Option<bool>, Error<UpdateTestPauseStatusError>> {
-        match self.update_test_pause_status_with_http_info(params).await {
+        match self
+            .update_test_pause_status_with_http_info(public_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -2783,13 +2617,10 @@ impl SyntheticsAPI {
     /// Pause or start a Synthetic test by changing the status.
     pub async fn update_test_pause_status_with_http_info(
         &self,
-        params: UpdateTestPauseStatusParams,
+        public_id: String,
+        body: crate::datadogV1::model::SyntheticsUpdateTestPauseStatusPayload,
     ) -> Result<ResponseContent<bool>, Error<UpdateTestPauseStatusError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let public_id = params.public_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

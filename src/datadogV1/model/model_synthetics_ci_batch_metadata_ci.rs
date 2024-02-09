@@ -10,10 +10,10 @@ use serde_with::skip_serializing_none;
 pub struct SyntheticsCIBatchMetadataCI {
     /// Description of the CI pipeline.
     #[serde(rename = "pipeline")]
-    pub pipeline: Option<Box<crate::datadogV1::model::SyntheticsCIBatchMetadataPipeline>>,
+    pub pipeline: Option<crate::datadogV1::model::SyntheticsCIBatchMetadataPipeline>,
     /// Description of the CI provider.
     #[serde(rename = "provider")]
-    pub provider: Option<Box<crate::datadogV1::model::SyntheticsCIBatchMetadataProvider>>,
+    pub provider: Option<crate::datadogV1::model::SyntheticsCIBatchMetadataProvider>,
 }
 
 impl SyntheticsCIBatchMetadataCI {
@@ -23,7 +23,24 @@ impl SyntheticsCIBatchMetadataCI {
             provider: None,
         }
     }
+
+    pub fn pipeline(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsCIBatchMetadataPipeline,
+    ) -> &mut Self {
+        self.pipeline = Some(value);
+        self
+    }
+
+    pub fn provider(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsCIBatchMetadataProvider,
+    ) -> &mut Self {
+        self.provider = Some(value);
+        self
+    }
 }
+
 impl Default for SyntheticsCIBatchMetadataCI {
     fn default() -> Self {
         Self::new()

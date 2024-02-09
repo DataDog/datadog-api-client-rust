@@ -43,7 +43,43 @@ impl MetricMetadata {
             unit: None,
         }
     }
+
+    pub fn description(&mut self, value: String) -> &mut Self {
+        self.description = Some(value);
+        self
+    }
+
+    pub fn integration(&mut self, value: String) -> &mut Self {
+        self.integration = Some(value);
+        self
+    }
+
+    pub fn per_unit(&mut self, value: String) -> &mut Self {
+        self.per_unit = Some(value);
+        self
+    }
+
+    pub fn short_name(&mut self, value: String) -> &mut Self {
+        self.short_name = Some(value);
+        self
+    }
+
+    pub fn statsd_interval(&mut self, value: i64) -> &mut Self {
+        self.statsd_interval = Some(value);
+        self
+    }
+
+    pub fn type_(&mut self, value: String) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
+
+    pub fn unit(&mut self, value: String) -> &mut Self {
+        self.unit = Some(value);
+        self
+    }
 }
+
 impl Default for MetricMetadata {
     fn default() -> Self {
         Self::new()

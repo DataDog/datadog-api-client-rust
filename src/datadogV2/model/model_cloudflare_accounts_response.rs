@@ -17,7 +17,16 @@ impl CloudflareAccountsResponse {
     pub fn new() -> CloudflareAccountsResponse {
         CloudflareAccountsResponse { data: None }
     }
+
+    pub fn data(
+        &mut self,
+        value: Vec<crate::datadogV2::model::CloudflareAccountResponseData>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for CloudflareAccountsResponse {
     fn default() -> Self {
         Self::new()

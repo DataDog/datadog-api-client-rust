@@ -31,4 +31,22 @@ impl ApmStatsQueryColumnType {
             order: None,
         }
     }
+
+    pub fn alias(&mut self, value: String) -> &mut Self {
+        self.alias = Some(value);
+        self
+    }
+
+    pub fn cell_display_mode(
+        &mut self,
+        value: crate::datadogV1::model::TableWidgetCellDisplayMode,
+    ) -> &mut Self {
+        self.cell_display_mode = Some(value);
+        self
+    }
+
+    pub fn order(&mut self, value: crate::datadogV1::model::WidgetSort) -> &mut Self {
+        self.order = Some(value);
+        self
+    }
 }

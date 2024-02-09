@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct DataScalarColumn {
     /// Metadata for the resulting numerical values.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV2::model::ScalarMeta>>,
+    pub meta: Option<crate::datadogV2::model::ScalarMeta>,
     /// The name referencing the formula or query for this column.
     #[serde(rename = "name")]
     pub name: Option<String>,
@@ -31,7 +31,28 @@ impl DataScalarColumn {
             values: None,
         }
     }
+
+    pub fn meta(&mut self, value: crate::datadogV2::model::ScalarMeta) -> &mut Self {
+        self.meta = Some(value);
+        self
+    }
+
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn type_(&mut self, value: crate::datadogV2::model::ScalarColumnTypeNumber) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
+
+    pub fn values(&mut self, value: Vec<Option<f64>>) -> &mut Self {
+        self.values = Some(value);
+        self
+    }
 }
+
 impl Default for DataScalarColumn {
     fn default() -> Self {
         Self::new()

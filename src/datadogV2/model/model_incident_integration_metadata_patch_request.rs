@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct IncidentIntegrationMetadataPatchRequest {
     /// Incident integration metadata data for a patch request.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::IncidentIntegrationMetadataPatchData>,
+    pub data: crate::datadogV2::model::IncidentIntegrationMetadataPatchData,
 }
 
 impl IncidentIntegrationMetadataPatchRequest {
     pub fn new(
-        data: Box<crate::datadogV2::model::IncidentIntegrationMetadataPatchData>,
+        data: crate::datadogV2::model::IncidentIntegrationMetadataPatchData,
     ) -> IncidentIntegrationMetadataPatchRequest {
         IncidentIntegrationMetadataPatchRequest { data }
     }

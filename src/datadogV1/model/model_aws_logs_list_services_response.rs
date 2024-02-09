@@ -23,7 +23,18 @@ impl AWSLogsListServicesResponse {
             label: None,
         }
     }
+
+    pub fn id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn label(&mut self, value: String) -> &mut Self {
+        self.label = Some(value);
+        self
+    }
 }
+
 impl Default for AWSLogsListServicesResponse {
     fn default() -> Self {
         Self::new()

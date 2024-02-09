@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct OpsgenieServiceCreateRequest {
     /// Opsgenie service data for a create request.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::OpsgenieServiceCreateData>,
+    pub data: crate::datadogV2::model::OpsgenieServiceCreateData,
 }
 
 impl OpsgenieServiceCreateRequest {
     pub fn new(
-        data: Box<crate::datadogV2::model::OpsgenieServiceCreateData>,
+        data: crate::datadogV2::model::OpsgenieServiceCreateData,
     ) -> OpsgenieServiceCreateRequest {
         OpsgenieServiceCreateRequest { data }
     }

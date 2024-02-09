@@ -32,7 +32,7 @@ pub struct DistributionWidgetDefinition {
     pub show_legend: Option<bool>,
     /// Time setting for the widget.
     #[serde(rename = "time")]
-    pub time: Option<Box<crate::datadogV1::model::WidgetTime>>,
+    pub time: Option<crate::datadogV1::model::WidgetTime>,
     /// Title of the widget.
     #[serde(rename = "title")]
     pub title: Option<String>,
@@ -47,10 +47,10 @@ pub struct DistributionWidgetDefinition {
     pub type_: crate::datadogV1::model::DistributionWidgetDefinitionType,
     /// X Axis controls for the distribution widget.
     #[serde(rename = "xaxis")]
-    pub xaxis: Option<Box<crate::datadogV1::model::DistributionWidgetXAxis>>,
+    pub xaxis: Option<crate::datadogV1::model::DistributionWidgetXAxis>,
     /// Y Axis controls for the distribution widget.
     #[serde(rename = "yaxis")]
-    pub yaxis: Option<Box<crate::datadogV1::model::DistributionWidgetYAxis>>,
+    pub yaxis: Option<crate::datadogV1::model::DistributionWidgetYAxis>,
 }
 
 impl DistributionWidgetDefinition {
@@ -73,5 +73,68 @@ impl DistributionWidgetDefinition {
             xaxis: None,
             yaxis: None,
         }
+    }
+
+    #[allow(deprecated)]
+    pub fn custom_links(
+        &mut self,
+        value: Vec<crate::datadogV1::model::WidgetCustomLink>,
+    ) -> &mut Self {
+        self.custom_links = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn legend_size(&mut self, value: String) -> &mut Self {
+        self.legend_size = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn markers(&mut self, value: Vec<crate::datadogV1::model::WidgetMarker>) -> &mut Self {
+        self.markers = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn show_legend(&mut self, value: bool) -> &mut Self {
+        self.show_legend = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
+        self.time = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn title_align(&mut self, value: crate::datadogV1::model::WidgetTextAlign) -> &mut Self {
+        self.title_align = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn title_size(&mut self, value: String) -> &mut Self {
+        self.title_size = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn xaxis(&mut self, value: crate::datadogV1::model::DistributionWidgetXAxis) -> &mut Self {
+        self.xaxis = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn yaxis(&mut self, value: crate::datadogV1::model::DistributionWidgetYAxis) -> &mut Self {
+        self.yaxis = Some(value);
+        self
     }
 }

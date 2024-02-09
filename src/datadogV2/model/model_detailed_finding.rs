@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct DetailedFinding {
     /// The JSON:API attributes of the detailed finding.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::DetailedFindingAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::DetailedFindingAttributes>,
     /// The unique ID for this finding.
     #[serde(rename = "id")]
     pub id: Option<String>,
@@ -27,7 +27,26 @@ impl DetailedFinding {
             type_: None,
         }
     }
+
+    pub fn attributes(
+        &mut self,
+        value: crate::datadogV2::model::DetailedFindingAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn type_(&mut self, value: crate::datadogV2::model::DetailedFindingType) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
+
 impl Default for DetailedFinding {
     fn default() -> Self {
         Self::new()

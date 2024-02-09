@@ -17,7 +17,13 @@ impl UsageLambdaTracedInvocationsResponse {
     pub fn new() -> UsageLambdaTracedInvocationsResponse {
         UsageLambdaTracedInvocationsResponse { data: None }
     }
+
+    pub fn data(&mut self, value: Vec<crate::datadogV2::model::UsageDataObject>) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for UsageLambdaTracedInvocationsResponse {
     fn default() -> Self {
         Self::new()

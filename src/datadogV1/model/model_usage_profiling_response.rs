@@ -17,7 +17,13 @@ impl UsageProfilingResponse {
     pub fn new() -> UsageProfilingResponse {
         UsageProfilingResponse { usage: None }
     }
+
+    pub fn usage(&mut self, value: Vec<crate::datadogV1::model::UsageProfilingHour>) -> &mut Self {
+        self.usage = Some(value);
+        self
+    }
 }
+
 impl Default for UsageProfilingResponse {
     fn default() -> Self {
         Self::new()

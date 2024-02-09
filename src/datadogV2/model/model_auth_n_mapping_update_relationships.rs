@@ -10,14 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct AuthNMappingUpdateRelationships {
     /// Relationship to role.
     #[serde(rename = "role")]
-    pub role: Option<Box<crate::datadogV2::model::RelationshipToRole>>,
+    pub role: Option<crate::datadogV2::model::RelationshipToRole>,
 }
 
 impl AuthNMappingUpdateRelationships {
     pub fn new() -> AuthNMappingUpdateRelationships {
         AuthNMappingUpdateRelationships { role: None }
     }
+
+    pub fn role(&mut self, value: crate::datadogV2::model::RelationshipToRole) -> &mut Self {
+        self.role = Some(value);
+        self
+    }
 }
+
 impl Default for AuthNMappingUpdateRelationships {
     fn default() -> Self {
         Self::new()

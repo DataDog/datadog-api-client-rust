@@ -43,7 +43,46 @@ impl ServiceDefinitionMeta {
             warnings: None,
         }
     }
+
+    pub fn github_html_url(&mut self, value: String) -> &mut Self {
+        self.github_html_url = Some(value);
+        self
+    }
+
+    pub fn ingested_schema_version(&mut self, value: String) -> &mut Self {
+        self.ingested_schema_version = Some(value);
+        self
+    }
+
+    pub fn ingestion_source(&mut self, value: String) -> &mut Self {
+        self.ingestion_source = Some(value);
+        self
+    }
+
+    pub fn last_modified_time(&mut self, value: String) -> &mut Self {
+        self.last_modified_time = Some(value);
+        self
+    }
+
+    pub fn origin(&mut self, value: String) -> &mut Self {
+        self.origin = Some(value);
+        self
+    }
+
+    pub fn origin_detail(&mut self, value: String) -> &mut Self {
+        self.origin_detail = Some(value);
+        self
+    }
+
+    pub fn warnings(
+        &mut self,
+        value: Vec<crate::datadogV2::model::ServiceDefinitionMetaWarnings>,
+    ) -> &mut Self {
+        self.warnings = Some(value);
+        self
+    }
 }
+
 impl Default for ServiceDefinitionMeta {
     fn default() -> Self {
         Self::new()

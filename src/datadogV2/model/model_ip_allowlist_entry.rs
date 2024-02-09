@@ -10,11 +10,11 @@ use serde_with::skip_serializing_none;
 pub struct IPAllowlistEntry {
     /// Data of the IP allowlist entry object.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::IPAllowlistEntryData>,
+    pub data: crate::datadogV2::model::IPAllowlistEntryData,
 }
 
 impl IPAllowlistEntry {
-    pub fn new(data: Box<crate::datadogV2::model::IPAllowlistEntryData>) -> IPAllowlistEntry {
+    pub fn new(data: crate::datadogV2::model::IPAllowlistEntryData) -> IPAllowlistEntry {
         IPAllowlistEntry { data }
     }
 }

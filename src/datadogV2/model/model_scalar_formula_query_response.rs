@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct ScalarFormulaQueryResponse {
     /// A message containing the response to a scalar query.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::ScalarResponse>>,
+    pub data: Option<crate::datadogV2::model::ScalarResponse>,
     /// An error generated when processing a request.
     #[serde(rename = "errors")]
     pub errors: Option<String>,
@@ -23,7 +23,18 @@ impl ScalarFormulaQueryResponse {
             errors: None,
         }
     }
+
+    pub fn data(&mut self, value: crate::datadogV2::model::ScalarResponse) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn errors(&mut self, value: String) -> &mut Self {
+        self.errors = Some(value);
+        self
+    }
 }
+
 impl Default for ScalarFormulaQueryResponse {
     fn default() -> Self {
         Self::new()

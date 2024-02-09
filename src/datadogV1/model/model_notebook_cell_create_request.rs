@@ -11,7 +11,7 @@ pub struct NotebookCellCreateRequest {
     /// The attributes of a notebook cell in create cell request. Valid cell types are `markdown`, `timeseries`, `toplist`, `heatmap`, `distribution`,
     /// `log_stream`. [More information on each graph visualization type.](<https://docs.datadoghq.com/dashboards/widgets/>)
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV1::model::NotebookCellCreateRequestAttributes>,
+    pub attributes: crate::datadogV1::model::NotebookCellCreateRequestAttributes,
     /// Type of the Notebook Cell resource.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::NotebookCellResourceType,
@@ -19,7 +19,7 @@ pub struct NotebookCellCreateRequest {
 
 impl NotebookCellCreateRequest {
     pub fn new(
-        attributes: Box<crate::datadogV1::model::NotebookCellCreateRequestAttributes>,
+        attributes: crate::datadogV1::model::NotebookCellCreateRequestAttributes,
         type_: crate::datadogV1::model::NotebookCellResourceType,
     ) -> NotebookCellCreateRequest {
         NotebookCellCreateRequest { attributes, type_ }

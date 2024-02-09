@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct UserUpdateData {
     /// Attributes of the edited user.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::UserUpdateAttributes>,
+    pub attributes: crate::datadogV2::model::UserUpdateAttributes,
     /// ID of the user.
     #[serde(rename = "id")]
     pub id: String,
@@ -21,7 +21,7 @@ pub struct UserUpdateData {
 
 impl UserUpdateData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::UserUpdateAttributes>,
+        attributes: crate::datadogV2::model::UserUpdateAttributes,
         id: String,
         type_: crate::datadogV2::model::UsersType,
     ) -> UserUpdateData {

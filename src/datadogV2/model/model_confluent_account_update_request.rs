@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct ConfluentAccountUpdateRequest {
     /// Data object for updating a Confluent account.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::ConfluentAccountUpdateRequestData>,
+    pub data: crate::datadogV2::model::ConfluentAccountUpdateRequestData,
 }
 
 impl ConfluentAccountUpdateRequest {
     pub fn new(
-        data: Box<crate::datadogV2::model::ConfluentAccountUpdateRequestData>,
+        data: crate::datadogV2::model::ConfluentAccountUpdateRequestData,
     ) -> ConfluentAccountUpdateRequest {
         ConfluentAccountUpdateRequest { data }
     }

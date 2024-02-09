@@ -23,7 +23,18 @@ impl SyntheticsTriggerCITestLocation {
             name: None,
         }
     }
+
+    pub fn id(&mut self, value: i64) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
 }
+
 impl Default for SyntheticsTriggerCITestLocation {
     fn default() -> Self {
         Self::new()

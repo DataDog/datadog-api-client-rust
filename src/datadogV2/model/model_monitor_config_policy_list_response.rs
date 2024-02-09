@@ -17,7 +17,16 @@ impl MonitorConfigPolicyListResponse {
     pub fn new() -> MonitorConfigPolicyListResponse {
         MonitorConfigPolicyListResponse { data: None }
     }
+
+    pub fn data(
+        &mut self,
+        value: Vec<crate::datadogV2::model::MonitorConfigPolicyResponseData>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for MonitorConfigPolicyListResponse {
     fn default() -> Self {
         Self::new()

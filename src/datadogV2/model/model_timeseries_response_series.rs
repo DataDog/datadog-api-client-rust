@@ -30,7 +30,23 @@ impl TimeseriesResponseSeries {
             unit: None,
         }
     }
+
+    pub fn group_tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.group_tags = Some(value);
+        self
+    }
+
+    pub fn query_index(&mut self, value: i32) -> &mut Self {
+        self.query_index = Some(value);
+        self
+    }
+
+    pub fn unit(&mut self, value: Vec<Option<crate::datadogV2::model::Unit>>) -> &mut Self {
+        self.unit = Some(value);
+        self
+    }
 }
+
 impl Default for TimeseriesResponseSeries {
     fn default() -> Self {
         Self::new()

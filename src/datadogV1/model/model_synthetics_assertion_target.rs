@@ -39,4 +39,17 @@ impl SyntheticsAssertionTarget {
             type_,
         }
     }
+
+    pub fn property(&mut self, value: String) -> &mut Self {
+        self.property = Some(value);
+        self
+    }
+
+    pub fn timings_scope(
+        &mut self,
+        value: crate::datadogV1::model::SyntheticsAssertionTimingsScope,
+    ) -> &mut Self {
+        self.timings_scope = Some(value);
+        self
+    }
 }

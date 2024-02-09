@@ -13,14 +13,14 @@ pub struct CIAppPipelinesAggregateRequest {
     pub compute: Option<Vec<crate::datadogV2::model::CIAppCompute>>,
     /// The search and filter query settings.
     #[serde(rename = "filter")]
-    pub filter: Option<Box<crate::datadogV2::model::CIAppPipelinesQueryFilter>>,
+    pub filter: Option<crate::datadogV2::model::CIAppPipelinesQueryFilter>,
     /// The rules for the group-by.
     #[serde(rename = "group_by")]
     pub group_by: Option<Vec<crate::datadogV2::model::CIAppPipelinesGroupBy>>,
     /// Global query options that are used during the query.
     /// Only supply timezone or time offset, not both. Otherwise, the query fails.
     #[serde(rename = "options")]
-    pub options: Option<Box<crate::datadogV2::model::CIAppQueryOptions>>,
+    pub options: Option<crate::datadogV2::model::CIAppQueryOptions>,
 }
 
 impl CIAppPipelinesAggregateRequest {
@@ -32,7 +32,34 @@ impl CIAppPipelinesAggregateRequest {
             options: None,
         }
     }
+
+    pub fn compute(&mut self, value: Vec<crate::datadogV2::model::CIAppCompute>) -> &mut Self {
+        self.compute = Some(value);
+        self
+    }
+
+    pub fn filter(
+        &mut self,
+        value: crate::datadogV2::model::CIAppPipelinesQueryFilter,
+    ) -> &mut Self {
+        self.filter = Some(value);
+        self
+    }
+
+    pub fn group_by(
+        &mut self,
+        value: Vec<crate::datadogV2::model::CIAppPipelinesGroupBy>,
+    ) -> &mut Self {
+        self.group_by = Some(value);
+        self
+    }
+
+    pub fn options(&mut self, value: crate::datadogV2::model::CIAppQueryOptions) -> &mut Self {
+        self.options = Some(value);
+        self
+    }
 }
+
 impl Default for CIAppPipelinesAggregateRequest {
     fn default() -> Self {
         Self::new()

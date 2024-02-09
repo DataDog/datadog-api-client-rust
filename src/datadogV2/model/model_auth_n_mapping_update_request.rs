@@ -10,13 +10,11 @@ use serde_with::skip_serializing_none;
 pub struct AuthNMappingUpdateRequest {
     /// Data for updating an AuthN Mapping.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::AuthNMappingUpdateData>,
+    pub data: crate::datadogV2::model::AuthNMappingUpdateData,
 }
 
 impl AuthNMappingUpdateRequest {
-    pub fn new(
-        data: Box<crate::datadogV2::model::AuthNMappingUpdateData>,
-    ) -> AuthNMappingUpdateRequest {
+    pub fn new(data: crate::datadogV2::model::AuthNMappingUpdateData) -> AuthNMappingUpdateRequest {
         AuthNMappingUpdateRequest { data }
     }
 }

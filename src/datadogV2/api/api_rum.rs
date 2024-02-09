@@ -5,35 +5,9 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// AggregateRUMEventsParams is a struct for passing parameters to the method [`RUMAPI::aggregate_rum_events`]
-#[derive(Clone, Debug)]
-pub struct AggregateRUMEventsParams {
-    pub body: crate::datadogV2::model::RUMAggregateRequest,
-}
-
-/// CreateRUMApplicationParams is a struct for passing parameters to the method [`RUMAPI::create_rum_application`]
-#[derive(Clone, Debug)]
-pub struct CreateRUMApplicationParams {
-    pub body: crate::datadogV2::model::RUMApplicationCreateRequest,
-}
-
-/// DeleteRUMApplicationParams is a struct for passing parameters to the method [`RUMAPI::delete_rum_application`]
-#[derive(Clone, Debug)]
-pub struct DeleteRUMApplicationParams {
-    /// RUM application ID.
-    pub id: String,
-}
-
-/// GetRUMApplicationParams is a struct for passing parameters to the method [`RUMAPI::get_rum_application`]
-#[derive(Clone, Debug)]
-pub struct GetRUMApplicationParams {
-    /// RUM application ID.
-    pub id: String,
-}
-
-/// ListRUMEventsParams is a struct for passing parameters to the method [`RUMAPI::list_rum_events`]
-#[derive(Clone, Debug)]
-pub struct ListRUMEventsParams {
+/// ListRUMEventsOptionalParams is a struct for passing parameters to the method [`RUMAPI::list_rum_events`]
+#[derive(Clone, Default, Debug)]
+pub struct ListRUMEventsOptionalParams {
     /// Search query following RUM syntax.
     pub filter_query: Option<String>,
     /// Minimum timestamp for requested events.
@@ -48,18 +22,37 @@ pub struct ListRUMEventsParams {
     pub page_limit: Option<i32>,
 }
 
-/// SearchRUMEventsParams is a struct for passing parameters to the method [`RUMAPI::search_rum_events`]
-#[derive(Clone, Debug)]
-pub struct SearchRUMEventsParams {
-    pub body: crate::datadogV2::model::RUMSearchEventsRequest,
-}
-
-/// UpdateRUMApplicationParams is a struct for passing parameters to the method [`RUMAPI::update_rum_application`]
-#[derive(Clone, Debug)]
-pub struct UpdateRUMApplicationParams {
-    /// RUM application ID.
-    pub id: String,
-    pub body: crate::datadogV2::model::RUMApplicationUpdateRequest,
+impl ListRUMEventsOptionalParams {
+    /// Search query following RUM syntax.
+    pub fn filter_query(&mut self, value: String) -> &mut Self {
+        self.filter_query = Some(value);
+        self
+    }
+    /// Minimum timestamp for requested events.
+    pub fn filter_from(&mut self, value: String) -> &mut Self {
+        self.filter_from = Some(value);
+        self
+    }
+    /// Maximum timestamp for requested events.
+    pub fn filter_to(&mut self, value: String) -> &mut Self {
+        self.filter_to = Some(value);
+        self
+    }
+    /// Order of events in results.
+    pub fn sort(&mut self, value: crate::datadogV2::model::RUMSort) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+    /// List following results with a cursor provided in the previous query.
+    pub fn page_cursor(&mut self, value: String) -> &mut Self {
+        self.page_cursor = Some(value);
+        self
+    }
+    /// Maximum number of events in the response.
+    pub fn page_limit(&mut self, value: i32) -> &mut Self {
+        self.page_limit = Some(value);
+        self
+    }
 }
 
 /// AggregateRUMEventsError is a struct for typed errors of method [`RUMAPI::aggregate_rum_events`]
@@ -163,12 +156,12 @@ impl RUMAPI {
     /// The API endpoint to aggregate RUM events into buckets of computed metrics and timeseries.
     pub async fn aggregate_rum_events(
         &self,
-        params: AggregateRUMEventsParams,
+        body: crate::datadogV2::model::RUMAggregateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::RUMAnalyticsAggregateResponse>,
         Error<AggregateRUMEventsError>,
     > {
-        match self.aggregate_rum_events_with_http_info(params).await {
+        match self.aggregate_rum_events_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -177,15 +170,12 @@ impl RUMAPI {
     /// The API endpoint to aggregate RUM events into buckets of computed metrics and timeseries.
     pub async fn aggregate_rum_events_with_http_info(
         &self,
-        params: AggregateRUMEventsParams,
+        body: crate::datadogV2::model::RUMAggregateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::RUMAnalyticsAggregateResponse>,
         Error<AggregateRUMEventsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -246,12 +236,12 @@ impl RUMAPI {
     /// Create a new RUM application in your organization.
     pub async fn create_rum_application(
         &self,
-        params: CreateRUMApplicationParams,
+        body: crate::datadogV2::model::RUMApplicationCreateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::RUMApplicationResponse>,
         Error<CreateRUMApplicationError>,
     > {
-        match self.create_rum_application_with_http_info(params).await {
+        match self.create_rum_application_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -260,15 +250,12 @@ impl RUMAPI {
     /// Create a new RUM application in your organization.
     pub async fn create_rum_application_with_http_info(
         &self,
-        params: CreateRUMApplicationParams,
+        body: crate::datadogV2::model::RUMApplicationCreateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::RUMApplicationResponse>,
         Error<CreateRUMApplicationError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -326,9 +313,9 @@ impl RUMAPI {
     /// Delete an existing RUM application in your organization.
     pub async fn delete_rum_application(
         &self,
-        params: DeleteRUMApplicationParams,
+        id: String,
     ) -> Result<Option<()>, Error<DeleteRUMApplicationError>> {
-        match self.delete_rum_application_with_http_info(params).await {
+        match self.delete_rum_application_with_http_info(id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -337,12 +324,9 @@ impl RUMAPI {
     /// Delete an existing RUM application in your organization.
     pub async fn delete_rum_application_with_http_info(
         &self,
-        params: DeleteRUMApplicationParams,
+        id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteRUMApplicationError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let id = params.id;
 
         let local_client = &local_configuration.client;
 
@@ -395,12 +379,12 @@ impl RUMAPI {
     /// Get the RUM application with given ID in your organization.
     pub async fn get_rum_application(
         &self,
-        params: GetRUMApplicationParams,
+        id: String,
     ) -> Result<
         Option<crate::datadogV2::model::RUMApplicationResponse>,
         Error<GetRUMApplicationError>,
     > {
-        match self.get_rum_application_with_http_info(params).await {
+        match self.get_rum_application_with_http_info(id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -409,15 +393,12 @@ impl RUMAPI {
     /// Get the RUM application with given ID in your organization.
     pub async fn get_rum_application_with_http_info(
         &self,
-        params: GetRUMApplicationParams,
+        id: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::RUMApplicationResponse>,
         Error<GetRUMApplicationError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let id = params.id;
 
         let local_client = &local_configuration.client;
 
@@ -491,8 +472,6 @@ impl RUMAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v2/rum/applications", local_configuration.base_path);
@@ -547,7 +526,7 @@ impl RUMAPI {
     /// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
     pub async fn list_rum_events(
         &self,
-        params: ListRUMEventsParams,
+        params: ListRUMEventsOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::RUMEventsResponse>, Error<ListRUMEventsError>> {
         match self.list_rum_events_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
@@ -563,14 +542,14 @@ impl RUMAPI {
     /// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
     pub async fn list_rum_events_with_http_info(
         &self,
-        params: ListRUMEventsParams,
+        params: ListRUMEventsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::RUMEventsResponse>,
         Error<ListRUMEventsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let filter_query = params.filter_query;
         let filter_from = params.filter_from;
         let filter_to = params.filter_to;
@@ -584,26 +563,29 @@ impl RUMAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = filter_query {
+        if let Some(ref local_query_param) = filter_query {
             local_req_builder =
-                local_req_builder.query(&[("filter[query]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_from {
+        if let Some(ref local_query_param) = filter_from {
             local_req_builder =
-                local_req_builder.query(&[("filter[from]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[from]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_to {
-            local_req_builder = local_req_builder.query(&[("filter[to]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = sort {
-            local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_cursor {
+        if let Some(ref local_query_param) = filter_to {
             local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[to]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = page_limit {
-            local_req_builder = local_req_builder.query(&[("page[limit]", &local_str.to_string())]);
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_cursor {
+            local_req_builder =
+                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -654,10 +636,10 @@ impl RUMAPI {
     /// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
     pub async fn search_rum_events(
         &self,
-        params: SearchRUMEventsParams,
+        body: crate::datadogV2::model::RUMSearchEventsRequest,
     ) -> Result<Option<crate::datadogV2::model::RUMEventsResponse>, Error<SearchRUMEventsError>>
     {
-        match self.search_rum_events_with_http_info(params).await {
+        match self.search_rum_events_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -671,15 +653,12 @@ impl RUMAPI {
     /// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
     pub async fn search_rum_events_with_http_info(
         &self,
-        params: SearchRUMEventsParams,
+        body: crate::datadogV2::model::RUMSearchEventsRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::RUMEventsResponse>,
         Error<SearchRUMEventsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -737,12 +716,13 @@ impl RUMAPI {
     /// Update the RUM application with given ID in your organization.
     pub async fn update_rum_application(
         &self,
-        params: UpdateRUMApplicationParams,
+        id: String,
+        body: crate::datadogV2::model::RUMApplicationUpdateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::RUMApplicationResponse>,
         Error<UpdateRUMApplicationError>,
     > {
-        match self.update_rum_application_with_http_info(params).await {
+        match self.update_rum_application_with_http_info(id, body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -751,16 +731,13 @@ impl RUMAPI {
     /// Update the RUM application with given ID in your organization.
     pub async fn update_rum_application_with_http_info(
         &self,
-        params: UpdateRUMApplicationParams,
+        id: String,
+        body: crate::datadogV2::model::RUMApplicationUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::RUMApplicationResponse>,
         Error<UpdateRUMApplicationError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let id = params.id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

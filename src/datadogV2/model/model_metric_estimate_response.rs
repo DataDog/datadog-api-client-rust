@@ -10,14 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct MetricEstimateResponse {
     /// Object for a metric cardinality estimate.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::MetricEstimate>>,
+    pub data: Option<crate::datadogV2::model::MetricEstimate>,
 }
 
 impl MetricEstimateResponse {
     pub fn new() -> MetricEstimateResponse {
         MetricEstimateResponse { data: None }
     }
+
+    pub fn data(&mut self, value: crate::datadogV2::model::MetricEstimate) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for MetricEstimateResponse {
     fn default() -> Self {
         Self::new()

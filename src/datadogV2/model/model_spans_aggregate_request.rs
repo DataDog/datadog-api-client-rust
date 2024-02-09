@@ -10,14 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct SpansAggregateRequest {
     /// The object containing the query content.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::SpansAggregateData>>,
+    pub data: Option<crate::datadogV2::model::SpansAggregateData>,
 }
 
 impl SpansAggregateRequest {
     pub fn new() -> SpansAggregateRequest {
         SpansAggregateRequest { data: None }
     }
+
+    pub fn data(&mut self, value: crate::datadogV2::model::SpansAggregateData) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for SpansAggregateRequest {
     fn default() -> Self {
         Self::new()

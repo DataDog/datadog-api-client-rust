@@ -5,13 +5,9 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// GetGraphSnapshotParams is a struct for passing parameters to the method [`SnapshotsAPI::get_graph_snapshot`]
-#[derive(Clone, Debug)]
-pub struct GetGraphSnapshotParams {
-    /// The POSIX timestamp of the start of the query in seconds.
-    pub start: i64,
-    /// The POSIX timestamp of the end of the query in seconds.
-    pub end: i64,
+/// GetGraphSnapshotOptionalParams is a struct for passing parameters to the method [`SnapshotsAPI::get_graph_snapshot`]
+#[derive(Clone, Default, Debug)]
+pub struct GetGraphSnapshotOptionalParams {
     /// The metric query.
     pub metric_query: Option<String>,
     /// A query that adds event bands to the graph.
@@ -26,6 +22,41 @@ pub struct GetGraphSnapshotParams {
     pub height: Option<i64>,
     /// The width of the graph. If no width is specified, the graph's original width is used.
     pub width: Option<i64>,
+}
+
+impl GetGraphSnapshotOptionalParams {
+    /// The metric query.
+    pub fn metric_query(&mut self, value: String) -> &mut Self {
+        self.metric_query = Some(value);
+        self
+    }
+    /// A query that adds event bands to the graph.
+    pub fn event_query(&mut self, value: String) -> &mut Self {
+        self.event_query = Some(value);
+        self
+    }
+    /// A JSON document defining the graph. `graph_def` can be used instead of `metric_query`.
+    /// The JSON document uses the [grammar defined here](<https://docs.datadoghq.com/graphing/graphing_json/#grammar>)
+    /// and should be formatted to a single line then URL encoded.
+    pub fn graph_def(&mut self, value: String) -> &mut Self {
+        self.graph_def = Some(value);
+        self
+    }
+    /// A title for the graph. If no title is specified, the graph does not have a title.
+    pub fn title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
+    }
+    /// The height of the graph. If no height is specified, the graph's original height is used.
+    pub fn height(&mut self, value: i64) -> &mut Self {
+        self.height = Some(value);
+        self
+    }
+    /// The width of the graph. If no width is specified, the graph's original width is used.
+    pub fn width(&mut self, value: i64) -> &mut Self {
+        self.width = Some(value);
+        self
+    }
 }
 
 /// GetGraphSnapshotError is a struct for typed errors of method [`SnapshotsAPI::get_graph_snapshot`]
@@ -63,9 +94,14 @@ impl SnapshotsAPI {
     /// **Note**: When a snapshot is created, there is some delay before it is available.
     pub async fn get_graph_snapshot(
         &self,
-        params: GetGraphSnapshotParams,
+        start: i64,
+        end: i64,
+        params: GetGraphSnapshotOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::GraphSnapshot>, Error<GetGraphSnapshotError>> {
-        match self.get_graph_snapshot_with_http_info(params).await {
+        match self
+            .get_graph_snapshot_with_http_info(start, end, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -75,14 +111,14 @@ impl SnapshotsAPI {
     /// **Note**: When a snapshot is created, there is some delay before it is available.
     pub async fn get_graph_snapshot_with_http_info(
         &self,
-        params: GetGraphSnapshotParams,
+        start: i64,
+        end: i64,
+        params: GetGraphSnapshotOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV1::model::GraphSnapshot>, Error<GetGraphSnapshotError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let start = params.start;
-        let end = params.end;
+        // unbox and build optional parameters
         let metric_query = params.metric_query;
         let event_query = params.event_query;
         let graph_def = params.graph_def;
@@ -98,24 +134,29 @@ impl SnapshotsAPI {
 
         local_req_builder = local_req_builder.query(&[("start", &start.to_string())]);
         local_req_builder = local_req_builder.query(&[("end", &end.to_string())]);
-        if let Some(ref local_str) = metric_query {
+        if let Some(ref local_query_param) = metric_query {
             local_req_builder =
-                local_req_builder.query(&[("metric_query", &local_str.to_string())]);
+                local_req_builder.query(&[("metric_query", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = event_query {
-            local_req_builder = local_req_builder.query(&[("event_query", &local_str.to_string())]);
+        if let Some(ref local_query_param) = event_query {
+            local_req_builder =
+                local_req_builder.query(&[("event_query", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = graph_def {
-            local_req_builder = local_req_builder.query(&[("graph_def", &local_str.to_string())]);
+        if let Some(ref local_query_param) = graph_def {
+            local_req_builder =
+                local_req_builder.query(&[("graph_def", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = title {
-            local_req_builder = local_req_builder.query(&[("title", &local_str.to_string())]);
+        if let Some(ref local_query_param) = title {
+            local_req_builder =
+                local_req_builder.query(&[("title", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = height {
-            local_req_builder = local_req_builder.query(&[("height", &local_str.to_string())]);
+        if let Some(ref local_query_param) = height {
+            local_req_builder =
+                local_req_builder.query(&[("height", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = width {
-            local_req_builder = local_req_builder.query(&[("width", &local_str.to_string())]);
+        if let Some(ref local_query_param) = width {
+            local_req_builder =
+                local_req_builder.query(&[("width", &local_query_param.to_string())]);
         };
 
         // build user agent

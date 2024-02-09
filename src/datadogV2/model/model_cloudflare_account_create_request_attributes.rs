@@ -27,4 +27,9 @@ impl CloudflareAccountCreateRequestAttributes {
             name,
         }
     }
+
+    pub fn email(&mut self, value: String) -> &mut Self {
+        self.email = Some(value);
+        self
+    }
 }

@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct IncidentIntegrationMetadataCreateData {
     /// Incident integration metadata's attributes for a create request.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::IncidentIntegrationMetadataAttributes>,
+    pub attributes: crate::datadogV2::model::IncidentIntegrationMetadataAttributes,
     /// Integration metadata resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::IncidentIntegrationMetadataType,
@@ -18,7 +18,7 @@ pub struct IncidentIntegrationMetadataCreateData {
 
 impl IncidentIntegrationMetadataCreateData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::IncidentIntegrationMetadataAttributes>,
+        attributes: crate::datadogV2::model::IncidentIntegrationMetadataAttributes,
         type_: crate::datadogV2::model::IncidentIntegrationMetadataType,
     ) -> IncidentIntegrationMetadataCreateData {
         IncidentIntegrationMetadataCreateData { attributes, type_ }

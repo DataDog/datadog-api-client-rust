@@ -10,14 +10,23 @@ use serde_with::skip_serializing_none;
 pub struct TeamsResponseMeta {
     /// Teams response metadata.
     #[serde(rename = "pagination")]
-    pub pagination: Option<Box<crate::datadogV2::model::TeamsResponseMetaPagination>>,
+    pub pagination: Option<crate::datadogV2::model::TeamsResponseMetaPagination>,
 }
 
 impl TeamsResponseMeta {
     pub fn new() -> TeamsResponseMeta {
         TeamsResponseMeta { pagination: None }
     }
+
+    pub fn pagination(
+        &mut self,
+        value: crate::datadogV2::model::TeamsResponseMetaPagination,
+    ) -> &mut Self {
+        self.pagination = Some(value);
+        self
+    }
 }
+
 impl Default for TeamsResponseMeta {
     fn default() -> Self {
         Self::new()

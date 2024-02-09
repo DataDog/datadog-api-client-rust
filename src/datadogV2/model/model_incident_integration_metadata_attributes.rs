@@ -20,7 +20,7 @@ pub struct IncidentIntegrationMetadataAttributes {
     pub integration_type: i32,
     /// Incident integration metadata's metadata attribute.
     #[serde(rename = "metadata")]
-    pub metadata: Box<crate::datadogV2::model::IncidentIntegrationMetadataMetadata>,
+    pub metadata: crate::datadogV2::model::IncidentIntegrationMetadataMetadata,
     /// Timestamp when the incident todo was last modified.
     #[serde(rename = "modified")]
     pub modified: Option<String>,
@@ -34,7 +34,7 @@ pub struct IncidentIntegrationMetadataAttributes {
 impl IncidentIntegrationMetadataAttributes {
     pub fn new(
         integration_type: i32,
-        metadata: Box<crate::datadogV2::model::IncidentIntegrationMetadataMetadata>,
+        metadata: crate::datadogV2::model::IncidentIntegrationMetadataMetadata,
     ) -> IncidentIntegrationMetadataAttributes {
         IncidentIntegrationMetadataAttributes {
             created: None,
@@ -44,5 +44,25 @@ impl IncidentIntegrationMetadataAttributes {
             modified: None,
             status: None,
         }
+    }
+
+    pub fn created(&mut self, value: String) -> &mut Self {
+        self.created = Some(value);
+        self
+    }
+
+    pub fn incident_id(&mut self, value: String) -> &mut Self {
+        self.incident_id = Some(value);
+        self
+    }
+
+    pub fn modified(&mut self, value: String) -> &mut Self {
+        self.modified = Some(value);
+        self
+    }
+
+    pub fn status(&mut self, value: i32) -> &mut Self {
+        self.status = Some(value);
+        self
     }
 }

@@ -17,7 +17,16 @@ impl UsageRumSessionsResponse {
     pub fn new() -> UsageRumSessionsResponse {
         UsageRumSessionsResponse { usage: None }
     }
+
+    pub fn usage(
+        &mut self,
+        value: Vec<crate::datadogV1::model::UsageRumSessionsHour>,
+    ) -> &mut Self {
+        self.usage = Some(value);
+        self
+    }
 }
+
 impl Default for UsageRumSessionsResponse {
     fn default() -> Self {
         Self::new()

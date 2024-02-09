@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct DowntimeUpdateRequestData {
     /// Attributes of the downtime to update.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::DowntimeUpdateRequestAttributes>,
+    pub attributes: crate::datadogV2::model::DowntimeUpdateRequestAttributes,
     /// ID of this downtime.
     #[serde(rename = "id")]
     pub id: String,
@@ -21,7 +21,7 @@ pub struct DowntimeUpdateRequestData {
 
 impl DowntimeUpdateRequestData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::DowntimeUpdateRequestAttributes>,
+        attributes: crate::datadogV2::model::DowntimeUpdateRequestAttributes,
         id: String,
         type_: crate::datadogV2::model::DowntimeResourceType,
     ) -> DowntimeUpdateRequestData {

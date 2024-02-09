@@ -5,36 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateLogsMetricParams is a struct for passing parameters to the method [`LogsMetricsAPI::create_logs_metric`]
-#[derive(Clone, Debug)]
-pub struct CreateLogsMetricParams {
-    /// The definition of the new log-based metric.
-    pub body: crate::datadogV2::model::LogsMetricCreateRequest,
-}
-
-/// DeleteLogsMetricParams is a struct for passing parameters to the method [`LogsMetricsAPI::delete_logs_metric`]
-#[derive(Clone, Debug)]
-pub struct DeleteLogsMetricParams {
-    /// The name of the log-based metric.
-    pub metric_id: String,
-}
-
-/// GetLogsMetricParams is a struct for passing parameters to the method [`LogsMetricsAPI::get_logs_metric`]
-#[derive(Clone, Debug)]
-pub struct GetLogsMetricParams {
-    /// The name of the log-based metric.
-    pub metric_id: String,
-}
-
-/// UpdateLogsMetricParams is a struct for passing parameters to the method [`LogsMetricsAPI::update_logs_metric`]
-#[derive(Clone, Debug)]
-pub struct UpdateLogsMetricParams {
-    /// The name of the log-based metric.
-    pub metric_id: String,
-    /// New definition of the log-based metric.
-    pub body: crate::datadogV2::model::LogsMetricUpdateRequest,
-}
-
 /// CreateLogsMetricError is a struct for typed errors of method [`LogsMetricsAPI::create_logs_metric`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -111,10 +81,10 @@ impl LogsMetricsAPI {
     /// Returns the log-based metric object from the request body when the request is successful.
     pub async fn create_logs_metric(
         &self,
-        params: CreateLogsMetricParams,
+        body: crate::datadogV2::model::LogsMetricCreateRequest,
     ) -> Result<Option<crate::datadogV2::model::LogsMetricResponse>, Error<CreateLogsMetricError>>
     {
-        match self.create_logs_metric_with_http_info(params).await {
+        match self.create_logs_metric_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -124,15 +94,12 @@ impl LogsMetricsAPI {
     /// Returns the log-based metric object from the request body when the request is successful.
     pub async fn create_logs_metric_with_http_info(
         &self,
-        params: CreateLogsMetricParams,
+        body: crate::datadogV2::model::LogsMetricCreateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::LogsMetricResponse>,
         Error<CreateLogsMetricError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -193,9 +160,9 @@ impl LogsMetricsAPI {
     /// Delete a specific log-based metric from your organization.
     pub async fn delete_logs_metric(
         &self,
-        params: DeleteLogsMetricParams,
+        metric_id: String,
     ) -> Result<Option<()>, Error<DeleteLogsMetricError>> {
-        match self.delete_logs_metric_with_http_info(params).await {
+        match self.delete_logs_metric_with_http_info(metric_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -204,12 +171,9 @@ impl LogsMetricsAPI {
     /// Delete a specific log-based metric from your organization.
     pub async fn delete_logs_metric_with_http_info(
         &self,
-        params: DeleteLogsMetricParams,
+        metric_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteLogsMetricError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let metric_id = params.metric_id;
 
         let local_client = &local_configuration.client;
 
@@ -262,10 +226,10 @@ impl LogsMetricsAPI {
     /// Get a specific log-based metric from your organization.
     pub async fn get_logs_metric(
         &self,
-        params: GetLogsMetricParams,
+        metric_id: String,
     ) -> Result<Option<crate::datadogV2::model::LogsMetricResponse>, Error<GetLogsMetricError>>
     {
-        match self.get_logs_metric_with_http_info(params).await {
+        match self.get_logs_metric_with_http_info(metric_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -274,15 +238,12 @@ impl LogsMetricsAPI {
     /// Get a specific log-based metric from your organization.
     pub async fn get_logs_metric_with_http_info(
         &self,
-        params: GetLogsMetricParams,
+        metric_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::LogsMetricResponse>,
         Error<GetLogsMetricError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let metric_id = params.metric_id;
 
         let local_client = &local_configuration.client;
 
@@ -354,8 +315,6 @@ impl LogsMetricsAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -409,10 +368,14 @@ impl LogsMetricsAPI {
     /// Returns the log-based metric object from the request body when the request is successful.
     pub async fn update_logs_metric(
         &self,
-        params: UpdateLogsMetricParams,
+        metric_id: String,
+        body: crate::datadogV2::model::LogsMetricUpdateRequest,
     ) -> Result<Option<crate::datadogV2::model::LogsMetricResponse>, Error<UpdateLogsMetricError>>
     {
-        match self.update_logs_metric_with_http_info(params).await {
+        match self
+            .update_logs_metric_with_http_info(metric_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -422,16 +385,13 @@ impl LogsMetricsAPI {
     /// Returns the log-based metric object from the request body when the request is successful.
     pub async fn update_logs_metric_with_http_info(
         &self,
-        params: UpdateLogsMetricParams,
+        metric_id: String,
+        body: crate::datadogV2::model::LogsMetricUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::LogsMetricResponse>,
         Error<UpdateLogsMetricError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let metric_id = params.metric_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

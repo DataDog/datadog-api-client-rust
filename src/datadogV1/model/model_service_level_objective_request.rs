@@ -37,7 +37,7 @@ pub struct ServiceLevelObjectiveRequest {
     /// to be used because this will sum up all request counts instead of averaging them, or taking the max or
     /// min of all of those requests.
     #[serde(rename = "query")]
-    pub query: Option<Box<crate::datadogV1::model::ServiceLevelObjectiveQuery>>,
+    pub query: Option<crate::datadogV1::model::ServiceLevelObjectiveQuery>,
     /// A list of tags associated with this service level objective.
     /// Always included in service level objective responses (but may be empty).
     /// Optional in create/update requests.
@@ -84,5 +84,48 @@ impl ServiceLevelObjectiveRequest {
             type_,
             warning_threshold: None,
         }
+    }
+
+    pub fn description(&mut self, value: Option<String>) -> &mut Self {
+        self.description = Some(value);
+        self
+    }
+
+    pub fn groups(&mut self, value: Vec<String>) -> &mut Self {
+        self.groups = Some(value);
+        self
+    }
+
+    pub fn monitor_ids(&mut self, value: Vec<i64>) -> &mut Self {
+        self.monitor_ids = Some(value);
+        self
+    }
+
+    pub fn query(
+        &mut self,
+        value: crate::datadogV1::model::ServiceLevelObjectiveQuery,
+    ) -> &mut Self {
+        self.query = Some(value);
+        self
+    }
+
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+
+    pub fn target_threshold(&mut self, value: f64) -> &mut Self {
+        self.target_threshold = Some(value);
+        self
+    }
+
+    pub fn timeframe(&mut self, value: crate::datadogV1::model::SLOTimeframe) -> &mut Self {
+        self.timeframe = Some(value);
+        self
+    }
+
+    pub fn warning_threshold(&mut self, value: f64) -> &mut Self {
+        self.warning_threshold = Some(value);
+        self
     }
 }

@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct CloudflareAccountResponseData {
     /// Attributes object of a Cloudflare account.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::CloudflareAccountResponseAttributes>,
+    pub attributes: crate::datadogV2::model::CloudflareAccountResponseAttributes,
     /// The ID of the Cloudflare account, a hash of the account name.
     #[serde(rename = "id")]
     pub id: String,
@@ -21,7 +21,7 @@ pub struct CloudflareAccountResponseData {
 
 impl CloudflareAccountResponseData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::CloudflareAccountResponseAttributes>,
+        attributes: crate::datadogV2::model::CloudflareAccountResponseAttributes,
         id: String,
         type_: crate::datadogV2::model::CloudflareAccountType,
     ) -> CloudflareAccountResponseData {

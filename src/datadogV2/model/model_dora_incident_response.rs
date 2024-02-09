@@ -10,13 +10,11 @@ use serde_with::skip_serializing_none;
 pub struct DORAIncidentResponse {
     /// Response after receiving a DORA incident event.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::DORAIncidentResponseData>,
+    pub data: crate::datadogV2::model::DORAIncidentResponseData,
 }
 
 impl DORAIncidentResponse {
-    pub fn new(
-        data: Box<crate::datadogV2::model::DORAIncidentResponseData>,
-    ) -> DORAIncidentResponse {
+    pub fn new(data: crate::datadogV2::model::DORAIncidentResponseData) -> DORAIncidentResponse {
         DORAIncidentResponse { data }
     }
 }

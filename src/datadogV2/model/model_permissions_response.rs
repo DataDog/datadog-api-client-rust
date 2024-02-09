@@ -17,7 +17,13 @@ impl PermissionsResponse {
     pub fn new() -> PermissionsResponse {
         PermissionsResponse { data: None }
     }
+
+    pub fn data(&mut self, value: Vec<crate::datadogV2::model::Permission>) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for PermissionsResponse {
     fn default() -> Self {
         Self::new()

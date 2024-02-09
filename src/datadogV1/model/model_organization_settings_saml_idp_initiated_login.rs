@@ -18,7 +18,13 @@ impl OrganizationSettingsSamlIdpInitiatedLogin {
     pub fn new() -> OrganizationSettingsSamlIdpInitiatedLogin {
         OrganizationSettingsSamlIdpInitiatedLogin { enabled: None }
     }
+
+    pub fn enabled(&mut self, value: bool) -> &mut Self {
+        self.enabled = Some(value);
+        self
+    }
 }
+
 impl Default for OrganizationSettingsSamlIdpInitiatedLogin {
     fn default() -> Self {
         Self::new()

@@ -17,7 +17,16 @@ impl UsageNetworkFlowsResponse {
     pub fn new() -> UsageNetworkFlowsResponse {
         UsageNetworkFlowsResponse { usage: None }
     }
+
+    pub fn usage(
+        &mut self,
+        value: Vec<crate::datadogV1::model::UsageNetworkFlowsHour>,
+    ) -> &mut Self {
+        self.usage = Some(value);
+        self
+    }
 }
+
 impl Default for UsageNetworkFlowsResponse {
     fn default() -> Self {
         Self::new()

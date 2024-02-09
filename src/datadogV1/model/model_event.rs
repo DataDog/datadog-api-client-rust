@@ -79,7 +79,73 @@ impl Event {
             url: None,
         }
     }
+
+    pub fn alert_type(&mut self, value: crate::datadogV1::model::EventAlertType) -> &mut Self {
+        self.alert_type = Some(value);
+        self
+    }
+
+    pub fn date_happened(&mut self, value: i64) -> &mut Self {
+        self.date_happened = Some(value);
+        self
+    }
+
+    pub fn device_name(&mut self, value: String) -> &mut Self {
+        self.device_name = Some(value);
+        self
+    }
+
+    pub fn host(&mut self, value: String) -> &mut Self {
+        self.host = Some(value);
+        self
+    }
+
+    pub fn id(&mut self, value: i64) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn id_str(&mut self, value: String) -> &mut Self {
+        self.id_str = Some(value);
+        self
+    }
+
+    pub fn payload(&mut self, value: String) -> &mut Self {
+        self.payload = Some(value);
+        self
+    }
+
+    pub fn priority(&mut self, value: Option<crate::datadogV1::model::EventPriority>) -> &mut Self {
+        self.priority = Some(value);
+        self
+    }
+
+    pub fn source_type_name(&mut self, value: String) -> &mut Self {
+        self.source_type_name = Some(value);
+        self
+    }
+
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+
+    pub fn text(&mut self, value: String) -> &mut Self {
+        self.text = Some(value);
+        self
+    }
+
+    pub fn title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
+    }
+
+    pub fn url(&mut self, value: String) -> &mut Self {
+        self.url = Some(value);
+        self
+    }
 }
+
 impl Default for Event {
     fn default() -> Self {
         Self::new()

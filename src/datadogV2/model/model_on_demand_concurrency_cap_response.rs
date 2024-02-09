@@ -10,14 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct OnDemandConcurrencyCapResponse {
     /// On-demand concurrency cap.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::OnDemandConcurrencyCap>>,
+    pub data: Option<crate::datadogV2::model::OnDemandConcurrencyCap>,
 }
 
 impl OnDemandConcurrencyCapResponse {
     pub fn new() -> OnDemandConcurrencyCapResponse {
         OnDemandConcurrencyCapResponse { data: None }
     }
+
+    pub fn data(&mut self, value: crate::datadogV2::model::OnDemandConcurrencyCap) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for OnDemandConcurrencyCapResponse {
     fn default() -> Self {
         Self::new()

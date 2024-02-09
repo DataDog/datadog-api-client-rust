@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct CheckCanDeleteSLOResponse {
     /// An array of service level objective objects.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV1::model::CheckCanDeleteSLOResponseData>>,
+    pub data: Option<crate::datadogV1::model::CheckCanDeleteSLOResponseData>,
     /// A mapping of SLO id to it's current usages.
     #[serde(rename = "errors")]
     pub errors: Option<std::collections::BTreeMap<String, String>>,
@@ -23,7 +23,21 @@ impl CheckCanDeleteSLOResponse {
             errors: None,
         }
     }
+
+    pub fn data(
+        &mut self,
+        value: crate::datadogV1::model::CheckCanDeleteSLOResponseData,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn errors(&mut self, value: std::collections::BTreeMap<String, String>) -> &mut Self {
+        self.errors = Some(value);
+        self
+    }
 }
+
 impl Default for CheckCanDeleteSLOResponse {
     fn default() -> Self {
         Self::new()

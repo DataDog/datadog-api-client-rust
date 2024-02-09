@@ -23,7 +23,18 @@ impl SAMLAssertionAttributeAttributes {
             attribute_value: None,
         }
     }
+
+    pub fn attribute_key(&mut self, value: String) -> &mut Self {
+        self.attribute_key = Some(value);
+        self
+    }
+
+    pub fn attribute_value(&mut self, value: String) -> &mut Self {
+        self.attribute_value = Some(value);
+        self
+    }
 }
+
 impl Default for SAMLAssertionAttributeAttributes {
     fn default() -> Self {
         Self::new()

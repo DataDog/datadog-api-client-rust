@@ -13,7 +13,7 @@ pub struct ContainerImageGroupImagesRelationshipsLink {
     pub data: Option<Vec<String>>,
     /// Links attributes.
     #[serde(rename = "links")]
-    pub links: Option<Box<crate::datadogV2::model::ContainerImageGroupRelationshipsLinks>>,
+    pub links: Option<crate::datadogV2::model::ContainerImageGroupRelationshipsLinks>,
 }
 
 impl ContainerImageGroupImagesRelationshipsLink {
@@ -23,7 +23,21 @@ impl ContainerImageGroupImagesRelationshipsLink {
             links: None,
         }
     }
+
+    pub fn data(&mut self, value: Vec<String>) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn links(
+        &mut self,
+        value: crate::datadogV2::model::ContainerImageGroupRelationshipsLinks,
+    ) -> &mut Self {
+        self.links = Some(value);
+        self
+    }
 }
+
 impl Default for ContainerImageGroupImagesRelationshipsLink {
     fn default() -> Self {
         Self::new()

@@ -10,13 +10,11 @@ use serde_with::skip_serializing_none;
 pub struct SpansMetricUpdateRequest {
     /// The new span-based metric properties.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::SpansMetricUpdateData>,
+    pub data: crate::datadogV2::model::SpansMetricUpdateData,
 }
 
 impl SpansMetricUpdateRequest {
-    pub fn new(
-        data: Box<crate::datadogV2::model::SpansMetricUpdateData>,
-    ) -> SpansMetricUpdateRequest {
+    pub fn new(data: crate::datadogV2::model::SpansMetricUpdateData) -> SpansMetricUpdateRequest {
         SpansMetricUpdateRequest { data }
     }
 }

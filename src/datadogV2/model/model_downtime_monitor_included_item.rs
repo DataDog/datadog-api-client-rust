@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct DowntimeMonitorIncludedItem {
     /// Attributes of the monitor identified by the downtime.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::DowntimeMonitorIncludedAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::DowntimeMonitorIncludedAttributes>,
     /// ID of the monitor identified by the downtime.
     #[serde(rename = "id")]
     pub id: Option<i64>,
@@ -27,7 +27,29 @@ impl DowntimeMonitorIncludedItem {
             type_: None,
         }
     }
+
+    pub fn attributes(
+        &mut self,
+        value: crate::datadogV2::model::DowntimeMonitorIncludedAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn id(&mut self, value: i64) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn type_(
+        &mut self,
+        value: crate::datadogV2::model::DowntimeIncludedMonitorType,
+    ) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
+
 impl Default for DowntimeMonitorIncludedItem {
     fn default() -> Self {
         Self::new()

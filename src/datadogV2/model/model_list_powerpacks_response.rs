@@ -16,10 +16,10 @@ pub struct ListPowerpacksResponse {
     pub included: Option<Vec<crate::datadogV2::model::User>>,
     /// Links attributes.
     #[serde(rename = "links")]
-    pub links: Option<Box<crate::datadogV2::model::PowerpackResponseLinks>>,
+    pub links: Option<crate::datadogV2::model::PowerpackResponseLinks>,
     /// Powerpack response metadata.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV2::model::PowerpacksResponseMeta>>,
+    pub meta: Option<crate::datadogV2::model::PowerpacksResponseMeta>,
 }
 
 impl ListPowerpacksResponse {
@@ -31,7 +31,28 @@ impl ListPowerpacksResponse {
             meta: None,
         }
     }
+
+    pub fn data(&mut self, value: Vec<crate::datadogV2::model::PowerpackData>) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn included(&mut self, value: Vec<crate::datadogV2::model::User>) -> &mut Self {
+        self.included = Some(value);
+        self
+    }
+
+    pub fn links(&mut self, value: crate::datadogV2::model::PowerpackResponseLinks) -> &mut Self {
+        self.links = Some(value);
+        self
+    }
+
+    pub fn meta(&mut self, value: crate::datadogV2::model::PowerpacksResponseMeta) -> &mut Self {
+        self.meta = Some(value);
+        self
+    }
 }
+
 impl Default for ListPowerpacksResponse {
     fn default() -> Self {
         Self::new()

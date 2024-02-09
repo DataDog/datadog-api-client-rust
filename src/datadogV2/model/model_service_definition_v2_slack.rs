@@ -30,4 +30,9 @@ impl ServiceDefinitionV2Slack {
             type_,
         }
     }
+
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
 }

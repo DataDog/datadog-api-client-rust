@@ -17,7 +17,13 @@ impl FastlyServiceAttributes {
     pub fn new() -> FastlyServiceAttributes {
         FastlyServiceAttributes { tags: None }
     }
+
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
 }
+
 impl Default for FastlyServiceAttributes {
     fn default() -> Self {
         Self::new()

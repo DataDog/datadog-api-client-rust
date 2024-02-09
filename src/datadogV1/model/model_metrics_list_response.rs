@@ -23,7 +23,18 @@ impl MetricsListResponse {
             metrics: None,
         }
     }
+
+    pub fn from(&mut self, value: String) -> &mut Self {
+        self.from = Some(value);
+        self
+    }
+
+    pub fn metrics(&mut self, value: Vec<String>) -> &mut Self {
+        self.metrics = Some(value);
+        self
+    }
 }
+
 impl Default for MetricsListResponse {
     fn default() -> Self {
         Self::new()

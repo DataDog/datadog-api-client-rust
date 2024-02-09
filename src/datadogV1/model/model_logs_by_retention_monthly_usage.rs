@@ -23,7 +23,21 @@ impl LogsByRetentionMonthlyUsage {
             usage: None,
         }
     }
+
+    pub fn date(&mut self, value: String) -> &mut Self {
+        self.date = Some(value);
+        self
+    }
+
+    pub fn usage(
+        &mut self,
+        value: Vec<crate::datadogV1::model::LogsRetentionSumUsage>,
+    ) -> &mut Self {
+        self.usage = Some(value);
+        self
+    }
 }
+
 impl Default for LogsByRetentionMonthlyUsage {
     fn default() -> Self {
         Self::new()

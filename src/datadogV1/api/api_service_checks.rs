@@ -5,13 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// SubmitServiceCheckParams is a struct for passing parameters to the method [`ServiceChecksAPI::submit_service_check`]
-#[derive(Clone, Debug)]
-pub struct SubmitServiceCheckParams {
-    /// Service Check request body.
-    pub body: Vec<crate::datadogV1::model::ServiceCheck>,
-}
-
 /// SubmitServiceCheckError is a struct for typed errors of method [`ServiceChecksAPI::submit_service_check`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -52,12 +45,12 @@ impl ServiceChecksAPI {
     /// - Service checks can be submitted up to 10 minutes in the past.
     pub async fn submit_service_check(
         &self,
-        params: SubmitServiceCheckParams,
+        body: Vec<crate::datadogV1::model::ServiceCheck>,
     ) -> Result<
         Option<crate::datadogV1::model::IntakePayloadAccepted>,
         Error<SubmitServiceCheckError>,
     > {
-        match self.submit_service_check_with_http_info(params).await {
+        match self.submit_service_check_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -70,15 +63,12 @@ impl ServiceChecksAPI {
     /// - Service checks can be submitted up to 10 minutes in the past.
     pub async fn submit_service_check_with_http_info(
         &self,
-        params: SubmitServiceCheckParams,
+        body: Vec<crate::datadogV1::model::ServiceCheck>,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::IntakePayloadAccepted>,
         Error<SubmitServiceCheckError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

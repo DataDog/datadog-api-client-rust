@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct BulkMuteFindingsResponse {
     /// Data object containing the ID of the request that was updated.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::BulkMuteFindingsResponseData>,
+    pub data: crate::datadogV2::model::BulkMuteFindingsResponseData,
 }
 
 impl BulkMuteFindingsResponse {
     pub fn new(
-        data: Box<crate::datadogV2::model::BulkMuteFindingsResponseData>,
+        data: crate::datadogV2::model::BulkMuteFindingsResponseData,
     ) -> BulkMuteFindingsResponse {
         BulkMuteFindingsResponse { data }
     }

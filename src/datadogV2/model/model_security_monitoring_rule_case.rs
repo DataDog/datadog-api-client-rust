@@ -32,7 +32,31 @@ impl SecurityMonitoringRuleCase {
             status: None,
         }
     }
+
+    pub fn condition(&mut self, value: String) -> &mut Self {
+        self.condition = Some(value);
+        self
+    }
+
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn notifications(&mut self, value: Vec<String>) -> &mut Self {
+        self.notifications = Some(value);
+        self
+    }
+
+    pub fn status(
+        &mut self,
+        value: crate::datadogV2::model::SecurityMonitoringRuleSeverity,
+    ) -> &mut Self {
+        self.status = Some(value);
+        self
+    }
 }
+
 impl Default for SecurityMonitoringRuleCase {
     fn default() -> Self {
         Self::new()

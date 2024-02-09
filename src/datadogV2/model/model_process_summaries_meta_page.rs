@@ -24,7 +24,18 @@ impl ProcessSummariesMetaPage {
             size: None,
         }
     }
+
+    pub fn after(&mut self, value: String) -> &mut Self {
+        self.after = Some(value);
+        self
+    }
+
+    pub fn size(&mut self, value: i32) -> &mut Self {
+        self.size = Some(value);
+        self
+    }
 }
+
 impl Default for ProcessSummariesMetaPage {
     fn default() -> Self {
         Self::new()

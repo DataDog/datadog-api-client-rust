@@ -5,43 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateApmRetentionFilterParams is a struct for passing parameters to the method [`APMRetentionFiltersAPI::create_apm_retention_filter`]
-#[derive(Clone, Debug)]
-pub struct CreateApmRetentionFilterParams {
-    /// The definition of the new retention filter.
-    pub body: crate::datadogV2::model::RetentionFilterCreateRequest,
-}
-
-/// DeleteApmRetentionFilterParams is a struct for passing parameters to the method [`APMRetentionFiltersAPI::delete_apm_retention_filter`]
-#[derive(Clone, Debug)]
-pub struct DeleteApmRetentionFilterParams {
-    /// The ID of the retention filter.
-    pub filter_id: String,
-}
-
-/// GetApmRetentionFilterParams is a struct for passing parameters to the method [`APMRetentionFiltersAPI::get_apm_retention_filter`]
-#[derive(Clone, Debug)]
-pub struct GetApmRetentionFilterParams {
-    /// The ID of the retention filter.
-    pub filter_id: String,
-}
-
-/// ReorderApmRetentionFiltersParams is a struct for passing parameters to the method [`APMRetentionFiltersAPI::reorder_apm_retention_filters`]
-#[derive(Clone, Debug)]
-pub struct ReorderApmRetentionFiltersParams {
-    /// The list of retention filters in the new order.
-    pub body: crate::datadogV2::model::ReorderRetentionFiltersRequest,
-}
-
-/// UpdateApmRetentionFilterParams is a struct for passing parameters to the method [`APMRetentionFiltersAPI::update_apm_retention_filter`]
-#[derive(Clone, Debug)]
-pub struct UpdateApmRetentionFilterParams {
-    /// The ID of the retention filter.
-    pub filter_id: String,
-    /// The updated definition of the retention filter.
-    pub body: crate::datadogV2::model::RetentionFilterUpdateRequest,
-}
-
 /// CreateApmRetentionFilterError is a struct for typed errors of method [`APMRetentionFiltersAPI::create_apm_retention_filter`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -128,15 +91,12 @@ impl APMRetentionFiltersAPI {
     /// Returns the retention filter definition when the request is successful.
     pub async fn create_apm_retention_filter(
         &self,
-        params: CreateApmRetentionFilterParams,
+        body: crate::datadogV2::model::RetentionFilterCreateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::RetentionFilterResponse>,
         Error<CreateApmRetentionFilterError>,
     > {
-        match self
-            .create_apm_retention_filter_with_http_info(params)
-            .await
-        {
+        match self.create_apm_retention_filter_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -146,15 +106,12 @@ impl APMRetentionFiltersAPI {
     /// Returns the retention filter definition when the request is successful.
     pub async fn create_apm_retention_filter_with_http_info(
         &self,
-        params: CreateApmRetentionFilterParams,
+        body: crate::datadogV2::model::RetentionFilterCreateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::RetentionFilterResponse>,
         Error<CreateApmRetentionFilterError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -215,10 +172,10 @@ impl APMRetentionFiltersAPI {
     /// Delete a specific retention filter from your organization.
     pub async fn delete_apm_retention_filter(
         &self,
-        params: DeleteApmRetentionFilterParams,
+        filter_id: String,
     ) -> Result<Option<()>, Error<DeleteApmRetentionFilterError>> {
         match self
-            .delete_apm_retention_filter_with_http_info(params)
+            .delete_apm_retention_filter_with_http_info(filter_id)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -229,12 +186,9 @@ impl APMRetentionFiltersAPI {
     /// Delete a specific retention filter from your organization.
     pub async fn delete_apm_retention_filter_with_http_info(
         &self,
-        params: DeleteApmRetentionFilterParams,
+        filter_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteApmRetentionFilterError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let filter_id = params.filter_id;
 
         let local_client = &local_configuration.client;
 
@@ -287,12 +241,15 @@ impl APMRetentionFiltersAPI {
     /// Get an APM retention filter.
     pub async fn get_apm_retention_filter(
         &self,
-        params: GetApmRetentionFilterParams,
+        filter_id: String,
     ) -> Result<
         Option<crate::datadogV2::model::RetentionFilterResponse>,
         Error<GetApmRetentionFilterError>,
     > {
-        match self.get_apm_retention_filter_with_http_info(params).await {
+        match self
+            .get_apm_retention_filter_with_http_info(filter_id)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -301,15 +258,12 @@ impl APMRetentionFiltersAPI {
     /// Get an APM retention filter.
     pub async fn get_apm_retention_filter_with_http_info(
         &self,
-        params: GetApmRetentionFilterParams,
+        filter_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::RetentionFilterResponse>,
         Error<GetApmRetentionFilterError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let filter_id = params.filter_id;
 
         let local_client = &local_configuration.client;
 
@@ -383,8 +337,6 @@ impl APMRetentionFiltersAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -437,10 +389,10 @@ impl APMRetentionFiltersAPI {
     /// Re-order the execution order of retention filters.
     pub async fn reorder_apm_retention_filters(
         &self,
-        params: ReorderApmRetentionFiltersParams,
+        body: crate::datadogV2::model::ReorderRetentionFiltersRequest,
     ) -> Result<Option<()>, Error<ReorderApmRetentionFiltersError>> {
         match self
-            .reorder_apm_retention_filters_with_http_info(params)
+            .reorder_apm_retention_filters_with_http_info(body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -451,12 +403,9 @@ impl APMRetentionFiltersAPI {
     /// Re-order the execution order of retention filters.
     pub async fn reorder_apm_retention_filters_with_http_info(
         &self,
-        params: ReorderApmRetentionFiltersParams,
+        body: crate::datadogV2::model::ReorderRetentionFiltersRequest,
     ) -> Result<ResponseContent<()>, Error<ReorderApmRetentionFiltersError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -515,13 +464,14 @@ impl APMRetentionFiltersAPI {
     /// Update a retention filter from your organization.
     pub async fn update_apm_retention_filter(
         &self,
-        params: UpdateApmRetentionFilterParams,
+        filter_id: String,
+        body: crate::datadogV2::model::RetentionFilterUpdateRequest,
     ) -> Result<
         Option<crate::datadogV2::model::RetentionFilterResponse>,
         Error<UpdateApmRetentionFilterError>,
     > {
         match self
-            .update_apm_retention_filter_with_http_info(params)
+            .update_apm_retention_filter_with_http_info(filter_id, body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -532,16 +482,13 @@ impl APMRetentionFiltersAPI {
     /// Update a retention filter from your organization.
     pub async fn update_apm_retention_filter_with_http_info(
         &self,
-        params: UpdateApmRetentionFilterParams,
+        filter_id: String,
+        body: crate::datadogV2::model::RetentionFilterUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::RetentionFilterResponse>,
         Error<UpdateApmRetentionFilterError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let filter_id = params.filter_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

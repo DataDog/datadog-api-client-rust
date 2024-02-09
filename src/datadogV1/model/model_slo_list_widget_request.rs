@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SLOListWidgetRequest {
     /// Updated SLO List widget.
     #[serde(rename = "query")]
-    pub query: Box<crate::datadogV1::model::SLOListWidgetQuery>,
+    pub query: crate::datadogV1::model::SLOListWidgetQuery,
     /// Widget request type.
     #[serde(rename = "request_type")]
     pub request_type: crate::datadogV1::model::SLOListWidgetRequestType,
@@ -18,7 +18,7 @@ pub struct SLOListWidgetRequest {
 
 impl SLOListWidgetRequest {
     pub fn new(
-        query: Box<crate::datadogV1::model::SLOListWidgetQuery>,
+        query: crate::datadogV1::model::SLOListWidgetQuery,
         request_type: crate::datadogV1::model::SLOListWidgetRequestType,
     ) -> SLOListWidgetRequest {
         SLOListWidgetRequest {

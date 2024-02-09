@@ -17,7 +17,13 @@ impl HTTPLogErrors {
     pub fn new() -> HTTPLogErrors {
         HTTPLogErrors { errors: None }
     }
+
+    pub fn errors(&mut self, value: Vec<crate::datadogV2::model::HTTPLogError>) -> &mut Self {
+        self.errors = Some(value);
+        self
+    }
 }
+
 impl Default for HTTPLogErrors {
     fn default() -> Self {
         Self::new()

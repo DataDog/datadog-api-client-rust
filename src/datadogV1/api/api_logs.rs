@@ -5,22 +5,29 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// ListLogsParams is a struct for passing parameters to the method [`LogsAPI::list_logs`]
-#[derive(Clone, Debug)]
-pub struct ListLogsParams {
-    /// Logs filter
-    pub body: crate::datadogV1::model::LogsListRequest,
-}
-
-/// SubmitLogParams is a struct for passing parameters to the method [`LogsAPI::submit_log`]
-#[derive(Clone, Debug)]
-pub struct SubmitLogParams {
-    /// Log to send (JSON format).
-    pub body: Vec<crate::datadogV1::model::HTTPLogItem>,
+/// SubmitLogOptionalParams is a struct for passing parameters to the method [`LogsAPI::submit_log`]
+#[derive(Clone, Default, Debug)]
+pub struct SubmitLogOptionalParams {
     /// HTTP header used to compress the media-type.
     pub content_encoding: Option<crate::datadogV1::model::ContentEncoding>,
     /// Log tags can be passed as query parameters with `text/plain` content type.
     pub ddtags: Option<String>,
+}
+
+impl SubmitLogOptionalParams {
+    /// HTTP header used to compress the media-type.
+    pub fn content_encoding(
+        &mut self,
+        value: crate::datadogV1::model::ContentEncoding,
+    ) -> &mut Self {
+        self.content_encoding = Some(value);
+        self
+    }
+    /// Log tags can be passed as query parameters with `text/plain` content type.
+    pub fn ddtags(&mut self, value: String) -> &mut Self {
+        self.ddtags = Some(value);
+        self
+    }
 }
 
 /// ListLogsError is a struct for typed errors of method [`LogsAPI::list_logs`]
@@ -74,9 +81,9 @@ impl LogsAPI {
     /// [2]: <https://docs.datadoghq.com/logs/archives>
     pub async fn list_logs(
         &self,
-        params: ListLogsParams,
+        body: crate::datadogV1::model::LogsListRequest,
     ) -> Result<Option<crate::datadogV1::model::LogsListResponse>, Error<ListLogsError>> {
-        match self.list_logs_with_http_info(params).await {
+        match self.list_logs_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -93,13 +100,10 @@ impl LogsAPI {
     /// [2]: <https://docs.datadoghq.com/logs/archives>
     pub async fn list_logs_with_http_info(
         &self,
-        params: ListLogsParams,
+        body: crate::datadogV1::model::LogsListRequest,
     ) -> Result<ResponseContent<crate::datadogV1::model::LogsListResponse>, Error<ListLogsError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -174,10 +178,11 @@ impl LogsAPI {
     /// - 5xx: Internal error, request should be retried after some time
     pub async fn submit_log(
         &self,
-        params: SubmitLogParams,
+        body: Vec<crate::datadogV1::model::HTTPLogItem>,
+        params: SubmitLogOptionalParams,
     ) -> Result<Option<std::collections::BTreeMap<String, serde_json::Value>>, Error<SubmitLogError>>
     {
-        match self.submit_log_with_http_info(params).await {
+        match self.submit_log_with_http_info(body, params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -204,15 +209,15 @@ impl LogsAPI {
     /// - 5xx: Internal error, request should be retried after some time
     pub async fn submit_log_with_http_info(
         &self,
-        params: SubmitLogParams,
+        body: Vec<crate::datadogV1::model::HTTPLogItem>,
+        params: SubmitLogOptionalParams,
     ) -> Result<
         ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
         Error<SubmitLogError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let body = params.body;
+        // unbox and build optional parameters
         let content_encoding = params.content_encoding;
         let ddtags = params.ddtags;
 
@@ -222,8 +227,9 @@ impl LogsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
-        if let Some(ref local_str) = ddtags {
-            local_req_builder = local_req_builder.query(&[("ddtags", &local_str.to_string())]);
+        if let Some(ref local_query_param) = ddtags {
+            local_req_builder =
+                local_req_builder.query(&[("ddtags", &local_query_param.to_string())]);
         };
 
         if let Some(ref local) = content_encoding {

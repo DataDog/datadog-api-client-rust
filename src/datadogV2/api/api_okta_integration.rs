@@ -5,34 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateOktaAccountParams is a struct for passing parameters to the method [`OktaIntegrationAPI::create_okta_account`]
-#[derive(Clone, Debug)]
-pub struct CreateOktaAccountParams {
-    pub body: crate::datadogV2::model::OktaAccountRequest,
-}
-
-/// DeleteOktaAccountParams is a struct for passing parameters to the method [`OktaIntegrationAPI::delete_okta_account`]
-#[derive(Clone, Debug)]
-pub struct DeleteOktaAccountParams {
-    /// None
-    pub account_id: String,
-}
-
-/// GetOktaAccountParams is a struct for passing parameters to the method [`OktaIntegrationAPI::get_okta_account`]
-#[derive(Clone, Debug)]
-pub struct GetOktaAccountParams {
-    /// None
-    pub account_id: String,
-}
-
-/// UpdateOktaAccountParams is a struct for passing parameters to the method [`OktaIntegrationAPI::update_okta_account`]
-#[derive(Clone, Debug)]
-pub struct UpdateOktaAccountParams {
-    /// None
-    pub account_id: String,
-    pub body: crate::datadogV2::model::OktaAccountUpdateRequest,
-}
-
 /// CreateOktaAccountError is a struct for typed errors of method [`OktaIntegrationAPI::create_okta_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -112,10 +84,10 @@ impl OktaIntegrationAPI {
     /// Create an Okta account.
     pub async fn create_okta_account(
         &self,
-        params: CreateOktaAccountParams,
+        body: crate::datadogV2::model::OktaAccountRequest,
     ) -> Result<Option<crate::datadogV2::model::OktaAccountResponse>, Error<CreateOktaAccountError>>
     {
-        match self.create_okta_account_with_http_info(params).await {
+        match self.create_okta_account_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -124,15 +96,12 @@ impl OktaIntegrationAPI {
     /// Create an Okta account.
     pub async fn create_okta_account_with_http_info(
         &self,
-        params: CreateOktaAccountParams,
+        body: crate::datadogV2::model::OktaAccountRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::OktaAccountResponse>,
         Error<CreateOktaAccountError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -193,9 +162,9 @@ impl OktaIntegrationAPI {
     /// Delete an Okta account.
     pub async fn delete_okta_account(
         &self,
-        params: DeleteOktaAccountParams,
+        account_id: String,
     ) -> Result<Option<()>, Error<DeleteOktaAccountError>> {
-        match self.delete_okta_account_with_http_info(params).await {
+        match self.delete_okta_account_with_http_info(account_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -204,12 +173,9 @@ impl OktaIntegrationAPI {
     /// Delete an Okta account.
     pub async fn delete_okta_account_with_http_info(
         &self,
-        params: DeleteOktaAccountParams,
+        account_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteOktaAccountError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_id = params.account_id;
 
         let local_client = &local_configuration.client;
 
@@ -262,10 +228,10 @@ impl OktaIntegrationAPI {
     /// Get an Okta account.
     pub async fn get_okta_account(
         &self,
-        params: GetOktaAccountParams,
+        account_id: String,
     ) -> Result<Option<crate::datadogV2::model::OktaAccountResponse>, Error<GetOktaAccountError>>
     {
-        match self.get_okta_account_with_http_info(params).await {
+        match self.get_okta_account_with_http_info(account_id).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -274,15 +240,12 @@ impl OktaIntegrationAPI {
     /// Get an Okta account.
     pub async fn get_okta_account_with_http_info(
         &self,
-        params: GetOktaAccountParams,
+        account_id: String,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::OktaAccountResponse>,
         Error<GetOktaAccountError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_id = params.account_id;
 
         let local_client = &local_configuration.client;
 
@@ -354,8 +317,6 @@ impl OktaIntegrationAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
@@ -408,10 +369,14 @@ impl OktaIntegrationAPI {
     /// Update an Okta account.
     pub async fn update_okta_account(
         &self,
-        params: UpdateOktaAccountParams,
+        account_id: String,
+        body: crate::datadogV2::model::OktaAccountUpdateRequest,
     ) -> Result<Option<crate::datadogV2::model::OktaAccountResponse>, Error<UpdateOktaAccountError>>
     {
-        match self.update_okta_account_with_http_info(params).await {
+        match self
+            .update_okta_account_with_http_info(account_id, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -420,16 +385,13 @@ impl OktaIntegrationAPI {
     /// Update an Okta account.
     pub async fn update_okta_account_with_http_info(
         &self,
-        params: UpdateOktaAccountParams,
+        account_id: String,
+        body: crate::datadogV2::model::OktaAccountUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::OktaAccountResponse>,
         Error<UpdateOktaAccountError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let account_id = params.account_id;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

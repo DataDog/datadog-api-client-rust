@@ -10,10 +10,10 @@ use serde_with::skip_serializing_none;
 pub struct ServiceDefinitionDataAttributes {
     /// Metadata about a service definition.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV2::model::ServiceDefinitionMeta>>,
+    pub meta: Option<crate::datadogV2::model::ServiceDefinitionMeta>,
     /// Service definition schema.
     #[serde(rename = "schema")]
-    pub schema: Option<Box<crate::datadogV2::model::ServiceDefinitionSchema>>,
+    pub schema: Option<crate::datadogV2::model::ServiceDefinitionSchema>,
 }
 
 impl ServiceDefinitionDataAttributes {
@@ -23,7 +23,18 @@ impl ServiceDefinitionDataAttributes {
             schema: None,
         }
     }
+
+    pub fn meta(&mut self, value: crate::datadogV2::model::ServiceDefinitionMeta) -> &mut Self {
+        self.meta = Some(value);
+        self
+    }
+
+    pub fn schema(&mut self, value: crate::datadogV2::model::ServiceDefinitionSchema) -> &mut Self {
+        self.schema = Some(value);
+        self
+    }
 }
+
 impl Default for ServiceDefinitionDataAttributes {
     fn default() -> Self {
         Self::new()

@@ -17,7 +17,16 @@ impl DashboardListUpdateItemsRequest {
     pub fn new() -> DashboardListUpdateItemsRequest {
         DashboardListUpdateItemsRequest { dashboards: None }
     }
+
+    pub fn dashboards(
+        &mut self,
+        value: Vec<crate::datadogV2::model::DashboardListItemRequest>,
+    ) -> &mut Self {
+        self.dashboards = Some(value);
+        self
+    }
 }
+
 impl Default for DashboardListUpdateItemsRequest {
     fn default() -> Self {
         Self::new()

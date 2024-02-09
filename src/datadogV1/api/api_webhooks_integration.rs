@@ -5,66 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// CreateWebhooksIntegrationParams is a struct for passing parameters to the method [`WebhooksIntegrationAPI::create_webhooks_integration`]
-#[derive(Clone, Debug)]
-pub struct CreateWebhooksIntegrationParams {
-    /// Create a webhooks integration request body.
-    pub body: crate::datadogV1::model::WebhooksIntegration,
-}
-
-/// CreateWebhooksIntegrationCustomVariableParams is a struct for passing parameters to the method [`WebhooksIntegrationAPI::create_webhooks_integration_custom_variable`]
-#[derive(Clone, Debug)]
-pub struct CreateWebhooksIntegrationCustomVariableParams {
-    /// Define a custom variable request body.
-    pub body: crate::datadogV1::model::WebhooksIntegrationCustomVariable,
-}
-
-/// DeleteWebhooksIntegrationParams is a struct for passing parameters to the method [`WebhooksIntegrationAPI::delete_webhooks_integration`]
-#[derive(Clone, Debug)]
-pub struct DeleteWebhooksIntegrationParams {
-    /// The name of the webhook.
-    pub webhook_name: String,
-}
-
-/// DeleteWebhooksIntegrationCustomVariableParams is a struct for passing parameters to the method [`WebhooksIntegrationAPI::delete_webhooks_integration_custom_variable`]
-#[derive(Clone, Debug)]
-pub struct DeleteWebhooksIntegrationCustomVariableParams {
-    /// The name of the custom variable.
-    pub custom_variable_name: String,
-}
-
-/// GetWebhooksIntegrationParams is a struct for passing parameters to the method [`WebhooksIntegrationAPI::get_webhooks_integration`]
-#[derive(Clone, Debug)]
-pub struct GetWebhooksIntegrationParams {
-    /// The name of the webhook.
-    pub webhook_name: String,
-}
-
-/// GetWebhooksIntegrationCustomVariableParams is a struct for passing parameters to the method [`WebhooksIntegrationAPI::get_webhooks_integration_custom_variable`]
-#[derive(Clone, Debug)]
-pub struct GetWebhooksIntegrationCustomVariableParams {
-    /// The name of the custom variable.
-    pub custom_variable_name: String,
-}
-
-/// UpdateWebhooksIntegrationParams is a struct for passing parameters to the method [`WebhooksIntegrationAPI::update_webhooks_integration`]
-#[derive(Clone, Debug)]
-pub struct UpdateWebhooksIntegrationParams {
-    /// The name of the webhook.
-    pub webhook_name: String,
-    /// Update an existing Datadog-Webhooks integration.
-    pub body: crate::datadogV1::model::WebhooksIntegrationUpdateRequest,
-}
-
-/// UpdateWebhooksIntegrationCustomVariableParams is a struct for passing parameters to the method [`WebhooksIntegrationAPI::update_webhooks_integration_custom_variable`]
-#[derive(Clone, Debug)]
-pub struct UpdateWebhooksIntegrationCustomVariableParams {
-    /// The name of the custom variable.
-    pub custom_variable_name: String,
-    /// Update an existing custom variable request body.
-    pub body: crate::datadogV1::model::WebhooksIntegrationCustomVariableUpdateRequest,
-}
-
 /// CreateWebhooksIntegrationError is a struct for typed errors of method [`WebhooksIntegrationAPI::create_webhooks_integration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -173,15 +113,12 @@ impl WebhooksIntegrationAPI {
     /// Creates an endpoint with the name `<WEBHOOK_NAME>`.
     pub async fn create_webhooks_integration(
         &self,
-        params: CreateWebhooksIntegrationParams,
+        body: crate::datadogV1::model::WebhooksIntegration,
     ) -> Result<
         Option<crate::datadogV1::model::WebhooksIntegration>,
         Error<CreateWebhooksIntegrationError>,
     > {
-        match self
-            .create_webhooks_integration_with_http_info(params)
-            .await
-        {
+        match self.create_webhooks_integration_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -190,15 +127,12 @@ impl WebhooksIntegrationAPI {
     /// Creates an endpoint with the name `<WEBHOOK_NAME>`.
     pub async fn create_webhooks_integration_with_http_info(
         &self,
-        params: CreateWebhooksIntegrationParams,
+        body: crate::datadogV1::model::WebhooksIntegration,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::WebhooksIntegration>,
         Error<CreateWebhooksIntegrationError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -259,13 +193,13 @@ impl WebhooksIntegrationAPI {
     /// Creates an endpoint with the name `<CUSTOM_VARIABLE_NAME>`.
     pub async fn create_webhooks_integration_custom_variable(
         &self,
-        params: CreateWebhooksIntegrationCustomVariableParams,
+        body: crate::datadogV1::model::WebhooksIntegrationCustomVariable,
     ) -> Result<
         Option<crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse>,
         Error<CreateWebhooksIntegrationCustomVariableError>,
     > {
         match self
-            .create_webhooks_integration_custom_variable_with_http_info(params)
+            .create_webhooks_integration_custom_variable_with_http_info(body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -276,15 +210,12 @@ impl WebhooksIntegrationAPI {
     /// Creates an endpoint with the name `<CUSTOM_VARIABLE_NAME>`.
     pub async fn create_webhooks_integration_custom_variable_with_http_info(
         &self,
-        params: CreateWebhooksIntegrationCustomVariableParams,
+        body: crate::datadogV1::model::WebhooksIntegrationCustomVariable,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse>,
         Error<CreateWebhooksIntegrationCustomVariableError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -346,10 +277,10 @@ impl WebhooksIntegrationAPI {
     /// Deletes the endpoint with the name `<WEBHOOK NAME>`.
     pub async fn delete_webhooks_integration(
         &self,
-        params: DeleteWebhooksIntegrationParams,
+        webhook_name: String,
     ) -> Result<Option<()>, Error<DeleteWebhooksIntegrationError>> {
         match self
-            .delete_webhooks_integration_with_http_info(params)
+            .delete_webhooks_integration_with_http_info(webhook_name)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -360,12 +291,9 @@ impl WebhooksIntegrationAPI {
     /// Deletes the endpoint with the name `<WEBHOOK NAME>`.
     pub async fn delete_webhooks_integration_with_http_info(
         &self,
-        params: DeleteWebhooksIntegrationParams,
+        webhook_name: String,
     ) -> Result<ResponseContent<()>, Error<DeleteWebhooksIntegrationError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let webhook_name = params.webhook_name;
 
         let local_client = &local_configuration.client;
 
@@ -418,10 +346,10 @@ impl WebhooksIntegrationAPI {
     /// Deletes the endpoint with the name `<CUSTOM_VARIABLE_NAME>`.
     pub async fn delete_webhooks_integration_custom_variable(
         &self,
-        params: DeleteWebhooksIntegrationCustomVariableParams,
+        custom_variable_name: String,
     ) -> Result<Option<()>, Error<DeleteWebhooksIntegrationCustomVariableError>> {
         match self
-            .delete_webhooks_integration_custom_variable_with_http_info(params)
+            .delete_webhooks_integration_custom_variable_with_http_info(custom_variable_name)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -432,12 +360,9 @@ impl WebhooksIntegrationAPI {
     /// Deletes the endpoint with the name `<CUSTOM_VARIABLE_NAME>`.
     pub async fn delete_webhooks_integration_custom_variable_with_http_info(
         &self,
-        params: DeleteWebhooksIntegrationCustomVariableParams,
+        custom_variable_name: String,
     ) -> Result<ResponseContent<()>, Error<DeleteWebhooksIntegrationCustomVariableError>> {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let custom_variable_name = params.custom_variable_name;
 
         let local_client = &local_configuration.client;
 
@@ -490,12 +415,15 @@ impl WebhooksIntegrationAPI {
     /// Gets the content of the webhook with the name `<WEBHOOK_NAME>`.
     pub async fn get_webhooks_integration(
         &self,
-        params: GetWebhooksIntegrationParams,
+        webhook_name: String,
     ) -> Result<
         Option<crate::datadogV1::model::WebhooksIntegration>,
         Error<GetWebhooksIntegrationError>,
     > {
-        match self.get_webhooks_integration_with_http_info(params).await {
+        match self
+            .get_webhooks_integration_with_http_info(webhook_name)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -504,15 +432,12 @@ impl WebhooksIntegrationAPI {
     /// Gets the content of the webhook with the name `<WEBHOOK_NAME>`.
     pub async fn get_webhooks_integration_with_http_info(
         &self,
-        params: GetWebhooksIntegrationParams,
+        webhook_name: String,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::WebhooksIntegration>,
         Error<GetWebhooksIntegrationError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let webhook_name = params.webhook_name;
 
         let local_client = &local_configuration.client;
 
@@ -570,13 +495,13 @@ impl WebhooksIntegrationAPI {
     /// response payload.
     pub async fn get_webhooks_integration_custom_variable(
         &self,
-        params: GetWebhooksIntegrationCustomVariableParams,
+        custom_variable_name: String,
     ) -> Result<
         Option<crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse>,
         Error<GetWebhooksIntegrationCustomVariableError>,
     > {
         match self
-            .get_webhooks_integration_custom_variable_with_http_info(params)
+            .get_webhooks_integration_custom_variable_with_http_info(custom_variable_name)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -590,15 +515,12 @@ impl WebhooksIntegrationAPI {
     /// response payload.
     pub async fn get_webhooks_integration_custom_variable_with_http_info(
         &self,
-        params: GetWebhooksIntegrationCustomVariableParams,
+        custom_variable_name: String,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse>,
         Error<GetWebhooksIntegrationCustomVariableError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let custom_variable_name = params.custom_variable_name;
 
         let local_client = &local_configuration.client;
 
@@ -654,13 +576,14 @@ impl WebhooksIntegrationAPI {
     /// Updates the endpoint with the name `<WEBHOOK_NAME>`.
     pub async fn update_webhooks_integration(
         &self,
-        params: UpdateWebhooksIntegrationParams,
+        webhook_name: String,
+        body: crate::datadogV1::model::WebhooksIntegrationUpdateRequest,
     ) -> Result<
         Option<crate::datadogV1::model::WebhooksIntegration>,
         Error<UpdateWebhooksIntegrationError>,
     > {
         match self
-            .update_webhooks_integration_with_http_info(params)
+            .update_webhooks_integration_with_http_info(webhook_name, body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -671,16 +594,13 @@ impl WebhooksIntegrationAPI {
     /// Updates the endpoint with the name `<WEBHOOK_NAME>`.
     pub async fn update_webhooks_integration_with_http_info(
         &self,
-        params: UpdateWebhooksIntegrationParams,
+        webhook_name: String,
+        body: crate::datadogV1::model::WebhooksIntegrationUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::WebhooksIntegration>,
         Error<UpdateWebhooksIntegrationError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let webhook_name = params.webhook_name;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -742,13 +662,14 @@ impl WebhooksIntegrationAPI {
     /// Updates the endpoint with the name `<CUSTOM_VARIABLE_NAME>`.
     pub async fn update_webhooks_integration_custom_variable(
         &self,
-        params: UpdateWebhooksIntegrationCustomVariableParams,
+        custom_variable_name: String,
+        body: crate::datadogV1::model::WebhooksIntegrationCustomVariableUpdateRequest,
     ) -> Result<
         Option<crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse>,
         Error<UpdateWebhooksIntegrationCustomVariableError>,
     > {
         match self
-            .update_webhooks_integration_custom_variable_with_http_info(params)
+            .update_webhooks_integration_custom_variable_with_http_info(custom_variable_name, body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -759,16 +680,13 @@ impl WebhooksIntegrationAPI {
     /// Updates the endpoint with the name `<CUSTOM_VARIABLE_NAME>`.
     pub async fn update_webhooks_integration_custom_variable_with_http_info(
         &self,
-        params: UpdateWebhooksIntegrationCustomVariableParams,
+        custom_variable_name: String,
+        body: crate::datadogV1::model::WebhooksIntegrationCustomVariableUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse>,
         Error<UpdateWebhooksIntegrationCustomVariableError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let custom_variable_name = params.custom_variable_name;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

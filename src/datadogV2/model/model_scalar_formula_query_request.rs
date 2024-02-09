@@ -10,13 +10,11 @@ use serde_with::skip_serializing_none;
 pub struct ScalarFormulaQueryRequest {
     /// A single scalar query to be executed.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::ScalarFormulaRequest>,
+    pub data: crate::datadogV2::model::ScalarFormulaRequest,
 }
 
 impl ScalarFormulaQueryRequest {
-    pub fn new(
-        data: Box<crate::datadogV2::model::ScalarFormulaRequest>,
-    ) -> ScalarFormulaQueryRequest {
+    pub fn new(data: crate::datadogV2::model::ScalarFormulaRequest) -> ScalarFormulaQueryRequest {
         ScalarFormulaQueryRequest { data }
     }
 }

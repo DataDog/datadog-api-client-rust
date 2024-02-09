@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct MetricBulkTagConfigDelete {
     /// Optional parameters for bulk deleting metric tag configurations.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::MetricBulkTagConfigDeleteAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::MetricBulkTagConfigDeleteAttributes>,
     /// A text prefix to match against metric names.
     #[serde(rename = "id")]
     pub id: String,
@@ -29,5 +29,13 @@ impl MetricBulkTagConfigDelete {
             id,
             type_,
         }
+    }
+
+    pub fn attributes(
+        &mut self,
+        value: crate::datadogV2::model::MetricBulkTagConfigDeleteAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
     }
 }

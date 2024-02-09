@@ -17,7 +17,13 @@ impl RUMAggregationBucketsResponse {
     pub fn new() -> RUMAggregationBucketsResponse {
         RUMAggregationBucketsResponse { buckets: None }
     }
+
+    pub fn buckets(&mut self, value: Vec<crate::datadogV2::model::RUMBucketResponse>) -> &mut Self {
+        self.buckets = Some(value);
+        self
+    }
 }
+
 impl Default for RUMAggregationBucketsResponse {
     fn default() -> Self {
         Self::new()

@@ -18,7 +18,13 @@ impl CIAppResponseLinks {
     pub fn new() -> CIAppResponseLinks {
         CIAppResponseLinks { next: None }
     }
+
+    pub fn next(&mut self, value: String) -> &mut Self {
+        self.next = Some(value);
+        self
+    }
 }
+
 impl Default for CIAppResponseLinks {
     fn default() -> Self {
         Self::new()

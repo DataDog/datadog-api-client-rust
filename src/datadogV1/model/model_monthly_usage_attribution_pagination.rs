@@ -23,7 +23,13 @@ impl MonthlyUsageAttributionPagination {
             next_record_id: None,
         }
     }
+
+    pub fn next_record_id(&mut self, value: Option<String>) -> &mut Self {
+        self.next_record_id = Some(value);
+        self
+    }
 }
+
 impl Default for MonthlyUsageAttributionPagination {
     fn default() -> Self {
         Self::new()

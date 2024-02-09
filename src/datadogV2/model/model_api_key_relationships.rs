@@ -10,10 +10,10 @@ use serde_with::skip_serializing_none;
 pub struct APIKeyRelationships {
     /// Relationship to user.
     #[serde(rename = "created_by")]
-    pub created_by: Option<Box<crate::datadogV2::model::RelationshipToUser>>,
+    pub created_by: Option<crate::datadogV2::model::RelationshipToUser>,
     /// Relationship to user.
     #[serde(rename = "modified_by")]
-    pub modified_by: Option<Box<crate::datadogV2::model::RelationshipToUser>>,
+    pub modified_by: Option<crate::datadogV2::model::RelationshipToUser>,
 }
 
 impl APIKeyRelationships {
@@ -23,7 +23,18 @@ impl APIKeyRelationships {
             modified_by: None,
         }
     }
+
+    pub fn created_by(&mut self, value: crate::datadogV2::model::RelationshipToUser) -> &mut Self {
+        self.created_by = Some(value);
+        self
+    }
+
+    pub fn modified_by(&mut self, value: crate::datadogV2::model::RelationshipToUser) -> &mut Self {
+        self.modified_by = Some(value);
+        self
+    }
 }
+
 impl Default for APIKeyRelationships {
     fn default() -> Self {
         Self::new()

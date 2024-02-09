@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct APIKeyUpdateData {
     /// Attributes used to update an API Key.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::APIKeyUpdateAttributes>,
+    pub attributes: crate::datadogV2::model::APIKeyUpdateAttributes,
     /// ID of the API key.
     #[serde(rename = "id")]
     pub id: String,
@@ -21,7 +21,7 @@ pub struct APIKeyUpdateData {
 
 impl APIKeyUpdateData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::APIKeyUpdateAttributes>,
+        attributes: crate::datadogV2::model::APIKeyUpdateAttributes,
         id: String,
         type_: crate::datadogV2::model::APIKeysType,
     ) -> APIKeyUpdateData {

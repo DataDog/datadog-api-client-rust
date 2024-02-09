@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct DowntimeCreateRequestData {
     /// Downtime details.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::DowntimeCreateRequestAttributes>,
+    pub attributes: crate::datadogV2::model::DowntimeCreateRequestAttributes,
     /// Downtime resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::DowntimeResourceType,
@@ -18,7 +18,7 @@ pub struct DowntimeCreateRequestData {
 
 impl DowntimeCreateRequestData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::DowntimeCreateRequestAttributes>,
+        attributes: crate::datadogV2::model::DowntimeCreateRequestAttributes,
         type_: crate::datadogV2::model::DowntimeResourceType,
     ) -> DowntimeCreateRequestData {
         DowntimeCreateRequestData { attributes, type_ }

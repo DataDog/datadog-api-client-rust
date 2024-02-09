@@ -27,7 +27,23 @@ impl SLOCreator {
             name: None,
         }
     }
+
+    pub fn email(&mut self, value: String) -> &mut Self {
+        self.email = Some(value);
+        self
+    }
+
+    pub fn id(&mut self, value: i64) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn name(&mut self, value: Option<String>) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
 }
+
 impl Default for SLOCreator {
     fn default() -> Self {
         Self::new()

@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct LogsArchiveAttributes {
     /// An archive's destination.
     #[serde(rename = "destination")]
-    pub destination: Option<Box<crate::datadogV2::model::LogsArchiveDestination>>,
+    pub destination: Option<crate::datadogV2::model::LogsArchiveDestination>,
     /// To store the tags in the archive, set the value "true".
     /// If it is set to "false", the tags will be deleted when the logs are sent to the archive.
     #[serde(rename = "include_tags")]
@@ -38,7 +38,7 @@ pub struct LogsArchiveAttributes {
 
 impl LogsArchiveAttributes {
     pub fn new(
-        destination: Option<Box<crate::datadogV2::model::LogsArchiveDestination>>,
+        destination: Option<crate::datadogV2::model::LogsArchiveDestination>,
         name: String,
         query: String,
     ) -> LogsArchiveAttributes {
@@ -51,5 +51,25 @@ impl LogsArchiveAttributes {
             rehydration_tags: None,
             state: None,
         }
+    }
+
+    pub fn include_tags(&mut self, value: bool) -> &mut Self {
+        self.include_tags = Some(value);
+        self
+    }
+
+    pub fn rehydration_max_scan_size_in_gb(&mut self, value: Option<i64>) -> &mut Self {
+        self.rehydration_max_scan_size_in_gb = Some(value);
+        self
+    }
+
+    pub fn rehydration_tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.rehydration_tags = Some(value);
+        self
+    }
+
+    pub fn state(&mut self, value: crate::datadogV2::model::LogsArchiveState) -> &mut Self {
+        self.state = Some(value);
+        self
     }
 }

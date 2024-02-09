@@ -5,18 +5,9 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// GetMetricMetadataParams is a struct for passing parameters to the method [`MetricsAPI::get_metric_metadata`]
-#[derive(Clone, Debug)]
-pub struct GetMetricMetadataParams {
-    /// Name of the metric for which to get metadata.
-    pub metric_name: String,
-}
-
-/// ListActiveMetricsParams is a struct for passing parameters to the method [`MetricsAPI::list_active_metrics`]
-#[derive(Clone, Debug)]
-pub struct ListActiveMetricsParams {
-    /// Seconds since the Unix epoch.
-    pub from: i64,
+/// ListActiveMetricsOptionalParams is a struct for passing parameters to the method [`MetricsAPI::list_active_metrics`]
+#[derive(Clone, Default, Debug)]
+pub struct ListActiveMetricsOptionalParams {
     /// Hostname for filtering the list of metrics returned.
     /// If set, metrics retrieved are those with the corresponding hostname tag.
     pub host: Option<String>,
@@ -25,47 +16,55 @@ pub struct ListActiveMetricsParams {
     pub tag_filter: Option<String>,
 }
 
-/// ListMetricsParams is a struct for passing parameters to the method [`MetricsAPI::list_metrics`]
-#[derive(Clone, Debug)]
-pub struct ListMetricsParams {
-    /// Query string to search metrics upon. Can optionally be prefixed with `metrics:`.
-    pub q: String,
+impl ListActiveMetricsOptionalParams {
+    /// Hostname for filtering the list of metrics returned.
+    /// If set, metrics retrieved are those with the corresponding hostname tag.
+    pub fn host(&mut self, value: String) -> &mut Self {
+        self.host = Some(value);
+        self
+    }
+    /// Filter metrics that have been submitted with the given tags. Supports boolean and wildcard expressions.
+    /// Cannot be combined with other filters.
+    pub fn tag_filter(&mut self, value: String) -> &mut Self {
+        self.tag_filter = Some(value);
+        self
+    }
 }
 
-/// QueryMetricsParams is a struct for passing parameters to the method [`MetricsAPI::query_metrics`]
-#[derive(Clone, Debug)]
-pub struct QueryMetricsParams {
-    /// Start of the queried time period, seconds since the Unix epoch.
-    pub from: i64,
-    /// End of the queried time period, seconds since the Unix epoch.
-    pub to: i64,
-    /// Query string.
-    pub query: String,
-}
-
-/// SubmitDistributionPointsParams is a struct for passing parameters to the method [`MetricsAPI::submit_distribution_points`]
-#[derive(Clone, Debug)]
-pub struct SubmitDistributionPointsParams {
-    pub body: crate::datadogV1::model::DistributionPointsPayload,
+/// SubmitDistributionPointsOptionalParams is a struct for passing parameters to the method [`MetricsAPI::submit_distribution_points`]
+#[derive(Clone, Default, Debug)]
+pub struct SubmitDistributionPointsOptionalParams {
     /// HTTP header used to compress the media-type.
     pub content_encoding: Option<crate::datadogV1::model::DistributionPointsContentEncoding>,
 }
 
-/// SubmitMetricsParams is a struct for passing parameters to the method [`MetricsAPI::submit_metrics`]
-#[derive(Clone, Debug)]
-pub struct SubmitMetricsParams {
-    pub body: crate::datadogV1::model::MetricsPayload,
+impl SubmitDistributionPointsOptionalParams {
+    /// HTTP header used to compress the media-type.
+    pub fn content_encoding(
+        &mut self,
+        value: crate::datadogV1::model::DistributionPointsContentEncoding,
+    ) -> &mut Self {
+        self.content_encoding = Some(value);
+        self
+    }
+}
+
+/// SubmitMetricsOptionalParams is a struct for passing parameters to the method [`MetricsAPI::submit_metrics`]
+#[derive(Clone, Default, Debug)]
+pub struct SubmitMetricsOptionalParams {
     /// HTTP header used to compress the media-type.
     pub content_encoding: Option<crate::datadogV1::model::MetricContentEncoding>,
 }
 
-/// UpdateMetricMetadataParams is a struct for passing parameters to the method [`MetricsAPI::update_metric_metadata`]
-#[derive(Clone, Debug)]
-pub struct UpdateMetricMetadataParams {
-    /// Name of the metric for which to edit metadata.
-    pub metric_name: String,
-    /// New metadata.
-    pub body: crate::datadogV1::model::MetricMetadata,
+impl SubmitMetricsOptionalParams {
+    /// HTTP header used to compress the media-type.
+    pub fn content_encoding(
+        &mut self,
+        value: crate::datadogV1::model::MetricContentEncoding,
+    ) -> &mut Self {
+        self.content_encoding = Some(value);
+        self
+    }
 }
 
 /// GetMetricMetadataError is a struct for typed errors of method [`MetricsAPI::get_metric_metadata`]
@@ -167,10 +166,10 @@ impl MetricsAPI {
     /// Get metadata about a specific metric.
     pub async fn get_metric_metadata(
         &self,
-        params: GetMetricMetadataParams,
+        metric_name: String,
     ) -> Result<Option<crate::datadogV1::model::MetricMetadata>, Error<GetMetricMetadataError>>
     {
-        match self.get_metric_metadata_with_http_info(params).await {
+        match self.get_metric_metadata_with_http_info(metric_name).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -179,15 +178,12 @@ impl MetricsAPI {
     /// Get metadata about a specific metric.
     pub async fn get_metric_metadata_with_http_info(
         &self,
-        params: GetMetricMetadataParams,
+        metric_name: String,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::MetricMetadata>,
         Error<GetMetricMetadataError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let metric_name = params.metric_name;
 
         let local_client = &local_configuration.client;
 
@@ -242,10 +238,11 @@ impl MetricsAPI {
     /// Get the list of actively reporting metrics from a given time until now.
     pub async fn list_active_metrics(
         &self,
-        params: ListActiveMetricsParams,
+        from: i64,
+        params: ListActiveMetricsOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::MetricsListResponse>, Error<ListActiveMetricsError>>
     {
-        match self.list_active_metrics_with_http_info(params).await {
+        match self.list_active_metrics_with_http_info(from, params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -254,15 +251,15 @@ impl MetricsAPI {
     /// Get the list of actively reporting metrics from a given time until now.
     pub async fn list_active_metrics_with_http_info(
         &self,
-        params: ListActiveMetricsParams,
+        from: i64,
+        params: ListActiveMetricsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::MetricsListResponse>,
         Error<ListActiveMetricsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let from = params.from;
+        // unbox and build optional parameters
         let host = params.host;
         let tag_filter = params.tag_filter;
 
@@ -273,11 +270,13 @@ impl MetricsAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("from", &from.to_string())]);
-        if let Some(ref local_str) = host {
-            local_req_builder = local_req_builder.query(&[("host", &local_str.to_string())]);
+        if let Some(ref local_query_param) = host {
+            local_req_builder =
+                local_req_builder.query(&[("host", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = tag_filter {
-            local_req_builder = local_req_builder.query(&[("tag_filter", &local_str.to_string())]);
+        if let Some(ref local_query_param) = tag_filter {
+            local_req_builder =
+                local_req_builder.query(&[("tag_filter", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -323,10 +322,10 @@ impl MetricsAPI {
     /// Search for metrics from the last 24 hours in Datadog.
     pub async fn list_metrics(
         &self,
-        params: ListMetricsParams,
+        q: String,
     ) -> Result<Option<crate::datadogV1::model::MetricSearchResponse>, Error<ListMetricsError>>
     {
-        match self.list_metrics_with_http_info(params).await {
+        match self.list_metrics_with_http_info(q).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -335,15 +334,12 @@ impl MetricsAPI {
     /// Search for metrics from the last 24 hours in Datadog.
     pub async fn list_metrics_with_http_info(
         &self,
-        params: ListMetricsParams,
+        q: String,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::MetricSearchResponse>,
         Error<ListMetricsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let q = params.q;
 
         let local_client = &local_configuration.client;
 
@@ -395,10 +391,12 @@ impl MetricsAPI {
     /// Query timeseries points.
     pub async fn query_metrics(
         &self,
-        params: QueryMetricsParams,
+        from: i64,
+        to: i64,
+        query: String,
     ) -> Result<Option<crate::datadogV1::model::MetricsQueryResponse>, Error<QueryMetricsError>>
     {
-        match self.query_metrics_with_http_info(params).await {
+        match self.query_metrics_with_http_info(from, to, query).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -407,17 +405,14 @@ impl MetricsAPI {
     /// Query timeseries points.
     pub async fn query_metrics_with_http_info(
         &self,
-        params: QueryMetricsParams,
+        from: i64,
+        to: i64,
+        query: String,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::MetricsQueryResponse>,
         Error<QueryMetricsError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let from = params.from;
-        let to = params.to;
-        let query = params.query;
 
         let local_client = &local_configuration.client;
 
@@ -471,12 +466,16 @@ impl MetricsAPI {
     /// The distribution points end-point allows you to post distribution data that can be graphed on Datadog’s dashboards.
     pub async fn submit_distribution_points(
         &self,
-        params: SubmitDistributionPointsParams,
+        body: crate::datadogV1::model::DistributionPointsPayload,
+        params: SubmitDistributionPointsOptionalParams,
     ) -> Result<
         Option<crate::datadogV1::model::IntakePayloadAccepted>,
         Error<SubmitDistributionPointsError>,
     > {
-        match self.submit_distribution_points_with_http_info(params).await {
+        match self
+            .submit_distribution_points_with_http_info(body, params)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -485,15 +484,15 @@ impl MetricsAPI {
     /// The distribution points end-point allows you to post distribution data that can be graphed on Datadog’s dashboards.
     pub async fn submit_distribution_points_with_http_info(
         &self,
-        params: SubmitDistributionPointsParams,
+        body: crate::datadogV1::model::DistributionPointsPayload,
+        params: SubmitDistributionPointsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::IntakePayloadAccepted>,
         Error<SubmitDistributionPointsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let body = params.body;
+        // unbox and build optional parameters
         let content_encoding = params.content_encoding;
 
         let local_client = &local_configuration.client;
@@ -566,10 +565,11 @@ impl MetricsAPI {
     /// compression is applied, which reduces the payload size.
     pub async fn submit_metrics(
         &self,
-        params: SubmitMetricsParams,
+        body: crate::datadogV1::model::MetricsPayload,
+        params: SubmitMetricsOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::IntakePayloadAccepted>, Error<SubmitMetricsError>>
     {
-        match self.submit_metrics_with_http_info(params).await {
+        match self.submit_metrics_with_http_info(body, params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -588,15 +588,15 @@ impl MetricsAPI {
     /// compression is applied, which reduces the payload size.
     pub async fn submit_metrics_with_http_info(
         &self,
-        params: SubmitMetricsParams,
+        body: crate::datadogV1::model::MetricsPayload,
+        params: SubmitMetricsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::IntakePayloadAccepted>,
         Error<SubmitMetricsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-        let body = params.body;
+        // unbox and build optional parameters
         let content_encoding = params.content_encoding;
 
         let local_client = &local_configuration.client;
@@ -656,10 +656,14 @@ impl MetricsAPI {
     /// Edit metadata of a specific metric. Find out more about [supported types](<https://docs.datadoghq.com/developers/metrics>).
     pub async fn update_metric_metadata(
         &self,
-        params: UpdateMetricMetadataParams,
+        metric_name: String,
+        body: crate::datadogV1::model::MetricMetadata,
     ) -> Result<Option<crate::datadogV1::model::MetricMetadata>, Error<UpdateMetricMetadataError>>
     {
-        match self.update_metric_metadata_with_http_info(params).await {
+        match self
+            .update_metric_metadata_with_http_info(metric_name, body)
+            .await
+        {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -668,16 +672,13 @@ impl MetricsAPI {
     /// Edit metadata of a specific metric. Find out more about [supported types](<https://docs.datadoghq.com/developers/metrics>).
     pub async fn update_metric_metadata_with_http_info(
         &self,
-        params: UpdateMetricMetadataParams,
+        metric_name: String,
+        body: crate::datadogV1::model::MetricMetadata,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::MetricMetadata>,
         Error<UpdateMetricMetadataError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let metric_name = params.metric_name;
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

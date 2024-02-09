@@ -5,21 +5,9 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// AggregateSpansParams is a struct for passing parameters to the method [`SpansAPI::aggregate_spans`]
-#[derive(Clone, Debug)]
-pub struct AggregateSpansParams {
-    pub body: crate::datadogV2::model::SpansAggregateRequest,
-}
-
-/// ListSpansParams is a struct for passing parameters to the method [`SpansAPI::list_spans`]
-#[derive(Clone, Debug)]
-pub struct ListSpansParams {
-    pub body: crate::datadogV2::model::SpansListRequest,
-}
-
-/// ListSpansGetParams is a struct for passing parameters to the method [`SpansAPI::list_spans_get`]
-#[derive(Clone, Debug)]
-pub struct ListSpansGetParams {
+/// ListSpansGetOptionalParams is a struct for passing parameters to the method [`SpansAPI::list_spans_get`]
+#[derive(Clone, Default, Debug)]
+pub struct ListSpansGetOptionalParams {
     /// Search query following spans syntax.
     pub filter_query: Option<String>,
     /// Minimum timestamp for requested spans. Supports date-time ISO8601, date math, and regular timestamps (milliseconds).
@@ -32,6 +20,39 @@ pub struct ListSpansGetParams {
     pub page_cursor: Option<String>,
     /// Maximum number of spans in the response.
     pub page_limit: Option<i32>,
+}
+
+impl ListSpansGetOptionalParams {
+    /// Search query following spans syntax.
+    pub fn filter_query(&mut self, value: String) -> &mut Self {
+        self.filter_query = Some(value);
+        self
+    }
+    /// Minimum timestamp for requested spans. Supports date-time ISO8601, date math, and regular timestamps (milliseconds).
+    pub fn filter_from(&mut self, value: String) -> &mut Self {
+        self.filter_from = Some(value);
+        self
+    }
+    /// Maximum timestamp for requested spans. Supports date-time ISO8601, date math, and regular timestamps (milliseconds).
+    pub fn filter_to(&mut self, value: String) -> &mut Self {
+        self.filter_to = Some(value);
+        self
+    }
+    /// Order of spans in results.
+    pub fn sort(&mut self, value: crate::datadogV2::model::SpansSort) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+    /// List following results with a cursor provided in the previous query.
+    pub fn page_cursor(&mut self, value: String) -> &mut Self {
+        self.page_cursor = Some(value);
+        self
+    }
+    /// Maximum number of spans in the response.
+    pub fn page_limit(&mut self, value: i32) -> &mut Self {
+        self.page_limit = Some(value);
+        self
+    }
 }
 
 /// AggregateSpansError is a struct for typed errors of method [`SpansAPI::aggregate_spans`]
@@ -91,10 +112,10 @@ impl SpansAPI {
     /// This endpoint is rate limited to `300` requests per hour.
     pub async fn aggregate_spans(
         &self,
-        params: AggregateSpansParams,
+        body: crate::datadogV2::model::SpansAggregateRequest,
     ) -> Result<Option<crate::datadogV2::model::SpansAggregateResponse>, Error<AggregateSpansError>>
     {
-        match self.aggregate_spans_with_http_info(params).await {
+        match self.aggregate_spans_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -104,15 +125,12 @@ impl SpansAPI {
     /// This endpoint is rate limited to `300` requests per hour.
     pub async fn aggregate_spans_with_http_info(
         &self,
-        params: AggregateSpansParams,
+        body: crate::datadogV2::model::SpansAggregateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::SpansAggregateResponse>,
         Error<AggregateSpansError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -179,9 +197,9 @@ impl SpansAPI {
     /// [1]: /logs/guide/collect-multiple-logs-with-pagination?tab=v2api
     pub async fn list_spans(
         &self,
-        params: ListSpansParams,
+        body: crate::datadogV2::model::SpansListRequest,
     ) -> Result<Option<crate::datadogV2::model::SpansListResponse>, Error<ListSpansError>> {
-        match self.list_spans_with_http_info(params).await {
+        match self.list_spans_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -196,13 +214,10 @@ impl SpansAPI {
     /// [1]: /logs/guide/collect-multiple-logs-with-pagination?tab=v2api
     pub async fn list_spans_with_http_info(
         &self,
-        params: ListSpansParams,
+        body: crate::datadogV2::model::SpansListRequest,
     ) -> Result<ResponseContent<crate::datadogV2::model::SpansListResponse>, Error<ListSpansError>>
     {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 
@@ -268,7 +283,7 @@ impl SpansAPI {
     /// [1]: /logs/guide/collect-multiple-logs-with-pagination?tab=v2api
     pub async fn list_spans_get(
         &self,
-        params: ListSpansGetParams,
+        params: ListSpansGetOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::SpansListResponse>, Error<ListSpansGetError>> {
         match self.list_spans_get_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
@@ -285,12 +300,12 @@ impl SpansAPI {
     /// [1]: /logs/guide/collect-multiple-logs-with-pagination?tab=v2api
     pub async fn list_spans_get_with_http_info(
         &self,
-        params: ListSpansGetParams,
+        params: ListSpansGetOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV2::model::SpansListResponse>, Error<ListSpansGetError>>
     {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let filter_query = params.filter_query;
         let filter_from = params.filter_from;
         let filter_to = params.filter_to;
@@ -304,26 +319,29 @@ impl SpansAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = filter_query {
+        if let Some(ref local_query_param) = filter_query {
             local_req_builder =
-                local_req_builder.query(&[("filter[query]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_from {
+        if let Some(ref local_query_param) = filter_from {
             local_req_builder =
-                local_req_builder.query(&[("filter[from]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[from]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_to {
-            local_req_builder = local_req_builder.query(&[("filter[to]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = sort {
-            local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_cursor {
+        if let Some(ref local_query_param) = filter_to {
             local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[to]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = page_limit {
-            local_req_builder = local_req_builder.query(&[("page[limit]", &local_str.to_string())]);
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_cursor {
+            local_req_builder =
+                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
         };
 
         // build user agent

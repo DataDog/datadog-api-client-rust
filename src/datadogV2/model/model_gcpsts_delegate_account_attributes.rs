@@ -19,7 +19,13 @@ impl GCPSTSDelegateAccountAttributes {
             delegate_account_email: None,
         }
     }
+
+    pub fn delegate_account_email(&mut self, value: String) -> &mut Self {
+        self.delegate_account_email = Some(value);
+        self
+    }
 }
+
 impl Default for GCPSTSDelegateAccountAttributes {
     fn default() -> Self {
         Self::new()

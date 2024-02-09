@@ -67,7 +67,48 @@ impl UsageSDSHour {
             total_scanned_bytes: None,
         }
     }
+
+    pub fn apm_scanned_bytes(&mut self, value: Option<i64>) -> &mut Self {
+        self.apm_scanned_bytes = Some(value);
+        self
+    }
+
+    pub fn events_scanned_bytes(&mut self, value: Option<i64>) -> &mut Self {
+        self.events_scanned_bytes = Some(value);
+        self
+    }
+
+    pub fn hour(&mut self, value: String) -> &mut Self {
+        self.hour = Some(value);
+        self
+    }
+
+    pub fn logs_scanned_bytes(&mut self, value: Option<i64>) -> &mut Self {
+        self.logs_scanned_bytes = Some(value);
+        self
+    }
+
+    pub fn org_name(&mut self, value: String) -> &mut Self {
+        self.org_name = Some(value);
+        self
+    }
+
+    pub fn public_id(&mut self, value: String) -> &mut Self {
+        self.public_id = Some(value);
+        self
+    }
+
+    pub fn rum_scanned_bytes(&mut self, value: Option<i64>) -> &mut Self {
+        self.rum_scanned_bytes = Some(value);
+        self
+    }
+
+    pub fn total_scanned_bytes(&mut self, value: Option<i64>) -> &mut Self {
+        self.total_scanned_bytes = Some(value);
+        self
+    }
 }
+
 impl Default for UsageSDSHour {
     fn default() -> Self {
         Self::new()

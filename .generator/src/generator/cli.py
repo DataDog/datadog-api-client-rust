@@ -47,6 +47,7 @@ def cli(specs, output):
     env.filters["untitle_case"] = formatter.untitle_case
     env.filters["upperfirst"] = utils.upperfirst
     env.filters["variable_name"] = formatter.variable_name
+    env.filters["has_optional_parameter"] = openapi.has_optional_parameter
 
     env.globals["enumerate"] = enumerate
     env.globals["responses_by_types"] = openapi.responses_by_types

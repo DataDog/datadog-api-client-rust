@@ -11,7 +11,7 @@ pub struct NotebookCellUpdateRequest {
     /// The attributes of a notebook cell in update cell request. Valid cell types are `markdown`, `timeseries`, `toplist`, `heatmap`, `distribution`,
     /// `log_stream`. [More information on each graph visualization type.](<https://docs.datadoghq.com/dashboards/widgets/>)
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV1::model::NotebookCellUpdateRequestAttributes>,
+    pub attributes: crate::datadogV1::model::NotebookCellUpdateRequestAttributes,
     /// Notebook cell ID.
     #[serde(rename = "id")]
     pub id: String,
@@ -22,7 +22,7 @@ pub struct NotebookCellUpdateRequest {
 
 impl NotebookCellUpdateRequest {
     pub fn new(
-        attributes: Box<crate::datadogV1::model::NotebookCellUpdateRequestAttributes>,
+        attributes: crate::datadogV1::model::NotebookCellUpdateRequestAttributes,
         id: String,
         type_: crate::datadogV1::model::NotebookCellResourceType,
     ) -> NotebookCellUpdateRequest {

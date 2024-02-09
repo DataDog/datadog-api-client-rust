@@ -34,7 +34,23 @@ impl SearchSLOQuery {
             numerator: None,
         }
     }
+
+    pub fn denominator(&mut self, value: String) -> &mut Self {
+        self.denominator = Some(value);
+        self
+    }
+
+    pub fn metrics(&mut self, value: Option<Vec<String>>) -> &mut Self {
+        self.metrics = Some(value);
+        self
+    }
+
+    pub fn numerator(&mut self, value: String) -> &mut Self {
+        self.numerator = Some(value);
+        self
+    }
 }
+
 impl Default for SearchSLOQuery {
     fn default() -> Self {
         Self::new()

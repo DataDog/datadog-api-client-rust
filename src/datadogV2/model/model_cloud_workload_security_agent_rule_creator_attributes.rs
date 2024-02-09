@@ -23,7 +23,18 @@ impl CloudWorkloadSecurityAgentRuleCreatorAttributes {
             name: None,
         }
     }
+
+    pub fn handle(&mut self, value: String) -> &mut Self {
+        self.handle = Some(value);
+        self
+    }
+
+    pub fn name(&mut self, value: Option<String>) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
 }
+
 impl Default for CloudWorkloadSecurityAgentRuleCreatorAttributes {
     fn default() -> Self {
         Self::new()

@@ -17,7 +17,13 @@ impl ApiKeyListResponse {
     pub fn new() -> ApiKeyListResponse {
         ApiKeyListResponse { api_keys: None }
     }
+
+    pub fn api_keys(&mut self, value: Vec<crate::datadogV1::model::ApiKey>) -> &mut Self {
+        self.api_keys = Some(value);
+        self
+    }
 }
+
 impl Default for ApiKeyListResponse {
     fn default() -> Self {
         Self::new()

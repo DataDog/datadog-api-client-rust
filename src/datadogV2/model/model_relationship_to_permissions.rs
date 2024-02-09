@@ -17,7 +17,16 @@ impl RelationshipToPermissions {
     pub fn new() -> RelationshipToPermissions {
         RelationshipToPermissions { data: None }
     }
+
+    pub fn data(
+        &mut self,
+        value: Vec<crate::datadogV2::model::RelationshipToPermissionData>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for RelationshipToPermissions {
     fn default() -> Self {
         Self::new()

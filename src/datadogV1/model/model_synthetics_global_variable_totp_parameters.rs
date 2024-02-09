@@ -23,7 +23,18 @@ impl SyntheticsGlobalVariableTOTPParameters {
             refresh_interval: None,
         }
     }
+
+    pub fn digits(&mut self, value: i32) -> &mut Self {
+        self.digits = Some(value);
+        self
+    }
+
+    pub fn refresh_interval(&mut self, value: i32) -> &mut Self {
+        self.refresh_interval = Some(value);
+        self
+    }
 }
+
 impl Default for SyntheticsGlobalVariableTOTPParameters {
     fn default() -> Self {
         Self::new()

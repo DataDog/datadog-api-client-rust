@@ -27,4 +27,14 @@ impl SLOListWidgetQuery {
             sort: None,
         }
     }
+
+    pub fn limit(&mut self, value: i64) -> &mut Self {
+        self.limit = Some(value);
+        self
+    }
+
+    pub fn sort(&mut self, value: Vec<crate::datadogV1::model::WidgetFieldSort>) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
 }

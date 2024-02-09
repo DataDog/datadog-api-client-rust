@@ -13,7 +13,7 @@ pub struct ListStreamWidgetRequest {
     pub columns: Vec<crate::datadogV1::model::ListStreamColumn>,
     /// Updated list stream widget.
     #[serde(rename = "query")]
-    pub query: Box<crate::datadogV1::model::ListStreamQuery>,
+    pub query: crate::datadogV1::model::ListStreamQuery,
     /// Widget response format.
     #[serde(rename = "response_format")]
     pub response_format: crate::datadogV1::model::ListStreamResponseFormat,
@@ -22,7 +22,7 @@ pub struct ListStreamWidgetRequest {
 impl ListStreamWidgetRequest {
     pub fn new(
         columns: Vec<crate::datadogV1::model::ListStreamColumn>,
-        query: Box<crate::datadogV1::model::ListStreamQuery>,
+        query: crate::datadogV1::model::ListStreamQuery,
         response_format: crate::datadogV1::model::ListStreamResponseFormat,
     ) -> ListStreamWidgetRequest {
         ListStreamWidgetRequest {

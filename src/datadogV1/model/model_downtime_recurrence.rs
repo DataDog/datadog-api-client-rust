@@ -60,7 +60,38 @@ impl DowntimeRecurrence {
             week_days: None,
         }
     }
+
+    pub fn period(&mut self, value: i32) -> &mut Self {
+        self.period = Some(value);
+        self
+    }
+
+    pub fn rrule(&mut self, value: String) -> &mut Self {
+        self.rrule = Some(value);
+        self
+    }
+
+    pub fn type_(&mut self, value: String) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
+
+    pub fn until_date(&mut self, value: Option<i64>) -> &mut Self {
+        self.until_date = Some(value);
+        self
+    }
+
+    pub fn until_occurrences(&mut self, value: Option<i32>) -> &mut Self {
+        self.until_occurrences = Some(value);
+        self
+    }
+
+    pub fn week_days(&mut self, value: Option<Vec<String>>) -> &mut Self {
+        self.week_days = Some(value);
+        self
+    }
 }
+
 impl Default for DowntimeRecurrence {
     fn default() -> Self {
         Self::new()

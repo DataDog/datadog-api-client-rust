@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct OutcomesBatchRequestData {
     /// The JSON:API attributes for a batched set of scorecard outcomes.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::OutcomesBatchAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::OutcomesBatchAttributes>,
     /// The JSON:API type for scorecard outcomes.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::OutcomesBatchType>,
@@ -23,7 +23,21 @@ impl OutcomesBatchRequestData {
             type_: None,
         }
     }
+
+    pub fn attributes(
+        &mut self,
+        value: crate::datadogV2::model::OutcomesBatchAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn type_(&mut self, value: crate::datadogV2::model::OutcomesBatchType) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
+
 impl Default for OutcomesBatchRequestData {
     fn default() -> Self {
         Self::new()

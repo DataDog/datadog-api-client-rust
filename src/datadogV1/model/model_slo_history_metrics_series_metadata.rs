@@ -42,7 +42,41 @@ impl SLOHistoryMetricsSeriesMetadata {
             unit: None,
         }
     }
+
+    pub fn aggr(&mut self, value: String) -> &mut Self {
+        self.aggr = Some(value);
+        self
+    }
+
+    pub fn expression(&mut self, value: String) -> &mut Self {
+        self.expression = Some(value);
+        self
+    }
+
+    pub fn metric(&mut self, value: String) -> &mut Self {
+        self.metric = Some(value);
+        self
+    }
+
+    pub fn query_index(&mut self, value: i64) -> &mut Self {
+        self.query_index = Some(value);
+        self
+    }
+
+    pub fn scope(&mut self, value: String) -> &mut Self {
+        self.scope = Some(value);
+        self
+    }
+
+    pub fn unit(
+        &mut self,
+        value: Option<Vec<Option<crate::datadogV1::model::SLOHistoryMetricsSeriesMetadataUnit>>>,
+    ) -> &mut Self {
+        self.unit = Some(value);
+        self
+    }
 }
+
 impl Default for SLOHistoryMetricsSeriesMetadata {
     fn default() -> Self {
         Self::new()

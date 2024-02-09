@@ -10,13 +10,13 @@ use serde_with::skip_serializing_none;
 pub struct IncidentResponseData {
     /// The incident's attributes from a response.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::IncidentResponseAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::IncidentResponseAttributes>,
     /// The incident's ID.
     #[serde(rename = "id")]
     pub id: String,
     /// The incident's relationships from a response.
     #[serde(rename = "relationships")]
-    pub relationships: Option<Box<crate::datadogV2::model::IncidentResponseRelationships>>,
+    pub relationships: Option<crate::datadogV2::model::IncidentResponseRelationships>,
     /// Incident resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::IncidentType,
@@ -30,5 +30,21 @@ impl IncidentResponseData {
             relationships: None,
             type_,
         }
+    }
+
+    pub fn attributes(
+        &mut self,
+        value: crate::datadogV2::model::IncidentResponseAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn relationships(
+        &mut self,
+        value: crate::datadogV2::model::IncidentResponseRelationships,
+    ) -> &mut Self {
+        self.relationships = Some(value);
+        self
     }
 }

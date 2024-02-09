@@ -17,13 +17,13 @@ pub struct SplitGraphWidgetDefinition {
     pub size: crate::datadogV1::model::SplitGraphVizSize,
     /// The original widget we are splitting on.
     #[serde(rename = "source_widget_definition")]
-    pub source_widget_definition: Box<crate::datadogV1::model::SplitGraphSourceWidgetDefinition>,
+    pub source_widget_definition: crate::datadogV1::model::SplitGraphSourceWidgetDefinition,
     /// Encapsulates all user choices about how to split a graph.
     #[serde(rename = "split_config")]
-    pub split_config: Box<crate::datadogV1::model::SplitConfig>,
+    pub split_config: crate::datadogV1::model::SplitConfig,
     /// Time setting for the widget.
     #[serde(rename = "time")]
-    pub time: Option<Box<crate::datadogV1::model::WidgetTime>>,
+    pub time: Option<crate::datadogV1::model::WidgetTime>,
     /// Title of your widget.
     #[serde(rename = "title")]
     pub title: Option<String>,
@@ -35,8 +35,8 @@ pub struct SplitGraphWidgetDefinition {
 impl SplitGraphWidgetDefinition {
     pub fn new(
         size: crate::datadogV1::model::SplitGraphVizSize,
-        source_widget_definition: Box<crate::datadogV1::model::SplitGraphSourceWidgetDefinition>,
-        split_config: Box<crate::datadogV1::model::SplitConfig>,
+        source_widget_definition: crate::datadogV1::model::SplitGraphSourceWidgetDefinition,
+        split_config: crate::datadogV1::model::SplitConfig,
         type_: crate::datadogV1::model::SplitGraphWidgetDefinitionType,
     ) -> SplitGraphWidgetDefinition {
         SplitGraphWidgetDefinition {
@@ -48,5 +48,20 @@ impl SplitGraphWidgetDefinition {
             title: None,
             type_,
         }
+    }
+
+    pub fn has_uniform_y_axes(&mut self, value: bool) -> &mut Self {
+        self.has_uniform_y_axes = Some(value);
+        self
+    }
+
+    pub fn time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
+        self.time = Some(value);
+        self
+    }
+
+    pub fn title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
     }
 }

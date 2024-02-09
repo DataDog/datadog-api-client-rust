@@ -20,7 +20,13 @@ impl SecurityMonitoringRuleImpossibleTravelOptions {
             baseline_user_locations: None,
         }
     }
+
+    pub fn baseline_user_locations(&mut self, value: bool) -> &mut Self {
+        self.baseline_user_locations = Some(value);
+        self
+    }
 }
+
 impl Default for SecurityMonitoringRuleImpossibleTravelOptions {
     fn default() -> Self {
         Self::new()

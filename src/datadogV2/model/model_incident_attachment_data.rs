@@ -10,13 +10,13 @@ use serde_with::skip_serializing_none;
 pub struct IncidentAttachmentData {
     /// The attributes object for an attachment.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::IncidentAttachmentAttributes>,
+    pub attributes: crate::datadogV2::model::IncidentAttachmentAttributes,
     /// A unique identifier that represents the incident attachment.
     #[serde(rename = "id")]
     pub id: String,
     /// The incident attachment's relationships.
     #[serde(rename = "relationships")]
-    pub relationships: Box<crate::datadogV2::model::IncidentAttachmentRelationships>,
+    pub relationships: crate::datadogV2::model::IncidentAttachmentRelationships,
     /// The incident attachment resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::IncidentAttachmentType,
@@ -24,9 +24,9 @@ pub struct IncidentAttachmentData {
 
 impl IncidentAttachmentData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::IncidentAttachmentAttributes>,
+        attributes: crate::datadogV2::model::IncidentAttachmentAttributes,
         id: String,
-        relationships: Box<crate::datadogV2::model::IncidentAttachmentRelationships>,
+        relationships: crate::datadogV2::model::IncidentAttachmentRelationships,
         type_: crate::datadogV2::model::IncidentAttachmentType,
     ) -> IncidentAttachmentData {
         IncidentAttachmentData {

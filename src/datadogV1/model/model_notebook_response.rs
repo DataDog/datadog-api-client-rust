@@ -10,14 +10,20 @@ use serde_with::skip_serializing_none;
 pub struct NotebookResponse {
     /// The data for a notebook.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV1::model::NotebookResponseData>>,
+    pub data: Option<crate::datadogV1::model::NotebookResponseData>,
 }
 
 impl NotebookResponse {
     pub fn new() -> NotebookResponse {
         NotebookResponse { data: None }
     }
+
+    pub fn data(&mut self, value: crate::datadogV1::model::NotebookResponseData) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for NotebookResponse {
     fn default() -> Self {
         Self::new()

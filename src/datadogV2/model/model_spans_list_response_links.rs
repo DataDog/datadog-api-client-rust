@@ -18,7 +18,13 @@ impl SpansListResponseLinks {
     pub fn new() -> SpansListResponseLinks {
         SpansListResponseLinks { next: None }
     }
+
+    pub fn next(&mut self, value: String) -> &mut Self {
+        self.next = Some(value);
+        self
+    }
 }
+
 impl Default for SpansListResponseLinks {
     fn default() -> Self {
         Self::new()

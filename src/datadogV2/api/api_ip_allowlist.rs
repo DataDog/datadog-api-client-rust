@@ -5,12 +5,6 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// UpdateIPAllowlistParams is a struct for passing parameters to the method [`IPAllowlistAPI::update_ip_allowlist`]
-#[derive(Clone, Debug)]
-pub struct UpdateIPAllowlistParams {
-    pub body: crate::datadogV2::model::IPAllowlistUpdateRequest,
-}
-
 /// GetIPAllowlistError is a struct for typed errors of method [`IPAllowlistAPI::get_ip_allowlist`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -73,8 +67,6 @@ impl IPAllowlistAPI {
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!("{}/api/v2/ip_allowlist", local_configuration.base_path);
@@ -124,10 +116,10 @@ impl IPAllowlistAPI {
     /// Edit the entries in the IP allowlist, and enable or disable it.
     pub async fn update_ip_allowlist(
         &self,
-        params: UpdateIPAllowlistParams,
+        body: crate::datadogV2::model::IPAllowlistUpdateRequest,
     ) -> Result<Option<crate::datadogV2::model::IPAllowlistResponse>, Error<UpdateIPAllowlistError>>
     {
-        match self.update_ip_allowlist_with_http_info(params).await {
+        match self.update_ip_allowlist_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -136,15 +128,12 @@ impl IPAllowlistAPI {
     /// Edit the entries in the IP allowlist, and enable or disable it.
     pub async fn update_ip_allowlist_with_http_info(
         &self,
-        params: UpdateIPAllowlistParams,
+        body: crate::datadogV2::model::IPAllowlistUpdateRequest,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::IPAllowlistResponse>,
         Error<UpdateIPAllowlistError>,
     > {
         let local_configuration = &self.config;
-
-        // unbox and build parameters
-        let body = params.body;
 
         let local_client = &local_configuration.client;
 

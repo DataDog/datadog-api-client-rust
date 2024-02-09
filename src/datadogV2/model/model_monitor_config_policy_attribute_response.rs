@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct MonitorConfigPolicyAttributeResponse {
     /// Configuration for the policy.
     #[serde(rename = "policy")]
-    pub policy: Option<Box<crate::datadogV2::model::MonitorConfigPolicyPolicy>>,
+    pub policy: Option<crate::datadogV2::model::MonitorConfigPolicyPolicy>,
     /// The monitor configuration policy type.
     #[serde(rename = "policy_type")]
     pub policy_type: Option<crate::datadogV2::model::MonitorConfigPolicyType>,
@@ -23,7 +23,24 @@ impl MonitorConfigPolicyAttributeResponse {
             policy_type: None,
         }
     }
+
+    pub fn policy(
+        &mut self,
+        value: crate::datadogV2::model::MonitorConfigPolicyPolicy,
+    ) -> &mut Self {
+        self.policy = Some(value);
+        self
+    }
+
+    pub fn policy_type(
+        &mut self,
+        value: crate::datadogV2::model::MonitorConfigPolicyType,
+    ) -> &mut Self {
+        self.policy_type = Some(value);
+        self
+    }
 }
+
 impl Default for MonitorConfigPolicyAttributeResponse {
     fn default() -> Self {
         Self::new()

@@ -68,7 +68,66 @@ impl AWSAccount {
             secret_access_key: None,
         }
     }
+
+    pub fn access_key_id(&mut self, value: String) -> &mut Self {
+        self.access_key_id = Some(value);
+        self
+    }
+
+    pub fn account_id(&mut self, value: String) -> &mut Self {
+        self.account_id = Some(value);
+        self
+    }
+
+    pub fn account_specific_namespace_rules(
+        &mut self,
+        value: std::collections::BTreeMap<String, bool>,
+    ) -> &mut Self {
+        self.account_specific_namespace_rules = Some(value);
+        self
+    }
+
+    pub fn cspm_resource_collection_enabled(&mut self, value: bool) -> &mut Self {
+        self.cspm_resource_collection_enabled = Some(value);
+        self
+    }
+
+    pub fn excluded_regions(&mut self, value: Vec<String>) -> &mut Self {
+        self.excluded_regions = Some(value);
+        self
+    }
+
+    pub fn filter_tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.filter_tags = Some(value);
+        self
+    }
+
+    pub fn host_tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.host_tags = Some(value);
+        self
+    }
+
+    pub fn metrics_collection_enabled(&mut self, value: bool) -> &mut Self {
+        self.metrics_collection_enabled = Some(value);
+        self
+    }
+
+    pub fn resource_collection_enabled(&mut self, value: bool) -> &mut Self {
+        self.resource_collection_enabled = Some(value);
+        self
+    }
+
+    pub fn role_name(&mut self, value: String) -> &mut Self {
+        self.role_name = Some(value);
+        self
+    }
+
+    pub fn secret_access_key(&mut self, value: String) -> &mut Self {
+        self.secret_access_key = Some(value);
+        self
+    }
 }
+
 impl Default for AWSAccount {
     fn default() -> Self {
         Self::new()

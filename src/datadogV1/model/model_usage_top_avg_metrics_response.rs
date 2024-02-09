@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct UsageTopAvgMetricsResponse {
     /// The object containing document metadata.
     #[serde(rename = "metadata")]
-    pub metadata: Option<Box<crate::datadogV1::model::UsageTopAvgMetricsMetadata>>,
+    pub metadata: Option<crate::datadogV1::model::UsageTopAvgMetricsMetadata>,
     /// Number of hourly recorded custom metrics for a given organization.
     #[serde(rename = "usage")]
     pub usage: Option<Vec<crate::datadogV1::model::UsageTopAvgMetricsHour>>,
@@ -23,7 +23,24 @@ impl UsageTopAvgMetricsResponse {
             usage: None,
         }
     }
+
+    pub fn metadata(
+        &mut self,
+        value: crate::datadogV1::model::UsageTopAvgMetricsMetadata,
+    ) -> &mut Self {
+        self.metadata = Some(value);
+        self
+    }
+
+    pub fn usage(
+        &mut self,
+        value: Vec<crate::datadogV1::model::UsageTopAvgMetricsHour>,
+    ) -> &mut Self {
+        self.usage = Some(value);
+        self
+    }
 }
+
 impl Default for UsageTopAvgMetricsResponse {
     fn default() -> Self {
         Self::new()

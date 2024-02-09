@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct IncidentCreateRelationships {
     /// Relationship to user.
     #[serde(rename = "commander_user")]
-    pub commander_user: Option<Box<crate::datadogV2::model::NullableRelationshipToUser>>,
+    pub commander_user: Option<crate::datadogV2::model::NullableRelationshipToUser>,
 }
 
 impl IncidentCreateRelationships {
     pub fn new(
-        commander_user: Option<Box<crate::datadogV2::model::NullableRelationshipToUser>>,
+        commander_user: Option<crate::datadogV2::model::NullableRelationshipToUser>,
     ) -> IncidentCreateRelationships {
         IncidentCreateRelationships { commander_user }
     }

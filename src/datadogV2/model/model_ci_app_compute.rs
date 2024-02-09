@@ -32,4 +32,19 @@ impl CIAppCompute {
             type_: None,
         }
     }
+
+    pub fn interval(&mut self, value: String) -> &mut Self {
+        self.interval = Some(value);
+        self
+    }
+
+    pub fn metric(&mut self, value: String) -> &mut Self {
+        self.metric = Some(value);
+        self
+    }
+
+    pub fn type_(&mut self, value: crate::datadogV2::model::CIAppComputeType) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }

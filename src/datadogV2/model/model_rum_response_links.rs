@@ -18,7 +18,13 @@ impl RUMResponseLinks {
     pub fn new() -> RUMResponseLinks {
         RUMResponseLinks { next: None }
     }
+
+    pub fn next(&mut self, value: String) -> &mut Self {
+        self.next = Some(value);
+        self
+    }
 }
+
 impl Default for RUMResponseLinks {
     fn default() -> Self {
         Self::new()

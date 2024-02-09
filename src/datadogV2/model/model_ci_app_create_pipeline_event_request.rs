@@ -10,14 +10,23 @@ use serde_with::skip_serializing_none;
 pub struct CIAppCreatePipelineEventRequest {
     /// Data of the pipeline event to create.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::CIAppCreatePipelineEventRequestData>>,
+    pub data: Option<crate::datadogV2::model::CIAppCreatePipelineEventRequestData>,
 }
 
 impl CIAppCreatePipelineEventRequest {
     pub fn new() -> CIAppCreatePipelineEventRequest {
         CIAppCreatePipelineEventRequest { data: None }
     }
+
+    pub fn data(
+        &mut self,
+        value: crate::datadogV2::model::CIAppCreatePipelineEventRequestData,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for CIAppCreatePipelineEventRequest {
     fn default() -> Self {
         Self::new()

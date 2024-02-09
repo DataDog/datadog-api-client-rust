@@ -10,13 +10,13 @@ use serde_with::skip_serializing_none;
 pub struct IncidentTeamResponseData {
     /// The incident team's attributes from a response.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::IncidentTeamResponseAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::IncidentTeamResponseAttributes>,
     /// The incident team's ID.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// The incident team's relationships.
     #[serde(rename = "relationships")]
-    pub relationships: Option<Box<crate::datadogV2::model::IncidentTeamRelationships>>,
+    pub relationships: Option<crate::datadogV2::model::IncidentTeamRelationships>,
     /// Incident Team resource type.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::IncidentTeamType>,
@@ -31,7 +31,34 @@ impl IncidentTeamResponseData {
             type_: None,
         }
     }
+
+    pub fn attributes(
+        &mut self,
+        value: crate::datadogV2::model::IncidentTeamResponseAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn relationships(
+        &mut self,
+        value: crate::datadogV2::model::IncidentTeamRelationships,
+    ) -> &mut Self {
+        self.relationships = Some(value);
+        self
+    }
+
+    pub fn type_(&mut self, value: crate::datadogV2::model::IncidentTeamType) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
+
 impl Default for IncidentTeamResponseData {
     fn default() -> Self {
         Self::new()

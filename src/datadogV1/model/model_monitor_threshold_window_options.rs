@@ -31,7 +31,18 @@ impl MonitorThresholdWindowOptions {
             trigger_window: None,
         }
     }
+
+    pub fn recovery_window(&mut self, value: Option<String>) -> &mut Self {
+        self.recovery_window = Some(value);
+        self
+    }
+
+    pub fn trigger_window(&mut self, value: Option<String>) -> &mut Self {
+        self.trigger_window = Some(value);
+        self
+    }
 }
+
 impl Default for MonitorThresholdWindowOptions {
     fn default() -> Self {
         Self::new()

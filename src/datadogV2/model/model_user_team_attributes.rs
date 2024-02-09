@@ -36,7 +36,23 @@ impl UserTeamAttributes {
             role: None,
         }
     }
+
+    pub fn provisioned_by(&mut self, value: Option<String>) -> &mut Self {
+        self.provisioned_by = Some(value);
+        self
+    }
+
+    pub fn provisioned_by_id(&mut self, value: Option<String>) -> &mut Self {
+        self.provisioned_by_id = Some(value);
+        self
+    }
+
+    pub fn role(&mut self, value: Option<crate::datadogV2::model::UserTeamRole>) -> &mut Self {
+        self.role = Some(value);
+        self
+    }
 }
+
 impl Default for UserTeamAttributes {
     fn default() -> Self {
         Self::new()

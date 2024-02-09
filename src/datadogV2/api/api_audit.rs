@@ -5,9 +5,9 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// ListAuditLogsParams is a struct for passing parameters to the method [`AuditAPI::list_audit_logs`]
-#[derive(Clone, Debug)]
-pub struct ListAuditLogsParams {
+/// ListAuditLogsOptionalParams is a struct for passing parameters to the method [`AuditAPI::list_audit_logs`]
+#[derive(Clone, Default, Debug)]
+pub struct ListAuditLogsOptionalParams {
     /// Search query following Audit Logs syntax.
     pub filter_query: Option<String>,
     /// Minimum timestamp for requested events.
@@ -22,10 +22,53 @@ pub struct ListAuditLogsParams {
     pub page_limit: Option<i32>,
 }
 
-/// SearchAuditLogsParams is a struct for passing parameters to the method [`AuditAPI::search_audit_logs`]
-#[derive(Clone, Debug)]
-pub struct SearchAuditLogsParams {
-    pub body: Option<Option<crate::datadogV2::model::AuditLogsSearchEventsRequest>>,
+impl ListAuditLogsOptionalParams {
+    /// Search query following Audit Logs syntax.
+    pub fn filter_query(&mut self, value: String) -> &mut Self {
+        self.filter_query = Some(value);
+        self
+    }
+    /// Minimum timestamp for requested events.
+    pub fn filter_from(&mut self, value: String) -> &mut Self {
+        self.filter_from = Some(value);
+        self
+    }
+    /// Maximum timestamp for requested events.
+    pub fn filter_to(&mut self, value: String) -> &mut Self {
+        self.filter_to = Some(value);
+        self
+    }
+    /// Order of events in results.
+    pub fn sort(&mut self, value: crate::datadogV2::model::AuditLogsSort) -> &mut Self {
+        self.sort = Some(value);
+        self
+    }
+    /// List following results with a cursor provided in the previous query.
+    pub fn page_cursor(&mut self, value: String) -> &mut Self {
+        self.page_cursor = Some(value);
+        self
+    }
+    /// Maximum number of events in the response.
+    pub fn page_limit(&mut self, value: i32) -> &mut Self {
+        self.page_limit = Some(value);
+        self
+    }
+}
+
+/// SearchAuditLogsOptionalParams is a struct for passing parameters to the method [`AuditAPI::search_audit_logs`]
+#[derive(Clone, Default, Debug)]
+pub struct SearchAuditLogsOptionalParams {
+    pub body: Option<crate::datadogV2::model::AuditLogsSearchEventsRequest>,
+}
+
+impl SearchAuditLogsOptionalParams {
+    pub fn body(
+        &mut self,
+        value: crate::datadogV2::model::AuditLogsSearchEventsRequest,
+    ) -> &mut Self {
+        self.body = Some(value);
+        self
+    }
 }
 
 /// ListAuditLogsError is a struct for typed errors of method [`AuditAPI::list_audit_logs`]
@@ -77,7 +120,7 @@ impl AuditAPI {
     /// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
     pub async fn list_audit_logs(
         &self,
-        params: ListAuditLogsParams,
+        params: ListAuditLogsOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::AuditLogsEventsResponse>, Error<ListAuditLogsError>>
     {
         match self.list_audit_logs_with_http_info(params).await {
@@ -94,14 +137,14 @@ impl AuditAPI {
     /// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
     pub async fn list_audit_logs_with_http_info(
         &self,
-        params: ListAuditLogsParams,
+        params: ListAuditLogsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::AuditLogsEventsResponse>,
         Error<ListAuditLogsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let filter_query = params.filter_query;
         let filter_from = params.filter_from;
         let filter_to = params.filter_to;
@@ -115,26 +158,29 @@ impl AuditAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_str) = filter_query {
+        if let Some(ref local_query_param) = filter_query {
             local_req_builder =
-                local_req_builder.query(&[("filter[query]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_from {
+        if let Some(ref local_query_param) = filter_from {
             local_req_builder =
-                local_req_builder.query(&[("filter[from]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[from]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = filter_to {
-            local_req_builder = local_req_builder.query(&[("filter[to]", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = sort {
-            local_req_builder = local_req_builder.query(&[("sort", &local_str.to_string())]);
-        };
-        if let Some(ref local_str) = page_cursor {
+        if let Some(ref local_query_param) = filter_to {
             local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_str.to_string())]);
+                local_req_builder.query(&[("filter[to]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_str) = page_limit {
-            local_req_builder = local_req_builder.query(&[("page[limit]", &local_str.to_string())]);
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_cursor {
+            local_req_builder =
+                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
         };
 
         // build user agent
@@ -185,7 +231,7 @@ impl AuditAPI {
     /// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
     pub async fn search_audit_logs(
         &self,
-        params: SearchAuditLogsParams,
+        params: SearchAuditLogsOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::AuditLogsEventsResponse>, Error<SearchAuditLogsError>>
     {
         match self.search_audit_logs_with_http_info(params).await {
@@ -202,14 +248,14 @@ impl AuditAPI {
     /// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
     pub async fn search_audit_logs_with_http_info(
         &self,
-        params: SearchAuditLogsParams,
+        params: SearchAuditLogsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::AuditLogsEventsResponse>,
         Error<SearchAuditLogsError>,
     > {
         let local_configuration = &self.config;
 
-        // unbox and build parameters
+        // unbox and build optional parameters
         let body = params.body;
 
         let local_client = &local_configuration.client;

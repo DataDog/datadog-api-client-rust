@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SecurityFilterUpdateData {
     /// The security filters properties to be updated.
     #[serde(rename = "attributes")]
-    pub attributes: Box<crate::datadogV2::model::SecurityFilterUpdateAttributes>,
+    pub attributes: crate::datadogV2::model::SecurityFilterUpdateAttributes,
     /// The type of the resource. The value should always be `security_filters`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::SecurityFilterType,
@@ -18,7 +18,7 @@ pub struct SecurityFilterUpdateData {
 
 impl SecurityFilterUpdateData {
     pub fn new(
-        attributes: Box<crate::datadogV2::model::SecurityFilterUpdateAttributes>,
+        attributes: crate::datadogV2::model::SecurityFilterUpdateAttributes,
         type_: crate::datadogV2::model::SecurityFilterType,
     ) -> SecurityFilterUpdateData {
         SecurityFilterUpdateData { attributes, type_ }

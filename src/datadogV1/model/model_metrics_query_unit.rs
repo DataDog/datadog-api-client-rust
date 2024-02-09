@@ -35,7 +35,33 @@ impl MetricsQueryUnit {
             short_name: None,
         }
     }
+
+    pub fn family(&mut self, value: String) -> &mut Self {
+        self.family = Some(value);
+        self
+    }
+
+    pub fn name(&mut self, value: String) -> &mut Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn plural(&mut self, value: String) -> &mut Self {
+        self.plural = Some(value);
+        self
+    }
+
+    pub fn scale_factor(&mut self, value: f64) -> &mut Self {
+        self.scale_factor = Some(value);
+        self
+    }
+
+    pub fn short_name(&mut self, value: String) -> &mut Self {
+        self.short_name = Some(value);
+        self
+    }
 }
+
 impl Default for MetricsQueryUnit {
     fn default() -> Self {
         Self::new()

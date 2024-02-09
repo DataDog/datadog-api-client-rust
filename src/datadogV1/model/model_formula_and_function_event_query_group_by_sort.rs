@@ -29,4 +29,14 @@ impl FormulaAndFunctionEventQueryGroupBySort {
             order: None,
         }
     }
+
+    pub fn metric(&mut self, value: String) -> &mut Self {
+        self.metric = Some(value);
+        self
+    }
+
+    pub fn order(&mut self, value: crate::datadogV1::model::QuerySortOrder) -> &mut Self {
+        self.order = Some(value);
+        self
+    }
 }

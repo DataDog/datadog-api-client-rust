@@ -10,12 +10,12 @@ use serde_with::skip_serializing_none;
 pub struct TimeseriesFormulaQueryRequest {
     /// A single timeseries query to be executed.
     #[serde(rename = "data")]
-    pub data: Box<crate::datadogV2::model::TimeseriesFormulaRequest>,
+    pub data: crate::datadogV2::model::TimeseriesFormulaRequest,
 }
 
 impl TimeseriesFormulaQueryRequest {
     pub fn new(
-        data: Box<crate::datadogV2::model::TimeseriesFormulaRequest>,
+        data: crate::datadogV2::model::TimeseriesFormulaRequest,
     ) -> TimeseriesFormulaQueryRequest {
         TimeseriesFormulaQueryRequest { data }
     }

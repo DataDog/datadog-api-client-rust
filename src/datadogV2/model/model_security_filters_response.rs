@@ -13,7 +13,7 @@ pub struct SecurityFiltersResponse {
     pub data: Option<Vec<crate::datadogV2::model::SecurityFilter>>,
     /// Optional metadata associated to the response.
     #[serde(rename = "meta")]
-    pub meta: Option<Box<crate::datadogV2::model::SecurityFilterMeta>>,
+    pub meta: Option<crate::datadogV2::model::SecurityFilterMeta>,
 }
 
 impl SecurityFiltersResponse {
@@ -23,7 +23,18 @@ impl SecurityFiltersResponse {
             meta: None,
         }
     }
+
+    pub fn data(&mut self, value: Vec<crate::datadogV2::model::SecurityFilter>) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn meta(&mut self, value: crate::datadogV2::model::SecurityFilterMeta) -> &mut Self {
+        self.meta = Some(value);
+        self
+    }
 }
+
 impl Default for SecurityFiltersResponse {
     fn default() -> Self {
         Self::new()

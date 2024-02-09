@@ -13,7 +13,7 @@ pub struct RUMResponseMetadata {
     pub elapsed: Option<i64>,
     /// Paging attributes.
     #[serde(rename = "page")]
-    pub page: Option<Box<crate::datadogV2::model::RUMResponsePage>>,
+    pub page: Option<crate::datadogV2::model::RUMResponsePage>,
     /// The identifier of the request.
     #[serde(rename = "request_id")]
     pub request_id: Option<String>,
@@ -36,7 +36,33 @@ impl RUMResponseMetadata {
             warnings: None,
         }
     }
+
+    pub fn elapsed(&mut self, value: i64) -> &mut Self {
+        self.elapsed = Some(value);
+        self
+    }
+
+    pub fn page(&mut self, value: crate::datadogV2::model::RUMResponsePage) -> &mut Self {
+        self.page = Some(value);
+        self
+    }
+
+    pub fn request_id(&mut self, value: String) -> &mut Self {
+        self.request_id = Some(value);
+        self
+    }
+
+    pub fn status(&mut self, value: crate::datadogV2::model::RUMResponseStatus) -> &mut Self {
+        self.status = Some(value);
+        self
+    }
+
+    pub fn warnings(&mut self, value: Vec<crate::datadogV2::model::RUMWarning>) -> &mut Self {
+        self.warnings = Some(value);
+        self
+    }
 }
+
 impl Default for RUMResponseMetadata {
     fn default() -> Self {
         Self::new()

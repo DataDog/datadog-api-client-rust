@@ -10,7 +10,7 @@ use serde_with::skip_serializing_none;
 pub struct SLOHistoryResponse {
     /// An array of service level objective objects.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV1::model::SLOHistoryResponseData>>,
+    pub data: Option<crate::datadogV1::model::SLOHistoryResponseData>,
     /// A list of errors while querying the history data for the service level objective.
     #[serde(rename = "errors", default, with = "::serde_with::rust::double_option")]
     pub errors: Option<Option<Vec<crate::datadogV1::model::SLOHistoryResponseError>>>,
@@ -23,7 +23,21 @@ impl SLOHistoryResponse {
             errors: None,
         }
     }
+
+    pub fn data(&mut self, value: crate::datadogV1::model::SLOHistoryResponseData) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn errors(
+        &mut self,
+        value: Option<Vec<crate::datadogV1::model::SLOHistoryResponseError>>,
+    ) -> &mut Self {
+        self.errors = Some(value);
+        self
+    }
 }
+
 impl Default for SLOHistoryResponse {
     fn default() -> Self {
         Self::new()

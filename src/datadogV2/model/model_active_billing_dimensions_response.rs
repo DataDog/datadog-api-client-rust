@@ -10,14 +10,23 @@ use serde_with::skip_serializing_none;
 pub struct ActiveBillingDimensionsResponse {
     /// Active billing dimensions data.
     #[serde(rename = "data")]
-    pub data: Option<Box<crate::datadogV2::model::ActiveBillingDimensionsBody>>,
+    pub data: Option<crate::datadogV2::model::ActiveBillingDimensionsBody>,
 }
 
 impl ActiveBillingDimensionsResponse {
     pub fn new() -> ActiveBillingDimensionsResponse {
         ActiveBillingDimensionsResponse { data: None }
     }
+
+    pub fn data(
+        &mut self,
+        value: crate::datadogV2::model::ActiveBillingDimensionsBody,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for ActiveBillingDimensionsResponse {
     fn default() -> Self {
         Self::new()

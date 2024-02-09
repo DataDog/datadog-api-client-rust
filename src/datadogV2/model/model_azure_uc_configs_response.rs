@@ -17,7 +17,13 @@ impl AzureUCConfigsResponse {
     pub fn new() -> AzureUCConfigsResponse {
         AzureUCConfigsResponse { data: None }
     }
+
+    pub fn data(&mut self, value: Vec<crate::datadogV2::model::AzureUCConfigPair>) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for AzureUCConfigsResponse {
     fn default() -> Self {
         Self::new()

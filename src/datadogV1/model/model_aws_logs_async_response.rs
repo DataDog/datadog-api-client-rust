@@ -23,7 +23,18 @@ impl AWSLogsAsyncResponse {
             status: None,
         }
     }
+
+    pub fn errors(&mut self, value: Vec<crate::datadogV1::model::AWSLogsAsyncError>) -> &mut Self {
+        self.errors = Some(value);
+        self
+    }
+
+    pub fn status(&mut self, value: String) -> &mut Self {
+        self.status = Some(value);
+        self
+    }
 }
+
 impl Default for AWSLogsAsyncResponse {
     fn default() -> Self {
         Self::new()

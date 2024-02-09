@@ -18,7 +18,16 @@ impl SensitiveDataScannerStandardPatternsResponseData {
     pub fn new() -> SensitiveDataScannerStandardPatternsResponseData {
         SensitiveDataScannerStandardPatternsResponseData { data: None }
     }
+
+    pub fn data(
+        &mut self,
+        value: Vec<crate::datadogV2::model::SensitiveDataScannerStandardPatternsResponseItem>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
 }
+
 impl Default for SensitiveDataScannerStandardPatternsResponseData {
     fn default() -> Self {
         Self::new()

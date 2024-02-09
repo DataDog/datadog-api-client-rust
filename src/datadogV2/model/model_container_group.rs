@@ -10,13 +10,13 @@ use serde_with::skip_serializing_none;
 pub struct ContainerGroup {
     /// Attributes for a container group.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::ContainerGroupAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::ContainerGroupAttributes>,
     /// Container Group ID.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Relationships to containers inside a container group.
     #[serde(rename = "relationships")]
-    pub relationships: Option<Box<crate::datadogV2::model::ContainerGroupRelationships>>,
+    pub relationships: Option<crate::datadogV2::model::ContainerGroupRelationships>,
     /// Type of container group.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::ContainerGroupType>,
@@ -31,7 +31,34 @@ impl ContainerGroup {
             type_: None,
         }
     }
+
+    pub fn attributes(
+        &mut self,
+        value: crate::datadogV2::model::ContainerGroupAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn relationships(
+        &mut self,
+        value: crate::datadogV2::model::ContainerGroupRelationships,
+    ) -> &mut Self {
+        self.relationships = Some(value);
+        self
+    }
+
+    pub fn type_(&mut self, value: crate::datadogV2::model::ContainerGroupType) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
+
 impl Default for ContainerGroup {
     fn default() -> Self {
         Self::new()

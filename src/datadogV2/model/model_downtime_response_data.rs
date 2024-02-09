@@ -10,13 +10,13 @@ use serde_with::skip_serializing_none;
 pub struct DowntimeResponseData {
     /// Downtime details.
     #[serde(rename = "attributes")]
-    pub attributes: Option<Box<crate::datadogV2::model::DowntimeResponseAttributes>>,
+    pub attributes: Option<crate::datadogV2::model::DowntimeResponseAttributes>,
     /// The downtime ID.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// All relationships associated with downtime.
     #[serde(rename = "relationships")]
-    pub relationships: Option<Box<crate::datadogV2::model::DowntimeRelationships>>,
+    pub relationships: Option<crate::datadogV2::model::DowntimeRelationships>,
     /// Downtime resource type.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::DowntimeResourceType>,
@@ -31,7 +31,34 @@ impl DowntimeResponseData {
             type_: None,
         }
     }
+
+    pub fn attributes(
+        &mut self,
+        value: crate::datadogV2::model::DowntimeResponseAttributes,
+    ) -> &mut Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn id(&mut self, value: String) -> &mut Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn relationships(
+        &mut self,
+        value: crate::datadogV2::model::DowntimeRelationships,
+    ) -> &mut Self {
+        self.relationships = Some(value);
+        self
+    }
+
+    pub fn type_(&mut self, value: crate::datadogV2::model::DowntimeResourceType) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
+
 impl Default for DowntimeResponseData {
     fn default() -> Self {
         Self::new()

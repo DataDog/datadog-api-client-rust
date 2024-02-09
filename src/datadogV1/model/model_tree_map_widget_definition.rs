@@ -28,7 +28,7 @@ pub struct TreeMapWidgetDefinition {
     pub size_by: Option<crate::datadogV1::model::TreeMapSizeBy>,
     /// Time setting for the widget.
     #[serde(rename = "time")]
-    pub time: Option<Box<crate::datadogV1::model::WidgetTime>>,
+    pub time: Option<crate::datadogV1::model::WidgetTime>,
     /// Title of your widget.
     #[serde(rename = "title")]
     pub title: Option<String>,
@@ -53,5 +53,44 @@ impl TreeMapWidgetDefinition {
             title: None,
             type_,
         }
+    }
+
+    #[allow(deprecated)]
+    pub fn color_by(&mut self, value: crate::datadogV1::model::TreeMapColorBy) -> &mut Self {
+        self.color_by = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn custom_links(
+        &mut self,
+        value: Vec<crate::datadogV1::model::WidgetCustomLink>,
+    ) -> &mut Self {
+        self.custom_links = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn group_by(&mut self, value: crate::datadogV1::model::TreeMapGroupBy) -> &mut Self {
+        self.group_by = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn size_by(&mut self, value: crate::datadogV1::model::TreeMapSizeBy) -> &mut Self {
+        self.size_by = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
+        self.time = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
     }
 }

@@ -13,7 +13,7 @@ pub struct SpansListResponseMetadata {
     pub elapsed: Option<i64>,
     /// Paging attributes.
     #[serde(rename = "page")]
-    pub page: Option<Box<crate::datadogV2::model::SpansResponseMetadataPage>>,
+    pub page: Option<crate::datadogV2::model::SpansResponseMetadataPage>,
     /// The identifier of the request.
     #[serde(rename = "request_id")]
     pub request_id: Option<String>,
@@ -36,7 +36,36 @@ impl SpansListResponseMetadata {
             warnings: None,
         }
     }
+
+    pub fn elapsed(&mut self, value: i64) -> &mut Self {
+        self.elapsed = Some(value);
+        self
+    }
+
+    pub fn page(&mut self, value: crate::datadogV2::model::SpansResponseMetadataPage) -> &mut Self {
+        self.page = Some(value);
+        self
+    }
+
+    pub fn request_id(&mut self, value: String) -> &mut Self {
+        self.request_id = Some(value);
+        self
+    }
+
+    pub fn status(
+        &mut self,
+        value: crate::datadogV2::model::SpansAggregateResponseStatus,
+    ) -> &mut Self {
+        self.status = Some(value);
+        self
+    }
+
+    pub fn warnings(&mut self, value: Vec<crate::datadogV2::model::SpansWarning>) -> &mut Self {
+        self.warnings = Some(value);
+        self
+    }
 }
+
 impl Default for SpansListResponseMetadata {
     fn default() -> Self {
         Self::new()

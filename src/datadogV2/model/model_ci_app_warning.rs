@@ -27,7 +27,23 @@ impl CIAppWarning {
             title: None,
         }
     }
+
+    pub fn code(&mut self, value: String) -> &mut Self {
+        self.code = Some(value);
+        self
+    }
+
+    pub fn detail(&mut self, value: String) -> &mut Self {
+        self.detail = Some(value);
+        self
+    }
+
+    pub fn title(&mut self, value: String) -> &mut Self {
+        self.title = Some(value);
+        self
+    }
 }
+
 impl Default for CIAppWarning {
     fn default() -> Self {
         Self::new()

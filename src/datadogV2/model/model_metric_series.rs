@@ -14,7 +14,7 @@ pub struct MetricSeries {
     pub interval: Option<i64>,
     /// Metadata for the metric.
     #[serde(rename = "metadata")]
-    pub metadata: Option<Box<crate::datadogV2::model::MetricMetadata>>,
+    pub metadata: Option<crate::datadogV2::model::MetricMetadata>,
     /// The name of the timeseries.
     #[serde(rename = "metric")]
     pub metric: String,
@@ -51,5 +51,40 @@ impl MetricSeries {
             type_: None,
             unit: None,
         }
+    }
+
+    pub fn interval(&mut self, value: i64) -> &mut Self {
+        self.interval = Some(value);
+        self
+    }
+
+    pub fn metadata(&mut self, value: crate::datadogV2::model::MetricMetadata) -> &mut Self {
+        self.metadata = Some(value);
+        self
+    }
+
+    pub fn resources(&mut self, value: Vec<crate::datadogV2::model::MetricResource>) -> &mut Self {
+        self.resources = Some(value);
+        self
+    }
+
+    pub fn source_type_name(&mut self, value: String) -> &mut Self {
+        self.source_type_name = Some(value);
+        self
+    }
+
+    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+        self.tags = Some(value);
+        self
+    }
+
+    pub fn type_(&mut self, value: crate::datadogV2::model::MetricIntakeType) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
+
+    pub fn unit(&mut self, value: String) -> &mut Self {
+        self.unit = Some(value);
+        self
     }
 }

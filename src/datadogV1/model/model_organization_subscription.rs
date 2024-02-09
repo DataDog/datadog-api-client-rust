@@ -17,7 +17,13 @@ impl OrganizationSubscription {
     pub fn new() -> OrganizationSubscription {
         OrganizationSubscription { type_: None }
     }
+
+    pub fn type_(&mut self, value: String) -> &mut Self {
+        self.type_ = Some(value);
+        self
+    }
 }
+
 impl Default for OrganizationSubscription {
     fn default() -> Self {
         Self::new()

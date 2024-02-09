@@ -13,7 +13,7 @@ pub struct ListRulesResponse {
     pub data: Option<Vec<crate::datadogV2::model::ListRulesResponseDataItem>>,
     /// Links attributes.
     #[serde(rename = "links")]
-    pub links: Option<Box<crate::datadogV2::model::ListRulesResponseLinks>>,
+    pub links: Option<crate::datadogV2::model::ListRulesResponseLinks>,
 }
 
 impl ListRulesResponse {
@@ -23,7 +23,21 @@ impl ListRulesResponse {
             links: None,
         }
     }
+
+    pub fn data(
+        &mut self,
+        value: Vec<crate::datadogV2::model::ListRulesResponseDataItem>,
+    ) -> &mut Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn links(&mut self, value: crate::datadogV2::model::ListRulesResponseLinks) -> &mut Self {
+        self.links = Some(value);
+        self
+    }
 }
+
 impl Default for ListRulesResponse {
     fn default() -> Self {
         Self::new()
