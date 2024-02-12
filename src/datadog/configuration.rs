@@ -20,7 +20,7 @@ impl Configuration {
         Configuration::default()
     }
 
-    pub fn set_unstable_operation_enabled(&mut self, operation: &String, enabled: bool) -> bool {
+    pub fn set_unstable_operation_enabled(&mut self, operation: &str, enabled: bool) -> bool {
         if let Some(unstable_operations) = &mut self.unstable_operations {
             if unstable_operations.contains_key(operation) {
                 unstable_operations.insert(operation.to_string(), enabled);
@@ -35,7 +35,7 @@ impl Configuration {
         false
     }
 
-    pub fn is_unstable_operation_enabled(&self, operation: &String) -> bool {
+    pub fn is_unstable_operation_enabled(&self, operation: &str) -> bool {
         if let Some(unstable_operations) = &self.unstable_operations {
             if unstable_operations.contains_key(operation) {
                 return unstable_operations.get(operation).unwrap().clone();
@@ -49,7 +49,7 @@ impl Configuration {
         false
     }
 
-    pub fn is_unstable_operation(&self, operation: &String) -> bool {
+    pub fn is_unstable_operation(&self, operation: &str) -> bool {
         if let Some(unstable_operations) = &self.unstable_operations {
             if unstable_operations.contains_key(operation) {
                 return true;
