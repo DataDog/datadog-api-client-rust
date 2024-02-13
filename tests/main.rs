@@ -56,10 +56,15 @@ async fn main() {
         .unwrap_or("false".to_string())
         .to_lowercase();
     let is_replay = !record_mode.eq("true") && !record_mode.eq("none");
+    let concurrent_scenarios = match is_replay {
+        true => 16,
+        false => 1,
+    };
     let parsed_cli: cli::Opts<parser::basic::Cli, runner::basic::Cli, writer::basic::Cli> =
         cli::Opts::parsed();
     let mut cucumber = DatadogWorld::cucumber()
         .with_default_cli()
+        .max_concurrent_scenarios(Some(concurrent_scenarios))
         .repeat_failed()
         .fail_on_skipped()
         .before(move |feature, rule, scenario, world| {
