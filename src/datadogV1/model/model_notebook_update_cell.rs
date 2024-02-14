@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 
 /// Updating a notebook can either insert new cell(s) or update existing cell(s) by including the cell `id`.
 /// To delete existing cell(s), simply omit it from the list of cells.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum NotebookUpdateCell {

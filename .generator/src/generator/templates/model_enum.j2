@@ -7,9 +7,10 @@ use serde::{Serialize, Deserialize};
 {{ description | block_comment }}
 {%- endif %}
 
+#[non_exhaustive]
 {%- if model["type"] == "integer" %}
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize_repr, Deserialize_repr)]
-#[repr({{model | simple_type(False, False)}})]
+#[repr({{model | simple_type(false, false)}})]
 {%- else %}
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 {%- endif %}

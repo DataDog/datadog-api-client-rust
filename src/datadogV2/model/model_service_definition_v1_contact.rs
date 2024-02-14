@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
 /// Contact information about the service.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ServiceDefinitionV1Contact {

@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
 /// Has one property enabled (boolean).
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct OrganizationSettingsSamlStrictMode {

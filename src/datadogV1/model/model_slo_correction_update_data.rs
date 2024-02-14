@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
 /// The data object associated with the SLO correction to be updated.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SLOCorrectionUpdateData {

@@ -83,6 +83,7 @@ pub async fn before_scenario(
     let filename = NON_ALNUM_RE
         .replace_all(scenario.name.as_str(), "-")
         .to_string();
+
     let mut prefix = "Test".to_string();
     let mut cassette_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     cassette_dir.push(format!(

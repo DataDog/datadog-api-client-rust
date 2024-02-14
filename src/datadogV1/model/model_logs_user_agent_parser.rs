@@ -6,6 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The User-Agent parser takes a User-Agent attribute and extracts the OS, browser, device, and other user data.
 /// It recognizes major bots like the Google Bot, Yahoo Slurp, and Bing.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LogsUserAgentParser {

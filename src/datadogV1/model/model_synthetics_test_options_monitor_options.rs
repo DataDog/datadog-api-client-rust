@@ -6,6 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Object containing the options for a Synthetic test as a monitor
 /// (for example, renotification).
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SyntheticsTestOptionsMonitorOptions {

@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
 /// Returns the AWS account associated with this integration.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AWSAccount {

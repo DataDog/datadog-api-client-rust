@@ -6,6 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// UploadIdPMetadataOptionalParams is a struct for passing parameters to the method [`OrganizationsAPI::upload_id_p_metadata`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct UploadIdPMetadataOptionalParams {
     /// The IdP metadata XML file

@@ -6,6 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// MakeGCPSTSDelegateOptionalParams is a struct for passing parameters to the method [`GCPIntegrationAPI::make_gcpsts_delegate`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct MakeGCPSTSDelegateOptionalParams {
     /// Create a delegate service account within Datadog.

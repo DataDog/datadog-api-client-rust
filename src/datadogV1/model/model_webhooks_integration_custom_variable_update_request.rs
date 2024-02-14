@@ -7,6 +7,7 @@ use serde_with::skip_serializing_none;
 /// Update request of a custom variable object.
 ///
 /// *All properties are optional.*
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct WebhooksIntegrationCustomVariableUpdateRequest {

@@ -6,6 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The response object with all security signals matching the request
 /// and pagination information.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SecurityMonitoringSignalsListResponse {

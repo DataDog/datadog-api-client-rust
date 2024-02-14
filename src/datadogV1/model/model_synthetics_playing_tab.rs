@@ -4,6 +4,7 @@
 
 use serde_repr::{Deserialize_repr, Serialize_repr};
 
+#[non_exhaustive]
 #[derive(
     Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize_repr, Deserialize_repr,
 )]

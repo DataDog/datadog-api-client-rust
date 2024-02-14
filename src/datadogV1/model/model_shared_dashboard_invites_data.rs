@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// An object or list of objects containing the information for an invitation to a shared dashboard.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SharedDashboardInvitesData {

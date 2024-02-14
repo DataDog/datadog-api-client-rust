@@ -6,6 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// SubmitLogOptionalParams is a struct for passing parameters to the method [`LogsAPI::submit_log`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct SubmitLogOptionalParams {
     /// HTTP header used to compress the media-type.

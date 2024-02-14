@@ -6,6 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// If pipelines are triggered due to actions to a Git repository, then all payloads must contain this.
 /// Note that either `tag` or `branch` has to be provided, but not both.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CIAppGitInfo {

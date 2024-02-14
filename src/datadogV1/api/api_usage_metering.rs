@@ -6,6 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetDailyCustomReportsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_daily_custom_reports`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetDailyCustomReportsOptionalParams {
     /// The number of files to return in the response. `[default=60]`.
@@ -42,6 +43,7 @@ impl GetDailyCustomReportsOptionalParams {
 }
 
 /// GetHourlyUsageAttributionOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_hourly_usage_attribution`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetHourlyUsageAttributionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
@@ -84,6 +86,7 @@ impl GetHourlyUsageAttributionOptionalParams {
 }
 
 /// GetIncidentManagementOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_incident_management`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetIncidentManagementOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
@@ -101,6 +104,7 @@ impl GetIncidentManagementOptionalParams {
 }
 
 /// GetIngestedSpansOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_ingested_spans`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetIngestedSpansOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
@@ -118,6 +122,7 @@ impl GetIngestedSpansOptionalParams {
 }
 
 /// GetMonthlyCustomReportsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_monthly_custom_reports`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetMonthlyCustomReportsOptionalParams {
     /// The number of files to return in the response `[default=60].`
@@ -154,6 +159,7 @@ impl GetMonthlyCustomReportsOptionalParams {
 }
 
 /// GetMonthlyUsageAttributionOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_monthly_usage_attribution`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetMonthlyUsageAttributionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
@@ -214,6 +220,7 @@ impl GetMonthlyUsageAttributionOptionalParams {
 }
 
 /// GetUsageAnalyzedLogsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_analyzed_logs`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageAnalyzedLogsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
@@ -231,6 +238,7 @@ impl GetUsageAnalyzedLogsOptionalParams {
 }
 
 /// GetUsageAttributionOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_attribution`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageAttributionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
@@ -284,6 +292,7 @@ impl GetUsageAttributionOptionalParams {
 }
 
 /// GetUsageAuditLogsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_audit_logs`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageAuditLogsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
@@ -301,6 +310,7 @@ impl GetUsageAuditLogsOptionalParams {
 }
 
 /// GetUsageBillableSummaryOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_billable_summary`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageBillableSummaryOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage starting this month.
@@ -316,6 +326,7 @@ impl GetUsageBillableSummaryOptionalParams {
 }
 
 /// GetUsageCIAppOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_ci_app`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageCIAppOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
@@ -333,6 +344,7 @@ impl GetUsageCIAppOptionalParams {
 }
 
 /// GetUsageCWSOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_cws`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageCWSOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
@@ -350,6 +362,7 @@ impl GetUsageCWSOptionalParams {
 }
 
 /// GetUsageCloudSecurityPostureManagementOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_cloud_security_posture_management`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageCloudSecurityPostureManagementOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
@@ -367,6 +380,7 @@ impl GetUsageCloudSecurityPostureManagementOptionalParams {
 }
 
 /// GetUsageDBMOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_dbm`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageDBMOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
@@ -384,6 +398,7 @@ impl GetUsageDBMOptionalParams {
 }
 
 /// GetUsageFargateOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_fargate`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageFargateOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
@@ -399,6 +414,7 @@ impl GetUsageFargateOptionalParams {
 }
 
 /// GetUsageHostsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_hosts`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageHostsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
@@ -414,6 +430,7 @@ impl GetUsageHostsOptionalParams {
 }
 
 /// GetUsageIndexedSpansOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_indexed_spans`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageIndexedSpansOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending **before** this hour.
@@ -429,6 +446,7 @@ impl GetUsageIndexedSpansOptionalParams {
 }
 
 /// GetUsageInternetOfThingsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_internet_of_things`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageInternetOfThingsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
@@ -446,6 +464,7 @@ impl GetUsageInternetOfThingsOptionalParams {
 }
 
 /// GetUsageLambdaOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_lambda`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageLambdaOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
@@ -461,6 +480,7 @@ impl GetUsageLambdaOptionalParams {
 }
 
 /// GetUsageLogsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_logs`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageLogsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
@@ -476,6 +496,7 @@ impl GetUsageLogsOptionalParams {
 }
 
 /// GetUsageLogsByIndexOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_logs_by_index`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageLogsByIndexOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
@@ -498,6 +519,7 @@ impl GetUsageLogsByIndexOptionalParams {
 }
 
 /// GetUsageLogsByRetentionOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_logs_by_retention`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageLogsByRetentionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
@@ -515,6 +537,7 @@ impl GetUsageLogsByRetentionOptionalParams {
 }
 
 /// GetUsageNetworkFlowsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_network_flows`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageNetworkFlowsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
@@ -532,6 +555,7 @@ impl GetUsageNetworkFlowsOptionalParams {
 }
 
 /// GetUsageNetworkHostsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_network_hosts`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageNetworkHostsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
@@ -547,6 +571,7 @@ impl GetUsageNetworkHostsOptionalParams {
 }
 
 /// GetUsageOnlineArchiveOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_online_archive`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageOnlineArchiveOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
@@ -564,6 +589,7 @@ impl GetUsageOnlineArchiveOptionalParams {
 }
 
 /// GetUsageProfilingOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_profiling`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageProfilingOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
@@ -581,6 +607,7 @@ impl GetUsageProfilingOptionalParams {
 }
 
 /// GetUsageRumSessionsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_rum_sessions`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageRumSessionsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
@@ -603,6 +630,7 @@ impl GetUsageRumSessionsOptionalParams {
 }
 
 /// GetUsageRumUnitsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_rum_units`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageRumUnitsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
@@ -618,6 +646,7 @@ impl GetUsageRumUnitsOptionalParams {
 }
 
 /// GetUsageSDSOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_sds`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageSDSOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
@@ -635,6 +664,7 @@ impl GetUsageSDSOptionalParams {
 }
 
 /// GetUsageSNMPOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_snmp`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageSNMPOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
@@ -652,6 +682,7 @@ impl GetUsageSNMPOptionalParams {
 }
 
 /// GetUsageSummaryOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_summary`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageSummaryOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
@@ -674,6 +705,7 @@ impl GetUsageSummaryOptionalParams {
 }
 
 /// GetUsageSyntheticsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_synthetics`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageSyntheticsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
@@ -689,6 +721,7 @@ impl GetUsageSyntheticsOptionalParams {
 }
 
 /// GetUsageSyntheticsAPIOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_synthetics_api`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageSyntheticsAPIOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
@@ -704,6 +737,7 @@ impl GetUsageSyntheticsAPIOptionalParams {
 }
 
 /// GetUsageSyntheticsBrowserOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_synthetics_browser`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageSyntheticsBrowserOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
@@ -719,6 +753,7 @@ impl GetUsageSyntheticsBrowserOptionalParams {
 }
 
 /// GetUsageTimeseriesOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_timeseries`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageTimeseriesOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
@@ -734,6 +769,7 @@ impl GetUsageTimeseriesOptionalParams {
 }
 
 /// GetUsageTopAvgMetricsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_top_avg_metrics`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageTopAvgMetricsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: [YYYY-MM] for usage beginning at this hour. (Either month or day should be specified, but not both)

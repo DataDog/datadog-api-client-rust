@@ -6,6 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// A dashboard is Datadog’s tool for visually tracking, analyzing, and displaying
 /// key performance metrics, which enable you to monitor the health of your infrastructure.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Dashboard {

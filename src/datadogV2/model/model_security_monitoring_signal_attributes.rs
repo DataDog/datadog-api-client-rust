@@ -6,6 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The object containing all signal attributes and their
 /// associated values.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SecurityMonitoringSignalAttributes {

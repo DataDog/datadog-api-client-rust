@@ -6,6 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetDowntimeOptionalParams is a struct for passing parameters to the method [`DowntimesAPI::get_downtime`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetDowntimeOptionalParams {
     /// Comma-separated list of resource paths for related resources to include in the response. Supported resource
@@ -23,6 +24,7 @@ impl GetDowntimeOptionalParams {
 }
 
 /// ListDowntimesOptionalParams is a struct for passing parameters to the method [`DowntimesAPI::list_downtimes`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListDowntimesOptionalParams {
     /// Only return downtimes that are active when the request is made.
@@ -61,6 +63,7 @@ impl ListDowntimesOptionalParams {
 }
 
 /// ListMonitorDowntimesOptionalParams is a struct for passing parameters to the method [`DowntimesAPI::list_monitor_downtimes`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListMonitorDowntimesOptionalParams {
     /// Specific offset to use as the beginning of the returned page.

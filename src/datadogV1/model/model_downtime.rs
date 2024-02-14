@@ -8,6 +8,7 @@ use serde_with::skip_serializing_none;
 /// allowing you to globally exclude scopes from alerting.
 /// Downtime settings, which can be scheduled with start and end times,
 /// prevent all alerting related to specified Datadog tags.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Downtime {

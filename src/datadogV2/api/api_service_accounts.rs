@@ -6,6 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListServiceAccountApplicationKeysOptionalParams is a struct for passing parameters to the method [`ServiceAccountsAPI::list_service_account_application_keys`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListServiceAccountApplicationKeysOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.

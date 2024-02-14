@@ -10,6 +10,7 @@ use serde_with::skip_serializing_none;
 ///   and by default log integrations take care of all the rest of the setup.
 ///
 ///   2. Use the Trace remapper processor to define a log attribute as its associated trace ID.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LogsTraceRemapper {

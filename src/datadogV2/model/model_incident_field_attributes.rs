@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// Dynamic fields for which selections can be made, with field names as keys.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum IncidentFieldAttributes {

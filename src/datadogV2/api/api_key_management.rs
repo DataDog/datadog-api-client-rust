@@ -6,6 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetAPIKeyOptionalParams is a struct for passing parameters to the method [`KeyManagementAPI::get_api_key`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetAPIKeyOptionalParams {
     /// Comma separated list of resource paths for related resources to include in the response. Supported resource paths are `created_by` and `modified_by`.
@@ -21,6 +22,7 @@ impl GetAPIKeyOptionalParams {
 }
 
 /// GetApplicationKeyOptionalParams is a struct for passing parameters to the method [`KeyManagementAPI::get_application_key`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetApplicationKeyOptionalParams {
     /// Resource path for related resources to include in the response. Only `owned_by` is supported.
@@ -36,6 +38,7 @@ impl GetApplicationKeyOptionalParams {
 }
 
 /// ListAPIKeysOptionalParams is a struct for passing parameters to the method [`KeyManagementAPI::list_api_keys`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListAPIKeysOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
@@ -125,6 +128,7 @@ impl ListAPIKeysOptionalParams {
 }
 
 /// ListApplicationKeysOptionalParams is a struct for passing parameters to the method [`KeyManagementAPI::list_application_keys`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListApplicationKeysOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
@@ -186,6 +190,7 @@ impl ListApplicationKeysOptionalParams {
 }
 
 /// ListCurrentUserApplicationKeysOptionalParams is a struct for passing parameters to the method [`KeyManagementAPI::list_current_user_application_keys`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListCurrentUserApplicationKeysOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.

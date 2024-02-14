@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// An archive's destination.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum LogsArchiveDestination {

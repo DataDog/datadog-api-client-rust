@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// Included data in the AuthN Mapping response.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AuthNMappingIncluded {

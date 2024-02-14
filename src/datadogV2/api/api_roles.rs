@@ -6,6 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListRoleUsersOptionalParams is a struct for passing parameters to the method [`RolesAPI::list_role_users`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListRoleUsersOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
@@ -46,6 +47,7 @@ impl ListRoleUsersOptionalParams {
 }
 
 /// ListRolesOptionalParams is a struct for passing parameters to the method [`RolesAPI::list_roles`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListRolesOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.

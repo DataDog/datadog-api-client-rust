@@ -6,6 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListProcessesOptionalParams is a struct for passing parameters to the method [`ProcessesAPI::list_processes`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListProcessesOptionalParams {
     /// String to search processes by.
