@@ -17,6 +17,9 @@ pub struct {{ name }} {
 {%- if schema.deprecated %}
 	#[deprecated]
 {%- endif %}
+{%- if required and nullable %}
+	#[serialize_always]
+{%- endif %}
     #[serde(rename = "{{ attr }}"{% if not required and nullable%}, default, with = "::serde_with::rust::double_option"{% endif %})]
     pub {{propertyName}}: {{dataType}},
 {%- endfor %}
