@@ -118,16 +118,16 @@ impl CloudWorkloadSecurityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/cloud_workload_security/agent_rules",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.create_cloud_workload_security_agent_rule")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -196,17 +196,17 @@ impl CloudWorkloadSecurityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/cloud_workload_security/agent_rules/{agent_rule_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.delete_cloud_workload_security_agent_rule"),
             agent_rule_id = urlencode(agent_rule_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -267,16 +267,16 @@ impl CloudWorkloadSecurityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/cloud_workload/policy/download",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.download_cloud_workload_policy_file")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -342,17 +342,17 @@ impl CloudWorkloadSecurityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/cloud_workload_security/agent_rules/{agent_rule_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.get_cloud_workload_security_agent_rule"),
             agent_rule_id = urlencode(agent_rule_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -418,16 +418,16 @@ impl CloudWorkloadSecurityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/cloud_workload_security/agent_rules",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.list_cloud_workload_security_agent_rules")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -499,17 +499,17 @@ impl CloudWorkloadSecurityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/cloud_workload_security/agent_rules/{agent_rule_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.update_cloud_workload_security_agent_rule"),
             agent_rule_id = urlencode(agent_rule_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

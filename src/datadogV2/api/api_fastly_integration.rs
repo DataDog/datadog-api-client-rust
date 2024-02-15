@@ -164,16 +164,16 @@ impl FastlyIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.create_fastly_account")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -249,17 +249,17 @@ impl FastlyIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts/{account_id}/services",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.create_fastly_service"),
             account_id = urlencode(account_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -324,17 +324,17 @@ impl FastlyIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts/{account_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.delete_fastly_account"),
             account_id = urlencode(account_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -395,7 +395,7 @@ impl FastlyIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts/{account_id}/services/{service_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.delete_fastly_service"),
             account_id = urlencode(account_id),
             service_id = urlencode(service_id)
         );
@@ -403,10 +403,10 @@ impl FastlyIntegrationAPI {
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -466,17 +466,17 @@ impl FastlyIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts/{account_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.get_fastly_account"),
             account_id = urlencode(account_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -543,7 +543,7 @@ impl FastlyIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts/{account_id}/services/{service_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.get_fastly_service"),
             account_id = urlencode(account_id),
             service_id = urlencode(service_id)
         );
@@ -551,10 +551,10 @@ impl FastlyIntegrationAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -616,16 +616,16 @@ impl FastlyIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.list_fastly_accounts")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -689,17 +689,17 @@ impl FastlyIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts/{account_id}/services",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.list_fastly_services"),
             account_id = urlencode(account_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -768,17 +768,17 @@ impl FastlyIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts/{account_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.update_fastly_account"),
             account_id = urlencode(account_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -856,7 +856,7 @@ impl FastlyIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts/{account_id}/services/{service_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.update_fastly_service"),
             account_id = urlencode(account_id),
             service_id = urlencode(service_id)
         );
@@ -864,10 +864,10 @@ impl FastlyIntegrationAPI {
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

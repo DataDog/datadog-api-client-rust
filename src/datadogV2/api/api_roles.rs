@@ -283,17 +283,17 @@ impl RolesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}/permissions",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.add_permission_to_role"),
             role_id = urlencode(role_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -361,17 +361,17 @@ impl RolesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}/users",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.add_user_to_role"),
             role_id = urlencode(role_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -438,17 +438,17 @@ impl RolesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}/clone",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.clone_role"),
             role_id = urlencode(role_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -511,15 +511,18 @@ impl RolesAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/roles", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v2/roles",
+            local_configuration.get_operation_host("v2.create_role")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -580,17 +583,17 @@ impl RolesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.delete_role"),
             role_id = urlencode(role_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -645,17 +648,17 @@ impl RolesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.get_role"),
             role_id = urlencode(role_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -712,15 +715,18 @@ impl RolesAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/permissions", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v2/permissions",
+            local_configuration.get_operation_host("v2.list_permissions")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -782,17 +788,17 @@ impl RolesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}/permissions",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.list_role_permissions"),
             role_id = urlencode(role_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -859,7 +865,7 @@ impl RolesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}/users",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.list_role_users"),
             role_id = urlencode(role_id)
         );
         let mut local_req_builder =
@@ -883,10 +889,10 @@ impl RolesAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -950,7 +956,10 @@ impl RolesAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/roles", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v2/roles",
+            local_configuration.get_operation_host("v2.list_roles")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -976,10 +985,10 @@ impl RolesAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1047,17 +1056,17 @@ impl RolesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}/permissions",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.remove_permission_from_role"),
             role_id = urlencode(role_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1131,17 +1140,17 @@ impl RolesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}/users",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.remove_user_from_role"),
             role_id = urlencode(role_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1209,17 +1218,17 @@ impl RolesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.update_role"),
             role_id = urlencode(role_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

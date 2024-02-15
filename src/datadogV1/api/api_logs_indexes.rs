@@ -107,16 +107,16 @@ impl LogsIndexesAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/indexes",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.create_logs_index")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -181,17 +181,17 @@ impl LogsIndexesAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/indexes/{name}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.get_logs_index"),
             name = urlencode(name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -250,16 +250,16 @@ impl LogsIndexesAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/index-order",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.get_logs_index_order")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -321,16 +321,16 @@ impl LogsIndexesAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/indexes",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.list_log_indexes")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -399,17 +399,17 @@ impl LogsIndexesAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/indexes/{name}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.update_logs_index"),
             name = urlencode(name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -480,16 +480,16 @@ impl LogsIndexesAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/index-order",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.update_logs_index_order")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

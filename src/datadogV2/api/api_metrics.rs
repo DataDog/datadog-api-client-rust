@@ -372,16 +372,16 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/config/bulk-tags",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.create_bulk_tags_metrics_configuration")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -465,17 +465,17 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tags",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.create_tag_configuration"),
             metric_name = urlencode(metric_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -555,16 +555,16 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/config/bulk-tags",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.delete_bulk_tags_metrics_configuration")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -634,17 +634,17 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tags",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.delete_tag_configuration"),
             metric_name = urlencode(metric_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -718,7 +718,7 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/estimate",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.estimate_metrics_output_series"),
             metric_name = urlencode(metric_name)
         );
         let mut local_req_builder =
@@ -746,10 +746,10 @@ impl MetricsAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -821,7 +821,7 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/active-configurations",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.list_active_metric_configurations"),
             metric_name = urlencode(metric_name)
         );
         let mut local_req_builder =
@@ -833,10 +833,10 @@ impl MetricsAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -904,17 +904,17 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tags",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.list_tag_configuration_by_name"),
             metric_name = urlencode(metric_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -985,7 +985,10 @@ impl MetricsAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/metrics", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v2/metrics",
+            local_configuration.get_operation_host("v2.list_tag_configurations")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -1021,10 +1024,10 @@ impl MetricsAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1092,17 +1095,17 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/all-tags",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.list_tags_by_metric_name"),
             metric_name = urlencode(metric_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1173,17 +1176,17 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/volumes",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.list_volumes_by_metric_name"),
             metric_name = urlencode(metric_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1245,8 +1248,9 @@ impl MetricsAPI {
         ResponseContent<crate::datadogV2::model::ScalarFormulaQueryResponse>,
         Error<QueryScalarDataError>,
     > {
+        let local_configuration = &self.config;
         let operation_id = "v2.query_scalar_data".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -1255,19 +1259,20 @@ impl MetricsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_configuration = &self.config;
-
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/query/scalar", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v2/query/scalar",
+            local_configuration.get_operation_host("v2.query_scalar_data")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1334,8 +1339,9 @@ impl MetricsAPI {
         ResponseContent<crate::datadogV2::model::TimeseriesFormulaQueryResponse>,
         Error<QueryTimeseriesDataError>,
     > {
+        let local_configuration = &self.config;
         let operation_id = "v2.query_timeseries_data".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -1344,19 +1350,20 @@ impl MetricsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_configuration = &self.config;
-
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/query/timeseries", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v2/query/timeseries",
+            local_configuration.get_operation_host("v2.query_timeseries_data")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1450,7 +1457,10 @@ impl MetricsAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/series", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v2/series",
+            local_configuration.get_operation_host("v2.submit_metrics")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
@@ -1459,10 +1469,10 @@ impl MetricsAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1543,17 +1553,17 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tags",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.update_tag_configuration"),
             metric_name = urlencode(metric_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

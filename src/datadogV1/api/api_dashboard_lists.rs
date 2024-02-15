@@ -102,16 +102,16 @@ impl DashboardListsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/lists/manual",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.create_dashboard_list")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -182,17 +182,17 @@ impl DashboardListsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/lists/manual/{list_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.delete_dashboard_list"),
             list_id = list_id
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -251,17 +251,17 @@ impl DashboardListsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/lists/manual/{list_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.get_dashboard_list"),
             list_id = list_id
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -323,16 +323,16 @@ impl DashboardListsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/lists/manual",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.list_dashboard_lists")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -399,17 +399,17 @@ impl DashboardListsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/lists/manual/{list_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.update_dashboard_list"),
             list_id = list_id
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

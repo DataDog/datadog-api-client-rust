@@ -167,15 +167,18 @@ impl ServiceAccountsAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/service_accounts", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v2/service_accounts",
+            local_configuration.get_operation_host("v2.create_service_account")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -251,17 +254,17 @@ impl ServiceAccountsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.create_service_account_application_key"),
             service_account_id = urlencode(service_account_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -331,7 +334,7 @@ impl ServiceAccountsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys/{app_key_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.delete_service_account_application_key"),
             service_account_id = urlencode(service_account_id),
             app_key_id = urlencode(app_key_id)
         );
@@ -339,10 +342,10 @@ impl ServiceAccountsAPI {
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -409,7 +412,7 @@ impl ServiceAccountsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys/{app_key_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.get_service_account_application_key"),
             service_account_id = urlencode(service_account_id),
             app_key_id = urlencode(app_key_id)
         );
@@ -417,10 +420,10 @@ impl ServiceAccountsAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -497,7 +500,7 @@ impl ServiceAccountsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.list_service_account_application_keys"),
             service_account_id = urlencode(service_account_id)
         );
         let mut local_req_builder =
@@ -529,10 +532,10 @@ impl ServiceAccountsAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -607,7 +610,7 @@ impl ServiceAccountsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys/{app_key_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.update_service_account_application_key"),
             service_account_id = urlencode(service_account_id),
             app_key_id = urlencode(app_key_id)
         );
@@ -615,10 +618,10 @@ impl ServiceAccountsAPI {
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

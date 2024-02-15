@@ -117,16 +117,16 @@ impl APMRetentionFiltersAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/apm/config/retention-filters",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.create_apm_retention_filter")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -194,17 +194,17 @@ impl APMRetentionFiltersAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/apm/config/retention-filters/{filter_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.delete_apm_retention_filter"),
             filter_id = urlencode(filter_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -269,17 +269,17 @@ impl APMRetentionFiltersAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/apm/config/retention-filters/{filter_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.get_apm_retention_filter"),
             filter_id = urlencode(filter_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -341,16 +341,16 @@ impl APMRetentionFiltersAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/apm/config/retention-filters",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.list_apm_retention_filters")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -411,16 +411,16 @@ impl APMRetentionFiltersAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/apm/config/retention-filters-execution-order",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.reorder_apm_retention_filters")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -494,17 +494,17 @@ impl APMRetentionFiltersAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/apm/config/retention-filters/{filter_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.update_apm_retention_filter"),
             filter_id = urlencode(filter_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

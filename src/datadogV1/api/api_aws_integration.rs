@@ -244,15 +244,18 @@ impl AWSIntegrationAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/integration/aws", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/integration/aws",
+            local_configuration.get_operation_host("v1.create_aws_account")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -326,16 +329,16 @@ impl AWSIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/event_bridge",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.create_aws_event_bridge_source")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -406,16 +409,16 @@ impl AWSIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/filtering",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.create_aws_tag_filter")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -486,16 +489,16 @@ impl AWSIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/generate_new_external_id",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.create_new_aws_external_id")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -564,15 +567,18 @@ impl AWSIntegrationAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/integration/aws", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/integration/aws",
+            local_configuration.get_operation_host("v1.delete_aws_account")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -646,16 +652,16 @@ impl AWSIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/event_bridge",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.delete_aws_event_bridge_source")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -726,16 +732,16 @@ impl AWSIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/filtering",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.delete_aws_tag_filter")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -807,7 +813,10 @@ impl AWSIntegrationAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/integration/aws", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/integration/aws",
+            local_configuration.get_operation_host("v1.list_aws_accounts")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -825,10 +834,10 @@ impl AWSIntegrationAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -890,16 +899,16 @@ impl AWSIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/event_bridge",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.list_aws_event_bridge_sources")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -963,7 +972,7 @@ impl AWSIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/filtering",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.list_aws_tag_filters")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -971,10 +980,10 @@ impl AWSIntegrationAPI {
         local_req_builder = local_req_builder.query(&[("account_id", &account_id.to_string())]);
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1030,16 +1039,16 @@ impl AWSIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/available_namespace_rules",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.list_available_aws_namespaces")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1107,7 +1116,10 @@ impl AWSIntegrationAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/integration/aws", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/integration/aws",
+            local_configuration.get_operation_host("v1.update_aws_account")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
@@ -1125,10 +1137,10 @@ impl AWSIntegrationAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

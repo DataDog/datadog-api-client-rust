@@ -465,16 +465,16 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/security_filters",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.create_security_filter")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -548,16 +548,16 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.create_security_monitoring_rule")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -625,17 +625,17 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/security_filters/{security_filter_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.delete_security_filter"),
             security_filter_id = urlencode(security_filter_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -694,17 +694,17 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules/{rule_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.delete_security_monitoring_rule"),
             rule_id = urlencode(rule_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -771,17 +771,17 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/{signal_id}/assignee",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.edit_security_monitoring_signal_assignee"),
             signal_id = urlencode(signal_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -858,17 +858,17 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/{signal_id}/incidents",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.edit_security_monitoring_signal_incidents"),
             signal_id = urlencode(signal_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -945,17 +945,17 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/{signal_id}/state",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.edit_security_monitoring_signal_state"),
             signal_id = urlencode(signal_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1018,8 +1018,9 @@ impl SecurityMonitoringAPI {
         params: GetFindingOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV2::model::GetFindingResponse>, Error<GetFindingError>>
     {
+        let local_configuration = &self.config;
         let operation_id = "v2.get_finding".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -1028,8 +1029,6 @@ impl SecurityMonitoringAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_configuration = &self.config;
-
         // unbox and build optional parameters
         let snapshot_timestamp = params.snapshot_timestamp;
 
@@ -1037,7 +1036,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/posture_management/findings/{finding_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.get_finding"),
             finding_id = urlencode(finding_id)
         );
         let mut local_req_builder =
@@ -1049,10 +1048,10 @@ impl SecurityMonitoringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1124,17 +1123,17 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/security_filters/{security_filter_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.get_security_filter"),
             security_filter_id = urlencode(security_filter_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1201,17 +1200,17 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules/{rule_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.get_security_monitoring_rule"),
             rule_id = urlencode(rule_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1278,17 +1277,17 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/{signal_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.get_security_monitoring_signal"),
             signal_id = urlencode(signal_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1404,8 +1403,9 @@ impl SecurityMonitoringAPI {
         ResponseContent<crate::datadogV2::model::ListFindingsResponse>,
         Error<ListFindingsError>,
     > {
+        let local_configuration = &self.config;
         let operation_id = "v2.list_findings".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -1413,8 +1413,6 @@ impl SecurityMonitoringAPI {
             };
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
-
-        let local_configuration = &self.config;
 
         // unbox and build optional parameters
         let page_limit = params.page_limit;
@@ -1434,7 +1432,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/posture_management/findings",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.list_findings")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1493,10 +1491,10 @@ impl SecurityMonitoringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1557,16 +1555,16 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/security_filters",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.list_security_filters")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1637,7 +1635,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.list_security_monitoring_rules")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1652,10 +1650,10 @@ impl SecurityMonitoringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1734,7 +1732,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.list_security_monitoring_signals")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1765,10 +1763,10 @@ impl SecurityMonitoringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1825,8 +1823,9 @@ impl SecurityMonitoringAPI {
         ResponseContent<crate::datadogV2::model::BulkMuteFindingsResponse>,
         Error<MuteFindingsError>,
     > {
+        let local_configuration = &self.config;
         let operation_id = "v2.mute_findings".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -1835,22 +1834,20 @@ impl SecurityMonitoringAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_configuration = &self.config;
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/posture_management/findings",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.mute_findings")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1930,16 +1927,16 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/search",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.search_security_monitoring_signals")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -2018,17 +2015,17 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/security_filters/{security_filter_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.update_security_filter"),
             security_filter_id = urlencode(security_filter_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -2108,17 +2105,17 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules/{rule_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.update_security_monitoring_rule"),
             rule_id = urlencode(rule_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

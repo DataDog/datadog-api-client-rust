@@ -102,7 +102,7 @@ pub async fn before_scenario(
     let mut frozen_time = chrono::Utc::now().signed_duration_since(DateTime::UNIX_EPOCH);
 
     let vcr_client_builder = ClientBuilder::new(reqwest::Client::new());
-    world.config.client = match env::var("RECORD").unwrap_or("false".to_string()).as_str() {
+    let client = match env::var("RECORD").unwrap_or("false".to_string()).as_str() {
         "none" => {
             prefix.push_str("-Rust");
             vcr_client_builder.build()
@@ -156,6 +156,12 @@ pub async fn before_scenario(
             vcr_client_builder.with(middleware).build()
         }
     };
+    world.config.client(client);
+    world
+        .config
+        .server_variables
+        .insert("site".into(), "datadoghq.com".into());
+
     world.config.api_key_auth = Some("00000000000000000000000000000000".to_string());
     world.config.app_key_auth = Some("0000000000000000000000000000000000000000".to_string());
 

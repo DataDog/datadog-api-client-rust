@@ -142,17 +142,17 @@ impl DowntimesAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/downtime/{downtime_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.cancel_downtime"),
             downtime_id = downtime_id
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -214,16 +214,16 @@ impl DowntimesAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/downtime/cancel/by_scope",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.cancel_downtimes_by_scope")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -287,15 +287,18 @@ impl DowntimesAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/downtime", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/downtime",
+            local_configuration.get_operation_host("v1.create_downtime")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -360,17 +363,17 @@ impl DowntimesAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/downtime/{downtime_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.get_downtime"),
             downtime_id = downtime_id
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -430,7 +433,10 @@ impl DowntimesAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/downtime", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/downtime",
+            local_configuration.get_operation_host("v1.list_downtimes")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -444,10 +450,10 @@ impl DowntimesAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -509,17 +515,17 @@ impl DowntimesAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/monitor/{monitor_id}/downtimes",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.list_monitor_downtimes"),
             monitor_id = monitor_id
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -580,17 +586,17 @@ impl DowntimesAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/downtime/{downtime_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.update_downtime"),
             downtime_id = downtime_id
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

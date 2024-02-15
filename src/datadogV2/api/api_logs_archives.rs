@@ -158,17 +158,17 @@ impl LogsArchivesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archives/{archive_id}/readers",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.add_read_role_to_archive"),
             archive_id = urlencode(archive_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -232,16 +232,16 @@ impl LogsArchivesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archives",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.create_logs_archive")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -306,17 +306,17 @@ impl LogsArchivesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archives/{archive_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.delete_logs_archive"),
             archive_id = urlencode(archive_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -373,17 +373,17 @@ impl LogsArchivesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archives/{archive_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.get_logs_archive"),
             archive_id = urlencode(archive_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -445,16 +445,16 @@ impl LogsArchivesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archive-order",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.get_logs_archive_order")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -519,17 +519,17 @@ impl LogsArchivesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archives/{archive_id}/readers",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.list_archive_read_roles"),
             archive_id = urlencode(archive_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -586,16 +586,16 @@ impl LogsArchivesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archives",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.list_logs_archives")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -658,17 +658,17 @@ impl LogsArchivesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archives/{archive_id}/readers",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.remove_role_from_archive"),
             archive_id = urlencode(archive_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -743,17 +743,17 @@ impl LogsArchivesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archives/{archive_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.update_logs_archive"),
             archive_id = urlencode(archive_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -830,16 +830,16 @@ impl LogsArchivesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archive-order",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.update_logs_archive_order")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

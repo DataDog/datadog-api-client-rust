@@ -98,16 +98,16 @@ impl PagerDutyIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/pagerduty/configuration/services",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.create_pager_duty_integration_service")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -175,17 +175,17 @@ impl PagerDutyIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/pagerduty/configuration/services/{service_name}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.delete_pager_duty_integration_service"),
             service_name = urlencode(service_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -250,17 +250,17 @@ impl PagerDutyIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/pagerduty/configuration/services/{service_name}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.get_pager_duty_integration_service"),
             service_name = urlencode(service_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -323,17 +323,17 @@ impl PagerDutyIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/pagerduty/configuration/services/{service_name}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.update_pager_duty_integration_service"),
             service_name = urlencode(service_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

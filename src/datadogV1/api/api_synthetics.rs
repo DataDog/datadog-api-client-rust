@@ -424,16 +424,16 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/variables",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.create_global_variable")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -504,16 +504,16 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/private-locations",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.create_private_location")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -585,16 +585,16 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/api",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.create_synthetics_api_test")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -668,16 +668,16 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/browser",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.create_synthetics_browser_test")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -745,17 +745,17 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/variables/{variable_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.delete_global_variable"),
             variable_id = urlencode(variable_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -814,17 +814,17 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/private-locations/{location_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.delete_private_location"),
             location_id = urlencode(location_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -886,16 +886,16 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/delete",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.delete_tests")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -970,17 +970,17 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/variables/{variable_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.edit_global_variable"),
             variable_id = urlencode(variable_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1048,17 +1048,17 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/api/{public_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.get_api_test"),
             public_id = urlencode(public_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1131,7 +1131,7 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/{public_id}/results",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.get_api_test_latest_results"),
             public_id = urlencode(public_id)
         );
         let mut local_req_builder =
@@ -1158,10 +1158,10 @@ impl SyntheticsAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1231,7 +1231,7 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/{public_id}/results/{result_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.get_api_test_result"),
             public_id = urlencode(public_id),
             result_id = urlencode(result_id)
         );
@@ -1239,10 +1239,10 @@ impl SyntheticsAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1306,17 +1306,17 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/browser/{public_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.get_browser_test"),
             public_id = urlencode(public_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1390,7 +1390,7 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/browser/{public_id}/results",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.get_browser_test_latest_results"),
             public_id = urlencode(public_id)
         );
         let mut local_req_builder =
@@ -1417,10 +1417,10 @@ impl SyntheticsAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1490,7 +1490,7 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/browser/{public_id}/results/{result_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.get_browser_test_result"),
             public_id = urlencode(public_id),
             result_id = urlencode(result_id)
         );
@@ -1498,10 +1498,10 @@ impl SyntheticsAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1565,17 +1565,17 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/variables/{variable_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.get_global_variable"),
             variable_id = urlencode(variable_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1639,17 +1639,17 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/private-locations/{location_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.get_private_location"),
             location_id = urlencode(location_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1713,17 +1713,17 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/ci/batch/{batch_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.get_synthetics_ci_batch"),
             batch_id = urlencode(batch_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1779,16 +1779,16 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/settings/default_locations",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.get_synthetics_default_locations")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1846,17 +1846,17 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/{public_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.get_test"),
             public_id = urlencode(public_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1917,16 +1917,16 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/variables",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.list_global_variables")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1989,16 +1989,16 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/locations",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.list_locations")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -2062,7 +2062,10 @@ impl SyntheticsAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/synthetics/tests", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/synthetics/tests",
+            local_configuration.get_operation_host("v1.list_tests")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -2076,10 +2079,10 @@ impl SyntheticsAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -2141,17 +2144,17 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/{public_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.patch_test"),
             public_id = urlencode(public_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -2221,16 +2224,16 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/trigger/ci",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.trigger_ci_tests")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -2301,16 +2304,16 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/trigger",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.trigger_tests")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -2379,17 +2382,17 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/api/{public_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.update_api_test"),
             public_id = urlencode(public_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -2463,17 +2466,17 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/browser/{public_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.update_browser_test"),
             public_id = urlencode(public_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -2549,17 +2552,17 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/private-locations/{location_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.update_private_location"),
             location_id = urlencode(location_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -2629,17 +2632,17 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/{public_id}/status",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.update_test_pause_status"),
             public_id = urlencode(public_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

@@ -1247,7 +1247,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/daily_custom_reports",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.get_daily_custom_reports")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1270,10 +1270,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1378,7 +1378,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/hourly-attribution",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.get_hourly_usage_attribution")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1403,10 +1403,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1480,7 +1480,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/incident-management",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.get_incident_management")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1492,10 +1492,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1569,7 +1569,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/ingested-spans",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.get_ingested_spans")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1581,10 +1581,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1658,7 +1658,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/monthly_custom_reports",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.get_monthly_custom_reports")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1681,10 +1681,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1791,7 +1791,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/monthly-attribution",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.get_monthly_usage_attribution")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1824,10 +1824,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1898,17 +1898,17 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/daily_custom_reports/{report_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.get_specified_daily_custom_reports"),
             report_id = urlencode(report_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1979,17 +1979,17 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/monthly_custom_reports/{report_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.get_specified_monthly_custom_reports"),
             report_id = urlencode(report_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -2063,7 +2063,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/analyzed_logs",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.get_usage_analyzed_logs")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2075,10 +2075,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -2159,7 +2159,10 @@ impl UsageMeteringAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/attribution", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/attribution",
+            local_configuration.get_operation_host("v1.get_usage_attribution")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -2191,10 +2194,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -2266,7 +2269,10 @@ impl UsageMeteringAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/audit_logs", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/audit_logs",
+            local_configuration.get_operation_host("v1.get_usage_audit_logs")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -2277,10 +2283,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -2347,7 +2353,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/billable-summary",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.get_usage_billable_summary")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2358,10 +2364,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -2428,7 +2434,10 @@ impl UsageMeteringAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/ci-app", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/ci-app",
+            local_configuration.get_operation_host("v1.get_usage_ci_app")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -2439,10 +2448,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -2506,7 +2515,10 @@ impl UsageMeteringAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/cws", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/cws",
+            local_configuration.get_operation_host("v1.get_usage_cws")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -2517,10 +2529,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -2591,7 +2603,11 @@ impl UsageMeteringAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/cspm", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/cspm",
+            local_configuration
+                .get_operation_host("v1.get_usage_cloud_security_posture_management")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -2602,10 +2618,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -2670,7 +2686,10 @@ impl UsageMeteringAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/dbm", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/dbm",
+            local_configuration.get_operation_host("v1.get_usage_dbm")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -2681,10 +2700,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -2753,7 +2772,10 @@ impl UsageMeteringAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/fargate", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/fargate",
+            local_configuration.get_operation_host("v1.get_usage_fargate")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -2764,10 +2786,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -2834,7 +2856,10 @@ impl UsageMeteringAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/hosts", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/hosts",
+            local_configuration.get_operation_host("v1.get_usage_hosts")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -2845,10 +2870,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -2922,7 +2947,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/indexed-spans",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.get_usage_indexed_spans")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2934,10 +2959,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -3009,7 +3034,10 @@ impl UsageMeteringAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/iot", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/iot",
+            local_configuration.get_operation_host("v1.get_usage_internet_of_things")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -3020,10 +3048,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -3090,7 +3118,10 @@ impl UsageMeteringAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/aws_lambda", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/aws_lambda",
+            local_configuration.get_operation_host("v1.get_usage_lambda")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -3101,10 +3132,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -3168,7 +3199,10 @@ impl UsageMeteringAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/logs", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/logs",
+            local_configuration.get_operation_host("v1.get_usage_logs")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -3179,10 +3213,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -3254,7 +3288,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/logs_by_index",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.get_usage_logs_by_index")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -3277,10 +3311,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -3354,7 +3388,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/logs-by-retention",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.get_usage_logs_by_retention")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -3366,10 +3400,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -3443,7 +3477,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/network_flows",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.get_usage_network_flows")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -3455,10 +3489,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -3532,7 +3566,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/network_hosts",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.get_usage_network_hosts")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -3544,10 +3578,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -3621,7 +3655,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/online-archive",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.get_usage_online_archive")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -3633,10 +3667,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -3708,7 +3742,10 @@ impl UsageMeteringAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/profiling", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/profiling",
+            local_configuration.get_operation_host("v1.get_usage_profiling")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -3719,10 +3756,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -3797,7 +3834,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/rum_sessions",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.get_usage_rum_sessions")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -3813,10 +3850,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -3886,7 +3923,10 @@ impl UsageMeteringAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/rum", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/rum",
+            local_configuration.get_operation_host("v1.get_usage_rum_units")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -3897,10 +3937,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -3964,7 +4004,10 @@ impl UsageMeteringAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/sds", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/sds",
+            local_configuration.get_operation_host("v1.get_usage_sds")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -3975,10 +4018,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -4041,7 +4084,10 @@ impl UsageMeteringAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/snmp", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/snmp",
+            local_configuration.get_operation_host("v1.get_usage_snmp")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -4052,10 +4098,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -4123,7 +4169,10 @@ impl UsageMeteringAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/summary", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/summary",
+            local_configuration.get_operation_host("v1.get_usage_summary")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -4138,10 +4187,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -4213,7 +4262,10 @@ impl UsageMeteringAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/synthetics", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/synthetics",
+            local_configuration.get_operation_host("v1.get_usage_synthetics")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -4224,10 +4276,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -4301,7 +4353,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/synthetics_api",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.get_usage_synthetics_api")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -4313,10 +4365,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -4390,7 +4442,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/synthetics_browser",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.get_usage_synthetics_browser")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -4402,10 +4454,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -4477,7 +4529,10 @@ impl UsageMeteringAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/timeseries", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/timeseries",
+            local_configuration.get_operation_host("v1.get_usage_timeseries")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -4488,10 +4543,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -4562,7 +4617,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/top_avg_metrics",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.get_usage_top_avg_metrics")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -4595,10 +4650,10 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

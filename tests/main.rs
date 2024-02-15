@@ -57,7 +57,7 @@ async fn main() {
         .to_lowercase();
     let is_replay = !record_mode.eq("true") && !record_mode.eq("none");
     let concurrent_scenarios = match is_replay {
-        true => 16,
+        true => 64,
         false => 1,
     };
     let parsed_cli: cli::Opts<parser::basic::Cli, runner::basic::Cli, writer::basic::Cli> =

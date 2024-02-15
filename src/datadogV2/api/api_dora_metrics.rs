@@ -79,8 +79,9 @@ impl DORAMetricsAPI {
         ResponseContent<crate::datadogV2::model::DORADeploymentResponse>,
         Error<CreateDORADeploymentError>,
     > {
+        let local_configuration = &self.config;
         let operation_id = "v2.create_dora_deployment".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -89,19 +90,20 @@ impl DORAMetricsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_configuration = &self.config;
-
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/dora/deployment", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v2/dora/deployment",
+            local_configuration.get_operation_host("v2.create_dora_deployment")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -169,8 +171,9 @@ impl DORAMetricsAPI {
         ResponseContent<crate::datadogV2::model::DORAIncidentResponse>,
         Error<CreateDORAIncidentError>,
     > {
+        let local_configuration = &self.config;
         let operation_id = "v2.create_dora_incident".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -179,19 +182,20 @@ impl DORAMetricsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_configuration = &self.config;
-
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/dora/incident", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v2/dora/incident",
+            local_configuration.get_operation_host("v2.create_dora_incident")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

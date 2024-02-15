@@ -164,16 +164,16 @@ impl ConfluentCloudAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.create_confluent_account")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -249,17 +249,17 @@ impl ConfluentCloudAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts/{account_id}/resources",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.create_confluent_resource"),
             account_id = urlencode(account_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -327,17 +327,17 @@ impl ConfluentCloudAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts/{account_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.delete_confluent_account"),
             account_id = urlencode(account_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -398,7 +398,7 @@ impl ConfluentCloudAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts/{account_id}/resources/{resource_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.delete_confluent_resource"),
             account_id = urlencode(account_id),
             resource_id = urlencode(resource_id)
         );
@@ -406,10 +406,10 @@ impl ConfluentCloudAPI {
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -471,17 +471,17 @@ impl ConfluentCloudAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts/{account_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.get_confluent_account"),
             account_id = urlencode(account_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -550,7 +550,7 @@ impl ConfluentCloudAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts/{account_id}/resources/{resource_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.get_confluent_resource"),
             account_id = urlencode(account_id),
             resource_id = urlencode(resource_id)
         );
@@ -558,10 +558,10 @@ impl ConfluentCloudAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -623,16 +623,16 @@ impl ConfluentCloudAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.list_confluent_account")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -699,17 +699,17 @@ impl ConfluentCloudAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts/{account_id}/resources",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.list_confluent_resource"),
             account_id = urlencode(account_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -778,17 +778,17 @@ impl ConfluentCloudAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts/{account_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.update_confluent_account"),
             account_id = urlencode(account_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -866,7 +866,7 @@ impl ConfluentCloudAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts/{account_id}/resources/{resource_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.update_confluent_resource"),
             account_id = urlencode(account_id),
             resource_id = urlencode(resource_id)
         );
@@ -874,10 +874,10 @@ impl ConfluentCloudAPI {
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

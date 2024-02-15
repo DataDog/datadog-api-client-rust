@@ -126,15 +126,18 @@ impl ServiceLevelObjectiveCorrectionsAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/slo/correction", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/slo/correction",
+            local_configuration.get_operation_host("v1.create_slo_correction")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -202,17 +205,17 @@ impl ServiceLevelObjectiveCorrectionsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/slo/correction/{slo_correction_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.delete_slo_correction"),
             slo_correction_id = urlencode(slo_correction_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -275,17 +278,17 @@ impl ServiceLevelObjectiveCorrectionsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/slo/correction/{slo_correction_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.get_slo_correction"),
             slo_correction_id = urlencode(slo_correction_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -351,7 +354,10 @@ impl ServiceLevelObjectiveCorrectionsAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/slo/correction", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/slo/correction",
+            local_configuration.get_operation_host("v1.list_slo_correction")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -365,10 +371,10 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -437,17 +443,17 @@ impl ServiceLevelObjectiveCorrectionsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/slo/correction/{slo_correction_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.update_slo_correction"),
             slo_correction_id = urlencode(slo_correction_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

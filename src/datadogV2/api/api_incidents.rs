@@ -419,8 +419,9 @@ impl IncidentsAPI {
         ResponseContent<crate::datadogV2::model::IncidentResponse>,
         Error<CreateIncidentError>,
     > {
+        let local_configuration = &self.config;
         let operation_id = "v2.create_incident".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -429,19 +430,20 @@ impl IncidentsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_configuration = &self.config;
-
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/incidents", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v2/incidents",
+            local_configuration.get_operation_host("v2.create_incident")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -511,8 +513,9 @@ impl IncidentsAPI {
         ResponseContent<crate::datadogV2::model::IncidentIntegrationMetadataResponse>,
         Error<CreateIncidentIntegrationError>,
     > {
+        let local_configuration = &self.config;
         let operation_id = "v2.create_incident_integration".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -521,23 +524,21 @@ impl IncidentsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_configuration = &self.config;
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/integrations",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.create_incident_integration"),
             incident_id = urlencode(incident_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -605,8 +606,9 @@ impl IncidentsAPI {
         ResponseContent<crate::datadogV2::model::IncidentTodoResponse>,
         Error<CreateIncidentTodoError>,
     > {
+        let local_configuration = &self.config;
         let operation_id = "v2.create_incident_todo".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -615,23 +617,21 @@ impl IncidentsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_configuration = &self.config;
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/todos",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.create_incident_todo"),
             incident_id = urlencode(incident_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -690,8 +690,9 @@ impl IncidentsAPI {
         &self,
         incident_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteIncidentError>> {
+        let local_configuration = &self.config;
         let operation_id = "v2.delete_incident".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -700,23 +701,21 @@ impl IncidentsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_configuration = &self.config;
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.delete_incident"),
             incident_id = urlencode(incident_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -771,8 +770,9 @@ impl IncidentsAPI {
         incident_id: String,
         integration_metadata_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteIncidentIntegrationError>> {
+        let local_configuration = &self.config;
         let operation_id = "v2.delete_incident_integration".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -781,13 +781,11 @@ impl IncidentsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_configuration = &self.config;
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/integrations/{integration_metadata_id}", 
-            local_configuration.base_path, incident_id=
+            local_configuration.get_operation_host("v2.delete_incident_integration"), incident_id=
             urlencode(incident_id)
             , integration_metadata_id=
             urlencode(integration_metadata_id)
@@ -796,10 +794,10 @@ impl IncidentsAPI {
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -854,8 +852,9 @@ impl IncidentsAPI {
         incident_id: String,
         todo_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteIncidentTodoError>> {
+        let local_configuration = &self.config;
         let operation_id = "v2.delete_incident_todo".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -864,13 +863,11 @@ impl IncidentsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_configuration = &self.config;
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/todos/{todo_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.delete_incident_todo"),
             incident_id = urlencode(incident_id),
             todo_id = urlencode(todo_id)
         );
@@ -878,10 +875,10 @@ impl IncidentsAPI {
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -934,8 +931,9 @@ impl IncidentsAPI {
         params: GetIncidentOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV2::model::IncidentResponse>, Error<GetIncidentError>>
     {
+        let local_configuration = &self.config;
         let operation_id = "v2.get_incident".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -944,8 +942,6 @@ impl IncidentsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_configuration = &self.config;
-
         // unbox and build optional parameters
         let include = params.include;
 
@@ -953,7 +949,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.get_incident"),
             incident_id = urlencode(incident_id)
         );
         let mut local_req_builder =
@@ -972,10 +968,10 @@ impl IncidentsAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1037,8 +1033,9 @@ impl IncidentsAPI {
         ResponseContent<crate::datadogV2::model::IncidentIntegrationMetadataResponse>,
         Error<GetIncidentIntegrationError>,
     > {
+        let local_configuration = &self.config;
         let operation_id = "v2.get_incident_integration".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -1047,13 +1044,11 @@ impl IncidentsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_configuration = &self.config;
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/integrations/{integration_metadata_id}", 
-            local_configuration.base_path, incident_id=
+            local_configuration.get_operation_host("v2.get_incident_integration"), incident_id=
             urlencode(incident_id)
             , integration_metadata_id=
             urlencode(integration_metadata_id)
@@ -1062,10 +1057,10 @@ impl IncidentsAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1126,8 +1121,9 @@ impl IncidentsAPI {
         ResponseContent<crate::datadogV2::model::IncidentTodoResponse>,
         Error<GetIncidentTodoError>,
     > {
+        let local_configuration = &self.config;
         let operation_id = "v2.get_incident_todo".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -1136,13 +1132,11 @@ impl IncidentsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_configuration = &self.config;
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/todos/{todo_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.get_incident_todo"),
             incident_id = urlencode(incident_id),
             todo_id = urlencode(todo_id)
         );
@@ -1150,10 +1144,10 @@ impl IncidentsAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1216,8 +1210,9 @@ impl IncidentsAPI {
         ResponseContent<crate::datadogV2::model::IncidentAttachmentsResponse>,
         Error<ListIncidentAttachmentsError>,
     > {
+        let local_configuration = &self.config;
         let operation_id = "v2.list_incident_attachments".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -1225,8 +1220,6 @@ impl IncidentsAPI {
             };
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
-
-        let local_configuration = &self.config;
 
         // unbox and build optional parameters
         let include = params.include;
@@ -1236,7 +1229,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/attachments",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.list_incident_attachments"),
             incident_id = urlencode(incident_id)
         );
         let mut local_req_builder =
@@ -1266,10 +1259,10 @@ impl IncidentsAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1330,8 +1323,9 @@ impl IncidentsAPI {
         ResponseContent<crate::datadogV2::model::IncidentIntegrationMetadataListResponse>,
         Error<ListIncidentIntegrationsError>,
     > {
+        let local_configuration = &self.config;
         let operation_id = "v2.list_incident_integrations".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -1340,23 +1334,21 @@ impl IncidentsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_configuration = &self.config;
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/integrations",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.list_incident_integrations"),
             incident_id = urlencode(incident_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1415,8 +1407,9 @@ impl IncidentsAPI {
         ResponseContent<crate::datadogV2::model::IncidentTodoListResponse>,
         Error<ListIncidentTodosError>,
     > {
+        let local_configuration = &self.config;
         let operation_id = "v2.list_incident_todos".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -1425,23 +1418,21 @@ impl IncidentsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_configuration = &self.config;
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/todos",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.list_incident_todos"),
             incident_id = urlencode(incident_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1496,8 +1487,9 @@ impl IncidentsAPI {
         ResponseContent<crate::datadogV2::model::IncidentsResponse>,
         Error<ListIncidentsError>,
     > {
+        let local_configuration = &self.config;
         let operation_id = "v2.list_incidents".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -1506,8 +1498,6 @@ impl IncidentsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_configuration = &self.config;
-
         // unbox and build optional parameters
         let include = params.include;
         let page_size = params.page_size;
@@ -1515,7 +1505,10 @@ impl IncidentsAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/incidents", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v2/incidents",
+            local_configuration.get_operation_host("v2.list_incidents")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -1540,10 +1533,10 @@ impl IncidentsAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1601,8 +1594,9 @@ impl IncidentsAPI {
         ResponseContent<crate::datadogV2::model::IncidentSearchResponse>,
         Error<SearchIncidentsError>,
     > {
+        let local_configuration = &self.config;
         let operation_id = "v2.search_incidents".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -1610,8 +1604,6 @@ impl IncidentsAPI {
             };
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
-
-        let local_configuration = &self.config;
 
         // unbox and build optional parameters
         let include = params.include;
@@ -1621,7 +1613,10 @@ impl IncidentsAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/incidents/search", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v2/incidents/search",
+            local_configuration.get_operation_host("v2.search_incidents")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -1644,10 +1639,10 @@ impl IncidentsAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1709,8 +1704,9 @@ impl IncidentsAPI {
         ResponseContent<crate::datadogV2::model::IncidentResponse>,
         Error<UpdateIncidentError>,
     > {
+        let local_configuration = &self.config;
         let operation_id = "v2.update_incident".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -1719,8 +1715,6 @@ impl IncidentsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_configuration = &self.config;
-
         // unbox and build optional parameters
         let include = params.include;
 
@@ -1728,7 +1722,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.update_incident"),
             incident_id = urlencode(incident_id)
         );
         let mut local_req_builder =
@@ -1747,10 +1741,10 @@ impl IncidentsAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1822,8 +1816,9 @@ impl IncidentsAPI {
         ResponseContent<crate::datadogV2::model::IncidentAttachmentUpdateResponse>,
         Error<UpdateIncidentAttachmentsError>,
     > {
+        let local_configuration = &self.config;
         let operation_id = "v2.update_incident_attachments".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -1832,8 +1827,6 @@ impl IncidentsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_configuration = &self.config;
-
         // unbox and build optional parameters
         let include = params.include;
 
@@ -1841,7 +1834,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/attachments",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.update_incident_attachments"),
             incident_id = urlencode(incident_id)
         );
         let mut local_req_builder =
@@ -1860,10 +1853,10 @@ impl IncidentsAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -1935,8 +1928,9 @@ impl IncidentsAPI {
         ResponseContent<crate::datadogV2::model::IncidentIntegrationMetadataResponse>,
         Error<UpdateIncidentIntegrationError>,
     > {
+        let local_configuration = &self.config;
         let operation_id = "v2.update_incident_integration".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -1945,13 +1939,11 @@ impl IncidentsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_configuration = &self.config;
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/integrations/{integration_metadata_id}", 
-            local_configuration.base_path, incident_id=
+            local_configuration.get_operation_host("v2.update_incident_integration"), incident_id=
             urlencode(incident_id)
             , integration_metadata_id=
             urlencode(integration_metadata_id)
@@ -1960,10 +1952,10 @@ impl IncidentsAPI {
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -2033,8 +2025,9 @@ impl IncidentsAPI {
         ResponseContent<crate::datadogV2::model::IncidentTodoResponse>,
         Error<UpdateIncidentTodoError>,
     > {
+        let local_configuration = &self.config;
         let operation_id = "v2.update_incident_todo".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -2043,13 +2036,11 @@ impl IncidentsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_configuration = &self.config;
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/todos/{todo_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.update_incident_todo"),
             incident_id = urlencode(incident_id),
             todo_id = urlencode(todo_id)
         );
@@ -2057,10 +2048,10 @@ impl IncidentsAPI {
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

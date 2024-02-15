@@ -137,16 +137,16 @@ impl AWSLogsIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/logs/check_async",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.check_aws_logs_lambda_async")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -238,16 +238,16 @@ impl AWSLogsIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/logs/services_async",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.check_aws_logs_services_async")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -318,16 +318,16 @@ impl AWSLogsIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/logs",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.create_aws_lambda_arn")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -398,16 +398,16 @@ impl AWSLogsIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/logs",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.delete_aws_lambda_arn")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -478,16 +478,16 @@ impl AWSLogsIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/logs/services",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.enable_aws_log_services")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -556,16 +556,16 @@ impl AWSLogsIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/logs",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.list_aws_logs_integrations")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -627,16 +627,16 @@ impl AWSLogsIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/logs/services",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.list_aws_logs_services")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

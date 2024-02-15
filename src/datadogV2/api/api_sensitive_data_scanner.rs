@@ -156,16 +156,16 @@ impl SensitiveDataScannerAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config/groups",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.create_scanning_group")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -245,16 +245,16 @@ impl SensitiveDataScannerAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config/rules",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.create_scanning_rule")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -331,17 +331,17 @@ impl SensitiveDataScannerAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config/groups/{group_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.delete_scanning_group"),
             group_id = urlencode(group_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -418,17 +418,17 @@ impl SensitiveDataScannerAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config/rules/{rule_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.delete_scanning_rule"),
             rule_id = urlencode(rule_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -498,16 +498,16 @@ impl SensitiveDataScannerAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.list_scanning_groups")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -570,16 +570,16 @@ impl SensitiveDataScannerAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config/standard-patterns",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.list_standard_patterns")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -644,16 +644,16 @@ impl SensitiveDataScannerAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.reorder_scanning_groups")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -736,17 +736,17 @@ impl SensitiveDataScannerAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config/groups/{group_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.update_scanning_group"),
             group_id = urlencode(group_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -829,17 +829,17 @@ impl SensitiveDataScannerAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config/rules/{rule_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.update_scanning_rule"),
             rule_id = urlencode(rule_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

@@ -261,8 +261,9 @@ impl ServiceScorecardsAPI {
         ResponseContent<crate::datadogV2::model::OutcomesBatchResponse>,
         Error<CreateScorecardOutcomesBatchError>,
     > {
+        let local_configuration = &self.config;
         let operation_id = "v2.create_scorecard_outcomes_batch".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -271,22 +272,20 @@ impl ServiceScorecardsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_configuration = &self.config;
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/outcomes/batch",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.create_scorecard_outcomes_batch")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -349,8 +348,9 @@ impl ServiceScorecardsAPI {
         ResponseContent<crate::datadogV2::model::CreateRuleResponse>,
         Error<CreateScorecardRuleError>,
     > {
+        let local_configuration = &self.config;
         let operation_id = "v2.create_scorecard_rule".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -359,19 +359,20 @@ impl ServiceScorecardsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_configuration = &self.config;
-
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/scorecard/rules", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v2/scorecard/rules",
+            local_configuration.get_operation_host("v2.create_scorecard_rule")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -430,8 +431,9 @@ impl ServiceScorecardsAPI {
         &self,
         rule_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteScorecardRuleError>> {
+        let local_configuration = &self.config;
         let operation_id = "v2.delete_scorecard_rule".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -440,23 +442,21 @@ impl ServiceScorecardsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_configuration = &self.config;
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/rules/{rule_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v2.delete_scorecard_rule"),
             rule_id = urlencode(rule_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -510,8 +510,9 @@ impl ServiceScorecardsAPI {
         ResponseContent<crate::datadogV2::model::OutcomesResponse>,
         Error<ListScorecardOutcomesError>,
     > {
+        let local_configuration = &self.config;
         let operation_id = "v2.list_scorecard_outcomes".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -519,8 +520,6 @@ impl ServiceScorecardsAPI {
             };
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
-
-        let local_configuration = &self.config;
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -538,7 +537,7 @@ impl ServiceScorecardsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/outcomes",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v2.list_scorecard_outcomes")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -587,10 +586,10 @@ impl ServiceScorecardsAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -646,8 +645,9 @@ impl ServiceScorecardsAPI {
         ResponseContent<crate::datadogV2::model::ListRulesResponse>,
         Error<ListScorecardRulesError>,
     > {
+        let local_configuration = &self.config;
         let operation_id = "v2.list_scorecard_rules".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
+        if local_configuration.is_unstable_operation_enabled(&operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -655,8 +655,6 @@ impl ServiceScorecardsAPI {
             };
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
-
-        let local_configuration = &self.config;
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -672,7 +670,10 @@ impl ServiceScorecardsAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/scorecard/rules", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v2/scorecard/rules",
+            local_configuration.get_operation_host("v2.list_scorecard_rules")
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -718,10 +719,10 @@ impl ServiceScorecardsAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

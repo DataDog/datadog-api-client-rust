@@ -138,16 +138,16 @@ impl WebhooksIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/webhooks/configuration/webhooks",
-            local_configuration.base_path
+            local_configuration.get_operation_host("v1.create_webhooks_integration")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -221,16 +221,17 @@ impl WebhooksIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/webhooks/configuration/custom-variables",
-            local_configuration.base_path
+            local_configuration
+                .get_operation_host("v1.create_webhooks_integration_custom_variable")
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -299,17 +300,17 @@ impl WebhooksIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/webhooks/configuration/webhooks/{webhook_name}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.delete_webhooks_integration"),
             webhook_name = urlencode(webhook_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -368,17 +369,18 @@ impl WebhooksIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/webhooks/configuration/custom-variables/{custom_variable_name}",
-            local_configuration.base_path,
+            local_configuration
+                .get_operation_host("v1.delete_webhooks_integration_custom_variable"),
             custom_variable_name = urlencode(custom_variable_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -443,17 +445,17 @@ impl WebhooksIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/webhooks/configuration/webhooks/{webhook_name}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.get_webhooks_integration"),
             webhook_name = urlencode(webhook_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -526,17 +528,17 @@ impl WebhooksIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/webhooks/configuration/custom-variables/{custom_variable_name}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.get_webhooks_integration_custom_variable"),
             custom_variable_name = urlencode(custom_variable_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -606,17 +608,17 @@ impl WebhooksIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/webhooks/configuration/webhooks/{webhook_name}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.update_webhooks_integration"),
             webhook_name = urlencode(webhook_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -692,17 +694,18 @@ impl WebhooksIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/webhooks/configuration/custom-variables/{custom_variable_name}",
-            local_configuration.base_path,
+            local_configuration
+                .get_operation_host("v1.update_webhooks_integration_custom_variable"),
             custom_variable_name = urlencode(custom_variable_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {

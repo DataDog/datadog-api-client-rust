@@ -1,13 +1,46 @@
 {% include "partial_header.j2" %}
+use lazy_static::lazy_static;
 use std::env;
 use std::collections::HashMap;
 use log::warn;
 
 #[derive(Debug, Clone)]
+pub struct ServerVariable {
+    pub description: String,
+    pub default_value: String,
+    pub enum_values: Vec<String>,
+}
+
+#[derive(Debug, Clone)]
+pub struct ServerConfiguration {
+    pub url: String,
+    pub description: String,
+    pub variables: HashMap<String, ServerVariable>,
+}
+
+impl ServerConfiguration {
+    pub fn get_url(&self, variables: &HashMap<String, String>) -> String {
+        let mut url = self.url.clone();
+        for (name, variable) in &self.variables {
+            let value = variables.get(name).unwrap_or(&variable.default_value);
+            if !variable.enum_values.contains(value) && !variable.enum_values.is_empty() {
+                panic!(
+                    "Value {} for variable {} is not in the enum values",
+                    value, name
+                );
+            }
+            url = url.replace(&format!("{{ '{{{}}}' }}", name), &value);
+        }
+        url
+    }
+}
+
+#[non_exhaustive]
+#[derive(Debug, Clone)]
 pub struct Configuration {
-    pub base_path: String,
-    pub user_agent: Option<String>,
-    pub client: reqwest_middleware::ClientWithMiddleware,
+    pub(crate) user_agent: String,
+    pub(crate) client: reqwest_middleware::ClientWithMiddleware,
+    pub unstable_operations: HashMap<String, bool>,
     {%- set authMethods = openapi.security %}
 	{%- if authMethods %}
 	{%- for authMethod in authMethods %}
@@ -19,12 +52,44 @@ pub struct Configuration {
 	{%- endfor %}
 	{%- endfor %}
 	{%- endif %}
-    unstable_operations: HashMap<String, bool>,
+    pub server_index: usize,
+    pub server_variables: HashMap<String, String>,
+    pub server_operation_index: HashMap<String, usize>,
+    pub server_operation_variables: HashMap<String, HashMap<String, String>>,
+
 }
 
 impl Configuration {
     pub fn new() -> Configuration {
         Configuration::default()
+    }
+
+    pub fn client(&mut self, client: reqwest_middleware::ClientWithMiddleware) {
+        self.client = client;
+    }
+
+    pub fn get_operation_host(&self, operation_str: &str) -> String {
+        let operation = operation_str.to_string();
+        if let Some(servers) = OPERATION_SERVERS.get(&operation) {
+            let server_index = self
+                .server_operation_index
+                .get(&operation)
+                .cloned()
+                .unwrap_or(0);
+            return servers
+                .get(server_index)
+                .expect(&format!("Server index for operation {operation} not found"))
+                .get_url(
+                    &self
+                        .server_operation_variables
+                        .get(&operation)
+                        .unwrap_or(&HashMap::new()),
+                );
+        }
+        SERVERS
+            .get(self.server_index)
+            .expect("Server index not found.")
+            .get_url(&self.server_variables)
     }
 
     pub fn set_unstable_operation_enabled(&mut self, operation: &str, enabled: bool) -> bool {
@@ -33,11 +98,7 @@ impl Configuration {
             return true;
         }
 
-        warn!(
-            "Operation {} is not an unstable operation, can't enable/disable",
-            operation
-        );
-
+        warn!("Operation {operation} is not an unstable operation, can't enable/disable");
         false
     }
 
@@ -46,11 +107,7 @@ impl Configuration {
             return self.unstable_operations.get(operation).unwrap().clone();
         }
 
-        warn!(
-            "Operation {} is not an unstable operation, is always enabled",
-            operation
-        );
-
+        warn!("Operation {operation} is not an unstable operation, is always enabled");
         false
     }
 
@@ -66,6 +123,13 @@ impl Configuration {
 impl Default for Configuration {
     fn default() -> Self {
         let http_client = reqwest_middleware::ClientBuilder::new(reqwest::Client::new());
+        let user_agent = format!(
+            "datadog-api-client-rust/{} (rust {}; os {}; arch {})",
+            option_env!("CARGO_PKG_VERSION").unwrap_or("?"),
+            option_env!("DD_RUSTC_VERSION").unwrap_or("?"),
+            env::consts::OS,
+            env::consts::ARCH,
+        );
         let unstable_operations = HashMap::from([
             {%- for version, api in apis.items() %}
             {%- for operations in api.values() %}
@@ -79,15 +143,9 @@ impl Default for Configuration {
         ]);
 
         Configuration {
-            base_path: "https://api.datadoghq.com".to_owned(),
-            user_agent: Some(format!(
-                "datadog-api-client-rust/{} (rust {}; os {}; arch {})",
-                option_env!("CARGO_PKG_VERSION").unwrap_or("?"),
-                option_env!("DD_RUSTC_VERSION").unwrap_or("?"),
-                env::consts::OS,
-                env::consts::ARCH,
-            )),
+            user_agent,
             client: http_client.build(),
+            unstable_operations,
             {%- set authMethods = openapi.security %}
             {%- if authMethods %}
             {%- for authMethod in authMethods %}
@@ -99,7 +157,66 @@ impl Default for Configuration {
             {%- endfor %}
             {%- endfor %}
             {%- endif %}
-            unstable_operations,
+            server_index: 0,
+            server_variables: HashMap::new(),
+            server_operation_index: HashMap::new(),
+            server_operation_variables: HashMap::new(),
         }
     }
+}
+
+{%- macro server_configuration(server) -%}
+ServerConfiguration {
+    url: "{{ server.url }}".into(),
+    description: "{{ server.description|default("No description provided") }}".into(),
+    variables: HashMap::from([
+    {%- for name, variable in server.get("variables", {}).items() %}
+        (
+            "{{ name }}".into(),
+            ServerVariable {
+                description: "{{ variable.description|default("No description provided") }}".into(),
+                default_value: "{{ variable.default }}".into(),
+                enum_values: vec![
+                {%- for value in variable.enum %}
+                    "{{ value }}".into(),
+                {%- endfor %}
+                ],
+            },
+        ),
+    {%- endfor %}
+    ]),
+},
+{%- endmacro %}
+
+
+lazy_static! {
+    static ref SERVERS: Vec<ServerConfiguration> = {
+        vec![
+            {%- for server in openapi.servers %}
+            {{ server_configuration(server) }}
+            {%- endfor %}
+        ]
+    };
+    static ref OPERATION_SERVERS: HashMap<String, Vec<ServerConfiguration>> = {
+        HashMap::from([
+            {%- for version, spec in all_specs.items() %}
+            {%- for path in spec.paths.values() %}
+            {%- for operation in path.values() %}
+            {%- for server in operation.servers %}
+            {% if loop.first %}
+            (
+                "{{ version }}.{{ operation.operationId | snake_case }}".into(),
+                vec![
+            {%- endif %}
+                {{ server_configuration(server) }}
+            {%- if loop.last %}
+                ],
+            ),
+            {%- endif %}
+            {%- endfor %}
+            {%- endfor %}
+            {%- endfor %}
+            {%- endfor %}
+        ])
+    };
 }

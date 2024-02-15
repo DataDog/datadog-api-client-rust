@@ -92,17 +92,17 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/security_analytics/signals/{signal_id}/add_to_incident",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.add_security_monitoring_signal_to_incident"),
             signal_id = urlencode(signal_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -178,17 +178,17 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/security_analytics/signals/{signal_id}/assignee",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.edit_security_monitoring_signal_assignee"),
             signal_id = urlencode(signal_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
@@ -264,17 +264,17 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/security_analytics/signals/{signal_id}/state",
-            local_configuration.base_path,
+            local_configuration.get_operation_host("v1.edit_security_monitoring_signal_state"),
             signal_id = urlencode(signal_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
         if let Some(ref local_apikey) = local_configuration.api_key_auth {
