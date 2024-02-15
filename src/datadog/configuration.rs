@@ -10,9 +10,9 @@ pub struct Configuration {
     pub base_path: String,
     pub user_agent: Option<String>,
     pub client: reqwest_middleware::ClientWithMiddleware,
-    pub unstable_operations: Option<HashMap<String, bool>>,
     pub api_key_auth: Option<String>,
     pub app_key_auth: Option<String>,
+    unstable_operations: HashMap<String, bool>,
 }
 
 impl Configuration {
@@ -21,39 +21,36 @@ impl Configuration {
     }
 
     pub fn set_unstable_operation_enabled(&mut self, operation: &str, enabled: bool) -> bool {
-        if let Some(unstable_operations) = &mut self.unstable_operations {
-            if unstable_operations.contains_key(operation) {
-                unstable_operations.insert(operation.to_string(), enabled);
-                return true;
-            }
+        if self.unstable_operations.contains_key(operation) {
+            self.unstable_operations
+                .insert(operation.to_string(), enabled);
+            return true;
         }
 
         warn!(
             "Operation {} is not an unstable operation, can't enable/disable",
             operation
         );
+
         false
     }
 
     pub fn is_unstable_operation_enabled(&self, operation: &str) -> bool {
-        if let Some(unstable_operations) = &self.unstable_operations {
-            if unstable_operations.contains_key(operation) {
-                return unstable_operations.get(operation).unwrap().clone();
-            }
+        if self.unstable_operations.contains_key(operation) {
+            return self.unstable_operations.get(operation).unwrap().clone();
         }
 
         warn!(
             "Operation {} is not an unstable operation, is always enabled",
             operation
         );
+
         false
     }
 
     pub fn is_unstable_operation(&self, operation: &str) -> bool {
-        if let Some(unstable_operations) = &self.unstable_operations {
-            if unstable_operations.contains_key(operation) {
-                return true;
-            }
+        if self.unstable_operations.contains_key(operation) {
+            return true;
         }
 
         false
@@ -63,7 +60,7 @@ impl Configuration {
 impl Default for Configuration {
     fn default() -> Self {
         let http_client = reqwest_middleware::ClientBuilder::new(reqwest::Client::new());
-        let unstable_operations = Some(HashMap::from([
+        let unstable_operations = HashMap::from([
             ("v2.get_active_billing_dimensions".to_owned(), false),
             ("v2.get_monthly_cost_attribution".to_owned(), false),
             ("v2.create_dora_deployment".to_owned(), false),
@@ -106,7 +103,7 @@ impl Default for Configuration {
             ("v2.get_incident_team".to_owned(), false),
             ("v2.list_incident_teams".to_owned(), false),
             ("v2.update_incident_team".to_owned(), false),
-        ]));
+        ]);
 
         Configuration {
             base_path: "https://api.datadoghq.com".to_owned(),
@@ -118,9 +115,9 @@ impl Default for Configuration {
                 env::consts::ARCH,
             )),
             client: http_client.build(),
-            unstable_operations: unstable_operations,
             api_key_auth: env::var("DD_API_KEY").ok(),
             app_key_auth: env::var("DD_APP_KEY").ok(),
+            unstable_operations: unstable_operations,
         }
     }
 }

@@ -343,16 +343,16 @@ fn new_request(world: &mut DatadogWorld, operation_id: String) {
 }
 
 #[given(expr = "operation {string} enabled")]
-fn enable_unstable(_world: &mut DatadogWorld, _operation_id: String) {
+fn enable_unstable(world: &mut DatadogWorld, operation_id: String) {
     let operation_id = format!(
         "v{}.{}",
-        _world.api_version,
-        _operation_id.to_case(Case::Snake)
+        world.api_version,
+        operation_id.to_case(Case::Snake)
     );
-    _world
+    world
         .config
         .set_unstable_operation_enabled(&operation_id, true);
-    initialize_api_instance(_world, _world.api_name.clone().unwrap());
+    initialize_api_instance(world, world.api_name.clone().unwrap());
 }
 
 #[given(regex = r"^body with value (.*)$")]
