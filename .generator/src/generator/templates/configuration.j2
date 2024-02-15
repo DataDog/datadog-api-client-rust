@@ -88,7 +88,6 @@ impl Default for Configuration {
                 env::consts::ARCH,
             )),
             client: http_client.build(),
-            unstable_operations: unstable_operations,
             {%- set authMethods = openapi.security %}
             {%- if authMethods %}
             {%- for authMethod in authMethods %}
@@ -100,6 +99,7 @@ impl Default for Configuration {
             {%- endfor %}
             {%- endfor %}
             {%- endif %}
+            unstable_operations,
         }
     }
 }

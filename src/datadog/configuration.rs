@@ -117,7 +117,7 @@ impl Default for Configuration {
             client: http_client.build(),
             api_key_auth: env::var("DD_API_KEY").ok(),
             app_key_auth: env::var("DD_APP_KEY").ok(),
-            unstable_operations: unstable_operations,
+            unstable_operations,
         }
     }
 }
