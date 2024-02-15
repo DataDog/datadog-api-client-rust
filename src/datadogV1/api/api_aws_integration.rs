@@ -241,12 +241,13 @@ impl AWSIntegrationAPI {
         Error<CreateAWSAccountError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.create_aws_account";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws",
-            local_configuration.get_operation_host("v1.create_aws_account")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -258,11 +259,11 @@ impl AWSIntegrationAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -324,12 +325,13 @@ impl AWSIntegrationAPI {
         Error<CreateAWSEventBridgeSourceError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.create_aws_event_bridge_source";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/event_bridge",
-            local_configuration.get_operation_host("v1.create_aws_event_bridge_source")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -341,11 +343,11 @@ impl AWSIntegrationAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -404,12 +406,13 @@ impl AWSIntegrationAPI {
         Error<CreateAWSTagFilterError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.create_aws_tag_filter";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/filtering",
-            local_configuration.get_operation_host("v1.create_aws_tag_filter")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -421,11 +424,11 @@ impl AWSIntegrationAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -484,12 +487,13 @@ impl AWSIntegrationAPI {
         Error<CreateNewAWSExternalIDError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.create_new_aws_external_id";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/generate_new_external_id",
-            local_configuration.get_operation_host("v1.create_new_aws_external_id")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
@@ -501,11 +505,11 @@ impl AWSIntegrationAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -564,12 +568,13 @@ impl AWSIntegrationAPI {
         Error<DeleteAWSAccountError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.delete_aws_account";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws",
-            local_configuration.get_operation_host("v1.delete_aws_account")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -581,11 +586,11 @@ impl AWSIntegrationAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -647,12 +652,13 @@ impl AWSIntegrationAPI {
         Error<DeleteAWSEventBridgeSourceError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.delete_aws_event_bridge_source";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/event_bridge",
-            local_configuration.get_operation_host("v1.delete_aws_event_bridge_source")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -664,11 +670,11 @@ impl AWSIntegrationAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -727,12 +733,13 @@ impl AWSIntegrationAPI {
         Error<DeleteAWSTagFilterError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.delete_aws_tag_filter";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/filtering",
-            local_configuration.get_operation_host("v1.delete_aws_tag_filter")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -744,11 +751,11 @@ impl AWSIntegrationAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -805,6 +812,7 @@ impl AWSIntegrationAPI {
         Error<ListAWSAccountsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.list_aws_accounts";
 
         // unbox and build optional parameters
         let account_id = params.account_id;
@@ -815,7 +823,7 @@ impl AWSIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws",
-            local_configuration.get_operation_host("v1.list_aws_accounts")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -840,11 +848,11 @@ impl AWSIntegrationAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -894,12 +902,13 @@ impl AWSIntegrationAPI {
         Error<ListAWSEventBridgeSourcesError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.list_aws_event_bridge_sources";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/event_bridge",
-            local_configuration.get_operation_host("v1.list_aws_event_bridge_sources")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -911,11 +920,11 @@ impl AWSIntegrationAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -967,12 +976,13 @@ impl AWSIntegrationAPI {
         Error<ListAWSTagFiltersError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.list_aws_tag_filters";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/filtering",
-            local_configuration.get_operation_host("v1.list_aws_tag_filters")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -986,11 +996,11 @@ impl AWSIntegrationAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1034,12 +1044,13 @@ impl AWSIntegrationAPI {
         &self,
     ) -> Result<ResponseContent<Vec<String>>, Error<ListAvailableAWSNamespacesError>> {
         let local_configuration = &self.config;
+        let operation_id = "v1.list_available_aws_namespaces";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/available_namespace_rules",
-            local_configuration.get_operation_host("v1.list_available_aws_namespaces")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1051,11 +1062,11 @@ impl AWSIntegrationAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1108,6 +1119,7 @@ impl AWSIntegrationAPI {
         Error<UpdateAWSAccountError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.update_aws_account";
 
         // unbox and build optional parameters
         let account_id = params.account_id;
@@ -1118,7 +1130,7 @@ impl AWSIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws",
-            local_configuration.get_operation_host("v1.update_aws_account")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
@@ -1143,11 +1155,11 @@ impl AWSIntegrationAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters

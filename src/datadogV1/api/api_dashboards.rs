@@ -255,12 +255,13 @@ impl DashboardsAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::Dashboard>, Error<CreateDashboardError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.create_dashboard";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard",
-            local_configuration.get_operation_host("v1.create_dashboard")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -272,11 +273,11 @@ impl DashboardsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -333,12 +334,13 @@ impl DashboardsAPI {
         Error<CreatePublicDashboardError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.create_public_dashboard";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/public",
-            local_configuration.get_operation_host("v1.create_public_dashboard")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -350,11 +352,11 @@ impl DashboardsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -411,12 +413,13 @@ impl DashboardsAPI {
         Error<DeleteDashboardError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.delete_dashboard";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/{dashboard_id}",
-            local_configuration.get_operation_host("v1.delete_dashboard"),
+            local_configuration.get_operation_host(operation_id),
             dashboard_id = urlencode(dashboard_id)
         );
         let mut local_req_builder =
@@ -429,11 +432,11 @@ impl DashboardsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -479,12 +482,13 @@ impl DashboardsAPI {
         body: crate::datadogV1::model::DashboardBulkDeleteRequest,
     ) -> Result<ResponseContent<()>, Error<DeleteDashboardsError>> {
         let local_configuration = &self.config;
+        let operation_id = "v1.delete_dashboards";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard",
-            local_configuration.get_operation_host("v1.delete_dashboards")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -496,11 +500,11 @@ impl DashboardsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -557,12 +561,13 @@ impl DashboardsAPI {
         Error<DeletePublicDashboardError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.delete_public_dashboard";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/public/{token}",
-            local_configuration.get_operation_host("v1.delete_public_dashboard"),
+            local_configuration.get_operation_host(operation_id),
             token = urlencode(token)
         );
         let mut local_req_builder =
@@ -575,11 +580,11 @@ impl DashboardsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -630,12 +635,13 @@ impl DashboardsAPI {
         body: crate::datadogV1::model::SharedDashboardInvites,
     ) -> Result<ResponseContent<()>, Error<DeletePublicDashboardInvitationError>> {
         let local_configuration = &self.config;
+        let operation_id = "v1.delete_public_dashboard_invitation";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/public/{token}/invitation",
-            local_configuration.get_operation_host("v1.delete_public_dashboard_invitation"),
+            local_configuration.get_operation_host(operation_id),
             token = urlencode(token)
         );
         let mut local_req_builder =
@@ -648,11 +654,11 @@ impl DashboardsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -703,12 +709,13 @@ impl DashboardsAPI {
         dashboard_id: String,
     ) -> Result<ResponseContent<crate::datadogV1::model::Dashboard>, Error<GetDashboardError>> {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_dashboard";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/{dashboard_id}",
-            local_configuration.get_operation_host("v1.get_dashboard"),
+            local_configuration.get_operation_host(operation_id),
             dashboard_id = urlencode(dashboard_id)
         );
         let mut local_req_builder =
@@ -721,11 +728,11 @@ impl DashboardsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -774,12 +781,13 @@ impl DashboardsAPI {
         Error<GetPublicDashboardError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_public_dashboard";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/public/{token}",
-            local_configuration.get_operation_host("v1.get_public_dashboard"),
+            local_configuration.get_operation_host(operation_id),
             token = urlencode(token)
         );
         let mut local_req_builder =
@@ -792,11 +800,11 @@ impl DashboardsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -853,6 +861,7 @@ impl DashboardsAPI {
         Error<GetPublicDashboardInvitationsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_public_dashboard_invitations";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -862,7 +871,7 @@ impl DashboardsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/public/{token}/invitation",
-            local_configuration.get_operation_host("v1.get_public_dashboard_invitations"),
+            local_configuration.get_operation_host(operation_id),
             token = urlencode(token)
         );
         let mut local_req_builder =
@@ -884,11 +893,11 @@ impl DashboardsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -943,6 +952,7 @@ impl DashboardsAPI {
         Error<ListDashboardsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.list_dashboards";
 
         // unbox and build optional parameters
         let filter_shared = params.filter_shared;
@@ -954,7 +964,7 @@ impl DashboardsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard",
-            local_configuration.get_operation_host("v1.list_dashboards")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -983,11 +993,11 @@ impl DashboardsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1033,12 +1043,13 @@ impl DashboardsAPI {
         body: crate::datadogV1::model::DashboardRestoreRequest,
     ) -> Result<ResponseContent<()>, Error<RestoreDashboardsError>> {
         let local_configuration = &self.config;
+        let operation_id = "v1.restore_dashboards";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard",
-            local_configuration.get_operation_host("v1.restore_dashboards")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -1050,11 +1061,11 @@ impl DashboardsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -1116,12 +1127,13 @@ impl DashboardsAPI {
         Error<SendPublicDashboardInvitationError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.send_public_dashboard_invitation";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/public/{token}/invitation",
-            local_configuration.get_operation_host("v1.send_public_dashboard_invitation"),
+            local_configuration.get_operation_host(operation_id),
             token = urlencode(token)
         );
         let mut local_req_builder =
@@ -1134,11 +1146,11 @@ impl DashboardsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -1197,12 +1209,13 @@ impl DashboardsAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::Dashboard>, Error<UpdateDashboardError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.update_dashboard";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/{dashboard_id}",
-            local_configuration.get_operation_host("v1.update_dashboard"),
+            local_configuration.get_operation_host(operation_id),
             dashboard_id = urlencode(dashboard_id)
         );
         let mut local_req_builder =
@@ -1215,11 +1228,11 @@ impl DashboardsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -1281,12 +1294,13 @@ impl DashboardsAPI {
         Error<UpdatePublicDashboardError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.update_public_dashboard";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/public/{token}",
-            local_configuration.get_operation_host("v1.update_public_dashboard"),
+            local_configuration.get_operation_host(operation_id),
             token = urlencode(token)
         );
         let mut local_req_builder =
@@ -1299,11 +1313,11 @@ impl DashboardsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters

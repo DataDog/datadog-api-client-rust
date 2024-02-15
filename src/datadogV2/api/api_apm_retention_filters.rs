@@ -112,12 +112,13 @@ impl APMRetentionFiltersAPI {
         Error<CreateApmRetentionFilterError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.create_apm_retention_filter";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/apm/config/retention-filters",
-            local_configuration.get_operation_host("v2.create_apm_retention_filter")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -129,11 +130,11 @@ impl APMRetentionFiltersAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -189,12 +190,13 @@ impl APMRetentionFiltersAPI {
         filter_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteApmRetentionFilterError>> {
         let local_configuration = &self.config;
+        let operation_id = "v2.delete_apm_retention_filter";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/apm/config/retention-filters/{filter_id}",
-            local_configuration.get_operation_host("v2.delete_apm_retention_filter"),
+            local_configuration.get_operation_host(operation_id),
             filter_id = urlencode(filter_id)
         );
         let mut local_req_builder =
@@ -207,11 +209,11 @@ impl APMRetentionFiltersAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -264,12 +266,13 @@ impl APMRetentionFiltersAPI {
         Error<GetApmRetentionFilterError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.get_apm_retention_filter";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/apm/config/retention-filters/{filter_id}",
-            local_configuration.get_operation_host("v2.get_apm_retention_filter"),
+            local_configuration.get_operation_host(operation_id),
             filter_id = urlencode(filter_id)
         );
         let mut local_req_builder =
@@ -282,11 +285,11 @@ impl APMRetentionFiltersAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -336,12 +339,13 @@ impl APMRetentionFiltersAPI {
         Error<ListApmRetentionFiltersError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.list_apm_retention_filters";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/apm/config/retention-filters",
-            local_configuration.get_operation_host("v2.list_apm_retention_filters")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -353,11 +357,11 @@ impl APMRetentionFiltersAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -406,12 +410,13 @@ impl APMRetentionFiltersAPI {
         body: crate::datadogV2::model::ReorderRetentionFiltersRequest,
     ) -> Result<ResponseContent<()>, Error<ReorderApmRetentionFiltersError>> {
         let local_configuration = &self.config;
+        let operation_id = "v2.reorder_apm_retention_filters";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/apm/config/retention-filters-execution-order",
-            local_configuration.get_operation_host("v2.reorder_apm_retention_filters")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
@@ -423,11 +428,11 @@ impl APMRetentionFiltersAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -489,12 +494,13 @@ impl APMRetentionFiltersAPI {
         Error<UpdateApmRetentionFilterError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.update_apm_retention_filter";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/apm/config/retention-filters/{filter_id}",
-            local_configuration.get_operation_host("v2.update_apm_retention_filter"),
+            local_configuration.get_operation_host(operation_id),
             filter_id = urlencode(filter_id)
         );
         let mut local_req_builder =
@@ -507,11 +513,11 @@ impl APMRetentionFiltersAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters

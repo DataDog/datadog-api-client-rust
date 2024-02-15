@@ -165,12 +165,13 @@ impl CIVisibilityPipelinesAPI {
         Error<AggregateCIAppPipelineEventsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.aggregate_ci_app_pipeline_events";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ci/pipelines/analytics/aggregate",
-            local_configuration.get_operation_host("v2.aggregate_ci_app_pipeline_events")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -182,11 +183,11 @@ impl CIVisibilityPipelinesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -250,12 +251,13 @@ impl CIVisibilityPipelinesAPI {
         Error<CreateCIAppPipelineEventError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.create_ci_app_pipeline_event";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ci/pipeline",
-            local_configuration.get_operation_host("v2.create_ci_app_pipeline_event")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -267,8 +269,8 @@ impl CIVisibilityPipelinesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
 
         // build body parameters
@@ -336,6 +338,7 @@ impl CIVisibilityPipelinesAPI {
         Error<ListCIAppPipelineEventsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.list_ci_app_pipeline_events";
 
         // unbox and build optional parameters
         let filter_query = params.filter_query;
@@ -349,7 +352,7 @@ impl CIVisibilityPipelinesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/ci/pipelines/events",
-            local_configuration.get_operation_host("v2.list_ci_app_pipeline_events")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -386,11 +389,11 @@ impl CIVisibilityPipelinesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -451,6 +454,7 @@ impl CIVisibilityPipelinesAPI {
         Error<SearchCIAppPipelineEventsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.search_ci_app_pipeline_events";
 
         // unbox and build optional parameters
         let body = params.body;
@@ -459,7 +463,7 @@ impl CIVisibilityPipelinesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/ci/pipelines/events/search",
-            local_configuration.get_operation_host("v2.search_ci_app_pipeline_events")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -471,11 +475,11 @@ impl CIVisibilityPipelinesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters

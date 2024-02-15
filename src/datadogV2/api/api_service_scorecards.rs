@@ -262,8 +262,8 @@ impl ServiceScorecardsAPI {
         Error<CreateScorecardOutcomesBatchError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_scorecard_outcomes_batch".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.create_scorecard_outcomes_batch";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -276,7 +276,7 @@ impl ServiceScorecardsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/outcomes/batch",
-            local_configuration.get_operation_host("v2.create_scorecard_outcomes_batch")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -288,11 +288,11 @@ impl ServiceScorecardsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -349,8 +349,8 @@ impl ServiceScorecardsAPI {
         Error<CreateScorecardRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_scorecard_rule".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.create_scorecard_rule";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -363,7 +363,7 @@ impl ServiceScorecardsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/rules",
-            local_configuration.get_operation_host("v2.create_scorecard_rule")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -375,11 +375,11 @@ impl ServiceScorecardsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -432,8 +432,8 @@ impl ServiceScorecardsAPI {
         rule_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteScorecardRuleError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_scorecard_rule".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.delete_scorecard_rule";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -446,7 +446,7 @@ impl ServiceScorecardsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/rules/{rule_id}",
-            local_configuration.get_operation_host("v2.delete_scorecard_rule"),
+            local_configuration.get_operation_host(operation_id),
             rule_id = urlencode(rule_id)
         );
         let mut local_req_builder =
@@ -459,11 +459,11 @@ impl ServiceScorecardsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -511,8 +511,8 @@ impl ServiceScorecardsAPI {
         Error<ListScorecardOutcomesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_scorecard_outcomes".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.list_scorecard_outcomes";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -537,7 +537,7 @@ impl ServiceScorecardsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/outcomes",
-            local_configuration.get_operation_host("v2.list_scorecard_outcomes")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -592,11 +592,11 @@ impl ServiceScorecardsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -646,8 +646,8 @@ impl ServiceScorecardsAPI {
         Error<ListScorecardRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_scorecard_rules".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.list_scorecard_rules";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -672,7 +672,7 @@ impl ServiceScorecardsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/rules",
-            local_configuration.get_operation_host("v2.list_scorecard_rules")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -725,11 +725,11 @@ impl ServiceScorecardsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;

@@ -162,8 +162,8 @@ pub async fn before_scenario(
         .server_variables
         .insert("site".into(), "datadoghq.com".into());
 
-    world.config.api_key_auth = Some("00000000000000000000000000000000".to_string());
-    world.config.app_key_auth = Some("0000000000000000000000000000000000000000".to_string());
+    world.config.api_key = Some("00000000000000000000000000000000".to_string());
+    world.config.app_key = Some("0000000000000000000000000000000000000000".to_string());
 
     let escaped_name = NON_ALNUM_RE
         .replace_all(scenario.name.as_str(), "_")
@@ -219,16 +219,16 @@ pub async fn after_scenario(
 }
 
 #[given(expr = "a valid \"apiKeyAuth\" key in the system")]
-fn valid_apikey_auth(world: &mut DatadogWorld) {
-    world.config.api_key_auth = env::var("DD_TEST_CLIENT_API_KEY").ok();
+fn valid_apikey(world: &mut DatadogWorld) {
+    world.config.api_key = env::var("DD_TEST_CLIENT_API_KEY").ok();
     if let Some(api) = world.api_name.as_ref() {
         initialize_api_instance(world, api.to_string());
     }
 }
 
 #[given(expr = "a valid \"appKeyAuth\" key in the system")]
-fn valid_appkey_auth(world: &mut DatadogWorld) {
-    world.config.app_key_auth = env::var("DD_TEST_CLIENT_APP_KEY").ok();
+fn valid_appkey(world: &mut DatadogWorld) {
+    world.config.app_key = env::var("DD_TEST_CLIENT_APP_KEY").ok();
     if let Some(api) = world.api_name.as_ref() {
         initialize_api_instance(world, api.to_string());
     }

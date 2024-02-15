@@ -113,12 +113,13 @@ impl CloudWorkloadSecurityAPI {
         Error<CreateCloudWorkloadSecurityAgentRuleError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.create_cloud_workload_security_agent_rule";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/cloud_workload_security/agent_rules",
-            local_configuration.get_operation_host("v2.create_cloud_workload_security_agent_rule")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -130,11 +131,11 @@ impl CloudWorkloadSecurityAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -191,12 +192,13 @@ impl CloudWorkloadSecurityAPI {
         agent_rule_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteCloudWorkloadSecurityAgentRuleError>> {
         let local_configuration = &self.config;
+        let operation_id = "v2.delete_cloud_workload_security_agent_rule";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/cloud_workload_security/agent_rules/{agent_rule_id}",
-            local_configuration.get_operation_host("v2.delete_cloud_workload_security_agent_rule"),
+            local_configuration.get_operation_host(operation_id),
             agent_rule_id = urlencode(agent_rule_id)
         );
         let mut local_req_builder =
@@ -209,11 +211,11 @@ impl CloudWorkloadSecurityAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -262,12 +264,13 @@ impl CloudWorkloadSecurityAPI {
         &self,
     ) -> Result<ResponseContent<Vec<u8>>, Error<DownloadCloudWorkloadPolicyFileError>> {
         let local_configuration = &self.config;
+        let operation_id = "v2.download_cloud_workload_policy_file";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security/cloud_workload/policy/download",
-            local_configuration.get_operation_host("v2.download_cloud_workload_policy_file")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -279,11 +282,11 @@ impl CloudWorkloadSecurityAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -337,12 +340,13 @@ impl CloudWorkloadSecurityAPI {
         Error<GetCloudWorkloadSecurityAgentRuleError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.get_cloud_workload_security_agent_rule";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/cloud_workload_security/agent_rules/{agent_rule_id}",
-            local_configuration.get_operation_host("v2.get_cloud_workload_security_agent_rule"),
+            local_configuration.get_operation_host(operation_id),
             agent_rule_id = urlencode(agent_rule_id)
         );
         let mut local_req_builder =
@@ -355,11 +359,11 @@ impl CloudWorkloadSecurityAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -413,12 +417,13 @@ impl CloudWorkloadSecurityAPI {
         Error<ListCloudWorkloadSecurityAgentRulesError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.list_cloud_workload_security_agent_rules";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/cloud_workload_security/agent_rules",
-            local_configuration.get_operation_host("v2.list_cloud_workload_security_agent_rules")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -430,11 +435,11 @@ impl CloudWorkloadSecurityAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -494,12 +499,13 @@ impl CloudWorkloadSecurityAPI {
         Error<UpdateCloudWorkloadSecurityAgentRuleError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.update_cloud_workload_security_agent_rule";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/cloud_workload_security/agent_rules/{agent_rule_id}",
-            local_configuration.get_operation_host("v2.update_cloud_workload_security_agent_rule"),
+            local_configuration.get_operation_host(operation_id),
             agent_rule_id = urlencode(agent_rule_id)
         );
         let mut local_req_builder =
@@ -512,11 +518,11 @@ impl CloudWorkloadSecurityAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters

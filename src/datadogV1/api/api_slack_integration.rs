@@ -109,12 +109,13 @@ impl SlackIntegrationAPI {
         Error<CreateSlackIntegrationChannelError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.create_slack_integration_channel";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/slack/configuration/accounts/{account_name}/channels",
-            local_configuration.get_operation_host("v1.create_slack_integration_channel"),
+            local_configuration.get_operation_host(operation_id),
             account_name = urlencode(account_name)
         );
         let mut local_req_builder =
@@ -127,11 +128,11 @@ impl SlackIntegrationAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -195,12 +196,13 @@ impl SlackIntegrationAPI {
         Error<GetSlackIntegrationChannelError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_slack_integration_channel";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/slack/configuration/accounts/{account_name}/channels/{channel_name}", 
-            local_configuration.get_operation_host("v1.get_slack_integration_channel"), account_name=
+            local_configuration.get_operation_host(operation_id), account_name=
             urlencode(account_name)
             , channel_name=
             urlencode(channel_name)
@@ -215,11 +217,11 @@ impl SlackIntegrationAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -274,12 +276,13 @@ impl SlackIntegrationAPI {
         Error<GetSlackIntegrationChannelsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_slack_integration_channels";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/slack/configuration/accounts/{account_name}/channels",
-            local_configuration.get_operation_host("v1.get_slack_integration_channels"),
+            local_configuration.get_operation_host(operation_id),
             account_name = urlencode(account_name)
         );
         let mut local_req_builder =
@@ -292,11 +295,11 @@ impl SlackIntegrationAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -347,12 +350,13 @@ impl SlackIntegrationAPI {
         channel_name: String,
     ) -> Result<ResponseContent<()>, Error<RemoveSlackIntegrationChannelError>> {
         let local_configuration = &self.config;
+        let operation_id = "v1.remove_slack_integration_channel";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/slack/configuration/accounts/{account_name}/channels/{channel_name}", 
-            local_configuration.get_operation_host("v1.remove_slack_integration_channel"), account_name=
+            local_configuration.get_operation_host(operation_id), account_name=
             urlencode(account_name)
             , channel_name=
             urlencode(channel_name)
@@ -367,11 +371,11 @@ impl SlackIntegrationAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -428,12 +432,13 @@ impl SlackIntegrationAPI {
         Error<UpdateSlackIntegrationChannelError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.update_slack_integration_channel";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/slack/configuration/accounts/{account_name}/channels/{channel_name}", 
-            local_configuration.get_operation_host("v1.update_slack_integration_channel"), account_name=
+            local_configuration.get_operation_host(operation_id), account_name=
             urlencode(account_name)
             , channel_name=
             urlencode(channel_name)
@@ -448,11 +453,11 @@ impl SlackIntegrationAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters

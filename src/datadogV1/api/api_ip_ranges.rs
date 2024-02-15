@@ -49,13 +49,11 @@ impl IPRangesAPI {
         &self,
     ) -> Result<ResponseContent<crate::datadogV1::model::IPRanges>, Error<GetIPRangesError>> {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_ip_ranges";
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!(
-            "{}/",
-            local_configuration.get_operation_host("v1.get_ip_ranges")
-        );
+        let local_uri_str = format!("{}/", local_configuration.get_operation_host(operation_id));
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 

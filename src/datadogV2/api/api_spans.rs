@@ -132,12 +132,13 @@ impl SpansAPI {
         Error<AggregateSpansError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.aggregate_spans";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/spans/analytics/aggregate",
-            local_configuration.get_operation_host("v2.aggregate_spans")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -149,11 +150,11 @@ impl SpansAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -219,12 +220,13 @@ impl SpansAPI {
     ) -> Result<ResponseContent<crate::datadogV2::model::SpansListResponse>, Error<ListSpansError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v2.list_spans";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/spans/events/search",
-            local_configuration.get_operation_host("v2.list_spans")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -236,11 +238,11 @@ impl SpansAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -305,6 +307,7 @@ impl SpansAPI {
     ) -> Result<ResponseContent<crate::datadogV2::model::SpansListResponse>, Error<ListSpansGetError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v2.list_spans_get";
 
         // unbox and build optional parameters
         let filter_query = params.filter_query;
@@ -318,7 +321,7 @@ impl SpansAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/spans/events",
-            local_configuration.get_operation_host("v2.list_spans_get")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -355,11 +358,11 @@ impl SpansAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;

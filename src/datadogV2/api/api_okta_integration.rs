@@ -102,12 +102,13 @@ impl OktaIntegrationAPI {
         Error<CreateOktaAccountError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.create_okta_account";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/okta/accounts",
-            local_configuration.get_operation_host("v2.create_okta_account")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -119,11 +120,11 @@ impl OktaIntegrationAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -176,12 +177,13 @@ impl OktaIntegrationAPI {
         account_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteOktaAccountError>> {
         let local_configuration = &self.config;
+        let operation_id = "v2.delete_okta_account";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/okta/accounts/{account_id}",
-            local_configuration.get_operation_host("v2.delete_okta_account"),
+            local_configuration.get_operation_host(operation_id),
             account_id = urlencode(account_id)
         );
         let mut local_req_builder =
@@ -194,11 +196,11 @@ impl OktaIntegrationAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -246,12 +248,13 @@ impl OktaIntegrationAPI {
         Error<GetOktaAccountError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.get_okta_account";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/okta/accounts/{account_id}",
-            local_configuration.get_operation_host("v2.get_okta_account"),
+            local_configuration.get_operation_host(operation_id),
             account_id = urlencode(account_id)
         );
         let mut local_req_builder =
@@ -264,11 +267,11 @@ impl OktaIntegrationAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -316,12 +319,13 @@ impl OktaIntegrationAPI {
         Error<ListOktaAccountsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.list_okta_accounts";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/okta/accounts",
-            local_configuration.get_operation_host("v2.list_okta_accounts")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -333,11 +337,11 @@ impl OktaIntegrationAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -392,12 +396,13 @@ impl OktaIntegrationAPI {
         Error<UpdateOktaAccountError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.update_okta_account";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/okta/accounts/{account_id}",
-            local_configuration.get_operation_host("v2.update_okta_account"),
+            local_configuration.get_operation_host(operation_id),
             account_id = urlencode(account_id)
         );
         let mut local_req_builder =
@@ -410,11 +415,11 @@ impl OktaIntegrationAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters

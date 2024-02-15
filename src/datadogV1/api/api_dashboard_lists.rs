@@ -97,12 +97,13 @@ impl DashboardListsAPI {
         Error<CreateDashboardListError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.create_dashboard_list";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/lists/manual",
-            local_configuration.get_operation_host("v1.create_dashboard_list")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -114,11 +115,11 @@ impl DashboardListsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -177,12 +178,13 @@ impl DashboardListsAPI {
         Error<DeleteDashboardListError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.delete_dashboard_list";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/lists/manual/{list_id}",
-            local_configuration.get_operation_host("v1.delete_dashboard_list"),
+            local_configuration.get_operation_host(operation_id),
             list_id = list_id
         );
         let mut local_req_builder =
@@ -195,11 +197,11 @@ impl DashboardListsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -246,12 +248,13 @@ impl DashboardListsAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::DashboardList>, Error<GetDashboardListError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_dashboard_list";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/lists/manual/{list_id}",
-            local_configuration.get_operation_host("v1.get_dashboard_list"),
+            local_configuration.get_operation_host(operation_id),
             list_id = list_id
         );
         let mut local_req_builder =
@@ -264,11 +267,11 @@ impl DashboardListsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -318,12 +321,13 @@ impl DashboardListsAPI {
         Error<ListDashboardListsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.list_dashboard_lists";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/lists/manual",
-            local_configuration.get_operation_host("v1.list_dashboard_lists")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -335,11 +339,11 @@ impl DashboardListsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -394,12 +398,13 @@ impl DashboardListsAPI {
         Error<UpdateDashboardListError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.update_dashboard_list";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/lists/manual/{list_id}",
-            local_configuration.get_operation_host("v1.update_dashboard_list"),
+            local_configuration.get_operation_host(operation_id),
             list_id = list_id
         );
         let mut local_req_builder =
@@ -412,11 +417,11 @@ impl DashboardListsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters

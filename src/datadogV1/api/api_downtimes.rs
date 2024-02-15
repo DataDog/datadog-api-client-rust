@@ -137,12 +137,13 @@ impl DowntimesAPI {
         downtime_id: i64,
     ) -> Result<ResponseContent<()>, Error<CancelDowntimeError>> {
         let local_configuration = &self.config;
+        let operation_id = "v1.cancel_downtime";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/downtime/{downtime_id}",
-            local_configuration.get_operation_host("v1.cancel_downtime"),
+            local_configuration.get_operation_host(operation_id),
             downtime_id = downtime_id
         );
         let mut local_req_builder =
@@ -155,11 +156,11 @@ impl DowntimesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -209,12 +210,13 @@ impl DowntimesAPI {
         Error<CancelDowntimesByScopeError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.cancel_downtimes_by_scope";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/downtime/cancel/by_scope",
-            local_configuration.get_operation_host("v1.cancel_downtimes_by_scope")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -226,11 +228,11 @@ impl DowntimesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -284,12 +286,13 @@ impl DowntimesAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::Downtime>, Error<CreateDowntimeError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.create_downtime";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/downtime",
-            local_configuration.get_operation_host("v1.create_downtime")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -301,11 +304,11 @@ impl DowntimesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -358,12 +361,13 @@ impl DowntimesAPI {
         downtime_id: i64,
     ) -> Result<ResponseContent<crate::datadogV1::model::Downtime>, Error<GetDowntimeError>> {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_downtime";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/downtime/{downtime_id}",
-            local_configuration.get_operation_host("v1.get_downtime"),
+            local_configuration.get_operation_host(operation_id),
             downtime_id = downtime_id
         );
         let mut local_req_builder =
@@ -376,11 +380,11 @@ impl DowntimesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -426,6 +430,7 @@ impl DowntimesAPI {
     ) -> Result<ResponseContent<Vec<crate::datadogV1::model::Downtime>>, Error<ListDowntimesError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.list_downtimes";
 
         // unbox and build optional parameters
         let current_only = params.current_only;
@@ -435,7 +440,7 @@ impl DowntimesAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/downtime",
-            local_configuration.get_operation_host("v1.list_downtimes")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -456,11 +461,11 @@ impl DowntimesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -510,12 +515,13 @@ impl DowntimesAPI {
         Error<ListMonitorDowntimesError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.list_monitor_downtimes";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/monitor/{monitor_id}/downtimes",
-            local_configuration.get_operation_host("v1.list_monitor_downtimes"),
+            local_configuration.get_operation_host(operation_id),
             monitor_id = monitor_id
         );
         let mut local_req_builder =
@@ -528,11 +534,11 @@ impl DowntimesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -581,12 +587,13 @@ impl DowntimesAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::Downtime>, Error<UpdateDowntimeError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.update_downtime";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/downtime/{downtime_id}",
-            local_configuration.get_operation_host("v1.update_downtime"),
+            local_configuration.get_operation_host(operation_id),
             downtime_id = downtime_id
         );
         let mut local_req_builder =
@@ -599,11 +606,11 @@ impl DowntimesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters

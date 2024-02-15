@@ -100,12 +100,13 @@ impl MonitorsAPI {
         Error<CreateMonitorConfigPolicyError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.create_monitor_config_policy";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/monitor/policy",
-            local_configuration.get_operation_host("v2.create_monitor_config_policy")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -117,11 +118,11 @@ impl MonitorsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -177,12 +178,13 @@ impl MonitorsAPI {
         policy_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteMonitorConfigPolicyError>> {
         let local_configuration = &self.config;
+        let operation_id = "v2.delete_monitor_config_policy";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/monitor/policy/{policy_id}",
-            local_configuration.get_operation_host("v2.delete_monitor_config_policy"),
+            local_configuration.get_operation_host(operation_id),
             policy_id = urlencode(policy_id)
         );
         let mut local_req_builder =
@@ -195,11 +197,11 @@ impl MonitorsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -252,12 +254,13 @@ impl MonitorsAPI {
         Error<GetMonitorConfigPolicyError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.get_monitor_config_policy";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/monitor/policy/{policy_id}",
-            local_configuration.get_operation_host("v2.get_monitor_config_policy"),
+            local_configuration.get_operation_host(operation_id),
             policy_id = urlencode(policy_id)
         );
         let mut local_req_builder =
@@ -270,11 +273,11 @@ impl MonitorsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -324,12 +327,13 @@ impl MonitorsAPI {
         Error<ListMonitorConfigPoliciesError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.list_monitor_config_policies";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/monitor/policy",
-            local_configuration.get_operation_host("v2.list_monitor_config_policies")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -341,11 +345,11 @@ impl MonitorsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -402,12 +406,13 @@ impl MonitorsAPI {
         Error<UpdateMonitorConfigPolicyError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.update_monitor_config_policy";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/monitor/policy/{policy_id}",
-            local_configuration.get_operation_host("v2.update_monitor_config_policy"),
+            local_configuration.get_operation_host(operation_id),
             policy_id = urlencode(policy_id)
         );
         let mut local_req_builder =
@@ -420,11 +425,11 @@ impl MonitorsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters

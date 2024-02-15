@@ -115,12 +115,13 @@ impl PowerpackAPI {
         Error<CreatePowerpackError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.create_powerpack";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/powerpacks",
-            local_configuration.get_operation_host("v2.create_powerpack")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -132,11 +133,11 @@ impl PowerpackAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -189,12 +190,13 @@ impl PowerpackAPI {
         powerpack_id: String,
     ) -> Result<ResponseContent<()>, Error<DeletePowerpackError>> {
         let local_configuration = &self.config;
+        let operation_id = "v2.delete_powerpack";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/powerpacks/{powerpack_id}",
-            local_configuration.get_operation_host("v2.delete_powerpack"),
+            local_configuration.get_operation_host(operation_id),
             powerpack_id = urlencode(powerpack_id)
         );
         let mut local_req_builder =
@@ -207,11 +209,11 @@ impl PowerpackAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -256,12 +258,13 @@ impl PowerpackAPI {
     ) -> Result<ResponseContent<crate::datadogV2::model::PowerpackResponse>, Error<GetPowerpackError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v2.get_powerpack";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/powerpacks/{powerpack_id}",
-            local_configuration.get_operation_host("v2.get_powerpack"),
+            local_configuration.get_operation_host(operation_id),
             powerpack_id = urlencode(powerpack_id)
         );
         let mut local_req_builder =
@@ -274,11 +277,11 @@ impl PowerpackAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -327,6 +330,7 @@ impl PowerpackAPI {
         Error<ListPowerpacksError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.list_powerpacks";
 
         // unbox and build optional parameters
         let page_limit = params.page_limit;
@@ -336,7 +340,7 @@ impl PowerpackAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/powerpacks",
-            local_configuration.get_operation_host("v2.list_powerpacks")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -357,11 +361,11 @@ impl PowerpackAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -416,12 +420,13 @@ impl PowerpackAPI {
         Error<UpdatePowerpackError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.update_powerpack";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/powerpacks/{powerpack_id}",
-            local_configuration.get_operation_host("v2.update_powerpack"),
+            local_configuration.get_operation_host(operation_id),
             powerpack_id = urlencode(powerpack_id)
         );
         let mut local_req_builder =
@@ -434,11 +439,11 @@ impl PowerpackAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters

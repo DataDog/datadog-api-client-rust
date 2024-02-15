@@ -137,12 +137,13 @@ impl AuthNMappingsAPI {
         Error<CreateAuthNMappingError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.create_auth_n_mapping";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/authn_mappings",
-            local_configuration.get_operation_host("v2.create_auth_n_mapping")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -154,11 +155,11 @@ impl AuthNMappingsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -214,12 +215,13 @@ impl AuthNMappingsAPI {
         authn_mapping_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteAuthNMappingError>> {
         let local_configuration = &self.config;
+        let operation_id = "v2.delete_auth_n_mapping";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/authn_mappings/{authn_mapping_id}",
-            local_configuration.get_operation_host("v2.delete_auth_n_mapping"),
+            local_configuration.get_operation_host(operation_id),
             authn_mapping_id = urlencode(authn_mapping_id)
         );
         let mut local_req_builder =
@@ -232,11 +234,11 @@ impl AuthNMappingsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -287,12 +289,13 @@ impl AuthNMappingsAPI {
         Error<GetAuthNMappingError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.get_auth_n_mapping";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/authn_mappings/{authn_mapping_id}",
-            local_configuration.get_operation_host("v2.get_auth_n_mapping"),
+            local_configuration.get_operation_host(operation_id),
             authn_mapping_id = urlencode(authn_mapping_id)
         );
         let mut local_req_builder =
@@ -305,11 +308,11 @@ impl AuthNMappingsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -359,6 +362,7 @@ impl AuthNMappingsAPI {
         Error<ListAuthNMappingsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.list_auth_n_mappings";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -370,7 +374,7 @@ impl AuthNMappingsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/authn_mappings",
-            local_configuration.get_operation_host("v2.list_auth_n_mappings")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -399,11 +403,11 @@ impl AuthNMappingsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -458,12 +462,13 @@ impl AuthNMappingsAPI {
         Error<UpdateAuthNMappingError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.update_auth_n_mapping";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/authn_mappings/{authn_mapping_id}",
-            local_configuration.get_operation_host("v2.update_auth_n_mapping"),
+            local_configuration.get_operation_host(operation_id),
             authn_mapping_id = urlencode(authn_mapping_id)
         );
         let mut local_req_builder =
@@ -476,11 +481,11 @@ impl AuthNMappingsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters

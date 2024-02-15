@@ -420,8 +420,8 @@ impl IncidentsAPI {
         Error<CreateIncidentError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_incident".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.create_incident";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -434,7 +434,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents",
-            local_configuration.get_operation_host("v2.create_incident")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -446,11 +446,11 @@ impl IncidentsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -514,8 +514,8 @@ impl IncidentsAPI {
         Error<CreateIncidentIntegrationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_incident_integration".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.create_incident_integration";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -528,7 +528,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/integrations",
-            local_configuration.get_operation_host("v2.create_incident_integration"),
+            local_configuration.get_operation_host(operation_id),
             incident_id = urlencode(incident_id)
         );
         let mut local_req_builder =
@@ -541,11 +541,11 @@ impl IncidentsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -607,8 +607,8 @@ impl IncidentsAPI {
         Error<CreateIncidentTodoError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_incident_todo".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.create_incident_todo";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -621,7 +621,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/todos",
-            local_configuration.get_operation_host("v2.create_incident_todo"),
+            local_configuration.get_operation_host(operation_id),
             incident_id = urlencode(incident_id)
         );
         let mut local_req_builder =
@@ -634,11 +634,11 @@ impl IncidentsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -691,8 +691,8 @@ impl IncidentsAPI {
         incident_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteIncidentError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_incident".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.delete_incident";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -705,7 +705,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}",
-            local_configuration.get_operation_host("v2.delete_incident"),
+            local_configuration.get_operation_host(operation_id),
             incident_id = urlencode(incident_id)
         );
         let mut local_req_builder =
@@ -718,11 +718,11 @@ impl IncidentsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -771,8 +771,8 @@ impl IncidentsAPI {
         integration_metadata_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteIncidentIntegrationError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_incident_integration".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.delete_incident_integration";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -785,7 +785,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/integrations/{integration_metadata_id}", 
-            local_configuration.get_operation_host("v2.delete_incident_integration"), incident_id=
+            local_configuration.get_operation_host(operation_id), incident_id=
             urlencode(incident_id)
             , integration_metadata_id=
             urlencode(integration_metadata_id)
@@ -800,11 +800,11 @@ impl IncidentsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -853,8 +853,8 @@ impl IncidentsAPI {
         todo_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteIncidentTodoError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_incident_todo".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.delete_incident_todo";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -867,7 +867,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/todos/{todo_id}",
-            local_configuration.get_operation_host("v2.delete_incident_todo"),
+            local_configuration.get_operation_host(operation_id),
             incident_id = urlencode(incident_id),
             todo_id = urlencode(todo_id)
         );
@@ -881,11 +881,11 @@ impl IncidentsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -932,8 +932,8 @@ impl IncidentsAPI {
     ) -> Result<ResponseContent<crate::datadogV2::model::IncidentResponse>, Error<GetIncidentError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_incident".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.get_incident";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -949,7 +949,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}",
-            local_configuration.get_operation_host("v2.get_incident"),
+            local_configuration.get_operation_host(operation_id),
             incident_id = urlencode(incident_id)
         );
         let mut local_req_builder =
@@ -974,11 +974,11 @@ impl IncidentsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1034,8 +1034,8 @@ impl IncidentsAPI {
         Error<GetIncidentIntegrationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_incident_integration".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.get_incident_integration";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -1048,7 +1048,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/integrations/{integration_metadata_id}", 
-            local_configuration.get_operation_host("v2.get_incident_integration"), incident_id=
+            local_configuration.get_operation_host(operation_id), incident_id=
             urlencode(incident_id)
             , integration_metadata_id=
             urlencode(integration_metadata_id)
@@ -1063,11 +1063,11 @@ impl IncidentsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1122,8 +1122,8 @@ impl IncidentsAPI {
         Error<GetIncidentTodoError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_incident_todo".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.get_incident_todo";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -1136,7 +1136,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/todos/{todo_id}",
-            local_configuration.get_operation_host("v2.get_incident_todo"),
+            local_configuration.get_operation_host(operation_id),
             incident_id = urlencode(incident_id),
             todo_id = urlencode(todo_id)
         );
@@ -1150,11 +1150,11 @@ impl IncidentsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1211,8 +1211,8 @@ impl IncidentsAPI {
         Error<ListIncidentAttachmentsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_incident_attachments".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.list_incident_attachments";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -1229,7 +1229,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/attachments",
-            local_configuration.get_operation_host("v2.list_incident_attachments"),
+            local_configuration.get_operation_host(operation_id),
             incident_id = urlencode(incident_id)
         );
         let mut local_req_builder =
@@ -1265,11 +1265,11 @@ impl IncidentsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1324,8 +1324,8 @@ impl IncidentsAPI {
         Error<ListIncidentIntegrationsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_incident_integrations".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.list_incident_integrations";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -1338,7 +1338,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/integrations",
-            local_configuration.get_operation_host("v2.list_incident_integrations"),
+            local_configuration.get_operation_host(operation_id),
             incident_id = urlencode(incident_id)
         );
         let mut local_req_builder =
@@ -1351,11 +1351,11 @@ impl IncidentsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1408,8 +1408,8 @@ impl IncidentsAPI {
         Error<ListIncidentTodosError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_incident_todos".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.list_incident_todos";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -1422,7 +1422,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/todos",
-            local_configuration.get_operation_host("v2.list_incident_todos"),
+            local_configuration.get_operation_host(operation_id),
             incident_id = urlencode(incident_id)
         );
         let mut local_req_builder =
@@ -1435,11 +1435,11 @@ impl IncidentsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1488,8 +1488,8 @@ impl IncidentsAPI {
         Error<ListIncidentsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_incidents".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.list_incidents";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -1507,7 +1507,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents",
-            local_configuration.get_operation_host("v2.list_incidents")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1539,11 +1539,11 @@ impl IncidentsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1595,8 +1595,8 @@ impl IncidentsAPI {
         Error<SearchIncidentsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.search_incidents".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.search_incidents";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -1615,7 +1615,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/search",
-            local_configuration.get_operation_host("v2.search_incidents")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1645,11 +1645,11 @@ impl IncidentsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1705,8 +1705,8 @@ impl IncidentsAPI {
         Error<UpdateIncidentError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_incident".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.update_incident";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -1722,7 +1722,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}",
-            local_configuration.get_operation_host("v2.update_incident"),
+            local_configuration.get_operation_host(operation_id),
             incident_id = urlencode(incident_id)
         );
         let mut local_req_builder =
@@ -1747,11 +1747,11 @@ impl IncidentsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -1817,8 +1817,8 @@ impl IncidentsAPI {
         Error<UpdateIncidentAttachmentsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_incident_attachments".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.update_incident_attachments";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -1834,7 +1834,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/attachments",
-            local_configuration.get_operation_host("v2.update_incident_attachments"),
+            local_configuration.get_operation_host(operation_id),
             incident_id = urlencode(incident_id)
         );
         let mut local_req_builder =
@@ -1859,11 +1859,11 @@ impl IncidentsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -1929,8 +1929,8 @@ impl IncidentsAPI {
         Error<UpdateIncidentIntegrationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_incident_integration".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.update_incident_integration";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -1943,7 +1943,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/integrations/{integration_metadata_id}", 
-            local_configuration.get_operation_host("v2.update_incident_integration"), incident_id=
+            local_configuration.get_operation_host(operation_id), incident_id=
             urlencode(incident_id)
             , integration_metadata_id=
             urlencode(integration_metadata_id)
@@ -1958,11 +1958,11 @@ impl IncidentsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -2026,8 +2026,8 @@ impl IncidentsAPI {
         Error<UpdateIncidentTodoError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_incident_todo".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.update_incident_todo";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -2040,7 +2040,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/todos/{todo_id}",
-            local_configuration.get_operation_host("v2.update_incident_todo"),
+            local_configuration.get_operation_host(operation_id),
             incident_id = urlencode(incident_id),
             todo_id = urlencode(todo_id)
         );
@@ -2054,11 +2054,11 @@ impl IncidentsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters

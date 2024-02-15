@@ -100,12 +100,13 @@ impl SpansMetricsAPI {
         Error<CreateSpansMetricError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.create_spans_metric";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/apm/config/metrics",
-            local_configuration.get_operation_host("v2.create_spans_metric")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -117,11 +118,11 @@ impl SpansMetricsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -174,12 +175,13 @@ impl SpansMetricsAPI {
         metric_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteSpansMetricError>> {
         let local_configuration = &self.config;
+        let operation_id = "v2.delete_spans_metric";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/apm/config/metrics/{metric_id}",
-            local_configuration.get_operation_host("v2.delete_spans_metric"),
+            local_configuration.get_operation_host(operation_id),
             metric_id = urlencode(metric_id)
         );
         let mut local_req_builder =
@@ -192,11 +194,11 @@ impl SpansMetricsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -244,12 +246,13 @@ impl SpansMetricsAPI {
         Error<GetSpansMetricError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.get_spans_metric";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/apm/config/metrics/{metric_id}",
-            local_configuration.get_operation_host("v2.get_spans_metric"),
+            local_configuration.get_operation_host(operation_id),
             metric_id = urlencode(metric_id)
         );
         let mut local_req_builder =
@@ -262,11 +265,11 @@ impl SpansMetricsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -314,12 +317,13 @@ impl SpansMetricsAPI {
         Error<ListSpansMetricsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.list_spans_metrics";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/apm/config/metrics",
-            local_configuration.get_operation_host("v2.list_spans_metrics")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -331,11 +335,11 @@ impl SpansMetricsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -392,12 +396,13 @@ impl SpansMetricsAPI {
         Error<UpdateSpansMetricError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.update_spans_metric";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/apm/config/metrics/{metric_id}",
-            local_configuration.get_operation_host("v2.update_spans_metric"),
+            local_configuration.get_operation_host(operation_id),
             metric_id = urlencode(metric_id)
         );
         let mut local_req_builder =
@@ -410,11 +415,11 @@ impl SpansMetricsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters

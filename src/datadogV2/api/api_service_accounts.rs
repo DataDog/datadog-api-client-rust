@@ -164,12 +164,13 @@ impl ServiceAccountsAPI {
         Error<CreateServiceAccountError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.create_service_account";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts",
-            local_configuration.get_operation_host("v2.create_service_account")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -181,11 +182,11 @@ impl ServiceAccountsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -249,12 +250,13 @@ impl ServiceAccountsAPI {
         Error<CreateServiceAccountApplicationKeyError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.create_service_account_application_key";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys",
-            local_configuration.get_operation_host("v2.create_service_account_application_key"),
+            local_configuration.get_operation_host(operation_id),
             service_account_id = urlencode(service_account_id)
         );
         let mut local_req_builder =
@@ -267,11 +269,11 @@ impl ServiceAccountsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -329,12 +331,13 @@ impl ServiceAccountsAPI {
         app_key_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteServiceAccountApplicationKeyError>> {
         let local_configuration = &self.config;
+        let operation_id = "v2.delete_service_account_application_key";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys/{app_key_id}",
-            local_configuration.get_operation_host("v2.delete_service_account_application_key"),
+            local_configuration.get_operation_host(operation_id),
             service_account_id = urlencode(service_account_id),
             app_key_id = urlencode(app_key_id)
         );
@@ -348,11 +351,11 @@ impl ServiceAccountsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -407,12 +410,13 @@ impl ServiceAccountsAPI {
         Error<GetServiceAccountApplicationKeyError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.get_service_account_application_key";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys/{app_key_id}",
-            local_configuration.get_operation_host("v2.get_service_account_application_key"),
+            local_configuration.get_operation_host(operation_id),
             service_account_id = urlencode(service_account_id),
             app_key_id = urlencode(app_key_id)
         );
@@ -426,11 +430,11 @@ impl ServiceAccountsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -487,6 +491,7 @@ impl ServiceAccountsAPI {
         Error<ListServiceAccountApplicationKeysError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.list_service_account_application_keys";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -500,7 +505,7 @@ impl ServiceAccountsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys",
-            local_configuration.get_operation_host("v2.list_service_account_application_keys"),
+            local_configuration.get_operation_host(operation_id),
             service_account_id = urlencode(service_account_id)
         );
         let mut local_req_builder =
@@ -538,11 +543,11 @@ impl ServiceAccountsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -605,12 +610,13 @@ impl ServiceAccountsAPI {
         Error<UpdateServiceAccountApplicationKeyError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.update_service_account_application_key";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys/{app_key_id}",
-            local_configuration.get_operation_host("v2.update_service_account_application_key"),
+            local_configuration.get_operation_host(operation_id),
             service_account_id = urlencode(service_account_id),
             app_key_id = urlencode(app_key_id)
         );
@@ -624,11 +630,11 @@ impl ServiceAccountsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters

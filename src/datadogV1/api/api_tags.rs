@@ -189,6 +189,7 @@ impl TagsAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::HostTags>, Error<CreateHostTagsError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.create_host_tags";
 
         // unbox and build optional parameters
         let source = params.source;
@@ -197,7 +198,7 @@ impl TagsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/tags/hosts/{host_name}",
-            local_configuration.get_operation_host("v1.create_host_tags"),
+            local_configuration.get_operation_host(operation_id),
             host_name = urlencode(host_name)
         );
         let mut local_req_builder =
@@ -215,11 +216,11 @@ impl TagsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -279,6 +280,7 @@ impl TagsAPI {
         params: DeleteHostTagsOptionalParams,
     ) -> Result<ResponseContent<()>, Error<DeleteHostTagsError>> {
         let local_configuration = &self.config;
+        let operation_id = "v1.delete_host_tags";
 
         // unbox and build optional parameters
         let source = params.source;
@@ -287,7 +289,7 @@ impl TagsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/tags/hosts/{host_name}",
-            local_configuration.get_operation_host("v1.delete_host_tags"),
+            local_configuration.get_operation_host(operation_id),
             host_name = urlencode(host_name)
         );
         let mut local_req_builder =
@@ -305,11 +307,11 @@ impl TagsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -355,6 +357,7 @@ impl TagsAPI {
         params: GetHostTagsOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV1::model::HostTags>, Error<GetHostTagsError>> {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_host_tags";
 
         // unbox and build optional parameters
         let source = params.source;
@@ -363,7 +366,7 @@ impl TagsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/tags/hosts/{host_name}",
-            local_configuration.get_operation_host("v1.get_host_tags"),
+            local_configuration.get_operation_host(operation_id),
             host_name = urlencode(host_name)
         );
         let mut local_req_builder =
@@ -381,11 +384,11 @@ impl TagsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -431,6 +434,7 @@ impl TagsAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::TagToHosts>, Error<ListHostTagsError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.list_host_tags";
 
         // unbox and build optional parameters
         let source = params.source;
@@ -439,7 +443,7 @@ impl TagsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/tags/hosts",
-            local_configuration.get_operation_host("v1.list_host_tags")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -456,11 +460,11 @@ impl TagsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -515,6 +519,7 @@ impl TagsAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::HostTags>, Error<UpdateHostTagsError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.update_host_tags";
 
         // unbox and build optional parameters
         let source = params.source;
@@ -523,7 +528,7 @@ impl TagsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/tags/hosts/{host_name}",
-            local_configuration.get_operation_host("v1.update_host_tags"),
+            local_configuration.get_operation_host(operation_id),
             host_name = urlencode(host_name)
         );
         let mut local_req_builder =
@@ -541,11 +546,11 @@ impl TagsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters

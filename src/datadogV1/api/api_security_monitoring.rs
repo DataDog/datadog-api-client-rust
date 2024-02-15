@@ -87,12 +87,13 @@ impl SecurityMonitoringAPI {
         Error<AddSecurityMonitoringSignalToIncidentError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.add_security_monitoring_signal_to_incident";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/security_analytics/signals/{signal_id}/add_to_incident",
-            local_configuration.get_operation_host("v1.add_security_monitoring_signal_to_incident"),
+            local_configuration.get_operation_host(operation_id),
             signal_id = urlencode(signal_id)
         );
         let mut local_req_builder =
@@ -105,11 +106,11 @@ impl SecurityMonitoringAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -173,12 +174,13 @@ impl SecurityMonitoringAPI {
         Error<EditSecurityMonitoringSignalAssigneeError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.edit_security_monitoring_signal_assignee";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/security_analytics/signals/{signal_id}/assignee",
-            local_configuration.get_operation_host("v1.edit_security_monitoring_signal_assignee"),
+            local_configuration.get_operation_host(operation_id),
             signal_id = urlencode(signal_id)
         );
         let mut local_req_builder =
@@ -191,11 +193,11 @@ impl SecurityMonitoringAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -259,12 +261,13 @@ impl SecurityMonitoringAPI {
         Error<EditSecurityMonitoringSignalStateError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.edit_security_monitoring_signal_state";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/security_analytics/signals/{signal_id}/state",
-            local_configuration.get_operation_host("v1.edit_security_monitoring_signal_state"),
+            local_configuration.get_operation_host(operation_id),
             signal_id = urlencode(signal_id)
         );
         let mut local_req_builder =
@@ -277,11 +280,11 @@ impl SecurityMonitoringAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters

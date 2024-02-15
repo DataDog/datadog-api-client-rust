@@ -93,12 +93,13 @@ impl PagerDutyIntegrationAPI {
         Error<CreatePagerDutyIntegrationServiceError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.create_pager_duty_integration_service";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/pagerduty/configuration/services",
-            local_configuration.get_operation_host("v1.create_pager_duty_integration_service")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -110,11 +111,11 @@ impl PagerDutyIntegrationAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -170,12 +171,13 @@ impl PagerDutyIntegrationAPI {
         service_name: String,
     ) -> Result<ResponseContent<()>, Error<DeletePagerDutyIntegrationServiceError>> {
         let local_configuration = &self.config;
+        let operation_id = "v1.delete_pager_duty_integration_service";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/pagerduty/configuration/services/{service_name}",
-            local_configuration.get_operation_host("v1.delete_pager_duty_integration_service"),
+            local_configuration.get_operation_host(operation_id),
             service_name = urlencode(service_name)
         );
         let mut local_req_builder =
@@ -188,11 +190,11 @@ impl PagerDutyIntegrationAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -245,12 +247,13 @@ impl PagerDutyIntegrationAPI {
         Error<GetPagerDutyIntegrationServiceError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_pager_duty_integration_service";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/pagerduty/configuration/services/{service_name}",
-            local_configuration.get_operation_host("v1.get_pager_duty_integration_service"),
+            local_configuration.get_operation_host(operation_id),
             service_name = urlencode(service_name)
         );
         let mut local_req_builder =
@@ -263,11 +266,11 @@ impl PagerDutyIntegrationAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -318,12 +321,13 @@ impl PagerDutyIntegrationAPI {
         body: crate::datadogV1::model::PagerDutyServiceKey,
     ) -> Result<ResponseContent<()>, Error<UpdatePagerDutyIntegrationServiceError>> {
         let local_configuration = &self.config;
+        let operation_id = "v1.update_pager_duty_integration_service";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/pagerduty/configuration/services/{service_name}",
-            local_configuration.get_operation_host("v1.update_pager_duty_integration_service"),
+            local_configuration.get_operation_host(operation_id),
             service_name = urlencode(service_name)
         );
         let mut local_req_builder =
@@ -336,11 +340,11 @@ impl PagerDutyIntegrationAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters

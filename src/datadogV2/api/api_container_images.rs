@@ -105,6 +105,7 @@ impl ContainerImagesAPI {
         Error<ListContainerImagesError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.list_container_images";
 
         // unbox and build optional parameters
         let filter_tags = params.filter_tags;
@@ -117,7 +118,7 @@ impl ContainerImagesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/container_images",
-            local_configuration.get_operation_host("v2.list_container_images")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -150,11 +151,11 @@ impl ContainerImagesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;

@@ -102,12 +102,13 @@ impl UsersAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::UserResponse>, Error<CreateUserError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.create_user";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/user",
-            local_configuration.get_operation_host("v1.create_user")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -119,11 +120,11 @@ impl UsersAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -184,12 +185,13 @@ impl UsersAPI {
         Error<DisableUserError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.disable_user";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/user/{user_handle}",
-            local_configuration.get_operation_host("v1.disable_user"),
+            local_configuration.get_operation_host(operation_id),
             user_handle = urlencode(user_handle)
         );
         let mut local_req_builder =
@@ -202,11 +204,11 @@ impl UsersAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -251,12 +253,13 @@ impl UsersAPI {
         user_handle: String,
     ) -> Result<ResponseContent<crate::datadogV1::model::UserResponse>, Error<GetUserError>> {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_user";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/user/{user_handle}",
-            local_configuration.get_operation_host("v1.get_user"),
+            local_configuration.get_operation_host(operation_id),
             user_handle = urlencode(user_handle)
         );
         let mut local_req_builder =
@@ -269,11 +272,11 @@ impl UsersAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -317,12 +320,13 @@ impl UsersAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::UserListResponse>, Error<ListUsersError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.list_users";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/user",
-            local_configuration.get_operation_host("v1.list_users")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -334,11 +338,11 @@ impl UsersAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -390,12 +394,13 @@ impl UsersAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::UserResponse>, Error<UpdateUserError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.update_user";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/user/{user_handle}",
-            local_configuration.get_operation_host("v1.update_user"),
+            local_configuration.get_operation_host(operation_id),
             user_handle = urlencode(user_handle)
         );
         let mut local_req_builder =
@@ -408,11 +413,11 @@ impl UsersAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters

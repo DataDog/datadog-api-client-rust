@@ -460,12 +460,13 @@ impl SecurityMonitoringAPI {
         Error<CreateSecurityFilterError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.create_security_filter";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/security_filters",
-            local_configuration.get_operation_host("v2.create_security_filter")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -477,11 +478,11 @@ impl SecurityMonitoringAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -543,12 +544,13 @@ impl SecurityMonitoringAPI {
         Error<CreateSecurityMonitoringRuleError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.create_security_monitoring_rule";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules",
-            local_configuration.get_operation_host("v2.create_security_monitoring_rule")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -560,11 +562,11 @@ impl SecurityMonitoringAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -620,12 +622,13 @@ impl SecurityMonitoringAPI {
         security_filter_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteSecurityFilterError>> {
         let local_configuration = &self.config;
+        let operation_id = "v2.delete_security_filter";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/security_filters/{security_filter_id}",
-            local_configuration.get_operation_host("v2.delete_security_filter"),
+            local_configuration.get_operation_host(operation_id),
             security_filter_id = urlencode(security_filter_id)
         );
         let mut local_req_builder =
@@ -638,11 +641,11 @@ impl SecurityMonitoringAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -689,12 +692,13 @@ impl SecurityMonitoringAPI {
         rule_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteSecurityMonitoringRuleError>> {
         let local_configuration = &self.config;
+        let operation_id = "v2.delete_security_monitoring_rule";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules/{rule_id}",
-            local_configuration.get_operation_host("v2.delete_security_monitoring_rule"),
+            local_configuration.get_operation_host(operation_id),
             rule_id = urlencode(rule_id)
         );
         let mut local_req_builder =
@@ -707,11 +711,11 @@ impl SecurityMonitoringAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -766,12 +770,13 @@ impl SecurityMonitoringAPI {
         Error<EditSecurityMonitoringSignalAssigneeError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.edit_security_monitoring_signal_assignee";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/{signal_id}/assignee",
-            local_configuration.get_operation_host("v2.edit_security_monitoring_signal_assignee"),
+            local_configuration.get_operation_host(operation_id),
             signal_id = urlencode(signal_id)
         );
         let mut local_req_builder =
@@ -784,11 +789,11 @@ impl SecurityMonitoringAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -853,12 +858,13 @@ impl SecurityMonitoringAPI {
         Error<EditSecurityMonitoringSignalIncidentsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.edit_security_monitoring_signal_incidents";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/{signal_id}/incidents",
-            local_configuration.get_operation_host("v2.edit_security_monitoring_signal_incidents"),
+            local_configuration.get_operation_host(operation_id),
             signal_id = urlencode(signal_id)
         );
         let mut local_req_builder =
@@ -871,11 +877,11 @@ impl SecurityMonitoringAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -940,12 +946,13 @@ impl SecurityMonitoringAPI {
         Error<EditSecurityMonitoringSignalStateError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.edit_security_monitoring_signal_state";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/{signal_id}/state",
-            local_configuration.get_operation_host("v2.edit_security_monitoring_signal_state"),
+            local_configuration.get_operation_host(operation_id),
             signal_id = urlencode(signal_id)
         );
         let mut local_req_builder =
@@ -958,11 +965,11 @@ impl SecurityMonitoringAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -1019,8 +1026,8 @@ impl SecurityMonitoringAPI {
     ) -> Result<ResponseContent<crate::datadogV2::model::GetFindingResponse>, Error<GetFindingError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_finding".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.get_finding";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -1036,7 +1043,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/posture_management/findings/{finding_id}",
-            local_configuration.get_operation_host("v2.get_finding"),
+            local_configuration.get_operation_host(operation_id),
             finding_id = urlencode(finding_id)
         );
         let mut local_req_builder =
@@ -1054,11 +1061,11 @@ impl SecurityMonitoringAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1118,12 +1125,13 @@ impl SecurityMonitoringAPI {
         Error<GetSecurityFilterError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.get_security_filter";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/security_filters/{security_filter_id}",
-            local_configuration.get_operation_host("v2.get_security_filter"),
+            local_configuration.get_operation_host(operation_id),
             security_filter_id = urlencode(security_filter_id)
         );
         let mut local_req_builder =
@@ -1136,11 +1144,11 @@ impl SecurityMonitoringAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1195,12 +1203,13 @@ impl SecurityMonitoringAPI {
         Error<GetSecurityMonitoringRuleError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.get_security_monitoring_rule";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules/{rule_id}",
-            local_configuration.get_operation_host("v2.get_security_monitoring_rule"),
+            local_configuration.get_operation_host(operation_id),
             rule_id = urlencode(rule_id)
         );
         let mut local_req_builder =
@@ -1213,11 +1222,11 @@ impl SecurityMonitoringAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1272,12 +1281,13 @@ impl SecurityMonitoringAPI {
         Error<GetSecurityMonitoringSignalError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.get_security_monitoring_signal";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/{signal_id}",
-            local_configuration.get_operation_host("v2.get_security_monitoring_signal"),
+            local_configuration.get_operation_host(operation_id),
             signal_id = urlencode(signal_id)
         );
         let mut local_req_builder =
@@ -1290,11 +1300,11 @@ impl SecurityMonitoringAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1404,8 +1414,8 @@ impl SecurityMonitoringAPI {
         Error<ListFindingsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_findings".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.list_findings";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -1432,7 +1442,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/posture_management/findings",
-            local_configuration.get_operation_host("v2.list_findings")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1497,11 +1507,11 @@ impl SecurityMonitoringAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1550,12 +1560,13 @@ impl SecurityMonitoringAPI {
         Error<ListSecurityFiltersError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.list_security_filters";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/security_filters",
-            local_configuration.get_operation_host("v2.list_security_filters")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1567,11 +1578,11 @@ impl SecurityMonitoringAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1626,6 +1637,7 @@ impl SecurityMonitoringAPI {
         Error<ListSecurityMonitoringRulesError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.list_security_monitoring_rules";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -1635,7 +1647,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules",
-            local_configuration.get_operation_host("v2.list_security_monitoring_rules")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1656,11 +1668,11 @@ impl SecurityMonitoringAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1719,6 +1731,7 @@ impl SecurityMonitoringAPI {
         Error<ListSecurityMonitoringSignalsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.list_security_monitoring_signals";
 
         // unbox and build optional parameters
         let filter_query = params.filter_query;
@@ -1732,7 +1745,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals",
-            local_configuration.get_operation_host("v2.list_security_monitoring_signals")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1769,11 +1782,11 @@ impl SecurityMonitoringAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1824,8 +1837,8 @@ impl SecurityMonitoringAPI {
         Error<MuteFindingsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.mute_findings".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.mute_findings";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -1838,7 +1851,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/posture_management/findings",
-            local_configuration.get_operation_host("v2.mute_findings")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -1850,11 +1863,11 @@ impl SecurityMonitoringAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -1919,6 +1932,7 @@ impl SecurityMonitoringAPI {
         Error<SearchSecurityMonitoringSignalsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.search_security_monitoring_signals";
 
         // unbox and build optional parameters
         let body = params.body;
@@ -1927,7 +1941,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/search",
-            local_configuration.get_operation_host("v2.search_security_monitoring_signals")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1939,11 +1953,11 @@ impl SecurityMonitoringAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -2010,12 +2024,13 @@ impl SecurityMonitoringAPI {
         Error<UpdateSecurityFilterError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.update_security_filter";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/security_filters/{security_filter_id}",
-            local_configuration.get_operation_host("v2.update_security_filter"),
+            local_configuration.get_operation_host(operation_id),
             security_filter_id = urlencode(security_filter_id)
         );
         let mut local_req_builder =
@@ -2028,11 +2043,11 @@ impl SecurityMonitoringAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -2100,12 +2115,13 @@ impl SecurityMonitoringAPI {
         Error<UpdateSecurityMonitoringRuleError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.update_security_monitoring_rule";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules/{rule_id}",
-            local_configuration.get_operation_host("v2.update_security_monitoring_rule"),
+            local_configuration.get_operation_host(operation_id),
             rule_id = urlencode(rule_id)
         );
         let mut local_req_builder =
@@ -2118,11 +2134,11 @@ impl SecurityMonitoringAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters

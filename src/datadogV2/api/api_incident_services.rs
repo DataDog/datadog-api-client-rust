@@ -163,8 +163,8 @@ impl IncidentServicesAPI {
         Error<CreateIncidentServiceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_incident_service".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.create_incident_service";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -177,7 +177,7 @@ impl IncidentServicesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/services",
-            local_configuration.get_operation_host("v2.create_incident_service")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -189,11 +189,11 @@ impl IncidentServicesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -249,8 +249,8 @@ impl IncidentServicesAPI {
         service_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteIncidentServiceError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_incident_service".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.delete_incident_service";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -263,7 +263,7 @@ impl IncidentServicesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/services/{service_id}",
-            local_configuration.get_operation_host("v2.delete_incident_service"),
+            local_configuration.get_operation_host(operation_id),
             service_id = urlencode(service_id)
         );
         let mut local_req_builder =
@@ -276,11 +276,11 @@ impl IncidentServicesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -337,8 +337,8 @@ impl IncidentServicesAPI {
         Error<GetIncidentServiceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_incident_service".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.get_incident_service";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -354,7 +354,7 @@ impl IncidentServicesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/services/{service_id}",
-            local_configuration.get_operation_host("v2.get_incident_service"),
+            local_configuration.get_operation_host(operation_id),
             service_id = urlencode(service_id)
         );
         let mut local_req_builder =
@@ -372,11 +372,11 @@ impl IncidentServicesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -428,8 +428,8 @@ impl IncidentServicesAPI {
         Error<ListIncidentServicesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_incident_services".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.list_incident_services";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -448,7 +448,7 @@ impl IncidentServicesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/services",
-            local_configuration.get_operation_host("v2.list_incident_services")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -477,11 +477,11 @@ impl IncidentServicesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -538,8 +538,8 @@ impl IncidentServicesAPI {
         Error<UpdateIncidentServiceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_incident_service".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.update_incident_service";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -552,7 +552,7 @@ impl IncidentServicesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/services/{service_id}",
-            local_configuration.get_operation_host("v2.update_incident_service"),
+            local_configuration.get_operation_host(operation_id),
             service_id = urlencode(service_id)
         );
         let mut local_req_builder =
@@ -565,11 +565,11 @@ impl IncidentServicesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters

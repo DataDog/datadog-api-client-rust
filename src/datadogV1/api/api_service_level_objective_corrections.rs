@@ -123,12 +123,13 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         Error<CreateSLOCorrectionError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.create_slo_correction";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/correction",
-            local_configuration.get_operation_host("v1.create_slo_correction")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -140,11 +141,11 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -200,12 +201,13 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         slo_correction_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteSLOCorrectionError>> {
         let local_configuration = &self.config;
+        let operation_id = "v1.delete_slo_correction";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/correction/{slo_correction_id}",
-            local_configuration.get_operation_host("v1.delete_slo_correction"),
+            local_configuration.get_operation_host(operation_id),
             slo_correction_id = urlencode(slo_correction_id)
         );
         let mut local_req_builder =
@@ -218,11 +220,11 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -273,12 +275,13 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         Error<GetSLOCorrectionError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_slo_correction";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/correction/{slo_correction_id}",
-            local_configuration.get_operation_host("v1.get_slo_correction"),
+            local_configuration.get_operation_host(operation_id),
             slo_correction_id = urlencode(slo_correction_id)
         );
         let mut local_req_builder =
@@ -291,11 +294,11 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -347,6 +350,7 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         Error<ListSLOCorrectionError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.list_slo_correction";
 
         // unbox and build optional parameters
         let offset = params.offset;
@@ -356,7 +360,7 @@ impl ServiceLevelObjectiveCorrectionsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/slo/correction",
-            local_configuration.get_operation_host("v1.list_slo_correction")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -377,11 +381,11 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -438,12 +442,13 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         Error<UpdateSLOCorrectionError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.update_slo_correction";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/correction/{slo_correction_id}",
-            local_configuration.get_operation_host("v1.update_slo_correction"),
+            local_configuration.get_operation_host(operation_id),
             slo_correction_id = urlencode(slo_correction_id)
         );
         let mut local_req_builder =
@@ -456,11 +461,11 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters

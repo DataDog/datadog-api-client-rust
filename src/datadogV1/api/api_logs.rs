@@ -105,12 +105,13 @@ impl LogsAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::LogsListResponse>, Error<ListLogsError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.list_logs";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs-queries/list",
-            local_configuration.get_operation_host("v1.list_logs")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -122,11 +123,11 @@ impl LogsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -220,6 +221,7 @@ impl LogsAPI {
         Error<SubmitLogError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.submit_log";
 
         // unbox and build optional parameters
         let content_encoding = params.content_encoding;
@@ -229,7 +231,7 @@ impl LogsAPI {
 
         let local_uri_str = format!(
             "{}/v1/input",
-            local_configuration.get_operation_host("v1.submit_log")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -250,8 +252,8 @@ impl LogsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
 
         // build body parameters

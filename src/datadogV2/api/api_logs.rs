@@ -202,12 +202,13 @@ impl LogsAPI {
         Error<AggregateLogsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.aggregate_logs";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/analytics/aggregate",
-            local_configuration.get_operation_host("v2.aggregate_logs")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -219,11 +220,11 @@ impl LogsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -297,6 +298,7 @@ impl LogsAPI {
     ) -> Result<ResponseContent<crate::datadogV2::model::LogsListResponse>, Error<ListLogsError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v2.list_logs";
 
         // unbox and build optional parameters
         let body = params.body;
@@ -305,7 +307,7 @@ impl LogsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/logs/events/search",
-            local_configuration.get_operation_host("v2.list_logs")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -317,11 +319,11 @@ impl LogsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -394,6 +396,7 @@ impl LogsAPI {
     ) -> Result<ResponseContent<crate::datadogV2::model::LogsListResponse>, Error<ListLogsGetError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v2.list_logs_get";
 
         // unbox and build optional parameters
         let filter_query = params.filter_query;
@@ -409,7 +412,7 @@ impl LogsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/logs/events",
-            local_configuration.get_operation_host("v2.list_logs_get")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -461,11 +464,11 @@ impl LogsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -562,6 +565,7 @@ impl LogsAPI {
         Error<SubmitLogError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.submit_log";
 
         // unbox and build optional parameters
         let content_encoding = params.content_encoding;
@@ -571,7 +575,7 @@ impl LogsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/logs",
-            local_configuration.get_operation_host("v2.submit_log")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -592,8 +596,8 @@ impl LogsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
 
         // build body parameters

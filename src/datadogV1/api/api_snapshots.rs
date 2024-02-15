@@ -118,6 +118,7 @@ impl SnapshotsAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::GraphSnapshot>, Error<GetGraphSnapshotError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_graph_snapshot";
 
         // unbox and build optional parameters
         let metric_query = params.metric_query;
@@ -131,7 +132,7 @@ impl SnapshotsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/graph/snapshot",
-            local_configuration.get_operation_host("v1.get_graph_snapshot")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -170,11 +171,11 @@ impl SnapshotsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;

@@ -56,12 +56,13 @@ impl AuthenticationAPI {
         Error<ValidateError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.validate";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/validate",
-            local_configuration.get_operation_host("v1.validate")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -73,8 +74,8 @@ impl AuthenticationAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;

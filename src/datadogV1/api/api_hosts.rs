@@ -167,6 +167,7 @@ impl HostsAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::HostTotals>, Error<GetHostTotalsError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_host_totals";
 
         // unbox and build optional parameters
         let from = params.from;
@@ -175,7 +176,7 @@ impl HostsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/hosts/totals",
-            local_configuration.get_operation_host("v1.get_host_totals")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -192,11 +193,11 @@ impl HostsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -249,6 +250,7 @@ impl HostsAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::HostListResponse>, Error<ListHostsError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.list_hosts";
 
         // unbox and build optional parameters
         let filter = params.filter;
@@ -264,7 +266,7 @@ impl HostsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/hosts",
-            local_configuration.get_operation_host("v1.list_hosts")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -309,11 +311,11 @@ impl HostsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -361,12 +363,13 @@ impl HostsAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::HostMuteResponse>, Error<MuteHostError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.mute_host";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/host/{host_name}/mute",
-            local_configuration.get_operation_host("v1.mute_host"),
+            local_configuration.get_operation_host(operation_id),
             host_name = urlencode(host_name)
         );
         let mut local_req_builder =
@@ -379,11 +382,11 @@ impl HostsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -436,12 +439,13 @@ impl HostsAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::HostMuteResponse>, Error<UnmuteHostError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.unmute_host";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/host/{host_name}/unmute",
-            local_configuration.get_operation_host("v1.unmute_host"),
+            local_configuration.get_operation_host(operation_id),
             host_name = urlencode(host_name)
         );
         let mut local_req_builder =
@@ -454,11 +458,11 @@ impl HostsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;

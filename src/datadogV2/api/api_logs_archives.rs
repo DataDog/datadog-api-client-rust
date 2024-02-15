@@ -153,12 +153,13 @@ impl LogsArchivesAPI {
         body: crate::datadogV2::model::RelationshipToRole,
     ) -> Result<ResponseContent<()>, Error<AddReadRoleToArchiveError>> {
         let local_configuration = &self.config;
+        let operation_id = "v2.add_read_role_to_archive";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archives/{archive_id}/readers",
-            local_configuration.get_operation_host("v2.add_read_role_to_archive"),
+            local_configuration.get_operation_host(operation_id),
             archive_id = urlencode(archive_id)
         );
         let mut local_req_builder =
@@ -171,11 +172,11 @@ impl LogsArchivesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -227,12 +228,13 @@ impl LogsArchivesAPI {
     ) -> Result<ResponseContent<crate::datadogV2::model::LogsArchive>, Error<CreateLogsArchiveError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v2.create_logs_archive";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archives",
-            local_configuration.get_operation_host("v2.create_logs_archive")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -244,11 +246,11 @@ impl LogsArchivesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -301,12 +303,13 @@ impl LogsArchivesAPI {
         archive_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteLogsArchiveError>> {
         let local_configuration = &self.config;
+        let operation_id = "v2.delete_logs_archive";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archives/{archive_id}",
-            local_configuration.get_operation_host("v2.delete_logs_archive"),
+            local_configuration.get_operation_host(operation_id),
             archive_id = urlencode(archive_id)
         );
         let mut local_req_builder =
@@ -319,11 +322,11 @@ impl LogsArchivesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -368,12 +371,13 @@ impl LogsArchivesAPI {
     ) -> Result<ResponseContent<crate::datadogV2::model::LogsArchive>, Error<GetLogsArchiveError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v2.get_logs_archive";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archives/{archive_id}",
-            local_configuration.get_operation_host("v2.get_logs_archive"),
+            local_configuration.get_operation_host(operation_id),
             archive_id = urlencode(archive_id)
         );
         let mut local_req_builder =
@@ -386,11 +390,11 @@ impl LogsArchivesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -440,12 +444,13 @@ impl LogsArchivesAPI {
         Error<GetLogsArchiveOrderError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.get_logs_archive_order";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archive-order",
-            local_configuration.get_operation_host("v2.get_logs_archive_order")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -457,11 +462,11 @@ impl LogsArchivesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -514,12 +519,13 @@ impl LogsArchivesAPI {
         Error<ListArchiveReadRolesError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.list_archive_read_roles";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archives/{archive_id}/readers",
-            local_configuration.get_operation_host("v2.list_archive_read_roles"),
+            local_configuration.get_operation_host(operation_id),
             archive_id = urlencode(archive_id)
         );
         let mut local_req_builder =
@@ -532,11 +538,11 @@ impl LogsArchivesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -581,12 +587,13 @@ impl LogsArchivesAPI {
     ) -> Result<ResponseContent<crate::datadogV2::model::LogsArchives>, Error<ListLogsArchivesError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v2.list_logs_archives";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archives",
-            local_configuration.get_operation_host("v2.list_logs_archives")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -598,11 +605,11 @@ impl LogsArchivesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -653,12 +660,13 @@ impl LogsArchivesAPI {
         body: crate::datadogV2::model::RelationshipToRole,
     ) -> Result<ResponseContent<()>, Error<RemoveRoleFromArchiveError>> {
         let local_configuration = &self.config;
+        let operation_id = "v2.remove_role_from_archive";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archives/{archive_id}/readers",
-            local_configuration.get_operation_host("v2.remove_role_from_archive"),
+            local_configuration.get_operation_host(operation_id),
             archive_id = urlencode(archive_id)
         );
         let mut local_req_builder =
@@ -671,11 +679,11 @@ impl LogsArchivesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -738,12 +746,13 @@ impl LogsArchivesAPI {
     ) -> Result<ResponseContent<crate::datadogV2::model::LogsArchive>, Error<UpdateLogsArchiveError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v2.update_logs_archive";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archives/{archive_id}",
-            local_configuration.get_operation_host("v2.update_logs_archive"),
+            local_configuration.get_operation_host(operation_id),
             archive_id = urlencode(archive_id)
         );
         let mut local_req_builder =
@@ -756,11 +765,11 @@ impl LogsArchivesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -825,12 +834,13 @@ impl LogsArchivesAPI {
         Error<UpdateLogsArchiveOrderError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.update_logs_archive_order";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archive-order",
-            local_configuration.get_operation_host("v2.update_logs_archive_order")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
@@ -842,11 +852,11 @@ impl LogsArchivesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters

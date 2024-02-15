@@ -69,12 +69,13 @@ impl ServiceChecksAPI {
         Error<SubmitServiceCheckError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.submit_service_check";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/check_run",
-            local_configuration.get_operation_host("v1.submit_service_check")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -86,8 +87,8 @@ impl ServiceChecksAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
 
         // build body parameters

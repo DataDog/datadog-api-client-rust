@@ -419,12 +419,13 @@ impl SyntheticsAPI {
         Error<CreateGlobalVariableError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.create_global_variable";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/variables",
-            local_configuration.get_operation_host("v1.create_global_variable")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -436,11 +437,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -499,12 +500,13 @@ impl SyntheticsAPI {
         Error<CreatePrivateLocationError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.create_private_location";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/private-locations",
-            local_configuration.get_operation_host("v1.create_private_location")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -516,11 +518,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -580,12 +582,13 @@ impl SyntheticsAPI {
         Error<CreateSyntheticsAPITestError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.create_synthetics_api_test";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/api",
-            local_configuration.get_operation_host("v1.create_synthetics_api_test")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -597,11 +600,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -663,12 +666,13 @@ impl SyntheticsAPI {
         Error<CreateSyntheticsBrowserTestError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.create_synthetics_browser_test";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/browser",
-            local_configuration.get_operation_host("v1.create_synthetics_browser_test")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -680,11 +684,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -740,12 +744,13 @@ impl SyntheticsAPI {
         variable_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteGlobalVariableError>> {
         let local_configuration = &self.config;
+        let operation_id = "v1.delete_global_variable";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/variables/{variable_id}",
-            local_configuration.get_operation_host("v1.delete_global_variable"),
+            local_configuration.get_operation_host(operation_id),
             variable_id = urlencode(variable_id)
         );
         let mut local_req_builder =
@@ -758,11 +763,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -809,12 +814,13 @@ impl SyntheticsAPI {
         location_id: String,
     ) -> Result<ResponseContent<()>, Error<DeletePrivateLocationError>> {
         let local_configuration = &self.config;
+        let operation_id = "v1.delete_private_location";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/private-locations/{location_id}",
-            local_configuration.get_operation_host("v1.delete_private_location"),
+            local_configuration.get_operation_host(operation_id),
             location_id = urlencode(location_id)
         );
         let mut local_req_builder =
@@ -827,11 +833,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -881,12 +887,13 @@ impl SyntheticsAPI {
         Error<DeleteTestsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.delete_tests";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/delete",
-            local_configuration.get_operation_host("v1.delete_tests")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -898,11 +905,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -965,12 +972,13 @@ impl SyntheticsAPI {
         Error<EditGlobalVariableError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.edit_global_variable";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/variables/{variable_id}",
-            local_configuration.get_operation_host("v1.edit_global_variable"),
+            local_configuration.get_operation_host(operation_id),
             variable_id = urlencode(variable_id)
         );
         let mut local_req_builder =
@@ -983,11 +991,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -1043,12 +1051,13 @@ impl SyntheticsAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::SyntheticsAPITest>, Error<GetAPITestError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_api_test";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/api/{public_id}",
-            local_configuration.get_operation_host("v1.get_api_test"),
+            local_configuration.get_operation_host(operation_id),
             public_id = urlencode(public_id)
         );
         let mut local_req_builder =
@@ -1061,11 +1070,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1121,6 +1130,7 @@ impl SyntheticsAPI {
         Error<GetAPITestLatestResultsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_api_test_latest_results";
 
         // unbox and build optional parameters
         let from_ts = params.from_ts;
@@ -1131,7 +1141,7 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/{public_id}/results",
-            local_configuration.get_operation_host("v1.get_api_test_latest_results"),
+            local_configuration.get_operation_host(operation_id),
             public_id = urlencode(public_id)
         );
         let mut local_req_builder =
@@ -1164,11 +1174,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1226,12 +1236,13 @@ impl SyntheticsAPI {
         Error<GetAPITestResultError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_api_test_result";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/{public_id}/results/{result_id}",
-            local_configuration.get_operation_host("v1.get_api_test_result"),
+            local_configuration.get_operation_host(operation_id),
             public_id = urlencode(public_id),
             result_id = urlencode(result_id)
         );
@@ -1245,11 +1256,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1301,12 +1312,13 @@ impl SyntheticsAPI {
         Error<GetBrowserTestError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_browser_test";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/browser/{public_id}",
-            local_configuration.get_operation_host("v1.get_browser_test"),
+            local_configuration.get_operation_host(operation_id),
             public_id = urlencode(public_id)
         );
         let mut local_req_builder =
@@ -1319,11 +1331,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1380,6 +1392,7 @@ impl SyntheticsAPI {
         Error<GetBrowserTestLatestResultsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_browser_test_latest_results";
 
         // unbox and build optional parameters
         let from_ts = params.from_ts;
@@ -1390,7 +1403,7 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/browser/{public_id}/results",
-            local_configuration.get_operation_host("v1.get_browser_test_latest_results"),
+            local_configuration.get_operation_host(operation_id),
             public_id = urlencode(public_id)
         );
         let mut local_req_builder =
@@ -1423,11 +1436,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1485,12 +1498,13 @@ impl SyntheticsAPI {
         Error<GetBrowserTestResultError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_browser_test_result";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/browser/{public_id}/results/{result_id}",
-            local_configuration.get_operation_host("v1.get_browser_test_result"),
+            local_configuration.get_operation_host(operation_id),
             public_id = urlencode(public_id),
             result_id = urlencode(result_id)
         );
@@ -1504,11 +1518,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1560,12 +1574,13 @@ impl SyntheticsAPI {
         Error<GetGlobalVariableError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_global_variable";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/variables/{variable_id}",
-            local_configuration.get_operation_host("v1.get_global_variable"),
+            local_configuration.get_operation_host(operation_id),
             variable_id = urlencode(variable_id)
         );
         let mut local_req_builder =
@@ -1578,11 +1593,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1634,12 +1649,13 @@ impl SyntheticsAPI {
         Error<GetPrivateLocationError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_private_location";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/private-locations/{location_id}",
-            local_configuration.get_operation_host("v1.get_private_location"),
+            local_configuration.get_operation_host(operation_id),
             location_id = urlencode(location_id)
         );
         let mut local_req_builder =
@@ -1652,11 +1668,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1708,12 +1724,13 @@ impl SyntheticsAPI {
         Error<GetSyntheticsCIBatchError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_synthetics_ci_batch";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/ci/batch/{batch_id}",
-            local_configuration.get_operation_host("v1.get_synthetics_ci_batch"),
+            local_configuration.get_operation_host(operation_id),
             batch_id = urlencode(batch_id)
         );
         let mut local_req_builder =
@@ -1726,11 +1743,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1774,12 +1791,13 @@ impl SyntheticsAPI {
         &self,
     ) -> Result<ResponseContent<Vec<String>>, Error<GetSyntheticsDefaultLocationsError>> {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_synthetics_default_locations";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/settings/default_locations",
-            local_configuration.get_operation_host("v1.get_synthetics_default_locations")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1791,11 +1809,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1841,12 +1859,13 @@ impl SyntheticsAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::SyntheticsTestDetails>, Error<GetTestError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_test";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/{public_id}",
-            local_configuration.get_operation_host("v1.get_test"),
+            local_configuration.get_operation_host(operation_id),
             public_id = urlencode(public_id)
         );
         let mut local_req_builder =
@@ -1859,11 +1878,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1912,12 +1931,13 @@ impl SyntheticsAPI {
         Error<ListGlobalVariablesError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.list_global_variables";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/variables",
-            local_configuration.get_operation_host("v1.list_global_variables")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1929,11 +1949,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1984,12 +2004,13 @@ impl SyntheticsAPI {
         Error<ListLocationsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.list_locations";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/locations",
-            local_configuration.get_operation_host("v1.list_locations")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2001,11 +2022,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -2055,6 +2076,7 @@ impl SyntheticsAPI {
         Error<ListTestsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.list_tests";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -2064,7 +2086,7 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests",
-            local_configuration.get_operation_host("v1.list_tests")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2085,11 +2107,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -2139,12 +2161,13 @@ impl SyntheticsAPI {
         Error<PatchTestError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.patch_test";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/{public_id}",
-            local_configuration.get_operation_host("v1.patch_test"),
+            local_configuration.get_operation_host(operation_id),
             public_id = urlencode(public_id)
         );
         let mut local_req_builder =
@@ -2157,11 +2180,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -2219,12 +2242,13 @@ impl SyntheticsAPI {
         Error<TriggerCITestsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.trigger_ci_tests";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/trigger/ci",
-            local_configuration.get_operation_host("v1.trigger_ci_tests")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -2236,11 +2260,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -2299,12 +2323,13 @@ impl SyntheticsAPI {
         Error<TriggerTestsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.trigger_tests";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/trigger",
-            local_configuration.get_operation_host("v1.trigger_tests")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -2316,11 +2341,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -2377,12 +2402,13 @@ impl SyntheticsAPI {
         Error<UpdateAPITestError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.update_api_test";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/api/{public_id}",
-            local_configuration.get_operation_host("v1.update_api_test"),
+            local_configuration.get_operation_host(operation_id),
             public_id = urlencode(public_id)
         );
         let mut local_req_builder =
@@ -2395,11 +2421,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -2461,12 +2487,13 @@ impl SyntheticsAPI {
         Error<UpdateBrowserTestError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.update_browser_test";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/browser/{public_id}",
-            local_configuration.get_operation_host("v1.update_browser_test"),
+            local_configuration.get_operation_host(operation_id),
             public_id = urlencode(public_id)
         );
         let mut local_req_builder =
@@ -2479,11 +2506,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -2547,12 +2574,13 @@ impl SyntheticsAPI {
         Error<UpdatePrivateLocationError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.update_private_location";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/private-locations/{location_id}",
-            local_configuration.get_operation_host("v1.update_private_location"),
+            local_configuration.get_operation_host(operation_id),
             location_id = urlencode(location_id)
         );
         let mut local_req_builder =
@@ -2565,11 +2593,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -2627,12 +2655,13 @@ impl SyntheticsAPI {
         body: crate::datadogV1::model::SyntheticsUpdateTestPauseStatusPayload,
     ) -> Result<ResponseContent<bool>, Error<UpdateTestPauseStatusError>> {
         let local_configuration = &self.config;
+        let operation_id = "v1.update_test_pause_status";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/{public_id}/status",
-            local_configuration.get_operation_host("v1.update_test_pause_status"),
+            local_configuration.get_operation_host(operation_id),
             public_id = urlencode(public_id)
         );
         let mut local_req_builder =
@@ -2645,11 +2674,11 @@ impl SyntheticsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters

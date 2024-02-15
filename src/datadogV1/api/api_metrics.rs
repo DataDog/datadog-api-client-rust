@@ -187,12 +187,13 @@ impl MetricsAPI {
         Error<GetMetricMetadataError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_metric_metadata";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/metrics/{metric_name}",
-            local_configuration.get_operation_host("v1.get_metric_metadata"),
+            local_configuration.get_operation_host(operation_id),
             metric_name = urlencode(metric_name)
         );
         let mut local_req_builder =
@@ -205,11 +206,11 @@ impl MetricsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -261,6 +262,7 @@ impl MetricsAPI {
         Error<ListActiveMetricsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.list_active_metrics";
 
         // unbox and build optional parameters
         let host = params.host;
@@ -270,7 +272,7 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/metrics",
-            local_configuration.get_operation_host("v1.list_active_metrics")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -292,11 +294,11 @@ impl MetricsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -346,12 +348,13 @@ impl MetricsAPI {
         Error<ListMetricsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.list_metrics";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/search",
-            local_configuration.get_operation_host("v1.list_metrics")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -365,11 +368,11 @@ impl MetricsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -422,12 +425,13 @@ impl MetricsAPI {
         Error<QueryMetricsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.query_metrics";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/query",
-            local_configuration.get_operation_host("v1.query_metrics")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -443,11 +447,11 @@ impl MetricsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -503,6 +507,7 @@ impl MetricsAPI {
         Error<SubmitDistributionPointsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.submit_distribution_points";
 
         // unbox and build optional parameters
         let content_encoding = params.content_encoding;
@@ -511,7 +516,7 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/distribution_points",
-            local_configuration.get_operation_host("v1.submit_distribution_points")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -527,8 +532,8 @@ impl MetricsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
 
         // build body parameters
@@ -607,6 +612,7 @@ impl MetricsAPI {
         Error<SubmitMetricsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.submit_metrics";
 
         // unbox and build optional parameters
         let content_encoding = params.content_encoding;
@@ -615,7 +621,7 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/series",
-            local_configuration.get_operation_host("v1.submit_metrics")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -631,8 +637,8 @@ impl MetricsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
 
         // build body parameters
@@ -694,12 +700,13 @@ impl MetricsAPI {
         Error<UpdateMetricMetadataError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.update_metric_metadata";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/metrics/{metric_name}",
-            local_configuration.get_operation_host("v1.update_metric_metadata"),
+            local_configuration.get_operation_host(operation_id),
             metric_name = urlencode(metric_name)
         );
         let mut local_req_builder =
@@ -712,11 +719,11 @@ impl MetricsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters

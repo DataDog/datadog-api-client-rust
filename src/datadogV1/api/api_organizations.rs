@@ -127,12 +127,13 @@ impl OrganizationsAPI {
         Error<CreateChildOrgError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.create_child_org";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/org",
-            local_configuration.get_operation_host("v1.create_child_org")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -144,11 +145,11 @@ impl OrganizationsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -205,12 +206,13 @@ impl OrganizationsAPI {
         Error<DowngradeOrgError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.downgrade_org";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/org/{public_id}/downgrade",
-            local_configuration.get_operation_host("v1.downgrade_org"),
+            local_configuration.get_operation_host(operation_id),
             public_id = urlencode(public_id)
         );
         let mut local_req_builder =
@@ -223,11 +225,11 @@ impl OrganizationsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -273,12 +275,13 @@ impl OrganizationsAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::OrganizationResponse>, Error<GetOrgError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_org";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/org/{public_id}",
-            local_configuration.get_operation_host("v1.get_org"),
+            local_configuration.get_operation_host(operation_id),
             public_id = urlencode(public_id)
         );
         let mut local_req_builder =
@@ -291,11 +294,11 @@ impl OrganizationsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -342,12 +345,13 @@ impl OrganizationsAPI {
         Error<ListOrgsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.list_orgs";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/org",
-            local_configuration.get_operation_host("v1.list_orgs")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -359,11 +363,11 @@ impl OrganizationsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -411,12 +415,13 @@ impl OrganizationsAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::OrganizationResponse>, Error<UpdateOrgError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.update_org";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/org/{public_id}",
-            local_configuration.get_operation_host("v1.update_org"),
+            local_configuration.get_operation_host(operation_id),
             public_id = urlencode(public_id)
         );
         let mut local_req_builder =
@@ -429,11 +434,11 @@ impl OrganizationsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -501,12 +506,13 @@ impl OrganizationsAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::IdpResponse>, Error<UploadIdPForOrgError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.upload_id_p_for_org";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/org/{public_id}/idp_metadata",
-            local_configuration.get_operation_host("v1.upload_id_p_for_org"),
+            local_configuration.get_operation_host(operation_id),
             public_id = urlencode(public_id)
         );
         let mut local_req_builder =
@@ -519,11 +525,11 @@ impl OrganizationsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build form parameters

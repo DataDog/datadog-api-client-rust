@@ -115,12 +115,13 @@ impl LogsPipelinesAPI {
         Error<CreateLogsPipelineError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.create_logs_pipeline";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/pipelines",
-            local_configuration.get_operation_host("v1.create_logs_pipeline")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -132,11 +133,11 @@ impl LogsPipelinesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -191,12 +192,13 @@ impl LogsPipelinesAPI {
         pipeline_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteLogsPipelineError>> {
         let local_configuration = &self.config;
+        let operation_id = "v1.delete_logs_pipeline";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/pipelines/{pipeline_id}",
-            local_configuration.get_operation_host("v1.delete_logs_pipeline"),
+            local_configuration.get_operation_host(operation_id),
             pipeline_id = urlencode(pipeline_id)
         );
         let mut local_req_builder =
@@ -209,11 +211,11 @@ impl LogsPipelinesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -260,12 +262,13 @@ impl LogsPipelinesAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::LogsPipeline>, Error<GetLogsPipelineError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_logs_pipeline";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/pipelines/{pipeline_id}",
-            local_configuration.get_operation_host("v1.get_logs_pipeline"),
+            local_configuration.get_operation_host(operation_id),
             pipeline_id = urlencode(pipeline_id)
         );
         let mut local_req_builder =
@@ -278,11 +281,11 @@ impl LogsPipelinesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -332,12 +335,13 @@ impl LogsPipelinesAPI {
         Error<GetLogsPipelineOrderError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_logs_pipeline_order";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/pipeline-order",
-            local_configuration.get_operation_host("v1.get_logs_pipeline_order")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -349,11 +353,11 @@ impl LogsPipelinesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -403,12 +407,13 @@ impl LogsPipelinesAPI {
         Error<ListLogsPipelinesError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.list_logs_pipelines";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/pipelines",
-            local_configuration.get_operation_host("v1.list_logs_pipelines")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -420,11 +425,11 @@ impl LogsPipelinesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -484,12 +489,13 @@ impl LogsPipelinesAPI {
         Error<UpdateLogsPipelineError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.update_logs_pipeline";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/pipelines/{pipeline_id}",
-            local_configuration.get_operation_host("v1.update_logs_pipeline"),
+            local_configuration.get_operation_host(operation_id),
             pipeline_id = urlencode(pipeline_id)
         );
         let mut local_req_builder =
@@ -502,11 +508,11 @@ impl LogsPipelinesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters
@@ -573,12 +579,13 @@ impl LogsPipelinesAPI {
         Error<UpdateLogsPipelineOrderError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.update_logs_pipeline_order";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/pipeline-order",
-            local_configuration.get_operation_host("v1.update_logs_pipeline_order")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
@@ -590,11 +597,11 @@ impl LogsPipelinesAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.app_key {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
         };
 
         // build body parameters

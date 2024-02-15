@@ -80,8 +80,8 @@ impl DORAMetricsAPI {
         Error<CreateDORADeploymentError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_dora_deployment".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.create_dora_deployment";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -94,7 +94,7 @@ impl DORAMetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/dora/deployment",
-            local_configuration.get_operation_host("v2.create_dora_deployment")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -106,8 +106,8 @@ impl DORAMetricsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
 
         // build body parameters
@@ -172,8 +172,8 @@ impl DORAMetricsAPI {
         Error<CreateDORAIncidentError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_dora_incident".to_string();
-        if local_configuration.is_unstable_operation_enabled(&operation_id) {
+        let operation_id = "v2.create_dora_incident";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {}", operation_id);
         } else {
             let local_error = UnstableOperationDisabledError {
@@ -186,7 +186,7 @@ impl DORAMetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/dora/incident",
-            local_configuration.get_operation_host("v2.create_dora_incident")
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -198,8 +198,8 @@ impl DORAMetricsAPI {
         );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(ref local_key) = local_configuration.api_key {
+            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
         };
 
         // build body parameters
