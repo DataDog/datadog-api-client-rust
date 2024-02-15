@@ -82,7 +82,7 @@ impl DORAMetricsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_dora_deployment";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_dora_deployment' is not enabled".to_string(),
@@ -174,7 +174,7 @@ impl DORAMetricsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_dora_incident";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_dora_incident' is not enabled".to_string(),

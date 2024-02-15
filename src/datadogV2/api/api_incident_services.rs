@@ -165,7 +165,7 @@ impl IncidentServicesAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_incident_service";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_incident_service' is not enabled".to_string(),
@@ -251,7 +251,7 @@ impl IncidentServicesAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_incident_service";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_incident_service' is not enabled".to_string(),
@@ -339,7 +339,7 @@ impl IncidentServicesAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_incident_service";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_incident_service' is not enabled".to_string(),
@@ -430,7 +430,7 @@ impl IncidentServicesAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.list_incident_services";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_incident_services' is not enabled".to_string(),
@@ -540,7 +540,7 @@ impl IncidentServicesAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_incident_service";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_incident_service' is not enabled".to_string(),

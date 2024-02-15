@@ -1261,7 +1261,7 @@ impl MetricsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.query_scalar_data";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation 'v2.query_scalar_data' is not enabled".to_string(),
@@ -1352,7 +1352,7 @@ impl MetricsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.query_timeseries_data";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation 'v2.query_timeseries_data' is not enabled".to_string(),

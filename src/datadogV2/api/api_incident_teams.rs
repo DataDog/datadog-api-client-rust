@@ -163,7 +163,7 @@ impl IncidentTeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_incident_team";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_incident_team' is not enabled".to_string(),
@@ -246,7 +246,7 @@ impl IncidentTeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_incident_team";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_incident_team' is not enabled".to_string(),
@@ -329,7 +329,7 @@ impl IncidentTeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_incident_team";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_incident_team' is not enabled".to_string(),
@@ -418,7 +418,7 @@ impl IncidentTeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.list_incident_teams";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_incident_teams' is not enabled".to_string(),
@@ -526,7 +526,7 @@ impl IncidentTeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_incident_team";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_incident_team' is not enabled".to_string(),

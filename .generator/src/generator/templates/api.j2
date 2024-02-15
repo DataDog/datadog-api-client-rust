@@ -113,7 +113,7 @@ impl {{ structName }} {
         let operation_id = "{{ version }}.{{ operation.operationId | snake_case }}";
         {%- if "x-unstable" in operation %}
         if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation '{{ version }}.{{ operation.operationId | snake_case }}' is not enabled".to_string(),
@@ -132,7 +132,7 @@ impl {{ structName }} {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
-            "{}{{path}}", 
+            "{}{{path}}",
             local_configuration.get_operation_host(operation_id)
             {%- for name, parameter in operation|parameters if parameter.in == "path" %}, {{ name|variable_name }}=
             {%- if parameter.schema.type == "string" %}

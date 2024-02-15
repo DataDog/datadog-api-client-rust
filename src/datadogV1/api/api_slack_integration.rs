@@ -201,7 +201,7 @@ impl SlackIntegrationAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
-            "{}/api/v1/integration/slack/configuration/accounts/{account_name}/channels/{channel_name}", 
+            "{}/api/v1/integration/slack/configuration/accounts/{account_name}/channels/{channel_name}",
             local_configuration.get_operation_host(operation_id), account_name=
             urlencode(account_name)
             , channel_name=
@@ -355,7 +355,7 @@ impl SlackIntegrationAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
-            "{}/api/v1/integration/slack/configuration/accounts/{account_name}/channels/{channel_name}", 
+            "{}/api/v1/integration/slack/configuration/accounts/{account_name}/channels/{channel_name}",
             local_configuration.get_operation_host(operation_id), account_name=
             urlencode(account_name)
             , channel_name=
@@ -437,7 +437,7 @@ impl SlackIntegrationAPI {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
-            "{}/api/v1/integration/slack/configuration/accounts/{account_name}/channels/{channel_name}", 
+            "{}/api/v1/integration/slack/configuration/accounts/{account_name}/channels/{channel_name}",
             local_configuration.get_operation_host(operation_id), account_name=
             urlencode(account_name)
             , channel_name=

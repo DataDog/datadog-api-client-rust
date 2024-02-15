@@ -24,12 +24,9 @@ impl ServerConfiguration {
         for (name, variable) in &self.variables {
             let value = variables.get(name).unwrap_or(&variable.default_value);
             if !variable.enum_values.contains(value) && !variable.enum_values.is_empty() {
-                panic!(
-                    "Value {} for variable {} is not in the enum values",
-                    value, name
-                );
+                panic!("Value {value} for variable {name} is not in the enum values");
             }
-            url = url.replace(&format!("{{ '{{{}}}' }}", name), &value);
+            url = url.replace(&format!("{{ '{{{name}}}' }}"), &value);
         }
         url
     }

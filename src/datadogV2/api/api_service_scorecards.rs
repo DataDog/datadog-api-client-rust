@@ -264,7 +264,7 @@ impl ServiceScorecardsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_scorecard_outcomes_batch";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_scorecard_outcomes_batch' is not enabled".to_string(),
@@ -351,7 +351,7 @@ impl ServiceScorecardsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_scorecard_rule";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_scorecard_rule' is not enabled".to_string(),
@@ -434,7 +434,7 @@ impl ServiceScorecardsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_scorecard_rule";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_scorecard_rule' is not enabled".to_string(),
@@ -513,7 +513,7 @@ impl ServiceScorecardsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.list_scorecard_outcomes";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_scorecard_outcomes' is not enabled".to_string(),
@@ -648,7 +648,7 @@ impl ServiceScorecardsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.list_scorecard_rules";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_scorecard_rules' is not enabled".to_string(),

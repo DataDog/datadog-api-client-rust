@@ -1028,7 +1028,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_finding";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_finding' is not enabled".to_string(),
@@ -1416,7 +1416,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.list_findings";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_findings' is not enabled".to_string(),
@@ -1839,7 +1839,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.mute_findings";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation 'v2.mute_findings' is not enabled".to_string(),
