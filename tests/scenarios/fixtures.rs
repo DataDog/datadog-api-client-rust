@@ -589,7 +589,7 @@ fn template(string: String, fixtures: &Value) -> String {
         .expect("failed to apply template")
 }
 
-fn process_param(
+fn process_param_from_response(
     param: &Value,
     undo_operation: &mut UndoOperation,
     given_key: Option<String>,
@@ -626,7 +626,36 @@ fn process_param_from_request(
     given_key: Option<String>,
     world: &DatadogWorld,
 ) {
-    // Implementation of the function goes here
+    let param_name = param.get("name").unwrap().as_str().unwrap().to_string();
+    
+    if let Some(source) = param.get("source") {
+        if let Some(value) = lookup(
+            &source.as_str().unwrap().to_string(),
+            &serde_json::to_value(&world.parameters).unwrap(),
+        ) {
+            undo_operation.parameters.insert(param_name.clone(), value);
+        }
+    }
+
+    if let Some(template_value) = param.get("template") {
+        if let Some(rendered) = template_value.as_str() {
+            let request_params_value: Value;
+            match serde_json::to_value(&world.parameters) {
+                Ok(value)  => {
+                    request_params_value = value;
+                },
+                Err(e) => panic!("failed to convert request parameters to json: {}", e),    
+            }
+            let json_value = match given_key.clone() {
+                Some(key) => template(rendered.to_string(), &world.fixtures.get(&key).unwrap_or_else(|| &request_params_value)),
+                None => template(rendered.to_string(), &serde_json::to_value(&world.parameters).unwrap()),
+            };
+            undo_operation.parameters.insert(
+                param_name.clone(),
+                serde_json::from_str(json_value.as_str()).unwrap(),
+            );
+        }
+    }
 }
 
 fn build_undo(
@@ -669,13 +698,13 @@ fn build_undo(
                 match param.get("origin") {
                     Some(origin) => {
                         if origin == "response" {
-                            process_param(param, &mut undo_operation, given_key.clone(), world);
+                            process_param_from_response(param, &mut undo_operation, given_key.clone(), world);
                         } else if origin == "request" {
                             process_param_from_request(param, &mut undo_operation, given_key.clone(), world);
                         }
                     }
                     None => {
-                        process_param(param, &mut undo_operation, given_key.clone(), world);
+                        process_param_from_response(param, &mut undo_operation, given_key.clone(), world);
                     }
                 }
             }
