@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// An object related to the configuration.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SensitiveDataScannerGetConfigIncludedItem {

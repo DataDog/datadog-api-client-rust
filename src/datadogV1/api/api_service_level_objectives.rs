@@ -6,6 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// DeleteSLOOptionalParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::delete_slo`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct DeleteSLOOptionalParams {
     /// Delete the monitor even if it's referenced by other resources (for example SLO, composite monitor).
@@ -21,6 +22,7 @@ impl DeleteSLOOptionalParams {
 }
 
 /// GetSLOOptionalParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::get_slo`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetSLOOptionalParams {
     /// Get the IDs of SLO monitors that reference this SLO.
@@ -36,6 +38,7 @@ impl GetSLOOptionalParams {
 }
 
 /// GetSLOHistoryOptionalParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::get_slo_history`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetSLOHistoryOptionalParams {
     /// The SLO target. If `target` is passed in, the response will include the remaining error budget and a timeframe value of `custom`.
@@ -60,6 +63,7 @@ impl GetSLOHistoryOptionalParams {
 }
 
 /// ListSLOsOptionalParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::list_sl_os`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListSLOsOptionalParams {
     /// A comma separated list of the IDs of the service level objectives objects.
@@ -110,6 +114,7 @@ impl ListSLOsOptionalParams {
 }
 
 /// SearchSLOOptionalParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::search_slo`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct SearchSLOOptionalParams {
     /// The query string to filter results based on SLO names.

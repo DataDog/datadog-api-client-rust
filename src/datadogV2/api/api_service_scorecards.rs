@@ -7,6 +7,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListScorecardOutcomesOptionalParams is a struct for passing parameters to the method [`ServiceScorecardsAPI::list_scorecard_outcomes`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListScorecardOutcomesOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
@@ -85,6 +86,7 @@ impl ListScorecardOutcomesOptionalParams {
 }
 
 /// ListScorecardRulesOptionalParams is a struct for passing parameters to the method [`ServiceScorecardsAPI::list_scorecard_rules`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListScorecardRulesOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.

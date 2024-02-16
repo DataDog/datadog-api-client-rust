@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// Definition of a logs processor.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum LogsProcessor {

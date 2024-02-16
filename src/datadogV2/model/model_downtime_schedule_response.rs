@@ -6,6 +6,7 @@ use serde::{Deserialize, Serialize};
 /// The schedule that defines when the monitor starts, stops, and recurs. There are two types of schedules:
 /// one-time and recurring. Recurring schedules may have up to five RRULE-based recurrences. If no schedules are
 /// provided, the downtime will begin immediately and never end.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DowntimeScheduleResponse {

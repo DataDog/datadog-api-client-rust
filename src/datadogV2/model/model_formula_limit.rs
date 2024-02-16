@@ -6,6 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Message for specifying limits to the number of values returned by a query.
 /// This limit is only for scalar queries and has no effect on timeseries queries.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FormulaLimit {

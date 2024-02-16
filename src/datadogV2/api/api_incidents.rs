@@ -7,6 +7,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetIncidentOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::get_incident`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetIncidentOptionalParams {
     /// Specifies which types of related objects should be included in the response.
@@ -25,6 +26,7 @@ impl GetIncidentOptionalParams {
 }
 
 /// ListIncidentAttachmentsOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::list_incident_attachments`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListIncidentAttachmentsOptionalParams {
     /// Specifies which types of related objects are included in the response.
@@ -54,6 +56,7 @@ impl ListIncidentAttachmentsOptionalParams {
 }
 
 /// ListIncidentsOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::list_incidents`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListIncidentsOptionalParams {
     /// Specifies which types of related objects should be included in the response.
@@ -86,6 +89,7 @@ impl ListIncidentsOptionalParams {
 }
 
 /// SearchIncidentsOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::search_incidents`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct SearchIncidentsOptionalParams {
     /// Specifies which types of related objects should be included in the response.
@@ -122,6 +126,7 @@ impl SearchIncidentsOptionalParams {
 }
 
 /// UpdateIncidentOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::update_incident`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct UpdateIncidentOptionalParams {
     /// Specifies which types of related objects should be included in the response.
@@ -140,6 +145,7 @@ impl UpdateIncidentOptionalParams {
 }
 
 /// UpdateIncidentAttachmentsOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::update_incident_attachments`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct UpdateIncidentAttachmentsOptionalParams {
     /// Specifies which types of related objects are included in the response.

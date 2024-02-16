@@ -4,11 +4,6 @@
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 
-extern crate reqwest;
-extern crate serde;
-extern crate serde_json;
-extern crate url;
-
 pub mod datadog;
 pub mod datadogV1;
 pub mod datadogV2;

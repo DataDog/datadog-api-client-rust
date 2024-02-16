@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// Query definition for Distribution Widget Histogram Request
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DistributionWidgetHistogramRequestQuery {

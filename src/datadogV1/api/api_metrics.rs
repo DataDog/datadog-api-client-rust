@@ -6,6 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListActiveMetricsOptionalParams is a struct for passing parameters to the method [`MetricsAPI::list_active_metrics`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListActiveMetricsOptionalParams {
     /// Hostname for filtering the list of metrics returned.
@@ -32,6 +33,7 @@ impl ListActiveMetricsOptionalParams {
 }
 
 /// SubmitDistributionPointsOptionalParams is a struct for passing parameters to the method [`MetricsAPI::submit_distribution_points`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct SubmitDistributionPointsOptionalParams {
     /// HTTP header used to compress the media-type.
@@ -50,6 +52,7 @@ impl SubmitDistributionPointsOptionalParams {
 }
 
 /// SubmitMetricsOptionalParams is a struct for passing parameters to the method [`MetricsAPI::submit_metrics`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct SubmitMetricsOptionalParams {
     /// HTTP header used to compress the media-type.

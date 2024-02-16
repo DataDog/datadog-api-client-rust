@@ -6,6 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetHostTotalsOptionalParams is a struct for passing parameters to the method [`HostsAPI::get_host_totals`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetHostTotalsOptionalParams {
     /// Number of seconds from which you want to get total number of active hosts.
@@ -21,6 +22,7 @@ impl GetHostTotalsOptionalParams {
 }
 
 /// ListHostsOptionalParams is a struct for passing parameters to the method [`HostsAPI::list_hosts`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListHostsOptionalParams {
     /// String to filter search results.

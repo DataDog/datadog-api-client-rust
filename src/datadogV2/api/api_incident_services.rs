@@ -7,6 +7,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetIncidentServiceOptionalParams is a struct for passing parameters to the method [`IncidentServicesAPI::get_incident_service`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetIncidentServiceOptionalParams {
     /// Specifies which types of related objects should be included in the response.
@@ -22,6 +23,7 @@ impl GetIncidentServiceOptionalParams {
 }
 
 /// ListIncidentServicesOptionalParams is a struct for passing parameters to the method [`IncidentServicesAPI::list_incident_services`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListIncidentServicesOptionalParams {
     /// Specifies which types of related objects should be included in the response.

@@ -6,6 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListEventsOptionalParams is a struct for passing parameters to the method [`EventsAPI::list_events`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListEventsOptionalParams {
     /// Priority of your events, either `low` or `normal`.

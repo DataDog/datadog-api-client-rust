@@ -6,6 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// A metric to submit to Datadog.
 /// See [Datadog metrics](<https://docs.datadoghq.com/developers/metrics/#custom-metrics-properties>).
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct MetricSeries {

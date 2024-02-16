@@ -6,6 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Response containing the number of lambda functions and sum of the invocations of all lambda functions
 /// for each hour for a given organization.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsageLambdaResponse {

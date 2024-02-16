@@ -7,6 +7,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetCostByOrgOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_cost_by_org`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetCostByOrgOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
@@ -22,6 +23,7 @@ impl GetCostByOrgOptionalParams {
 }
 
 /// GetEstimatedCostByOrgOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_estimated_cost_by_org`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetEstimatedCostByOrgOptionalParams {
     /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`. Defaults to `summary`.
@@ -65,6 +67,7 @@ impl GetEstimatedCostByOrgOptionalParams {
 }
 
 /// GetHistoricalCostByOrgOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_historical_cost_by_org`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetHistoricalCostByOrgOptionalParams {
     /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`.  Defaults to `summary`.
@@ -87,6 +90,7 @@ impl GetHistoricalCostByOrgOptionalParams {
 }
 
 /// GetHourlyUsageOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_hourly_usage`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetHourlyUsageOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
@@ -141,6 +145,7 @@ impl GetHourlyUsageOptionalParams {
 }
 
 /// GetMonthlyCostAttributionOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_monthly_cost_attribution`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetMonthlyCostAttributionOptionalParams {
     /// The direction to sort by: `[desc, asc]`.
@@ -186,6 +191,7 @@ impl GetMonthlyCostAttributionOptionalParams {
 }
 
 /// GetProjectedCostOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_projected_cost`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetProjectedCostOptionalParams {
     /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`. Defaults to `summary`.
@@ -201,6 +207,7 @@ impl GetProjectedCostOptionalParams {
 }
 
 /// GetUsageApplicationSecurityMonitoringOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_application_security_monitoring`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageApplicationSecurityMonitoringOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
@@ -218,6 +225,7 @@ impl GetUsageApplicationSecurityMonitoringOptionalParams {
 }
 
 /// GetUsageLambdaTracedInvocationsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_lambda_traced_invocations`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageLambdaTracedInvocationsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
@@ -235,6 +243,7 @@ impl GetUsageLambdaTracedInvocationsOptionalParams {
 }
 
 /// GetUsageObservabilityPipelinesOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_observability_pipelines`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageObservabilityPipelinesOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending

@@ -9,6 +9,7 @@ use serde_with::skip_serializing_none;
 /// integration, service, or any other tag or attribute.
 ///
 /// A pipeline can contain Nested Pipelines and Processors whereas a Nested Pipeline can only contain Processors.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LogsPipelineProcessor {

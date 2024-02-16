@@ -6,6 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Set the boolean property enabled to enable or disable single sign on with SAML.
 /// See the SAML documentation for more information about all SAML settings.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct OrganizationSettingsSaml {

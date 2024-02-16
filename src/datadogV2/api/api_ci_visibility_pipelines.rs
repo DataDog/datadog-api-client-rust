@@ -6,6 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListCIAppPipelineEventsOptionalParams is a struct for passing parameters to the method [`CIVisibilityPipelinesAPI::list_ci_app_pipeline_events`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListCIAppPipelineEventsOptionalParams {
     /// Search query following log syntax.
@@ -56,6 +57,7 @@ impl ListCIAppPipelineEventsOptionalParams {
 }
 
 /// SearchCIAppPipelineEventsOptionalParams is a struct for passing parameters to the method [`CIVisibilityPipelinesAPI::search_ci_app_pipeline_events`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct SearchCIAppPipelineEventsOptionalParams {
     pub body: Option<crate::datadogV2::model::CIAppPipelineEventsRequest>,

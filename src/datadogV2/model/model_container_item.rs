@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// Possible Container models.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ContainerItem {

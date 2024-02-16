@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// Create service definitions request.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ServiceDefinitionsCreateRequest {

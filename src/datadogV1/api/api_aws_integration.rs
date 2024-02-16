@@ -6,6 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListAWSAccountsOptionalParams is a struct for passing parameters to the method [`AWSIntegrationAPI::list_aws_accounts`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListAWSAccountsOptionalParams {
     /// Only return AWS accounts that matches this `account_id`.
@@ -35,6 +36,7 @@ impl ListAWSAccountsOptionalParams {
 }
 
 /// UpdateAWSAccountOptionalParams is a struct for passing parameters to the method [`AWSIntegrationAPI::update_aws_account`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct UpdateAWSAccountOptionalParams {
     /// Only return AWS accounts that matches this `account_id`.

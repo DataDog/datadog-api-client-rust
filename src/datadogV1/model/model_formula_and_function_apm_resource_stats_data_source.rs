@@ -4,6 +4,7 @@
 
 use serde::{Deserialize, Serialize};
 
+#[non_exhaustive]
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum FormulaAndFunctionApmResourceStatsDataSource {
     #[serde(rename = "apm_resource_stats")]

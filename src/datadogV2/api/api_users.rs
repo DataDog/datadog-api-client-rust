@@ -6,6 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListUsersOptionalParams is a struct for passing parameters to the method [`UsersAPI::list_users`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListUsersOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.

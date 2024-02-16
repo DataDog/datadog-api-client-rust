@@ -6,6 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The funnel visualization displays a funnel of user sessions that maps a sequence of view navigation and user interaction in your application.
 ///
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FunnelWidgetDefinition {

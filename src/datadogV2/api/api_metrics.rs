@@ -7,6 +7,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// EstimateMetricsOutputSeriesOptionalParams is a struct for passing parameters to the method [`MetricsAPI::estimate_metrics_output_series`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct EstimateMetricsOutputSeriesOptionalParams {
     /// Filtered tag keys that the metric is configured to query with.
@@ -50,6 +51,7 @@ impl EstimateMetricsOutputSeriesOptionalParams {
 }
 
 /// ListActiveMetricConfigurationsOptionalParams is a struct for passing parameters to the method [`MetricsAPI::list_active_metric_configurations`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListActiveMetricConfigurationsOptionalParams {
     /// The number of seconds of look back (from now).
@@ -67,6 +69,7 @@ impl ListActiveMetricConfigurationsOptionalParams {
 }
 
 /// ListTagConfigurationsOptionalParams is a struct for passing parameters to the method [`MetricsAPI::list_tag_configurations`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListTagConfigurationsOptionalParams {
     /// Filter custom metrics that have configured tags.
@@ -135,6 +138,7 @@ impl ListTagConfigurationsOptionalParams {
 }
 
 /// SubmitMetricsOptionalParams is a struct for passing parameters to the method [`MetricsAPI::submit_metrics`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct SubmitMetricsOptionalParams {
     /// HTTP header used to compress the media-type.

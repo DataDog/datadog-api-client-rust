@@ -22,6 +22,7 @@ use serde_with::skip_serializing_none;
 ///
 ///   **Note:** If multiple log status remapper processors can be applied to a given log,
 ///   only the first one (according to the pipelines order) is taken into account.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LogsStatusRemapper {

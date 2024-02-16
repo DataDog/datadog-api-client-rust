@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// Create a new rule.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SecurityMonitoringRuleCreatePayload {

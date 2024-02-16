@@ -6,6 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Object containing a deleted Synthetic test ID with the associated
 /// deletion timestamp.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SyntheticsDeletedTest {

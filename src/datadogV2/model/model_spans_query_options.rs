@@ -6,6 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Global query options that are used during the query.
 /// Note: You should only supply timezone or time offset but not both otherwise the query will fail.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SpansQueryOptions {

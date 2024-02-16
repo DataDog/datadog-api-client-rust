@@ -7,6 +7,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetFindingOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::get_finding`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetFindingOptionalParams {
     /// Return the finding for a given snapshot of time (Unix ms).
@@ -22,6 +23,7 @@ impl GetFindingOptionalParams {
 }
 
 /// ListFindingsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_findings`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListFindingsOptionalParams {
     /// Limit the number of findings returned. Must be <= 1000.
@@ -117,6 +119,7 @@ impl ListFindingsOptionalParams {
 }
 
 /// ListSecurityMonitoringRulesOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_security_monitoring_rules`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListSecurityMonitoringRulesOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
@@ -139,6 +142,7 @@ impl ListSecurityMonitoringRulesOptionalParams {
 }
 
 /// ListSecurityMonitoringSignalsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_security_monitoring_signals`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListSecurityMonitoringSignalsOptionalParams {
     /// The search query for security signals.
@@ -192,6 +196,7 @@ impl ListSecurityMonitoringSignalsOptionalParams {
 }
 
 /// SearchSecurityMonitoringSignalsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::search_security_monitoring_signals`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct SearchSecurityMonitoringSignalsOptionalParams {
     pub body: Option<crate::datadogV2::model::SecurityMonitoringSignalListRequest>,
