@@ -589,6 +589,46 @@ fn template(string: String, fixtures: &Value) -> String {
         .expect("failed to apply template")
 }
 
+fn process_param(
+    param: &Value,
+    undo_operation: &mut UndoOperation,
+    given_key: Option<String>,
+    world: &DatadogWorld,
+) {
+    let param_name = param.get("name").unwrap().as_str().unwrap().to_string();
+    
+    if let Some(source) = param.get("source") {
+        if let Some(value) = lookup(
+            &source.as_str().unwrap().to_string(),
+            &world.response.object,
+        ) {
+            undo_operation.parameters.insert(param_name.clone(), value);
+        }
+    }
+
+    if let Some(template_value) = param.get("template") {
+        if let Some(rendered) = template_value.as_str() {
+            let json_value = match given_key.clone() {
+                Some(key) => template(rendered.to_string(), &world.fixtures.get(&key).unwrap_or_else(|| &world.response.object)),
+                None => template(rendered.to_string(), &world.response.object),
+            };
+            undo_operation.parameters.insert(
+                param_name.clone(),
+                serde_json::from_str(json_value.as_str()).unwrap(),
+            );
+        }
+    }
+}
+
+fn process_param_from_request(
+    param: &Value,
+    undo_operation: &mut UndoOperation,
+    given_key: Option<String>,
+    world: &DatadogWorld,
+) {
+    // Implementation of the function goes here
+}
+
 fn build_undo(
     world: &mut DatadogWorld,
     operation_id: &String,
@@ -626,29 +666,18 @@ fn build_undo(
             };
             let params = undo.get("parameters").unwrap().as_array().unwrap();
             for param in params {
-                let param_name = param.get("name").unwrap().as_str().unwrap().to_string();
-                if let Some(source) = param.get("source") {
-                    if let Some(value) = lookup(
-                        &source.as_str().unwrap().to_string(),
-                        &world.response.object,
-                    ) {
-                        undo_operation.parameters.insert(param_name.clone(), value);
+                match param.get("origin") {
+                    Some(origin) => {
+                        if origin == "response" {
+                            process_param(param, &mut undo_operation, given_key.clone(), world);
+                        } else if origin == "request" {
+                            process_param_from_request(param, &mut undo_operation, given_key.clone(), world);
+                        }
                     }
-                };
-                if let Some(template_value) = param.get("template") {
-                    if let Some(rendered) = template_value.as_str() {
-                        let json_value = match given_key.clone() {
-                            Some(key) => {
-                                template(rendered.to_string(), &world.fixtures.get(key).unwrap())
-                            }
-                            None => template(rendered.to_string(), &world.response.object),
-                        };
-                        undo_operation.parameters.insert(
-                            param_name.clone(),
-                            serde_json::from_str(json_value.as_str()).unwrap(),
-                        );
-                    };
-                };
+                    None => {
+                        process_param(param, &mut undo_operation, given_key.clone(), world);
+                    }
+                }
             }
             Ok(Some(undo_operation))
         }
