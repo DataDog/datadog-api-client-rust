@@ -157,11 +157,6 @@ pub async fn before_scenario(
         }
     };
     world.config.client(client);
-    world
-        .config
-        .server_variables
-        .insert("site".into(), "datadoghq.com".into());
-
     world.config.api_key = Some("00000000000000000000000000000000".to_string());
     world.config.app_key = Some("0000000000000000000000000000000000000000".to_string());
 
