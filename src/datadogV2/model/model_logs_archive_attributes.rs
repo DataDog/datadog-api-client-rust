@@ -10,6 +10,7 @@ use serde_with::skip_serializing_none;
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LogsArchiveAttributes {
     /// An archive's destination.
+    #[serialize_always]
     #[serde(rename = "destination")]
     pub destination: Option<crate::datadogV2::model::LogsArchiveDestination>,
     /// To store the tags in the archive, set the value "true".
