@@ -215,11 +215,17 @@ pub async fn after_scenario(
 #[given(expr = "a valid \"apiKeyAuth\" key in the system")]
 fn valid_apikey_auth(world: &mut DatadogWorld) {
     world.config.api_key_auth = env::var("DD_TEST_CLIENT_API_KEY").ok();
+    if let Some(api) = world.api_name.as_ref() {
+        initialize_api_instance(world, api.to_string());
+    }
 }
 
 #[given(expr = "a valid \"appKeyAuth\" key in the system")]
 fn valid_appkey_auth(world: &mut DatadogWorld) {
     world.config.app_key_auth = env::var("DD_TEST_CLIENT_APP_KEY").ok();
+    if let Some(api) = world.api_name.as_ref() {
+        initialize_api_instance(world, api.to_string());
+    }
 }
 
 #[given(expr = "an instance of {string} API")]
