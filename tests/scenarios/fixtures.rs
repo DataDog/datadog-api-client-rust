@@ -17,12 +17,7 @@ use rvcr::{VCRMiddleware, VCRMode};
 use serde_json::{json, Value};
 use sha256::digest;
 use std::{
-    collections::{HashMap, HashSet},
-    env,
-    fs::{create_dir_all, read_to_string},
-    ops::Add,
-    path::PathBuf,
-    str::FromStr,
+    collections::{HashMap, HashSet}, env, fs::{create_dir_all, read_to_string}, ops::Add, path::PathBuf, str::FromStr
 };
 
 pub type TestCall = fn(&mut DatadogWorld, &HashMap<String, Value>);
@@ -112,7 +107,7 @@ pub async fn before_scenario(
             // freeze_file
             //     .write_all(
             //         DateTime::to_rfc3339(
-            //             &DateTime::from_timestamp(frozen_time as i64, 0)
+            //             &DateTime::from_timestamp(frozen_time.num_milliseconds() as i64, 0)
             //                 .expect("failed to convert timestamp to datetime"),
             //         )
             //         .as_bytes(),
@@ -305,7 +300,7 @@ pub fn given_resource_in_system(
         } else if let Value::Object(ref mut map) = world.fixtures {
             map.insert(given_key.clone(), world.response.object.clone());
         }
-
+        world.parameters = given_parameters.clone();
         match build_undo(world, &operation_id, Some(given_key)) {
             Ok(Some(undo)) => world.undo_operations.push(undo),
             Ok(None) => {}
@@ -636,20 +631,14 @@ fn process_param_from_request(
             undo_operation.parameters.insert(param_name.clone(), value);
         }
     }
-
+    let request_params_value = &serde_json::to_value(&world.parameters.get(&param_name).unwrap_or(&serde_json::Value::Null)).unwrap();
     if let Some(template_value) = param.get("template") {
         if let Some(rendered) = template_value.as_str() {
-            let request_params_value: Value;
-            match serde_json::to_value(&world.parameters) {
-                Ok(value)  => {
-                    request_params_value = value;
-                },
-                Err(e) => panic!("failed to convert request parameters to json: {}", e),    
-            }
             let json_value = match given_key.clone() {
-                Some(key) => template(rendered.to_string(), &world.fixtures.get(&key).unwrap_or_else(|| &request_params_value)),
-                None => template(rendered.to_string(), &serde_json::to_value(&world.parameters).unwrap()),
+                Some(key) => template(rendered.to_string(), &world.fixtures.get(&key).unwrap_or_else(|| request_params_value)),
+                None => template(rendered.to_string(), request_params_value),
             };
+            println!("Json Value: {}", json_value.clone());
             undo_operation.parameters.insert(
                 param_name.clone(),
                 serde_json::from_str(json_value.as_str()).unwrap(),
