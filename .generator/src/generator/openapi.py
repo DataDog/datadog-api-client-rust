@@ -82,6 +82,11 @@ def type_to_rust(schema, alternative_name=None, render_nullable=False, render_op
     raise ValueError(f"Unknown type {type_}")
 
 
+def get_schema_for_attribute(schema, attribute, current_name=None):
+    """Return schema for the attribute."""
+    return schema.get("properties", {}).get(attribute)
+
+
 def get_type_for_attribute(schema, attribute, current_name=None):
     """Return Rust type name for the attribute."""
     child_schema = schema.get("properties", {}).get(attribute)
@@ -307,6 +312,7 @@ def parameter_schema(parameter):
         for content in parameter.get("content", {}).values():
             if "schema" in content:
                 return content["schema"]
+
     raise ValueError(f"Unknown schema for parameter {parameter}")
 
 
@@ -314,8 +320,9 @@ def return_type(operation, version):
     for response in operation.get("responses", {}).values():
         for content in response.get("content", {}).values():
             if "schema" in content:
-                return type_to_rust(content["schema"], version=version, render_option=False)
-        return
+                return_type = type_to_rust(content["schema"], version=version, render_option=False)
+                return return_type, content["schema"]
+        return None, None
 
 
 def accept_headers(operation):
@@ -404,25 +411,60 @@ def response(operation, status_code=None):
 
 def get_default(operation, attribute_path):
     attrs = attribute_path.split(".")
+
     for name, parameter in parameters(operation):
         if name == attrs[0]:
             break
     if name == attribute_path:
         # We found a top level attribute matching the full path, let's use the default
-        return parameter["schema"]["default"]
+        return formatter.format_value(parameter["schema"]["default"])
 
     if name == "body":
         parameter = next(iter(parameter["content"].values()))["schema"]
     for attr in attrs[1:]:
         parameter = parameter["properties"][attr]
-    return parameter["default"]
+
+    return formatter.format_value(parameter["default"])
 
 
-def get_container(operation, attribute_path, container_name="o[0]"):
+def get_accessors(operation, attribute_path, container_name="params"):
+    param_path = attribute_path.split(".")
+    for name, parameter in parameters(operation):
+        if name == param_path[0]:
+            break
+    
+    required = parameter["required"]
+    getter = setter = container_name
+    if name == "body":
+        parameter = next(iter(parameter["content"].values()))
+        if required:
+            param_path = param_path[1:]
+            getter = setter = f"body"
+
+    schema = parameter["schema"]
+    for attr in param_path:
+        required = True if attr in schema.get("required", []) else False
+        
+        name = formatter.attribute_name(attr)
+        if required or attr == param_path[0]:
+            getter = setter = f"{getter}.{name}"
+        else:
+            getter = f"{getter}.as_ref().unwrap().{name}"
+            setter = f"{setter}.as_mut().unwrap().{name}"
+
+        if attr != param_path[-1] and attr != "body":
+            required = attr in schema.get("required", [])
+            schema = schema["properties"][attr]
+
+    return getter, setter, required, schema
+
+
+def get_container(operation, attribute_path, container_name="params"):    
     attribute_name = attribute_path.split(".")[0]
     for name, parameter in parameters(operation):
         if name == attribute_name and parameter["required"]:
             return '{}.{}'.format(name, ".".join(formatter.attribute_name(a) for a in attribute_path.split(".")[1:]))
+
     return f'{container_name}.{formatter.attribute_path(attribute_path)}'
 
 
@@ -434,7 +476,7 @@ def get_deprecated(schema):
     return False
 
 
-def get_container_type(operation, attribute_path, stop=None):
+def get_container_type(operation, attribute_path, stop=None, **kwargs):
     attrs = attribute_path.split(".")[:stop]
     for name, parameter in parameters(operation):
         if name == attrs[0]:
@@ -444,15 +486,15 @@ def get_container_type(operation, attribute_path, stop=None):
         parameter = next(iter(parameter["content"].values()))
         
     if name == attrs[0] and len(attrs) == 1:
-        return type_to_rust(parameter["schema"])
-
+        return type_to_rust(parameter["schema"], **kwargs)
+    
     parameter = parameter["schema"]
     for attr in attrs[1:]:
         parameter = parameter["properties"][attr]
-    return type_to_rust(parameter)
+    return type_to_rust(parameter, **kwargs)
 
 
-def get_type_at_path(operation, attribute_path):
+def get_type_at_path(operation, attribute_path, version=None):
     content = None
     for code, response in operation.get("responses", {}).items():
         if int(code) >= 300:
@@ -463,9 +505,11 @@ def get_type_at_path(operation, attribute_path):
     if content is None:
         raise RuntimeError("Default response not found")
     content = content["schema"]
-    for attr in attribute_path.split("."):
-        content = content["properties"][attr]
-    return get_name(content.get("items"))
+    if attribute_path:
+        for attr in attribute_path.split("."):
+            content = content["properties"][attr]
+
+    return get_name(content.get("items"), version=version)
 
 
 def generate_value(schema, use_random=False, prefix=None):
