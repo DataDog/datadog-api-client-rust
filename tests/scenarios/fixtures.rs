@@ -635,10 +635,15 @@ fn process_param_from_request(
     if let Some(template_value) = param.get("template") {
         if let Some(rendered) = template_value.as_str() {
             let json_value = match given_key.clone() {
-                Some(key) => template(rendered.to_string(), &world.fixtures.get(&key).unwrap_or_else(|| request_params_value)),
+                Some(key) => {
+                    let fixture_value = match world.fixtures.get(&key){
+                        Some(value) if !value.as_object().unwrap().is_empty()=> value,
+                        _ => request_params_value,
+                    };
+                    template(rendered.to_string(), fixture_value)
+                },
                 None => template(rendered.to_string(), request_params_value),
             };
-            println!("Json Value: {}", json_value.clone());
             undo_operation.parameters.insert(
                 param_name.clone(),
                 serde_json::from_str(json_value.as_str()).unwrap(),
