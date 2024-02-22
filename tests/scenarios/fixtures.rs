@@ -320,8 +320,8 @@ pub fn given_resource_in_system(
         } else if let Value::Object(ref mut map) = world.fixtures {
             map.insert(given_key.clone(), world.response.object.clone());
         }
-        world.parameters = given_parameters.clone();
-        match build_undo(world, &operation_id, Some(given_key)) {
+        //world.parameters = given_parameters.clone();
+        match build_undo(world, &operation_id, Some(given_key),given_parameters.clone()) {
             Ok(Some(undo)) => world.undo_operations.push(undo),
             Ok(None) => {}
             Err(err) => panic!("{err}"),
@@ -406,7 +406,7 @@ fn request_sent(world: &mut DatadogWorld) {
             world.operation_id
         ))(world, &world.parameters.clone());
 
-    match build_undo(world, &world.operation_id.clone(), None) {
+    match build_undo(world, &world.operation_id.clone(), None, world.parameters.clone()) {
         Ok(Some(undo)) => {
             world.undo_operations.push(undo);
         }
@@ -650,18 +650,19 @@ fn process_param_from_request(
     undo_operation: &mut UndoOperation,
     given_key: Option<String>,
     world: &DatadogWorld,
+    request_parameters: HashMap<String, Value>,
 ) {
     let param_name = param.get("name").unwrap().as_str().unwrap().to_string();
     
     if let Some(source) = param.get("source") {
         if let Some(value) = lookup(
             &source.as_str().unwrap().to_string(),
-            &serde_json::to_value(&world.parameters).unwrap(),
+            &serde_json::to_value(&request_parameters).unwrap(),
         ) {
             undo_operation.parameters.insert(param_name.clone(), value);
         }
     }
-    let request_params_value = &serde_json::to_value(&world.parameters.get(&param_name).unwrap_or(&serde_json::Value::Null)).unwrap();
+    let request_params_value = &serde_json::to_value(&request_parameters.get(&param_name).unwrap_or(&serde_json::Value::Null)).unwrap();
     if let Some(template_value) = param.get("template") {
         if let Some(rendered) = template_value.as_str() {
             let json_value = match given_key.clone() {
@@ -674,6 +675,8 @@ fn process_param_from_request(
                 },
                 None => template(rendered.to_string(), request_params_value),
             };
+
+            println!("json_value: {:?}", json_value);
             undo_operation.parameters.insert(
                 param_name.clone(),
                 serde_json::from_str(json_value.as_str()).unwrap(),
@@ -686,6 +689,7 @@ fn build_undo(
     world: &mut DatadogWorld,
     operation_id: &String,
     given_key: Option<String>,
+    request_parameters: HashMap<String, Value>,
 ) -> Result<Option<UndoOperation>, Value> {
     if world.response.code < 200 || world.response.code >= 300 {
         return Ok(None);
@@ -736,13 +740,14 @@ fn build_undo(
             initialize_api_instance(world, undo_operation.tag.clone().unwrap());
 
             let params = undo.get("parameters").unwrap().as_array().unwrap();
+            println!("undo params: {:?}", params);
             for param in params {
                 match param.get("origin") {
                     Some(origin) => {
                         if origin == "response" {
                             process_param_from_response(param, &mut undo_operation, given_key.clone(), world);
                         } else if origin == "request" {
-                            process_param_from_request(param, &mut undo_operation, given_key.clone(), world);
+                            process_param_from_request(param, &mut undo_operation, given_key.clone(), world, request_parameters.clone());
                         }
                     }
                     None => {
