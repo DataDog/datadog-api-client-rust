@@ -648,8 +648,6 @@ fn process_param_from_response(
 fn process_param_from_request(
     param: &Value,
     undo_operation: &mut UndoOperation,
-    given_key: Option<String>,
-    world: &DatadogWorld,
     request_parameters: HashMap<String, Value>,
 ) {
     let param_name = param.get("name").unwrap().as_str().unwrap().to_string();
@@ -665,17 +663,7 @@ fn process_param_from_request(
     let request_params_value = &serde_json::to_value(&request_parameters.get(&param_name).unwrap_or(&serde_json::Value::Null)).unwrap();
     if let Some(template_value) = param.get("template") {
         if let Some(rendered) = template_value.as_str() {
-            let json_value = match given_key.clone() {
-                Some(key) => {
-                    let fixture_value = match world.fixtures.get(&key){
-                        Some(value) if !value.as_object().unwrap().is_empty()=> value,
-                        _ => request_params_value,
-                    };
-                    template(rendered.to_string(), fixture_value)
-                },
-                None => template(rendered.to_string(), request_params_value),
-            };
-
+            let json_value = template(rendered.to_string(), request_params_value);
             println!("json_value: {:?}", json_value);
             undo_operation.parameters.insert(
                 param_name.clone(),
@@ -747,7 +735,7 @@ fn build_undo(
                         if origin == "response" {
                             process_param_from_response(param, &mut undo_operation, given_key.clone(), world);
                         } else if origin == "request" {
-                            process_param_from_request(param, &mut undo_operation, given_key.clone(), world, request_parameters.clone());
+                            process_param_from_request(param, &mut undo_operation, request_parameters.clone());
                         }
                     }
                     None => {
