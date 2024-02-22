@@ -664,7 +664,6 @@ fn process_param_from_request(
     if let Some(template_value) = param.get("template") {
         if let Some(rendered) = template_value.as_str() {
             let json_value = template(rendered.to_string(), request_params_value);
-            println!("json_value: {:?}", json_value);
             undo_operation.parameters.insert(
                 param_name.clone(),
                 serde_json::from_str(json_value.as_str()).unwrap(),
@@ -728,7 +727,6 @@ fn build_undo(
             initialize_api_instance(world, undo_operation.tag.clone().unwrap());
 
             let params = undo.get("parameters").unwrap().as_array().unwrap();
-            println!("undo params: {:?}", params);
             for param in params {
                 match param.get("origin") {
                     Some(origin) => {
