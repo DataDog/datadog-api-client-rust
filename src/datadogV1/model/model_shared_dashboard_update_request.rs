@@ -10,6 +10,7 @@ use serde_with::skip_serializing_none;
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SharedDashboardUpdateRequest {
     /// Timeframe setting for the shared dashboard.
+    #[serialize_always]
     #[serde(rename = "global_time")]
     pub global_time: Option<crate::datadogV1::model::SharedDashboardUpdateRequestGlobalTime>,
     /// Whether to allow viewers to select a different global time setting for the shared dashboard.

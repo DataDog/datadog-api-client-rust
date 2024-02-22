@@ -2,6 +2,7 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use log::warn;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -418,6 +419,16 @@ impl IncidentsAPI {
         ResponseContent<crate::datadogV2::model::IncidentResponse>,
         Error<CreateIncidentError>,
     > {
+        let operation_id = "v2.create_incident".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.create_incident' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         let local_client = &local_configuration.client;
@@ -500,6 +511,16 @@ impl IncidentsAPI {
         ResponseContent<crate::datadogV2::model::IncidentIntegrationMetadataResponse>,
         Error<CreateIncidentIntegrationError>,
     > {
+        let operation_id = "v2.create_incident_integration".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.create_incident_integration' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         let local_client = &local_configuration.client;
@@ -584,6 +605,16 @@ impl IncidentsAPI {
         ResponseContent<crate::datadogV2::model::IncidentTodoResponse>,
         Error<CreateIncidentTodoError>,
     > {
+        let operation_id = "v2.create_incident_todo".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.create_incident_todo' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         let local_client = &local_configuration.client;
@@ -659,6 +690,16 @@ impl IncidentsAPI {
         &self,
         incident_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteIncidentError>> {
+        let operation_id = "v2.delete_incident".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.delete_incident' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         let local_client = &local_configuration.client;
@@ -730,6 +771,16 @@ impl IncidentsAPI {
         incident_id: String,
         integration_metadata_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteIncidentIntegrationError>> {
+        let operation_id = "v2.delete_incident_integration".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.delete_incident_integration' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         let local_client = &local_configuration.client;
@@ -803,6 +854,16 @@ impl IncidentsAPI {
         incident_id: String,
         todo_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteIncidentTodoError>> {
+        let operation_id = "v2.delete_incident_todo".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.delete_incident_todo' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         let local_client = &local_configuration.client;
@@ -873,6 +934,16 @@ impl IncidentsAPI {
         params: GetIncidentOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV2::model::IncidentResponse>, Error<GetIncidentError>>
     {
+        let operation_id = "v2.get_incident".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_incident' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         // unbox and build optional parameters
@@ -966,6 +1037,16 @@ impl IncidentsAPI {
         ResponseContent<crate::datadogV2::model::IncidentIntegrationMetadataResponse>,
         Error<GetIncidentIntegrationError>,
     > {
+        let operation_id = "v2.get_incident_integration".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_incident_integration' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         let local_client = &local_configuration.client;
@@ -1045,6 +1126,16 @@ impl IncidentsAPI {
         ResponseContent<crate::datadogV2::model::IncidentTodoResponse>,
         Error<GetIncidentTodoError>,
     > {
+        let operation_id = "v2.get_incident_todo".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_incident_todo' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         let local_client = &local_configuration.client;
@@ -1125,6 +1216,16 @@ impl IncidentsAPI {
         ResponseContent<crate::datadogV2::model::IncidentAttachmentsResponse>,
         Error<ListIncidentAttachmentsError>,
     > {
+        let operation_id = "v2.list_incident_attachments".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_incident_attachments' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         // unbox and build optional parameters
@@ -1229,6 +1330,16 @@ impl IncidentsAPI {
         ResponseContent<crate::datadogV2::model::IncidentIntegrationMetadataListResponse>,
         Error<ListIncidentIntegrationsError>,
     > {
+        let operation_id = "v2.list_incident_integrations".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_incident_integrations' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         let local_client = &local_configuration.client;
@@ -1304,6 +1415,16 @@ impl IncidentsAPI {
         ResponseContent<crate::datadogV2::model::IncidentTodoListResponse>,
         Error<ListIncidentTodosError>,
     > {
+        let operation_id = "v2.list_incident_todos".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_incident_todos' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         let local_client = &local_configuration.client;
@@ -1375,6 +1496,16 @@ impl IncidentsAPI {
         ResponseContent<crate::datadogV2::model::IncidentsResponse>,
         Error<ListIncidentsError>,
     > {
+        let operation_id = "v2.list_incidents".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_incidents' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         // unbox and build optional parameters
@@ -1470,6 +1601,16 @@ impl IncidentsAPI {
         ResponseContent<crate::datadogV2::model::IncidentSearchResponse>,
         Error<SearchIncidentsError>,
     > {
+        let operation_id = "v2.search_incidents".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.search_incidents' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         // unbox and build optional parameters
@@ -1568,6 +1709,16 @@ impl IncidentsAPI {
         ResponseContent<crate::datadogV2::model::IncidentResponse>,
         Error<UpdateIncidentError>,
     > {
+        let operation_id = "v2.update_incident".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.update_incident' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         // unbox and build optional parameters
@@ -1671,6 +1822,16 @@ impl IncidentsAPI {
         ResponseContent<crate::datadogV2::model::IncidentAttachmentUpdateResponse>,
         Error<UpdateIncidentAttachmentsError>,
     > {
+        let operation_id = "v2.update_incident_attachments".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.update_incident_attachments' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         // unbox and build optional parameters
@@ -1774,6 +1935,16 @@ impl IncidentsAPI {
         ResponseContent<crate::datadogV2::model::IncidentIntegrationMetadataResponse>,
         Error<UpdateIncidentIntegrationError>,
     > {
+        let operation_id = "v2.update_incident_integration".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.update_incident_integration' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         let local_client = &local_configuration.client;
@@ -1862,6 +2033,16 @@ impl IncidentsAPI {
         ResponseContent<crate::datadogV2::model::IncidentTodoResponse>,
         Error<UpdateIncidentTodoError>,
     > {
+        let operation_id = "v2.update_incident_todo".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.update_incident_todo' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         let local_client = &local_configuration.client;

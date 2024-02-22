@@ -2,6 +2,7 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use log::warn;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -400,6 +401,16 @@ impl UsageMeteringAPI {
         ResponseContent<crate::datadogV2::model::ActiveBillingDimensionsResponse>,
         Error<GetActiveBillingDimensionsError>,
     > {
+        let operation_id = "v2.get_active_billing_dimensions".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_active_billing_dimensions' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         let local_client = &local_configuration.client;
@@ -918,6 +929,16 @@ impl UsageMeteringAPI {
         ResponseContent<crate::datadogV2::model::MonthlyCostAttributionResponse>,
         Error<GetMonthlyCostAttributionError>,
     > {
+        let operation_id = "v2.get_monthly_cost_attribution".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_monthly_cost_attribution' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         // unbox and build optional parameters
