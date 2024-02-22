@@ -320,7 +320,6 @@ pub fn given_resource_in_system(
         } else if let Value::Object(ref mut map) = world.fixtures {
             map.insert(given_key.clone(), world.response.object.clone());
         }
-        //world.parameters = given_parameters.clone();
         match build_undo(world, &operation_id, Some(given_key),given_parameters.clone()) {
             Ok(Some(undo)) => world.undo_operations.push(undo),
             Ok(None) => {}
