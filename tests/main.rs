@@ -95,27 +95,20 @@ async fn main() {
         .filter_run("tests/scenarios/features/".to_string(), move |_, _, sc| {
             let name_re = parsed_cli.re_filter.clone();
             let name_match = name_re
-                .and_then(|filter| {
-                    if filter.is_match(sc.name.as_str()) {
-                        Some(true)
-                    } else {
-                        Some(false)
-                    }
-                })
+                .and_then(|filter| Some(filter.is_match(sc.name.as_str())))
                 .unwrap_or(true);
             if !name_match {
-                return false;
-            }
-            if sc.tags.contains(&"skip".into()) || sc.tags.contains(&"skip-rust".into()) {
-                return false;
+                false
+            } else if sc.tags.contains(&"skip".into()) || sc.tags.contains(&"skip-rust".into()) {
+                false
             } else if !is_replay && sc.tags.contains(&"replay-only".into()) {
-                return false;
+                false
             } else if is_replay && sc.tags.contains(&"integration-only".into()) {
-                return false;
+                false
             } else if sc.tags.contains(&"with-pagination".into()) {
-                return false;
+                false
             } else {
-                return true;
+                true
             }
         })
         .await;

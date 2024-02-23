@@ -180,8 +180,8 @@ impl {{ structName }} {
         {%- for name in authMethod %}
         {%- set schema = openapi.components.securitySchemes[name] %}
         {%- if schema.type == "apiKey" and schema.in != "cookie" %}
-        if let Some(ref local_key) = local_configuration.{{name|variable_name|replace("_auth", "")}} {
-            local_req_builder = local_req_builder.header("{{schema.name}}", local_key);
+        if let Some(local_key) = local_configuration.auth_keys.get("{{ name }}") {
+            local_req_builder = local_req_builder.header("{{schema.name}}", &local_key.key);
         };
         {%- endif %}
         {%- endfor %}

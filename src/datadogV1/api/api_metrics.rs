@@ -206,11 +206,11 @@ impl MetricsAPI {
         );
 
         // build auth
-        if let Some(ref local_key) = local_configuration.api_key {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_key) = local_configuration.app_key {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -294,11 +294,11 @@ impl MetricsAPI {
         );
 
         // build auth
-        if let Some(ref local_key) = local_configuration.api_key {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_key) = local_configuration.app_key {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -368,11 +368,11 @@ impl MetricsAPI {
         );
 
         // build auth
-        if let Some(ref local_key) = local_configuration.api_key {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_key) = local_configuration.app_key {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -447,11 +447,11 @@ impl MetricsAPI {
         );
 
         // build auth
-        if let Some(ref local_key) = local_configuration.api_key {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_key) = local_configuration.app_key {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -532,8 +532,8 @@ impl MetricsAPI {
         );
 
         // build auth
-        if let Some(ref local_key) = local_configuration.api_key {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
 
         // build body parameters
@@ -637,8 +637,8 @@ impl MetricsAPI {
         );
 
         // build auth
-        if let Some(ref local_key) = local_configuration.api_key {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
 
         // build body parameters
@@ -719,11 +719,11 @@ impl MetricsAPI {
         );
 
         // build auth
-        if let Some(ref local_key) = local_configuration.api_key {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_key);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_key) = local_configuration.app_key {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_key);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         // build body parameters

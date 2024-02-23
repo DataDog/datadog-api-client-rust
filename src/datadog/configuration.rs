@@ -34,14 +34,19 @@ impl ServerConfiguration {
     }
 }
 
+#[derive(Debug, Clone)]
+pub struct APIKey {
+    pub key: String,
+    pub prefix: String,
+}
+
 #[non_exhaustive]
 #[derive(Debug, Clone)]
 pub struct Configuration {
     pub(crate) user_agent: String,
     pub(crate) client: reqwest_middleware::ClientWithMiddleware,
-    pub unstable_operations: HashMap<String, bool>,
-    pub api_key: Option<String>,
-    pub app_key: Option<String>,
+    pub(crate) unstable_operations: HashMap<String, bool>,
+    pub(crate) auth_keys: HashMap<String, APIKey>,
     pub server_index: usize,
     pub server_variables: HashMap<String, String>,
     pub server_operation_index: HashMap<String, usize>,
@@ -53,83 +58,8 @@ impl Configuration {
         Self::default()
     }
 
-    pub fn with_keys(api_key: Option<String>, app_key: Option<String>) -> Self {
-        let http_client = reqwest_middleware::ClientBuilder::new(reqwest::Client::new());
-        let user_agent = format!(
-            "datadog-api-client-rust/{} (rust {}; os {}; arch {})",
-            option_env!("CARGO_PKG_VERSION").unwrap_or("?"),
-            option_env!("DD_RUSTC_VERSION").unwrap_or("?"),
-            env::consts::OS,
-            env::consts::ARCH,
-        );
-        let unstable_operations = HashMap::from([
-            ("v2.get_active_billing_dimensions".to_owned(), false),
-            ("v2.get_monthly_cost_attribution".to_owned(), false),
-            ("v2.create_dora_deployment".to_owned(), false),
-            ("v2.create_dora_incident".to_owned(), false),
-            ("v2.create_incident".to_owned(), false),
-            ("v2.create_incident_integration".to_owned(), false),
-            ("v2.create_incident_todo".to_owned(), false),
-            ("v2.delete_incident".to_owned(), false),
-            ("v2.delete_incident_integration".to_owned(), false),
-            ("v2.delete_incident_todo".to_owned(), false),
-            ("v2.get_incident".to_owned(), false),
-            ("v2.get_incident_integration".to_owned(), false),
-            ("v2.get_incident_todo".to_owned(), false),
-            ("v2.list_incident_attachments".to_owned(), false),
-            ("v2.list_incident_integrations".to_owned(), false),
-            ("v2.list_incidents".to_owned(), false),
-            ("v2.list_incident_todos".to_owned(), false),
-            ("v2.search_incidents".to_owned(), false),
-            ("v2.update_incident".to_owned(), false),
-            ("v2.update_incident_attachments".to_owned(), false),
-            ("v2.update_incident_integration".to_owned(), false),
-            ("v2.update_incident_todo".to_owned(), false),
-            ("v2.query_scalar_data".to_owned(), false),
-            ("v2.query_timeseries_data".to_owned(), false),
-            ("v2.get_finding".to_owned(), false),
-            ("v2.list_findings".to_owned(), false),
-            ("v2.mute_findings".to_owned(), false),
-            ("v2.create_scorecard_outcomes_batch".to_owned(), false),
-            ("v2.create_scorecard_rule".to_owned(), false),
-            ("v2.delete_scorecard_rule".to_owned(), false),
-            ("v2.list_scorecard_outcomes".to_owned(), false),
-            ("v2.list_scorecard_rules".to_owned(), false),
-            ("v2.create_incident_service".to_owned(), false),
-            ("v2.delete_incident_service".to_owned(), false),
-            ("v2.get_incident_service".to_owned(), false),
-            ("v2.list_incident_services".to_owned(), false),
-            ("v2.update_incident_service".to_owned(), false),
-            ("v2.create_incident_team".to_owned(), false),
-            ("v2.delete_incident_team".to_owned(), false),
-            ("v2.get_incident_team".to_owned(), false),
-            ("v2.list_incident_teams".to_owned(), false),
-            ("v2.update_incident_team".to_owned(), false),
-        ]);
-
-        Self {
-            user_agent,
-            client: http_client.build(),
-            unstable_operations,
-            api_key,
-            app_key,
-            server_index: 0,
-            server_variables: HashMap::new(),
-            server_operation_index: HashMap::new(),
-            server_operation_variables: HashMap::new(),
-        }
-    }
-
     pub fn client(&mut self, client: reqwest_middleware::ClientWithMiddleware) {
         self.client = client;
-    }
-
-    pub fn api_key(&mut self, key: String) {
-        self.api_key = Some(key);
-    }
-
-    pub fn app_key(&mut self, key: String) {
-        self.app_key = Some(key);
     }
 
     pub fn get_operation_host(&self, operation_str: &str) -> String {
@@ -183,11 +113,92 @@ impl Configuration {
 
         false
     }
+
+    pub fn set_auth_key(&mut self, operation_str: &str, api_key: APIKey) {
+        self.auth_keys.insert(operation_str.to_string(), api_key);
+    }
 }
 
 impl Default for Configuration {
     fn default() -> Self {
-        Self::with_keys(env::var("DD_API_KEY").ok(), env::var("DD_APP_KEY").ok())
+        let http_client = reqwest_middleware::ClientBuilder::new(reqwest::Client::new());
+        let user_agent = format!(
+            "datadog-api-client-rust/{} (rust {}; os {}; arch {})",
+            option_env!("CARGO_PKG_VERSION").unwrap_or("?"),
+            option_env!("DD_RUSTC_VERSION").unwrap_or("?"),
+            env::consts::OS,
+            env::consts::ARCH,
+        );
+        let unstable_operations = HashMap::from([
+            ("v2.get_active_billing_dimensions".to_owned(), false),
+            ("v2.get_monthly_cost_attribution".to_owned(), false),
+            ("v2.create_dora_deployment".to_owned(), false),
+            ("v2.create_dora_incident".to_owned(), false),
+            ("v2.create_incident".to_owned(), false),
+            ("v2.create_incident_integration".to_owned(), false),
+            ("v2.create_incident_todo".to_owned(), false),
+            ("v2.delete_incident".to_owned(), false),
+            ("v2.delete_incident_integration".to_owned(), false),
+            ("v2.delete_incident_todo".to_owned(), false),
+            ("v2.get_incident".to_owned(), false),
+            ("v2.get_incident_integration".to_owned(), false),
+            ("v2.get_incident_todo".to_owned(), false),
+            ("v2.list_incident_attachments".to_owned(), false),
+            ("v2.list_incident_integrations".to_owned(), false),
+            ("v2.list_incidents".to_owned(), false),
+            ("v2.list_incident_todos".to_owned(), false),
+            ("v2.search_incidents".to_owned(), false),
+            ("v2.update_incident".to_owned(), false),
+            ("v2.update_incident_attachments".to_owned(), false),
+            ("v2.update_incident_integration".to_owned(), false),
+            ("v2.update_incident_todo".to_owned(), false),
+            ("v2.query_scalar_data".to_owned(), false),
+            ("v2.query_timeseries_data".to_owned(), false),
+            ("v2.get_finding".to_owned(), false),
+            ("v2.list_findings".to_owned(), false),
+            ("v2.mute_findings".to_owned(), false),
+            ("v2.create_scorecard_outcomes_batch".to_owned(), false),
+            ("v2.create_scorecard_rule".to_owned(), false),
+            ("v2.delete_scorecard_rule".to_owned(), false),
+            ("v2.list_scorecard_outcomes".to_owned(), false),
+            ("v2.list_scorecard_rules".to_owned(), false),
+            ("v2.create_incident_service".to_owned(), false),
+            ("v2.delete_incident_service".to_owned(), false),
+            ("v2.get_incident_service".to_owned(), false),
+            ("v2.list_incident_services".to_owned(), false),
+            ("v2.update_incident_service".to_owned(), false),
+            ("v2.create_incident_team".to_owned(), false),
+            ("v2.delete_incident_team".to_owned(), false),
+            ("v2.get_incident_team".to_owned(), false),
+            ("v2.list_incident_teams".to_owned(), false),
+            ("v2.update_incident_team".to_owned(), false),
+        ]);
+        let mut auth_keys: HashMap<String, APIKey> = HashMap::new();
+        auth_keys.insert(
+            "apiKeyAuth".to_owned(),
+            APIKey {
+                key: env::var("DD_API_KEY").unwrap_or_default(),
+                prefix: "".to_owned(),
+            },
+        );
+        auth_keys.insert(
+            "appKeyAuth".to_owned(),
+            APIKey {
+                key: env::var("DD_APP_KEY").unwrap_or_default(),
+                prefix: "".to_owned(),
+            },
+        );
+
+        Self {
+            user_agent,
+            client: http_client.build(),
+            unstable_operations,
+            auth_keys,
+            server_index: 0,
+            server_variables: HashMap::new(),
+            server_operation_index: HashMap::new(),
+            server_operation_variables: HashMap::new(),
+        }
     }
 }
 

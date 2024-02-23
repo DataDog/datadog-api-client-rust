@@ -32,95 +32,33 @@ impl ServerConfiguration {
     }
 }
 
+#[derive(Debug, Clone)]
+pub struct APIKey {
+    pub key: String,
+    pub prefix: String,
+}
+
 #[non_exhaustive]
 #[derive(Debug, Clone)]
 pub struct Configuration {
     pub(crate) user_agent: String,
     pub(crate) client: reqwest_middleware::ClientWithMiddleware,
-    pub unstable_operations: HashMap<String, bool>,
-    {%- set authMethods = openapi.security %}
-	{%- if authMethods %}
-	{%- for authMethod in authMethods %}
-	{%- for name in authMethod %}
-	{%- set schema = openapi.components.securitySchemes[name] %}
-	{%- if schema.type == "apiKey" and schema.in != "cookie" %}
-    pub {{name|variable_name|replace("_auth", "")}}: Option<String>,
-	{%- endif %}
-	{%- endfor %}
-	{%- endfor %}
-	{%- endif %}
+    pub(crate) unstable_operations: HashMap<String, bool>,
+    pub(crate) auth_keys: HashMap<String, APIKey>,
     pub server_index: usize,
     pub server_variables: HashMap<String, String>,
     pub server_operation_index: HashMap<String, usize>,
     pub server_operation_variables: HashMap<String, HashMap<String, String>>,
-
-}
+}   
 
 impl Configuration {
     pub fn new() -> Self {
         Self::default()
     }
 
-    pub fn with_keys({% if openapi.security %}{% for authMethod in openapi.security %}{% for name in authMethod %}{% set schema = openapi.components.securitySchemes[name] %}{% if schema.type == "apiKey" and schema.in != "cookie" %}{{name|variable_name|replace("_auth", "")}}: Option<String>{% if not loop.last %}, {% endif %}{% endif %}{% endfor %}{% endfor %}{% endif %}) -> Self {
-        let http_client = reqwest_middleware::ClientBuilder::new(reqwest::Client::new());
-        let user_agent = format!(
-            "datadog-api-client-rust/{} (rust {}; os {}; arch {})",
-            option_env!("CARGO_PKG_VERSION").unwrap_or("?"),
-            option_env!("DD_RUSTC_VERSION").unwrap_or("?"),
-            env::consts::OS,
-            env::consts::ARCH,
-        );
-        let unstable_operations = HashMap::from([
-            {%- for version, api in apis.items() %}
-            {%- for operations in api.values() %}
-            {%- for _, _, operation in operations|sort(attribute="2.operationId") %}
-            {%- if "x-unstable" in operation %}
-                ("{{ version }}.{{ operation.operationId | snake_case }}".to_owned(), false),
-            {%- endif %}
-            {%- endfor %}
-            {%- endfor %}
-            {%- endfor %}
-        ]);
-
-        Self {
-            user_agent,
-            client: http_client.build(),
-            unstable_operations,
-            {%- set authMethods = openapi.security %}
-            {%- if authMethods %}
-            {%- for authMethod in authMethods %}
-            {%- for name in authMethod %}
-            {%- set schema = openapi.components.securitySchemes[name] %}
-            {%- if schema.type == "apiKey" and schema.in != "cookie" %}
-            {{name|variable_name|replace("_auth", "")}},
-            {%- endif %}
-            {%- endfor %}
-            {%- endfor %}
-            {%- endif %}
-            server_index: 0,
-            server_variables: HashMap::new(),
-            server_operation_index: HashMap::new(),
-            server_operation_variables: HashMap::new(),
-        }
-
-    }
-
     pub fn client(&mut self, client: reqwest_middleware::ClientWithMiddleware) {
         self.client = client;
     }
-
-    {%- if openapi.security %}
-	{%- for authMethod in openapi.security %}
-	{%- for name in authMethod %}
-	{%- set schema = openapi.components.securitySchemes[name] %}
-	{% if schema.type == "apiKey" and schema.in != "cookie" %}
-    pub fn {{name|variable_name|replace("_auth", "")}}(&mut self, key: String) {
-        self.{{name|variable_name|replace("_auth", "")}} = Some(key);
-    }
-    {%- endif %}
-	{%- endfor %}
-	{%- endfor %}
-	{%- endif %}
 
     pub fn get_operation_host(&self, operation_str: &str) -> String {
         let operation = operation_str.to_string();
@@ -172,11 +110,62 @@ impl Configuration {
 
         false
     }
+
+    pub fn set_auth_key(&mut self, operation_str: &str, api_key: APIKey) {
+        self.auth_keys.insert(operation_str.to_string(), api_key);
+    }
 }
 
 impl Default for Configuration {
     fn default() -> Self {
-        Self::with_keys({% if openapi.security %}{% for authMethod in openapi.security %}{% for name in authMethod %}{% set schema = openapi.components.securitySchemes[name] %}{% if schema.type == "apiKey" and schema.in != "cookie" %}env::var("{{ schema.get("x-env-name") }}").ok(){% if not loop.last %}, {% endif %}{% endif %}{% endfor %}{% endfor %}{% endif %})
+        let http_client = reqwest_middleware::ClientBuilder::new(reqwest::Client::new());
+        let user_agent = format!(
+            "datadog-api-client-rust/{} (rust {}; os {}; arch {})",
+            option_env!("CARGO_PKG_VERSION").unwrap_or("?"),
+            option_env!("DD_RUSTC_VERSION").unwrap_or("?"),
+            env::consts::OS,
+            env::consts::ARCH,
+        );
+        let unstable_operations = HashMap::from([
+            {%- for version, api in apis.items() %}
+            {%- for operations in api.values() %}
+            {%- for _, _, operation in operations|sort(attribute="2.operationId") %}
+            {%- if "x-unstable" in operation %}
+                ("{{ version }}.{{ operation.operationId | snake_case }}".to_owned(), false),
+            {%- endif %}
+            {%- endfor %}
+            {%- endfor %}
+            {%- endfor %}
+        ]);
+        let mut auth_keys: HashMap<String, APIKey> = HashMap::new();
+        {%- set authMethods = openapi.security %}
+        {%- if authMethods %}
+        {%- for authMethod in authMethods %}
+        {%- for name in authMethod %}
+        {%- set schema = openapi.components.securitySchemes[name] %}
+        {%- if schema.type == "apiKey" and schema.in != "cookie" %}
+        auth_keys.insert(
+            "{{ name }}".to_owned(),
+            APIKey {
+                key: env::var("{{ schema.get("x-env-name") }}").unwrap_or_default(),
+                prefix: "".to_owned(),
+            },
+        );
+        {%- endif %}
+        {%- endfor %}
+        {%- endfor %}
+        {%- endif %}
+
+        Self {
+            user_agent,
+            client: http_client.build(),
+            unstable_operations,
+            auth_keys,
+            server_index: 0,
+            server_variables: HashMap::new(),
+            server_operation_index: HashMap::new(),
+            server_operation_variables: HashMap::new(),
+        }
     }
 }
 
