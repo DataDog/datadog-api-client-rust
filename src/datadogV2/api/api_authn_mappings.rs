@@ -5,7 +5,7 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// ListAuthNMappingsOptionalParams is a struct for passing parameters to the method [`AuthNMappingsAPI::list_auth_n_mappings`]
+/// ListAuthNMappingsOptionalParams is a struct for passing parameters to the method [`AuthNMappingsAPI::list_authn_mappings`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListAuthNMappingsOptionalParams {
@@ -42,7 +42,7 @@ impl ListAuthNMappingsOptionalParams {
     }
 }
 
-/// CreateAuthNMappingError is a struct for typed errors of method [`AuthNMappingsAPI::create_auth_n_mapping`]
+/// CreateAuthNMappingError is a struct for typed errors of method [`AuthNMappingsAPI::create_authn_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateAuthNMappingError {
@@ -53,7 +53,7 @@ pub enum CreateAuthNMappingError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteAuthNMappingError is a struct for typed errors of method [`AuthNMappingsAPI::delete_auth_n_mapping`]
+/// DeleteAuthNMappingError is a struct for typed errors of method [`AuthNMappingsAPI::delete_authn_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteAuthNMappingError {
@@ -63,7 +63,7 @@ pub enum DeleteAuthNMappingError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetAuthNMappingError is a struct for typed errors of method [`AuthNMappingsAPI::get_auth_n_mapping`]
+/// GetAuthNMappingError is a struct for typed errors of method [`AuthNMappingsAPI::get_authn_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetAuthNMappingError {
@@ -73,7 +73,7 @@ pub enum GetAuthNMappingError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListAuthNMappingsError is a struct for typed errors of method [`AuthNMappingsAPI::list_auth_n_mappings`]
+/// ListAuthNMappingsError is a struct for typed errors of method [`AuthNMappingsAPI::list_authn_mappings`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListAuthNMappingsError {
@@ -82,7 +82,7 @@ pub enum ListAuthNMappingsError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateAuthNMappingError is a struct for typed errors of method [`AuthNMappingsAPI::update_auth_n_mapping`]
+/// UpdateAuthNMappingError is a struct for typed errors of method [`AuthNMappingsAPI::update_authn_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateAuthNMappingError {
@@ -117,19 +117,19 @@ impl AuthNMappingsAPI {
     }
 
     /// Create an AuthN Mapping.
-    pub async fn create_auth_n_mapping(
+    pub async fn create_authn_mapping(
         &self,
         body: crate::datadogV2::model::AuthNMappingCreateRequest,
     ) -> Result<Option<crate::datadogV2::model::AuthNMappingResponse>, Error<CreateAuthNMappingError>>
     {
-        match self.create_auth_n_mapping_with_http_info(body).await {
+        match self.create_authn_mapping_with_http_info(body).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
     }
 
     /// Create an AuthN Mapping.
-    pub async fn create_auth_n_mapping_with_http_info(
+    pub async fn create_authn_mapping_with_http_info(
         &self,
         body: crate::datadogV2::model::AuthNMappingCreateRequest,
     ) -> Result<
@@ -192,12 +192,12 @@ impl AuthNMappingsAPI {
     }
 
     /// Delete an AuthN Mapping specified by AuthN Mapping UUID.
-    pub async fn delete_auth_n_mapping(
+    pub async fn delete_authn_mapping(
         &self,
         authn_mapping_id: String,
     ) -> Result<Option<()>, Error<DeleteAuthNMappingError>> {
         match self
-            .delete_auth_n_mapping_with_http_info(authn_mapping_id)
+            .delete_authn_mapping_with_http_info(authn_mapping_id)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -206,7 +206,7 @@ impl AuthNMappingsAPI {
     }
 
     /// Delete an AuthN Mapping specified by AuthN Mapping UUID.
-    pub async fn delete_auth_n_mapping_with_http_info(
+    pub async fn delete_authn_mapping_with_http_info(
         &self,
         authn_mapping_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteAuthNMappingError>> {
@@ -261,13 +261,13 @@ impl AuthNMappingsAPI {
     }
 
     /// Get an AuthN Mapping specified by the AuthN Mapping UUID.
-    pub async fn get_auth_n_mapping(
+    pub async fn get_authn_mapping(
         &self,
         authn_mapping_id: String,
     ) -> Result<Option<crate::datadogV2::model::AuthNMappingResponse>, Error<GetAuthNMappingError>>
     {
         match self
-            .get_auth_n_mapping_with_http_info(authn_mapping_id)
+            .get_authn_mapping_with_http_info(authn_mapping_id)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -276,7 +276,7 @@ impl AuthNMappingsAPI {
     }
 
     /// Get an AuthN Mapping specified by the AuthN Mapping UUID.
-    pub async fn get_auth_n_mapping_with_http_info(
+    pub async fn get_authn_mapping_with_http_info(
         &self,
         authn_mapping_id: String,
     ) -> Result<
@@ -336,19 +336,19 @@ impl AuthNMappingsAPI {
     }
 
     /// List all AuthN Mappings in the org.
-    pub async fn list_auth_n_mappings(
+    pub async fn list_authn_mappings(
         &self,
         params: ListAuthNMappingsOptionalParams,
     ) -> Result<Option<crate::datadogV2::model::AuthNMappingsResponse>, Error<ListAuthNMappingsError>>
     {
-        match self.list_auth_n_mappings_with_http_info(params).await {
+        match self.list_authn_mappings_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
     }
 
     /// List all AuthN Mappings in the org.
-    pub async fn list_auth_n_mappings_with_http_info(
+    pub async fn list_authn_mappings_with_http_info(
         &self,
         params: ListAuthNMappingsOptionalParams,
     ) -> Result<
@@ -427,14 +427,14 @@ impl AuthNMappingsAPI {
     }
 
     /// Edit an AuthN Mapping.
-    pub async fn update_auth_n_mapping(
+    pub async fn update_authn_mapping(
         &self,
         authn_mapping_id: String,
         body: crate::datadogV2::model::AuthNMappingUpdateRequest,
     ) -> Result<Option<crate::datadogV2::model::AuthNMappingResponse>, Error<UpdateAuthNMappingError>>
     {
         match self
-            .update_auth_n_mapping_with_http_info(authn_mapping_id, body)
+            .update_authn_mapping_with_http_info(authn_mapping_id, body)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -443,7 +443,7 @@ impl AuthNMappingsAPI {
     }
 
     /// Edit an AuthN Mapping.
-    pub async fn update_auth_n_mapping_with_http_info(
+    pub async fn update_authn_mapping_with_http_info(
         &self,
         authn_mapping_id: String,
         body: crate::datadogV2::model::AuthNMappingUpdateRequest,
