@@ -137,7 +137,7 @@ impl AuthNMappingsAPI {
         Error<CreateAuthNMappingError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_auth_n_mapping";
+        let operation_id = "v2.create_authn_mapping";
 
         let local_client = &local_configuration.client;
 
@@ -215,7 +215,7 @@ impl AuthNMappingsAPI {
         authn_mapping_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteAuthNMappingError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_auth_n_mapping";
+        let operation_id = "v2.delete_authn_mapping";
 
         let local_client = &local_configuration.client;
 
@@ -289,7 +289,7 @@ impl AuthNMappingsAPI {
         Error<GetAuthNMappingError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_auth_n_mapping";
+        let operation_id = "v2.get_authn_mapping";
 
         let local_client = &local_configuration.client;
 
@@ -362,7 +362,7 @@ impl AuthNMappingsAPI {
         Error<ListAuthNMappingsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_auth_n_mappings";
+        let operation_id = "v2.list_authn_mappings";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -462,7 +462,7 @@ impl AuthNMappingsAPI {
         Error<UpdateAuthNMappingError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_auth_n_mapping";
+        let operation_id = "v2.update_authn_mapping";
 
         let local_client = &local_configuration.client;
 

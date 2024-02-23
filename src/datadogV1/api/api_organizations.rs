@@ -506,7 +506,7 @@ impl OrganizationsAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::IdpResponse>, Error<UploadIdPForOrgError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v1.upload_id_p_for_org";
+        let operation_id = "v1.upload_idp_for_org";
 
         let local_client = &local_configuration.client;
 

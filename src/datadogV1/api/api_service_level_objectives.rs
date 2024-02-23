@@ -890,7 +890,7 @@ impl ServiceLevelObjectivesAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::SLOListResponse>, Error<ListSLOsError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v1.list_sl_os";
+        let operation_id = "v1.list_slos";
 
         // unbox and build optional parameters
         let ids = params.ids;

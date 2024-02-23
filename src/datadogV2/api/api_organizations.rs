@@ -73,7 +73,7 @@ impl OrganizationsAPI {
         params: UploadIdPMetadataOptionalParams,
     ) -> Result<ResponseContent<()>, Error<UploadIdPMetadataError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.upload_id_p_metadata";
+        let operation_id = "v2.upload_idp_metadata";
 
         // unbox and build optional parameters
         let idp_file = params.idp_file;
