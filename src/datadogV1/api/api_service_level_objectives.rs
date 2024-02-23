@@ -62,7 +62,7 @@ impl GetSLOHistoryOptionalParams {
     }
 }
 
-/// ListSLOsOptionalParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::list_sl_os`]
+/// ListSLOsOptionalParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::list_slos`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListSLOsOptionalParams {
@@ -228,7 +228,7 @@ pub enum GetSLOHistoryError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListSLOsError is a struct for typed errors of method [`ServiceLevelObjectivesAPI::list_sl_os`]
+/// ListSLOsError is a struct for typed errors of method [`ServiceLevelObjectivesAPI::list_slos`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListSLOsError {
@@ -873,18 +873,18 @@ impl ServiceLevelObjectivesAPI {
     }
 
     /// Get a list of service level objective objects for your organization.
-    pub async fn list_sl_os(
+    pub async fn list_slos(
         &self,
         params: ListSLOsOptionalParams,
     ) -> Result<Option<crate::datadogV1::model::SLOListResponse>, Error<ListSLOsError>> {
-        match self.list_sl_os_with_http_info(params).await {
+        match self.list_slos_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
     }
 
     /// Get a list of service level objective objects for your organization.
-    pub async fn list_sl_os_with_http_info(
+    pub async fn list_slos_with_http_info(
         &self,
         params: ListSLOsOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV1::model::SLOListResponse>, Error<ListSLOsError>>

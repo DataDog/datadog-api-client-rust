@@ -54,7 +54,7 @@ pub enum UpdateOrgError {
     UnknownValue(serde_json::Value),
 }
 
-/// UploadIdPForOrgError is a struct for typed errors of method [`OrganizationsAPI::upload_id_p_for_org`]
+/// UploadIdPForOrgError is a struct for typed errors of method [`OrganizationsAPI::upload_idp_for_org`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UploadIdPForOrgError {
@@ -479,13 +479,13 @@ impl OrganizationsAPI {
     /// * **Multipart Form-Data**: Post the IdP metadata file using a form post.
     ///
     /// * **XML Body:** Post the IdP metadata file as the body of the request.
-    pub async fn upload_id_p_for_org(
+    pub async fn upload_idp_for_org(
         &self,
         public_id: String,
         idp_file: Vec<u8>,
     ) -> Result<Option<crate::datadogV1::model::IdpResponse>, Error<UploadIdPForOrgError>> {
         match self
-            .upload_id_p_for_org_with_http_info(public_id, idp_file)
+            .upload_idp_for_org_with_http_info(public_id, idp_file)
             .await
         {
             Ok(response_content) => Ok(response_content.entity),
@@ -499,7 +499,7 @@ impl OrganizationsAPI {
     /// * **Multipart Form-Data**: Post the IdP metadata file using a form post.
     ///
     /// * **XML Body:** Post the IdP metadata file as the body of the request.
-    pub async fn upload_id_p_for_org_with_http_info(
+    pub async fn upload_idp_for_org_with_http_info(
         &self,
         public_id: String,
         idp_file: Vec<u8>,

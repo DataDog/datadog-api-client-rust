@@ -44,7 +44,7 @@ pub struct ApiInstances {
     pub v2_api_spans_metrics: Option<datadogV2::api::api_spans_metrics::SpansMetricsAPI>,
     pub v2_api_apm_retention_filters: Option<datadogV2::api::api_apm_retention_filters::APMRetentionFiltersAPI>,
     pub v2_api_audit: Option<datadogV2::api::api_audit::AuditAPI>,
-    pub v2_api_auth_n_mappings: Option<datadogV2::api::api_auth_n_mappings::AuthNMappingsAPI>,
+    pub v2_api_authn_mappings: Option<datadogV2::api::api_authn_mappings::AuthNMappingsAPI>,
     pub v2_api_ci_visibility_pipelines: Option<datadogV2::api::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI>,
     pub v2_api_ci_visibility_tests: Option<datadogV2::api::api_ci_visibility_tests::CIVisibilityTestsAPI>,
     pub v2_api_container_images: Option<datadogV2::api::api_container_images::ContainerImagesAPI>,
@@ -342,8 +342,8 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
             );
         }
         "AuthNMappings" => {
-            world.api_instances.v2_api_auth_n_mappings = Some(
-                datadogV2::api::api_auth_n_mappings::AuthNMappingsAPI::with_config(
+            world.api_instances.v2_api_authn_mappings = Some(
+                datadogV2::api::api_authn_mappings::AuthNMappingsAPI::with_config(
                     world.config.clone(),
                 ),
             );
@@ -1133,7 +1133,7 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .insert("v1.DowngradeOrg".into(), test_v1_downgrade_org);
     world
         .function_mappings
-        .insert("v1.UploadIdPForOrg".into(), test_v1_upload_id_p_for_org);
+        .insert("v1.UploadIdPForOrg".into(), test_v1_upload_idp_for_org);
     world.function_mappings.insert(
         "v1.AddSecurityMonitoringSignalToIncident".into(),
         test_v1_add_security_monitoring_signal_to_incident,
@@ -1148,7 +1148,7 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     );
     world
         .function_mappings
-        .insert("v1.ListSLOs".into(), test_v1_list_sl_os);
+        .insert("v1.ListSLOs".into(), test_v1_list_slos);
     world
         .function_mappings
         .insert("v1.CreateSLO".into(), test_v1_create_slo);
@@ -1426,22 +1426,19 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .insert("v2.SearchAuditLogs".into(), test_v2_search_audit_logs);
     world
         .function_mappings
-        .insert("v2.ListAuthNMappings".into(), test_v2_list_auth_n_mappings);
-    world.function_mappings.insert(
-        "v2.CreateAuthNMapping".into(),
-        test_v2_create_auth_n_mapping,
-    );
-    world.function_mappings.insert(
-        "v2.DeleteAuthNMapping".into(),
-        test_v2_delete_auth_n_mapping,
-    );
+        .insert("v2.ListAuthNMappings".into(), test_v2_list_authn_mappings);
     world
         .function_mappings
-        .insert("v2.GetAuthNMapping".into(), test_v2_get_auth_n_mapping);
-    world.function_mappings.insert(
-        "v2.UpdateAuthNMapping".into(),
-        test_v2_update_auth_n_mapping,
-    );
+        .insert("v2.CreateAuthNMapping".into(), test_v2_create_authn_mapping);
+    world
+        .function_mappings
+        .insert("v2.DeleteAuthNMapping".into(), test_v2_delete_authn_mapping);
+    world
+        .function_mappings
+        .insert("v2.GetAuthNMapping".into(), test_v2_get_authn_mapping);
+    world
+        .function_mappings
+        .insert("v2.UpdateAuthNMapping".into(), test_v2_update_authn_mapping);
     world.function_mappings.insert(
         "v2.CreateCIAppPipelineEvent".into(),
         test_v2_create_ci_app_pipeline_event,
@@ -2130,7 +2127,7 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .insert("v2.SearchRUMEvents".into(), test_v2_search_rum_events);
     world
         .function_mappings
-        .insert("v2.UploadIdPMetadata".into(), test_v2_upload_id_p_metadata);
+        .insert("v2.UploadIdPMetadata".into(), test_v2_upload_idp_metadata);
     world.function_mappings.insert(
         "v2.ListScorecardOutcomes".into(),
         test_v2_list_scorecard_outcomes,
@@ -7500,7 +7497,7 @@ fn test_v1_downgrade_org(world: &mut DatadogWorld, _parameters: &HashMap<String,
     world.response.code = response.status.as_u16();
 }
 
-fn test_v1_upload_id_p_for_org(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v1_upload_idp_for_org(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
         .v1_api_organizations
@@ -7514,7 +7511,7 @@ fn test_v1_upload_id_p_for_org(world: &mut DatadogWorld, _parameters: &HashMap<S
         .unwrap()
         .as_bytes()
         .to_vec();
-    let response = match block_on(api.upload_id_p_for_org_with_http_info(public_id, idp_file)) {
+    let response = match block_on(api.upload_idp_for_org_with_http_info(public_id, idp_file)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -7624,7 +7621,7 @@ fn test_v1_edit_security_monitoring_signal_state(
     world.response.code = response.status.as_u16();
 }
 
-fn test_v1_list_sl_os(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v1_list_slos(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
         .v1_api_service_level_objectives
@@ -7656,7 +7653,7 @@ fn test_v1_list_sl_os(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
     params.metrics_query = metrics_query;
     params.limit = limit;
     params.offset = offset;
-    let response = match block_on(api.list_sl_os_with_http_info(params)) {
+    let response = match block_on(api.list_slos_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -10040,10 +10037,10 @@ fn test_v2_search_audit_logs(world: &mut DatadogWorld, _parameters: &HashMap<Str
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_list_auth_n_mappings(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_list_authn_mappings(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_auth_n_mappings
+        .v2_api_authn_mappings
         .as_ref()
         .expect("api instance not found");
     let page_size = _parameters
@@ -10058,13 +10055,12 @@ fn test_v2_list_auth_n_mappings(world: &mut DatadogWorld, _parameters: &HashMap<
     let filter = _parameters
         .get("filter")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params =
-        datadogV2::api::api_auth_n_mappings::ListAuthNMappingsOptionalParams::default();
+    let mut params = datadogV2::api::api_authn_mappings::ListAuthNMappingsOptionalParams::default();
     params.page_size = page_size;
     params.page_number = page_number;
     params.sort = sort;
     params.filter = filter;
-    let response = match block_on(api.list_auth_n_mappings_with_http_info(params)) {
+    let response = match block_on(api.list_authn_mappings_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -10082,14 +10078,14 @@ fn test_v2_list_auth_n_mappings(world: &mut DatadogWorld, _parameters: &HashMap<
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_create_auth_n_mapping(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_create_authn_mapping(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_auth_n_mappings
+        .v2_api_authn_mappings
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.create_auth_n_mapping_with_http_info(body)) {
+    let response = match block_on(api.create_authn_mapping_with_http_info(body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -10107,15 +10103,15 @@ fn test_v2_create_auth_n_mapping(world: &mut DatadogWorld, _parameters: &HashMap
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_delete_auth_n_mapping(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_delete_authn_mapping(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_auth_n_mappings
+        .v2_api_authn_mappings
         .as_ref()
         .expect("api instance not found");
     let authn_mapping_id =
         serde_json::from_value(_parameters.get("authn_mapping_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.delete_auth_n_mapping_with_http_info(authn_mapping_id)) {
+    let response = match block_on(api.delete_authn_mapping_with_http_info(authn_mapping_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -10133,15 +10129,15 @@ fn test_v2_delete_auth_n_mapping(world: &mut DatadogWorld, _parameters: &HashMap
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_get_auth_n_mapping(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_get_authn_mapping(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_auth_n_mappings
+        .v2_api_authn_mappings
         .as_ref()
         .expect("api instance not found");
     let authn_mapping_id =
         serde_json::from_value(_parameters.get("authn_mapping_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.get_auth_n_mapping_with_http_info(authn_mapping_id)) {
+    let response = match block_on(api.get_authn_mapping_with_http_info(authn_mapping_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -10159,17 +10155,16 @@ fn test_v2_get_auth_n_mapping(world: &mut DatadogWorld, _parameters: &HashMap<St
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_update_auth_n_mapping(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_update_authn_mapping(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_auth_n_mappings
+        .v2_api_authn_mappings
         .as_ref()
         .expect("api instance not found");
     let authn_mapping_id =
         serde_json::from_value(_parameters.get("authn_mapping_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.update_auth_n_mapping_with_http_info(authn_mapping_id, body))
-    {
+    let response = match block_on(api.update_authn_mapping_with_http_info(authn_mapping_id, body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -15995,7 +15990,7 @@ fn test_v2_search_rum_events(world: &mut DatadogWorld, _parameters: &HashMap<Str
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_upload_id_p_metadata(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_upload_idp_metadata(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
         .v2_api_organizations
@@ -16006,7 +16001,7 @@ fn test_v2_upload_id_p_metadata(world: &mut DatadogWorld, _parameters: &HashMap<
         .and_then(|param| Some(param.as_str().unwrap().as_bytes().to_vec()));
     let mut params = datadogV2::api::api_organizations::UploadIdPMetadataOptionalParams::default();
     params.idp_file = idp_file;
-    let response = match block_on(api.upload_id_p_metadata_with_http_info(params)) {
+    let response = match block_on(api.upload_idp_metadata_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
