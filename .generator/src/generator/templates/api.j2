@@ -110,16 +110,16 @@ impl {{ structName }} {
     {%- set itemType = get_type_at_path(operation, pagination.resultsPath, version=version) %}
     {%- set pageParam = operation|parameters|selectattr('0', 'equalto', pagination.pageParam)|list|last|last %}
     {%- set limitParam = operation|parameters|selectattr('0', 'equalto', pagination.limitParam)|list|last|last %}
+    {%- set limitParamParts = pagination.limitParam.split(".") %}
 
     pub fn {{operation.operationId | snake_case}}_with_pagination(
-        &self{% for name, parameter in requiredParams %}, mut {{name|variable_name}}: {{ get_type_for_parameter(parameter, version) }}{% endfor %}{% if operation|has_optional_parameter %}, mut params: {{operation.operationId}}OptionalParams{% endif %}
+        &self{% for name, parameter in requiredParams %}, {% if limitParamParts[0] == name|variable_name %}mut {% endif %} {{name|variable_name}}: {{ get_type_for_parameter(parameter, version) }}{% endfor %}{% if operation|has_optional_parameter %}, mut params: {{operation.operationId}}OptionalParams{% endif %}
     ) -> impl Stream<Item = Result<{{ itemType }}, Error<{{ operation.operationId }}Error>>> + '_
     {
         try_stream! {
             {#- Limit param part fields #}
             let mut page_size: {{ get_container_type(operation, pagination.limitParam, render_option=false, version=version) }} = {{ get_default(operation, pagination.limitParam) }};
 
-            {% set limitParamParts = pagination.limitParam.split(".") %}
             {%- for i in range(limitParamParts|length) %}
             {%- set tempLimitParam = ".".join(limitParamParts[:i + 1]) %}
             {%- set getter, setter, required, schema = get_accessors(operation, tempLimitParam) %}
@@ -147,12 +147,12 @@ impl {{ structName }} {
             loop {
                 let resp = self.{{operation.operationId | snake_case}}({% for name, parameter in requiredParams %} {{name|variable_name}}.clone(),{% endfor %}{% if operation|has_optional_parameter %}params.clone(),{% endif %}).await?;
                 if let Some(resp) = resp {
-                    {% set ns = namespace(respGetter="resp") %}
+                    {% set ns = namespace(respGetter="resp", parentSchema=returnSchema) %}
                     {%- if pagination.resultsPath %}
-                    {%- set parentSchema = returnSchema %}
                     {%- for part in pagination.resultsPath.split(".") %}
-                    {%- set required = parentSchema.get("required", []) %}
-                    {%- set ns.respGetter = ns.respGetter ~ "." ~ part ~ ".unwrap_or_default()" if part not in required else ns.respGetter ~ "." ~ part %}
+                    {%- set required = ns.parentSchema.get("required", []) %}
+                    {%- set ns.respGetter = ns.respGetter ~ "." ~ part ~ ".unwrap()" if part not in required else ns.respGetter ~ "." ~ part %}
+                    {%- set ns.parentSchema = ns.parentSchema.properties[part] %}
                     {%- endfor %}
                     {%- endif %}
 
@@ -174,7 +174,16 @@ impl {{ structName }} {
                 {%- set getter, setter, required, schema = get_accessors(operation, pagination.pageParam) %}
                 {{ setter }} = {% if not required %}Some({% endif %}{{ getter }}.unwrap() + 1{% if not required %}){% endif %};
                 {%- endif %}
+
+                {%- if pagination.pageOffsetParam %}
+                {%- set getter, setter, required, schema = get_accessors(operation, pagination.pageOffsetParam) %}
+                if {{ get_container(operation, pagination.pageOffsetParam) }}.is_none() {
+                    {{ setter }} = {% if not required %}Some({% endif %}page_size.clone(){% if not required %}){% endif %};
+                } else {
+                    {{ setter }} = {% if not required %}Some({% endif %}{{ getter }}.unwrap() + page_size.clone(){% if not required %}){% endif %};
                 }
+                {%- endif %}
+            }
         }
     }
     {%- endif %}
