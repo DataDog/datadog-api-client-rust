@@ -422,7 +422,6 @@ fn request_sent(world: &mut DatadogWorld) {
 
 #[when(regex = r"^the request with pagination is sent$")]
 fn request_with_pagination_sent(world: &mut DatadogWorld) {
-    log::debug!("yoooooooo");
     world
         .function_mappings
         .get(&format!(
@@ -541,15 +540,16 @@ fn req_eq(lhs: &vcr_cassette::Request, rhs: &vcr_cassette::Request) -> bool {
         .query()
         .unwrap_or_default()
         .split("&")
-        .into_iter()
+        .map(|s: &str| s.replace("+", "%20"))
         .collect();
     let rhs_queries: HashSet<_> = rhs
         .uri
         .query()
         .unwrap_or_default()
         .split("&")
-        .into_iter()
+        .map(|s: &str| s.replace("+", "%20"))
         .collect();
+
     lhs.uri.scheme() == rhs.uri.scheme()
         && lhs.uri.host() == rhs.uri.host()
         && lhs.uri.port() == rhs.uri.port()
