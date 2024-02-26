@@ -166,23 +166,39 @@ impl {{ structName }} {
                         break;
                     }
 
+                    {%- if pagination.pageParam %}
+                    {%- set getter, setter, required, schema = get_accessors(operation, pagination.pageParam) %}
+                    {{ setter }} = {% if not required %}Some({% endif %}{{ getter }}.unwrap() + 1{% if not required %}){% endif %};
+                    {%- endif %}
+    
+                    {%- if pagination.pageOffsetParam %}
+                    {%- set getter, setter, required, schema = get_accessors(operation, pagination.pageOffsetParam) %}
+                    if {{ get_container(operation, pagination.pageOffsetParam) }}.is_none() {
+                        {{ setter }} = {% if not required %}Some({% endif %}page_size.clone(){% if not required %}){% endif %};
+                    } else {
+                        {{ setter }} = {% if not required %}Some({% endif %}{{ getter }}.unwrap() + page_size.clone(){% if not required %}){% endif %};
+                    }
+                    {%- endif %}
+    
+                    {%- if pagination.cursorParam %}
+                    {%- set cursorParamGetter, cursorParamSetter, cursorParamRequired, cursorParamSchema = get_accessors(operation, pagination.cursorParam) %}
+                    {% set ns = namespace(respGetter="resp", parentSchema=returnSchema) %}
+                    {%- for part in pagination.cursorParam.split(".") %}
+                    {%- set required = ns.parentSchema.get("required", []) %}
+                    {%- set ns.respGetter = ns.respGetter ~ "." ~ part ~ ".unwrap()" if part not in required else ns.respGetter ~ "." ~ part %}
+                    {%- set ns.parentSchema = ns.parentSchema.properties[part] %}
+                    {%- endfor %}
+                    // {{  }}
+                    if {{ cursorParamGetter }}.is_none() {
+                        {{ cursorParamSetter }} = {% if cursorParamRequired %}Some({% endif %}None{% if cursorParamRequired %}){% endif %};
+                    } else {
+                        break;
+                    }
+                    {%- endif %}
+
                 } else {
                     break;
                 }
-
-                {%- if pagination.pageParam %}
-                {%- set getter, setter, required, schema = get_accessors(operation, pagination.pageParam) %}
-                {{ setter }} = {% if not required %}Some({% endif %}{{ getter }}.unwrap() + 1{% if not required %}){% endif %};
-                {%- endif %}
-
-                {%- if pagination.pageOffsetParam %}
-                {%- set getter, setter, required, schema = get_accessors(operation, pagination.pageOffsetParam) %}
-                if {{ get_container(operation, pagination.pageOffsetParam) }}.is_none() {
-                    {{ setter }} = {% if not required %}Some({% endif %}page_size.clone(){% if not required %}){% endif %};
-                } else {
-                    {{ setter }} = {% if not required %}Some({% endif %}{{ getter }}.unwrap() + page_size.clone(){% if not required %}){% endif %};
-                }
-                {%- endif %}
             }
         }
     }
