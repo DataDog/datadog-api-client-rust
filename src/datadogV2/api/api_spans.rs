@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -205,6 +207,50 @@ impl SpansAPI {
         }
     }
 
+    pub fn list_spans_with_pagination(
+        &self,
+        mut body: crate::datadogV2::model::SpansListRequest,
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::Span, Error<ListSpansError>>> + '_ {
+        try_stream! {
+            let mut page_size: i32 = 10;
+            if body.data.is_none() {
+                body.data = Some(crate::datadogV2::model::SpansListRequestData::new());
+            }
+            if body.data.as_ref().unwrap().attributes.is_none() {
+                body.data.as_mut().unwrap().attributes = Some(crate::datadogV2::model::SpansListRequestAttributes::new());
+            }
+            if body.data.as_ref().unwrap().attributes.as_ref().unwrap().page.is_none() {
+                body.data.as_mut().unwrap().attributes.as_mut().unwrap().page = Some(crate::datadogV2::model::SpansListRequestPage::new());
+            }
+            if body.data.as_ref().unwrap().attributes.as_ref().unwrap().page.as_ref().unwrap().limit.is_none() {
+                body.data.as_mut().unwrap().attributes.as_mut().unwrap().page.as_mut().unwrap().limit = Some(page_size);
+            } else {
+                page_size = body.data.as_ref().unwrap().attributes.as_ref().unwrap().page.as_ref().unwrap().limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_spans( body.clone(),).await?;
+
+                let Some(resp) = resp else { break };
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                let Some(meta) = resp.meta else { break };
+                let Some(page) = meta.page else { break };
+                let Some(after) = page.after else { break };
+
+                body.data.as_mut().unwrap().attributes.as_mut().unwrap().page.as_mut().unwrap().cursor = Some(after);
+            }
+        }
+    }
+
     /// List endpoint returns spans that match a span search query.
     /// [Results are paginated][1].
     ///
@@ -288,6 +334,42 @@ impl SpansAPI {
         match self.list_spans_get_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_spans_get_with_pagination(
+        &self,
+        mut params: ListSpansGetOptionalParams,
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::Span, Error<ListSpansGetError>>> + '_
+    {
+        try_stream! {
+            let mut page_size: i32 = 10;
+            if params.page_limit.is_none() {
+                params.page_limit = Some(page_size);
+            } else {
+                page_size = params.page_limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_spans_get(params.clone()).await?;
+
+                let Some(resp) = resp else { break };
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                let Some(meta) = resp.meta else { break };
+                let Some(page) = meta.page else { break };
+                let Some(after) = page.after else { break };
+
+                params.page_cursor = Some(after);
+            }
         }
     }
 

@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -917,6 +919,46 @@ impl DashboardsAPI {
         match self.list_dashboards_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_dashboards_with_pagination(
+        &self,
+        mut params: ListDashboardsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV1::model::DashboardSummaryDefinition,
+            Error<ListDashboardsError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 100;
+            if params.count.is_none() {
+                params.count = Some(page_size);
+            } else {
+                page_size = params.count.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_dashboards(params.clone()).await?;
+
+                let Some(resp) = resp else { break };
+                let Some(dashboards) = resp.dashboards else { break };
+
+                let r = dashboards;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                if params.start.is_none() {
+                    params.start = Some(page_size.clone());
+                } else {
+                    params.start = Some(params.start.unwrap() + page_size.clone());
+                }
+            }
         }
     }
 

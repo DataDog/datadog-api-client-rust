@@ -432,7 +432,7 @@ def get_accessors(operation, attribute_path, container_name="params"):
     for name, parameter in parameters(operation):
         if name == param_path[0]:
             break
-    
+
     required = parameter["required"]
     getter = setter = container_name
     if name == "body":
@@ -444,7 +444,7 @@ def get_accessors(operation, attribute_path, container_name="params"):
     schema = parameter["schema"]
     for attr in param_path:
         required = True if attr in schema.get("required", []) else False
-        
+
         name = formatter.attribute_name(attr)
         if required or attr == param_path[0]:
             getter = setter = f"{getter}.{name}"
@@ -459,7 +459,7 @@ def get_accessors(operation, attribute_path, container_name="params"):
     return getter, setter, required, schema
 
 
-def get_container(operation, attribute_path, container_name="params"):    
+def get_container(operation, attribute_path, container_name="params"):
     attribute_name = attribute_path.split(".")[0]
     for name, parameter in parameters(operation):
         if name == attribute_name and parameter["required"]:
@@ -487,7 +487,7 @@ def get_container_type(operation, attribute_path, stop=None, **kwargs):
         
     if name == attrs[0] and len(attrs) == 1:
         return type_to_rust(parameter["schema"], **kwargs)
-    
+
     parameter = parameter["schema"]
     for attr in attrs[1:]:
         parameter = parameter["properties"][attr]

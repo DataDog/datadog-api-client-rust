@@ -114,7 +114,7 @@ def format_value(value, quotes='"', schema=None, version=None, required=None):
 
     if required is False:
         value = f"Some({value})"
-    
+
     return value
 
 

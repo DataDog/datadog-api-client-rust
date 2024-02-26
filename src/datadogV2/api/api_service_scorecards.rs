@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -469,6 +471,46 @@ impl ServiceScorecardsAPI {
         }
     }
 
+    pub fn list_scorecard_outcomes_with_pagination(
+        &self,
+        mut params: ListScorecardOutcomesOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::OutcomesResponseDataItem,
+            Error<ListScorecardOutcomesError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 10;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_scorecard_outcomes(params.clone()).await?;
+
+                let Some(resp) = resp else { break };
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                if params.page_offset.is_none() {
+                    params.page_offset = Some(page_size.clone());
+                } else {
+                    params.page_offset = Some(params.page_offset.unwrap() + page_size.clone());
+                }
+            }
+        }
+    }
+
     /// Fetches all rule outcomes.
     pub async fn list_scorecard_outcomes_with_http_info(
         &self,
@@ -592,6 +634,46 @@ impl ServiceScorecardsAPI {
         match self.list_scorecard_rules_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_scorecard_rules_with_pagination(
+        &self,
+        mut params: ListScorecardRulesOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::ListRulesResponseDataItem,
+            Error<ListScorecardRulesError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 10;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_scorecard_rules(params.clone()).await?;
+
+                let Some(resp) = resp else { break };
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                if params.page_offset.is_none() {
+                    params.page_offset = Some(page_size.clone());
+                } else {
+                    params.page_offset = Some(params.page_offset.unwrap() + page_size.clone());
+                }
+            }
         }
     }
 

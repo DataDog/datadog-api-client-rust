@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -2040,6 +2042,42 @@ impl SyntheticsAPI {
         match self.list_tests_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_tests_with_pagination(
+        &self,
+        mut params: ListTestsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<crate::datadogV1::model::SyntheticsTestDetails, Error<ListTestsError>>,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 100;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            if params.page_number.is_none() {
+                params.page_number = Some(0);
+            }
+            loop {
+                let resp = self.list_tests(params.clone()).await?;
+
+                let Some(resp) = resp else { break };
+                let Some(tests) = resp.tests else { break };
+
+                let r = tests;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                params.page_number = Some(params.page_number.unwrap() + 1);
+            }
         }
     }
 

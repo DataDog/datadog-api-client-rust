@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -92,6 +94,43 @@ impl ContainerImagesAPI {
         match self.list_container_images_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_container_images_with_pagination(
+        &self,
+        mut params: ListContainerImagesOptionalParams,
+    ) -> impl Stream<
+        Item = Result<crate::datadogV2::model::ContainerImageItem, Error<ListContainerImagesError>>,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i32 = 1000;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_container_images(params.clone()).await?;
+
+                let Some(resp) = resp else { break };
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                let Some(meta) = resp.meta else { break };
+                let Some(pagination) = meta.pagination else { break };
+                let Some(next_cursor) = pagination.next_cursor else { break };
+
+                params.page_cursor = Some(next_cursor);
+            }
         }
     }
 

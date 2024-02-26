@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -331,6 +333,43 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         match self.list_slo_correction_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_slo_correction_with_pagination(
+        &self,
+        mut params: ListSLOCorrectionOptionalParams,
+    ) -> impl Stream<
+        Item = Result<crate::datadogV1::model::SLOCorrection, Error<ListSLOCorrectionError>>,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 25;
+            if params.limit.is_none() {
+                params.limit = Some(page_size);
+            } else {
+                page_size = params.limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_slo_correction(params.clone()).await?;
+
+                let Some(resp) = resp else { break };
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                if params.offset.is_none() {
+                    params.offset = Some(page_size.clone());
+                } else {
+                    params.offset = Some(params.offset.unwrap() + page_size.clone());
+                }
+            }
         }
     }
 

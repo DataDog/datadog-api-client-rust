@@ -145,60 +145,71 @@ impl {{ structName }} {
             }
         {%- endif %}
             loop {
-                let resp = self.{{operation.operationId | snake_case}}({% for name, parameter in requiredParams %} {{name|variable_name}}.clone(),{% endfor %}{% if operation|has_optional_parameter %}params.clone(),{% endif %}).await?;
-                if let Some(resp) = resp {
-                    {% set ns = namespace(respGetter="resp", parentSchema=returnSchema) %}
-                    {%- if pagination.resultsPath %}
-                    {%- for part in pagination.resultsPath.split(".") %}
-                    {%- set required = ns.parentSchema.get("required", []) %}
-                    {%- set ns.respGetter = ns.respGetter ~ "." ~ part ~ ".unwrap()" if part not in required else ns.respGetter ~ "." ~ part %}
-                    {%- set ns.parentSchema = ns.parentSchema.properties[part] %}
-                    {%- endfor %}
-                    {%- endif %}
+                let resp = self.{{operation.operationId | snake_case}}({% for name, parameter in requiredParams %} {{name|variable_name}}.clone(),{% endfor %}{% if operation|has_optional_parameter %}params.clone(){% endif %}).await?;
 
-                    let r = {{ ns.respGetter }};
-                    let count = r.len();
-                    for team in r {
-                        yield team;
-                    }
+                let Some(resp) = resp else { break };
+                {%- set ns = namespace(respGetter="resp", parentSchema=returnSchema) %}
+                {%- if pagination.resultsPath %}
+                {%- set resultsPathParts = pagination.resultsPath.split(".") %}
+                {%- for i in range(resultsPathParts|length) %}
+                {%- set required = resultsPathParts[i] in ns.parentSchema.get("required", []) %}
 
-                    if count < page_size as usize {
-                        break;
-                    }
+                {%- if required %}
+                {%- set ns.respGetter = ns.respGetter ~ "." ~ resultsPathParts[i] %}
+                {%- else %}
+                {%- set attrName = resultsPathParts[i]|variable_name %}
+                let Some({{ attrName }}) = {{ ns.respGetter }}.{{ attrName }} else { break };
+                {%- set ns.respGetter = attrName %}
+                {%- endif %}
 
-                    {%- if pagination.pageParam %}
-                    {%- set getter, setter, required, schema = get_accessors(operation, pagination.pageParam) %}
-                    {{ setter }} = {% if not required %}Some({% endif %}{{ getter }}.unwrap() + 1{% if not required %}){% endif %};
-                    {%- endif %}
-    
-                    {%- if pagination.pageOffsetParam %}
-                    {%- set getter, setter, required, schema = get_accessors(operation, pagination.pageOffsetParam) %}
-                    if {{ get_container(operation, pagination.pageOffsetParam) }}.is_none() {
-                        {{ setter }} = {% if not required %}Some({% endif %}page_size.clone(){% if not required %}){% endif %};
-                    } else {
-                        {{ setter }} = {% if not required %}Some({% endif %}{{ getter }}.unwrap() + page_size.clone(){% if not required %}){% endif %};
-                    }
-                    {%- endif %}
-    
-                    {%- if pagination.cursorParam %}
-                    {%- set cursorParamGetter, cursorParamSetter, cursorParamRequired, cursorParamSchema = get_accessors(operation, pagination.cursorParam) %}
-                    {% set ns = namespace(respGetter="resp", parentSchema=returnSchema) %}
-                    {%- for part in pagination.cursorParam.split(".") %}
-                    {%- set required = ns.parentSchema.get("required", []) %}
-                    {%- set ns.respGetter = ns.respGetter ~ "." ~ part ~ ".unwrap()" if part not in required else ns.respGetter ~ "." ~ part %}
-                    {%- set ns.parentSchema = ns.parentSchema.properties[part] %}
-                    {%- endfor %}
-                    // {{  }}
-                    if {{ cursorParamGetter }}.is_none() {
-                        {{ cursorParamSetter }} = {% if cursorParamRequired %}Some({% endif %}None{% if cursorParamRequired %}){% endif %};
-                    } else {
-                        break;
-                    }
-                    {%- endif %}
+                {%- set ns.parentSchema = ns.parentSchema.properties[resultsPathParts[i]] %}
+                {%- endfor %}
+                {%- endif %}
 
-                } else {
+                let r = {{ ns.respGetter }};
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
                     break;
                 }
+
+                {%- if pagination.pageParam %}
+                {%- set getter, setter, required, schema = get_accessors(operation, pagination.pageParam) %}
+                {{ setter }} = {% if not required %}Some({% endif %}{{ getter }}.unwrap() + 1{% if not required %}){% endif %};
+                {%- endif %}
+
+                {%- if pagination.pageOffsetParam %}
+                {%- set getter, setter, required, schema = get_accessors(operation, pagination.pageOffsetParam) %}
+                if {{ get_container(operation, pagination.pageOffsetParam) }}.is_none() {
+                    {{ setter }} = {% if not required %}Some({% endif %}page_size.clone(){% if not required %}){% endif %};
+                } else {
+                    {{ setter }} = {% if not required %}Some({% endif %}{{ getter }}.unwrap() + page_size.clone(){% if not required %}){% endif %};
+                }
+                {%- endif %}
+
+                {%- if pagination.cursorParam %}
+                {%- set _, cursorParamSetter, required, schema = get_accessors(operation, pagination.cursorParam) %}
+                {%- set ns = namespace(cursorGetter="resp", parentSchema=returnSchema, required=False) %}
+                {%- set cursorPathParts = pagination.cursorPath.split(".") %}
+                {%- for i in range(cursorPathParts|length) %}
+                {%- set ns.required = cursorPathParts[i] in ns.parentSchema.get("required", []) %}
+
+                {%- if ns.required %}
+                {%- set ns.cursorGetter = ns.cursorGetter ~ "." ~ cursorPathParts[i] %}
+                {%- else %}
+                {%- set attrName = cursorPathParts[i]|variable_name %}
+                let Some({{ attrName }}) = {{ ns.cursorGetter }}.{{ attrName }} else { break };
+                {%- set ns.cursorGetter = attrName %}
+                {%- endif %}
+
+                {%- set ns.parentSchema = ns.parentSchema.properties[cursorPathParts[i]] %}
+                {%- endfor %}
+
+                {{ cursorParamSetter }} = {% if not required%}Some({% endif %}{{ ns.cursorGetter }}{% if not required%}){% endif %};
+                {%- endif %}
             }
         }
     }
