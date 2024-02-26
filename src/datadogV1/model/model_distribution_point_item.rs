@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// List of distribution point.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DistributionPointItem {

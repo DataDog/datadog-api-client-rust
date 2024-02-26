@@ -2,13 +2,14 @@ use serde::{Serialize, Deserialize};
 use serde_with::skip_serializing_none;
 
 {{ model.description | block_comment }}
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct {{ name }} {
 {%- for attr, schema in model.get("properties", {}).items() %}
 {%- set propertyName = attr|variable_name %}
 {%- set required = attr in model.required %}
-{%- set nullable = schema.get("nullable", False)%}
+{%- set nullable = schema.get("nullable", false)%}
 {%- set dataType = get_type(schema, alternative_name=name + propertyName, render_nullable=nullable, render_option=not required, render_box=false, version=version) %}
     {%- if schema.description is defined %}
     {{ schema.description | block_comment }}
@@ -16,25 +17,28 @@ pub struct {{ name }} {
 {%- if schema.deprecated %}
 	#[deprecated]
 {%- endif %}
+{%- if required and nullable %}
+	#[serialize_always]
+{%- endif %}
     #[serde(rename = "{{ attr }}"{% if not required and nullable%}, default, with = "::serde_with::rust::double_option"{% endif %})]
     pub {{propertyName}}: {{dataType}},
 {%- endfor %}
-{%- if model.additionalProperties is defined and model.additionalProperties != False %}
-{%- set dataType = get_type(model.additionalProperties, alternative_name=None, render_nullable=False, render_option=False, render_box=false, version=version) %}
+{%- if model.additionalProperties is defined and model.additionalProperties != false %}
+{%- set dataType = get_type(model.additionalProperties, alternative_name=None, render_nullable=false, render_option=false, render_box=false, version=version) %}
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, {{ dataType }}>,
 {%- endif %}
 }
 
 impl {{ name }} {
-    pub fn new({% for attr, schema in model.get("properties", {}).items() if attr in model.required %}{%- set nullable = schema.get("nullable", False)%}{%- set dataType = get_type(schema, alternative_name=name + attr|variable_name, render_nullable=nullable, render_option=False, render_box=false, version=version) %}{{attr|variable_name}}: {{ dataType }}{%- if not loop.last %}, {% endif %}{% endfor %}) -> {{ name }} {
+    pub fn new({% for attr, schema in model.get("properties", {}).items() if attr in model.required %}{%- set nullable = schema.get("nullable", false)%}{%- set dataType = get_type(schema, alternative_name=name + attr|variable_name, render_nullable=nullable, render_option=false, render_box=false, version=version) %}{{attr|variable_name}}: {{ dataType }}{%- if not loop.last %}, {% endif %}{% endfor %}) -> {{ name }} {
         {%- if get_deprecated(model) %}
         #[allow(deprecated)]
         {%- endif %}
         {{ name }} {
             {%- for attr, schema in model.get("properties", {}).items() %}
             {%- set required = attr in model.required %}
-            {%- set nullable = schema.get("nullable", False)%}
+            {%- set nullable = schema.get("nullable", false)%}
             {%- set dataType = get_type(schema, alternative_name=name + attr|variable_name, render_nullable=nullable, render_option=not required, render_box=false, version=version) %}
             {%- if attr in model.get("required", []) %}
             {{ attr|variable_name }},
@@ -42,14 +46,14 @@ impl {{ name }} {
             {{ attr|variable_name }}: None,
             {%- endif %}
             {%- endfor %}
-            {%- if model.additionalProperties is defined and model.additionalProperties != False %}
+            {%- if model.additionalProperties is defined and model.additionalProperties != false %}
             additional_properties: std::collections::BTreeMap::new(),
             {%- endif %}
         }
     }
     {% for attr, schema in model.get("properties", {}).items() if attr not in model.required %}
-    {%- set nullable = schema.get("nullable", False)%}
-    {%- set dataType = get_type(schema, alternative_name=name + attr|variable_name, render_nullable=nullable, render_option=False, render_box=false, version=version) %}
+    {%- set nullable = schema.get("nullable", false)%}
+    {%- set dataType = get_type(schema, alternative_name=name + attr|variable_name, render_nullable=nullable, render_option=false, render_box=false, version=version) %}
     {%- if get_deprecated(model) %}
     #[allow(deprecated)]
     {%- endif %}

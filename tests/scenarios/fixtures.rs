@@ -3,6 +3,7 @@ use crate::{
     GIVEN_MAP,
 };
 use chrono::{DateTime, Duration, Months, SecondsFormat};
+use convert_case::{Case, Casing};
 use cucumber::{
     event::ScenarioFinished,
     gherkin::{Feature, Rule, Scenario},
@@ -50,6 +51,7 @@ pub struct DatadogWorld {
     pub operation_id: String,
     pub parameters: HashMap<String, Value>,
     pub response: Response,
+    pub api_name: Option<String>,
     pub api_instances: ApiInstances,
     pub given_map: Option<&'static Value>,
     pub undo_map: Option<&'static Value>,
@@ -83,6 +85,7 @@ pub async fn before_scenario(
     let filename = NON_ALNUM_RE
         .replace_all(scenario.name.as_str(), "-")
         .to_string();
+
     let mut prefix = "Test".to_string();
     let mut cassette_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     cassette_dir.push(format!(
@@ -221,7 +224,8 @@ fn valid_appkey_auth(world: &mut DatadogWorld) {
 
 #[given(expr = "an instance of {string} API")]
 fn instance_of_api(world: &mut DatadogWorld, api: String) {
-    initialize_api_instance(world, api);
+    initialize_api_instance(world, api.clone());
+    world.api_name = Some(api);
 }
 
 pub fn given_resource_in_system(
@@ -261,14 +265,17 @@ pub fn given_resource_in_system(
             }
         }
 
-        if let Some(tag) = given.get("tag") {
+        let api_name = if let Some(tag) = given.get("tag") {
             let mut api_name = tag
                 .as_str()
                 .expect("failed to parse given tag as str")
                 .to_string();
             api_name.retain(|c| !c.is_whitespace());
-            initialize_api_instance(world, api_name);
-        }
+
+            api_name
+        } else {
+            world.api_name.clone().unwrap()
+        };
 
         let operation_id = given
             .get("operationId")
@@ -276,6 +283,20 @@ pub fn given_resource_in_system(
             .as_str()
             .expect("failed to parse given operation id as str")
             .to_string();
+
+        let unstable_operation_id = format!(
+            "v{}.{}",
+            world.api_version,
+            operation_id.to_case(Case::Snake)
+        );
+
+        if world.config.is_unstable_operation(&unstable_operation_id) {
+            world
+                .config
+                .set_unstable_operation_enabled(&unstable_operation_id, true);
+        }
+
+        initialize_api_instance(world, api_name);
 
         let test_call = world
             .function_mappings
@@ -319,7 +340,17 @@ fn new_request(world: &mut DatadogWorld, operation_id: String) {
 }
 
 #[given(expr = "operation {string} enabled")]
-fn enable_unstable(_world: &mut DatadogWorld, _operation_id: String) {}
+fn enable_unstable(world: &mut DatadogWorld, operation_id: String) {
+    let operation_id = format!(
+        "v{}.{}",
+        world.api_version,
+        operation_id.to_case(Case::Snake)
+    );
+    world
+        .config
+        .set_unstable_operation_enabled(&operation_id, true);
+    initialize_api_instance(world, world.api_name.clone().unwrap());
+}
 
 #[given(regex = r"^body with value (.*)$")]
 fn body_with_value(world: &mut DatadogWorld, body: String) {
@@ -605,14 +636,14 @@ fn build_undo(
         .unwrap();
     match undo.get("type").unwrap().as_str() {
         Some("unsafe") => {
-            let tag = match undo.get("tag") {
-                Some(tag) => {
-                    let mut tag = tag.as_str().unwrap().to_string();
-                    tag.retain(|c| !c.is_whitespace());
-                    Some(tag)
-                }
-                None => None,
+            let api_name = if let Some(tag) = undo.get("tag") {
+                let mut api_name = tag.as_str().unwrap().to_string();
+                api_name.retain(|c| !c.is_whitespace());
+                api_name
+            } else {
+                world.api_name.clone().unwrap()
             };
+
             let mut undo_operation = UndoOperation {
                 operation_id: undo
                     .get("operationId")
@@ -620,9 +651,27 @@ fn build_undo(
                     .as_str()
                     .unwrap()
                     .to_string(),
-                tag,
+                tag: Some(api_name.clone()),
                 parameters: HashMap::new(),
             };
+
+            let unstable_operation_id: String = format!(
+                "v{}.{}",
+                world.api_version,
+                undo.get("operationId")
+                    .unwrap()
+                    .as_str()
+                    .unwrap()
+                    .to_case(Case::Snake)
+            );
+
+            if world.config.is_unstable_operation(&unstable_operation_id) {
+                world
+                    .config
+                    .set_unstable_operation_enabled(&unstable_operation_id, true);
+            }
+            initialize_api_instance(world, undo_operation.tag.clone().unwrap());
+
             let params = undo.get("parameters").unwrap().as_array().unwrap();
             for param in params {
                 let param_name = param.get("name").unwrap().as_str().unwrap().to_string();

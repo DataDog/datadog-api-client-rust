@@ -2,10 +2,12 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use log::warn;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetCostByOrgOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_cost_by_org`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetCostByOrgOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
@@ -21,6 +23,7 @@ impl GetCostByOrgOptionalParams {
 }
 
 /// GetEstimatedCostByOrgOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_estimated_cost_by_org`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetEstimatedCostByOrgOptionalParams {
     /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`. Defaults to `summary`.
@@ -64,6 +67,7 @@ impl GetEstimatedCostByOrgOptionalParams {
 }
 
 /// GetHistoricalCostByOrgOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_historical_cost_by_org`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetHistoricalCostByOrgOptionalParams {
     /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`.  Defaults to `summary`.
@@ -86,6 +90,7 @@ impl GetHistoricalCostByOrgOptionalParams {
 }
 
 /// GetHourlyUsageOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_hourly_usage`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetHourlyUsageOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
@@ -140,6 +145,7 @@ impl GetHourlyUsageOptionalParams {
 }
 
 /// GetMonthlyCostAttributionOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_monthly_cost_attribution`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetMonthlyCostAttributionOptionalParams {
     /// The direction to sort by: `[desc, asc]`.
@@ -185,6 +191,7 @@ impl GetMonthlyCostAttributionOptionalParams {
 }
 
 /// GetProjectedCostOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_projected_cost`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetProjectedCostOptionalParams {
     /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`. Defaults to `summary`.
@@ -200,6 +207,7 @@ impl GetProjectedCostOptionalParams {
 }
 
 /// GetUsageApplicationSecurityMonitoringOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_application_security_monitoring`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageApplicationSecurityMonitoringOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
@@ -217,6 +225,7 @@ impl GetUsageApplicationSecurityMonitoringOptionalParams {
 }
 
 /// GetUsageLambdaTracedInvocationsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_lambda_traced_invocations`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageLambdaTracedInvocationsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
@@ -234,6 +243,7 @@ impl GetUsageLambdaTracedInvocationsOptionalParams {
 }
 
 /// GetUsageObservabilityPipelinesOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_observability_pipelines`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageObservabilityPipelinesOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
@@ -391,6 +401,16 @@ impl UsageMeteringAPI {
         ResponseContent<crate::datadogV2::model::ActiveBillingDimensionsResponse>,
         Error<GetActiveBillingDimensionsError>,
     > {
+        let operation_id = "v2.get_active_billing_dimensions".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_active_billing_dimensions' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         let local_client = &local_configuration.client;
@@ -909,6 +929,16 @@ impl UsageMeteringAPI {
         ResponseContent<crate::datadogV2::model::MonthlyCostAttributionResponse>,
         Error<GetMonthlyCostAttributionError>,
     > {
+        let operation_id = "v2.get_monthly_cost_attribution".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_monthly_cost_attribution' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         // unbox and build optional parameters

@@ -8,6 +8,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListPowerpacksOptionalParams is a struct for passing parameters to the method [`PowerpackAPI::list_powerpacks`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListPowerpacksOptionalParams {
     /// Maximum number of powerpacks in the response.

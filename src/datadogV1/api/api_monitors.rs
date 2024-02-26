@@ -8,6 +8,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// DeleteMonitorOptionalParams is a struct for passing parameters to the method [`MonitorsAPI::delete_monitor`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct DeleteMonitorOptionalParams {
     /// Delete the monitor even if it's referenced by other resources (for example SLO, composite monitor).
@@ -23,6 +24,7 @@ impl DeleteMonitorOptionalParams {
 }
 
 /// GetMonitorOptionalParams is a struct for passing parameters to the method [`MonitorsAPI::get_monitor`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetMonitorOptionalParams {
     /// When specified, shows additional information about the group states. Choose one or more from `all`, `alert`, `warn`, and `no data`.
@@ -45,6 +47,7 @@ impl GetMonitorOptionalParams {
 }
 
 /// ListMonitorsOptionalParams is a struct for passing parameters to the method [`MonitorsAPI::list_monitors`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListMonitorsOptionalParams {
     /// When specified, shows additional information about the group states.
@@ -115,6 +118,7 @@ impl ListMonitorsOptionalParams {
 }
 
 /// SearchMonitorGroupsOptionalParams is a struct for passing parameters to the method [`MonitorsAPI::search_monitor_groups`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct SearchMonitorGroupsOptionalParams {
     /// After entering a search query in your [Manage Monitor page][1] use the query parameter value in the
@@ -173,6 +177,7 @@ impl SearchMonitorGroupsOptionalParams {
 }
 
 /// SearchMonitorsOptionalParams is a struct for passing parameters to the method [`MonitorsAPI::search_monitors`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct SearchMonitorsOptionalParams {
     /// After entering a search query in your [Manage Monitor page][1] use the query parameter value in the

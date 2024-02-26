@@ -4,6 +4,7 @@
 
 use serde::{Deserialize, Serialize};
 
+#[non_exhaustive]
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum AzureUCConfigPatchRequestType {
     #[serde(rename = "azure_uc_config_patch_request")]

@@ -4,10 +4,11 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
-/// Key/Value pair of attributes used for update request.
+/// Key/Value pair of attributes used for create request.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-pub struct AuthNMappingUpdateAttributes {
+pub struct AuthNMappingCreateAttributes {
     /// Key portion of a key/value pair of the attribute sent from the Identity Provider.
     #[serde(rename = "attribute_key")]
     pub attribute_key: Option<String>,
@@ -16,9 +17,9 @@ pub struct AuthNMappingUpdateAttributes {
     pub attribute_value: Option<String>,
 }
 
-impl AuthNMappingUpdateAttributes {
-    pub fn new() -> AuthNMappingUpdateAttributes {
-        AuthNMappingUpdateAttributes {
+impl AuthNMappingCreateAttributes {
+    pub fn new() -> AuthNMappingCreateAttributes {
+        AuthNMappingCreateAttributes {
             attribute_key: None,
             attribute_value: None,
         }
@@ -35,7 +36,7 @@ impl AuthNMappingUpdateAttributes {
     }
 }
 
-impl Default for AuthNMappingUpdateAttributes {
+impl Default for AuthNMappingCreateAttributes {
     fn default() -> Self {
         Self::new()
     }

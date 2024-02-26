@@ -2,10 +2,12 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use log::warn;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetIncidentServiceOptionalParams is a struct for passing parameters to the method [`IncidentServicesAPI::get_incident_service`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetIncidentServiceOptionalParams {
     /// Specifies which types of related objects should be included in the response.
@@ -21,6 +23,7 @@ impl GetIncidentServiceOptionalParams {
 }
 
 /// ListIncidentServicesOptionalParams is a struct for passing parameters to the method [`IncidentServicesAPI::list_incident_services`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListIncidentServicesOptionalParams {
     /// Specifies which types of related objects should be included in the response.
@@ -159,6 +162,16 @@ impl IncidentServicesAPI {
         ResponseContent<crate::datadogV2::model::IncidentServiceResponse>,
         Error<CreateIncidentServiceError>,
     > {
+        let operation_id = "v2.create_incident_service".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.create_incident_service' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         let local_client = &local_configuration.client;
@@ -233,6 +246,16 @@ impl IncidentServicesAPI {
         &self,
         service_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteIncidentServiceError>> {
+        let operation_id = "v2.delete_incident_service".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.delete_incident_service' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         let local_client = &local_configuration.client;
@@ -312,6 +335,16 @@ impl IncidentServicesAPI {
         ResponseContent<crate::datadogV2::model::IncidentServiceResponse>,
         Error<GetIncidentServiceError>,
     > {
+        let operation_id = "v2.get_incident_service".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_incident_service' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         // unbox and build optional parameters
@@ -394,6 +427,16 @@ impl IncidentServicesAPI {
         ResponseContent<crate::datadogV2::model::IncidentServicesResponse>,
         Error<ListIncidentServicesError>,
     > {
+        let operation_id = "v2.list_incident_services".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_incident_services' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         // unbox and build optional parameters
@@ -492,6 +535,16 @@ impl IncidentServicesAPI {
         ResponseContent<crate::datadogV2::model::IncidentServiceResponse>,
         Error<UpdateIncidentServiceError>,
     > {
+        let operation_id = "v2.update_incident_service".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.update_incident_service' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         let local_client = &local_configuration.client;

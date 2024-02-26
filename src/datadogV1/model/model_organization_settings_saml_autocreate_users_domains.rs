@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
 /// Has two properties, `enabled` (boolean) and `domains`, which is a list of domains without the @ symbol.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct OrganizationSettingsSamlAutocreateUsersDomains {

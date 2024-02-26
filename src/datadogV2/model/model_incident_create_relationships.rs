@@ -5,10 +5,12 @@ use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
 /// The relationships the incident will have with other resources once created.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct IncidentCreateRelationships {
     /// Relationship to user.
+    #[serialize_always]
     #[serde(rename = "commander_user")]
     pub commander_user: Option<crate::datadogV2::model::NullableRelationshipToUser>,
 }

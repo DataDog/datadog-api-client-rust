@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// Object for a metrics and metric tag configurations.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum MetricsAndMetricTagConfigurations {

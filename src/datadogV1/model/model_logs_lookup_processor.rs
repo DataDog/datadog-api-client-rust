@@ -10,6 +10,7 @@ use serde_with::skip_serializing_none;
 /// into a human readable service name. Alternatively, you could also use it to check
 /// if the MAC address that just attempted to connect to the production
 /// environment belongs to your list of stolen machines.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LogsLookupProcessor {

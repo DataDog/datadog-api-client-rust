@@ -6,6 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// The GeoIP parser takes an IP address attribute and extracts if available
 /// the Continent, Country, Subdivision, and City information in the target attribute path.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LogsGeoIPParser {

@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// A resulting object to put the given computes in over all the matching records.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CIAppGroupByTotal {

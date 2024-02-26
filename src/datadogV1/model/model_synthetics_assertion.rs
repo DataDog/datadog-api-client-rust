@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 
 /// Object describing the assertions type, their associated operator,
 /// which property they apply, and upon which target.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SyntheticsAssertion {

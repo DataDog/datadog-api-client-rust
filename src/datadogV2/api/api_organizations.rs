@@ -5,7 +5,8 @@ use crate::datadog::*;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
-/// UploadIdPMetadataOptionalParams is a struct for passing parameters to the method [`OrganizationsAPI::upload_id_p_metadata`]
+/// UploadIdPMetadataOptionalParams is a struct for passing parameters to the method [`OrganizationsAPI::upload_idp_metadata`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct UploadIdPMetadataOptionalParams {
     /// The IdP metadata XML file
@@ -20,7 +21,7 @@ impl UploadIdPMetadataOptionalParams {
     }
 }
 
-/// UploadIdPMetadataError is a struct for typed errors of method [`OrganizationsAPI::upload_id_p_metadata`]
+/// UploadIdPMetadataError is a struct for typed errors of method [`OrganizationsAPI::upload_idp_metadata`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UploadIdPMetadataError {
@@ -54,11 +55,11 @@ impl OrganizationsAPI {
     /// Endpoint for uploading IdP metadata for SAML setup.
     ///
     /// Use this endpoint to upload or replace IdP metadata for SAML login configuration.
-    pub async fn upload_id_p_metadata(
+    pub async fn upload_idp_metadata(
         &self,
         params: UploadIdPMetadataOptionalParams,
     ) -> Result<Option<()>, Error<UploadIdPMetadataError>> {
-        match self.upload_id_p_metadata_with_http_info(params).await {
+        match self.upload_idp_metadata_with_http_info(params).await {
             Ok(response_content) => Ok(response_content.entity),
             Err(err) => Err(err),
         }
@@ -67,7 +68,7 @@ impl OrganizationsAPI {
     /// Endpoint for uploading IdP metadata for SAML setup.
     ///
     /// Use this endpoint to upload or replace IdP metadata for SAML login configuration.
-    pub async fn upload_id_p_metadata_with_http_info(
+    pub async fn upload_idp_metadata_with_http_info(
         &self,
         params: UploadIdPMetadataOptionalParams,
     ) -> Result<ResponseContent<()>, Error<UploadIdPMetadataError>> {

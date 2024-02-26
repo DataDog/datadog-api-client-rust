@@ -2,3 +2,12 @@
 **/*.rs.bk
 Cargo.lock
 __pycache__
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/

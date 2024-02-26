@@ -6,6 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// A JSON list of the ID or IDs of the Synthetic tests that you want
 /// to delete.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SyntheticsDeleteTestsPayload {

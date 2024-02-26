@@ -8,6 +8,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListCIAppTestEventsOptionalParams is a struct for passing parameters to the method [`CIVisibilityTestsAPI::list_ci_app_test_events`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListCIAppTestEventsOptionalParams {
     /// Search query following log syntax.
@@ -58,6 +59,7 @@ impl ListCIAppTestEventsOptionalParams {
 }
 
 /// SearchCIAppTestEventsOptionalParams is a struct for passing parameters to the method [`CIVisibilityTestsAPI::search_ci_app_test_events`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct SearchCIAppTestEventsOptionalParams {
     pub body: Option<crate::datadogV2::model::CIAppTestEventsRequest>,

@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// A single column in a scalar query response.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ScalarColumn {

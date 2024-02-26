@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
 /// Text in a notebook is formatted with [Markdown](<https://daringfireball.net/projects/markdown/>), which enables the use of headings, subheadings, links, images, lists, and code blocks.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct NotebookMarkdownCellDefinition {

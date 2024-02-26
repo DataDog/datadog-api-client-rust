@@ -8,6 +8,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetTeamMembershipsOptionalParams is a struct for passing parameters to the method [`TeamsAPI::get_team_memberships`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetTeamMembershipsOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
@@ -44,6 +45,7 @@ impl GetTeamMembershipsOptionalParams {
 }
 
 /// ListTeamsOptionalParams is a struct for passing parameters to the method [`TeamsAPI::list_teams`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListTeamsOptionalParams {
     /// Specific page number to return.

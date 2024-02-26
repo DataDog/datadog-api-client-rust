@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// The value to use for spans that don't have the facet used to group by.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SpansGroupByMissing {

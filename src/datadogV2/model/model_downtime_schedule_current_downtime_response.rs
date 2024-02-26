@@ -7,6 +7,7 @@ use serde_with::skip_serializing_none;
 /// The most recent actual start and end dates for a recurring downtime. For a canceled downtime,
 /// this is the previously occurring downtime. For active downtimes, this is the ongoing downtime, and for scheduled
 /// downtimes it is the upcoming downtime.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct DowntimeScheduleCurrentDowntimeResponse {

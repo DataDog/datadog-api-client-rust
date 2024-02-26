@@ -6,6 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListDowntimesOptionalParams is a struct for passing parameters to the method [`DowntimesAPI::list_downtimes`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListDowntimesOptionalParams {
     /// Only return downtimes that are active when the request is made.

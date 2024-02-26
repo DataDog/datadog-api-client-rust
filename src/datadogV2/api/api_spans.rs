@@ -8,6 +8,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListSpansGetOptionalParams is a struct for passing parameters to the method [`SpansAPI::list_spans_get`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListSpansGetOptionalParams {
     /// Search query following spans syntax.

@@ -8,6 +8,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListLogsOptionalParams is a struct for passing parameters to the method [`LogsAPI::list_logs`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListLogsOptionalParams {
     pub body: Option<crate::datadogV2::model::LogsListRequest>,
@@ -21,6 +22,7 @@ impl ListLogsOptionalParams {
 }
 
 /// ListLogsGetOptionalParams is a struct for passing parameters to the method [`LogsAPI::list_logs_get`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListLogsGetOptionalParams {
     /// Search query following logs syntax.
@@ -90,6 +92,7 @@ impl ListLogsGetOptionalParams {
 }
 
 /// SubmitLogOptionalParams is a struct for passing parameters to the method [`LogsAPI::submit_log`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct SubmitLogOptionalParams {
     /// HTTP header used to compress the media-type.

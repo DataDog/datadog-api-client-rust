@@ -7,6 +7,7 @@ use serde_with::skip_serializing_none;
 /// Options for cloud_configuration rules.
 /// Fields `resourceType` and `regoRule` are mandatory when managing custom `cloud_configuration` rules.
 ///
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CloudConfigurationComplianceRuleOptions {

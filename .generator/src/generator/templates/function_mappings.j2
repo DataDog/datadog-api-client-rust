@@ -26,9 +26,7 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
     {%- set structName = name.replace(" ", "")+"API" %}
         "{{name.replace(" ", "")}}" => {
         {%- for version in versions %}
-            if world.api_instances.{{version}}_{{fieldName}}.is_none() {
-                world.api_instances.{{version}}_{{fieldName}} = Some(datadog{{ version.upper() }}::api::{{fieldName}}::{{structName}}::with_config(world.config.clone()));
-            }
+            world.api_instances.{{version}}_{{fieldName}} = Some(datadog{{ version.upper() }}::api::{{fieldName}}::{{structName}}::with_config(world.config.clone()));
         {%- endfor %}
         },
     {%- endfor %}
@@ -40,7 +38,7 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
 {%- for version, apis in all_apis.items() %}
 {%- for _, operations in apis.items() %}
 {%- for _, _, operation in operations %}
-    world.function_mappings.insert("{{version}}.{{ operation['operationId'] }}".to_string(), test_{{version}}_{{ operation['operationId'] | snake_case }});
+    world.function_mappings.insert("{{version}}.{{ operation['operationId'] }}".into(), test_{{version}}_{{ operation['operationId'] | snake_case }});
 {%- endfor %}
 {%- endfor %}
 {%- endfor %}
@@ -63,25 +61,23 @@ fn test_{{version}}_{{ operation['operationId'] | snake_case }}(world: &mut Data
     let {{ parameter[0] | variable_name }} = serde_json::from_value(_parameters.get("{{ parameter[0] }}").unwrap().clone()).unwrap();
     {%- endif -%}
     {%- else %}
-    let {{ parameter[0] | variable_name }} = if let Some(param) = _parameters.get("{{ parameter[0] }}") {
+    let {{ parameter[0] | variable_name }} = _parameters.get("{{ parameter[0] }}").and_then(|param| 
         {%- if schema | is_primitive and schema.get("format") == "binary" -%}
         Some(param.as_str().unwrap().as_bytes().to_vec())
         {%- else -%}
         Some(serde_json::from_value(param.clone()).unwrap())
         {%- endif -%}
-    } else {
-        None
-    };
+    );
     {%- endif %}
     {%- endfor %}
 
     {%- for parameter in optionalParams %}
     {%- if loop.first %}
-    let params = datadog{{ version.upper() }}::api::{{ apiName }}::{{ operation['operationId'] }}OptionalParams {
+    let mut params = datadog{{ version.upper() }}::api::{{ apiName }}::{{ operation['operationId'] }}OptionalParams::default();
     {%- endif %}
-        {{ parameter[0] | variable_name }},
+    params.{{ parameter[0] | variable_name }} = {{ parameter[0] | variable_name }};
     {%- if loop.last %}
-    };
+    ;
     {%- endif %}
     {%- endfor %}
     let response = match block_on(api.{{ operation['operationId'] | snake_case}}_with_http_info({% for name, parameter in requiredParams %}{{name|variable_name}}{% if loop.last %}{% if operation|has_optional_parameter %}, {% endif %}{% else %}, {% endif %}{% endfor %}{% if operation|has_optional_parameter %}params{% endif %})) {

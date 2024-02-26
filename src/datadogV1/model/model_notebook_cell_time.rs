@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// Timeframe for the notebook cell. When 'null', the notebook global time is used.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum NotebookCellTime {

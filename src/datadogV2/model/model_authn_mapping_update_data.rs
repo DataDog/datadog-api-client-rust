@@ -4,27 +4,31 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
-/// The AuthN Mapping object returned by API.
+/// Data for updating an AuthN Mapping.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-pub struct AuthNMapping {
-    /// Attributes of AuthN Mapping.
+pub struct AuthNMappingUpdateData {
+    /// Key/Value pair of attributes used for update request.
     #[serde(rename = "attributes")]
-    pub attributes: Option<crate::datadogV2::model::AuthNMappingAttributes>,
+    pub attributes: Option<crate::datadogV2::model::AuthNMappingUpdateAttributes>,
     /// ID of the AuthN Mapping.
     #[serde(rename = "id")]
     pub id: String,
-    /// All relationships associated with AuthN Mapping.
+    /// Relationship of AuthN Mapping update object to Role.
     #[serde(rename = "relationships")]
-    pub relationships: Option<crate::datadogV2::model::AuthNMappingRelationships>,
+    pub relationships: Option<crate::datadogV2::model::AuthNMappingUpdateRelationships>,
     /// AuthN Mappings resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::AuthNMappingsType,
 }
 
-impl AuthNMapping {
-    pub fn new(id: String, type_: crate::datadogV2::model::AuthNMappingsType) -> AuthNMapping {
-        AuthNMapping {
+impl AuthNMappingUpdateData {
+    pub fn new(
+        id: String,
+        type_: crate::datadogV2::model::AuthNMappingsType,
+    ) -> AuthNMappingUpdateData {
+        AuthNMappingUpdateData {
             attributes: None,
             id,
             relationships: None,
@@ -34,7 +38,7 @@ impl AuthNMapping {
 
     pub fn attributes(
         &mut self,
-        value: crate::datadogV2::model::AuthNMappingAttributes,
+        value: crate::datadogV2::model::AuthNMappingUpdateAttributes,
     ) -> &mut Self {
         self.attributes = Some(value);
         self
@@ -42,7 +46,7 @@ impl AuthNMapping {
 
     pub fn relationships(
         &mut self,
-        value: crate::datadogV2::model::AuthNMappingRelationships,
+        value: crate::datadogV2::model::AuthNMappingUpdateRelationships,
     ) -> &mut Self {
         self.relationships = Some(value);
         self

@@ -8,6 +8,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListSLOCorrectionOptionalParams is a struct for passing parameters to the method [`ServiceLevelObjectiveCorrectionsAPI::list_slo_correction`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListSLOCorrectionOptionalParams {
     /// The specific offset to use as the beginning of the returned response.

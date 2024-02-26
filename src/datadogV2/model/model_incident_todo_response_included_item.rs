@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// An object related to an incident todo that is included in the response.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum IncidentTodoResponseIncludedItem {

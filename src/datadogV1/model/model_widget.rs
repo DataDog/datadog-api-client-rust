@@ -10,6 +10,7 @@ use serde_with::skip_serializing_none;
 ///       For the **new dashboard layout**, the `layout` property depends on the `reflow_type` of the dashboard.
 ///       - If `reflow_type` is `fixed`, `layout` is required.
 ///       - If `reflow_type` is `auto`, `layout` should not be set.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Widget {

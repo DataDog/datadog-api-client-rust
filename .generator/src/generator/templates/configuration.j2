@@ -1,5 +1,7 @@
 {% include "partial_header.j2" %}
 use std::env;
+use std::collections::HashMap;
+use log::warn;
 
 #[derive(Debug, Clone)]
 pub struct Configuration {
@@ -17,18 +19,65 @@ pub struct Configuration {
 	{%- endfor %}
 	{%- endfor %}
 	{%- endif %}
-
+    unstable_operations: HashMap<String, bool>,
 }
 
 impl Configuration {
     pub fn new() -> Configuration {
         Configuration::default()
     }
+
+    pub fn set_unstable_operation_enabled(&mut self, operation: &str, enabled: bool) -> bool {
+        if self.unstable_operations.contains_key(operation) {
+            self.unstable_operations.insert(operation.to_string(), enabled);
+            return true;
+        }
+
+        warn!(
+            "Operation {} is not an unstable operation, can't enable/disable",
+            operation
+        );
+
+        false
+    }
+
+    pub fn is_unstable_operation_enabled(&self, operation: &str) -> bool {
+        if self.unstable_operations.contains_key(operation) {
+            return self.unstable_operations.get(operation).unwrap().clone();
+        }
+
+        warn!(
+            "Operation {} is not an unstable operation, is always enabled",
+            operation
+        );
+
+        false
+    }
+
+    pub fn is_unstable_operation(&self, operation: &str) -> bool {
+        if self.unstable_operations.contains_key(operation) {
+            return true;
+        }
+
+        false
+    }
 }
 
 impl Default for Configuration {
     fn default() -> Self {
         let http_client = reqwest_middleware::ClientBuilder::new(reqwest::Client::new());
+        let unstable_operations = HashMap::from([
+            {%- for version, api in apis.items() %}
+            {%- for operations in api.values() %}
+            {%- for _, _, operation in operations|sort(attribute="2.operationId") %}
+            {%- if "x-unstable" in operation %}
+                ("{{ version }}.{{ operation.operationId | snake_case }}".to_owned(), false),
+            {%- endif %}
+            {%- endfor %}
+            {%- endfor %}
+            {%- endfor %}
+        ]);
+
         Configuration {
             base_path: "https://api.datadoghq.com".to_owned(),
             user_agent: Some(format!(
@@ -50,6 +99,7 @@ impl Default for Configuration {
             {%- endfor %}
             {%- endfor %}
             {%- endif %}
+            unstable_operations,
         }
     }
 }

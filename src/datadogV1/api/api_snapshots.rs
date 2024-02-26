@@ -6,6 +6,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetGraphSnapshotOptionalParams is a struct for passing parameters to the method [`SnapshotsAPI::get_graph_snapshot`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetGraphSnapshotOptionalParams {
     /// The metric query.

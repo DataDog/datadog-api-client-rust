@@ -7,6 +7,7 @@ use serde_with::skip_serializing_none;
 /// The Distribution visualization is another way of showing metrics
 /// aggregated across one or several tags, such as hosts.
 /// Unlike the heat map, a distribution graph’s x-axis is quantity rather than time.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct DistributionWidgetDefinition {

@@ -10,6 +10,7 @@ use serde_with::skip_serializing_none;
 /// This endpoint operates on multiple service level objective objects, so
 /// it may be partially successful. In such cases, the "data" and "error"
 /// fields in this response indicate which deletions succeeded and failed.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SLOBulkDeleteResponse {

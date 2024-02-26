@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 {{ model.description | block_comment }}
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum {{name}} {

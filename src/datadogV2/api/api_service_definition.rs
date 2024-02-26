@@ -8,6 +8,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetServiceDefinitionOptionalParams is a struct for passing parameters to the method [`ServiceDefinitionAPI::get_service_definition`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetServiceDefinitionOptionalParams {
     /// The schema version desired in the response.
@@ -26,6 +27,7 @@ impl GetServiceDefinitionOptionalParams {
 }
 
 /// ListServiceDefinitionsOptionalParams is a struct for passing parameters to the method [`ServiceDefinitionAPI::list_service_definitions`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListServiceDefinitionsOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.

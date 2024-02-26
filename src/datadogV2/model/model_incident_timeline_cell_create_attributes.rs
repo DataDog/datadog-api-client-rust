@@ -4,6 +4,7 @@
 use serde::{Deserialize, Serialize};
 
 /// The timeline cell's attributes for a create request.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum IncidentTimelineCellCreateAttributes {

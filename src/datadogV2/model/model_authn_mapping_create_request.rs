@@ -4,17 +4,18 @@
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 
-/// Request to update an AuthN Mapping.
+/// Request for creating an AuthN Mapping.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-pub struct AuthNMappingUpdateRequest {
-    /// Data for updating an AuthN Mapping.
+pub struct AuthNMappingCreateRequest {
+    /// Data for creating an AuthN Mapping.
     #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::AuthNMappingUpdateData,
+    pub data: crate::datadogV2::model::AuthNMappingCreateData,
 }
 
-impl AuthNMappingUpdateRequest {
-    pub fn new(data: crate::datadogV2::model::AuthNMappingUpdateData) -> AuthNMappingUpdateRequest {
-        AuthNMappingUpdateRequest { data }
+impl AuthNMappingCreateRequest {
+    pub fn new(data: crate::datadogV2::model::AuthNMappingCreateData) -> AuthNMappingCreateRequest {
+        AuthNMappingCreateRequest { data }
     }
 }

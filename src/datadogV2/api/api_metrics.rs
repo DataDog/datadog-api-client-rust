@@ -2,10 +2,12 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use log::warn;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// EstimateMetricsOutputSeriesOptionalParams is a struct for passing parameters to the method [`MetricsAPI::estimate_metrics_output_series`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct EstimateMetricsOutputSeriesOptionalParams {
     /// Filtered tag keys that the metric is configured to query with.
@@ -49,6 +51,7 @@ impl EstimateMetricsOutputSeriesOptionalParams {
 }
 
 /// ListActiveMetricConfigurationsOptionalParams is a struct for passing parameters to the method [`MetricsAPI::list_active_metric_configurations`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListActiveMetricConfigurationsOptionalParams {
     /// The number of seconds of look back (from now).
@@ -66,6 +69,7 @@ impl ListActiveMetricConfigurationsOptionalParams {
 }
 
 /// ListTagConfigurationsOptionalParams is a struct for passing parameters to the method [`MetricsAPI::list_tag_configurations`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListTagConfigurationsOptionalParams {
     /// Filter custom metrics that have configured tags.
@@ -134,6 +138,7 @@ impl ListTagConfigurationsOptionalParams {
 }
 
 /// SubmitMetricsOptionalParams is a struct for passing parameters to the method [`MetricsAPI::submit_metrics`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct SubmitMetricsOptionalParams {
     /// HTTP header used to compress the media-type.
@@ -1240,6 +1245,16 @@ impl MetricsAPI {
         ResponseContent<crate::datadogV2::model::ScalarFormulaQueryResponse>,
         Error<QueryScalarDataError>,
     > {
+        let operation_id = "v2.query_scalar_data".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.query_scalar_data' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         let local_client = &local_configuration.client;
@@ -1319,6 +1334,16 @@ impl MetricsAPI {
         ResponseContent<crate::datadogV2::model::TimeseriesFormulaQueryResponse>,
         Error<QueryTimeseriesDataError>,
     > {
+        let operation_id = "v2.query_timeseries_data".to_string();
+        if self.config.is_unstable_operation_enabled(&operation_id) {
+            warn!("Using unstable operation {}", operation_id);
+        } else {
+            let local_error = UnstableOperationDisabledError {
+                msg: "Operation 'v2.query_timeseries_data' is not enabled".to_string(),
+            };
+            return Err(Error::UnstableOperationDisabledError(local_error));
+        }
+
         let local_configuration = &self.config;
 
         let local_client = &local_configuration.client;

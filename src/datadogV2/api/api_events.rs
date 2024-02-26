@@ -8,6 +8,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// ListEventsOptionalParams is a struct for passing parameters to the method [`EventsAPI::list_events`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListEventsOptionalParams {
     /// Search query following events syntax.
@@ -58,6 +59,7 @@ impl ListEventsOptionalParams {
 }
 
 /// SearchEventsOptionalParams is a struct for passing parameters to the method [`EventsAPI::search_events`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct SearchEventsOptionalParams {
     pub body: Option<crate::datadogV2::model::EventsListRequest>,

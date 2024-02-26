@@ -8,6 +8,7 @@ use reqwest;
 use serde::{Deserialize, Serialize};
 
 /// GetAPITestLatestResultsOptionalParams is a struct for passing parameters to the method [`SyntheticsAPI::get_api_test_latest_results`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetAPITestLatestResultsOptionalParams {
     /// Timestamp in milliseconds from which to start querying results.
@@ -37,6 +38,7 @@ impl GetAPITestLatestResultsOptionalParams {
 }
 
 /// GetBrowserTestLatestResultsOptionalParams is a struct for passing parameters to the method [`SyntheticsAPI::get_browser_test_latest_results`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetBrowserTestLatestResultsOptionalParams {
     /// Timestamp in milliseconds from which to start querying results.
@@ -66,6 +68,7 @@ impl GetBrowserTestLatestResultsOptionalParams {
 }
 
 /// ListTestsOptionalParams is a struct for passing parameters to the method [`SyntheticsAPI::list_tests`]
+#[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListTestsOptionalParams {
     /// Used for pagination. The number of tests returned in the page.

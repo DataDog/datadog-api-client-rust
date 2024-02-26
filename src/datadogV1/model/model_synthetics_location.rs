@@ -6,6 +6,7 @@ use serde_with::skip_serializing_none;
 
 /// Synthetic location that can be used when creating or editing a
 /// test.
+#[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SyntheticsLocation {
