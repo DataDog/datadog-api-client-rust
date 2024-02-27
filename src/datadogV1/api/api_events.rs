@@ -119,9 +119,9 @@ impl EventsAPI {
     pub async fn create_event(
         &self,
         body: crate::datadogV1::model::EventCreateRequest,
-    ) -> Result<Option<crate::datadogV1::model::EventCreateResponse>, Error<CreateEventError>> {
+    ) -> Result<crate::datadogV1::model::EventCreateResponse, Error<CreateEventError>> {
         match self.create_event_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -168,13 +168,18 @@ impl EventsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::EventCreateResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::EventCreateResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateEventError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -193,9 +198,9 @@ impl EventsAPI {
     pub async fn get_event(
         &self,
         event_id: i64,
-    ) -> Result<Option<crate::datadogV1::model::EventResponse>, Error<GetEventError>> {
+    ) -> Result<crate::datadogV1::model::EventResponse, Error<GetEventError>> {
         match self.get_event_with_http_info(event_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -241,13 +246,16 @@ impl EventsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::EventResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::EventResponse>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetEventError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -273,9 +281,9 @@ impl EventsAPI {
         start: i64,
         end: i64,
         params: ListEventsOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::EventListResponse>, Error<ListEventsError>> {
+    ) -> Result<crate::datadogV1::model::EventListResponse, Error<ListEventsError>> {
         match self.list_events_with_http_info(start, end, params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -360,13 +368,17 @@ impl EventsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::EventListResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::EventListResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListEventsError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {

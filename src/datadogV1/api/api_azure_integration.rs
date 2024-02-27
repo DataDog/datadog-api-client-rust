@@ -87,11 +87,11 @@ impl AzureIntegrationAPI {
         &self,
         body: crate::datadogV1::model::AzureAccount,
     ) -> Result<
-        Option<std::collections::BTreeMap<String, serde_json::Value>>,
+        std::collections::BTreeMap<String, serde_json::Value>,
         Error<CreateAzureIntegrationError>,
     > {
         match self.create_azure_integration_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -146,13 +146,18 @@ impl AzureIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateAzureIntegrationError> =
                 serde_json::from_str(&local_content).ok();
@@ -170,11 +175,11 @@ impl AzureIntegrationAPI {
         &self,
         body: crate::datadogV1::model::AzureAccount,
     ) -> Result<
-        Option<std::collections::BTreeMap<String, serde_json::Value>>,
+        std::collections::BTreeMap<String, serde_json::Value>,
         Error<DeleteAzureIntegrationError>,
     > {
         match self.delete_azure_integration_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -223,13 +228,18 @@ impl AzureIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<DeleteAzureIntegrationError> =
                 serde_json::from_str(&local_content).ok();
@@ -245,10 +255,9 @@ impl AzureIntegrationAPI {
     /// List all Datadog-Azure integrations configured in your Datadog account.
     pub async fn list_azure_integration(
         &self,
-    ) -> Result<Option<Vec<crate::datadogV1::model::AzureAccount>>, Error<ListAzureIntegrationError>>
-    {
+    ) -> Result<Vec<crate::datadogV1::model::AzureAccount>, Error<ListAzureIntegrationError>> {
         match self.list_azure_integration_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -289,13 +298,17 @@ impl AzureIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<Vec<crate::datadogV1::model::AzureAccount>> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<Vec<crate::datadogV1::model::AzureAccount>>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListAzureIntegrationError> =
                 serde_json::from_str(&local_content).ok();
@@ -313,11 +326,11 @@ impl AzureIntegrationAPI {
         &self,
         body: crate::datadogV1::model::AzureAccount,
     ) -> Result<
-        Option<std::collections::BTreeMap<String, serde_json::Value>>,
+        std::collections::BTreeMap<String, serde_json::Value>,
         Error<UpdateAzureHostFiltersError>,
     > {
         match self.update_azure_host_filters_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -369,13 +382,18 @@ impl AzureIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateAzureHostFiltersError> =
                 serde_json::from_str(&local_content).ok();
@@ -395,11 +413,11 @@ impl AzureIntegrationAPI {
         &self,
         body: crate::datadogV1::model::AzureAccount,
     ) -> Result<
-        Option<std::collections::BTreeMap<String, serde_json::Value>>,
+        std::collections::BTreeMap<String, serde_json::Value>,
         Error<UpdateAzureIntegrationError>,
     > {
         match self.update_azure_integration_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -450,13 +468,18 @@ impl AzureIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateAzureIntegrationError> =
                 serde_json::from_str(&local_content).ok();

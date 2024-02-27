@@ -60,12 +60,12 @@ impl RestrictionPoliciesAPI {
     pub async fn delete_restriction_policy(
         &self,
         resource_id: String,
-    ) -> Result<Option<()>, Error<DeleteRestrictionPolicyError>> {
+    ) -> Result<(), Error<DeleteRestrictionPolicyError>> {
         match self
             .delete_restriction_policy_with_http_info(resource_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -129,15 +129,13 @@ impl RestrictionPoliciesAPI {
     pub async fn get_restriction_policy(
         &self,
         resource_id: String,
-    ) -> Result<
-        Option<crate::datadogV2::model::RestrictionPolicyResponse>,
-        Error<GetRestrictionPolicyError>,
-    > {
+    ) -> Result<crate::datadogV2::model::RestrictionPolicyResponse, Error<GetRestrictionPolicyError>>
+    {
         match self
             .get_restriction_policy_with_http_info(resource_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -183,13 +181,18 @@ impl RestrictionPoliciesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::RestrictionPolicyResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::RestrictionPolicyResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetRestrictionPolicyError> =
                 serde_json::from_str(&local_content).ok();
@@ -225,14 +228,14 @@ impl RestrictionPoliciesAPI {
         resource_id: String,
         body: crate::datadogV2::model::RestrictionPolicyUpdateRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::RestrictionPolicyResponse>,
+        crate::datadogV2::model::RestrictionPolicyResponse,
         Error<UpdateRestrictionPolicyError>,
     > {
         match self
             .update_restriction_policy_with_http_info(resource_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -303,13 +306,18 @@ impl RestrictionPoliciesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::RestrictionPolicyResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::RestrictionPolicyResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateRestrictionPolicyError> =
                 serde_json::from_str(&local_content).ok();

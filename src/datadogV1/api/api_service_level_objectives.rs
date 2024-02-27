@@ -286,12 +286,10 @@ impl ServiceLevelObjectivesAPI {
     pub async fn check_can_delete_slo(
         &self,
         ids: String,
-    ) -> Result<
-        Option<crate::datadogV1::model::CheckCanDeleteSLOResponse>,
-        Error<CheckCanDeleteSLOError>,
-    > {
+    ) -> Result<crate::datadogV1::model::CheckCanDeleteSLOResponse, Error<CheckCanDeleteSLOError>>
+    {
         match self.check_can_delete_slo_with_http_info(ids).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -336,13 +334,18 @@ impl ServiceLevelObjectivesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::CheckCanDeleteSLOResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::CheckCanDeleteSLOResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CheckCanDeleteSLOError> =
                 serde_json::from_str(&local_content).ok();
@@ -359,9 +362,9 @@ impl ServiceLevelObjectivesAPI {
     pub async fn create_slo(
         &self,
         body: crate::datadogV1::model::ServiceLevelObjectiveRequest,
-    ) -> Result<Option<crate::datadogV1::model::SLOListResponse>, Error<CreateSLOError>> {
+    ) -> Result<crate::datadogV1::model::SLOListResponse, Error<CreateSLOError>> {
         match self.create_slo_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -408,13 +411,16 @@ impl ServiceLevelObjectivesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SLOListResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SLOListResponse>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateSLOError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -434,9 +440,9 @@ impl ServiceLevelObjectivesAPI {
         &self,
         slo_id: String,
         params: DeleteSLOOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::SLODeleteResponse>, Error<DeleteSLOError>> {
+    ) -> Result<crate::datadogV1::model::SLODeleteResponse, Error<DeleteSLOError>> {
         match self.delete_slo_with_http_info(slo_id, params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -492,13 +498,17 @@ impl ServiceLevelObjectivesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SLODeleteResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SLODeleteResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<DeleteSLOError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -518,12 +528,10 @@ impl ServiceLevelObjectivesAPI {
     pub async fn delete_slo_timeframe_in_bulk(
         &self,
         body: std::collections::BTreeMap<String, Vec<crate::datadogV1::model::SLOTimeframe>>,
-    ) -> Result<
-        Option<crate::datadogV1::model::SLOBulkDeleteResponse>,
-        Error<DeleteSLOTimeframeInBulkError>,
-    > {
+    ) -> Result<crate::datadogV1::model::SLOBulkDeleteResponse, Error<DeleteSLOTimeframeInBulkError>>
+    {
         match self.delete_slo_timeframe_in_bulk_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -576,13 +584,18 @@ impl ServiceLevelObjectivesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SLOBulkDeleteResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SLOBulkDeleteResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<DeleteSLOTimeframeInBulkError> =
                 serde_json::from_str(&local_content).ok();
@@ -600,9 +613,9 @@ impl ServiceLevelObjectivesAPI {
         &self,
         slo_id: String,
         params: GetSLOOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::SLOResponse>, Error<GetSLOError>> {
+    ) -> Result<crate::datadogV1::model::SLOResponse, Error<GetSLOError>> {
         match self.get_slo_with_http_info(slo_id, params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -654,13 +667,16 @@ impl ServiceLevelObjectivesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SLOResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SLOResponse>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetSLOError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -676,12 +692,10 @@ impl ServiceLevelObjectivesAPI {
     pub async fn get_slo_corrections(
         &self,
         slo_id: String,
-    ) -> Result<
-        Option<crate::datadogV1::model::SLOCorrectionListResponse>,
-        Error<GetSLOCorrectionsError>,
-    > {
+    ) -> Result<crate::datadogV1::model::SLOCorrectionListResponse, Error<GetSLOCorrectionsError>>
+    {
         match self.get_slo_corrections_with_http_info(slo_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -727,13 +741,18 @@ impl ServiceLevelObjectivesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SLOCorrectionListResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SLOCorrectionListResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetSLOCorrectionsError> =
                 serde_json::from_str(&local_content).ok();
@@ -760,13 +779,12 @@ impl ServiceLevelObjectivesAPI {
         from_ts: i64,
         to_ts: i64,
         params: GetSLOHistoryOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::SLOHistoryResponse>, Error<GetSLOHistoryError>>
-    {
+    ) -> Result<crate::datadogV1::model::SLOHistoryResponse, Error<GetSLOHistoryError>> {
         match self
             .get_slo_history_with_http_info(slo_id, from_ts, to_ts, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -837,13 +855,18 @@ impl ServiceLevelObjectivesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SLOHistoryResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SLOHistoryResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetSLOHistoryError> =
                 serde_json::from_str(&local_content).ok();
@@ -860,9 +883,9 @@ impl ServiceLevelObjectivesAPI {
     pub async fn list_slos(
         &self,
         params: ListSLOsOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::SLOListResponse>, Error<ListSLOsError>> {
+    ) -> Result<crate::datadogV1::model::SLOListResponse, Error<ListSLOsError>> {
         match self.list_slos_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -934,13 +957,16 @@ impl ServiceLevelObjectivesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SLOListResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SLOListResponse>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListSLOsError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -956,9 +982,9 @@ impl ServiceLevelObjectivesAPI {
     pub async fn search_slo(
         &self,
         params: SearchSLOOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::SearchSLOResponse>, Error<SearchSLOError>> {
+    ) -> Result<crate::datadogV1::model::SearchSLOResponse, Error<SearchSLOError>> {
         match self.search_slo_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1021,13 +1047,17 @@ impl ServiceLevelObjectivesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SearchSLOResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SearchSLOResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<SearchSLOError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -1044,9 +1074,9 @@ impl ServiceLevelObjectivesAPI {
         &self,
         slo_id: String,
         body: crate::datadogV1::model::ServiceLevelObjective,
-    ) -> Result<Option<crate::datadogV1::model::SLOListResponse>, Error<UpdateSLOError>> {
+    ) -> Result<crate::datadogV1::model::SLOListResponse, Error<UpdateSLOError>> {
         match self.update_slo_with_http_info(slo_id, body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1098,13 +1128,16 @@ impl ServiceLevelObjectivesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SLOListResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SLOListResponse>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateSLOError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {

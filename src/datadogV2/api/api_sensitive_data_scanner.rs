@@ -129,11 +129,11 @@ impl SensitiveDataScannerAPI {
         &self,
         body: crate::datadogV2::model::SensitiveDataScannerGroupCreateRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::SensitiveDataScannerCreateGroupResponse>,
+        crate::datadogV2::model::SensitiveDataScannerCreateGroupResponse,
         Error<CreateScanningGroupError>,
     > {
         match self.create_scanning_group_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -189,14 +189,19 @@ impl SensitiveDataScannerAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<
+            match serde_json::from_str::<
                 crate::datadogV2::model::SensitiveDataScannerCreateGroupResponse,
-            > = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateScanningGroupError> =
                 serde_json::from_str(&local_content).ok();
@@ -218,11 +223,11 @@ impl SensitiveDataScannerAPI {
         &self,
         body: crate::datadogV2::model::SensitiveDataScannerRuleCreateRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::SensitiveDataScannerCreateRuleResponse>,
+        crate::datadogV2::model::SensitiveDataScannerCreateRuleResponse,
         Error<CreateScanningRuleError>,
     > {
         match self.create_scanning_rule_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -278,14 +283,19 @@ impl SensitiveDataScannerAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<
+            match serde_json::from_str::<
                 crate::datadogV2::model::SensitiveDataScannerCreateRuleResponse,
-            > = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateScanningRuleError> =
                 serde_json::from_str(&local_content).ok();
@@ -304,14 +314,14 @@ impl SensitiveDataScannerAPI {
         group_id: String,
         body: crate::datadogV2::model::SensitiveDataScannerGroupDeleteRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::SensitiveDataScannerGroupDeleteResponse>,
+        crate::datadogV2::model::SensitiveDataScannerGroupDeleteResponse,
         Error<DeleteScanningGroupError>,
     > {
         match self
             .delete_scanning_group_with_http_info(group_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -365,14 +375,19 @@ impl SensitiveDataScannerAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<
+            match serde_json::from_str::<
                 crate::datadogV2::model::SensitiveDataScannerGroupDeleteResponse,
-            > = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<DeleteScanningGroupError> =
                 serde_json::from_str(&local_content).ok();
@@ -391,14 +406,14 @@ impl SensitiveDataScannerAPI {
         rule_id: String,
         body: crate::datadogV2::model::SensitiveDataScannerRuleDeleteRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::SensitiveDataScannerRuleDeleteResponse>,
+        crate::datadogV2::model::SensitiveDataScannerRuleDeleteResponse,
         Error<DeleteScanningRuleError>,
     > {
         match self
             .delete_scanning_rule_with_http_info(rule_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -452,14 +467,19 @@ impl SensitiveDataScannerAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<
+            match serde_json::from_str::<
                 crate::datadogV2::model::SensitiveDataScannerRuleDeleteResponse,
-            > = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<DeleteScanningRuleError> =
                 serde_json::from_str(&local_content).ok();
@@ -476,11 +496,11 @@ impl SensitiveDataScannerAPI {
     pub async fn list_scanning_groups(
         &self,
     ) -> Result<
-        Option<crate::datadogV2::model::SensitiveDataScannerGetConfigResponse>,
+        crate::datadogV2::model::SensitiveDataScannerGetConfigResponse,
         Error<ListScanningGroupsError>,
     > {
         match self.list_scanning_groups_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -524,14 +544,19 @@ impl SensitiveDataScannerAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<
+            match serde_json::from_str::<
                 crate::datadogV2::model::SensitiveDataScannerGetConfigResponse,
-            > = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListScanningGroupsError> =
                 serde_json::from_str(&local_content).ok();
@@ -548,11 +573,11 @@ impl SensitiveDataScannerAPI {
     pub async fn list_standard_patterns(
         &self,
     ) -> Result<
-        Option<crate::datadogV2::model::SensitiveDataScannerStandardPatternsResponseData>,
+        crate::datadogV2::model::SensitiveDataScannerStandardPatternsResponseData,
         Error<ListStandardPatternsError>,
     > {
         match self.list_standard_patterns_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -596,14 +621,19 @@ impl SensitiveDataScannerAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<
+            match serde_json::from_str::<
                 crate::datadogV2::model::SensitiveDataScannerStandardPatternsResponseData,
-            > = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListStandardPatternsError> =
                 serde_json::from_str(&local_content).ok();
@@ -621,11 +651,11 @@ impl SensitiveDataScannerAPI {
         &self,
         body: crate::datadogV2::model::SensitiveDataScannerConfigRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::SensitiveDataScannerReorderGroupsResponse>,
+        crate::datadogV2::model::SensitiveDataScannerReorderGroupsResponse,
         Error<ReorderScanningGroupsError>,
     > {
         match self.reorder_scanning_groups_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -677,14 +707,19 @@ impl SensitiveDataScannerAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<
+            match serde_json::from_str::<
                 crate::datadogV2::model::SensitiveDataScannerReorderGroupsResponse,
-            > = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ReorderScanningGroupsError> =
                 serde_json::from_str(&local_content).ok();
@@ -706,14 +741,14 @@ impl SensitiveDataScannerAPI {
         group_id: String,
         body: crate::datadogV2::model::SensitiveDataScannerGroupUpdateRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::SensitiveDataScannerGroupUpdateResponse>,
+        crate::datadogV2::model::SensitiveDataScannerGroupUpdateResponse,
         Error<UpdateScanningGroupError>,
     > {
         match self
             .update_scanning_group_with_http_info(group_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -770,14 +805,19 @@ impl SensitiveDataScannerAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<
+            match serde_json::from_str::<
                 crate::datadogV2::model::SensitiveDataScannerGroupUpdateResponse,
-            > = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateScanningGroupError> =
                 serde_json::from_str(&local_content).ok();
@@ -799,14 +839,14 @@ impl SensitiveDataScannerAPI {
         rule_id: String,
         body: crate::datadogV2::model::SensitiveDataScannerRuleUpdateRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::SensitiveDataScannerRuleUpdateResponse>,
+        crate::datadogV2::model::SensitiveDataScannerRuleUpdateResponse,
         Error<UpdateScanningRuleError>,
     > {
         match self
             .update_scanning_rule_with_http_info(rule_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -863,14 +903,19 @@ impl SensitiveDataScannerAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<
+            match serde_json::from_str::<
                 crate::datadogV2::model::SensitiveDataScannerRuleUpdateResponse,
-            > = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateScanningRuleError> =
                 serde_json::from_str(&local_content).ok();

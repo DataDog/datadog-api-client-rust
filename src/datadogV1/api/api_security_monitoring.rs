@@ -65,14 +65,14 @@ impl SecurityMonitoringAPI {
         signal_id: String,
         body: crate::datadogV1::model::AddSignalToIncidentRequest,
     ) -> Result<
-        Option<crate::datadogV1::model::SuccessfulSignalUpdateResponse>,
+        crate::datadogV1::model::SuccessfulSignalUpdateResponse,
         Error<AddSecurityMonitoringSignalToIncidentError>,
     > {
         match self
             .add_security_monitoring_signal_to_incident_with_http_info(signal_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -126,13 +126,18 @@ impl SecurityMonitoringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SuccessfulSignalUpdateResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SuccessfulSignalUpdateResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<AddSecurityMonitoringSignalToIncidentError> =
                 serde_json::from_str(&local_content).ok();
@@ -151,14 +156,14 @@ impl SecurityMonitoringAPI {
         signal_id: String,
         body: crate::datadogV1::model::SignalAssigneeUpdateRequest,
     ) -> Result<
-        Option<crate::datadogV1::model::SuccessfulSignalUpdateResponse>,
+        crate::datadogV1::model::SuccessfulSignalUpdateResponse,
         Error<EditSecurityMonitoringSignalAssigneeError>,
     > {
         match self
             .edit_security_monitoring_signal_assignee_with_http_info(signal_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -212,13 +217,18 @@ impl SecurityMonitoringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SuccessfulSignalUpdateResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SuccessfulSignalUpdateResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<EditSecurityMonitoringSignalAssigneeError> =
                 serde_json::from_str(&local_content).ok();
@@ -237,14 +247,14 @@ impl SecurityMonitoringAPI {
         signal_id: String,
         body: crate::datadogV1::model::SignalStateUpdateRequest,
     ) -> Result<
-        Option<crate::datadogV1::model::SuccessfulSignalUpdateResponse>,
+        crate::datadogV1::model::SuccessfulSignalUpdateResponse,
         Error<EditSecurityMonitoringSignalStateError>,
     > {
         match self
             .edit_security_monitoring_signal_state_with_http_info(signal_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -298,13 +308,18 @@ impl SecurityMonitoringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SuccessfulSignalUpdateResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SuccessfulSignalUpdateResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<EditSecurityMonitoringSignalStateError> =
                 serde_json::from_str(&local_content).ok();

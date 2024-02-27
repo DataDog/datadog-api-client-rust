@@ -82,10 +82,9 @@ impl SpansMetricsAPI {
     pub async fn create_spans_metric(
         &self,
         body: crate::datadogV2::model::SpansMetricCreateRequest,
-    ) -> Result<Option<crate::datadogV2::model::SpansMetricResponse>, Error<CreateSpansMetricError>>
-    {
+    ) -> Result<crate::datadogV2::model::SpansMetricResponse, Error<CreateSpansMetricError>> {
         match self.create_spans_metric_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -138,13 +137,18 @@ impl SpansMetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::SpansMetricResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::SpansMetricResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateSpansMetricError> =
                 serde_json::from_str(&local_content).ok();
@@ -161,9 +165,9 @@ impl SpansMetricsAPI {
     pub async fn delete_spans_metric(
         &self,
         metric_id: String,
-    ) -> Result<Option<()>, Error<DeleteSpansMetricError>> {
+    ) -> Result<(), Error<DeleteSpansMetricError>> {
         match self.delete_spans_metric_with_http_info(metric_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -227,10 +231,9 @@ impl SpansMetricsAPI {
     pub async fn get_spans_metric(
         &self,
         metric_id: String,
-    ) -> Result<Option<crate::datadogV2::model::SpansMetricResponse>, Error<GetSpansMetricError>>
-    {
+    ) -> Result<crate::datadogV2::model::SpansMetricResponse, Error<GetSpansMetricError>> {
         match self.get_spans_metric_with_http_info(metric_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -276,13 +279,18 @@ impl SpansMetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::SpansMetricResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::SpansMetricResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetSpansMetricError> =
                 serde_json::from_str(&local_content).ok();
@@ -298,10 +306,9 @@ impl SpansMetricsAPI {
     /// Get the list of configured span-based metrics with their definitions.
     pub async fn list_spans_metrics(
         &self,
-    ) -> Result<Option<crate::datadogV2::model::SpansMetricsResponse>, Error<ListSpansMetricsError>>
-    {
+    ) -> Result<crate::datadogV2::model::SpansMetricsResponse, Error<ListSpansMetricsError>> {
         match self.list_spans_metrics_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -345,13 +352,18 @@ impl SpansMetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::SpansMetricsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::SpansMetricsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListSpansMetricsError> =
                 serde_json::from_str(&local_content).ok();
@@ -370,13 +382,12 @@ impl SpansMetricsAPI {
         &self,
         metric_id: String,
         body: crate::datadogV2::model::SpansMetricUpdateRequest,
-    ) -> Result<Option<crate::datadogV2::model::SpansMetricResponse>, Error<UpdateSpansMetricError>>
-    {
+    ) -> Result<crate::datadogV2::model::SpansMetricResponse, Error<UpdateSpansMetricError>> {
         match self
             .update_spans_metric_with_http_info(metric_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -431,13 +442,18 @@ impl SpansMetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::SpansMetricResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::SpansMetricResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateSpansMetricError> =
                 serde_json::from_str(&local_content).ok();

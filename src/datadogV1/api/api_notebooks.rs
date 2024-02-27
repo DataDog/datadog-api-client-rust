@@ -163,9 +163,9 @@ impl NotebooksAPI {
     pub async fn create_notebook(
         &self,
         body: crate::datadogV1::model::NotebookCreateRequest,
-    ) -> Result<Option<crate::datadogV1::model::NotebookResponse>, Error<CreateNotebookError>> {
+    ) -> Result<crate::datadogV1::model::NotebookResponse, Error<CreateNotebookError>> {
         match self.create_notebook_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -214,13 +214,17 @@ impl NotebooksAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::NotebookResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::NotebookResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateNotebookError> =
                 serde_json::from_str(&local_content).ok();
@@ -237,9 +241,9 @@ impl NotebooksAPI {
     pub async fn delete_notebook(
         &self,
         notebook_id: i64,
-    ) -> Result<Option<()>, Error<DeleteNotebookError>> {
+    ) -> Result<(), Error<DeleteNotebookError>> {
         match self.delete_notebook_with_http_info(notebook_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -303,9 +307,9 @@ impl NotebooksAPI {
     pub async fn get_notebook(
         &self,
         notebook_id: i64,
-    ) -> Result<Option<crate::datadogV1::model::NotebookResponse>, Error<GetNotebookError>> {
+    ) -> Result<crate::datadogV1::model::NotebookResponse, Error<GetNotebookError>> {
         match self.get_notebook_with_http_info(notebook_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -349,13 +353,17 @@ impl NotebooksAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::NotebookResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::NotebookResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetNotebookError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -372,9 +380,9 @@ impl NotebooksAPI {
     pub async fn list_notebooks(
         &self,
         params: ListNotebooksOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::NotebooksResponse>, Error<ListNotebooksError>> {
+    ) -> Result<crate::datadogV1::model::NotebooksResponse, Error<ListNotebooksError>> {
         match self.list_notebooks_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -470,13 +478,17 @@ impl NotebooksAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::NotebooksResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::NotebooksResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListNotebooksError> =
                 serde_json::from_str(&local_content).ok();
@@ -494,9 +506,9 @@ impl NotebooksAPI {
         &self,
         notebook_id: i64,
         body: crate::datadogV1::model::NotebookUpdateRequest,
-    ) -> Result<Option<crate::datadogV1::model::NotebookResponse>, Error<UpdateNotebookError>> {
+    ) -> Result<crate::datadogV1::model::NotebookResponse, Error<UpdateNotebookError>> {
         match self.update_notebook_with_http_info(notebook_id, body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -550,13 +562,17 @@ impl NotebooksAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::NotebookResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::NotebookResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateNotebookError> =
                 serde_json::from_str(&local_content).ok();

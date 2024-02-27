@@ -340,14 +340,14 @@ impl MetricsAPI {
         &self,
         body: crate::datadogV2::model::MetricBulkTagConfigCreateRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::MetricBulkTagConfigResponse>,
+        crate::datadogV2::model::MetricBulkTagConfigResponse,
         Error<CreateBulkTagsMetricsConfigurationError>,
     > {
         match self
             .create_bulk_tags_metrics_configuration_with_http_info(body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -405,13 +405,18 @@ impl MetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::MetricBulkTagConfigResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::MetricBulkTagConfigResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateBulkTagsMetricsConfigurationError> =
                 serde_json::from_str(&local_content).ok();
@@ -434,14 +439,14 @@ impl MetricsAPI {
         metric_name: String,
         body: crate::datadogV2::model::MetricTagConfigurationCreateRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::MetricTagConfigurationResponse>,
+        crate::datadogV2::model::MetricTagConfigurationResponse,
         Error<CreateTagConfigurationError>,
     > {
         match self
             .create_tag_configuration_with_http_info(metric_name, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -499,13 +504,18 @@ impl MetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::MetricTagConfigurationResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::MetricTagConfigurationResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateTagConfigurationError> =
                 serde_json::from_str(&local_content).ok();
@@ -526,14 +536,14 @@ impl MetricsAPI {
         &self,
         body: crate::datadogV2::model::MetricBulkTagConfigDeleteRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::MetricBulkTagConfigResponse>,
+        crate::datadogV2::model::MetricBulkTagConfigResponse,
         Error<DeleteBulkTagsMetricsConfigurationError>,
     > {
         match self
             .delete_bulk_tags_metrics_configuration_with_http_info(body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -588,13 +598,18 @@ impl MetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::MetricBulkTagConfigResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::MetricBulkTagConfigResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<DeleteBulkTagsMetricsConfigurationError> =
                 serde_json::from_str(&local_content).ok();
@@ -612,12 +627,12 @@ impl MetricsAPI {
     pub async fn delete_tag_configuration(
         &self,
         metric_name: String,
-    ) -> Result<Option<()>, Error<DeleteTagConfigurationError>> {
+    ) -> Result<(), Error<DeleteTagConfigurationError>> {
         match self
             .delete_tag_configuration_with_http_info(metric_name)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -684,14 +699,14 @@ impl MetricsAPI {
         metric_name: String,
         params: EstimateMetricsOutputSeriesOptionalParams,
     ) -> Result<
-        Option<crate::datadogV2::model::MetricEstimateResponse>,
+        crate::datadogV2::model::MetricEstimateResponse,
         Error<EstimateMetricsOutputSeriesError>,
     > {
         match self
             .estimate_metrics_output_series_with_http_info(metric_name, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -766,13 +781,18 @@ impl MetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::MetricEstimateResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::MetricEstimateResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<EstimateMetricsOutputSeriesError> =
                 serde_json::from_str(&local_content).ok();
@@ -791,14 +811,14 @@ impl MetricsAPI {
         metric_name: String,
         params: ListActiveMetricConfigurationsOptionalParams,
     ) -> Result<
-        Option<crate::datadogV2::model::MetricSuggestedTagsAndAggregationsResponse>,
+        crate::datadogV2::model::MetricSuggestedTagsAndAggregationsResponse,
         Error<ListActiveMetricConfigurationsError>,
     > {
         match self
             .list_active_metric_configurations_with_http_info(metric_name, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -853,14 +873,19 @@ impl MetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<
+            match serde_json::from_str::<
                 crate::datadogV2::model::MetricSuggestedTagsAndAggregationsResponse,
-            > = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListActiveMetricConfigurationsError> =
                 serde_json::from_str(&local_content).ok();
@@ -878,14 +903,14 @@ impl MetricsAPI {
         &self,
         metric_name: String,
     ) -> Result<
-        Option<crate::datadogV2::model::MetricTagConfigurationResponse>,
+        crate::datadogV2::model::MetricTagConfigurationResponse,
         Error<ListTagConfigurationByNameError>,
     > {
         match self
             .list_tag_configuration_by_name_with_http_info(metric_name)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -931,13 +956,18 @@ impl MetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::MetricTagConfigurationResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::MetricTagConfigurationResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListTagConfigurationByNameError> =
                 serde_json::from_str(&local_content).ok();
@@ -955,11 +985,11 @@ impl MetricsAPI {
         &self,
         params: ListTagConfigurationsOptionalParams,
     ) -> Result<
-        Option<crate::datadogV2::model::MetricsAndMetricTagConfigurationsResponse>,
+        crate::datadogV2::model::MetricsAndMetricTagConfigurationsResponse,
         Error<ListTagConfigurationsError>,
     > {
         match self.list_tag_configurations_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1041,14 +1071,19 @@ impl MetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<
+            match serde_json::from_str::<
                 crate::datadogV2::model::MetricsAndMetricTagConfigurationsResponse,
-            > = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListTagConfigurationsError> =
                 serde_json::from_str(&local_content).ok();
@@ -1065,15 +1100,13 @@ impl MetricsAPI {
     pub async fn list_tags_by_metric_name(
         &self,
         metric_name: String,
-    ) -> Result<
-        Option<crate::datadogV2::model::MetricAllTagsResponse>,
-        Error<ListTagsByMetricNameError>,
-    > {
+    ) -> Result<crate::datadogV2::model::MetricAllTagsResponse, Error<ListTagsByMetricNameError>>
+    {
         match self
             .list_tags_by_metric_name_with_http_info(metric_name)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1119,13 +1152,18 @@ impl MetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::MetricAllTagsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::MetricAllTagsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListTagsByMetricNameError> =
                 serde_json::from_str(&local_content).ok();
@@ -1144,15 +1182,13 @@ impl MetricsAPI {
     pub async fn list_volumes_by_metric_name(
         &self,
         metric_name: String,
-    ) -> Result<
-        Option<crate::datadogV2::model::MetricVolumesResponse>,
-        Error<ListVolumesByMetricNameError>,
-    > {
+    ) -> Result<crate::datadogV2::model::MetricVolumesResponse, Error<ListVolumesByMetricNameError>>
+    {
         match self
             .list_volumes_by_metric_name_with_http_info(metric_name)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1200,13 +1236,18 @@ impl MetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::MetricVolumesResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::MetricVolumesResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListVolumesByMetricNameError> =
                 serde_json::from_str(&local_content).ok();
@@ -1225,12 +1266,10 @@ impl MetricsAPI {
     pub async fn query_scalar_data(
         &self,
         body: crate::datadogV2::model::ScalarFormulaQueryRequest,
-    ) -> Result<
-        Option<crate::datadogV2::model::ScalarFormulaQueryResponse>,
-        Error<QueryScalarDataError>,
-    > {
+    ) -> Result<crate::datadogV2::model::ScalarFormulaQueryResponse, Error<QueryScalarDataError>>
+    {
         match self.query_scalar_data_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1291,13 +1330,18 @@ impl MetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::ScalarFormulaQueryResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::ScalarFormulaQueryResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<QueryScalarDataError> =
                 serde_json::from_str(&local_content).ok();
@@ -1316,11 +1360,11 @@ impl MetricsAPI {
         &self,
         body: crate::datadogV2::model::TimeseriesFormulaQueryRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::TimeseriesFormulaQueryResponse>,
+        crate::datadogV2::model::TimeseriesFormulaQueryResponse,
         Error<QueryTimeseriesDataError>,
     > {
         match self.query_timeseries_data_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1380,13 +1424,18 @@ impl MetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::TimeseriesFormulaQueryResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::TimeseriesFormulaQueryResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<QueryTimeseriesDataError> =
                 serde_json::from_str(&local_content).ok();
@@ -1415,10 +1464,9 @@ impl MetricsAPI {
         &self,
         body: crate::datadogV2::model::MetricPayload,
         params: SubmitMetricsOptionalParams,
-    ) -> Result<Option<crate::datadogV2::model::IntakePayloadAccepted>, Error<SubmitMetricsError>>
-    {
+    ) -> Result<crate::datadogV2::model::IntakePayloadAccepted, Error<SubmitMetricsError>> {
         match self.submit_metrics_with_http_info(body, params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1483,13 +1531,18 @@ impl MetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::IntakePayloadAccepted> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::IntakePayloadAccepted>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<SubmitMetricsError> =
                 serde_json::from_str(&local_content).ok();
@@ -1512,14 +1565,14 @@ impl MetricsAPI {
         metric_name: String,
         body: crate::datadogV2::model::MetricTagConfigurationUpdateRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::MetricTagConfigurationResponse>,
+        crate::datadogV2::model::MetricTagConfigurationResponse,
         Error<UpdateTagConfigurationError>,
     > {
         match self
             .update_tag_configuration_with_http_info(metric_name, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1577,13 +1630,18 @@ impl MetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::MetricTagConfigurationResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::MetricTagConfigurationResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateTagConfigurationError> =
                 serde_json::from_str(&local_content).ok();

@@ -152,9 +152,9 @@ impl HostsAPI {
     pub async fn get_host_totals(
         &self,
         params: GetHostTotalsOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::HostTotals>, Error<GetHostTotalsError>> {
+    ) -> Result<crate::datadogV1::model::HostTotals, Error<GetHostTotalsError>> {
         match self.get_host_totals_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -203,13 +203,16 @@ impl HostsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::HostTotals> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::HostTotals>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetHostTotalsError> =
                 serde_json::from_str(&local_content).ok();
@@ -229,9 +232,9 @@ impl HostsAPI {
     pub async fn list_hosts(
         &self,
         params: ListHostsOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::HostListResponse>, Error<ListHostsError>> {
+    ) -> Result<crate::datadogV1::model::HostListResponse, Error<ListHostsError>> {
         match self.list_hosts_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -317,13 +320,17 @@ impl HostsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::HostListResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::HostListResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListHostsError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -340,9 +347,9 @@ impl HostsAPI {
         &self,
         host_name: String,
         body: crate::datadogV1::model::HostMuteSettings,
-    ) -> Result<Option<crate::datadogV1::model::HostMuteResponse>, Error<MuteHostError>> {
+    ) -> Result<crate::datadogV1::model::HostMuteResponse, Error<MuteHostError>> {
         match self.mute_host_with_http_info(host_name, body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -394,13 +401,17 @@ impl HostsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::HostMuteResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::HostMuteResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<MuteHostError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -416,9 +427,9 @@ impl HostsAPI {
     pub async fn unmute_host(
         &self,
         host_name: String,
-    ) -> Result<Option<crate::datadogV1::model::HostMuteResponse>, Error<UnmuteHostError>> {
+    ) -> Result<crate::datadogV1::model::HostMuteResponse, Error<UnmuteHostError>> {
         match self.unmute_host_with_http_info(host_name).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -462,13 +473,17 @@ impl HostsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::HostMuteResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::HostMuteResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UnmuteHostError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {

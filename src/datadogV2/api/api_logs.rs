@@ -185,10 +185,9 @@ impl LogsAPI {
     pub async fn aggregate_logs(
         &self,
         body: crate::datadogV2::model::LogsAggregateRequest,
-    ) -> Result<Option<crate::datadogV2::model::LogsAggregateResponse>, Error<AggregateLogsError>>
-    {
+    ) -> Result<crate::datadogV2::model::LogsAggregateResponse, Error<AggregateLogsError>> {
         match self.aggregate_logs_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -240,13 +239,18 @@ impl LogsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::LogsAggregateResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::LogsAggregateResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<AggregateLogsError> =
                 serde_json::from_str(&local_content).ok();
@@ -273,9 +277,9 @@ impl LogsAPI {
     pub async fn list_logs(
         &self,
         params: ListLogsOptionalParams,
-    ) -> Result<Option<crate::datadogV2::model::LogsListResponse>, Error<ListLogsError>> {
+    ) -> Result<crate::datadogV2::model::LogsListResponse, Error<ListLogsError>> {
         match self.list_logs_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -338,13 +342,17 @@ impl LogsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::LogsListResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::LogsListResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListLogsError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -370,9 +378,9 @@ impl LogsAPI {
     pub async fn list_logs_get(
         &self,
         params: ListLogsGetOptionalParams,
-    ) -> Result<Option<crate::datadogV2::model::LogsListResponse>, Error<ListLogsGetError>> {
+    ) -> Result<crate::datadogV2::model::LogsListResponse, Error<ListLogsGetError>> {
         match self.list_logs_get_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -472,13 +480,17 @@ impl LogsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::LogsListResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::LogsListResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListLogsGetError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -518,10 +530,9 @@ impl LogsAPI {
         &self,
         body: Vec<crate::datadogV2::model::HTTPLogItem>,
         params: SubmitLogOptionalParams,
-    ) -> Result<Option<std::collections::BTreeMap<String, serde_json::Value>>, Error<SubmitLogError>>
-    {
+    ) -> Result<std::collections::BTreeMap<String, serde_json::Value>, Error<SubmitLogError>> {
         match self.submit_log_with_http_info(body, params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -604,13 +615,18 @@ impl LogsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<SubmitLogError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {

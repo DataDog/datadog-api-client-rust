@@ -136,12 +136,12 @@ impl LogsArchivesAPI {
         &self,
         archive_id: String,
         body: crate::datadogV2::model::RelationshipToRole,
-    ) -> Result<Option<()>, Error<AddReadRoleToArchiveError>> {
+    ) -> Result<(), Error<AddReadRoleToArchiveError>> {
         match self
             .add_read_role_to_archive_with_http_info(archive_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -213,9 +213,9 @@ impl LogsArchivesAPI {
     pub async fn create_logs_archive(
         &self,
         body: crate::datadogV2::model::LogsArchiveCreateRequest,
-    ) -> Result<Option<crate::datadogV2::model::LogsArchive>, Error<CreateLogsArchiveError>> {
+    ) -> Result<crate::datadogV2::model::LogsArchive, Error<CreateLogsArchiveError>> {
         match self.create_logs_archive_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -265,13 +265,16 @@ impl LogsArchivesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::LogsArchive> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::LogsArchive>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateLogsArchiveError> =
                 serde_json::from_str(&local_content).ok();
@@ -288,9 +291,9 @@ impl LogsArchivesAPI {
     pub async fn delete_logs_archive(
         &self,
         archive_id: String,
-    ) -> Result<Option<()>, Error<DeleteLogsArchiveError>> {
+    ) -> Result<(), Error<DeleteLogsArchiveError>> {
         match self.delete_logs_archive_with_http_info(archive_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -354,9 +357,9 @@ impl LogsArchivesAPI {
     pub async fn get_logs_archive(
         &self,
         archive_id: String,
-    ) -> Result<Option<crate::datadogV2::model::LogsArchive>, Error<GetLogsArchiveError>> {
+    ) -> Result<crate::datadogV2::model::LogsArchive, Error<GetLogsArchiveError>> {
         match self.get_logs_archive_with_http_info(archive_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -400,13 +403,16 @@ impl LogsArchivesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::LogsArchive> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::LogsArchive>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetLogsArchiveError> =
                 serde_json::from_str(&local_content).ok();
@@ -423,10 +429,9 @@ impl LogsArchivesAPI {
     /// This endpoint takes no JSON arguments.
     pub async fn get_logs_archive_order(
         &self,
-    ) -> Result<Option<crate::datadogV2::model::LogsArchiveOrder>, Error<GetLogsArchiveOrderError>>
-    {
+    ) -> Result<crate::datadogV2::model::LogsArchiveOrder, Error<GetLogsArchiveOrderError>> {
         match self.get_logs_archive_order_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -471,13 +476,17 @@ impl LogsArchivesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::LogsArchiveOrder> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::LogsArchiveOrder>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetLogsArchiveOrderError> =
                 serde_json::from_str(&local_content).ok();
@@ -494,13 +503,12 @@ impl LogsArchivesAPI {
     pub async fn list_archive_read_roles(
         &self,
         archive_id: String,
-    ) -> Result<Option<crate::datadogV2::model::RolesResponse>, Error<ListArchiveReadRolesError>>
-    {
+    ) -> Result<crate::datadogV2::model::RolesResponse, Error<ListArchiveReadRolesError>> {
         match self
             .list_archive_read_roles_with_http_info(archive_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -546,13 +554,16 @@ impl LogsArchivesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::RolesResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::RolesResponse>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListArchiveReadRolesError> =
                 serde_json::from_str(&local_content).ok();
@@ -568,9 +579,9 @@ impl LogsArchivesAPI {
     /// Get the list of configured logs archives with their definitions.
     pub async fn list_logs_archives(
         &self,
-    ) -> Result<Option<crate::datadogV2::model::LogsArchives>, Error<ListLogsArchivesError>> {
+    ) -> Result<crate::datadogV2::model::LogsArchives, Error<ListLogsArchivesError>> {
         match self.list_logs_archives_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -612,13 +623,16 @@ impl LogsArchivesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::LogsArchives> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::LogsArchives>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListLogsArchivesError> =
                 serde_json::from_str(&local_content).ok();
@@ -636,12 +650,12 @@ impl LogsArchivesAPI {
         &self,
         archive_id: String,
         body: crate::datadogV2::model::RelationshipToRole,
-    ) -> Result<Option<()>, Error<RemoveRoleFromArchiveError>> {
+    ) -> Result<(), Error<RemoveRoleFromArchiveError>> {
         match self
             .remove_role_from_archive_with_http_info(archive_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -717,12 +731,12 @@ impl LogsArchivesAPI {
         &self,
         archive_id: String,
         body: crate::datadogV2::model::LogsArchiveCreateRequest,
-    ) -> Result<Option<crate::datadogV2::model::LogsArchive>, Error<UpdateLogsArchiveError>> {
+    ) -> Result<crate::datadogV2::model::LogsArchive, Error<UpdateLogsArchiveError>> {
         match self
             .update_logs_archive_with_http_info(archive_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -777,13 +791,16 @@ impl LogsArchivesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::LogsArchive> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::LogsArchive>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateLogsArchiveError> =
                 serde_json::from_str(&local_content).ok();
@@ -804,10 +821,9 @@ impl LogsArchivesAPI {
     pub async fn update_logs_archive_order(
         &self,
         body: crate::datadogV2::model::LogsArchiveOrder,
-    ) -> Result<Option<crate::datadogV2::model::LogsArchiveOrder>, Error<UpdateLogsArchiveOrderError>>
-    {
+    ) -> Result<crate::datadogV2::model::LogsArchiveOrder, Error<UpdateLogsArchiveOrderError>> {
         match self.update_logs_archive_order_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -863,13 +879,17 @@ impl LogsArchivesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::LogsArchiveOrder> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::LogsArchiveOrder>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateLogsArchiveOrderError> =
                 serde_json::from_str(&local_content).ok();

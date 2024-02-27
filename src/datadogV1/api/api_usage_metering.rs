@@ -1216,11 +1216,11 @@ impl UsageMeteringAPI {
         &self,
         params: GetDailyCustomReportsOptionalParams,
     ) -> Result<
-        Option<crate::datadogV1::model::UsageCustomReportsResponse>,
+        crate::datadogV1::model::UsageCustomReportsResponse,
         Error<GetDailyCustomReportsError>,
     > {
         match self.get_daily_custom_reports_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1290,13 +1290,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageCustomReportsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageCustomReportsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetDailyCustomReportsError> =
                 serde_json::from_str(&local_content).ok();
@@ -1330,14 +1335,14 @@ impl UsageMeteringAPI {
         usage_type: crate::datadogV1::model::HourlyUsageAttributionUsageType,
         params: GetHourlyUsageAttributionOptionalParams,
     ) -> Result<
-        Option<crate::datadogV1::model::HourlyUsageAttributionResponse>,
+        crate::datadogV1::model::HourlyUsageAttributionResponse,
         Error<GetHourlyUsageAttributionError>,
     > {
         match self
             .get_hourly_usage_attribution_with_http_info(start_hr, usage_type, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1423,13 +1428,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::HourlyUsageAttributionResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::HourlyUsageAttributionResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetHourlyUsageAttributionError> =
                 serde_json::from_str(&local_content).ok();
@@ -1449,14 +1459,14 @@ impl UsageMeteringAPI {
         start_hr: String,
         params: GetIncidentManagementOptionalParams,
     ) -> Result<
-        Option<crate::datadogV1::model::UsageIncidentManagementResponse>,
+        crate::datadogV1::model::UsageIncidentManagementResponse,
         Error<GetIncidentManagementError>,
     > {
         match self
             .get_incident_management_with_http_info(start_hr, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1512,13 +1522,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageIncidentManagementResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageIncidentManagementResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetIncidentManagementError> =
                 serde_json::from_str(&local_content).ok();
@@ -1537,15 +1552,13 @@ impl UsageMeteringAPI {
         &self,
         start_hr: String,
         params: GetIngestedSpansOptionalParams,
-    ) -> Result<
-        Option<crate::datadogV1::model::UsageIngestedSpansResponse>,
-        Error<GetIngestedSpansError>,
-    > {
+    ) -> Result<crate::datadogV1::model::UsageIngestedSpansResponse, Error<GetIngestedSpansError>>
+    {
         match self
             .get_ingested_spans_with_http_info(start_hr, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1601,13 +1614,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageIngestedSpansResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageIngestedSpansResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetIngestedSpansError> =
                 serde_json::from_str(&local_content).ok();
@@ -1627,11 +1645,11 @@ impl UsageMeteringAPI {
         &self,
         params: GetMonthlyCustomReportsOptionalParams,
     ) -> Result<
-        Option<crate::datadogV1::model::UsageCustomReportsResponse>,
+        crate::datadogV1::model::UsageCustomReportsResponse,
         Error<GetMonthlyCustomReportsError>,
     > {
         match self.get_monthly_custom_reports_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1701,13 +1719,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageCustomReportsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageCustomReportsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetMonthlyCustomReportsError> =
                 serde_json::from_str(&local_content).ok();
@@ -1741,14 +1764,14 @@ impl UsageMeteringAPI {
         fields: crate::datadogV1::model::MonthlyUsageAttributionSupportedMetrics,
         params: GetMonthlyUsageAttributionOptionalParams,
     ) -> Result<
-        Option<crate::datadogV1::model::MonthlyUsageAttributionResponse>,
+        crate::datadogV1::model::MonthlyUsageAttributionResponse,
         Error<GetMonthlyUsageAttributionError>,
     > {
         match self
             .get_monthly_usage_attribution_with_http_info(start_month, fields, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1844,13 +1867,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::MonthlyUsageAttributionResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::MonthlyUsageAttributionResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetMonthlyUsageAttributionError> =
                 serde_json::from_str(&local_content).ok();
@@ -1870,14 +1898,14 @@ impl UsageMeteringAPI {
         &self,
         report_id: String,
     ) -> Result<
-        Option<crate::datadogV1::model::UsageSpecifiedCustomReportsResponse>,
+        crate::datadogV1::model::UsageSpecifiedCustomReportsResponse,
         Error<GetSpecifiedDailyCustomReportsError>,
     > {
         match self
             .get_specified_daily_custom_reports_with_http_info(report_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1925,13 +1953,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageSpecifiedCustomReportsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageSpecifiedCustomReportsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetSpecifiedDailyCustomReportsError> =
                 serde_json::from_str(&local_content).ok();
@@ -1951,14 +1984,14 @@ impl UsageMeteringAPI {
         &self,
         report_id: String,
     ) -> Result<
-        Option<crate::datadogV1::model::UsageSpecifiedCustomReportsResponse>,
+        crate::datadogV1::model::UsageSpecifiedCustomReportsResponse,
         Error<GetSpecifiedMonthlyCustomReportsError>,
     > {
         match self
             .get_specified_monthly_custom_reports_with_http_info(report_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -2006,13 +2039,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageSpecifiedCustomReportsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageSpecifiedCustomReportsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetSpecifiedMonthlyCustomReportsError> =
                 serde_json::from_str(&local_content).ok();
@@ -2031,15 +2069,13 @@ impl UsageMeteringAPI {
         &self,
         start_hr: String,
         params: GetUsageAnalyzedLogsOptionalParams,
-    ) -> Result<
-        Option<crate::datadogV1::model::UsageAnalyzedLogsResponse>,
-        Error<GetUsageAnalyzedLogsError>,
-    > {
+    ) -> Result<crate::datadogV1::model::UsageAnalyzedLogsResponse, Error<GetUsageAnalyzedLogsError>>
+    {
         match self
             .get_usage_analyzed_logs_with_http_info(start_hr, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -2095,13 +2131,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageAnalyzedLogsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageAnalyzedLogsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageAnalyzedLogsError> =
                 serde_json::from_str(&local_content).ok();
@@ -2122,15 +2163,13 @@ impl UsageMeteringAPI {
         start_month: String,
         fields: crate::datadogV1::model::UsageAttributionSupportedMetrics,
         params: GetUsageAttributionOptionalParams,
-    ) -> Result<
-        Option<crate::datadogV1::model::UsageAttributionResponse>,
-        Error<GetUsageAttributionError>,
-    > {
+    ) -> Result<crate::datadogV1::model::UsageAttributionResponse, Error<GetUsageAttributionError>>
+    {
         match self
             .get_usage_attribution_with_http_info(start_month, fields, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -2211,13 +2250,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageAttributionResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageAttributionResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageAttributionError> =
                 serde_json::from_str(&local_content).ok();
@@ -2236,15 +2280,13 @@ impl UsageMeteringAPI {
         &self,
         start_hr: String,
         params: GetUsageAuditLogsOptionalParams,
-    ) -> Result<
-        Option<crate::datadogV1::model::UsageAuditLogsResponse>,
-        Error<GetUsageAuditLogsError>,
-    > {
+    ) -> Result<crate::datadogV1::model::UsageAuditLogsResponse, Error<GetUsageAuditLogsError>>
+    {
         match self
             .get_usage_audit_logs_with_http_info(start_hr, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -2297,13 +2339,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageAuditLogsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageAuditLogsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageAuditLogsError> =
                 serde_json::from_str(&local_content).ok();
@@ -2321,11 +2368,11 @@ impl UsageMeteringAPI {
         &self,
         params: GetUsageBillableSummaryOptionalParams,
     ) -> Result<
-        Option<crate::datadogV1::model::UsageBillableSummaryResponse>,
+        crate::datadogV1::model::UsageBillableSummaryResponse,
         Error<GetUsageBillableSummaryError>,
     > {
         match self.get_usage_billable_summary_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -2378,13 +2425,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageBillableSummaryResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageBillableSummaryResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageBillableSummaryError> =
                 serde_json::from_str(&local_content).ok();
@@ -2403,10 +2455,9 @@ impl UsageMeteringAPI {
         &self,
         start_hr: String,
         params: GetUsageCIAppOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::UsageCIVisibilityResponse>, Error<GetUsageCIAppError>>
-    {
+    ) -> Result<crate::datadogV1::model::UsageCIVisibilityResponse, Error<GetUsageCIAppError>> {
         match self.get_usage_ci_app_with_http_info(start_hr, params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -2459,13 +2510,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageCIVisibilityResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageCIVisibilityResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageCIAppError> =
                 serde_json::from_str(&local_content).ok();
@@ -2484,9 +2540,9 @@ impl UsageMeteringAPI {
         &self,
         start_hr: String,
         params: GetUsageCWSOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::UsageCWSResponse>, Error<GetUsageCWSError>> {
+    ) -> Result<crate::datadogV1::model::UsageCWSResponse, Error<GetUsageCWSError>> {
         match self.get_usage_cws_with_http_info(start_hr, params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -2537,13 +2593,17 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageCWSResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageCWSResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageCWSError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -2562,14 +2622,14 @@ impl UsageMeteringAPI {
         start_hr: String,
         params: GetUsageCloudSecurityPostureManagementOptionalParams,
     ) -> Result<
-        Option<crate::datadogV1::model::UsageCloudSecurityPostureManagementResponse>,
+        crate::datadogV1::model::UsageCloudSecurityPostureManagementResponse,
         Error<GetUsageCloudSecurityPostureManagementError>,
     > {
         match self
             .get_usage_cloud_security_posture_management_with_http_info(start_hr, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -2622,14 +2682,19 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<
+            match serde_json::from_str::<
                 crate::datadogV1::model::UsageCloudSecurityPostureManagementResponse,
-            > = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageCloudSecurityPostureManagementError> =
                 serde_json::from_str(&local_content).ok();
@@ -2648,9 +2713,9 @@ impl UsageMeteringAPI {
         &self,
         start_hr: String,
         params: GetUsageDBMOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::UsageDBMResponse>, Error<GetUsageDBMError>> {
+    ) -> Result<crate::datadogV1::model::UsageDBMResponse, Error<GetUsageDBMError>> {
         match self.get_usage_dbm_with_http_info(start_hr, params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -2701,13 +2766,17 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageDBMResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageDBMResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageDBMError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -2725,13 +2794,12 @@ impl UsageMeteringAPI {
         &self,
         start_hr: String,
         params: GetUsageFargateOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::UsageFargateResponse>, Error<GetUsageFargateError>>
-    {
+    ) -> Result<crate::datadogV1::model::UsageFargateResponse, Error<GetUsageFargateError>> {
         match self
             .get_usage_fargate_with_http_info(start_hr, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -2784,13 +2852,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageFargateResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageFargateResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageFargateError> =
                 serde_json::from_str(&local_content).ok();
@@ -2809,10 +2882,9 @@ impl UsageMeteringAPI {
         &self,
         start_hr: String,
         params: GetUsageHostsOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::UsageHostsResponse>, Error<GetUsageHostsError>>
-    {
+    ) -> Result<crate::datadogV1::model::UsageHostsResponse, Error<GetUsageHostsError>> {
         match self.get_usage_hosts_with_http_info(start_hr, params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -2865,13 +2937,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageHostsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageHostsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageHostsError> =
                 serde_json::from_str(&local_content).ok();
@@ -2890,15 +2967,13 @@ impl UsageMeteringAPI {
         &self,
         start_hr: String,
         params: GetUsageIndexedSpansOptionalParams,
-    ) -> Result<
-        Option<crate::datadogV1::model::UsageIndexedSpansResponse>,
-        Error<GetUsageIndexedSpansError>,
-    > {
+    ) -> Result<crate::datadogV1::model::UsageIndexedSpansResponse, Error<GetUsageIndexedSpansError>>
+    {
         match self
             .get_usage_indexed_spans_with_http_info(start_hr, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -2954,13 +3029,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageIndexedSpansResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageIndexedSpansResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageIndexedSpansError> =
                 serde_json::from_str(&local_content).ok();
@@ -2979,15 +3059,13 @@ impl UsageMeteringAPI {
         &self,
         start_hr: String,
         params: GetUsageInternetOfThingsOptionalParams,
-    ) -> Result<
-        Option<crate::datadogV1::model::UsageIoTResponse>,
-        Error<GetUsageInternetOfThingsError>,
-    > {
+    ) -> Result<crate::datadogV1::model::UsageIoTResponse, Error<GetUsageInternetOfThingsError>>
+    {
         match self
             .get_usage_internet_of_things_with_http_info(start_hr, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -3040,13 +3118,17 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageIoTResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageIoTResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageInternetOfThingsError> =
                 serde_json::from_str(&local_content).ok();
@@ -3065,10 +3147,9 @@ impl UsageMeteringAPI {
         &self,
         start_hr: String,
         params: GetUsageLambdaOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::UsageLambdaResponse>, Error<GetUsageLambdaError>>
-    {
+    ) -> Result<crate::datadogV1::model::UsageLambdaResponse, Error<GetUsageLambdaError>> {
         match self.get_usage_lambda_with_http_info(start_hr, params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -3121,13 +3202,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageLambdaResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageLambdaResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageLambdaError> =
                 serde_json::from_str(&local_content).ok();
@@ -3146,9 +3232,9 @@ impl UsageMeteringAPI {
         &self,
         start_hr: String,
         params: GetUsageLogsOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::UsageLogsResponse>, Error<GetUsageLogsError>> {
+    ) -> Result<crate::datadogV1::model::UsageLogsResponse, Error<GetUsageLogsError>> {
         match self.get_usage_logs_with_http_info(start_hr, params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -3199,13 +3285,17 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageLogsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageLogsResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageLogsError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -3222,15 +3312,13 @@ impl UsageMeteringAPI {
         &self,
         start_hr: String,
         params: GetUsageLogsByIndexOptionalParams,
-    ) -> Result<
-        Option<crate::datadogV1::model::UsageLogsByIndexResponse>,
-        Error<GetUsageLogsByIndexError>,
-    > {
+    ) -> Result<crate::datadogV1::model::UsageLogsByIndexResponse, Error<GetUsageLogsByIndexError>>
+    {
         match self
             .get_usage_logs_by_index_with_http_info(start_hr, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -3297,13 +3385,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageLogsByIndexResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageLogsByIndexResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageLogsByIndexError> =
                 serde_json::from_str(&local_content).ok();
@@ -3323,14 +3416,14 @@ impl UsageMeteringAPI {
         start_hr: String,
         params: GetUsageLogsByRetentionOptionalParams,
     ) -> Result<
-        Option<crate::datadogV1::model::UsageLogsByRetentionResponse>,
+        crate::datadogV1::model::UsageLogsByRetentionResponse,
         Error<GetUsageLogsByRetentionError>,
     > {
         match self
             .get_usage_logs_by_retention_with_http_info(start_hr, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -3386,13 +3479,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageLogsByRetentionResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageLogsByRetentionResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageLogsByRetentionError> =
                 serde_json::from_str(&local_content).ok();
@@ -3411,15 +3509,13 @@ impl UsageMeteringAPI {
         &self,
         start_hr: String,
         params: GetUsageNetworkFlowsOptionalParams,
-    ) -> Result<
-        Option<crate::datadogV1::model::UsageNetworkFlowsResponse>,
-        Error<GetUsageNetworkFlowsError>,
-    > {
+    ) -> Result<crate::datadogV1::model::UsageNetworkFlowsResponse, Error<GetUsageNetworkFlowsError>>
+    {
         match self
             .get_usage_network_flows_with_http_info(start_hr, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -3475,13 +3571,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageNetworkFlowsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageNetworkFlowsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageNetworkFlowsError> =
                 serde_json::from_str(&local_content).ok();
@@ -3500,15 +3601,13 @@ impl UsageMeteringAPI {
         &self,
         start_hr: String,
         params: GetUsageNetworkHostsOptionalParams,
-    ) -> Result<
-        Option<crate::datadogV1::model::UsageNetworkHostsResponse>,
-        Error<GetUsageNetworkHostsError>,
-    > {
+    ) -> Result<crate::datadogV1::model::UsageNetworkHostsResponse, Error<GetUsageNetworkHostsError>>
+    {
         match self
             .get_usage_network_hosts_with_http_info(start_hr, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -3564,13 +3663,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageNetworkHostsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageNetworkHostsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageNetworkHostsError> =
                 serde_json::from_str(&local_content).ok();
@@ -3590,14 +3694,14 @@ impl UsageMeteringAPI {
         start_hr: String,
         params: GetUsageOnlineArchiveOptionalParams,
     ) -> Result<
-        Option<crate::datadogV1::model::UsageOnlineArchiveResponse>,
+        crate::datadogV1::model::UsageOnlineArchiveResponse,
         Error<GetUsageOnlineArchiveError>,
     > {
         match self
             .get_usage_online_archive_with_http_info(start_hr, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -3653,13 +3757,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageOnlineArchiveResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageOnlineArchiveResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageOnlineArchiveError> =
                 serde_json::from_str(&local_content).ok();
@@ -3678,15 +3787,13 @@ impl UsageMeteringAPI {
         &self,
         start_hr: String,
         params: GetUsageProfilingOptionalParams,
-    ) -> Result<
-        Option<crate::datadogV1::model::UsageProfilingResponse>,
-        Error<GetUsageProfilingError>,
-    > {
+    ) -> Result<crate::datadogV1::model::UsageProfilingResponse, Error<GetUsageProfilingError>>
+    {
         match self
             .get_usage_profiling_with_http_info(start_hr, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -3739,13 +3846,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageProfilingResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageProfilingResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageProfilingError> =
                 serde_json::from_str(&local_content).ok();
@@ -3764,15 +3876,13 @@ impl UsageMeteringAPI {
         &self,
         start_hr: String,
         params: GetUsageRumSessionsOptionalParams,
-    ) -> Result<
-        Option<crate::datadogV1::model::UsageRumSessionsResponse>,
-        Error<GetUsageRumSessionsError>,
-    > {
+    ) -> Result<crate::datadogV1::model::UsageRumSessionsResponse, Error<GetUsageRumSessionsError>>
+    {
         match self
             .get_usage_rum_sessions_with_http_info(start_hr, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -3833,13 +3943,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageRumSessionsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageRumSessionsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageRumSessionsError> =
                 serde_json::from_str(&local_content).ok();
@@ -3858,13 +3973,12 @@ impl UsageMeteringAPI {
         &self,
         start_hr: String,
         params: GetUsageRumUnitsOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::UsageRumUnitsResponse>, Error<GetUsageRumUnitsError>>
-    {
+    ) -> Result<crate::datadogV1::model::UsageRumUnitsResponse, Error<GetUsageRumUnitsError>> {
         match self
             .get_usage_rum_units_with_http_info(start_hr, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -3917,13 +4031,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageRumUnitsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageRumUnitsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageRumUnitsError> =
                 serde_json::from_str(&local_content).ok();
@@ -3942,9 +4061,9 @@ impl UsageMeteringAPI {
         &self,
         start_hr: String,
         params: GetUsageSDSOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::UsageSDSResponse>, Error<GetUsageSDSError>> {
+    ) -> Result<crate::datadogV1::model::UsageSDSResponse, Error<GetUsageSDSError>> {
         match self.get_usage_sds_with_http_info(start_hr, params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -3995,13 +4114,17 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageSDSResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageSDSResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageSDSError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -4019,9 +4142,9 @@ impl UsageMeteringAPI {
         &self,
         start_hr: String,
         params: GetUsageSNMPOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::UsageSNMPResponse>, Error<GetUsageSNMPError>> {
+    ) -> Result<crate::datadogV1::model::UsageSNMPResponse, Error<GetUsageSNMPError>> {
         match self.get_usage_snmp_with_http_info(start_hr, params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -4072,13 +4195,17 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageSNMPResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageSNMPResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageSNMPError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -4095,13 +4222,12 @@ impl UsageMeteringAPI {
         &self,
         start_month: String,
         params: GetUsageSummaryOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::UsageSummaryResponse>, Error<GetUsageSummaryError>>
-    {
+    ) -> Result<crate::datadogV1::model::UsageSummaryResponse, Error<GetUsageSummaryError>> {
         match self
             .get_usage_summary_with_http_info(start_month, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -4158,13 +4284,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageSummaryResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageSummaryResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageSummaryError> =
                 serde_json::from_str(&local_content).ok();
@@ -4183,15 +4314,13 @@ impl UsageMeteringAPI {
         &self,
         start_hr: String,
         params: GetUsageSyntheticsOptionalParams,
-    ) -> Result<
-        Option<crate::datadogV1::model::UsageSyntheticsResponse>,
-        Error<GetUsageSyntheticsError>,
-    > {
+    ) -> Result<crate::datadogV1::model::UsageSyntheticsResponse, Error<GetUsageSyntheticsError>>
+    {
         match self
             .get_usage_synthetics_with_http_info(start_hr, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -4244,13 +4373,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageSyntheticsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageSyntheticsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageSyntheticsError> =
                 serde_json::from_str(&local_content).ok();
@@ -4270,14 +4404,14 @@ impl UsageMeteringAPI {
         start_hr: String,
         params: GetUsageSyntheticsAPIOptionalParams,
     ) -> Result<
-        Option<crate::datadogV1::model::UsageSyntheticsAPIResponse>,
+        crate::datadogV1::model::UsageSyntheticsAPIResponse,
         Error<GetUsageSyntheticsAPIError>,
     > {
         match self
             .get_usage_synthetics_api_with_http_info(start_hr, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -4333,13 +4467,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageSyntheticsAPIResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageSyntheticsAPIResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageSyntheticsAPIError> =
                 serde_json::from_str(&local_content).ok();
@@ -4359,14 +4498,14 @@ impl UsageMeteringAPI {
         start_hr: String,
         params: GetUsageSyntheticsBrowserOptionalParams,
     ) -> Result<
-        Option<crate::datadogV1::model::UsageSyntheticsBrowserResponse>,
+        crate::datadogV1::model::UsageSyntheticsBrowserResponse,
         Error<GetUsageSyntheticsBrowserError>,
     > {
         match self
             .get_usage_synthetics_browser_with_http_info(start_hr, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -4422,13 +4561,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageSyntheticsBrowserResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageSyntheticsBrowserResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageSyntheticsBrowserError> =
                 serde_json::from_str(&local_content).ok();
@@ -4447,15 +4591,13 @@ impl UsageMeteringAPI {
         &self,
         start_hr: String,
         params: GetUsageTimeseriesOptionalParams,
-    ) -> Result<
-        Option<crate::datadogV1::model::UsageTimeseriesResponse>,
-        Error<GetUsageTimeseriesError>,
-    > {
+    ) -> Result<crate::datadogV1::model::UsageTimeseriesResponse, Error<GetUsageTimeseriesError>>
+    {
         match self
             .get_usage_timeseries_with_http_info(start_hr, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -4508,13 +4650,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageTimeseriesResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageTimeseriesResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageTimeseriesError> =
                 serde_json::from_str(&local_content).ok();
@@ -4532,11 +4679,11 @@ impl UsageMeteringAPI {
         &self,
         params: GetUsageTopAvgMetricsOptionalParams,
     ) -> Result<
-        Option<crate::datadogV1::model::UsageTopAvgMetricsResponse>,
+        crate::datadogV1::model::UsageTopAvgMetricsResponse,
         Error<GetUsageTopAvgMetricsError>,
     > {
         match self.get_usage_top_avg_metrics_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -4615,13 +4762,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UsageTopAvgMetricsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UsageTopAvgMetricsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageTopAvgMetricsError> =
                 serde_json::from_str(&local_content).ok();

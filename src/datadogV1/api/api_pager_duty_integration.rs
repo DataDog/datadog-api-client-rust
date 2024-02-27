@@ -72,14 +72,14 @@ impl PagerDutyIntegrationAPI {
         &self,
         body: crate::datadogV1::model::PagerDutyService,
     ) -> Result<
-        Option<crate::datadogV1::model::PagerDutyServiceName>,
+        crate::datadogV1::model::PagerDutyServiceName,
         Error<CreatePagerDutyIntegrationServiceError>,
     > {
         match self
             .create_pager_duty_integration_service_with_http_info(body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -131,13 +131,18 @@ impl PagerDutyIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::PagerDutyServiceName> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::PagerDutyServiceName>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreatePagerDutyIntegrationServiceError> =
                 serde_json::from_str(&local_content).ok();
@@ -154,12 +159,12 @@ impl PagerDutyIntegrationAPI {
     pub async fn delete_pager_duty_integration_service(
         &self,
         service_name: String,
-    ) -> Result<Option<()>, Error<DeletePagerDutyIntegrationServiceError>> {
+    ) -> Result<(), Error<DeletePagerDutyIntegrationServiceError>> {
         match self
             .delete_pager_duty_integration_service_with_http_info(service_name)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -224,14 +229,14 @@ impl PagerDutyIntegrationAPI {
         &self,
         service_name: String,
     ) -> Result<
-        Option<crate::datadogV1::model::PagerDutyServiceName>,
+        crate::datadogV1::model::PagerDutyServiceName,
         Error<GetPagerDutyIntegrationServiceError>,
     > {
         match self
             .get_pager_duty_integration_service_with_http_info(service_name)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -277,13 +282,18 @@ impl PagerDutyIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::PagerDutyServiceName> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::PagerDutyServiceName>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetPagerDutyIntegrationServiceError> =
                 serde_json::from_str(&local_content).ok();
@@ -301,12 +311,12 @@ impl PagerDutyIntegrationAPI {
         &self,
         service_name: String,
         body: crate::datadogV1::model::PagerDutyServiceKey,
-    ) -> Result<Option<()>, Error<UpdatePagerDutyIntegrationServiceError>> {
+    ) -> Result<(), Error<UpdatePagerDutyIntegrationServiceError>> {
         match self
             .update_pager_duty_integration_service_with_http_info(service_name, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }

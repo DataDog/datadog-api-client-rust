@@ -159,11 +159,11 @@ impl RUMAPI {
         &self,
         body: crate::datadogV2::model::RUMAggregateRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::RUMAnalyticsAggregateResponse>,
+        crate::datadogV2::model::RUMAnalyticsAggregateResponse,
         Error<AggregateRUMEventsError>,
     > {
         match self.aggregate_rum_events_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -215,13 +215,18 @@ impl RUMAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::RUMAnalyticsAggregateResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::RUMAnalyticsAggregateResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<AggregateRUMEventsError> =
                 serde_json::from_str(&local_content).ok();
@@ -238,12 +243,10 @@ impl RUMAPI {
     pub async fn create_rum_application(
         &self,
         body: crate::datadogV2::model::RUMApplicationCreateRequest,
-    ) -> Result<
-        Option<crate::datadogV2::model::RUMApplicationResponse>,
-        Error<CreateRUMApplicationError>,
-    > {
+    ) -> Result<crate::datadogV2::model::RUMApplicationResponse, Error<CreateRUMApplicationError>>
+    {
         match self.create_rum_application_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -292,13 +295,18 @@ impl RUMAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::RUMApplicationResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::RUMApplicationResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateRUMApplicationError> =
                 serde_json::from_str(&local_content).ok();
@@ -315,9 +323,9 @@ impl RUMAPI {
     pub async fn delete_rum_application(
         &self,
         id: String,
-    ) -> Result<Option<()>, Error<DeleteRUMApplicationError>> {
+    ) -> Result<(), Error<DeleteRUMApplicationError>> {
         match self.delete_rum_application_with_http_info(id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -381,12 +389,10 @@ impl RUMAPI {
     pub async fn get_rum_application(
         &self,
         id: String,
-    ) -> Result<
-        Option<crate::datadogV2::model::RUMApplicationResponse>,
-        Error<GetRUMApplicationError>,
-    > {
+    ) -> Result<crate::datadogV2::model::RUMApplicationResponse, Error<GetRUMApplicationError>>
+    {
         match self.get_rum_application_with_http_info(id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -432,13 +438,18 @@ impl RUMAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::RUMApplicationResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::RUMApplicationResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetRUMApplicationError> =
                 serde_json::from_str(&local_content).ok();
@@ -454,12 +465,10 @@ impl RUMAPI {
     /// List all the RUM applications in your organization.
     pub async fn get_rum_applications(
         &self,
-    ) -> Result<
-        Option<crate::datadogV2::model::RUMApplicationsResponse>,
-        Error<GetRUMApplicationsError>,
-    > {
+    ) -> Result<crate::datadogV2::model::RUMApplicationsResponse, Error<GetRUMApplicationsError>>
+    {
         match self.get_rum_applications_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -500,13 +509,18 @@ impl RUMAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::RUMApplicationsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::RUMApplicationsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetRUMApplicationsError> =
                 serde_json::from_str(&local_content).ok();
@@ -528,9 +542,9 @@ impl RUMAPI {
     pub async fn list_rum_events(
         &self,
         params: ListRUMEventsOptionalParams,
-    ) -> Result<Option<crate::datadogV2::model::RUMEventsResponse>, Error<ListRUMEventsError>> {
+    ) -> Result<crate::datadogV2::model::RUMEventsResponse, Error<ListRUMEventsError>> {
         match self.list_rum_events_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -610,13 +624,17 @@ impl RUMAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::RUMEventsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::RUMEventsResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListRUMEventsError> =
                 serde_json::from_str(&local_content).ok();
@@ -638,10 +656,9 @@ impl RUMAPI {
     pub async fn search_rum_events(
         &self,
         body: crate::datadogV2::model::RUMSearchEventsRequest,
-    ) -> Result<Option<crate::datadogV2::model::RUMEventsResponse>, Error<SearchRUMEventsError>>
-    {
+    ) -> Result<crate::datadogV2::model::RUMEventsResponse, Error<SearchRUMEventsError>> {
         match self.search_rum_events_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -695,13 +712,17 @@ impl RUMAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::RUMEventsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::RUMEventsResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<SearchRUMEventsError> =
                 serde_json::from_str(&local_content).ok();
@@ -719,12 +740,10 @@ impl RUMAPI {
         &self,
         id: String,
         body: crate::datadogV2::model::RUMApplicationUpdateRequest,
-    ) -> Result<
-        Option<crate::datadogV2::model::RUMApplicationResponse>,
-        Error<UpdateRUMApplicationError>,
-    > {
+    ) -> Result<crate::datadogV2::model::RUMApplicationResponse, Error<UpdateRUMApplicationError>>
+    {
         match self.update_rum_application_with_http_info(id, body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -778,13 +797,18 @@ impl RUMAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::RUMApplicationResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::RUMApplicationResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateRUMApplicationError> =
                 serde_json::from_str(&local_content).ok();

@@ -71,11 +71,11 @@ impl GCPIntegrationAPI {
         &self,
         body: crate::datadogV1::model::GCPAccount,
     ) -> Result<
-        Option<std::collections::BTreeMap<String, serde_json::Value>>,
+        std::collections::BTreeMap<String, serde_json::Value>,
         Error<CreateGCPIntegrationError>,
     > {
         match self.create_gcp_integration_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -124,13 +124,18 @@ impl GCPIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateGCPIntegrationError> =
                 serde_json::from_str(&local_content).ok();
@@ -148,11 +153,11 @@ impl GCPIntegrationAPI {
         &self,
         body: crate::datadogV1::model::GCPAccount,
     ) -> Result<
-        Option<std::collections::BTreeMap<String, serde_json::Value>>,
+        std::collections::BTreeMap<String, serde_json::Value>,
         Error<DeleteGCPIntegrationError>,
     > {
         match self.delete_gcp_integration_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -201,13 +206,18 @@ impl GCPIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<DeleteGCPIntegrationError> =
                 serde_json::from_str(&local_content).ok();
@@ -223,10 +233,9 @@ impl GCPIntegrationAPI {
     /// This endpoint is deprecated – use the V2 endpoints instead. List all Datadog-GCP integrations configured in your Datadog account.
     pub async fn list_gcp_integration(
         &self,
-    ) -> Result<Option<Vec<crate::datadogV1::model::GCPAccount>>, Error<ListGCPIntegrationError>>
-    {
+    ) -> Result<Vec<crate::datadogV1::model::GCPAccount>, Error<ListGCPIntegrationError>> {
         match self.list_gcp_integration_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -267,13 +276,16 @@ impl GCPIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<Vec<crate::datadogV1::model::GCPAccount>> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<Vec<crate::datadogV1::model::GCPAccount>>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListGCPIntegrationError> =
                 serde_json::from_str(&local_content).ok();
@@ -294,11 +306,11 @@ impl GCPIntegrationAPI {
         &self,
         body: crate::datadogV1::model::GCPAccount,
     ) -> Result<
-        Option<std::collections::BTreeMap<String, serde_json::Value>>,
+        std::collections::BTreeMap<String, serde_json::Value>,
         Error<UpdateGCPIntegrationError>,
     > {
         match self.update_gcp_integration_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -350,13 +362,18 @@ impl GCPIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateGCPIntegrationError> =
                 serde_json::from_str(&local_content).ok();

@@ -86,11 +86,11 @@ impl CloudflareIntegrationAPI {
         &self,
         body: crate::datadogV2::model::CloudflareAccountCreateRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::CloudflareAccountResponse>,
+        crate::datadogV2::model::CloudflareAccountResponse,
         Error<CreateCloudflareAccountError>,
     > {
         match self.create_cloudflare_account_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -142,13 +142,18 @@ impl CloudflareIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::CloudflareAccountResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::CloudflareAccountResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateCloudflareAccountError> =
                 serde_json::from_str(&local_content).ok();
@@ -165,12 +170,12 @@ impl CloudflareIntegrationAPI {
     pub async fn delete_cloudflare_account(
         &self,
         account_id: String,
-    ) -> Result<Option<()>, Error<DeleteCloudflareAccountError>> {
+    ) -> Result<(), Error<DeleteCloudflareAccountError>> {
         match self
             .delete_cloudflare_account_with_http_info(account_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -234,12 +239,10 @@ impl CloudflareIntegrationAPI {
     pub async fn get_cloudflare_account(
         &self,
         account_id: String,
-    ) -> Result<
-        Option<crate::datadogV2::model::CloudflareAccountResponse>,
-        Error<GetCloudflareAccountError>,
-    > {
+    ) -> Result<crate::datadogV2::model::CloudflareAccountResponse, Error<GetCloudflareAccountError>>
+    {
         match self.get_cloudflare_account_with_http_info(account_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -285,13 +288,18 @@ impl CloudflareIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::CloudflareAccountResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::CloudflareAccountResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetCloudflareAccountError> =
                 serde_json::from_str(&local_content).ok();
@@ -308,11 +316,11 @@ impl CloudflareIntegrationAPI {
     pub async fn list_cloudflare_accounts(
         &self,
     ) -> Result<
-        Option<crate::datadogV2::model::CloudflareAccountsResponse>,
+        crate::datadogV2::model::CloudflareAccountsResponse,
         Error<ListCloudflareAccountsError>,
     > {
         match self.list_cloudflare_accounts_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -356,13 +364,18 @@ impl CloudflareIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::CloudflareAccountsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::CloudflareAccountsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListCloudflareAccountsError> =
                 serde_json::from_str(&local_content).ok();
@@ -381,14 +394,14 @@ impl CloudflareIntegrationAPI {
         account_id: String,
         body: crate::datadogV2::model::CloudflareAccountUpdateRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::CloudflareAccountResponse>,
+        crate::datadogV2::model::CloudflareAccountResponse,
         Error<UpdateCloudflareAccountError>,
     > {
         match self
             .update_cloudflare_account_with_http_info(account_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -442,13 +455,18 @@ impl CloudflareIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::CloudflareAccountResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::CloudflareAccountResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateCloudflareAccountError> =
                 serde_json::from_str(&local_content).ok();

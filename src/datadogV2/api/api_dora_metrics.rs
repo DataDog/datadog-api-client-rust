@@ -56,12 +56,10 @@ impl DORAMetricsAPI {
     pub async fn create_dora_deployment(
         &self,
         body: crate::datadogV2::model::DORADeploymentRequest,
-    ) -> Result<
-        Option<crate::datadogV2::model::DORADeploymentResponse>,
-        Error<CreateDORADeploymentError>,
-    > {
+    ) -> Result<crate::datadogV2::model::DORADeploymentResponse, Error<CreateDORADeploymentError>>
+    {
         match self.create_dora_deployment_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -122,13 +120,18 @@ impl DORAMetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::DORADeploymentResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::DORADeploymentResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateDORADeploymentError> =
                 serde_json::from_str(&local_content).ok();
@@ -149,10 +152,9 @@ impl DORAMetricsAPI {
     pub async fn create_dora_incident(
         &self,
         body: crate::datadogV2::model::DORAIncidentRequest,
-    ) -> Result<Option<crate::datadogV2::model::DORAIncidentResponse>, Error<CreateDORAIncidentError>>
-    {
+    ) -> Result<crate::datadogV2::model::DORAIncidentResponse, Error<CreateDORAIncidentError>> {
         match self.create_dora_incident_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -212,13 +214,18 @@ impl DORAMetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::DORAIncidentResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::DORAIncidentResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateDORAIncidentError> =
                 serde_json::from_str(&local_content).ok();

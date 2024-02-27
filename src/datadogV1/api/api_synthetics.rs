@@ -400,12 +400,10 @@ impl SyntheticsAPI {
     pub async fn create_global_variable(
         &self,
         body: crate::datadogV1::model::SyntheticsGlobalVariable,
-    ) -> Result<
-        Option<crate::datadogV1::model::SyntheticsGlobalVariable>,
-        Error<CreateGlobalVariableError>,
-    > {
+    ) -> Result<crate::datadogV1::model::SyntheticsGlobalVariable, Error<CreateGlobalVariableError>>
+    {
         match self.create_global_variable_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -457,13 +455,18 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SyntheticsGlobalVariable> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SyntheticsGlobalVariable>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateGlobalVariableError> =
                 serde_json::from_str(&local_content).ok();
@@ -481,11 +484,11 @@ impl SyntheticsAPI {
         &self,
         body: crate::datadogV1::model::SyntheticsPrivateLocation,
     ) -> Result<
-        Option<crate::datadogV1::model::SyntheticsPrivateLocationCreationResponse>,
+        crate::datadogV1::model::SyntheticsPrivateLocationCreationResponse,
         Error<CreatePrivateLocationError>,
     > {
         match self.create_private_location_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -537,14 +540,19 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<
+            match serde_json::from_str::<
                 crate::datadogV1::model::SyntheticsPrivateLocationCreationResponse,
-            > = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreatePrivateLocationError> =
                 serde_json::from_str(&local_content).ok();
@@ -561,12 +569,10 @@ impl SyntheticsAPI {
     pub async fn create_synthetics_api_test(
         &self,
         body: crate::datadogV1::model::SyntheticsAPITest,
-    ) -> Result<
-        Option<crate::datadogV1::model::SyntheticsAPITest>,
-        Error<CreateSyntheticsAPITestError>,
-    > {
+    ) -> Result<crate::datadogV1::model::SyntheticsAPITest, Error<CreateSyntheticsAPITestError>>
+    {
         match self.create_synthetics_api_test_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -618,13 +624,17 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SyntheticsAPITest> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SyntheticsAPITest>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateSyntheticsAPITestError> =
                 serde_json::from_str(&local_content).ok();
@@ -642,14 +652,14 @@ impl SyntheticsAPI {
         &self,
         body: crate::datadogV1::model::SyntheticsBrowserTest,
     ) -> Result<
-        Option<crate::datadogV1::model::SyntheticsBrowserTest>,
+        crate::datadogV1::model::SyntheticsBrowserTest,
         Error<CreateSyntheticsBrowserTestError>,
     > {
         match self
             .create_synthetics_browser_test_with_http_info(body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -701,13 +711,18 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SyntheticsBrowserTest> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SyntheticsBrowserTest>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateSyntheticsBrowserTestError> =
                 serde_json::from_str(&local_content).ok();
@@ -724,12 +739,12 @@ impl SyntheticsAPI {
     pub async fn delete_global_variable(
         &self,
         variable_id: String,
-    ) -> Result<Option<()>, Error<DeleteGlobalVariableError>> {
+    ) -> Result<(), Error<DeleteGlobalVariableError>> {
         match self
             .delete_global_variable_with_http_info(variable_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -793,12 +808,12 @@ impl SyntheticsAPI {
     pub async fn delete_private_location(
         &self,
         location_id: String,
-    ) -> Result<Option<()>, Error<DeletePrivateLocationError>> {
+    ) -> Result<(), Error<DeletePrivateLocationError>> {
         match self
             .delete_private_location_with_http_info(location_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -862,12 +877,10 @@ impl SyntheticsAPI {
     pub async fn delete_tests(
         &self,
         body: crate::datadogV1::model::SyntheticsDeleteTestsPayload,
-    ) -> Result<
-        Option<crate::datadogV1::model::SyntheticsDeleteTestsResponse>,
-        Error<DeleteTestsError>,
-    > {
+    ) -> Result<crate::datadogV1::model::SyntheticsDeleteTestsResponse, Error<DeleteTestsError>>
+    {
         match self.delete_tests_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -919,13 +932,18 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SyntheticsDeleteTestsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SyntheticsDeleteTestsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<DeleteTestsError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -942,15 +960,13 @@ impl SyntheticsAPI {
         &self,
         variable_id: String,
         body: crate::datadogV1::model::SyntheticsGlobalVariable,
-    ) -> Result<
-        Option<crate::datadogV1::model::SyntheticsGlobalVariable>,
-        Error<EditGlobalVariableError>,
-    > {
+    ) -> Result<crate::datadogV1::model::SyntheticsGlobalVariable, Error<EditGlobalVariableError>>
+    {
         match self
             .edit_global_variable_with_http_info(variable_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1004,13 +1020,18 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SyntheticsGlobalVariable> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SyntheticsGlobalVariable>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<EditGlobalVariableError> =
                 serde_json::from_str(&local_content).ok();
@@ -1028,9 +1049,9 @@ impl SyntheticsAPI {
     pub async fn get_api_test(
         &self,
         public_id: String,
-    ) -> Result<Option<crate::datadogV1::model::SyntheticsAPITest>, Error<GetAPITestError>> {
+    ) -> Result<crate::datadogV1::model::SyntheticsAPITest, Error<GetAPITestError>> {
         match self.get_api_test_with_http_info(public_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1075,13 +1096,17 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SyntheticsAPITest> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SyntheticsAPITest>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetAPITestError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -1099,14 +1124,14 @@ impl SyntheticsAPI {
         public_id: String,
         params: GetAPITestLatestResultsOptionalParams,
     ) -> Result<
-        Option<crate::datadogV1::model::SyntheticsGetAPITestLatestResultsResponse>,
+        crate::datadogV1::model::SyntheticsGetAPITestLatestResultsResponse,
         Error<GetAPITestLatestResultsError>,
     > {
         match self
             .get_api_test_latest_results_with_http_info(public_id, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1178,14 +1203,19 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<
+            match serde_json::from_str::<
                 crate::datadogV1::model::SyntheticsGetAPITestLatestResultsResponse,
-            > = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetAPITestLatestResultsError> =
                 serde_json::from_str(&local_content).ok();
@@ -1203,15 +1233,13 @@ impl SyntheticsAPI {
         &self,
         public_id: String,
         result_id: String,
-    ) -> Result<
-        Option<crate::datadogV1::model::SyntheticsAPITestResultFull>,
-        Error<GetAPITestResultError>,
-    > {
+    ) -> Result<crate::datadogV1::model::SyntheticsAPITestResultFull, Error<GetAPITestResultError>>
+    {
         match self
             .get_api_test_result_with_http_info(public_id, result_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1259,13 +1287,18 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SyntheticsAPITestResultFull> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SyntheticsAPITestResultFull>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetAPITestResultError> =
                 serde_json::from_str(&local_content).ok();
@@ -1283,10 +1316,9 @@ impl SyntheticsAPI {
     pub async fn get_browser_test(
         &self,
         public_id: String,
-    ) -> Result<Option<crate::datadogV1::model::SyntheticsBrowserTest>, Error<GetBrowserTestError>>
-    {
+    ) -> Result<crate::datadogV1::model::SyntheticsBrowserTest, Error<GetBrowserTestError>> {
         match self.get_browser_test_with_http_info(public_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1333,13 +1365,18 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SyntheticsBrowserTest> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SyntheticsBrowserTest>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetBrowserTestError> =
                 serde_json::from_str(&local_content).ok();
@@ -1358,14 +1395,14 @@ impl SyntheticsAPI {
         public_id: String,
         params: GetBrowserTestLatestResultsOptionalParams,
     ) -> Result<
-        Option<crate::datadogV1::model::SyntheticsGetBrowserTestLatestResultsResponse>,
+        crate::datadogV1::model::SyntheticsGetBrowserTestLatestResultsResponse,
         Error<GetBrowserTestLatestResultsError>,
     > {
         match self
             .get_browser_test_latest_results_with_http_info(public_id, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1437,14 +1474,19 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<
+            match serde_json::from_str::<
                 crate::datadogV1::model::SyntheticsGetBrowserTestLatestResultsResponse,
-            > = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetBrowserTestLatestResultsError> =
                 serde_json::from_str(&local_content).ok();
@@ -1463,14 +1505,14 @@ impl SyntheticsAPI {
         public_id: String,
         result_id: String,
     ) -> Result<
-        Option<crate::datadogV1::model::SyntheticsBrowserTestResultFull>,
+        crate::datadogV1::model::SyntheticsBrowserTestResultFull,
         Error<GetBrowserTestResultError>,
     > {
         match self
             .get_browser_test_result_with_http_info(public_id, result_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1518,13 +1560,18 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SyntheticsBrowserTestResultFull> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SyntheticsBrowserTestResultFull>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetBrowserTestResultError> =
                 serde_json::from_str(&local_content).ok();
@@ -1541,12 +1588,10 @@ impl SyntheticsAPI {
     pub async fn get_global_variable(
         &self,
         variable_id: String,
-    ) -> Result<
-        Option<crate::datadogV1::model::SyntheticsGlobalVariable>,
-        Error<GetGlobalVariableError>,
-    > {
+    ) -> Result<crate::datadogV1::model::SyntheticsGlobalVariable, Error<GetGlobalVariableError>>
+    {
         match self.get_global_variable_with_http_info(variable_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1592,13 +1637,18 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SyntheticsGlobalVariable> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SyntheticsGlobalVariable>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetGlobalVariableError> =
                 serde_json::from_str(&local_content).ok();
@@ -1615,12 +1665,10 @@ impl SyntheticsAPI {
     pub async fn get_private_location(
         &self,
         location_id: String,
-    ) -> Result<
-        Option<crate::datadogV1::model::SyntheticsPrivateLocation>,
-        Error<GetPrivateLocationError>,
-    > {
+    ) -> Result<crate::datadogV1::model::SyntheticsPrivateLocation, Error<GetPrivateLocationError>>
+    {
         match self.get_private_location_with_http_info(location_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1666,13 +1714,18 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SyntheticsPrivateLocation> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SyntheticsPrivateLocation>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetPrivateLocationError> =
                 serde_json::from_str(&local_content).ok();
@@ -1689,12 +1742,10 @@ impl SyntheticsAPI {
     pub async fn get_synthetics_ci_batch(
         &self,
         batch_id: String,
-    ) -> Result<
-        Option<crate::datadogV1::model::SyntheticsBatchDetails>,
-        Error<GetSyntheticsCIBatchError>,
-    > {
+    ) -> Result<crate::datadogV1::model::SyntheticsBatchDetails, Error<GetSyntheticsCIBatchError>>
+    {
         match self.get_synthetics_ci_batch_with_http_info(batch_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1740,13 +1791,18 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SyntheticsBatchDetails> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SyntheticsBatchDetails>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetSyntheticsCIBatchError> =
                 serde_json::from_str(&local_content).ok();
@@ -1762,9 +1818,9 @@ impl SyntheticsAPI {
     /// Get the default locations settings.
     pub async fn get_synthetics_default_locations(
         &self,
-    ) -> Result<Option<Vec<String>>, Error<GetSyntheticsDefaultLocationsError>> {
+    ) -> Result<Vec<String>, Error<GetSyntheticsDefaultLocationsError>> {
         match self.get_synthetics_default_locations_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1805,12 +1861,16 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<Vec<String>> = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<Vec<String>>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetSyntheticsDefaultLocationsError> =
                 serde_json::from_str(&local_content).ok();
@@ -1827,9 +1887,9 @@ impl SyntheticsAPI {
     pub async fn get_test(
         &self,
         public_id: String,
-    ) -> Result<Option<crate::datadogV1::model::SyntheticsTestDetails>, Error<GetTestError>> {
+    ) -> Result<crate::datadogV1::model::SyntheticsTestDetails, Error<GetTestError>> {
         match self.get_test_with_http_info(public_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1873,13 +1933,18 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SyntheticsTestDetails> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SyntheticsTestDetails>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetTestError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -1895,11 +1960,11 @@ impl SyntheticsAPI {
     pub async fn list_global_variables(
         &self,
     ) -> Result<
-        Option<crate::datadogV1::model::SyntheticsListGlobalVariablesResponse>,
+        crate::datadogV1::model::SyntheticsListGlobalVariablesResponse,
         Error<ListGlobalVariablesError>,
     > {
         match self.list_global_variables_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1943,14 +2008,19 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<
+            match serde_json::from_str::<
                 crate::datadogV1::model::SyntheticsListGlobalVariablesResponse,
-            > = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListGlobalVariablesError> =
                 serde_json::from_str(&local_content).ok();
@@ -1967,10 +2037,9 @@ impl SyntheticsAPI {
     /// tests. No arguments required.
     pub async fn list_locations(
         &self,
-    ) -> Result<Option<crate::datadogV1::model::SyntheticsLocations>, Error<ListLocationsError>>
-    {
+    ) -> Result<crate::datadogV1::model::SyntheticsLocations, Error<ListLocationsError>> {
         match self.list_locations_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -2015,13 +2084,18 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SyntheticsLocations> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SyntheticsLocations>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListLocationsError> =
                 serde_json::from_str(&local_content).ok();
@@ -2038,10 +2112,9 @@ impl SyntheticsAPI {
     pub async fn list_tests(
         &self,
         params: ListTestsOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::SyntheticsListTestsResponse>, Error<ListTestsError>>
-    {
+    ) -> Result<crate::datadogV1::model::SyntheticsListTestsResponse, Error<ListTestsError>> {
         match self.list_tests_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -2096,13 +2169,18 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SyntheticsListTestsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SyntheticsListTestsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListTestsError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -2119,9 +2197,9 @@ impl SyntheticsAPI {
         &self,
         public_id: String,
         body: crate::datadogV1::model::SyntheticsPatchTestBody,
-    ) -> Result<Option<crate::datadogV1::model::SyntheticsTestDetails>, Error<PatchTestError>> {
+    ) -> Result<crate::datadogV1::model::SyntheticsTestDetails, Error<PatchTestError>> {
         match self.patch_test_with_http_info(public_id, body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -2175,13 +2253,18 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SyntheticsTestDetails> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SyntheticsTestDetails>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<PatchTestError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -2197,12 +2280,10 @@ impl SyntheticsAPI {
     pub async fn trigger_ci_tests(
         &self,
         body: crate::datadogV1::model::SyntheticsCITestBody,
-    ) -> Result<
-        Option<crate::datadogV1::model::SyntheticsTriggerCITestsResponse>,
-        Error<TriggerCITestsError>,
-    > {
+    ) -> Result<crate::datadogV1::model::SyntheticsTriggerCITestsResponse, Error<TriggerCITestsError>>
+    {
         match self.trigger_ci_tests_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -2254,13 +2335,18 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SyntheticsTriggerCITestsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SyntheticsTriggerCITestsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<TriggerCITestsError> =
                 serde_json::from_str(&local_content).ok();
@@ -2277,12 +2363,10 @@ impl SyntheticsAPI {
     pub async fn trigger_tests(
         &self,
         body: crate::datadogV1::model::SyntheticsTriggerBody,
-    ) -> Result<
-        Option<crate::datadogV1::model::SyntheticsTriggerCITestsResponse>,
-        Error<TriggerTestsError>,
-    > {
+    ) -> Result<crate::datadogV1::model::SyntheticsTriggerCITestsResponse, Error<TriggerTestsError>>
+    {
         match self.trigger_tests_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -2334,13 +2418,18 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SyntheticsTriggerCITestsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SyntheticsTriggerCITestsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<TriggerTestsError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -2357,9 +2446,9 @@ impl SyntheticsAPI {
         &self,
         public_id: String,
         body: crate::datadogV1::model::SyntheticsAPITest,
-    ) -> Result<Option<crate::datadogV1::model::SyntheticsAPITest>, Error<UpdateAPITestError>> {
+    ) -> Result<crate::datadogV1::model::SyntheticsAPITest, Error<UpdateAPITestError>> {
         match self.update_api_test_with_http_info(public_id, body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -2413,13 +2502,17 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SyntheticsAPITest> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SyntheticsAPITest>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateAPITestError> =
                 serde_json::from_str(&local_content).ok();
@@ -2437,13 +2530,12 @@ impl SyntheticsAPI {
         &self,
         public_id: String,
         body: crate::datadogV1::model::SyntheticsBrowserTest,
-    ) -> Result<Option<crate::datadogV1::model::SyntheticsBrowserTest>, Error<UpdateBrowserTestError>>
-    {
+    ) -> Result<crate::datadogV1::model::SyntheticsBrowserTest, Error<UpdateBrowserTestError>> {
         match self
             .update_browser_test_with_http_info(public_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -2497,13 +2589,18 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SyntheticsBrowserTest> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SyntheticsBrowserTest>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateBrowserTestError> =
                 serde_json::from_str(&local_content).ok();
@@ -2521,15 +2618,13 @@ impl SyntheticsAPI {
         &self,
         location_id: String,
         body: crate::datadogV1::model::SyntheticsPrivateLocation,
-    ) -> Result<
-        Option<crate::datadogV1::model::SyntheticsPrivateLocation>,
-        Error<UpdatePrivateLocationError>,
-    > {
+    ) -> Result<crate::datadogV1::model::SyntheticsPrivateLocation, Error<UpdatePrivateLocationError>>
+    {
         match self
             .update_private_location_with_http_info(location_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -2583,13 +2678,18 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SyntheticsPrivateLocation> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SyntheticsPrivateLocation>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdatePrivateLocationError> =
                 serde_json::from_str(&local_content).ok();
@@ -2607,12 +2707,12 @@ impl SyntheticsAPI {
         &self,
         public_id: String,
         body: crate::datadogV1::model::SyntheticsUpdateTestPauseStatusPayload,
-    ) -> Result<Option<bool>, Error<UpdateTestPauseStatusError>> {
+    ) -> Result<bool, Error<UpdateTestPauseStatusError>> {
         match self
             .update_test_pause_status_with_http_info(public_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -2663,12 +2763,16 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<bool> = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<bool>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateTestPauseStatusError> =
                 serde_json::from_str(&local_content).ok();

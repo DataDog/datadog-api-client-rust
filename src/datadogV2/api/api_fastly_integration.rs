@@ -140,12 +140,10 @@ impl FastlyIntegrationAPI {
     pub async fn create_fastly_account(
         &self,
         body: crate::datadogV2::model::FastlyAccountCreateRequest,
-    ) -> Result<
-        Option<crate::datadogV2::model::FastlyAccountResponse>,
-        Error<CreateFastlyAccountError>,
-    > {
+    ) -> Result<crate::datadogV2::model::FastlyAccountResponse, Error<CreateFastlyAccountError>>
+    {
         match self.create_fastly_account_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -197,13 +195,18 @@ impl FastlyIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::FastlyAccountResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::FastlyAccountResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateFastlyAccountError> =
                 serde_json::from_str(&local_content).ok();
@@ -221,15 +224,13 @@ impl FastlyIntegrationAPI {
         &self,
         account_id: String,
         body: crate::datadogV2::model::FastlyServiceRequest,
-    ) -> Result<
-        Option<crate::datadogV2::model::FastlyServiceResponse>,
-        Error<CreateFastlyServiceError>,
-    > {
+    ) -> Result<crate::datadogV2::model::FastlyServiceResponse, Error<CreateFastlyServiceError>>
+    {
         match self
             .create_fastly_service_with_http_info(account_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -283,13 +284,18 @@ impl FastlyIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::FastlyServiceResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::FastlyServiceResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateFastlyServiceError> =
                 serde_json::from_str(&local_content).ok();
@@ -306,9 +312,9 @@ impl FastlyIntegrationAPI {
     pub async fn delete_fastly_account(
         &self,
         account_id: String,
-    ) -> Result<Option<()>, Error<DeleteFastlyAccountError>> {
+    ) -> Result<(), Error<DeleteFastlyAccountError>> {
         match self.delete_fastly_account_with_http_info(account_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -373,12 +379,12 @@ impl FastlyIntegrationAPI {
         &self,
         account_id: String,
         service_id: String,
-    ) -> Result<Option<()>, Error<DeleteFastlyServiceError>> {
+    ) -> Result<(), Error<DeleteFastlyServiceError>> {
         match self
             .delete_fastly_service_with_http_info(account_id, service_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -444,10 +450,9 @@ impl FastlyIntegrationAPI {
     pub async fn get_fastly_account(
         &self,
         account_id: String,
-    ) -> Result<Option<crate::datadogV2::model::FastlyAccountResponse>, Error<GetFastlyAccountError>>
-    {
+    ) -> Result<crate::datadogV2::model::FastlyAccountResponse, Error<GetFastlyAccountError>> {
         match self.get_fastly_account_with_http_info(account_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -493,13 +498,18 @@ impl FastlyIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::FastlyAccountResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::FastlyAccountResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetFastlyAccountError> =
                 serde_json::from_str(&local_content).ok();
@@ -517,13 +527,12 @@ impl FastlyIntegrationAPI {
         &self,
         account_id: String,
         service_id: String,
-    ) -> Result<Option<crate::datadogV2::model::FastlyServiceResponse>, Error<GetFastlyServiceError>>
-    {
+    ) -> Result<crate::datadogV2::model::FastlyServiceResponse, Error<GetFastlyServiceError>> {
         match self
             .get_fastly_service_with_http_info(account_id, service_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -571,13 +580,18 @@ impl FastlyIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::FastlyServiceResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::FastlyServiceResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetFastlyServiceError> =
                 serde_json::from_str(&local_content).ok();
@@ -593,12 +607,10 @@ impl FastlyIntegrationAPI {
     /// List Fastly accounts.
     pub async fn list_fastly_accounts(
         &self,
-    ) -> Result<
-        Option<crate::datadogV2::model::FastlyAccountsResponse>,
-        Error<ListFastlyAccountsError>,
-    > {
+    ) -> Result<crate::datadogV2::model::FastlyAccountsResponse, Error<ListFastlyAccountsError>>
+    {
         match self.list_fastly_accounts_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -642,13 +654,18 @@ impl FastlyIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::FastlyAccountsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::FastlyAccountsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListFastlyAccountsError> =
                 serde_json::from_str(&local_content).ok();
@@ -665,12 +682,10 @@ impl FastlyIntegrationAPI {
     pub async fn list_fastly_services(
         &self,
         account_id: String,
-    ) -> Result<
-        Option<crate::datadogV2::model::FastlyServicesResponse>,
-        Error<ListFastlyServicesError>,
-    > {
+    ) -> Result<crate::datadogV2::model::FastlyServicesResponse, Error<ListFastlyServicesError>>
+    {
         match self.list_fastly_services_with_http_info(account_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -716,13 +731,18 @@ impl FastlyIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::FastlyServicesResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::FastlyServicesResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListFastlyServicesError> =
                 serde_json::from_str(&local_content).ok();
@@ -740,15 +760,13 @@ impl FastlyIntegrationAPI {
         &self,
         account_id: String,
         body: crate::datadogV2::model::FastlyAccountUpdateRequest,
-    ) -> Result<
-        Option<crate::datadogV2::model::FastlyAccountResponse>,
-        Error<UpdateFastlyAccountError>,
-    > {
+    ) -> Result<crate::datadogV2::model::FastlyAccountResponse, Error<UpdateFastlyAccountError>>
+    {
         match self
             .update_fastly_account_with_http_info(account_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -802,13 +820,18 @@ impl FastlyIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::FastlyAccountResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::FastlyAccountResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateFastlyAccountError> =
                 serde_json::from_str(&local_content).ok();
@@ -827,15 +850,13 @@ impl FastlyIntegrationAPI {
         account_id: String,
         service_id: String,
         body: crate::datadogV2::model::FastlyServiceRequest,
-    ) -> Result<
-        Option<crate::datadogV2::model::FastlyServiceResponse>,
-        Error<UpdateFastlyServiceError>,
-    > {
+    ) -> Result<crate::datadogV2::model::FastlyServiceResponse, Error<UpdateFastlyServiceError>>
+    {
         match self
             .update_fastly_service_with_http_info(account_id, service_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -891,13 +912,18 @@ impl FastlyIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::FastlyServiceResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::FastlyServiceResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateFastlyServiceError> =
                 serde_json::from_str(&local_content).ok();

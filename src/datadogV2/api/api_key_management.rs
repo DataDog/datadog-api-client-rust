@@ -422,9 +422,9 @@ impl KeyManagementAPI {
     pub async fn create_api_key(
         &self,
         body: crate::datadogV2::model::APIKeyCreateRequest,
-    ) -> Result<Option<crate::datadogV2::model::APIKeyResponse>, Error<CreateAPIKeyError>> {
+    ) -> Result<crate::datadogV2::model::APIKeyResponse, Error<CreateAPIKeyError>> {
         match self.create_api_key_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -471,13 +471,16 @@ impl KeyManagementAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::APIKeyResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::APIKeyResponse>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateAPIKeyError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -494,14 +497,14 @@ impl KeyManagementAPI {
         &self,
         body: crate::datadogV2::model::ApplicationKeyCreateRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::ApplicationKeyResponse>,
+        crate::datadogV2::model::ApplicationKeyResponse,
         Error<CreateCurrentUserApplicationKeyError>,
     > {
         match self
             .create_current_user_application_key_with_http_info(body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -553,13 +556,18 @@ impl KeyManagementAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::ApplicationKeyResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::ApplicationKeyResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateCurrentUserApplicationKeyError> =
                 serde_json::from_str(&local_content).ok();
@@ -573,12 +581,9 @@ impl KeyManagementAPI {
     }
 
     /// Delete an API key.
-    pub async fn delete_api_key(
-        &self,
-        api_key_id: String,
-    ) -> Result<Option<()>, Error<DeleteAPIKeyError>> {
+    pub async fn delete_api_key(&self, api_key_id: String) -> Result<(), Error<DeleteAPIKeyError>> {
         match self.delete_api_key_with_http_info(api_key_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -641,9 +646,9 @@ impl KeyManagementAPI {
     pub async fn delete_application_key(
         &self,
         app_key_id: String,
-    ) -> Result<Option<()>, Error<DeleteApplicationKeyError>> {
+    ) -> Result<(), Error<DeleteApplicationKeyError>> {
         match self.delete_application_key_with_http_info(app_key_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -707,12 +712,12 @@ impl KeyManagementAPI {
     pub async fn delete_current_user_application_key(
         &self,
         app_key_id: String,
-    ) -> Result<Option<()>, Error<DeleteCurrentUserApplicationKeyError>> {
+    ) -> Result<(), Error<DeleteCurrentUserApplicationKeyError>> {
         match self
             .delete_current_user_application_key_with_http_info(app_key_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -777,9 +782,9 @@ impl KeyManagementAPI {
         &self,
         api_key_id: String,
         params: GetAPIKeyOptionalParams,
-    ) -> Result<Option<crate::datadogV2::model::APIKeyResponse>, Error<GetAPIKeyError>> {
+    ) -> Result<crate::datadogV2::model::APIKeyResponse, Error<GetAPIKeyError>> {
         match self.get_api_key_with_http_info(api_key_id, params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -832,13 +837,16 @@ impl KeyManagementAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::APIKeyResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::APIKeyResponse>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetAPIKeyError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -855,15 +863,13 @@ impl KeyManagementAPI {
         &self,
         app_key_id: String,
         params: GetApplicationKeyOptionalParams,
-    ) -> Result<
-        Option<crate::datadogV2::model::ApplicationKeyResponse>,
-        Error<GetApplicationKeyError>,
-    > {
+    ) -> Result<crate::datadogV2::model::ApplicationKeyResponse, Error<GetApplicationKeyError>>
+    {
         match self
             .get_application_key_with_http_info(app_key_id, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -918,13 +924,18 @@ impl KeyManagementAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::ApplicationKeyResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::ApplicationKeyResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetApplicationKeyError> =
                 serde_json::from_str(&local_content).ok();
@@ -942,14 +953,14 @@ impl KeyManagementAPI {
         &self,
         app_key_id: String,
     ) -> Result<
-        Option<crate::datadogV2::model::ApplicationKeyResponse>,
+        crate::datadogV2::model::ApplicationKeyResponse,
         Error<GetCurrentUserApplicationKeyError>,
     > {
         match self
             .get_current_user_application_key_with_http_info(app_key_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -995,13 +1006,18 @@ impl KeyManagementAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::ApplicationKeyResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::ApplicationKeyResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetCurrentUserApplicationKeyError> =
                 serde_json::from_str(&local_content).ok();
@@ -1018,9 +1034,9 @@ impl KeyManagementAPI {
     pub async fn list_api_keys(
         &self,
         params: ListAPIKeysOptionalParams,
-    ) -> Result<Option<crate::datadogV2::model::APIKeysResponse>, Error<ListAPIKeysError>> {
+    ) -> Result<crate::datadogV2::model::APIKeysResponse, Error<ListAPIKeysError>> {
         match self.list_api_keys_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1120,13 +1136,16 @@ impl KeyManagementAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::APIKeysResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::APIKeysResponse>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListAPIKeysError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -1142,12 +1161,10 @@ impl KeyManagementAPI {
     pub async fn list_application_keys(
         &self,
         params: ListApplicationKeysOptionalParams,
-    ) -> Result<
-        Option<crate::datadogV2::model::ListApplicationKeysResponse>,
-        Error<ListApplicationKeysError>,
-    > {
+    ) -> Result<crate::datadogV2::model::ListApplicationKeysResponse, Error<ListApplicationKeysError>>
+    {
         match self.list_application_keys_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1227,13 +1244,18 @@ impl KeyManagementAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::ListApplicationKeysResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::ListApplicationKeysResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListApplicationKeysError> =
                 serde_json::from_str(&local_content).ok();
@@ -1251,14 +1273,14 @@ impl KeyManagementAPI {
         &self,
         params: ListCurrentUserApplicationKeysOptionalParams,
     ) -> Result<
-        Option<crate::datadogV2::model::ListApplicationKeysResponse>,
+        crate::datadogV2::model::ListApplicationKeysResponse,
         Error<ListCurrentUserApplicationKeysError>,
     > {
         match self
             .list_current_user_application_keys_with_http_info(params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1341,13 +1363,18 @@ impl KeyManagementAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::ListApplicationKeysResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::ListApplicationKeysResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListCurrentUserApplicationKeysError> =
                 serde_json::from_str(&local_content).ok();
@@ -1365,9 +1392,9 @@ impl KeyManagementAPI {
         &self,
         api_key_id: String,
         body: crate::datadogV2::model::APIKeyUpdateRequest,
-    ) -> Result<Option<crate::datadogV2::model::APIKeyResponse>, Error<UpdateAPIKeyError>> {
+    ) -> Result<crate::datadogV2::model::APIKeyResponse, Error<UpdateAPIKeyError>> {
         match self.update_api_key_with_http_info(api_key_id, body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1419,13 +1446,16 @@ impl KeyManagementAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::APIKeyResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::APIKeyResponse>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateAPIKeyError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -1442,15 +1472,13 @@ impl KeyManagementAPI {
         &self,
         app_key_id: String,
         body: crate::datadogV2::model::ApplicationKeyUpdateRequest,
-    ) -> Result<
-        Option<crate::datadogV2::model::ApplicationKeyResponse>,
-        Error<UpdateApplicationKeyError>,
-    > {
+    ) -> Result<crate::datadogV2::model::ApplicationKeyResponse, Error<UpdateApplicationKeyError>>
+    {
         match self
             .update_application_key_with_http_info(app_key_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1504,13 +1532,18 @@ impl KeyManagementAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::ApplicationKeyResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::ApplicationKeyResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateApplicationKeyError> =
                 serde_json::from_str(&local_content).ok();
@@ -1529,14 +1562,14 @@ impl KeyManagementAPI {
         app_key_id: String,
         body: crate::datadogV2::model::ApplicationKeyUpdateRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::ApplicationKeyResponse>,
+        crate::datadogV2::model::ApplicationKeyResponse,
         Error<UpdateCurrentUserApplicationKeyError>,
     > {
         match self
             .update_current_user_application_key_with_http_info(app_key_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1590,13 +1623,18 @@ impl KeyManagementAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::ApplicationKeyResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::ApplicationKeyResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateCurrentUserApplicationKeyError> =
                 serde_json::from_str(&local_content).ok();

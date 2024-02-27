@@ -46,11 +46,11 @@ impl SyntheticsAPI {
     pub async fn get_on_demand_concurrency_cap(
         &self,
     ) -> Result<
-        Option<crate::datadogV2::model::OnDemandConcurrencyCapResponse>,
+        crate::datadogV2::model::OnDemandConcurrencyCapResponse,
         Error<GetOnDemandConcurrencyCapError>,
     > {
         match self.get_on_demand_concurrency_cap_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -94,13 +94,18 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::OnDemandConcurrencyCapResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::OnDemandConcurrencyCapResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetOnDemandConcurrencyCapError> =
                 serde_json::from_str(&local_content).ok();
@@ -118,14 +123,14 @@ impl SyntheticsAPI {
         &self,
         body: crate::datadogV2::model::OnDemandConcurrencyCapAttributes,
     ) -> Result<
-        Option<crate::datadogV2::model::OnDemandConcurrencyCapResponse>,
+        crate::datadogV2::model::OnDemandConcurrencyCapResponse,
         Error<SetOnDemandConcurrencyCapError>,
     > {
         match self
             .set_on_demand_concurrency_cap_with_http_info(body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -177,13 +182,18 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::OnDemandConcurrencyCapResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::OnDemandConcurrencyCapResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<SetOnDemandConcurrencyCapError> =
                 serde_json::from_str(&local_content).ok();

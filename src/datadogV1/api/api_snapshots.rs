@@ -98,12 +98,12 @@ impl SnapshotsAPI {
         start: i64,
         end: i64,
         params: GetGraphSnapshotOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::GraphSnapshot>, Error<GetGraphSnapshotError>> {
+    ) -> Result<crate::datadogV1::model::GraphSnapshot, Error<GetGraphSnapshotError>> {
         match self
             .get_graph_snapshot_with_http_info(start, end, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -181,13 +181,16 @@ impl SnapshotsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::GraphSnapshot> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::GraphSnapshot>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetGraphSnapshotError> =
                 serde_json::from_str(&local_content).ok();

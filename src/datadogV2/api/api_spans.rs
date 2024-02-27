@@ -114,10 +114,9 @@ impl SpansAPI {
     pub async fn aggregate_spans(
         &self,
         body: crate::datadogV2::model::SpansAggregateRequest,
-    ) -> Result<Option<crate::datadogV2::model::SpansAggregateResponse>, Error<AggregateSpansError>>
-    {
+    ) -> Result<crate::datadogV2::model::SpansAggregateResponse, Error<AggregateSpansError>> {
         match self.aggregate_spans_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -170,13 +169,18 @@ impl SpansAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::SpansAggregateResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::SpansAggregateResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<AggregateSpansError> =
                 serde_json::from_str(&local_content).ok();
@@ -199,9 +203,9 @@ impl SpansAPI {
     pub async fn list_spans(
         &self,
         body: crate::datadogV2::model::SpansListRequest,
-    ) -> Result<Option<crate::datadogV2::model::SpansListResponse>, Error<ListSpansError>> {
+    ) -> Result<crate::datadogV2::model::SpansListResponse, Error<ListSpansError>> {
         match self.list_spans_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -257,13 +261,17 @@ impl SpansAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::SpansListResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::SpansListResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListSpansError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -285,9 +293,9 @@ impl SpansAPI {
     pub async fn list_spans_get(
         &self,
         params: ListSpansGetOptionalParams,
-    ) -> Result<Option<crate::datadogV2::model::SpansListResponse>, Error<ListSpansGetError>> {
+    ) -> Result<crate::datadogV2::model::SpansListResponse, Error<ListSpansGetError>> {
         match self.list_spans_get_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -366,13 +374,17 @@ impl SpansAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::SpansListResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::SpansListResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListSpansGetError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {

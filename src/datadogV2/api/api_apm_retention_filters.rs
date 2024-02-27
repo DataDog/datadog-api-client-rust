@@ -93,11 +93,11 @@ impl APMRetentionFiltersAPI {
         &self,
         body: crate::datadogV2::model::RetentionFilterCreateRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::RetentionFilterResponse>,
+        crate::datadogV2::model::RetentionFilterResponse,
         Error<CreateApmRetentionFilterError>,
     > {
         match self.create_apm_retention_filter_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -150,13 +150,18 @@ impl APMRetentionFiltersAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::RetentionFilterResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::RetentionFilterResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateApmRetentionFilterError> =
                 serde_json::from_str(&local_content).ok();
@@ -173,12 +178,12 @@ impl APMRetentionFiltersAPI {
     pub async fn delete_apm_retention_filter(
         &self,
         filter_id: String,
-    ) -> Result<Option<()>, Error<DeleteApmRetentionFilterError>> {
+    ) -> Result<(), Error<DeleteApmRetentionFilterError>> {
         match self
             .delete_apm_retention_filter_with_http_info(filter_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -242,15 +247,13 @@ impl APMRetentionFiltersAPI {
     pub async fn get_apm_retention_filter(
         &self,
         filter_id: String,
-    ) -> Result<
-        Option<crate::datadogV2::model::RetentionFilterResponse>,
-        Error<GetApmRetentionFilterError>,
-    > {
+    ) -> Result<crate::datadogV2::model::RetentionFilterResponse, Error<GetApmRetentionFilterError>>
+    {
         match self
             .get_apm_retention_filter_with_http_info(filter_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -296,13 +299,18 @@ impl APMRetentionFiltersAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::RetentionFilterResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::RetentionFilterResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetApmRetentionFilterError> =
                 serde_json::from_str(&local_content).ok();
@@ -319,11 +327,11 @@ impl APMRetentionFiltersAPI {
     pub async fn list_apm_retention_filters(
         &self,
     ) -> Result<
-        Option<crate::datadogV2::model::RetentionFiltersResponse>,
+        crate::datadogV2::model::RetentionFiltersResponse,
         Error<ListApmRetentionFiltersError>,
     > {
         match self.list_apm_retention_filters_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -367,13 +375,18 @@ impl APMRetentionFiltersAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::RetentionFiltersResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::RetentionFiltersResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListApmRetentionFiltersError> =
                 serde_json::from_str(&local_content).ok();
@@ -390,12 +403,12 @@ impl APMRetentionFiltersAPI {
     pub async fn reorder_apm_retention_filters(
         &self,
         body: crate::datadogV2::model::ReorderRetentionFiltersRequest,
-    ) -> Result<Option<()>, Error<ReorderApmRetentionFiltersError>> {
+    ) -> Result<(), Error<ReorderApmRetentionFiltersError>> {
         match self
             .reorder_apm_retention_filters_with_http_info(body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -467,14 +480,14 @@ impl APMRetentionFiltersAPI {
         filter_id: String,
         body: crate::datadogV2::model::RetentionFilterUpdateRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::RetentionFilterResponse>,
+        crate::datadogV2::model::RetentionFilterResponse,
         Error<UpdateApmRetentionFilterError>,
     > {
         match self
             .update_apm_retention_filter_with_http_info(filter_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -528,13 +541,18 @@ impl APMRetentionFiltersAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::RetentionFilterResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::RetentionFilterResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateApmRetentionFilterError> =
                 serde_json::from_str(&local_content).ok();

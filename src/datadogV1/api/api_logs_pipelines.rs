@@ -99,9 +99,9 @@ impl LogsPipelinesAPI {
     pub async fn create_logs_pipeline(
         &self,
         body: crate::datadogV1::model::LogsPipeline,
-    ) -> Result<Option<crate::datadogV1::model::LogsPipeline>, Error<CreateLogsPipelineError>> {
+    ) -> Result<crate::datadogV1::model::LogsPipeline, Error<CreateLogsPipelineError>> {
         match self.create_logs_pipeline_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -153,13 +153,16 @@ impl LogsPipelinesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::LogsPipeline> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::LogsPipeline>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateLogsPipelineError> =
                 serde_json::from_str(&local_content).ok();
@@ -177,9 +180,9 @@ impl LogsPipelinesAPI {
     pub async fn delete_logs_pipeline(
         &self,
         pipeline_id: String,
-    ) -> Result<Option<()>, Error<DeleteLogsPipelineError>> {
+    ) -> Result<(), Error<DeleteLogsPipelineError>> {
         match self.delete_logs_pipeline_with_http_info(pipeline_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -245,9 +248,9 @@ impl LogsPipelinesAPI {
     pub async fn get_logs_pipeline(
         &self,
         pipeline_id: String,
-    ) -> Result<Option<crate::datadogV1::model::LogsPipeline>, Error<GetLogsPipelineError>> {
+    ) -> Result<crate::datadogV1::model::LogsPipeline, Error<GetLogsPipelineError>> {
         match self.get_logs_pipeline_with_http_info(pipeline_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -292,13 +295,16 @@ impl LogsPipelinesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::LogsPipeline> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::LogsPipeline>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetLogsPipelineError> =
                 serde_json::from_str(&local_content).ok();
@@ -315,10 +321,9 @@ impl LogsPipelinesAPI {
     /// This endpoint takes no JSON arguments.
     pub async fn get_logs_pipeline_order(
         &self,
-    ) -> Result<Option<crate::datadogV1::model::LogsPipelinesOrder>, Error<GetLogsPipelineOrderError>>
-    {
+    ) -> Result<crate::datadogV1::model::LogsPipelinesOrder, Error<GetLogsPipelineOrderError>> {
         match self.get_logs_pipeline_order_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -363,13 +368,18 @@ impl LogsPipelinesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::LogsPipelinesOrder> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::LogsPipelinesOrder>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetLogsPipelineOrderError> =
                 serde_json::from_str(&local_content).ok();
@@ -386,10 +396,9 @@ impl LogsPipelinesAPI {
     /// This endpoint takes no JSON arguments.
     pub async fn list_logs_pipelines(
         &self,
-    ) -> Result<Option<Vec<crate::datadogV1::model::LogsPipeline>>, Error<ListLogsPipelinesError>>
-    {
+    ) -> Result<Vec<crate::datadogV1::model::LogsPipeline>, Error<ListLogsPipelinesError>> {
         match self.list_logs_pipelines_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -434,13 +443,17 @@ impl LogsPipelinesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<Vec<crate::datadogV1::model::LogsPipeline>> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<Vec<crate::datadogV1::model::LogsPipeline>>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListLogsPipelinesError> =
                 serde_json::from_str(&local_content).ok();
@@ -461,12 +474,12 @@ impl LogsPipelinesAPI {
         &self,
         pipeline_id: String,
         body: crate::datadogV1::model::LogsPipeline,
-    ) -> Result<Option<crate::datadogV1::model::LogsPipeline>, Error<UpdateLogsPipelineError>> {
+    ) -> Result<crate::datadogV1::model::LogsPipeline, Error<UpdateLogsPipelineError>> {
         match self
             .update_logs_pipeline_with_http_info(pipeline_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -523,13 +536,16 @@ impl LogsPipelinesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::LogsPipeline> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::LogsPipeline>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateLogsPipelineError> =
                 serde_json::from_str(&local_content).ok();
@@ -550,12 +566,10 @@ impl LogsPipelinesAPI {
     pub async fn update_logs_pipeline_order(
         &self,
         body: crate::datadogV1::model::LogsPipelinesOrder,
-    ) -> Result<
-        Option<crate::datadogV1::model::LogsPipelinesOrder>,
-        Error<UpdateLogsPipelineOrderError>,
-    > {
+    ) -> Result<crate::datadogV1::model::LogsPipelinesOrder, Error<UpdateLogsPipelineOrderError>>
+    {
         match self.update_logs_pipeline_order_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -611,13 +625,18 @@ impl LogsPipelinesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::LogsPipelinesOrder> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::LogsPipelinesOrder>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateLogsPipelineOrderError> =
                 serde_json::from_str(&local_content).ok();

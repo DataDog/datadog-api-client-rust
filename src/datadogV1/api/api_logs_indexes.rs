@@ -88,9 +88,9 @@ impl LogsIndexesAPI {
     pub async fn create_logs_index(
         &self,
         body: crate::datadogV1::model::LogsIndex,
-    ) -> Result<Option<crate::datadogV1::model::LogsIndex>, Error<CreateLogsIndexError>> {
+    ) -> Result<crate::datadogV1::model::LogsIndex, Error<CreateLogsIndexError>> {
         match self.create_logs_index_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -140,13 +140,16 @@ impl LogsIndexesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::LogsIndex> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::LogsIndex>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateLogsIndexError> =
                 serde_json::from_str(&local_content).ok();
@@ -163,9 +166,9 @@ impl LogsIndexesAPI {
     pub async fn get_logs_index(
         &self,
         name: String,
-    ) -> Result<Option<crate::datadogV1::model::LogsIndex>, Error<GetLogsIndexError>> {
+    ) -> Result<crate::datadogV1::model::LogsIndex, Error<GetLogsIndexError>> {
         match self.get_logs_index_with_http_info(name).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -208,13 +211,16 @@ impl LogsIndexesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::LogsIndex> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::LogsIndex>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetLogsIndexError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -229,10 +235,9 @@ impl LogsIndexesAPI {
     /// Get the current order of your log indexes. This endpoint takes no JSON arguments.
     pub async fn get_logs_index_order(
         &self,
-    ) -> Result<Option<crate::datadogV1::model::LogsIndexesOrder>, Error<GetLogsIndexOrderError>>
-    {
+    ) -> Result<crate::datadogV1::model::LogsIndexesOrder, Error<GetLogsIndexOrderError>> {
         match self.get_logs_index_order_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -276,13 +281,17 @@ impl LogsIndexesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::LogsIndexesOrder> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::LogsIndexesOrder>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetLogsIndexOrderError> =
                 serde_json::from_str(&local_content).ok();
@@ -299,10 +308,9 @@ impl LogsIndexesAPI {
     /// This endpoint returns an array of the `LogIndex` objects of your organization.
     pub async fn list_log_indexes(
         &self,
-    ) -> Result<Option<crate::datadogV1::model::LogsIndexListResponse>, Error<ListLogIndexesError>>
-    {
+    ) -> Result<crate::datadogV1::model::LogsIndexListResponse, Error<ListLogIndexesError>> {
         match self.list_log_indexes_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -347,13 +355,18 @@ impl LogsIndexesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::LogsIndexListResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::LogsIndexListResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListLogIndexesError> =
                 serde_json::from_str(&local_content).ok();
@@ -375,9 +388,9 @@ impl LogsIndexesAPI {
         &self,
         name: String,
         body: crate::datadogV1::model::LogsIndexUpdateRequest,
-    ) -> Result<Option<crate::datadogV1::model::LogsIndex>, Error<UpdateLogsIndexError>> {
+    ) -> Result<crate::datadogV1::model::LogsIndex, Error<UpdateLogsIndexError>> {
         match self.update_logs_index_with_http_info(name, body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -433,13 +446,16 @@ impl LogsIndexesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::LogsIndex> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::LogsIndex>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateLogsIndexError> =
                 serde_json::from_str(&local_content).ok();
@@ -457,10 +473,9 @@ impl LogsIndexesAPI {
     pub async fn update_logs_index_order(
         &self,
         body: crate::datadogV1::model::LogsIndexesOrder,
-    ) -> Result<Option<crate::datadogV1::model::LogsIndexesOrder>, Error<UpdateLogsIndexOrderError>>
-    {
+    ) -> Result<crate::datadogV1::model::LogsIndexesOrder, Error<UpdateLogsIndexOrderError>> {
         match self.update_logs_index_order_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -513,13 +528,17 @@ impl LogsIndexesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::LogsIndexesOrder> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::LogsIndexesOrder>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateLogsIndexOrderError> =
                 serde_json::from_str(&local_content).ok();

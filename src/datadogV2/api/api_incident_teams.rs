@@ -144,10 +144,9 @@ impl IncidentTeamsAPI {
     pub async fn create_incident_team(
         &self,
         body: crate::datadogV2::model::IncidentTeamCreateRequest,
-    ) -> Result<Option<crate::datadogV2::model::IncidentTeamResponse>, Error<CreateIncidentTeamError>>
-    {
+    ) -> Result<crate::datadogV2::model::IncidentTeamResponse, Error<CreateIncidentTeamError>> {
         match self.create_incident_team_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -206,13 +205,18 @@ impl IncidentTeamsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::IncidentTeamResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::IncidentTeamResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateIncidentTeamError> =
                 serde_json::from_str(&local_content).ok();
@@ -229,9 +233,9 @@ impl IncidentTeamsAPI {
     pub async fn delete_incident_team(
         &self,
         team_id: String,
-    ) -> Result<Option<()>, Error<DeleteIncidentTeamError>> {
+    ) -> Result<(), Error<DeleteIncidentTeamError>> {
         match self.delete_incident_team_with_http_info(team_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -307,10 +311,9 @@ impl IncidentTeamsAPI {
         &self,
         team_id: String,
         params: GetIncidentTeamOptionalParams,
-    ) -> Result<Option<crate::datadogV2::model::IncidentTeamResponse>, Error<GetIncidentTeamError>>
-    {
+    ) -> Result<crate::datadogV2::model::IncidentTeamResponse, Error<GetIncidentTeamError>> {
         match self.get_incident_team_with_http_info(team_id, params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -376,13 +379,18 @@ impl IncidentTeamsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::IncidentTeamResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::IncidentTeamResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetIncidentTeamError> =
                 serde_json::from_str(&local_content).ok();
@@ -399,10 +407,9 @@ impl IncidentTeamsAPI {
     pub async fn list_incident_teams(
         &self,
         params: ListIncidentTeamsOptionalParams,
-    ) -> Result<Option<crate::datadogV2::model::IncidentTeamsResponse>, Error<ListIncidentTeamsError>>
-    {
+    ) -> Result<crate::datadogV2::model::IncidentTeamsResponse, Error<ListIncidentTeamsError>> {
         match self.list_incident_teams_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -477,13 +484,18 @@ impl IncidentTeamsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::IncidentTeamsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::IncidentTeamsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListIncidentTeamsError> =
                 serde_json::from_str(&local_content).ok();
@@ -501,13 +513,12 @@ impl IncidentTeamsAPI {
         &self,
         team_id: String,
         body: crate::datadogV2::model::IncidentTeamUpdateRequest,
-    ) -> Result<Option<crate::datadogV2::model::IncidentTeamResponse>, Error<UpdateIncidentTeamError>>
-    {
+    ) -> Result<crate::datadogV2::model::IncidentTeamResponse, Error<UpdateIncidentTeamError>> {
         match self
             .update_incident_team_with_http_info(team_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -571,13 +582,18 @@ impl IncidentTeamsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::IncidentTeamResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::IncidentTeamResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateIncidentTeamError> =
                 serde_json::from_str(&local_content).ok();

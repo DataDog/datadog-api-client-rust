@@ -114,12 +114,10 @@ impl WebhooksIntegrationAPI {
     pub async fn create_webhooks_integration(
         &self,
         body: crate::datadogV1::model::WebhooksIntegration,
-    ) -> Result<
-        Option<crate::datadogV1::model::WebhooksIntegration>,
-        Error<CreateWebhooksIntegrationError>,
-    > {
+    ) -> Result<crate::datadogV1::model::WebhooksIntegration, Error<CreateWebhooksIntegrationError>>
+    {
         match self.create_webhooks_integration_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -171,13 +169,18 @@ impl WebhooksIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::WebhooksIntegration> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::WebhooksIntegration>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateWebhooksIntegrationError> =
                 serde_json::from_str(&local_content).ok();
@@ -195,14 +198,14 @@ impl WebhooksIntegrationAPI {
         &self,
         body: crate::datadogV1::model::WebhooksIntegrationCustomVariable,
     ) -> Result<
-        Option<crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse>,
+        crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse,
         Error<CreateWebhooksIntegrationCustomVariableError>,
     > {
         match self
             .create_webhooks_integration_custom_variable_with_http_info(body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -254,14 +257,19 @@ impl WebhooksIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<
+            match serde_json::from_str::<
                 crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse,
-            > = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateWebhooksIntegrationCustomVariableError> =
                 serde_json::from_str(&local_content).ok();
@@ -278,12 +286,12 @@ impl WebhooksIntegrationAPI {
     pub async fn delete_webhooks_integration(
         &self,
         webhook_name: String,
-    ) -> Result<Option<()>, Error<DeleteWebhooksIntegrationError>> {
+    ) -> Result<(), Error<DeleteWebhooksIntegrationError>> {
         match self
             .delete_webhooks_integration_with_http_info(webhook_name)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -347,12 +355,12 @@ impl WebhooksIntegrationAPI {
     pub async fn delete_webhooks_integration_custom_variable(
         &self,
         custom_variable_name: String,
-    ) -> Result<Option<()>, Error<DeleteWebhooksIntegrationCustomVariableError>> {
+    ) -> Result<(), Error<DeleteWebhooksIntegrationCustomVariableError>> {
         match self
             .delete_webhooks_integration_custom_variable_with_http_info(custom_variable_name)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -416,15 +424,13 @@ impl WebhooksIntegrationAPI {
     pub async fn get_webhooks_integration(
         &self,
         webhook_name: String,
-    ) -> Result<
-        Option<crate::datadogV1::model::WebhooksIntegration>,
-        Error<GetWebhooksIntegrationError>,
-    > {
+    ) -> Result<crate::datadogV1::model::WebhooksIntegration, Error<GetWebhooksIntegrationError>>
+    {
         match self
             .get_webhooks_integration_with_http_info(webhook_name)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -470,13 +476,18 @@ impl WebhooksIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::WebhooksIntegration> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::WebhooksIntegration>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetWebhooksIntegrationError> =
                 serde_json::from_str(&local_content).ok();
@@ -497,14 +508,14 @@ impl WebhooksIntegrationAPI {
         &self,
         custom_variable_name: String,
     ) -> Result<
-        Option<crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse>,
+        crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse,
         Error<GetWebhooksIntegrationCustomVariableError>,
     > {
         match self
             .get_webhooks_integration_custom_variable_with_http_info(custom_variable_name)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -553,14 +564,19 @@ impl WebhooksIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<
+            match serde_json::from_str::<
                 crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse,
-            > = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetWebhooksIntegrationCustomVariableError> =
                 serde_json::from_str(&local_content).ok();
@@ -578,15 +594,13 @@ impl WebhooksIntegrationAPI {
         &self,
         webhook_name: String,
         body: crate::datadogV1::model::WebhooksIntegrationUpdateRequest,
-    ) -> Result<
-        Option<crate::datadogV1::model::WebhooksIntegration>,
-        Error<UpdateWebhooksIntegrationError>,
-    > {
+    ) -> Result<crate::datadogV1::model::WebhooksIntegration, Error<UpdateWebhooksIntegrationError>>
+    {
         match self
             .update_webhooks_integration_with_http_info(webhook_name, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -640,13 +654,18 @@ impl WebhooksIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::WebhooksIntegration> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::WebhooksIntegration>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateWebhooksIntegrationError> =
                 serde_json::from_str(&local_content).ok();
@@ -665,14 +684,14 @@ impl WebhooksIntegrationAPI {
         custom_variable_name: String,
         body: crate::datadogV1::model::WebhooksIntegrationCustomVariableUpdateRequest,
     ) -> Result<
-        Option<crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse>,
+        crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse,
         Error<UpdateWebhooksIntegrationCustomVariableError>,
     > {
         match self
             .update_webhooks_integration_custom_variable_with_http_info(custom_variable_name, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -726,14 +745,19 @@ impl WebhooksIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<
+            match serde_json::from_str::<
                 crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse,
-            > = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateWebhooksIntegrationCustomVariableError> =
                 serde_json::from_str(&local_content).ok();

@@ -85,12 +85,10 @@ impl OpsgenieIntegrationAPI {
     pub async fn create_opsgenie_service(
         &self,
         body: crate::datadogV2::model::OpsgenieServiceCreateRequest,
-    ) -> Result<
-        Option<crate::datadogV2::model::OpsgenieServiceResponse>,
-        Error<CreateOpsgenieServiceError>,
-    > {
+    ) -> Result<crate::datadogV2::model::OpsgenieServiceResponse, Error<CreateOpsgenieServiceError>>
+    {
         match self.create_opsgenie_service_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -142,13 +140,18 @@ impl OpsgenieIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::OpsgenieServiceResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::OpsgenieServiceResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateOpsgenieServiceError> =
                 serde_json::from_str(&local_content).ok();
@@ -165,12 +168,12 @@ impl OpsgenieIntegrationAPI {
     pub async fn delete_opsgenie_service(
         &self,
         integration_service_id: String,
-    ) -> Result<Option<()>, Error<DeleteOpsgenieServiceError>> {
+    ) -> Result<(), Error<DeleteOpsgenieServiceError>> {
         match self
             .delete_opsgenie_service_with_http_info(integration_service_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -234,15 +237,13 @@ impl OpsgenieIntegrationAPI {
     pub async fn get_opsgenie_service(
         &self,
         integration_service_id: String,
-    ) -> Result<
-        Option<crate::datadogV2::model::OpsgenieServiceResponse>,
-        Error<GetOpsgenieServiceError>,
-    > {
+    ) -> Result<crate::datadogV2::model::OpsgenieServiceResponse, Error<GetOpsgenieServiceError>>
+    {
         match self
             .get_opsgenie_service_with_http_info(integration_service_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -288,13 +289,18 @@ impl OpsgenieIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::OpsgenieServiceResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::OpsgenieServiceResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetOpsgenieServiceError> =
                 serde_json::from_str(&local_content).ok();
@@ -310,12 +316,10 @@ impl OpsgenieIntegrationAPI {
     /// Get a list of all services from the Datadog Opsgenie integration.
     pub async fn list_opsgenie_services(
         &self,
-    ) -> Result<
-        Option<crate::datadogV2::model::OpsgenieServicesResponse>,
-        Error<ListOpsgenieServicesError>,
-    > {
+    ) -> Result<crate::datadogV2::model::OpsgenieServicesResponse, Error<ListOpsgenieServicesError>>
+    {
         match self.list_opsgenie_services_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -359,13 +363,18 @@ impl OpsgenieIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::OpsgenieServicesResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::OpsgenieServicesResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListOpsgenieServicesError> =
                 serde_json::from_str(&local_content).ok();
@@ -383,15 +392,13 @@ impl OpsgenieIntegrationAPI {
         &self,
         integration_service_id: String,
         body: crate::datadogV2::model::OpsgenieServiceUpdateRequest,
-    ) -> Result<
-        Option<crate::datadogV2::model::OpsgenieServiceResponse>,
-        Error<UpdateOpsgenieServiceError>,
-    > {
+    ) -> Result<crate::datadogV2::model::OpsgenieServiceResponse, Error<UpdateOpsgenieServiceError>>
+    {
         match self
             .update_opsgenie_service_with_http_info(integration_service_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -445,13 +452,18 @@ impl OpsgenieIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::OpsgenieServiceResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::OpsgenieServiceResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateOpsgenieServiceError> =
                 serde_json::from_str(&local_content).ok();

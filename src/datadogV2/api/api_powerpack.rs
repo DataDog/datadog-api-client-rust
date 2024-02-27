@@ -98,10 +98,9 @@ impl PowerpackAPI {
     pub async fn create_powerpack(
         &self,
         body: crate::datadogV2::model::Powerpack,
-    ) -> Result<Option<crate::datadogV2::model::PowerpackResponse>, Error<CreatePowerpackError>>
-    {
+    ) -> Result<crate::datadogV2::model::PowerpackResponse, Error<CreatePowerpackError>> {
         match self.create_powerpack_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -150,13 +149,17 @@ impl PowerpackAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::PowerpackResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::PowerpackResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreatePowerpackError> =
                 serde_json::from_str(&local_content).ok();
@@ -173,9 +176,9 @@ impl PowerpackAPI {
     pub async fn delete_powerpack(
         &self,
         powerpack_id: String,
-    ) -> Result<Option<()>, Error<DeletePowerpackError>> {
+    ) -> Result<(), Error<DeletePowerpackError>> {
         match self.delete_powerpack_with_http_info(powerpack_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -239,9 +242,9 @@ impl PowerpackAPI {
     pub async fn get_powerpack(
         &self,
         powerpack_id: String,
-    ) -> Result<Option<crate::datadogV2::model::PowerpackResponse>, Error<GetPowerpackError>> {
+    ) -> Result<crate::datadogV2::model::PowerpackResponse, Error<GetPowerpackError>> {
         match self.get_powerpack_with_http_info(powerpack_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -285,13 +288,17 @@ impl PowerpackAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::PowerpackResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::PowerpackResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetPowerpackError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -307,10 +314,9 @@ impl PowerpackAPI {
     pub async fn list_powerpacks(
         &self,
         params: ListPowerpacksOptionalParams,
-    ) -> Result<Option<crate::datadogV2::model::ListPowerpacksResponse>, Error<ListPowerpacksError>>
-    {
+    ) -> Result<crate::datadogV2::model::ListPowerpacksResponse, Error<ListPowerpacksError>> {
         match self.list_powerpacks_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -365,13 +371,18 @@ impl PowerpackAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::ListPowerpacksResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::ListPowerpacksResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListPowerpacksError> =
                 serde_json::from_str(&local_content).ok();
@@ -389,13 +400,12 @@ impl PowerpackAPI {
         &self,
         powerpack_id: String,
         body: crate::datadogV2::model::Powerpack,
-    ) -> Result<Option<crate::datadogV2::model::PowerpackResponse>, Error<UpdatePowerpackError>>
-    {
+    ) -> Result<crate::datadogV2::model::PowerpackResponse, Error<UpdatePowerpackError>> {
         match self
             .update_powerpack_with_http_info(powerpack_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -449,13 +459,17 @@ impl PowerpackAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::PowerpackResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::PowerpackResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdatePowerpackError> =
                 serde_json::from_str(&local_content).ok();

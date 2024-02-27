@@ -257,13 +257,12 @@ impl RolesAPI {
         &self,
         role_id: String,
         body: crate::datadogV2::model::RelationshipToPermission,
-    ) -> Result<Option<crate::datadogV2::model::PermissionsResponse>, Error<AddPermissionToRoleError>>
-    {
+    ) -> Result<crate::datadogV2::model::PermissionsResponse, Error<AddPermissionToRoleError>> {
         match self
             .add_permission_to_role_with_http_info(role_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -317,13 +316,18 @@ impl RolesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::PermissionsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::PermissionsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<AddPermissionToRoleError> =
                 serde_json::from_str(&local_content).ok();
@@ -341,9 +345,9 @@ impl RolesAPI {
         &self,
         role_id: String,
         body: crate::datadogV2::model::RelationshipToUser,
-    ) -> Result<Option<crate::datadogV2::model::UsersResponse>, Error<AddUserToRoleError>> {
+    ) -> Result<crate::datadogV2::model::UsersResponse, Error<AddUserToRoleError>> {
         match self.add_user_to_role_with_http_info(role_id, body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -395,13 +399,16 @@ impl RolesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::UsersResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::UsersResponse>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<AddUserToRoleError> =
                 serde_json::from_str(&local_content).ok();
@@ -419,9 +426,9 @@ impl RolesAPI {
         &self,
         role_id: String,
         body: crate::datadogV2::model::RoleCloneRequest,
-    ) -> Result<Option<crate::datadogV2::model::RoleResponse>, Error<CloneRoleError>> {
+    ) -> Result<crate::datadogV2::model::RoleResponse, Error<CloneRoleError>> {
         match self.clone_role_with_http_info(role_id, body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -472,13 +479,16 @@ impl RolesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::RoleResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::RoleResponse>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CloneRoleError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -494,9 +504,9 @@ impl RolesAPI {
     pub async fn create_role(
         &self,
         body: crate::datadogV2::model::RoleCreateRequest,
-    ) -> Result<Option<crate::datadogV2::model::RoleCreateResponse>, Error<CreateRoleError>> {
+    ) -> Result<crate::datadogV2::model::RoleCreateResponse, Error<CreateRoleError>> {
         match self.create_role_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -543,13 +553,18 @@ impl RolesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::RoleCreateResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::RoleCreateResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateRoleError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -562,9 +577,9 @@ impl RolesAPI {
     }
 
     /// Disables a role.
-    pub async fn delete_role(&self, role_id: String) -> Result<Option<()>, Error<DeleteRoleError>> {
+    pub async fn delete_role(&self, role_id: String) -> Result<(), Error<DeleteRoleError>> {
         match self.delete_role_with_http_info(role_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -627,9 +642,9 @@ impl RolesAPI {
     pub async fn get_role(
         &self,
         role_id: String,
-    ) -> Result<Option<crate::datadogV2::model::RoleResponse>, Error<GetRoleError>> {
+    ) -> Result<crate::datadogV2::model::RoleResponse, Error<GetRoleError>> {
         match self.get_role_with_http_info(role_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -672,13 +687,16 @@ impl RolesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::RoleResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::RoleResponse>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetRoleError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -693,10 +711,9 @@ impl RolesAPI {
     /// Returns a list of all permissions, including name, description, and ID.
     pub async fn list_permissions(
         &self,
-    ) -> Result<Option<crate::datadogV2::model::PermissionsResponse>, Error<ListPermissionsError>>
-    {
+    ) -> Result<crate::datadogV2::model::PermissionsResponse, Error<ListPermissionsError>> {
         match self.list_permissions_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -737,13 +754,18 @@ impl RolesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::PermissionsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::PermissionsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListPermissionsError> =
                 serde_json::from_str(&local_content).ok();
@@ -760,10 +782,9 @@ impl RolesAPI {
     pub async fn list_role_permissions(
         &self,
         role_id: String,
-    ) -> Result<Option<crate::datadogV2::model::PermissionsResponse>, Error<ListRolePermissionsError>>
-    {
+    ) -> Result<crate::datadogV2::model::PermissionsResponse, Error<ListRolePermissionsError>> {
         match self.list_role_permissions_with_http_info(role_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -809,13 +830,18 @@ impl RolesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::PermissionsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::PermissionsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListRolePermissionsError> =
                 serde_json::from_str(&local_content).ok();
@@ -833,9 +859,9 @@ impl RolesAPI {
         &self,
         role_id: String,
         params: ListRoleUsersOptionalParams,
-    ) -> Result<Option<crate::datadogV2::model::UsersResponse>, Error<ListRoleUsersError>> {
+    ) -> Result<crate::datadogV2::model::UsersResponse, Error<ListRoleUsersError>> {
         match self.list_role_users_with_http_info(role_id, params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -903,13 +929,16 @@ impl RolesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::UsersResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::UsersResponse>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListRoleUsersError> =
                 serde_json::from_str(&local_content).ok();
@@ -926,9 +955,9 @@ impl RolesAPI {
     pub async fn list_roles(
         &self,
         params: ListRolesOptionalParams,
-    ) -> Result<Option<crate::datadogV2::model::RolesResponse>, Error<ListRolesError>> {
+    ) -> Result<crate::datadogV2::model::RolesResponse, Error<ListRolesError>> {
         match self.list_roles_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -996,13 +1025,16 @@ impl RolesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::RolesResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::RolesResponse>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListRolesError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -1019,15 +1051,13 @@ impl RolesAPI {
         &self,
         role_id: String,
         body: crate::datadogV2::model::RelationshipToPermission,
-    ) -> Result<
-        Option<crate::datadogV2::model::PermissionsResponse>,
-        Error<RemovePermissionFromRoleError>,
-    > {
+    ) -> Result<crate::datadogV2::model::PermissionsResponse, Error<RemovePermissionFromRoleError>>
+    {
         match self
             .remove_permission_from_role_with_http_info(role_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1081,13 +1111,18 @@ impl RolesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::PermissionsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::PermissionsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<RemovePermissionFromRoleError> =
                 serde_json::from_str(&local_content).ok();
@@ -1105,13 +1140,12 @@ impl RolesAPI {
         &self,
         role_id: String,
         body: crate::datadogV2::model::RelationshipToUser,
-    ) -> Result<Option<crate::datadogV2::model::UsersResponse>, Error<RemoveUserFromRoleError>>
-    {
+    ) -> Result<crate::datadogV2::model::UsersResponse, Error<RemoveUserFromRoleError>> {
         match self
             .remove_user_from_role_with_http_info(role_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1165,13 +1199,16 @@ impl RolesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::UsersResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::UsersResponse>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<RemoveUserFromRoleError> =
                 serde_json::from_str(&local_content).ok();
@@ -1189,9 +1226,9 @@ impl RolesAPI {
         &self,
         role_id: String,
         body: crate::datadogV2::model::RoleUpdateRequest,
-    ) -> Result<Option<crate::datadogV2::model::RoleUpdateResponse>, Error<UpdateRoleError>> {
+    ) -> Result<crate::datadogV2::model::RoleUpdateResponse, Error<UpdateRoleError>> {
         match self.update_role_with_http_info(role_id, body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1243,13 +1280,18 @@ impl RolesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::RoleUpdateResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::RoleUpdateResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateRoleError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {

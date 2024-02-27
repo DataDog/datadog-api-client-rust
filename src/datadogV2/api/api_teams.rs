@@ -298,9 +298,9 @@ impl TeamsAPI {
     pub async fn create_team(
         &self,
         body: crate::datadogV2::model::TeamCreateRequest,
-    ) -> Result<Option<crate::datadogV2::model::TeamResponse>, Error<CreateTeamError>> {
+    ) -> Result<crate::datadogV2::model::TeamResponse, Error<CreateTeamError>> {
         match self.create_team_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -348,13 +348,16 @@ impl TeamsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::TeamResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::TeamResponse>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateTeamError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -371,9 +374,9 @@ impl TeamsAPI {
         &self,
         team_id: String,
         body: crate::datadogV2::model::TeamLinkCreateRequest,
-    ) -> Result<Option<crate::datadogV2::model::TeamLinkResponse>, Error<CreateTeamLinkError>> {
+    ) -> Result<crate::datadogV2::model::TeamLinkResponse, Error<CreateTeamLinkError>> {
         match self.create_team_link_with_http_info(team_id, body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -427,13 +430,17 @@ impl TeamsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::TeamLinkResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::TeamLinkResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateTeamLinkError> =
                 serde_json::from_str(&local_content).ok();
@@ -451,13 +458,12 @@ impl TeamsAPI {
         &self,
         team_id: String,
         body: crate::datadogV2::model::UserTeamRequest,
-    ) -> Result<Option<crate::datadogV2::model::UserTeamResponse>, Error<CreateTeamMembershipError>>
-    {
+    ) -> Result<crate::datadogV2::model::UserTeamResponse, Error<CreateTeamMembershipError>> {
         match self
             .create_team_membership_with_http_info(team_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -511,13 +517,17 @@ impl TeamsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::UserTeamResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::UserTeamResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateTeamMembershipError> =
                 serde_json::from_str(&local_content).ok();
@@ -531,9 +541,9 @@ impl TeamsAPI {
     }
 
     /// Remove a team using the team's `id`.
-    pub async fn delete_team(&self, team_id: String) -> Result<Option<()>, Error<DeleteTeamError>> {
+    pub async fn delete_team(&self, team_id: String) -> Result<(), Error<DeleteTeamError>> {
         match self.delete_team_with_http_info(team_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -597,9 +607,9 @@ impl TeamsAPI {
         &self,
         team_id: String,
         link_id: String,
-    ) -> Result<Option<()>, Error<DeleteTeamLinkError>> {
+    ) -> Result<(), Error<DeleteTeamLinkError>> {
         match self.delete_team_link_with_http_info(team_id, link_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -666,12 +676,12 @@ impl TeamsAPI {
         &self,
         team_id: String,
         user_id: String,
-    ) -> Result<Option<()>, Error<DeleteTeamMembershipError>> {
+    ) -> Result<(), Error<DeleteTeamMembershipError>> {
         match self
             .delete_team_membership_with_http_info(team_id, user_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -737,9 +747,9 @@ impl TeamsAPI {
     pub async fn get_team(
         &self,
         team_id: String,
-    ) -> Result<Option<crate::datadogV2::model::TeamResponse>, Error<GetTeamError>> {
+    ) -> Result<crate::datadogV2::model::TeamResponse, Error<GetTeamError>> {
         match self.get_team_with_http_info(team_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -782,13 +792,16 @@ impl TeamsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::TeamResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::TeamResponse>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetTeamError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -805,9 +818,9 @@ impl TeamsAPI {
         &self,
         team_id: String,
         link_id: String,
-    ) -> Result<Option<crate::datadogV2::model::TeamLinkResponse>, Error<GetTeamLinkError>> {
+    ) -> Result<crate::datadogV2::model::TeamLinkResponse, Error<GetTeamLinkError>> {
         match self.get_team_link_with_http_info(team_id, link_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -853,13 +866,17 @@ impl TeamsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::TeamLinkResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::TeamLinkResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetTeamLinkError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -875,9 +892,9 @@ impl TeamsAPI {
     pub async fn get_team_links(
         &self,
         team_id: String,
-    ) -> Result<Option<crate::datadogV2::model::TeamLinksResponse>, Error<GetTeamLinksError>> {
+    ) -> Result<crate::datadogV2::model::TeamLinksResponse, Error<GetTeamLinksError>> {
         match self.get_team_links_with_http_info(team_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -921,13 +938,17 @@ impl TeamsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::TeamLinksResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::TeamLinksResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetTeamLinksError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -944,13 +965,12 @@ impl TeamsAPI {
         &self,
         team_id: String,
         params: GetTeamMembershipsOptionalParams,
-    ) -> Result<Option<crate::datadogV2::model::UserTeamsResponse>, Error<GetTeamMembershipsError>>
-    {
+    ) -> Result<crate::datadogV2::model::UserTeamsResponse, Error<GetTeamMembershipsError>> {
         match self
             .get_team_memberships_with_http_info(team_id, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1020,13 +1040,17 @@ impl TeamsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::UserTeamsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::UserTeamsResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetTeamMembershipsError> =
                 serde_json::from_str(&local_content).ok();
@@ -1044,14 +1068,14 @@ impl TeamsAPI {
         &self,
         team_id: String,
     ) -> Result<
-        Option<crate::datadogV2::model::TeamPermissionSettingsResponse>,
+        crate::datadogV2::model::TeamPermissionSettingsResponse,
         Error<GetTeamPermissionSettingsError>,
     > {
         match self
             .get_team_permission_settings_with_http_info(team_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1097,13 +1121,18 @@ impl TeamsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::TeamPermissionSettingsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::TeamPermissionSettingsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetTeamPermissionSettingsError> =
                 serde_json::from_str(&local_content).ok();
@@ -1120,10 +1149,9 @@ impl TeamsAPI {
     pub async fn get_user_memberships(
         &self,
         user_uuid: String,
-    ) -> Result<Option<crate::datadogV2::model::UserTeamsResponse>, Error<GetUserMembershipsError>>
-    {
+    ) -> Result<crate::datadogV2::model::UserTeamsResponse, Error<GetUserMembershipsError>> {
         match self.get_user_memberships_with_http_info(user_uuid).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1169,13 +1197,17 @@ impl TeamsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::UserTeamsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::UserTeamsResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUserMembershipsError> =
                 serde_json::from_str(&local_content).ok();
@@ -1193,9 +1225,9 @@ impl TeamsAPI {
     pub async fn list_teams(
         &self,
         params: ListTeamsOptionalParams,
-    ) -> Result<Option<crate::datadogV2::model::TeamsResponse>, Error<ListTeamsError>> {
+    ) -> Result<crate::datadogV2::model::TeamsResponse, Error<ListTeamsError>> {
         match self.list_teams_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1288,13 +1320,16 @@ impl TeamsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::TeamsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::TeamsResponse>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListTeamsError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -1312,9 +1347,9 @@ impl TeamsAPI {
         &self,
         team_id: String,
         body: crate::datadogV2::model::TeamUpdateRequest,
-    ) -> Result<Option<crate::datadogV2::model::TeamResponse>, Error<UpdateTeamError>> {
+    ) -> Result<crate::datadogV2::model::TeamResponse, Error<UpdateTeamError>> {
         match self.update_team_with_http_info(team_id, body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1367,13 +1402,16 @@ impl TeamsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::TeamResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::TeamResponse>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateTeamError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -1391,12 +1429,12 @@ impl TeamsAPI {
         team_id: String,
         link_id: String,
         body: crate::datadogV2::model::TeamLinkCreateRequest,
-    ) -> Result<Option<crate::datadogV2::model::TeamLinkResponse>, Error<UpdateTeamLinkError>> {
+    ) -> Result<crate::datadogV2::model::TeamLinkResponse, Error<UpdateTeamLinkError>> {
         match self
             .update_team_link_with_http_info(team_id, link_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1452,13 +1490,17 @@ impl TeamsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::TeamLinkResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::TeamLinkResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateTeamLinkError> =
                 serde_json::from_str(&local_content).ok();
@@ -1477,13 +1519,12 @@ impl TeamsAPI {
         team_id: String,
         user_id: String,
         body: crate::datadogV2::model::UserTeamUpdateRequest,
-    ) -> Result<Option<crate::datadogV2::model::UserTeamResponse>, Error<UpdateTeamMembershipError>>
-    {
+    ) -> Result<crate::datadogV2::model::UserTeamResponse, Error<UpdateTeamMembershipError>> {
         match self
             .update_team_membership_with_http_info(team_id, user_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1539,13 +1580,17 @@ impl TeamsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::UserTeamResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::UserTeamResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateTeamMembershipError> =
                 serde_json::from_str(&local_content).ok();
@@ -1565,14 +1610,14 @@ impl TeamsAPI {
         action: String,
         body: crate::datadogV2::model::TeamPermissionSettingUpdateRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::TeamPermissionSettingResponse>,
+        crate::datadogV2::model::TeamPermissionSettingResponse,
         Error<UpdateTeamPermissionSettingError>,
     > {
         match self
             .update_team_permission_setting_with_http_info(team_id, action, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -1628,13 +1673,18 @@ impl TeamsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::TeamPermissionSettingResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::TeamPermissionSettingResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateTeamPermissionSettingError> =
                 serde_json::from_str(&local_content).ok();

@@ -120,10 +120,9 @@ impl AuthNMappingsAPI {
     pub async fn create_authn_mapping(
         &self,
         body: crate::datadogV2::model::AuthNMappingCreateRequest,
-    ) -> Result<Option<crate::datadogV2::model::AuthNMappingResponse>, Error<CreateAuthNMappingError>>
-    {
+    ) -> Result<crate::datadogV2::model::AuthNMappingResponse, Error<CreateAuthNMappingError>> {
         match self.create_authn_mapping_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -172,13 +171,18 @@ impl AuthNMappingsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::AuthNMappingResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::AuthNMappingResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateAuthNMappingError> =
                 serde_json::from_str(&local_content).ok();
@@ -195,12 +199,12 @@ impl AuthNMappingsAPI {
     pub async fn delete_authn_mapping(
         &self,
         authn_mapping_id: String,
-    ) -> Result<Option<()>, Error<DeleteAuthNMappingError>> {
+    ) -> Result<(), Error<DeleteAuthNMappingError>> {
         match self
             .delete_authn_mapping_with_http_info(authn_mapping_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -264,13 +268,12 @@ impl AuthNMappingsAPI {
     pub async fn get_authn_mapping(
         &self,
         authn_mapping_id: String,
-    ) -> Result<Option<crate::datadogV2::model::AuthNMappingResponse>, Error<GetAuthNMappingError>>
-    {
+    ) -> Result<crate::datadogV2::model::AuthNMappingResponse, Error<GetAuthNMappingError>> {
         match self
             .get_authn_mapping_with_http_info(authn_mapping_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -316,13 +319,18 @@ impl AuthNMappingsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::AuthNMappingResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::AuthNMappingResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetAuthNMappingError> =
                 serde_json::from_str(&local_content).ok();
@@ -339,10 +347,9 @@ impl AuthNMappingsAPI {
     pub async fn list_authn_mappings(
         &self,
         params: ListAuthNMappingsOptionalParams,
-    ) -> Result<Option<crate::datadogV2::model::AuthNMappingsResponse>, Error<ListAuthNMappingsError>>
-    {
+    ) -> Result<crate::datadogV2::model::AuthNMappingsResponse, Error<ListAuthNMappingsError>> {
         match self.list_authn_mappings_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -407,13 +414,18 @@ impl AuthNMappingsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::AuthNMappingsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::AuthNMappingsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListAuthNMappingsError> =
                 serde_json::from_str(&local_content).ok();
@@ -431,13 +443,12 @@ impl AuthNMappingsAPI {
         &self,
         authn_mapping_id: String,
         body: crate::datadogV2::model::AuthNMappingUpdateRequest,
-    ) -> Result<Option<crate::datadogV2::model::AuthNMappingResponse>, Error<UpdateAuthNMappingError>>
-    {
+    ) -> Result<crate::datadogV2::model::AuthNMappingResponse, Error<UpdateAuthNMappingError>> {
         match self
             .update_authn_mapping_with_http_info(authn_mapping_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => Ok(response_content.entity.unwrap()),
             Err(err) => Err(err),
         }
     }
@@ -491,13 +502,18 @@ impl AuthNMappingsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::AuthNMappingResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::AuthNMappingResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateAuthNMappingError> =
                 serde_json::from_str(&local_content).ok();
