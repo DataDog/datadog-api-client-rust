@@ -23,7 +23,7 @@ from generator.utils import (
     untitle_case,
 )
 
-from generator.formatter import format_parameters, format_data_with_schema, go_name
+from generator.formatter import format_parameters, format_data_with_schema, rust_name
 
 
 MODIFIED_FEATURES = {pathlib.Path(p).resolve() for p in os.getenv("BDD_MODIFIED_FEATURES", "").split(" ") if p}
@@ -68,12 +68,12 @@ JINJA_ENV.filters["tojson"] = json.dumps
 JINJA_ENV.filters["snake_case"] = snake_case
 JINJA_ENV.filters["camel_case"] = camel_case
 JINJA_ENV.filters["untitle_case"] = untitle_case
-JINJA_ENV.filters["go_name"] = go_name
+JINJA_ENV.filters["rust_name"] = rust_name
 JINJA_ENV.globals["format_data_with_schema"] = format_data_with_schema
 JINJA_ENV.globals["format_parameters"] = format_parameters
 JINJA_ENV.globals["given_variables"] = given_variables
 
-GO_EXAMPLE_J2 = JINJA_ENV.get_template("example.j2")
+RUST_EXAMPLE_J2 = JINJA_ENV.get_template("example.j2")
 
 
 def pytest_bdd_after_scenario(request, feature, scenario):
@@ -100,14 +100,14 @@ def pytest_bdd_after_scenario(request, feature, scenario):
     if scenario_name != scenario.name:
         unique_suffix = "_" + str(zlib.adler32(scenario.name.encode("utf-8")))
 
-    data = GO_EXAMPLE_J2.render(
+    data = RUST_EXAMPLE_J2.render(
         context=context,
         version=version,
         scenario=scenario,
         operation_spec=operation_spec.spec,
     )
 
-    output = ROOT_PATH / "examples" / version / group_name / f"{operation_id}{unique_suffix}.go"
+    output = ROOT_PATH / "examples" / version / group_name / f"{operation_id}{unique_suffix}.rs"
     output.parent.mkdir(parents=True, exist_ok=True)
 
     with output.open("w") as f:

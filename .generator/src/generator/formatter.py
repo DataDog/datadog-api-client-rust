@@ -192,17 +192,15 @@ def attribute_path(attribute):
     return ".".join(attribute_name(a) for a in attribute.split("."))
 
 
-def go_name(name):
+def rust_name(name):
     """Convert key to Rust name.
 
     Example:
 
-    >>> go_name("DASHBOARD_ID")
+    >>> rust_name("DASHBOARD_ID")
     DashboardID
     """
-    return "".join(
-        part.capitalize() if part not in {"API", "ID", "HTTP", "URL", "DNS"} else part for part in name.split("_")
-    )
+    return name.lower()
 
 
 def reference_to_value(schema, value, print_nullable=True, **kwargs):
@@ -218,9 +216,9 @@ def reference_to_value(schema, value, print_nullable=True, **kwargs):
 
     prefix = ""
     if type_name in PRIMITIVE_TYPES:
-        prefix = "datadog."
+        prefix = ""
     else:
-        prefix = f"datadog{kwargs.get('version', '')}."
+        prefix = f"datadog{kwargs.get('version', '')}::"
 
     if nullable and print_nullable:
         if value == "nil":
@@ -232,18 +230,18 @@ def reference_to_value(schema, value, print_nullable=True, **kwargs):
 
     if type_name == "integer":
         function_name = {
-            "int": "Int",
-            "int32": "Int32",
-            "int64": "Int64",
-            None: "Int",
+            "int": "i32",
+            "int32": "i32",
+            "int64": "i64",
+            None: "i64",
         }[type_format]
         return formatter.format(prefix=prefix, function_name=function_name, value=value)
 
     if type_name == "number":
         function_name = {
-            "float": "Float32",
-            "double": "Float64",
-            None: "Float32",
+            "float": "f32",
+            "double": "f64",
+            None: "f32",
         }[type_format]
         return formatter.format(prefix=prefix, function_name=function_name, value=value)
 
@@ -257,7 +255,7 @@ def reference_to_value(schema, value, print_nullable=True, **kwargs):
         return formatter.format(prefix=prefix, function_name=function_name, value=value)
 
     if type_name == "boolean":
-        return formatter.format(prefix=prefix, function_name="Bool", value=value)
+        return formatter.format(prefix=prefix, function_name="bool", value=value)
 
     if nullable:
         function_name = schema_name(schema)
@@ -398,7 +396,7 @@ def format_data_with_schema(
 
         # Make sure that variables used in given statements are camelCase for Rust linter
         if parameters in variables:
-            parameters = go_name(parameters)
+            parameters = rust_name(parameters)
 
         simple_type_value = simple_type(schema)
         if isinstance(data, int) and simple_type_value in {
@@ -586,7 +584,7 @@ def format_data_with_schema_dict(
     if not schema:
         return ""
 
-    reference = "" if required else "&"
+    reference = "" if required else ""
     nullable = schema.get("nullable", False)
 
     name = schema_name(schema) or default_name
@@ -610,7 +608,7 @@ def format_data_with_schema_dict(
                 required=k in required_properties,
                 **kwargs,
             )
-            parameters += f"{camel_case(k)}: {value},\n"
+            parameters += f".{snake_case(k)}({value})"
 
     if schema.get("additionalProperties"):
         saved_parameters = ""
@@ -675,4 +673,4 @@ def format_data_with_schema_dict(
 
     if in_list:
         return f"{{\n{parameters}}}"
-    return f"{reference}{name_prefix}{name}{{\n{parameters}}}"
+    return f"{reference}{name_prefix}{name}::new(){parameters}"
