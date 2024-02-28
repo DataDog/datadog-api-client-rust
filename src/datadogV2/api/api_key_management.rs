@@ -436,25 +436,29 @@ impl KeyManagementAPI {
     ) -> Result<ResponseContent<crate::datadogV2::model::APIKeyResponse>, Error<CreateAPIKeyError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v2.create_api_key";
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/api_keys", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v2/api_keys",
+            local_configuration.get_operation_host(operation_id)
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         // build body parameters
@@ -518,28 +522,29 @@ impl KeyManagementAPI {
         Error<CreateCurrentUserApplicationKeyError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.create_current_user_application_key";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/current_user/application_keys",
-            local_configuration.base_path
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         // build body parameters
@@ -594,29 +599,30 @@ impl KeyManagementAPI {
         api_key_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteAPIKeyError>> {
         let local_configuration = &self.config;
+        let operation_id = "v2.delete_api_key";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/api_keys/{api_key_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             api_key_id = urlencode(api_key_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -659,29 +665,30 @@ impl KeyManagementAPI {
         app_key_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteApplicationKeyError>> {
         let local_configuration = &self.config;
+        let operation_id = "v2.delete_application_key";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/application_keys/{app_key_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             app_key_id = urlencode(app_key_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -728,29 +735,30 @@ impl KeyManagementAPI {
         app_key_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteCurrentUserApplicationKeyError>> {
         let local_configuration = &self.config;
+        let operation_id = "v2.delete_current_user_application_key";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/current_user/application_keys/{app_key_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             app_key_id = urlencode(app_key_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -797,6 +805,7 @@ impl KeyManagementAPI {
     ) -> Result<ResponseContent<crate::datadogV2::model::APIKeyResponse>, Error<GetAPIKeyError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v2.get_api_key";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -805,7 +814,7 @@ impl KeyManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/api_keys/{api_key_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             api_key_id = urlencode(api_key_id)
         );
         let mut local_req_builder =
@@ -817,17 +826,17 @@ impl KeyManagementAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -884,6 +893,7 @@ impl KeyManagementAPI {
         Error<GetApplicationKeyError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.get_application_key";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -892,7 +902,7 @@ impl KeyManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/application_keys/{app_key_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             app_key_id = urlencode(app_key_id)
         );
         let mut local_req_builder =
@@ -904,17 +914,17 @@ impl KeyManagementAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -974,29 +984,30 @@ impl KeyManagementAPI {
         Error<GetCurrentUserApplicationKeyError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.get_current_user_application_key";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/current_user/application_keys/{app_key_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             app_key_id = urlencode(app_key_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1048,6 +1059,7 @@ impl KeyManagementAPI {
     ) -> Result<ResponseContent<crate::datadogV2::model::APIKeysResponse>, Error<ListAPIKeysError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v2.list_api_keys";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -1064,7 +1076,10 @@ impl KeyManagementAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/api_keys", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v2/api_keys",
+            local_configuration.get_operation_host(operation_id)
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -1116,17 +1131,17 @@ impl KeyManagementAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1178,6 +1193,7 @@ impl KeyManagementAPI {
         Error<ListApplicationKeysError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.list_application_keys";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -1190,7 +1206,10 @@ impl KeyManagementAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/application_keys", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v2/application_keys",
+            local_configuration.get_operation_host(operation_id)
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -1224,17 +1243,17 @@ impl KeyManagementAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1294,6 +1313,7 @@ impl KeyManagementAPI {
         Error<ListCurrentUserApplicationKeysError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.list_current_user_application_keys";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -1308,7 +1328,7 @@ impl KeyManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/current_user/application_keys",
-            local_configuration.base_path
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1343,17 +1363,17 @@ impl KeyManagementAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1407,29 +1427,30 @@ impl KeyManagementAPI {
     ) -> Result<ResponseContent<crate::datadogV2::model::APIKeyResponse>, Error<UpdateAPIKeyError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v2.update_api_key";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/api_keys/{api_key_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             api_key_id = urlencode(api_key_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         // build body parameters
@@ -1493,29 +1514,30 @@ impl KeyManagementAPI {
         Error<UpdateApplicationKeyError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.update_application_key";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/application_keys/{app_key_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             app_key_id = urlencode(app_key_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         // build body parameters
@@ -1584,29 +1606,30 @@ impl KeyManagementAPI {
         Error<UpdateCurrentUserApplicationKeyError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.update_current_user_application_key";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/current_user/application_keys/{app_key_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             app_key_id = urlencode(app_key_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         // build body parameters

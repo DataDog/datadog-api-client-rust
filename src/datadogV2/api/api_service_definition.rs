@@ -147,28 +147,29 @@ impl ServiceDefinitionAPI {
         Error<CreateOrUpdateServiceDefinitionsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.create_or_update_service_definitions";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/services/definitions",
-            local_configuration.base_path
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         // build body parameters
@@ -229,29 +230,30 @@ impl ServiceDefinitionAPI {
         service_name: String,
     ) -> Result<ResponseContent<()>, Error<DeleteServiceDefinitionError>> {
         let local_configuration = &self.config;
+        let operation_id = "v2.delete_service_definition";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/services/definitions/{service_name}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             service_name = urlencode(service_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -306,6 +308,7 @@ impl ServiceDefinitionAPI {
         Error<GetServiceDefinitionError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.get_service_definition";
 
         // unbox and build optional parameters
         let schema_version = params.schema_version;
@@ -314,7 +317,7 @@ impl ServiceDefinitionAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/services/definitions/{service_name}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             service_name = urlencode(service_name)
         );
         let mut local_req_builder =
@@ -326,17 +329,17 @@ impl ServiceDefinitionAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -393,6 +396,7 @@ impl ServiceDefinitionAPI {
         Error<ListServiceDefinitionsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.list_service_definitions";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -403,7 +407,7 @@ impl ServiceDefinitionAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/services/definitions",
-            local_configuration.base_path
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -422,17 +426,17 @@ impl ServiceDefinitionAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;

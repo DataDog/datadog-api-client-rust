@@ -9,7 +9,7 @@ use cucumber::{
     gherkin::{Feature, Rule, Scenario},
     given, then, when, World,
 };
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog::configuration::{APIKey, Configuration};
 use lazy_static::lazy_static;
 use minijinja::{Environment, State};
 use regex::Regex;
@@ -102,7 +102,7 @@ pub async fn before_scenario(
     let mut frozen_time = chrono::Utc::now().signed_duration_since(DateTime::UNIX_EPOCH);
 
     let vcr_client_builder = ClientBuilder::new(reqwest::Client::new());
-    world.config.client = match env::var("RECORD").unwrap_or("false".to_string()).as_str() {
+    let client = match env::var("RECORD").unwrap_or("false".to_string()).as_str() {
         "none" => {
             prefix.push_str("-Rust");
             vcr_client_builder.build()
@@ -156,8 +156,21 @@ pub async fn before_scenario(
             vcr_client_builder.with(middleware).build()
         }
     };
-    world.config.api_key_auth = Some("00000000000000000000000000000000".to_string());
-    world.config.app_key_auth = Some("0000000000000000000000000000000000000000".to_string());
+    world.config.client(client);
+    world.config.set_auth_key(
+        "apiKeyAuth",
+        APIKey {
+            key: "00000000000000000000000000000000".to_string(),
+            prefix: "".to_owned(),
+        },
+    );
+    world.config.set_auth_key(
+        "appKeyAuth",
+        APIKey {
+            key: "0000000000000000000000000000000000000000".to_string(),
+            prefix: "".to_owned(),
+        },
+    );
 
     let escaped_name = NON_ALNUM_RE
         .replace_all(scenario.name.as_str(), "_")
@@ -213,13 +226,31 @@ pub async fn after_scenario(
 }
 
 #[given(expr = "a valid \"apiKeyAuth\" key in the system")]
-fn valid_apikey_auth(world: &mut DatadogWorld) {
-    world.config.api_key_auth = env::var("DD_TEST_CLIENT_API_KEY").ok();
+fn valid_apikey(world: &mut DatadogWorld) {
+    world.config.set_auth_key(
+        "apiKeyAuth",
+        APIKey {
+            key: env::var("DD_TEST_CLIENT_API_KEY").unwrap_or_default(),
+            prefix: "".to_owned(),
+        },
+    );
+    if let Some(api) = world.api_name.as_ref() {
+        initialize_api_instance(world, api.to_string());
+    }
 }
 
 #[given(expr = "a valid \"appKeyAuth\" key in the system")]
-fn valid_appkey_auth(world: &mut DatadogWorld) {
-    world.config.app_key_auth = env::var("DD_TEST_CLIENT_APP_KEY").ok();
+fn valid_appkey(world: &mut DatadogWorld) {
+    world.config.set_auth_key(
+        "appKeyAuth",
+        APIKey {
+            key: env::var("DD_TEST_CLIENT_APP_KEY").unwrap_or_default(),
+            prefix: "".to_owned(),
+        },
+    );
+    if let Some(api) = world.api_name.as_ref() {
+        initialize_api_instance(world, api.to_string());
+    }
 }
 
 #[given(expr = "an instance of {string} API")]

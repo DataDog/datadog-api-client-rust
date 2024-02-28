@@ -113,10 +113,11 @@ impl {{ structName }} {
     {{ operation.description | block_comment }}
     {%- endif %}
     pub async fn {{operation.operationId | snake_case}}_with_http_info(&self{% for name, parameter in requiredParams %}, {{name|variable_name}}: {{ get_type_for_parameter(parameter, version) }}{% endfor %}{% if operation|has_optional_parameter %}, params: {{operation.operationId}}OptionalParams{% endif %}) -> Result<ResponseContent<{% if returnType %}{{returnType}}{% else %}(){% endif %}>, Error<{{operation.operationId}}Error>> {
+        let local_configuration = &self.config;
+        let operation_id = "{{ version }}.{{ operation.operationId | snake_case }}";
         {%- if "x-unstable" in operation %}
-        let operation_id = "{{ version }}.{{ operation.operationId | snake_case }}".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation '{{ version }}.{{ operation.operationId | snake_case }}' is not enabled".to_string(),
@@ -124,8 +125,6 @@ impl {{ structName }} {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
         {%- endif %}
-
-        let local_configuration = &self.config;
 
         {% for name, parameter in operation|parameters if parameter.required != true %}
         {%- if loop.first %}
@@ -137,8 +136,8 @@ impl {{ structName }} {
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
-            "{}{{path}}", 
-            local_configuration.base_path
+            "{}{{path}}",
+            local_configuration.get_operation_host(operation_id)
             {%- for name, parameter in operation|parameters if parameter.in == "path" %}, {{ name|variable_name }}=
             {%- if parameter.schema.type == "string" %}
             urlencode({{ name|variable_name }}{% if not parameter.required %}.unwrap(){% elif parameter.schema.nullable %}.unwrap(){% endif %}{% if parameter.schema.type == "array" %}.join(",").as_ref(){% endif %})
@@ -176,9 +175,7 @@ impl {{ structName }} {
         {%- endfor %}
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_configuration.user_agent.clone());
         
         // build auth
         {%- set authMethods = operation.security if "security" in operation else openapi.security %}
@@ -187,8 +184,8 @@ impl {{ structName }} {
         {%- for name in authMethod %}
         {%- set schema = openapi.components.securitySchemes[name] %}
         {%- if schema.type == "apiKey" and schema.in != "cookie" %}
-        if let Some(ref local_apikey) = local_configuration.{{name|variable_name}} {
-            local_req_builder = local_req_builder.header("{{schema.name}}", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("{{ name }}") {
+            local_req_builder = local_req_builder.header("{{schema.name}}", &local_key.key);
         };
         {%- endif %}
         {%- endfor %}

@@ -163,25 +163,29 @@ impl ServiceAccountsAPI {
         Error<CreateServiceAccountError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.create_service_account";
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/service_accounts", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v2/service_accounts",
+            local_configuration.get_operation_host(operation_id)
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         // build body parameters
@@ -248,29 +252,30 @@ impl ServiceAccountsAPI {
         Error<CreateServiceAccountApplicationKeyError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.create_service_account_application_key";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             service_account_id = urlencode(service_account_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         // build body parameters
@@ -333,12 +338,13 @@ impl ServiceAccountsAPI {
         app_key_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteServiceAccountApplicationKeyError>> {
         let local_configuration = &self.config;
+        let operation_id = "v2.delete_service_account_application_key";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys/{app_key_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             service_account_id = urlencode(service_account_id),
             app_key_id = urlencode(app_key_id)
         );
@@ -346,17 +352,17 @@ impl ServiceAccountsAPI {
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -411,12 +417,13 @@ impl ServiceAccountsAPI {
         Error<GetServiceAccountApplicationKeyError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.get_service_account_application_key";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys/{app_key_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             service_account_id = urlencode(service_account_id),
             app_key_id = urlencode(app_key_id)
         );
@@ -424,17 +431,17 @@ impl ServiceAccountsAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -496,6 +503,7 @@ impl ServiceAccountsAPI {
         Error<ListServiceAccountApplicationKeysError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.list_service_account_application_keys";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -509,7 +517,7 @@ impl ServiceAccountsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             service_account_id = urlencode(service_account_id)
         );
         let mut local_req_builder =
@@ -541,17 +549,17 @@ impl ServiceAccountsAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -619,12 +627,13 @@ impl ServiceAccountsAPI {
         Error<UpdateServiceAccountApplicationKeyError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.update_service_account_application_key";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys/{app_key_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             service_account_id = urlencode(service_account_id),
             app_key_id = urlencode(app_key_id)
         );
@@ -632,17 +641,17 @@ impl ServiceAccountsAPI {
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         // build body parameters
