@@ -597,12 +597,23 @@ fn req_eq(lhs: &vcr_cassette::Request, rhs: &vcr_cassette::Request) -> bool {
     let lhs_queries: HashSet<_> = lhs_query.split("&").into_iter().collect();
     let rhs_queries: HashSet<_> = rhs_query.split("&").into_iter().collect();
 
+    let lhs_body = lhs
+        .body
+        .string
+        .parse::<serde_json::Value>()
+        .unwrap_or_default();
+    let rhs_body = rhs
+        .body
+        .string
+        .parse::<serde_json::Value>()
+        .unwrap_or_default();
+
     lhs.uri.scheme() == rhs.uri.scheme()
         && lhs.uri.host() == rhs.uri.host()
         && lhs.uri.port() == rhs.uri.port()
         && lhs.uri.path() == rhs.uri.path()
         && lhs_queries == rhs_queries
-        && lhs.body.string == rhs.body.string
+        && lhs_body == rhs_body
         && lhs.method == rhs.method
 }
 
