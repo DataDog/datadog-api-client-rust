@@ -95,7 +95,7 @@ fn test_{{version}}_{{ operation['operationId'] | snake_case }}(world: &mut Data
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }                    
                 },
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };

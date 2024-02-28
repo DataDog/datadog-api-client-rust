@@ -2543,7 +2543,7 @@ fn test_v1_get_ip_ranges(world: &mut DatadogWorld, _parameters: &HashMap<String,
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -2567,7 +2567,7 @@ fn test_v1_list_api_keys(world: &mut DatadogWorld, _parameters: &HashMap<String,
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -2592,7 +2592,7 @@ fn test_v1_create_api_key(world: &mut DatadogWorld, _parameters: &HashMap<String
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -2617,7 +2617,7 @@ fn test_v1_delete_api_key(world: &mut DatadogWorld, _parameters: &HashMap<String
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -2642,7 +2642,7 @@ fn test_v1_get_api_key(world: &mut DatadogWorld, _parameters: &HashMap<String, V
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -2668,7 +2668,7 @@ fn test_v1_update_api_key(world: &mut DatadogWorld, _parameters: &HashMap<String
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -2692,7 +2692,7 @@ fn test_v1_list_application_keys(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -2717,7 +2717,7 @@ fn test_v1_create_application_key(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -2742,7 +2742,7 @@ fn test_v1_delete_application_key(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -2767,7 +2767,7 @@ fn test_v1_get_application_key(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -2793,7 +2793,7 @@ fn test_v1_update_application_key(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -2818,7 +2818,7 @@ fn test_v1_submit_service_check(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -2863,7 +2863,7 @@ fn test_v1_get_daily_custom_reports(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -2892,7 +2892,7 @@ fn test_v1_get_specified_daily_custom_reports(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -2937,7 +2937,7 @@ fn test_v1_get_monthly_custom_reports(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -2966,7 +2966,7 @@ fn test_v1_get_specified_monthly_custom_reports(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -2997,7 +2997,7 @@ fn test_v1_get_usage_analyzed_logs(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -3051,7 +3051,7 @@ fn test_v1_get_usage_attribution(world: &mut DatadogWorld, _parameters: &HashMap
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -3081,7 +3081,7 @@ fn test_v1_get_usage_audit_logs(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -3111,7 +3111,7 @@ fn test_v1_get_usage_lambda(world: &mut DatadogWorld, _parameters: &HashMap<Stri
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -3144,7 +3144,7 @@ fn test_v1_get_usage_billable_summary(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -3174,7 +3174,7 @@ fn test_v1_get_usage_ci_app(world: &mut DatadogWorld, _parameters: &HashMap<Stri
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -3209,7 +3209,7 @@ fn test_v1_get_usage_cloud_security_posture_management(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -3239,7 +3239,7 @@ fn test_v1_get_usage_cws(world: &mut DatadogWorld, _parameters: &HashMap<String,
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -3269,7 +3269,7 @@ fn test_v1_get_usage_dbm(world: &mut DatadogWorld, _parameters: &HashMap<String,
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -3299,7 +3299,7 @@ fn test_v1_get_usage_fargate(world: &mut DatadogWorld, _parameters: &HashMap<Str
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -3329,7 +3329,7 @@ fn test_v1_get_usage_hosts(world: &mut DatadogWorld, _parameters: &HashMap<Strin
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -3379,7 +3379,7 @@ fn test_v1_get_hourly_usage_attribution(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -3410,7 +3410,7 @@ fn test_v1_get_incident_management(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -3441,7 +3441,7 @@ fn test_v1_get_usage_indexed_spans(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -3471,7 +3471,7 @@ fn test_v1_get_ingested_spans(world: &mut DatadogWorld, _parameters: &HashMap<St
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -3506,7 +3506,7 @@ fn test_v1_get_usage_internet_of_things(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -3536,7 +3536,7 @@ fn test_v1_get_usage_logs(world: &mut DatadogWorld, _parameters: &HashMap<String
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -3571,7 +3571,7 @@ fn test_v1_get_usage_logs_by_retention(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -3606,7 +3606,7 @@ fn test_v1_get_usage_logs_by_index(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -3666,7 +3666,7 @@ fn test_v1_get_monthly_usage_attribution(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -3697,7 +3697,7 @@ fn test_v1_get_usage_network_flows(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -3728,7 +3728,7 @@ fn test_v1_get_usage_network_hosts(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -3762,7 +3762,7 @@ fn test_v1_get_usage_online_archive(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -3792,7 +3792,7 @@ fn test_v1_get_usage_profiling(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -3822,7 +3822,7 @@ fn test_v1_get_usage_rum_units(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -3857,7 +3857,7 @@ fn test_v1_get_usage_rum_sessions(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -3887,7 +3887,7 @@ fn test_v1_get_usage_sds(world: &mut DatadogWorld, _parameters: &HashMap<String,
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -3917,7 +3917,7 @@ fn test_v1_get_usage_snmp(world: &mut DatadogWorld, _parameters: &HashMap<String
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -3952,7 +3952,7 @@ fn test_v1_get_usage_summary(world: &mut DatadogWorld, _parameters: &HashMap<Str
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -3983,7 +3983,7 @@ fn test_v1_get_usage_synthetics(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4017,7 +4017,7 @@ fn test_v1_get_usage_synthetics_api(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4052,7 +4052,7 @@ fn test_v1_get_usage_synthetics_browser(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4083,7 +4083,7 @@ fn test_v1_get_usage_timeseries(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4132,7 +4132,7 @@ fn test_v1_get_usage_top_avg_metrics(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4157,7 +4157,7 @@ fn test_v1_delete_dashboards(world: &mut DatadogWorld, _parameters: &HashMap<Str
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4198,7 +4198,7 @@ fn test_v1_list_dashboards(world: &mut DatadogWorld, _parameters: &HashMap<Strin
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4276,7 +4276,7 @@ fn test_v1_restore_dashboards(world: &mut DatadogWorld, _parameters: &HashMap<St
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4301,7 +4301,7 @@ fn test_v1_create_dashboard(world: &mut DatadogWorld, _parameters: &HashMap<Stri
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4326,7 +4326,7 @@ fn test_v1_create_public_dashboard(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4351,7 +4351,7 @@ fn test_v1_delete_public_dashboard(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4376,7 +4376,7 @@ fn test_v1_get_public_dashboard(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4402,7 +4402,7 @@ fn test_v1_update_public_dashboard(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4432,7 +4432,7 @@ fn test_v1_delete_public_dashboard_invitation(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -4471,7 +4471,7 @@ fn test_v1_get_public_dashboard_invitations(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -4501,7 +4501,7 @@ fn test_v1_send_public_dashboard_invitation(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4527,7 +4527,7 @@ fn test_v1_delete_dashboard(world: &mut DatadogWorld, _parameters: &HashMap<Stri
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4553,7 +4553,7 @@ fn test_v1_get_dashboard(world: &mut DatadogWorld, _parameters: &HashMap<String,
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4580,7 +4580,7 @@ fn test_v1_update_dashboard(world: &mut DatadogWorld, _parameters: &HashMap<Stri
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4604,7 +4604,7 @@ fn test_v1_list_dashboard_lists(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4629,7 +4629,7 @@ fn test_v1_create_dashboard_list(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4654,7 +4654,7 @@ fn test_v1_delete_dashboard_list(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4679,7 +4679,7 @@ fn test_v1_get_dashboard_list(world: &mut DatadogWorld, _parameters: &HashMap<St
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4705,7 +4705,7 @@ fn test_v1_update_dashboard_list(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4738,7 +4738,7 @@ fn test_v1_submit_distribution_points(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4772,7 +4772,7 @@ fn test_v1_list_active_metrics(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4798,7 +4798,7 @@ fn test_v1_get_metric_metadata(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4825,7 +4825,7 @@ fn test_v1_update_metric_metadata(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4852,7 +4852,7 @@ fn test_v1_query_metrics(world: &mut DatadogWorld, _parameters: &HashMap<String,
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4877,7 +4877,7 @@ fn test_v1_list_metrics(world: &mut DatadogWorld, _parameters: &HashMap<String, 
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4907,7 +4907,7 @@ fn test_v1_submit_metrics(world: &mut DatadogWorld, _parameters: &HashMap<String
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4940,7 +4940,7 @@ fn test_v1_list_downtimes(world: &mut DatadogWorld, _parameters: &HashMap<String
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4965,7 +4965,7 @@ fn test_v1_create_downtime(world: &mut DatadogWorld, _parameters: &HashMap<Strin
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -4993,7 +4993,7 @@ fn test_v1_cancel_downtimes_by_scope(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5019,7 +5019,7 @@ fn test_v1_cancel_downtime(world: &mut DatadogWorld, _parameters: &HashMap<Strin
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5045,7 +5045,7 @@ fn test_v1_get_downtime(world: &mut DatadogWorld, _parameters: &HashMap<String, 
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5072,7 +5072,7 @@ fn test_v1_update_downtime(world: &mut DatadogWorld, _parameters: &HashMap<Strin
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5098,7 +5098,7 @@ fn test_v1_list_monitor_downtimes(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5149,7 +5149,7 @@ fn test_v1_list_events(world: &mut DatadogWorld, _parameters: &HashMap<String, V
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5174,7 +5174,7 @@ fn test_v1_create_event(world: &mut DatadogWorld, _parameters: &HashMap<String, 
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5199,7 +5199,7 @@ fn test_v1_get_event(world: &mut DatadogWorld, _parameters: &HashMap<String, Val
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5250,7 +5250,7 @@ fn test_v1_get_graph_snapshot(world: &mut DatadogWorld, _parameters: &HashMap<St
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5276,7 +5276,7 @@ fn test_v1_mute_host(world: &mut DatadogWorld, _parameters: &HashMap<String, Val
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5301,7 +5301,7 @@ fn test_v1_unmute_host(world: &mut DatadogWorld, _parameters: &HashMap<String, V
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5358,7 +5358,7 @@ fn test_v1_list_hosts(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5387,7 +5387,7 @@ fn test_v1_get_host_totals(world: &mut DatadogWorld, _parameters: &HashMap<Strin
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5412,7 +5412,7 @@ fn test_v1_delete_aws_account(world: &mut DatadogWorld, _parameters: &HashMap<St
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5449,7 +5449,7 @@ fn test_v1_list_aws_accounts(world: &mut DatadogWorld, _parameters: &HashMap<Str
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5474,7 +5474,7 @@ fn test_v1_create_aws_account(world: &mut DatadogWorld, _parameters: &HashMap<St
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5512,7 +5512,7 @@ fn test_v1_update_aws_account(world: &mut DatadogWorld, _parameters: &HashMap<St
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5539,7 +5539,7 @@ fn test_v1_list_available_aws_namespaces(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5567,7 +5567,7 @@ fn test_v1_delete_aws_event_bridge_source(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5594,7 +5594,7 @@ fn test_v1_list_aws_event_bridge_sources(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5622,7 +5622,7 @@ fn test_v1_create_aws_event_bridge_source(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5647,7 +5647,7 @@ fn test_v1_delete_aws_tag_filter(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5673,7 +5673,7 @@ fn test_v1_list_aws_tag_filters(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5698,7 +5698,7 @@ fn test_v1_create_aws_tag_filter(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5726,7 +5726,7 @@ fn test_v1_create_new_aws_external_id(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5751,7 +5751,7 @@ fn test_v1_delete_aws_lambda_arn(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5778,7 +5778,7 @@ fn test_v1_list_aws_logs_integrations(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5803,7 +5803,7 @@ fn test_v1_create_aws_lambda_arn(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5831,7 +5831,7 @@ fn test_v1_check_aws_logs_lambda_async(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5855,7 +5855,7 @@ fn test_v1_list_aws_logs_services(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5880,7 +5880,7 @@ fn test_v1_enable_aws_log_services(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5908,7 +5908,7 @@ fn test_v1_check_aws_logs_services_async(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5936,7 +5936,7 @@ fn test_v1_delete_azure_integration(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5960,7 +5960,7 @@ fn test_v1_list_azure_integration(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -5988,7 +5988,7 @@ fn test_v1_create_azure_integration(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6016,7 +6016,7 @@ fn test_v1_update_azure_integration(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6044,7 +6044,7 @@ fn test_v1_update_azure_host_filters(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6069,7 +6069,7 @@ fn test_v1_delete_gcp_integration(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6093,7 +6093,7 @@ fn test_v1_list_gcp_integration(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6118,7 +6118,7 @@ fn test_v1_create_gcp_integration(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6143,7 +6143,7 @@ fn test_v1_update_gcp_integration(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6171,7 +6171,7 @@ fn test_v1_create_pager_duty_integration_service(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6201,7 +6201,7 @@ fn test_v1_delete_pager_duty_integration_service(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -6231,7 +6231,7 @@ fn test_v1_get_pager_duty_integration_service(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -6263,7 +6263,7 @@ fn test_v1_update_pager_duty_integration_service(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6292,7 +6292,7 @@ fn test_v1_get_slack_integration_channels(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6323,7 +6323,7 @@ fn test_v1_create_slack_integration_channel(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -6356,7 +6356,7 @@ fn test_v1_remove_slack_integration_channel(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6389,7 +6389,7 @@ fn test_v1_get_slack_integration_channel(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6425,7 +6425,7 @@ fn test_v1_update_slack_integration_channel(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6454,7 +6454,7 @@ fn test_v1_create_webhooks_integration_custom_variable(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -6485,7 +6485,7 @@ fn test_v1_delete_webhooks_integration_custom_variable(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6516,7 +6516,7 @@ fn test_v1_get_webhooks_integration_custom_variable(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6548,7 +6548,7 @@ fn test_v1_update_webhooks_integration_custom_variable(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6576,7 +6576,7 @@ fn test_v1_create_webhooks_integration(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6605,7 +6605,7 @@ fn test_v1_delete_webhooks_integration(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6634,7 +6634,7 @@ fn test_v1_get_webhooks_integration(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6665,7 +6665,7 @@ fn test_v1_update_webhooks_integration(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -6690,7 +6690,7 @@ fn test_v1_list_logs(world: &mut DatadogWorld, _parameters: &HashMap<String, Val
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6724,7 +6724,7 @@ fn test_v1_submit_log(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6748,7 +6748,7 @@ fn test_v1_get_logs_index_order(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6773,7 +6773,7 @@ fn test_v1_update_logs_index_order(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6797,7 +6797,7 @@ fn test_v1_list_log_indexes(world: &mut DatadogWorld, _parameters: &HashMap<Stri
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6822,7 +6822,7 @@ fn test_v1_create_logs_index(world: &mut DatadogWorld, _parameters: &HashMap<Str
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6847,7 +6847,7 @@ fn test_v1_get_logs_index(world: &mut DatadogWorld, _parameters: &HashMap<String
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6873,7 +6873,7 @@ fn test_v1_update_logs_index(world: &mut DatadogWorld, _parameters: &HashMap<Str
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6897,7 +6897,7 @@ fn test_v1_get_logs_pipeline_order(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6925,7 +6925,7 @@ fn test_v1_update_logs_pipeline_order(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6949,7 +6949,7 @@ fn test_v1_list_logs_pipelines(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -6974,7 +6974,7 @@ fn test_v1_create_logs_pipeline(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -7000,7 +7000,7 @@ fn test_v1_delete_logs_pipeline(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -7026,7 +7026,7 @@ fn test_v1_get_logs_pipeline(world: &mut DatadogWorld, _parameters: &HashMap<Str
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -7053,7 +7053,7 @@ fn test_v1_update_logs_pipeline(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -7110,7 +7110,7 @@ fn test_v1_list_monitors(world: &mut DatadogWorld, _parameters: &HashMap<String,
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -7204,7 +7204,7 @@ fn test_v1_create_monitor(world: &mut DatadogWorld, _parameters: &HashMap<String
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -7233,7 +7233,7 @@ fn test_v1_check_can_delete_monitor(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -7274,7 +7274,7 @@ fn test_v1_search_monitor_groups(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -7315,7 +7315,7 @@ fn test_v1_search_monitors(world: &mut DatadogWorld, _parameters: &HashMap<Strin
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -7340,7 +7340,7 @@ fn test_v1_validate_monitor(world: &mut DatadogWorld, _parameters: &HashMap<Stri
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -7371,7 +7371,7 @@ fn test_v1_delete_monitor(world: &mut DatadogWorld, _parameters: &HashMap<String
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -7406,7 +7406,7 @@ fn test_v1_get_monitor(world: &mut DatadogWorld, _parameters: &HashMap<String, V
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -7433,7 +7433,7 @@ fn test_v1_update_monitor(world: &mut DatadogWorld, _parameters: &HashMap<String
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -7463,7 +7463,7 @@ fn test_v1_validate_existing_monitor(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -7528,7 +7528,7 @@ fn test_v1_list_notebooks(world: &mut DatadogWorld, _parameters: &HashMap<String
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -7630,7 +7630,7 @@ fn test_v1_create_notebook(world: &mut DatadogWorld, _parameters: &HashMap<Strin
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -7656,7 +7656,7 @@ fn test_v1_delete_notebook(world: &mut DatadogWorld, _parameters: &HashMap<Strin
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -7682,7 +7682,7 @@ fn test_v1_get_notebook(world: &mut DatadogWorld, _parameters: &HashMap<String, 
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -7709,7 +7709,7 @@ fn test_v1_update_notebook(world: &mut DatadogWorld, _parameters: &HashMap<Strin
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -7733,7 +7733,7 @@ fn test_v1_list_orgs(world: &mut DatadogWorld, _parameters: &HashMap<String, Val
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -7758,7 +7758,7 @@ fn test_v1_create_child_org(world: &mut DatadogWorld, _parameters: &HashMap<Stri
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -7783,7 +7783,7 @@ fn test_v1_get_org(world: &mut DatadogWorld, _parameters: &HashMap<String, Value
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -7809,7 +7809,7 @@ fn test_v1_update_org(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -7834,7 +7834,7 @@ fn test_v1_downgrade_org(world: &mut DatadogWorld, _parameters: &HashMap<String,
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -7866,7 +7866,7 @@ fn test_v1_upload_idp_for_org(world: &mut DatadogWorld, _parameters: &HashMap<St
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -7897,7 +7897,7 @@ fn test_v1_add_security_monitoring_signal_to_incident(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -7928,7 +7928,7 @@ fn test_v1_edit_security_monitoring_signal_assignee(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -7958,7 +7958,7 @@ fn test_v1_edit_security_monitoring_signal_state(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -8008,7 +8008,7 @@ fn test_v1_list_slos(world: &mut DatadogWorld, _parameters: &HashMap<String, Val
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -8095,7 +8095,7 @@ fn test_v1_create_slo(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -8123,7 +8123,7 @@ fn test_v1_delete_slo_timeframe_in_bulk(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -8148,7 +8148,7 @@ fn test_v1_check_can_delete_slo(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -8190,7 +8190,7 @@ fn test_v1_search_slo(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -8221,7 +8221,7 @@ fn test_v1_delete_slo(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -8251,7 +8251,7 @@ fn test_v1_get_slo(world: &mut DatadogWorld, _parameters: &HashMap<String, Value
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -8277,7 +8277,7 @@ fn test_v1_update_slo(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -8302,7 +8302,7 @@ fn test_v1_get_slo_corrections(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -8340,7 +8340,7 @@ fn test_v1_get_slo_history(world: &mut DatadogWorld, _parameters: &HashMap<Strin
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -8373,7 +8373,7 @@ fn test_v1_list_slo_correction(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -8443,7 +8443,7 @@ fn test_v1_create_slo_correction(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -8469,7 +8469,7 @@ fn test_v1_delete_slo_correction(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -8495,7 +8495,7 @@ fn test_v1_get_slo_correction(world: &mut DatadogWorld, _parameters: &HashMap<St
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -8523,7 +8523,7 @@ fn test_v1_update_slo_correction(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -8548,7 +8548,7 @@ fn test_v1_get_synthetics_ci_batch(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -8572,7 +8572,7 @@ fn test_v1_list_locations(world: &mut DatadogWorld, _parameters: &HashMap<String
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -8597,7 +8597,7 @@ fn test_v1_create_private_location(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -8623,7 +8623,7 @@ fn test_v1_delete_private_location(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -8649,7 +8649,7 @@ fn test_v1_get_private_location(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -8676,7 +8676,7 @@ fn test_v1_update_private_location(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -8703,7 +8703,7 @@ fn test_v1_get_synthetics_default_locations(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -8736,7 +8736,7 @@ fn test_v1_list_tests(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -8809,7 +8809,7 @@ fn test_v1_create_synthetics_api_test(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -8834,7 +8834,7 @@ fn test_v1_get_api_test(world: &mut DatadogWorld, _parameters: &HashMap<String, 
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -8860,7 +8860,7 @@ fn test_v1_update_api_test(world: &mut DatadogWorld, _parameters: &HashMap<Strin
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -8888,7 +8888,7 @@ fn test_v1_create_synthetics_browser_test(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -8913,7 +8913,7 @@ fn test_v1_get_browser_test(world: &mut DatadogWorld, _parameters: &HashMap<Stri
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -8939,7 +8939,7 @@ fn test_v1_update_browser_test(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -8982,7 +8982,7 @@ fn test_v1_get_browser_test_latest_results(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -9009,7 +9009,7 @@ fn test_v1_get_browser_test_result(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9034,7 +9034,7 @@ fn test_v1_delete_tests(world: &mut DatadogWorld, _parameters: &HashMap<String, 
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9059,7 +9059,7 @@ fn test_v1_trigger_tests(world: &mut DatadogWorld, _parameters: &HashMap<String,
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9084,7 +9084,7 @@ fn test_v1_trigger_ci_tests(world: &mut DatadogWorld, _parameters: &HashMap<Stri
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9109,7 +9109,7 @@ fn test_v1_get_test(world: &mut DatadogWorld, _parameters: &HashMap<String, Valu
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9135,7 +9135,7 @@ fn test_v1_patch_test(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9178,7 +9178,7 @@ fn test_v1_get_api_test_latest_results(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9204,7 +9204,7 @@ fn test_v1_get_api_test_result(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9233,7 +9233,7 @@ fn test_v1_update_test_pause_status(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9257,7 +9257,7 @@ fn test_v1_list_global_variables(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9282,7 +9282,7 @@ fn test_v1_create_global_variable(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9308,7 +9308,7 @@ fn test_v1_delete_global_variable(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9334,7 +9334,7 @@ fn test_v1_get_global_variable(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9361,7 +9361,7 @@ fn test_v1_edit_global_variable(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9390,7 +9390,7 @@ fn test_v1_list_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<String
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9420,7 +9420,7 @@ fn test_v1_delete_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<Stri
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9450,7 +9450,7 @@ fn test_v1_get_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<String,
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9481,7 +9481,7 @@ fn test_v1_create_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<Stri
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9512,7 +9512,7 @@ fn test_v1_update_host_tags(world: &mut DatadogWorld, _parameters: &HashMap<Stri
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9536,7 +9536,7 @@ fn test_v1_list_users(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9561,7 +9561,7 @@ fn test_v1_create_user(world: &mut DatadogWorld, _parameters: &HashMap<String, V
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9587,7 +9587,7 @@ fn test_v1_disable_user(world: &mut DatadogWorld, _parameters: &HashMap<String, 
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9613,7 +9613,7 @@ fn test_v1_get_user(world: &mut DatadogWorld, _parameters: &HashMap<String, Valu
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9640,7 +9640,7 @@ fn test_v1_update_user(world: &mut DatadogWorld, _parameters: &HashMap<String, V
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9664,7 +9664,7 @@ fn test_v1_validate(world: &mut DatadogWorld, _parameters: &HashMap<String, Valu
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9733,7 +9733,7 @@ fn test_v2_list_api_keys(world: &mut DatadogWorld, _parameters: &HashMap<String,
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9758,7 +9758,7 @@ fn test_v2_create_api_key(world: &mut DatadogWorld, _parameters: &HashMap<String
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9784,7 +9784,7 @@ fn test_v2_delete_api_key(world: &mut DatadogWorld, _parameters: &HashMap<String
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9815,7 +9815,7 @@ fn test_v2_get_api_key(world: &mut DatadogWorld, _parameters: &HashMap<String, V
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9842,7 +9842,7 @@ fn test_v2_update_api_key(world: &mut DatadogWorld, _parameters: &HashMap<String
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9896,7 +9896,7 @@ fn test_v2_list_application_keys(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9922,7 +9922,7 @@ fn test_v2_delete_application_key(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9953,7 +9953,7 @@ fn test_v2_get_application_key(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -9980,7 +9980,7 @@ fn test_v2_update_application_key(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -10037,7 +10037,7 @@ fn test_v2_list_current_user_application_keys(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -10065,7 +10065,7 @@ fn test_v2_create_current_user_application_key(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -10095,7 +10095,7 @@ fn test_v2_delete_current_user_application_key(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -10124,7 +10124,7 @@ fn test_v2_get_current_user_application_key(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -10155,7 +10155,7 @@ fn test_v2_update_current_user_application_key(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -10179,7 +10179,7 @@ fn test_v2_list_spans_metrics(world: &mut DatadogWorld, _parameters: &HashMap<St
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -10204,7 +10204,7 @@ fn test_v2_create_spans_metric(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -10229,7 +10229,7 @@ fn test_v2_delete_spans_metric(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -10254,7 +10254,7 @@ fn test_v2_get_spans_metric(world: &mut DatadogWorld, _parameters: &HashMap<Stri
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -10280,7 +10280,7 @@ fn test_v2_update_spans_metric(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -10307,7 +10307,7 @@ fn test_v2_list_apm_retention_filters(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -10335,7 +10335,7 @@ fn test_v2_create_apm_retention_filter(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -10363,7 +10363,7 @@ fn test_v2_reorder_apm_retention_filters(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -10391,7 +10391,7 @@ fn test_v2_delete_apm_retention_filter(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -10419,7 +10419,7 @@ fn test_v2_get_apm_retention_filter(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -10448,7 +10448,7 @@ fn test_v2_update_apm_retention_filter(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -10497,7 +10497,7 @@ fn test_v2_list_audit_logs(world: &mut DatadogWorld, _parameters: &HashMap<Strin
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -10587,7 +10587,7 @@ fn test_v2_search_audit_logs(world: &mut DatadogWorld, _parameters: &HashMap<Str
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -10669,7 +10669,7 @@ fn test_v2_list_authn_mappings(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -10694,7 +10694,7 @@ fn test_v2_create_authn_mapping(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -10720,7 +10720,7 @@ fn test_v2_delete_authn_mapping(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -10746,7 +10746,7 @@ fn test_v2_get_authn_mapping(world: &mut DatadogWorld, _parameters: &HashMap<Str
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -10773,7 +10773,7 @@ fn test_v2_update_authn_mapping(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -10801,7 +10801,7 @@ fn test_v2_create_ci_app_pipeline_event(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -10829,7 +10829,7 @@ fn test_v2_aggregate_ci_app_pipeline_events(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -10883,7 +10883,7 @@ fn test_v2_list_ci_app_pipeline_events(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -10978,7 +10978,7 @@ fn test_v2_search_ci_app_pipeline_events(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -11047,7 +11047,7 @@ fn test_v2_aggregate_ci_app_test_events(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -11097,7 +11097,7 @@ fn test_v2_list_ci_app_test_events(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -11192,7 +11192,7 @@ fn test_v2_search_ci_app_test_events(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -11280,7 +11280,7 @@ fn test_v2_list_container_images(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -11383,7 +11383,7 @@ fn test_v2_list_containers(world: &mut DatadogWorld, _parameters: &HashMap<Strin
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -11467,7 +11467,7 @@ fn test_v2_list_cost_awscur_configs(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -11495,7 +11495,7 @@ fn test_v2_create_cost_awscur_config(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -11524,7 +11524,7 @@ fn test_v2_delete_cost_awscur_config(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -11555,7 +11555,7 @@ fn test_v2_update_cost_awscur_config(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -11591,7 +11591,7 @@ fn test_v2_list_aws_related_accounts(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -11618,7 +11618,7 @@ fn test_v2_list_cost_azure_uc_configs(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -11646,7 +11646,7 @@ fn test_v2_create_cost_azure_uc_configs(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -11676,7 +11676,7 @@ fn test_v2_delete_cost_azure_uc_config(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -11707,7 +11707,7 @@ fn test_v2_update_cost_azure_uc_configs(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -11731,7 +11731,7 @@ fn test_v2_get_cloud_cost_activity(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -11758,7 +11758,7 @@ fn test_v2_get_active_billing_dimensions(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -11816,7 +11816,7 @@ fn test_v2_get_monthly_cost_attribution(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -11851,7 +11851,7 @@ fn test_v2_get_usage_application_security_monitoring(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -11882,7 +11882,7 @@ fn test_v2_get_cost_by_org(world: &mut DatadogWorld, _parameters: &HashMap<Strin
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -11931,7 +11931,7 @@ fn test_v2_get_estimated_cost_by_org(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -11971,7 +11971,7 @@ fn test_v2_get_historical_cost_by_org(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -12030,7 +12030,7 @@ fn test_v2_get_hourly_usage(world: &mut DatadogWorld, _parameters: &HashMap<Stri
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -12066,7 +12066,7 @@ fn test_v2_get_usage_lambda_traced_invocations(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -12101,7 +12101,7 @@ fn test_v2_get_usage_observability_pipelines(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -12130,7 +12130,7 @@ fn test_v2_get_projected_cost(world: &mut DatadogWorld, _parameters: &HashMap<St
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -12161,7 +12161,7 @@ fn test_v2_delete_dashboard_list_items(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -12190,7 +12190,7 @@ fn test_v2_get_dashboard_list_items(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -12221,7 +12221,7 @@ fn test_v2_create_dashboard_list_items(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -12252,7 +12252,7 @@ fn test_v2_update_dashboard_list_items(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -12277,7 +12277,7 @@ fn test_v2_create_dora_deployment(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -12302,7 +12302,7 @@ fn test_v2_create_dora_incident(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -12343,7 +12343,7 @@ fn test_v2_list_downtimes(world: &mut DatadogWorld, _parameters: &HashMap<String
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -12421,7 +12421,7 @@ fn test_v2_create_downtime(world: &mut DatadogWorld, _parameters: &HashMap<Strin
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -12447,7 +12447,7 @@ fn test_v2_cancel_downtime(world: &mut DatadogWorld, _parameters: &HashMap<Strin
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -12478,7 +12478,7 @@ fn test_v2_get_downtime(world: &mut DatadogWorld, _parameters: &HashMap<String, 
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -12505,7 +12505,7 @@ fn test_v2_update_downtime(world: &mut DatadogWorld, _parameters: &HashMap<Strin
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -12540,7 +12540,7 @@ fn test_v2_list_monitor_downtimes(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -12636,7 +12636,7 @@ fn test_v2_list_events(world: &mut DatadogWorld, _parameters: &HashMap<String, V
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -12726,7 +12726,7 @@ fn test_v2_search_events(world: &mut DatadogWorld, _parameters: &HashMap<String,
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -12804,7 +12804,7 @@ fn test_v2_list_incidents(world: &mut DatadogWorld, _parameters: &HashMap<String
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -12878,7 +12878,7 @@ fn test_v2_create_incident(world: &mut DatadogWorld, _parameters: &HashMap<Strin
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -12920,7 +12920,7 @@ fn test_v2_search_incidents(world: &mut DatadogWorld, _parameters: &HashMap<Stri
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13000,7 +13000,7 @@ fn test_v2_delete_incident(world: &mut DatadogWorld, _parameters: &HashMap<Strin
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13031,7 +13031,7 @@ fn test_v2_get_incident(world: &mut DatadogWorld, _parameters: &HashMap<String, 
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13063,7 +13063,7 @@ fn test_v2_update_incident(world: &mut DatadogWorld, _parameters: &HashMap<Strin
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13103,7 +13103,7 @@ fn test_v2_list_incident_attachments(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13140,7 +13140,7 @@ fn test_v2_update_incident_attachments(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -13169,7 +13169,7 @@ fn test_v2_list_incident_integrations(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13200,7 +13200,7 @@ fn test_v2_create_incident_integration(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13234,7 +13234,7 @@ fn test_v2_delete_incident_integration(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13268,7 +13268,7 @@ fn test_v2_get_incident_integration(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13305,7 +13305,7 @@ fn test_v2_update_incident_integration(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13331,7 +13331,7 @@ fn test_v2_list_incident_todos(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13358,7 +13358,7 @@ fn test_v2_create_incident_todo(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13385,7 +13385,7 @@ fn test_v2_delete_incident_todo(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13412,7 +13412,7 @@ fn test_v2_get_incident_todo(world: &mut DatadogWorld, _parameters: &HashMap<Str
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13441,7 +13441,7 @@ fn test_v2_update_incident_todo(world: &mut DatadogWorld, _parameters: &HashMap<
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -13465,7 +13465,7 @@ fn test_v2_list_gcpsts_accounts(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13490,7 +13490,7 @@ fn test_v2_create_gcpsts_account(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13516,7 +13516,7 @@ fn test_v2_delete_gcpsts_account(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13543,7 +13543,7 @@ fn test_v2_update_gcpsts_account(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13567,7 +13567,7 @@ fn test_v2_get_gcpsts_delegate(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13597,7 +13597,7 @@ fn test_v2_make_gcpsts_delegate(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13621,7 +13621,7 @@ fn test_v2_list_opsgenie_services(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13646,7 +13646,7 @@ fn test_v2_create_opsgenie_service(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13673,7 +13673,7 @@ fn test_v2_delete_opsgenie_service(world: &mut DatadogWorld, _parameters: &HashM
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -13699,7 +13699,7 @@ fn test_v2_get_opsgenie_service(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13727,7 +13727,7 @@ fn test_v2_update_opsgenie_service(world: &mut DatadogWorld, _parameters: &HashM
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -13754,7 +13754,7 @@ fn test_v2_list_cloudflare_accounts(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13782,7 +13782,7 @@ fn test_v2_create_cloudflare_account(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13811,7 +13811,7 @@ fn test_v2_delete_cloudflare_account(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13837,7 +13837,7 @@ fn test_v2_get_cloudflare_account(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13867,7 +13867,7 @@ fn test_v2_update_cloudflare_account(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13891,7 +13891,7 @@ fn test_v2_list_confluent_account(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13919,7 +13919,7 @@ fn test_v2_create_confluent_account(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13948,7 +13948,7 @@ fn test_v2_delete_confluent_account(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -13974,7 +13974,7 @@ fn test_v2_get_confluent_account(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -14004,7 +14004,7 @@ fn test_v2_update_confluent_account(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -14030,7 +14030,7 @@ fn test_v2_list_confluent_resource(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -14060,7 +14060,7 @@ fn test_v2_create_confluent_resource(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -14092,7 +14092,7 @@ fn test_v2_delete_confluent_resource(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -14121,7 +14121,7 @@ fn test_v2_get_confluent_resource(world: &mut DatadogWorld, _parameters: &HashMa
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -14155,7 +14155,7 @@ fn test_v2_update_confluent_resource(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -14179,7 +14179,7 @@ fn test_v2_list_fastly_accounts(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -14204,7 +14204,7 @@ fn test_v2_create_fastly_account(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -14230,7 +14230,7 @@ fn test_v2_delete_fastly_account(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -14256,7 +14256,7 @@ fn test_v2_get_fastly_account(world: &mut DatadogWorld, _parameters: &HashMap<St
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -14283,7 +14283,7 @@ fn test_v2_update_fastly_account(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -14309,7 +14309,7 @@ fn test_v2_list_fastly_services(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -14336,7 +14336,7 @@ fn test_v2_create_fastly_service(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -14365,7 +14365,7 @@ fn test_v2_delete_fastly_service(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -14393,7 +14393,7 @@ fn test_v2_get_fastly_service(world: &mut DatadogWorld, _parameters: &HashMap<St
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -14423,7 +14423,7 @@ fn test_v2_update_fastly_service(world: &mut DatadogWorld, _parameters: &HashMap
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -14447,7 +14447,7 @@ fn test_v2_list_okta_accounts(world: &mut DatadogWorld, _parameters: &HashMap<St
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -14472,7 +14472,7 @@ fn test_v2_create_okta_account(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -14498,7 +14498,7 @@ fn test_v2_delete_okta_account(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -14524,7 +14524,7 @@ fn test_v2_get_okta_account(world: &mut DatadogWorld, _parameters: &HashMap<Stri
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -14551,7 +14551,7 @@ fn test_v2_update_okta_account(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -14575,7 +14575,7 @@ fn test_v2_get_ip_allowlist(world: &mut DatadogWorld, _parameters: &HashMap<Stri
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -14600,7 +14600,7 @@ fn test_v2_update_ip_allowlist(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -14634,7 +14634,7 @@ fn test_v2_submit_log(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -14659,7 +14659,7 @@ fn test_v2_aggregate_logs(world: &mut DatadogWorld, _parameters: &HashMap<String
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -14716,7 +14716,7 @@ fn test_v2_list_logs_get(world: &mut DatadogWorld, _parameters: &HashMap<String,
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -14814,7 +14814,7 @@ fn test_v2_list_logs(world: &mut DatadogWorld, _parameters: &HashMap<String, Val
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -14879,7 +14879,7 @@ fn test_v2_get_logs_archive_order(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -14907,7 +14907,7 @@ fn test_v2_update_logs_archive_order(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -14931,7 +14931,7 @@ fn test_v2_list_logs_archives(world: &mut DatadogWorld, _parameters: &HashMap<St
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -14956,7 +14956,7 @@ fn test_v2_create_logs_archive(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -14982,7 +14982,7 @@ fn test_v2_delete_logs_archive(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15008,7 +15008,7 @@ fn test_v2_get_logs_archive(world: &mut DatadogWorld, _parameters: &HashMap<Stri
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15035,7 +15035,7 @@ fn test_v2_update_logs_archive(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15065,7 +15065,7 @@ fn test_v2_remove_role_from_archive(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15091,7 +15091,7 @@ fn test_v2_list_archive_read_roles(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15121,7 +15121,7 @@ fn test_v2_add_read_role_to_archive(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15145,7 +15145,7 @@ fn test_v2_list_logs_metrics(world: &mut DatadogWorld, _parameters: &HashMap<Str
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15170,7 +15170,7 @@ fn test_v2_create_logs_metric(world: &mut DatadogWorld, _parameters: &HashMap<St
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15195,7 +15195,7 @@ fn test_v2_delete_logs_metric(world: &mut DatadogWorld, _parameters: &HashMap<St
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15220,7 +15220,7 @@ fn test_v2_get_logs_metric(world: &mut DatadogWorld, _parameters: &HashMap<Strin
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15246,7 +15246,7 @@ fn test_v2_update_logs_metric(world: &mut DatadogWorld, _parameters: &HashMap<St
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15299,7 +15299,7 @@ fn test_v2_list_tag_configurations(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15327,7 +15327,7 @@ fn test_v2_delete_bulk_tags_metrics_configuration(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15355,7 +15355,7 @@ fn test_v2_create_bulk_tags_metrics_configuration(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15391,7 +15391,7 @@ fn test_v2_list_active_metric_configurations(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -15420,7 +15420,7 @@ fn test_v2_list_tags_by_metric_name(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15472,7 +15472,7 @@ fn test_v2_estimate_metrics_output_series(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -15501,7 +15501,7 @@ fn test_v2_delete_tag_configuration(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15530,7 +15530,7 @@ fn test_v2_list_tag_configuration_by_name(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15560,7 +15560,7 @@ fn test_v2_update_tag_configuration(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15590,7 +15590,7 @@ fn test_v2_create_tag_configuration(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15619,7 +15619,7 @@ fn test_v2_list_volumes_by_metric_name(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15644,7 +15644,7 @@ fn test_v2_query_scalar_data(world: &mut DatadogWorld, _parameters: &HashMap<Str
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15669,7 +15669,7 @@ fn test_v2_query_timeseries_data(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15699,7 +15699,7 @@ fn test_v2_submit_metrics(world: &mut DatadogWorld, _parameters: &HashMap<String
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15726,7 +15726,7 @@ fn test_v2_list_monitor_config_policies(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15754,7 +15754,7 @@ fn test_v2_create_monitor_config_policy(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15782,7 +15782,7 @@ fn test_v2_delete_monitor_config_policy(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15810,7 +15810,7 @@ fn test_v2_get_monitor_config_policy(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15840,7 +15840,7 @@ fn test_v2_update_monitor_config_policy(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15864,7 +15864,7 @@ fn test_v2_list_permissions(world: &mut DatadogWorld, _parameters: &HashMap<Stri
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15909,7 +15909,7 @@ fn test_v2_list_roles(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15934,7 +15934,7 @@ fn test_v2_create_role(world: &mut DatadogWorld, _parameters: &HashMap<String, V
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15959,7 +15959,7 @@ fn test_v2_delete_role(world: &mut DatadogWorld, _parameters: &HashMap<String, V
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -15984,7 +15984,7 @@ fn test_v2_get_role(world: &mut DatadogWorld, _parameters: &HashMap<String, Valu
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -16010,7 +16010,7 @@ fn test_v2_update_role(world: &mut DatadogWorld, _parameters: &HashMap<String, V
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -16036,7 +16036,7 @@ fn test_v2_clone_role(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -16065,7 +16065,7 @@ fn test_v2_remove_permission_from_role(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -16090,7 +16090,7 @@ fn test_v2_list_role_permissions(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -16116,7 +16116,7 @@ fn test_v2_add_permission_to_role(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -16142,7 +16142,7 @@ fn test_v2_remove_user_from_role(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -16184,7 +16184,7 @@ fn test_v2_list_role_users(world: &mut DatadogWorld, _parameters: &HashMap<Strin
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -16210,7 +16210,7 @@ fn test_v2_add_user_to_role(world: &mut DatadogWorld, _parameters: &HashMap<Stri
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -16283,7 +16283,7 @@ fn test_v2_list_findings(world: &mut DatadogWorld, _parameters: &HashMap<String,
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -16393,7 +16393,7 @@ fn test_v2_mute_findings(world: &mut DatadogWorld, _parameters: &HashMap<String,
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -16424,7 +16424,7 @@ fn test_v2_get_finding(world: &mut DatadogWorld, _parameters: &HashMap<String, V
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -16448,7 +16448,7 @@ fn test_v2_list_security_filters(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -16473,7 +16473,7 @@ fn test_v2_create_security_filter(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -16499,7 +16499,7 @@ fn test_v2_delete_security_filter(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -16525,7 +16525,7 @@ fn test_v2_get_security_filter(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -16553,7 +16553,7 @@ fn test_v2_update_security_filter(world: &mut DatadogWorld, _parameters: &HashMa
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -16591,7 +16591,7 @@ fn test_v2_list_security_monitoring_rules(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -16619,7 +16619,7 @@ fn test_v2_create_security_monitoring_rule(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -16647,7 +16647,7 @@ fn test_v2_delete_security_monitoring_rule(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -16675,7 +16675,7 @@ fn test_v2_get_security_monitoring_rule(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -16705,7 +16705,7 @@ fn test_v2_update_security_monitoring_rule(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -16757,7 +16757,7 @@ fn test_v2_list_security_monitoring_signals(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -16850,7 +16850,7 @@ fn test_v2_search_security_monitoring_signals(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -16919,7 +16919,7 @@ fn test_v2_get_security_monitoring_signal(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -16950,7 +16950,7 @@ fn test_v2_edit_security_monitoring_signal_assignee(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -16981,7 +16981,7 @@ fn test_v2_edit_security_monitoring_signal_incidents(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -17011,7 +17011,7 @@ fn test_v2_edit_security_monitoring_signal_state(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -17044,7 +17044,7 @@ fn test_v2_list_powerpacks(world: &mut DatadogWorld, _parameters: &HashMap<Strin
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -17114,7 +17114,7 @@ fn test_v2_create_powerpack(world: &mut DatadogWorld, _parameters: &HashMap<Stri
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -17140,7 +17140,7 @@ fn test_v2_delete_powerpack(world: &mut DatadogWorld, _parameters: &HashMap<Stri
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -17166,7 +17166,7 @@ fn test_v2_get_powerpack(world: &mut DatadogWorld, _parameters: &HashMap<String,
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -17193,7 +17193,7 @@ fn test_v2_update_powerpack(world: &mut DatadogWorld, _parameters: &HashMap<Stri
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -17242,7 +17242,7 @@ fn test_v2_list_processes(world: &mut DatadogWorld, _parameters: &HashMap<String
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -17332,7 +17332,7 @@ fn test_v2_delete_restriction_policy(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -17358,7 +17358,7 @@ fn test_v2_get_restriction_policy(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -17388,7 +17388,7 @@ fn test_v2_update_restriction_policy(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -17413,7 +17413,7 @@ fn test_v2_aggregate_rum_events(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -17437,7 +17437,7 @@ fn test_v2_get_rum_applications(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -17462,7 +17462,7 @@ fn test_v2_create_rum_application(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -17487,7 +17487,7 @@ fn test_v2_delete_rum_application(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -17512,7 +17512,7 @@ fn test_v2_get_rum_application(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -17538,7 +17538,7 @@ fn test_v2_update_rum_application(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -17587,7 +17587,7 @@ fn test_v2_list_rum_events(world: &mut DatadogWorld, _parameters: &HashMap<Strin
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -17673,7 +17673,7 @@ fn test_v2_search_rum_events(world: &mut DatadogWorld, _parameters: &HashMap<Str
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -17739,7 +17739,7 @@ fn test_v2_upload_idp_metadata(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -17805,7 +17805,7 @@ fn test_v2_list_scorecard_outcomes(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -17911,7 +17911,7 @@ fn test_v2_create_scorecard_outcomes_batch(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -17977,7 +17977,7 @@ fn test_v2_list_scorecard_rules(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -18080,7 +18080,7 @@ fn test_v2_create_scorecard_rule(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -18105,7 +18105,7 @@ fn test_v2_delete_scorecard_rule(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -18132,7 +18132,7 @@ fn test_v2_download_cloud_workload_policy_file(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -18159,7 +18159,7 @@ fn test_v2_list_cloud_workload_security_agent_rules(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -18188,7 +18188,7 @@ fn test_v2_create_cloud_workload_security_agent_rule(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -18219,7 +18219,7 @@ fn test_v2_delete_cloud_workload_security_agent_rule(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -18249,7 +18249,7 @@ fn test_v2_get_cloud_workload_security_agent_rule(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -18281,7 +18281,7 @@ fn test_v2_update_cloud_workload_security_agent_rule(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -18305,7 +18305,7 @@ fn test_v2_list_scanning_groups(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -18330,7 +18330,7 @@ fn test_v2_reorder_scanning_groups(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -18355,7 +18355,7 @@ fn test_v2_create_scanning_group(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -18381,7 +18381,7 @@ fn test_v2_delete_scanning_group(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -18407,7 +18407,7 @@ fn test_v2_update_scanning_group(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -18432,7 +18432,7 @@ fn test_v2_create_scanning_rule(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -18458,7 +18458,7 @@ fn test_v2_delete_scanning_rule(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -18484,7 +18484,7 @@ fn test_v2_update_scanning_rule(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -18508,7 +18508,7 @@ fn test_v2_list_standard_patterns(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -18533,7 +18533,7 @@ fn test_v2_create_service_account(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -18589,7 +18589,7 @@ fn test_v2_list_service_account_application_keys(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -18621,7 +18621,7 @@ fn test_v2_create_service_account_application_key(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -18654,7 +18654,7 @@ fn test_v2_delete_service_account_application_key(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -18687,7 +18687,7 @@ fn test_v2_get_service_account_application_key(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -18723,7 +18723,7 @@ fn test_v2_update_service_account_application_key(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -18765,7 +18765,7 @@ fn test_v2_list_incident_services(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -18790,7 +18790,7 @@ fn test_v2_create_incident_service(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -18816,7 +18816,7 @@ fn test_v2_delete_incident_service(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -18848,7 +18848,7 @@ fn test_v2_get_incident_service(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -18875,7 +18875,7 @@ fn test_v2_update_incident_service(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -18916,7 +18916,7 @@ fn test_v2_list_service_definitions(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -18994,7 +18994,7 @@ fn test_v2_create_or_update_service_definitions(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -19023,7 +19023,7 @@ fn test_v2_delete_service_definition(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -19055,7 +19055,7 @@ fn test_v2_get_service_definition(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -19080,7 +19080,7 @@ fn test_v2_aggregate_spans(world: &mut DatadogWorld, _parameters: &HashMap<Strin
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -19129,7 +19129,7 @@ fn test_v2_list_spans_get(world: &mut DatadogWorld, _parameters: &HashMap<String
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -19215,7 +19215,7 @@ fn test_v2_list_spans(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -19279,7 +19279,7 @@ fn test_v2_get_on_demand_concurrency_cap(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -19307,7 +19307,7 @@ fn test_v2_set_on_demand_concurrency_cap(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -19360,7 +19360,7 @@ fn test_v2_list_teams(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -19450,7 +19450,7 @@ fn test_v2_create_team(world: &mut DatadogWorld, _parameters: &HashMap<String, V
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -19475,7 +19475,7 @@ fn test_v2_delete_team(world: &mut DatadogWorld, _parameters: &HashMap<String, V
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -19500,7 +19500,7 @@ fn test_v2_get_team(world: &mut DatadogWorld, _parameters: &HashMap<String, Valu
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -19526,7 +19526,7 @@ fn test_v2_update_team(world: &mut DatadogWorld, _parameters: &HashMap<String, V
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -19551,7 +19551,7 @@ fn test_v2_get_team_links(world: &mut DatadogWorld, _parameters: &HashMap<String
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -19577,7 +19577,7 @@ fn test_v2_create_team_link(world: &mut DatadogWorld, _parameters: &HashMap<Stri
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -19603,7 +19603,7 @@ fn test_v2_delete_team_link(world: &mut DatadogWorld, _parameters: &HashMap<Stri
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -19629,7 +19629,7 @@ fn test_v2_get_team_link(world: &mut DatadogWorld, _parameters: &HashMap<String,
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -19656,7 +19656,7 @@ fn test_v2_update_team_link(world: &mut DatadogWorld, _parameters: &HashMap<Stri
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -19698,7 +19698,7 @@ fn test_v2_get_team_memberships(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -19724,7 +19724,7 @@ fn test_v2_create_team_membership(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -19750,7 +19750,7 @@ fn test_v2_delete_team_membership(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -19778,7 +19778,7 @@ fn test_v2_update_team_membership(world: &mut DatadogWorld, _parameters: &HashMa
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -19806,7 +19806,7 @@ fn test_v2_get_team_permission_settings(
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -19837,7 +19837,7 @@ fn test_v2_update_team_permission_setting(
                             world.response.object = serde_json::to_value(entity).unwrap();
                         }
                     }
-                    _ => panic!("error parsing response: {}", error),
+                    _ => panic!("error parsing response: {error}"),
                 };
             }
         };
@@ -19862,7 +19862,7 @@ fn test_v2_get_user_memberships(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -19903,7 +19903,7 @@ fn test_v2_list_incident_teams(world: &mut DatadogWorld, _parameters: &HashMap<S
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -19928,7 +19928,7 @@ fn test_v2_create_incident_team(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -19953,7 +19953,7 @@ fn test_v2_delete_incident_team(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -19983,7 +19983,7 @@ fn test_v2_get_incident_team(world: &mut DatadogWorld, _parameters: &HashMap<Str
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -20009,7 +20009,7 @@ fn test_v2_update_incident_team(world: &mut DatadogWorld, _parameters: &HashMap<
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -20034,7 +20034,7 @@ fn test_v2_send_invitations(world: &mut DatadogWorld, _parameters: &HashMap<Stri
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -20060,7 +20060,7 @@ fn test_v2_get_invitation(world: &mut DatadogWorld, _parameters: &HashMap<String
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -20109,7 +20109,7 @@ fn test_v2_list_users(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -20195,7 +20195,7 @@ fn test_v2_create_user(world: &mut DatadogWorld, _parameters: &HashMap<String, V
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -20220,7 +20220,7 @@ fn test_v2_disable_user(world: &mut DatadogWorld, _parameters: &HashMap<String, 
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -20245,7 +20245,7 @@ fn test_v2_get_user(world: &mut DatadogWorld, _parameters: &HashMap<String, Valu
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -20271,7 +20271,7 @@ fn test_v2_update_user(world: &mut DatadogWorld, _parameters: &HashMap<String, V
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -20296,7 +20296,7 @@ fn test_v2_list_user_organizations(world: &mut DatadogWorld, _parameters: &HashM
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };
@@ -20321,7 +20321,7 @@ fn test_v2_list_user_permissions(world: &mut DatadogWorld, _parameters: &HashMap
                         world.response.object = serde_json::to_value(entity).unwrap();
                     }
                 }
-                _ => panic!("error parsing response: {}", error),
+                _ => panic!("error parsing response: {error}"),
             };
         }
     };

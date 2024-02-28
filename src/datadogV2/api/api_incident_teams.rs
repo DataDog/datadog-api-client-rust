@@ -160,9 +160,10 @@ impl IncidentTeamsAPI {
         ResponseContent<crate::datadogV2::model::IncidentTeamResponse>,
         Error<CreateIncidentTeamError>,
     > {
-        let operation_id = "v2.create_incident_team".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+        let local_configuration = &self.config;
+        let operation_id = "v2.create_incident_team";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_incident_team' is not enabled".to_string(),
@@ -170,26 +171,27 @@ impl IncidentTeamsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_configuration = &self.config;
-
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/teams", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v2/teams",
+            local_configuration.get_operation_host(operation_id)
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         // build body parameters
@@ -241,9 +243,10 @@ impl IncidentTeamsAPI {
         &self,
         team_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteIncidentTeamError>> {
-        let operation_id = "v2.delete_incident_team".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+        let local_configuration = &self.config;
+        let operation_id = "v2.delete_incident_team";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_incident_team' is not enabled".to_string(),
@@ -251,30 +254,28 @@ impl IncidentTeamsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_configuration = &self.config;
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/teams/{team_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             team_id = urlencode(team_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -325,17 +326,16 @@ impl IncidentTeamsAPI {
         ResponseContent<crate::datadogV2::model::IncidentTeamResponse>,
         Error<GetIncidentTeamError>,
     > {
-        let operation_id = "v2.get_incident_team".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_incident_team";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_incident_team' is not enabled".to_string(),
             };
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
-
-        let local_configuration = &self.config;
 
         // unbox and build optional parameters
         let include = params.include;
@@ -344,7 +344,7 @@ impl IncidentTeamsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/teams/{team_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             team_id = urlencode(team_id)
         );
         let mut local_req_builder =
@@ -356,17 +356,17 @@ impl IncidentTeamsAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -415,17 +415,16 @@ impl IncidentTeamsAPI {
         ResponseContent<crate::datadogV2::model::IncidentTeamsResponse>,
         Error<ListIncidentTeamsError>,
     > {
-        let operation_id = "v2.list_incident_teams".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_incident_teams";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_incident_teams' is not enabled".to_string(),
             };
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
-
-        let local_configuration = &self.config;
 
         // unbox and build optional parameters
         let include = params.include;
@@ -435,7 +434,10 @@ impl IncidentTeamsAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/teams", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v2/teams",
+            local_configuration.get_operation_host(operation_id)
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -457,17 +459,17 @@ impl IncidentTeamsAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -521,9 +523,10 @@ impl IncidentTeamsAPI {
         ResponseContent<crate::datadogV2::model::IncidentTeamResponse>,
         Error<UpdateIncidentTeamError>,
     > {
-        let operation_id = "v2.update_incident_team".to_string();
-        if self.config.is_unstable_operation_enabled(&operation_id) {
-            warn!("Using unstable operation {}", operation_id);
+        let local_configuration = &self.config;
+        let operation_id = "v2.update_incident_team";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_incident_team' is not enabled".to_string(),
@@ -531,30 +534,28 @@ impl IncidentTeamsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_configuration = &self.config;
-
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/teams/{team_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             team_id = urlencode(team_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         // build body parameters

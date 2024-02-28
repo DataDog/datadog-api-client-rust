@@ -56,10 +56,15 @@ async fn main() {
         .unwrap_or("false".to_string())
         .to_lowercase();
     let is_replay = !record_mode.eq("true") && !record_mode.eq("none");
+    let concurrent_scenarios = match is_replay {
+        true => 64,
+        false => 1,
+    };
     let parsed_cli: cli::Opts<parser::basic::Cli, runner::basic::Cli, writer::basic::Cli> =
         cli::Opts::parsed();
     let mut cucumber = DatadogWorld::cucumber()
         .with_default_cli()
+        .max_concurrent_scenarios(Some(concurrent_scenarios))
         .repeat_failed()
         .fail_on_skipped()
         .before(move |feature, rule, scenario, world| {
@@ -90,25 +95,18 @@ async fn main() {
         .filter_run("tests/scenarios/features/".to_string(), move |_, _, sc| {
             let name_re = parsed_cli.re_filter.clone();
             let name_match = name_re
-                .and_then(|filter| {
-                    if filter.is_match(sc.name.as_str()) {
-                        Some(true)
-                    } else {
-                        Some(false)
-                    }
-                })
+                .and_then(|filter| Some(filter.is_match(sc.name.as_str())))
                 .unwrap_or(true);
             if !name_match {
-                return false;
-            }
-            if sc.tags.contains(&"skip".into()) || sc.tags.contains(&"skip-rust".into()) {
-                return false;
+                false
+            } else if sc.tags.contains(&"skip".into()) || sc.tags.contains(&"skip-rust".into()) {
+                false
             } else if !is_replay && sc.tags.contains(&"replay-only".into()) {
-                return false;
+                false
             } else if is_replay && sc.tags.contains(&"integration-only".into()) {
-                return false;
+                false
             } else {
-                return true;
+                true
             }
         })
         .await;
