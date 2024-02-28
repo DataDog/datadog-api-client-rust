@@ -261,7 +261,6 @@ pub fn given_resource_in_system(
     world: &mut DatadogWorld,
     context: cucumber::step::Context,
 ) -> std::pin::Pin<Box<dyn futures::Future<Output = ()> + '_>> {
-
     let mut given: Value = Value::Null;
     let mut given_api_version: String = "".to_string();
     let mut found = false;
@@ -282,7 +281,7 @@ pub fn given_resource_in_system(
     if !found {
         panic!("given step not found");
     }
-    
+
     let given_key = given.get("key").unwrap().as_str().unwrap().to_string();
     Box::pin(async move {
         let mut given_parameters: HashMap<String, Value> = HashMap::new();
@@ -564,20 +563,24 @@ fn response_is_bool(world: &mut DatadogWorld, path: String, expected: String) {
 }
 
 fn req_eq(lhs: &vcr_cassette::Request, rhs: &vcr_cassette::Request) -> bool {
-    let lhs_queries: HashSet<_> = lhs
-        .uri
-        .query()
-        .unwrap_or_default()
-        .split("&")
-        .map(|s: &str| s.replace("+", "%20"))
-        .collect();
-    let rhs_queries: HashSet<_> = rhs
-        .uri
-        .query()
-        .unwrap_or_default()
-        .split("&")
-        .map(|s: &str| s.replace("+", "%20"))
-        .collect();
+    let lhs_query = urldecode::decode(
+        lhs.uri
+            .query()
+            .unwrap_or_default()
+            .to_string()
+            .replace("+", "%20"),
+    );
+    let rhs_query = urldecode::decode(
+        rhs.uri
+            .query()
+            .unwrap_or_default()
+            .to_string()
+            .replace("+", "%20"),
+    );
+
+    let lhs_queries: HashSet<_> = lhs_query.split("&").into_iter().collect();
+    let rhs_queries: HashSet<_> = rhs_query.split("&").into_iter().collect();
+
     lhs.uri.scheme() == rhs.uri.scheme()
         && lhs.uri.host() == rhs.uri.host()
         && lhs.uri.port() == rhs.uri.port()
@@ -740,11 +743,7 @@ fn build_undo(
     if world.response.code < 200 || world.response.code >= 300 {
         return Ok(None);
     }
-    let undo = UNDO_MAP
-        .get(operation_id)
-        .unwrap()
-        .get("undo")
-        .unwrap();
+    let undo = UNDO_MAP.get(operation_id).unwrap().get("undo").unwrap();
     match undo.get("type").unwrap().as_str() {
         Some("unsafe") => {
             let api_name = if let Some(tag) = undo.get("tag") {

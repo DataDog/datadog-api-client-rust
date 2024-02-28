@@ -34,10 +34,7 @@ lazy_static! {
         let given_v2: Value = serde_json::from_reader(BufReader::new(given_v2_file))
             .expect("failed to deserialize given.json");
 
-        HashMap::from([
-            ("v1".to_string(), givens_v1),
-            ("v2".to_string(), given_v2),
-        ])
+        HashMap::from([("v1".to_string(), givens_v1), ("v2".to_string(), given_v2)])
     };
     pub static ref UNDO_MAP: Value = {
         let undo_v1_file = File::open("tests/scenarios/features/v1/undo.json").unwrap();

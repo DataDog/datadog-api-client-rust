@@ -33,6 +33,7 @@ sha256 = "1.4.0"
 tokio = { version = "1.10", features = ["macros", "rt-multi-thread", "time"] }
 minijinja = "1.0.10"
 convert_case = "0.6.0"
+urldecode = "0.1.1"
 
 [[test]]
 harness = false  # allows Cucumber to print output instead of libtest
