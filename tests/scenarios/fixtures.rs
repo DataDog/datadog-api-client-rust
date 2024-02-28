@@ -1,6 +1,6 @@
 use crate::{
     scenarios::function_mappings::{collect_function_calls, initialize_api_instance, ApiInstances},
-    GIVEN_MAP,
+    GIVEN_MAP, UNDO_MAP,
 };
 use chrono::{DateTime, Duration, Months, SecondsFormat};
 use convert_case::{Case, Casing};
@@ -53,8 +53,6 @@ pub struct DatadogWorld {
     pub response: Response,
     pub api_name: Option<String>,
     pub api_instances: ApiInstances,
-    pub given_map: Option<&'static Value>,
-    pub undo_map: Option<&'static Value>,
     undo_operations: Vec<UndoOperation>,
 }
 
@@ -232,13 +230,27 @@ pub fn given_resource_in_system(
     world: &mut DatadogWorld,
     context: cucumber::step::Context,
 ) -> std::pin::Pin<Box<dyn futures::Future<Output = ()> + '_>> {
-    let given = GIVEN_MAP
-        .as_array()
-        .unwrap()
-        .iter()
-        .find(|value| value.get("step").unwrap().as_str().unwrap() == context.step.value)
-        .unwrap()
-        .clone();
+
+    let mut given: Value = Value::Null;
+    let mut given_api_version: String = "".to_string();
+    for (version, values) in GIVEN_MAP.iter() {
+        let found = false;
+        for value in values.as_array().unwrap() {
+            if value.get("step").unwrap().as_str().unwrap() == context.step.value {
+                given = value.clone();
+                given_api_version = version.clone();
+                break;
+            };
+        }
+        if found {
+            break;
+        }
+    }
+
+    if given_api_version == "" || given.is_null() {
+        panic!("given step not found");
+    }
+    
     let given_key = given.get("key").unwrap().as_str().unwrap().to_string();
     Box::pin(async move {
         let mut given_parameters: HashMap<String, Value> = HashMap::new();
@@ -285,8 +297,8 @@ pub fn given_resource_in_system(
             .to_string();
 
         let unstable_operation_id = format!(
-            "v{}.{}",
-            world.api_version,
+            "{}.{}",
+            given_api_version,
             operation_id.to_case(Case::Snake)
         );
 
@@ -300,18 +312,8 @@ pub fn given_resource_in_system(
 
         let test_call = world
             .function_mappings
-            .get(&format!("v{}.{}", world.api_version, &operation_id))
-            .unwrap_or_else(|| {
-                let alt_version = match world.api_version {
-                    1 => 2,
-                    2 => 1,
-                    _ => panic!("invalid api version"),
-                };
-                world
-                    .function_mappings
-                    .get(&format!("v{}.{}", alt_version, &operation_id))
-                    .expect("given operation not found")
-            });
+            .get(&format!("{}.{}", given_api_version, &operation_id))
+            .unwrap();
 
         test_call(world, &given_parameters);
 
@@ -627,9 +629,7 @@ fn build_undo(
     if world.response.code < 200 || world.response.code >= 300 {
         return Ok(None);
     }
-    let undo = world
-        .undo_map
-        .unwrap()
+    let undo = UNDO_MAP
         .get(operation_id)
         .unwrap()
         .get("undo")
