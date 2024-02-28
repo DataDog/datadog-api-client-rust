@@ -569,14 +569,14 @@ fn req_eq(lhs: &vcr_cassette::Request, rhs: &vcr_cassette::Request) -> bool {
         .query()
         .unwrap_or_default()
         .split("&")
-        .into_iter()
+        .map(|s: &str| s.replace("+", "%20"))
         .collect();
     let rhs_queries: HashSet<_> = rhs
         .uri
         .query()
         .unwrap_or_default()
         .split("&")
-        .into_iter()
+        .map(|s: &str| s.replace("+", "%20"))
         .collect();
     lhs.uri.scheme() == rhs.uri.scheme()
         && lhs.uri.host() == rhs.uri.host()
