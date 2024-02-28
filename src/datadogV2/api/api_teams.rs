@@ -313,25 +313,29 @@ impl TeamsAPI {
     ) -> Result<ResponseContent<crate::datadogV2::model::TeamResponse>, Error<CreateTeamError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v2.create_team";
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/team", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v2/team",
+            local_configuration.get_operation_host(operation_id)
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         // build body parameters
@@ -388,29 +392,30 @@ impl TeamsAPI {
         Error<CreateTeamLinkError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.create_team_link";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             team_id = urlencode(team_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         // build body parameters
@@ -472,29 +477,30 @@ impl TeamsAPI {
         Error<CreateTeamMembershipError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.create_team_membership";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/memberships",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             team_id = urlencode(team_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         // build body parameters
@@ -544,29 +550,30 @@ impl TeamsAPI {
         team_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteTeamError>> {
         let local_configuration = &self.config;
+        let operation_id = "v2.delete_team";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             team_id = urlencode(team_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -611,12 +618,13 @@ impl TeamsAPI {
         link_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteTeamLinkError>> {
         let local_configuration = &self.config;
+        let operation_id = "v2.delete_team_link";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links/{link_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             team_id = urlencode(team_id),
             link_id = urlencode(link_id)
         );
@@ -624,17 +632,17 @@ impl TeamsAPI {
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -683,12 +691,13 @@ impl TeamsAPI {
         user_id: String,
     ) -> Result<ResponseContent<()>, Error<DeleteTeamMembershipError>> {
         let local_configuration = &self.config;
+        let operation_id = "v2.delete_team_membership";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/memberships/{user_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             team_id = urlencode(team_id),
             user_id = urlencode(user_id)
         );
@@ -696,17 +705,17 @@ impl TeamsAPI {
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -750,29 +759,30 @@ impl TeamsAPI {
         team_id: String,
     ) -> Result<ResponseContent<crate::datadogV2::model::TeamResponse>, Error<GetTeamError>> {
         let local_configuration = &self.config;
+        let operation_id = "v2.get_team";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             team_id = urlencode(team_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -820,12 +830,13 @@ impl TeamsAPI {
     ) -> Result<ResponseContent<crate::datadogV2::model::TeamLinkResponse>, Error<GetTeamLinkError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v2.get_team_link";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links/{link_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             team_id = urlencode(team_id),
             link_id = urlencode(link_id)
         );
@@ -833,17 +844,17 @@ impl TeamsAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -889,29 +900,30 @@ impl TeamsAPI {
     ) -> Result<ResponseContent<crate::datadogV2::model::TeamLinksResponse>, Error<GetTeamLinksError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v2.get_team_links";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             team_id = urlencode(team_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -965,6 +977,7 @@ impl TeamsAPI {
         Error<GetTeamMembershipsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.get_team_memberships";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -976,7 +989,7 @@ impl TeamsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/memberships",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             team_id = urlencode(team_id)
         );
         let mut local_req_builder =
@@ -1000,17 +1013,17 @@ impl TeamsAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1065,29 +1078,30 @@ impl TeamsAPI {
         Error<GetTeamPermissionSettingsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.get_team_permission_settings";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/permission-settings",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             team_id = urlencode(team_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1137,29 +1151,30 @@ impl TeamsAPI {
         Error<GetUserMembershipsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.get_user_memberships";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/users/{user_uuid}/memberships",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             user_uuid = urlencode(user_uuid)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1208,6 +1223,7 @@ impl TeamsAPI {
     ) -> Result<ResponseContent<crate::datadogV2::model::TeamsResponse>, Error<ListTeamsError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v2.list_teams";
 
         // unbox and build optional parameters
         let page_number = params.page_number;
@@ -1220,7 +1236,10 @@ impl TeamsAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v2/team", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v2/team",
+            local_configuration.get_operation_host(operation_id)
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -1268,17 +1287,17 @@ impl TeamsAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1328,29 +1347,30 @@ impl TeamsAPI {
     ) -> Result<ResponseContent<crate::datadogV2::model::TeamResponse>, Error<UpdateTeamError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v2.update_team";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             team_id = urlencode(team_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         // build body parameters
@@ -1412,12 +1432,13 @@ impl TeamsAPI {
         Error<UpdateTeamLinkError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.update_team_link";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links/{link_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             team_id = urlencode(team_id),
             link_id = urlencode(link_id)
         );
@@ -1425,17 +1446,17 @@ impl TeamsAPI {
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         // build body parameters
@@ -1499,12 +1520,13 @@ impl TeamsAPI {
         Error<UpdateTeamMembershipError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.update_team_membership";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/memberships/{user_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             team_id = urlencode(team_id),
             user_id = urlencode(user_id)
         );
@@ -1512,17 +1534,17 @@ impl TeamsAPI {
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         // build body parameters
@@ -1588,12 +1610,13 @@ impl TeamsAPI {
         Error<UpdateTeamPermissionSettingError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v2.update_team_permission_setting";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/permission-settings/{action}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             team_id = urlencode(team_id),
             action = urlencode(action)
         );
@@ -1601,17 +1624,17 @@ impl TeamsAPI {
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         // build body parameters

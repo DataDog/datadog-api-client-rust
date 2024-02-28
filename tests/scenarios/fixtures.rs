@@ -9,7 +9,7 @@ use cucumber::{
     gherkin::{Feature, Rule, Scenario},
     given, then, when, World,
 };
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog::configuration::{APIKey, Configuration};
 use lazy_static::lazy_static;
 use minijinja::{Environment, State};
 use regex::Regex;
@@ -100,7 +100,7 @@ pub async fn before_scenario(
     let mut frozen_time = chrono::Utc::now().signed_duration_since(DateTime::UNIX_EPOCH);
 
     let vcr_client_builder = ClientBuilder::new(reqwest::Client::new());
-    world.config.client = match env::var("RECORD").unwrap_or("false".to_string()).as_str() {
+    let client = match env::var("RECORD").unwrap_or("false".to_string()).as_str() {
         "none" => {
             prefix.push_str("-Rust");
             vcr_client_builder.build()
@@ -112,7 +112,7 @@ pub async fn before_scenario(
             // freeze_file
             //     .write_all(
             //         DateTime::to_rfc3339(
-            //             &DateTime::from_timestamp(frozen_time as i64, 0)
+            //             &DateTime::from_timestamp(frozen_time.num_milliseconds() as i64, 0)
             //                 .expect("failed to convert timestamp to datetime"),
             //         )
             //         .as_bytes(),
@@ -154,8 +154,21 @@ pub async fn before_scenario(
             vcr_client_builder.with(middleware).build()
         }
     };
-    world.config.api_key_auth = Some("00000000000000000000000000000000".to_string());
-    world.config.app_key_auth = Some("0000000000000000000000000000000000000000".to_string());
+    world.config.client(client);
+    world.config.set_auth_key(
+        "apiKeyAuth",
+        APIKey {
+            key: "00000000000000000000000000000000".to_string(),
+            prefix: "".to_owned(),
+        },
+    );
+    world.config.set_auth_key(
+        "appKeyAuth",
+        APIKey {
+            key: "0000000000000000000000000000000000000000".to_string(),
+            prefix: "".to_owned(),
+        },
+    );
 
     let escaped_name = NON_ALNUM_RE
         .replace_all(scenario.name.as_str(), "_")
@@ -211,13 +224,31 @@ pub async fn after_scenario(
 }
 
 #[given(expr = "a valid \"apiKeyAuth\" key in the system")]
-fn valid_apikey_auth(world: &mut DatadogWorld) {
-    world.config.api_key_auth = env::var("DD_TEST_CLIENT_API_KEY").ok();
+fn valid_apikey(world: &mut DatadogWorld) {
+    world.config.set_auth_key(
+        "apiKeyAuth",
+        APIKey {
+            key: env::var("DD_TEST_CLIENT_API_KEY").unwrap_or_default(),
+            prefix: "".to_owned(),
+        },
+    );
+    if let Some(api) = world.api_name.as_ref() {
+        initialize_api_instance(world, api.to_string());
+    }
 }
 
 #[given(expr = "a valid \"appKeyAuth\" key in the system")]
-fn valid_appkey_auth(world: &mut DatadogWorld) {
-    world.config.app_key_auth = env::var("DD_TEST_CLIENT_APP_KEY").ok();
+fn valid_appkey(world: &mut DatadogWorld) {
+    world.config.set_auth_key(
+        "appKeyAuth",
+        APIKey {
+            key: env::var("DD_TEST_CLIENT_APP_KEY").unwrap_or_default(),
+            prefix: "".to_owned(),
+        },
+    );
+    if let Some(api) = world.api_name.as_ref() {
+        initialize_api_instance(world, api.to_string());
+    }
 }
 
 #[given(expr = "an instance of {string} API")]
@@ -328,8 +359,12 @@ pub fn given_resource_in_system(
         } else if let Value::Object(ref mut map) = world.fixtures {
             map.insert(given_key.clone(), world.response.object.clone());
         }
-
-        match build_undo(world, &operation_id, Some(given_key)) {
+        match build_undo(
+            world,
+            &operation_id,
+            Some(given_key),
+            given_parameters.clone(),
+        ) {
             Ok(Some(undo)) => world.undo_operations.push(undo),
             Ok(None) => {}
             Err(err) => panic!("{err}"),
@@ -414,7 +449,12 @@ fn request_sent(world: &mut DatadogWorld) {
             world.operation_id
         ))(world, &world.parameters.clone());
 
-    match build_undo(world, &world.operation_id.clone(), None) {
+    match build_undo(
+        world,
+        &world.operation_id.clone(),
+        None,
+        world.parameters.clone(),
+    ) {
         Ok(Some(undo)) => {
             world.undo_operations.push(undo);
         }
@@ -622,10 +662,80 @@ fn template(string: String, fixtures: &Value) -> String {
         .expect("failed to apply template")
 }
 
+fn process_param_from_response(
+    param: &Value,
+    undo_operation: &mut UndoOperation,
+    given_key: Option<String>,
+    world: &DatadogWorld,
+) {
+    let param_name = param.get("name").unwrap().as_str().unwrap().to_string();
+
+    if let Some(source) = param.get("source") {
+        if let Some(value) = lookup(
+            &source.as_str().unwrap().to_string(),
+            &world.response.object,
+        ) {
+            undo_operation.parameters.insert(param_name.clone(), value);
+        }
+    }
+
+    if let Some(template_value) = param.get("template") {
+        if let Some(rendered) = template_value.as_str() {
+            let json_value = match given_key.clone() {
+                Some(key) => template(
+                    rendered.to_string(),
+                    &world
+                        .fixtures
+                        .get(&key)
+                        .unwrap_or_else(|| &world.response.object),
+                ),
+                None => template(rendered.to_string(), &world.response.object),
+            };
+            undo_operation.parameters.insert(
+                param_name.clone(),
+                serde_json::from_str(json_value.as_str()).unwrap(),
+            );
+        }
+    }
+}
+
+fn process_param_from_request(
+    param: &Value,
+    undo_operation: &mut UndoOperation,
+    request_parameters: HashMap<String, Value>,
+) {
+    let param_name = param.get("name").unwrap().as_str().unwrap().to_string();
+
+    if let Some(source) = param.get("source") {
+        if let Some(value) = lookup(
+            &source.as_str().unwrap().to_string(),
+            &serde_json::to_value(&request_parameters).unwrap(),
+        ) {
+            undo_operation.parameters.insert(param_name.clone(), value);
+        }
+    }
+    let request_params_value = &serde_json::to_value(
+        &request_parameters
+            .get(&param_name)
+            .unwrap_or(&serde_json::Value::Null),
+    )
+    .unwrap();
+    if let Some(template_value) = param.get("template") {
+        if let Some(rendered) = template_value.as_str() {
+            let json_value = template(rendered.to_string(), request_params_value);
+            undo_operation.parameters.insert(
+                param_name.clone(),
+                serde_json::from_str(json_value.as_str()).unwrap(),
+            );
+        }
+    }
+}
+
 fn build_undo(
     world: &mut DatadogWorld,
     operation_id: &String,
     given_key: Option<String>,
+    request_parameters: HashMap<String, Value>,
 ) -> Result<Option<UndoOperation>, Value> {
     if world.response.code < 200 || world.response.code >= 300 {
         return Ok(None);
@@ -675,29 +785,32 @@ fn build_undo(
 
             let params = undo.get("parameters").unwrap().as_array().unwrap();
             for param in params {
-                let param_name = param.get("name").unwrap().as_str().unwrap().to_string();
-                if let Some(source) = param.get("source") {
-                    if let Some(value) = lookup(
-                        &source.as_str().unwrap().to_string(),
-                        &world.response.object,
-                    ) {
-                        undo_operation.parameters.insert(param_name.clone(), value);
+                match param.get("origin") {
+                    Some(origin) => {
+                        if origin == "response" {
+                            process_param_from_response(
+                                param,
+                                &mut undo_operation,
+                                given_key.clone(),
+                                world,
+                            );
+                        } else if origin == "request" {
+                            process_param_from_request(
+                                param,
+                                &mut undo_operation,
+                                request_parameters.clone(),
+                            );
+                        }
                     }
-                };
-                if let Some(template_value) = param.get("template") {
-                    if let Some(rendered) = template_value.as_str() {
-                        let json_value = match given_key.clone() {
-                            Some(key) => {
-                                template(rendered.to_string(), &world.fixtures.get(key).unwrap())
-                            }
-                            None => template(rendered.to_string(), &world.response.object),
-                        };
-                        undo_operation.parameters.insert(
-                            param_name.clone(),
-                            serde_json::from_str(json_value.as_str()).unwrap(),
+                    None => {
+                        process_param_from_response(
+                            param,
+                            &mut undo_operation,
+                            given_key.clone(),
+                            world,
                         );
-                    };
-                };
+                    }
+                }
             }
             Ok(Some(undo_operation))
         }

@@ -49,18 +49,19 @@ impl IPRangesAPI {
         &self,
     ) -> Result<ResponseContent<crate::datadogV1::model::IPRanges>, Error<GetIPRangesError>> {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_ip_ranges";
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/", local_configuration.base_path);
+        let local_uri_str = format!("{}/", local_configuration.get_operation_host(operation_id));
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
 

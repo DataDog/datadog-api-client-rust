@@ -1236,6 +1236,7 @@ impl UsageMeteringAPI {
         Error<GetDailyCustomReportsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_daily_custom_reports";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -1247,7 +1248,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/daily_custom_reports",
-            local_configuration.base_path
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1270,17 +1271,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1367,6 +1368,7 @@ impl UsageMeteringAPI {
         Error<GetHourlyUsageAttributionError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_hourly_usage_attribution";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
@@ -1378,7 +1380,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/hourly-attribution",
-            local_configuration.base_path
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1403,17 +1405,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1472,6 +1474,7 @@ impl UsageMeteringAPI {
         Error<GetIncidentManagementError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_incident_management";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
@@ -1480,7 +1483,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/incident-management",
-            local_configuration.base_path
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1492,17 +1495,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1561,6 +1564,7 @@ impl UsageMeteringAPI {
         Error<GetIngestedSpansError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_ingested_spans";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
@@ -1569,7 +1573,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/ingested-spans",
-            local_configuration.base_path
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1581,17 +1585,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1647,6 +1651,7 @@ impl UsageMeteringAPI {
         Error<GetMonthlyCustomReportsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_monthly_custom_reports";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -1658,7 +1663,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/monthly_custom_reports",
-            local_configuration.base_path
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1681,17 +1686,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1778,6 +1783,7 @@ impl UsageMeteringAPI {
         Error<GetMonthlyUsageAttributionError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_monthly_usage_attribution";
 
         // unbox and build optional parameters
         let end_month = params.end_month;
@@ -1791,7 +1797,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/monthly-attribution",
-            local_configuration.base_path
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1824,17 +1830,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1893,29 +1899,30 @@ impl UsageMeteringAPI {
         Error<GetSpecifiedDailyCustomReportsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_specified_daily_custom_reports";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/daily_custom_reports/{report_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             report_id = urlencode(report_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -1974,29 +1981,30 @@ impl UsageMeteringAPI {
         Error<GetSpecifiedMonthlyCustomReportsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_specified_monthly_custom_reports";
 
         let local_client = &local_configuration.client;
 
         let local_uri_str = format!(
             "{}/api/v1/monthly_custom_reports/{report_id}",
-            local_configuration.base_path,
+            local_configuration.get_operation_host(operation_id),
             report_id = urlencode(report_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -2055,6 +2063,7 @@ impl UsageMeteringAPI {
         Error<GetUsageAnalyzedLogsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_analyzed_logs";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
@@ -2063,7 +2072,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/analyzed_logs",
-            local_configuration.base_path
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2075,17 +2084,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -2148,6 +2157,7 @@ impl UsageMeteringAPI {
         Error<GetUsageAttributionError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_attribution";
 
         // unbox and build optional parameters
         let end_month = params.end_month;
@@ -2159,7 +2169,10 @@ impl UsageMeteringAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/attribution", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/attribution",
+            local_configuration.get_operation_host(operation_id)
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -2191,17 +2204,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -2260,13 +2273,17 @@ impl UsageMeteringAPI {
         Error<GetUsageAuditLogsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_audit_logs";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/audit_logs", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/audit_logs",
+            local_configuration.get_operation_host(operation_id)
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -2277,17 +2294,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -2339,6 +2356,7 @@ impl UsageMeteringAPI {
         Error<GetUsageBillableSummaryError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_billable_summary";
 
         // unbox and build optional parameters
         let month = params.month;
@@ -2347,7 +2365,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/billable-summary",
-            local_configuration.base_path
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2358,17 +2376,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -2422,13 +2440,17 @@ impl UsageMeteringAPI {
         Error<GetUsageCIAppError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_ci_app";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/ci-app", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/ci-app",
+            local_configuration.get_operation_host(operation_id)
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -2439,17 +2461,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -2500,13 +2522,17 @@ impl UsageMeteringAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::UsageCWSResponse>, Error<GetUsageCWSError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_cws";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/cws", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/cws",
+            local_configuration.get_operation_host(operation_id)
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -2517,17 +2543,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -2585,13 +2611,17 @@ impl UsageMeteringAPI {
         Error<GetUsageCloudSecurityPostureManagementError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_cloud_security_posture_management";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/cspm", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/cspm",
+            local_configuration.get_operation_host(operation_id)
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -2602,17 +2632,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -2664,13 +2694,17 @@ impl UsageMeteringAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::UsageDBMResponse>, Error<GetUsageDBMError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_dbm";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/dbm", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/dbm",
+            local_configuration.get_operation_host(operation_id)
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -2681,17 +2715,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -2747,13 +2781,17 @@ impl UsageMeteringAPI {
         Error<GetUsageFargateError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_fargate";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/fargate", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/fargate",
+            local_configuration.get_operation_host(operation_id)
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -2764,17 +2802,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -2828,13 +2866,17 @@ impl UsageMeteringAPI {
         Error<GetUsageHostsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_hosts";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/hosts", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/hosts",
+            local_configuration.get_operation_host(operation_id)
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -2845,17 +2887,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -2914,6 +2956,7 @@ impl UsageMeteringAPI {
         Error<GetUsageIndexedSpansError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_indexed_spans";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
@@ -2922,7 +2965,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/indexed-spans",
-            local_configuration.base_path
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2934,17 +2977,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -3003,13 +3046,17 @@ impl UsageMeteringAPI {
         Error<GetUsageInternetOfThingsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_internet_of_things";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/iot", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/iot",
+            local_configuration.get_operation_host(operation_id)
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -3020,17 +3067,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -3084,13 +3131,17 @@ impl UsageMeteringAPI {
         Error<GetUsageLambdaError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_lambda";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/aws_lambda", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/aws_lambda",
+            local_configuration.get_operation_host(operation_id)
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -3101,17 +3152,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -3162,13 +3213,17 @@ impl UsageMeteringAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::UsageLogsResponse>, Error<GetUsageLogsError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_logs";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/logs", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/logs",
+            local_configuration.get_operation_host(operation_id)
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -3179,17 +3234,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -3245,6 +3300,7 @@ impl UsageMeteringAPI {
         Error<GetUsageLogsByIndexError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_logs_by_index";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
@@ -3254,7 +3310,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/logs_by_index",
-            local_configuration.base_path
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -3277,17 +3333,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -3346,6 +3402,7 @@ impl UsageMeteringAPI {
         Error<GetUsageLogsByRetentionError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_logs_by_retention";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
@@ -3354,7 +3411,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/logs-by-retention",
-            local_configuration.base_path
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -3366,17 +3423,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -3435,6 +3492,7 @@ impl UsageMeteringAPI {
         Error<GetUsageNetworkFlowsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_network_flows";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
@@ -3443,7 +3501,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/network_flows",
-            local_configuration.base_path
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -3455,17 +3513,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -3524,6 +3582,7 @@ impl UsageMeteringAPI {
         Error<GetUsageNetworkHostsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_network_hosts";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
@@ -3532,7 +3591,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/network_hosts",
-            local_configuration.base_path
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -3544,17 +3603,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -3613,6 +3672,7 @@ impl UsageMeteringAPI {
         Error<GetUsageOnlineArchiveError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_online_archive";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
@@ -3621,7 +3681,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/online-archive",
-            local_configuration.base_path
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -3633,17 +3693,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -3702,13 +3762,17 @@ impl UsageMeteringAPI {
         Error<GetUsageProfilingError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_profiling";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/profiling", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/profiling",
+            local_configuration.get_operation_host(operation_id)
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -3719,17 +3783,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -3788,6 +3852,7 @@ impl UsageMeteringAPI {
         Error<GetUsageRumSessionsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_rum_sessions";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
@@ -3797,7 +3862,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/rum_sessions",
-            local_configuration.base_path
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -3813,17 +3878,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -3880,13 +3945,17 @@ impl UsageMeteringAPI {
         Error<GetUsageRumUnitsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_rum_units";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/rum", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/rum",
+            local_configuration.get_operation_host(operation_id)
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -3897,17 +3966,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -3958,13 +4027,17 @@ impl UsageMeteringAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::UsageSDSResponse>, Error<GetUsageSDSError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_sds";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/sds", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/sds",
+            local_configuration.get_operation_host(operation_id)
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -3975,17 +4048,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -4035,13 +4108,17 @@ impl UsageMeteringAPI {
     ) -> Result<ResponseContent<crate::datadogV1::model::UsageSNMPResponse>, Error<GetUsageSNMPError>>
     {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_snmp";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/snmp", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/snmp",
+            local_configuration.get_operation_host(operation_id)
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -4052,17 +4129,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -4116,6 +4193,7 @@ impl UsageMeteringAPI {
         Error<GetUsageSummaryError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_summary";
 
         // unbox and build optional parameters
         let end_month = params.end_month;
@@ -4123,7 +4201,10 @@ impl UsageMeteringAPI {
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/summary", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/summary",
+            local_configuration.get_operation_host(operation_id)
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -4138,17 +4219,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -4207,13 +4288,17 @@ impl UsageMeteringAPI {
         Error<GetUsageSyntheticsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_synthetics";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/synthetics", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/synthetics",
+            local_configuration.get_operation_host(operation_id)
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -4224,17 +4309,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -4293,6 +4378,7 @@ impl UsageMeteringAPI {
         Error<GetUsageSyntheticsAPIError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_synthetics_api";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
@@ -4301,7 +4387,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/synthetics_api",
-            local_configuration.base_path
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -4313,17 +4399,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -4382,6 +4468,7 @@ impl UsageMeteringAPI {
         Error<GetUsageSyntheticsBrowserError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_synthetics_browser";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
@@ -4390,7 +4477,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/synthetics_browser",
-            local_configuration.base_path
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -4402,17 +4489,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -4471,13 +4558,17 @@ impl UsageMeteringAPI {
         Error<GetUsageTimeseriesError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_timeseries";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
         let local_client = &local_configuration.client;
 
-        let local_uri_str = format!("{}/api/v1/usage/timeseries", local_configuration.base_path);
+        let local_uri_str = format!(
+            "{}/api/v1/usage/timeseries",
+            local_configuration.get_operation_host(operation_id)
+        );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -4488,17 +4579,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
@@ -4550,6 +4641,7 @@ impl UsageMeteringAPI {
         Error<GetUsageTopAvgMetricsError>,
     > {
         let local_configuration = &self.config;
+        let operation_id = "v1.get_usage_top_avg_metrics";
 
         // unbox and build optional parameters
         let month = params.month;
@@ -4562,7 +4654,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/usage/top_avg_metrics",
-            local_configuration.base_path
+            local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -4595,17 +4687,17 @@ impl UsageMeteringAPI {
         };
 
         // build user agent
-        if let Some(ref local_user_agent) = local_configuration.user_agent {
-            local_req_builder =
-                local_req_builder.header(reqwest::header::USER_AGENT, local_user_agent.clone());
-        }
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
 
         // build auth
-        if let Some(ref local_apikey) = local_configuration.api_key_auth {
-            local_req_builder = local_req_builder.header("DD-API-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
         };
-        if let Some(ref local_apikey) = local_configuration.app_key_auth {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", local_apikey);
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
         };
 
         let local_req = local_req_builder.build()?;
