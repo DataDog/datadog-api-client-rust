@@ -7,7 +7,7 @@ use scenarios::fixtures::{
     after_scenario, before_scenario, given_resource_in_system, DatadogWorld,
 };
 use serde_json::Value;
-use std::{env, fs::File, io::BufReader};
+use std::{collections::HashMap, env, fs::File, io::BufReader};
 
 fn merge(a: &mut Value, b: &Value) {
     match (a, b) {
@@ -26,15 +26,18 @@ fn merge(a: &mut Value, b: &Value) {
 }
 
 lazy_static! {
-    pub static ref GIVEN_MAP: Value = {
+    pub static ref GIVEN_MAP: HashMap<String, Value> = {
         let given_v1_file = File::open("tests/scenarios/features/v1/given.json").unwrap();
-        let mut givens: Value = serde_json::from_reader(BufReader::new(given_v1_file))
+        let givens_v1: Value = serde_json::from_reader(BufReader::new(given_v1_file))
             .expect("failed to deserialize given.json");
         let given_v2_file = File::open("tests/scenarios/features/v2/given.json").unwrap();
         let given_v2: Value = serde_json::from_reader(BufReader::new(given_v2_file))
             .expect("failed to deserialize given.json");
-        merge(&mut givens, &given_v2);
-        givens
+
+        HashMap::from([
+            ("v1".to_string(), givens_v1),
+            ("v2".to_string(), given_v2),
+        ])
     };
     pub static ref UNDO_MAP: Value = {
         let undo_v1_file = File::open("tests/scenarios/features/v1/undo.json").unwrap();
@@ -76,19 +79,19 @@ async fn main() {
                 .as_str()
                 .parse()
                 .unwrap();
-            world.given_map = Some(&GIVEN_MAP);
-            world.undo_map = Some(&UNDO_MAP);
             Box::pin(before_scenario(feature, rule, scenario, world))
         })
         .after(|feature, rule, scenario, ev, world| {
             Box::pin(after_scenario(feature, rule, scenario, ev, world))
         });
 
-    for value in GIVEN_MAP.as_array().unwrap() {
-        cucumber = cucumber.given(
-            Regex::new(value.get("step").unwrap().as_str().unwrap()).unwrap(),
-            given_resource_in_system,
-        );
+    for (_, values) in GIVEN_MAP.iter() {
+        for value in values.as_array().unwrap() {
+            cucumber = cucumber.given(
+                Regex::new(value.get("step").unwrap().as_str().unwrap()).unwrap(),
+                given_resource_in_system,
+            );
+        }
     }
 
     cucumber
