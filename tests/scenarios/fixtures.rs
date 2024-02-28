@@ -179,6 +179,14 @@ pub async fn before_scenario(
     };
     let unique = format!("{}-{}-{}", prefix, name, frozen_time.num_seconds());
     let unique_alnum = NON_ALNUM_RE.replace_all(unique.as_str(), "").to_string();
+
+    let uuid_first = frozen_time.num_seconds().to_string();
+    let uuid = format!(
+        "{}-0000-0000-0000-{}00",
+        uuid_first[..8].to_string(),
+        uuid_first[..10].to_string()
+    );
+
     world.fixtures = json!({
         "unique": unique,
         "unique_lower": unique.to_ascii_lowercase(),
@@ -189,6 +197,7 @@ pub async fn before_scenario(
         "unique_hash": digest(unique)[..16],
         "now": frozen_time.num_seconds(),
         "now_millis": frozen_time.num_milliseconds(),
+        "uuid": uuid,
     });
 }
 
