@@ -563,20 +563,27 @@ fn response_is_bool(world: &mut DatadogWorld, path: String, expected: String) {
 }
 
 fn req_eq(lhs: &vcr_cassette::Request, rhs: &vcr_cassette::Request) -> bool {
-    let lhs_query = urldecode::decode(
+    let lhs_query = urlencoding::decode(
         lhs.uri
             .query()
             .unwrap_or_default()
             .to_string()
-            .replace("+", "%20"),
-    );
-    let rhs_query = urldecode::decode(
+            .replace("+", "%20")
+            .as_str(),
+    )
+    .expect("UTF-8")
+    .to_string();
+
+    let rhs_query = urlencoding::decode(
         rhs.uri
             .query()
             .unwrap_or_default()
             .to_string()
-            .replace("+", "%20"),
-    );
+            .replace("+", "%20")
+            .as_str(),
+    )
+    .expect("UTF-8")
+    .to_string();
 
     let lhs_queries: HashSet<_> = lhs_query.split("&").into_iter().collect();
     let rhs_queries: HashSet<_> = rhs_query.split("&").into_iter().collect();
