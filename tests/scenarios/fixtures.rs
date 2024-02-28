@@ -233,12 +233,13 @@ pub fn given_resource_in_system(
 
     let mut given: Value = Value::Null;
     let mut given_api_version: String = "".to_string();
+    let mut found = false;
     for (version, values) in GIVEN_MAP.iter() {
-        let found = false;
         for value in values.as_array().unwrap() {
             if value.get("step").unwrap().as_str().unwrap() == context.step.value {
                 given = value.clone();
                 given_api_version = version.clone();
+                found = true;
                 break;
             };
         }
@@ -247,7 +248,7 @@ pub fn given_resource_in_system(
         }
     }
 
-    if given_api_version == "" || given.is_null() {
+    if !found {
         panic!("given step not found");
     }
     
