@@ -241,14 +241,22 @@ impl ServiceScorecardsAPI {
         &self,
         body: crate::datadogV2::model::OutcomesBatchRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::OutcomesBatchResponse>,
+        crate::datadogV2::model::OutcomesBatchResponse,
         Error<CreateScorecardOutcomesBatchError>,
     > {
         match self
             .create_scorecard_outcomes_batch_with_http_info(body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -309,13 +317,18 @@ impl ServiceScorecardsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::OutcomesBatchResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::OutcomesBatchResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateScorecardOutcomesBatchError> =
                 serde_json::from_str(&local_content).ok();
@@ -332,10 +345,17 @@ impl ServiceScorecardsAPI {
     pub async fn create_scorecard_rule(
         &self,
         body: crate::datadogV2::model::CreateRuleRequest,
-    ) -> Result<Option<crate::datadogV2::model::CreateRuleResponse>, Error<CreateScorecardRuleError>>
-    {
+    ) -> Result<crate::datadogV2::model::CreateRuleResponse, Error<CreateScorecardRuleError>> {
         match self.create_scorecard_rule_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -396,13 +416,18 @@ impl ServiceScorecardsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::CreateRuleResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::CreateRuleResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateScorecardRuleError> =
                 serde_json::from_str(&local_content).ok();
@@ -419,9 +444,9 @@ impl ServiceScorecardsAPI {
     pub async fn delete_scorecard_rule(
         &self,
         rule_id: String,
-    ) -> Result<Option<()>, Error<DeleteScorecardRuleError>> {
+    ) -> Result<(), Error<DeleteScorecardRuleError>> {
         match self.delete_scorecard_rule_with_http_info(rule_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -494,10 +519,17 @@ impl ServiceScorecardsAPI {
     pub async fn list_scorecard_outcomes(
         &self,
         params: ListScorecardOutcomesOptionalParams,
-    ) -> Result<Option<crate::datadogV2::model::OutcomesResponse>, Error<ListScorecardOutcomesError>>
-    {
+    ) -> Result<crate::datadogV2::model::OutcomesResponse, Error<ListScorecardOutcomesError>> {
         match self.list_scorecard_outcomes_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -606,13 +638,17 @@ impl ServiceScorecardsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::OutcomesResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::OutcomesResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListScorecardOutcomesError> =
                 serde_json::from_str(&local_content).ok();
@@ -629,10 +665,17 @@ impl ServiceScorecardsAPI {
     pub async fn list_scorecard_rules(
         &self,
         params: ListScorecardRulesOptionalParams,
-    ) -> Result<Option<crate::datadogV2::model::ListRulesResponse>, Error<ListScorecardRulesError>>
-    {
+    ) -> Result<crate::datadogV2::model::ListRulesResponse, Error<ListScorecardRulesError>> {
         match self.list_scorecard_rules_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -739,13 +782,17 @@ impl ServiceScorecardsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::ListRulesResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::ListRulesResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListScorecardRulesError> =
                 serde_json::from_str(&local_content).ok();

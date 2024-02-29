@@ -104,12 +104,18 @@ impl ServiceLevelObjectiveCorrectionsAPI {
     pub async fn create_slo_correction(
         &self,
         body: crate::datadogV1::model::SLOCorrectionCreateRequest,
-    ) -> Result<
-        Option<crate::datadogV1::model::SLOCorrectionResponse>,
-        Error<CreateSLOCorrectionError>,
-    > {
+    ) -> Result<crate::datadogV1::model::SLOCorrectionResponse, Error<CreateSLOCorrectionError>>
+    {
         match self.create_slo_correction_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -162,13 +168,18 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SLOCorrectionResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SLOCorrectionResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateSLOCorrectionError> =
                 serde_json::from_str(&local_content).ok();
@@ -185,12 +196,12 @@ impl ServiceLevelObjectiveCorrectionsAPI {
     pub async fn delete_slo_correction(
         &self,
         slo_correction_id: String,
-    ) -> Result<Option<()>, Error<DeleteSLOCorrectionError>> {
+    ) -> Result<(), Error<DeleteSLOCorrectionError>> {
         match self
             .delete_slo_correction_with_http_info(slo_correction_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -255,13 +266,20 @@ impl ServiceLevelObjectiveCorrectionsAPI {
     pub async fn get_slo_correction(
         &self,
         slo_correction_id: String,
-    ) -> Result<Option<crate::datadogV1::model::SLOCorrectionResponse>, Error<GetSLOCorrectionError>>
-    {
+    ) -> Result<crate::datadogV1::model::SLOCorrectionResponse, Error<GetSLOCorrectionError>> {
         match self
             .get_slo_correction_with_http_info(slo_correction_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -308,13 +326,18 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SLOCorrectionResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SLOCorrectionResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetSLOCorrectionError> =
                 serde_json::from_str(&local_content).ok();
@@ -331,12 +354,18 @@ impl ServiceLevelObjectiveCorrectionsAPI {
     pub async fn list_slo_correction(
         &self,
         params: ListSLOCorrectionOptionalParams,
-    ) -> Result<
-        Option<crate::datadogV1::model::SLOCorrectionListResponse>,
-        Error<ListSLOCorrectionError>,
-    > {
+    ) -> Result<crate::datadogV1::model::SLOCorrectionListResponse, Error<ListSLOCorrectionError>>
+    {
         match self.list_slo_correction_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -395,13 +424,18 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SLOCorrectionListResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SLOCorrectionListResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListSLOCorrectionError> =
                 serde_json::from_str(&local_content).ok();
@@ -419,15 +453,21 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         &self,
         slo_correction_id: String,
         body: crate::datadogV1::model::SLOCorrectionUpdateRequest,
-    ) -> Result<
-        Option<crate::datadogV1::model::SLOCorrectionResponse>,
-        Error<UpdateSLOCorrectionError>,
-    > {
+    ) -> Result<crate::datadogV1::model::SLOCorrectionResponse, Error<UpdateSLOCorrectionError>>
+    {
         match self
             .update_slo_correction_with_http_info(slo_correction_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -482,13 +522,18 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SLOCorrectionResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SLOCorrectionResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateSLOCorrectionError> =
                 serde_json::from_str(&local_content).ok();

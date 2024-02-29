@@ -82,10 +82,17 @@ impl LogsMetricsAPI {
     pub async fn create_logs_metric(
         &self,
         body: crate::datadogV2::model::LogsMetricCreateRequest,
-    ) -> Result<Option<crate::datadogV2::model::LogsMetricResponse>, Error<CreateLogsMetricError>>
-    {
+    ) -> Result<crate::datadogV2::model::LogsMetricResponse, Error<CreateLogsMetricError>> {
         match self.create_logs_metric_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -139,13 +146,18 @@ impl LogsMetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::LogsMetricResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::LogsMetricResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateLogsMetricError> =
                 serde_json::from_str(&local_content).ok();
@@ -162,9 +174,9 @@ impl LogsMetricsAPI {
     pub async fn delete_logs_metric(
         &self,
         metric_id: String,
-    ) -> Result<Option<()>, Error<DeleteLogsMetricError>> {
+    ) -> Result<(), Error<DeleteLogsMetricError>> {
         match self.delete_logs_metric_with_http_info(metric_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -229,10 +241,17 @@ impl LogsMetricsAPI {
     pub async fn get_logs_metric(
         &self,
         metric_id: String,
-    ) -> Result<Option<crate::datadogV2::model::LogsMetricResponse>, Error<GetLogsMetricError>>
-    {
+    ) -> Result<crate::datadogV2::model::LogsMetricResponse, Error<GetLogsMetricError>> {
         match self.get_logs_metric_with_http_info(metric_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -279,13 +298,18 @@ impl LogsMetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::LogsMetricResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::LogsMetricResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetLogsMetricError> =
                 serde_json::from_str(&local_content).ok();
@@ -301,10 +325,17 @@ impl LogsMetricsAPI {
     /// Get the list of configured log-based metrics with their definitions.
     pub async fn list_logs_metrics(
         &self,
-    ) -> Result<Option<crate::datadogV2::model::LogsMetricsResponse>, Error<ListLogsMetricsError>>
-    {
+    ) -> Result<crate::datadogV2::model::LogsMetricsResponse, Error<ListLogsMetricsError>> {
         match self.list_logs_metrics_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -349,13 +380,18 @@ impl LogsMetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::LogsMetricsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::LogsMetricsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListLogsMetricsError> =
                 serde_json::from_str(&local_content).ok();
@@ -374,13 +410,20 @@ impl LogsMetricsAPI {
         &self,
         metric_id: String,
         body: crate::datadogV2::model::LogsMetricUpdateRequest,
-    ) -> Result<Option<crate::datadogV2::model::LogsMetricResponse>, Error<UpdateLogsMetricError>>
-    {
+    ) -> Result<crate::datadogV2::model::LogsMetricResponse, Error<UpdateLogsMetricError>> {
         match self
             .update_logs_metric_with_http_info(metric_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -436,13 +479,18 @@ impl LogsMetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::LogsMetricResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::LogsMetricResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateLogsMetricError> =
                 serde_json::from_str(&local_content).ok();
