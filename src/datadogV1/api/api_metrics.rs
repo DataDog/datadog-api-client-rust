@@ -170,10 +170,17 @@ impl MetricsAPI {
     pub async fn get_metric_metadata(
         &self,
         metric_name: String,
-    ) -> Result<Option<crate::datadogV1::model::MetricMetadata>, Error<GetMetricMetadataError>>
-    {
+    ) -> Result<crate::datadogV1::model::MetricMetadata, Error<GetMetricMetadataError>> {
         match self.get_metric_metadata_with_http_info(metric_name).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -220,13 +227,16 @@ impl MetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::MetricMetadata> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::MetricMetadata>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetMetricMetadataError> =
                 serde_json::from_str(&local_content).ok();
@@ -244,10 +254,17 @@ impl MetricsAPI {
         &self,
         from: i64,
         params: ListActiveMetricsOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::MetricsListResponse>, Error<ListActiveMetricsError>>
-    {
+    ) -> Result<crate::datadogV1::model::MetricsListResponse, Error<ListActiveMetricsError>> {
         match self.list_active_metrics_with_http_info(from, params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -308,13 +325,18 @@ impl MetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::MetricsListResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::MetricsListResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListActiveMetricsError> =
                 serde_json::from_str(&local_content).ok();
@@ -331,10 +353,17 @@ impl MetricsAPI {
     pub async fn list_metrics(
         &self,
         q: String,
-    ) -> Result<Option<crate::datadogV1::model::MetricSearchResponse>, Error<ListMetricsError>>
-    {
+    ) -> Result<crate::datadogV1::model::MetricSearchResponse, Error<ListMetricsError>> {
         match self.list_metrics_with_http_info(q).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -382,13 +411,18 @@ impl MetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::MetricSearchResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::MetricSearchResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListMetricsError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -406,10 +440,17 @@ impl MetricsAPI {
         from: i64,
         to: i64,
         query: String,
-    ) -> Result<Option<crate::datadogV1::model::MetricsQueryResponse>, Error<QueryMetricsError>>
-    {
+    ) -> Result<crate::datadogV1::model::MetricsQueryResponse, Error<QueryMetricsError>> {
         match self.query_metrics_with_http_info(from, to, query).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -461,13 +502,18 @@ impl MetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::MetricsQueryResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::MetricsQueryResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<QueryMetricsError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -484,15 +530,21 @@ impl MetricsAPI {
         &self,
         body: crate::datadogV1::model::DistributionPointsPayload,
         params: SubmitDistributionPointsOptionalParams,
-    ) -> Result<
-        Option<crate::datadogV1::model::IntakePayloadAccepted>,
-        Error<SubmitDistributionPointsError>,
-    > {
+    ) -> Result<crate::datadogV1::model::IntakePayloadAccepted, Error<SubmitDistributionPointsError>>
+    {
         match self
             .submit_distribution_points_with_http_info(body, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -550,13 +602,18 @@ impl MetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::IntakePayloadAccepted> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::IntakePayloadAccepted>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<SubmitDistributionPointsError> =
                 serde_json::from_str(&local_content).ok();
@@ -584,10 +641,17 @@ impl MetricsAPI {
         &self,
         body: crate::datadogV1::model::MetricsPayload,
         params: SubmitMetricsOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::IntakePayloadAccepted>, Error<SubmitMetricsError>>
-    {
+    ) -> Result<crate::datadogV1::model::IntakePayloadAccepted, Error<SubmitMetricsError>> {
         match self.submit_metrics_with_http_info(body, params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -655,13 +719,18 @@ impl MetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::IntakePayloadAccepted> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::IntakePayloadAccepted>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<SubmitMetricsError> =
                 serde_json::from_str(&local_content).ok();
@@ -679,13 +748,20 @@ impl MetricsAPI {
         &self,
         metric_name: String,
         body: crate::datadogV1::model::MetricMetadata,
-    ) -> Result<Option<crate::datadogV1::model::MetricMetadata>, Error<UpdateMetricMetadataError>>
-    {
+    ) -> Result<crate::datadogV1::model::MetricMetadata, Error<UpdateMetricMetadataError>> {
         match self
             .update_metric_metadata_with_http_info(metric_name, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -740,13 +816,16 @@ impl MetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::MetricMetadata> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::MetricMetadata>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateMetricMetadataError> =
                 serde_json::from_str(&local_content).ok();

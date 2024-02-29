@@ -126,11 +126,19 @@ impl CIVisibilityTestsAPI {
         &self,
         body: crate::datadogV2::model::CIAppTestsAggregateRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::CIAppTestsAnalyticsAggregateResponse>,
+        crate::datadogV2::model::CIAppTestsAnalyticsAggregateResponse,
         Error<AggregateCIAppTestEventsError>,
     > {
         match self.aggregate_ci_app_test_events_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -183,14 +191,19 @@ impl CIVisibilityTestsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<
+            match serde_json::from_str::<
                 crate::datadogV2::model::CIAppTestsAnalyticsAggregateResponse,
-            > = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<AggregateCIAppTestEventsError> =
                 serde_json::from_str(&local_content).ok();
@@ -210,12 +223,18 @@ impl CIVisibilityTestsAPI {
     pub async fn list_ci_app_test_events(
         &self,
         params: ListCIAppTestEventsOptionalParams,
-    ) -> Result<
-        Option<crate::datadogV2::model::CIAppTestEventsResponse>,
-        Error<ListCIAppTestEventsError>,
-    > {
+    ) -> Result<crate::datadogV2::model::CIAppTestEventsResponse, Error<ListCIAppTestEventsError>>
+    {
         match self.list_ci_app_test_events_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -297,13 +316,18 @@ impl CIVisibilityTestsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::CIAppTestEventsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::CIAppTestEventsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListCIAppTestEventsError> =
                 serde_json::from_str(&local_content).ok();
@@ -323,12 +347,18 @@ impl CIVisibilityTestsAPI {
     pub async fn search_ci_app_test_events(
         &self,
         params: SearchCIAppTestEventsOptionalParams,
-    ) -> Result<
-        Option<crate::datadogV2::model::CIAppTestEventsResponse>,
-        Error<SearchCIAppTestEventsError>,
-    > {
+    ) -> Result<crate::datadogV2::model::CIAppTestEventsResponse, Error<SearchCIAppTestEventsError>>
+    {
         match self.search_ci_app_test_events_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -387,13 +417,18 @@ impl CIVisibilityTestsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::CIAppTestEventsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::CIAppTestEventsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<SearchCIAppTestEventsError> =
                 serde_json::from_str(&local_content).ok();

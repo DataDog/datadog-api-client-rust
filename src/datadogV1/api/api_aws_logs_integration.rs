@@ -106,12 +106,18 @@ impl AWSLogsIntegrationAPI {
     pub async fn check_aws_logs_lambda_async(
         &self,
         body: crate::datadogV1::model::AWSAccountAndLambdaRequest,
-    ) -> Result<
-        Option<crate::datadogV1::model::AWSLogsAsyncResponse>,
-        Error<CheckAWSLogsLambdaAsyncError>,
-    > {
+    ) -> Result<crate::datadogV1::model::AWSLogsAsyncResponse, Error<CheckAWSLogsLambdaAsyncError>>
+    {
         match self.check_aws_logs_lambda_async_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -171,13 +177,18 @@ impl AWSLogsIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::AWSLogsAsyncResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::AWSLogsAsyncResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CheckAWSLogsLambdaAsyncError> =
                 serde_json::from_str(&local_content).ok();
@@ -203,15 +214,21 @@ impl AWSLogsIntegrationAPI {
     pub async fn check_aws_logs_services_async(
         &self,
         body: crate::datadogV1::model::AWSLogsServicesRequest,
-    ) -> Result<
-        Option<crate::datadogV1::model::AWSLogsAsyncResponse>,
-        Error<CheckAWSLogsServicesAsyncError>,
-    > {
+    ) -> Result<crate::datadogV1::model::AWSLogsAsyncResponse, Error<CheckAWSLogsServicesAsyncError>>
+    {
         match self
             .check_aws_logs_services_async_with_http_info(body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -273,13 +290,18 @@ impl AWSLogsIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::AWSLogsAsyncResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::AWSLogsAsyncResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CheckAWSLogsServicesAsyncError> =
                 serde_json::from_str(&local_content).ok();
@@ -296,12 +318,18 @@ impl AWSLogsIntegrationAPI {
     pub async fn create_aws_lambda_arn(
         &self,
         body: crate::datadogV1::model::AWSAccountAndLambdaRequest,
-    ) -> Result<
-        Option<std::collections::BTreeMap<String, serde_json::Value>>,
-        Error<CreateAWSLambdaARNError>,
-    > {
+    ) -> Result<std::collections::BTreeMap<String, serde_json::Value>, Error<CreateAWSLambdaARNError>>
+    {
         match self.create_aws_lambda_arn_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -354,13 +382,18 @@ impl AWSLogsIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateAWSLambdaARNError> =
                 serde_json::from_str(&local_content).ok();
@@ -377,12 +410,18 @@ impl AWSLogsIntegrationAPI {
     pub async fn delete_aws_lambda_arn(
         &self,
         body: crate::datadogV1::model::AWSAccountAndLambdaRequest,
-    ) -> Result<
-        Option<std::collections::BTreeMap<String, serde_json::Value>>,
-        Error<DeleteAWSLambdaARNError>,
-    > {
+    ) -> Result<std::collections::BTreeMap<String, serde_json::Value>, Error<DeleteAWSLambdaARNError>>
+    {
         match self.delete_aws_lambda_arn_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -435,13 +474,18 @@ impl AWSLogsIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<DeleteAWSLambdaARNError> =
                 serde_json::from_str(&local_content).ok();
@@ -459,11 +503,19 @@ impl AWSLogsIntegrationAPI {
         &self,
         body: crate::datadogV1::model::AWSLogsServicesRequest,
     ) -> Result<
-        Option<std::collections::BTreeMap<String, serde_json::Value>>,
+        std::collections::BTreeMap<String, serde_json::Value>,
         Error<EnableAWSLogServicesError>,
     > {
         match self.enable_aws_log_services_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -516,13 +568,18 @@ impl AWSLogsIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<EnableAWSLogServicesError> =
                 serde_json::from_str(&local_content).ok();
@@ -539,11 +596,19 @@ impl AWSLogsIntegrationAPI {
     pub async fn list_aws_logs_integrations(
         &self,
     ) -> Result<
-        Option<Vec<crate::datadogV1::model::AWSLogsListResponse>>,
+        Vec<crate::datadogV1::model::AWSLogsListResponse>,
         Error<ListAWSLogsIntegrationsError>,
     > {
         match self.list_aws_logs_integrations_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -588,13 +653,18 @@ impl AWSLogsIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<Vec<crate::datadogV1::model::AWSLogsListResponse>> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<Vec<crate::datadogV1::model::AWSLogsListResponse>>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListAWSLogsIntegrationsError> =
                 serde_json::from_str(&local_content).ok();
@@ -611,11 +681,19 @@ impl AWSLogsIntegrationAPI {
     pub async fn list_aws_logs_services(
         &self,
     ) -> Result<
-        Option<Vec<crate::datadogV1::model::AWSLogsListServicesResponse>>,
+        Vec<crate::datadogV1::model::AWSLogsListServicesResponse>,
         Error<ListAWSLogsServicesError>,
     > {
         match self.list_aws_logs_services_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -660,13 +738,18 @@ impl AWSLogsIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<Vec<crate::datadogV1::model::AWSLogsListServicesResponse>> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<Vec<crate::datadogV1::model::AWSLogsListServicesResponse>>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListAWSLogsServicesError> =
                 serde_json::from_str(&local_content).ok();

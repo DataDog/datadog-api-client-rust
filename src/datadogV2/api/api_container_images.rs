@@ -86,12 +86,18 @@ impl ContainerImagesAPI {
     pub async fn list_container_images(
         &self,
         params: ListContainerImagesOptionalParams,
-    ) -> Result<
-        Option<crate::datadogV2::model::ContainerImagesResponse>,
-        Error<ListContainerImagesError>,
-    > {
+    ) -> Result<crate::datadogV2::model::ContainerImagesResponse, Error<ListContainerImagesError>>
+    {
         match self.list_container_images_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -165,13 +171,18 @@ impl ContainerImagesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::ContainerImagesResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::ContainerImagesResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListContainerImagesError> =
                 serde_json::from_str(&local_content).ok();

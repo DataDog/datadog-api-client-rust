@@ -147,10 +147,17 @@ impl ServiceAccountsAPI {
     pub async fn create_service_account(
         &self,
         body: crate::datadogV2::model::ServiceAccountCreateRequest,
-    ) -> Result<Option<crate::datadogV2::model::UserResponse>, Error<CreateServiceAccountError>>
-    {
+    ) -> Result<crate::datadogV2::model::UserResponse, Error<CreateServiceAccountError>> {
         match self.create_service_account_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -203,13 +210,16 @@ impl ServiceAccountsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::UserResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::UserResponse>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateServiceAccountError> =
                 serde_json::from_str(&local_content).ok();
@@ -228,14 +238,22 @@ impl ServiceAccountsAPI {
         service_account_id: String,
         body: crate::datadogV2::model::ApplicationKeyCreateRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::ApplicationKeyResponse>,
+        crate::datadogV2::model::ApplicationKeyResponse,
         Error<CreateServiceAccountApplicationKeyError>,
     > {
         match self
             .create_service_account_application_key_with_http_info(service_account_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -290,13 +308,18 @@ impl ServiceAccountsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::ApplicationKeyResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::ApplicationKeyResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateServiceAccountApplicationKeyError> =
                 serde_json::from_str(&local_content).ok();
@@ -314,12 +337,12 @@ impl ServiceAccountsAPI {
         &self,
         service_account_id: String,
         app_key_id: String,
-    ) -> Result<Option<()>, Error<DeleteServiceAccountApplicationKeyError>> {
+    ) -> Result<(), Error<DeleteServiceAccountApplicationKeyError>> {
         match self
             .delete_service_account_application_key_with_http_info(service_account_id, app_key_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -388,14 +411,22 @@ impl ServiceAccountsAPI {
         service_account_id: String,
         app_key_id: String,
     ) -> Result<
-        Option<crate::datadogV2::model::PartialApplicationKeyResponse>,
+        crate::datadogV2::model::PartialApplicationKeyResponse,
         Error<GetServiceAccountApplicationKeyError>,
     > {
         match self
             .get_service_account_application_key_with_http_info(service_account_id, app_key_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -444,13 +475,18 @@ impl ServiceAccountsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::PartialApplicationKeyResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::PartialApplicationKeyResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetServiceAccountApplicationKeyError> =
                 serde_json::from_str(&local_content).ok();
@@ -469,14 +505,22 @@ impl ServiceAccountsAPI {
         service_account_id: String,
         params: ListServiceAccountApplicationKeysOptionalParams,
     ) -> Result<
-        Option<crate::datadogV2::model::ListApplicationKeysResponse>,
+        crate::datadogV2::model::ListApplicationKeysResponse,
         Error<ListServiceAccountApplicationKeysError>,
     > {
         match self
             .list_service_account_application_keys_with_http_info(service_account_id, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -557,13 +601,18 @@ impl ServiceAccountsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::ListApplicationKeysResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::ListApplicationKeysResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListServiceAccountApplicationKeysError> =
                 serde_json::from_str(&local_content).ok();
@@ -583,7 +632,7 @@ impl ServiceAccountsAPI {
         app_key_id: String,
         body: crate::datadogV2::model::ApplicationKeyUpdateRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::PartialApplicationKeyResponse>,
+        crate::datadogV2::model::PartialApplicationKeyResponse,
         Error<UpdateServiceAccountApplicationKeyError>,
     > {
         match self
@@ -594,7 +643,15 @@ impl ServiceAccountsAPI {
             )
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -651,13 +708,18 @@ impl ServiceAccountsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::PartialApplicationKeyResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::PartialApplicationKeyResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateServiceAccountApplicationKeyError> =
                 serde_json::from_str(&local_content).ok();

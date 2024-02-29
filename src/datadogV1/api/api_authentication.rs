@@ -38,12 +38,18 @@ impl AuthenticationAPI {
     /// Check if the API key (not the APP key) is valid. If invalid, a 403 is returned.
     pub async fn validate(
         &self,
-    ) -> Result<
-        Option<crate::datadogV1::model::AuthenticationValidationResponse>,
-        Error<ValidateError>,
-    > {
+    ) -> Result<crate::datadogV1::model::AuthenticationValidationResponse, Error<ValidateError>>
+    {
         match self.validate_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -85,13 +91,18 @@ impl AuthenticationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::AuthenticationValidationResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::AuthenticationValidationResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ValidateError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {

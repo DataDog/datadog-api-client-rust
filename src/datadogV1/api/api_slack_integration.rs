@@ -87,14 +87,22 @@ impl SlackIntegrationAPI {
         account_name: String,
         body: crate::datadogV1::model::SlackIntegrationChannel,
     ) -> Result<
-        Option<crate::datadogV1::model::SlackIntegrationChannel>,
+        crate::datadogV1::model::SlackIntegrationChannel,
         Error<CreateSlackIntegrationChannelError>,
     > {
         match self
             .create_slack_integration_channel_with_http_info(account_name, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -149,13 +157,18 @@ impl SlackIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SlackIntegrationChannel> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SlackIntegrationChannel>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateSlackIntegrationChannelError> =
                 serde_json::from_str(&local_content).ok();
@@ -174,14 +187,22 @@ impl SlackIntegrationAPI {
         account_name: String,
         channel_name: String,
     ) -> Result<
-        Option<crate::datadogV1::model::SlackIntegrationChannel>,
+        crate::datadogV1::model::SlackIntegrationChannel,
         Error<GetSlackIntegrationChannelError>,
     > {
         match self
             .get_slack_integration_channel_with_http_info(account_name, channel_name)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -231,13 +252,18 @@ impl SlackIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SlackIntegrationChannel> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SlackIntegrationChannel>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetSlackIntegrationChannelError> =
                 serde_json::from_str(&local_content).ok();
@@ -255,14 +281,22 @@ impl SlackIntegrationAPI {
         &self,
         account_name: String,
     ) -> Result<
-        Option<Vec<crate::datadogV1::model::SlackIntegrationChannel>>,
+        Vec<crate::datadogV1::model::SlackIntegrationChannel>,
         Error<GetSlackIntegrationChannelsError>,
     > {
         match self
             .get_slack_integration_channels_with_http_info(account_name)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -309,13 +343,18 @@ impl SlackIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<Vec<crate::datadogV1::model::SlackIntegrationChannel>> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<Vec<crate::datadogV1::model::SlackIntegrationChannel>>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetSlackIntegrationChannelsError> =
                 serde_json::from_str(&local_content).ok();
@@ -333,12 +372,12 @@ impl SlackIntegrationAPI {
         &self,
         account_name: String,
         channel_name: String,
-    ) -> Result<Option<()>, Error<RemoveSlackIntegrationChannelError>> {
+    ) -> Result<(), Error<RemoveSlackIntegrationChannelError>> {
         match self
             .remove_slack_integration_channel_with_http_info(account_name, channel_name)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -409,14 +448,22 @@ impl SlackIntegrationAPI {
         channel_name: String,
         body: crate::datadogV1::model::SlackIntegrationChannel,
     ) -> Result<
-        Option<crate::datadogV1::model::SlackIntegrationChannel>,
+        crate::datadogV1::model::SlackIntegrationChannel,
         Error<UpdateSlackIntegrationChannelError>,
     > {
         match self
             .update_slack_integration_channel_with_http_info(account_name, channel_name, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -474,13 +521,18 @@ impl SlackIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SlackIntegrationChannel> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SlackIntegrationChannel>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateSlackIntegrationChannelError> =
                 serde_json::from_str(&local_content).ok();

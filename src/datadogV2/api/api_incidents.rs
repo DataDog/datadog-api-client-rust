@@ -404,9 +404,17 @@ impl IncidentsAPI {
     pub async fn create_incident(
         &self,
         body: crate::datadogV2::model::IncidentCreateRequest,
-    ) -> Result<Option<crate::datadogV2::model::IncidentResponse>, Error<CreateIncidentError>> {
+    ) -> Result<crate::datadogV2::model::IncidentResponse, Error<CreateIncidentError>> {
         match self.create_incident_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -467,13 +475,17 @@ impl IncidentsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::IncidentResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::IncidentResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateIncidentError> =
                 serde_json::from_str(&local_content).ok();
@@ -492,14 +504,22 @@ impl IncidentsAPI {
         incident_id: String,
         body: crate::datadogV2::model::IncidentIntegrationMetadataCreateRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::IncidentIntegrationMetadataResponse>,
+        crate::datadogV2::model::IncidentIntegrationMetadataResponse,
         Error<CreateIncidentIntegrationError>,
     > {
         match self
             .create_incident_integration_with_http_info(incident_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -562,13 +582,18 @@ impl IncidentsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::IncidentIntegrationMetadataResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::IncidentIntegrationMetadataResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateIncidentIntegrationError> =
                 serde_json::from_str(&local_content).ok();
@@ -586,13 +611,20 @@ impl IncidentsAPI {
         &self,
         incident_id: String,
         body: crate::datadogV2::model::IncidentTodoCreateRequest,
-    ) -> Result<Option<crate::datadogV2::model::IncidentTodoResponse>, Error<CreateIncidentTodoError>>
-    {
+    ) -> Result<crate::datadogV2::model::IncidentTodoResponse, Error<CreateIncidentTodoError>> {
         match self
             .create_incident_todo_with_http_info(incident_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -655,13 +687,18 @@ impl IncidentsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::IncidentTodoResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::IncidentTodoResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateIncidentTodoError> =
                 serde_json::from_str(&local_content).ok();
@@ -678,9 +715,9 @@ impl IncidentsAPI {
     pub async fn delete_incident(
         &self,
         incident_id: String,
-    ) -> Result<Option<()>, Error<DeleteIncidentError>> {
+    ) -> Result<(), Error<DeleteIncidentError>> {
         match self.delete_incident_with_http_info(incident_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -754,12 +791,12 @@ impl IncidentsAPI {
         &self,
         incident_id: String,
         integration_metadata_id: String,
-    ) -> Result<Option<()>, Error<DeleteIncidentIntegrationError>> {
+    ) -> Result<(), Error<DeleteIncidentIntegrationError>> {
         match self
             .delete_incident_integration_with_http_info(incident_id, integration_metadata_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -836,12 +873,12 @@ impl IncidentsAPI {
         &self,
         incident_id: String,
         todo_id: String,
-    ) -> Result<Option<()>, Error<DeleteIncidentTodoError>> {
+    ) -> Result<(), Error<DeleteIncidentTodoError>> {
         match self
             .delete_incident_todo_with_http_info(incident_id, todo_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -917,9 +954,17 @@ impl IncidentsAPI {
         &self,
         incident_id: String,
         params: GetIncidentOptionalParams,
-    ) -> Result<Option<crate::datadogV2::model::IncidentResponse>, Error<GetIncidentError>> {
+    ) -> Result<crate::datadogV2::model::IncidentResponse, Error<GetIncidentError>> {
         match self.get_incident_with_http_info(incident_id, params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -988,13 +1033,17 @@ impl IncidentsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::IncidentResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::IncidentResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetIncidentError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -1012,14 +1061,22 @@ impl IncidentsAPI {
         incident_id: String,
         integration_metadata_id: String,
     ) -> Result<
-        Option<crate::datadogV2::model::IncidentIntegrationMetadataResponse>,
+        crate::datadogV2::model::IncidentIntegrationMetadataResponse,
         Error<GetIncidentIntegrationError>,
     > {
         match self
             .get_incident_integration_with_http_info(incident_id, integration_metadata_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1077,13 +1134,18 @@ impl IncidentsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::IncidentIntegrationMetadataResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::IncidentIntegrationMetadataResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetIncidentIntegrationError> =
                 serde_json::from_str(&local_content).ok();
@@ -1101,13 +1163,20 @@ impl IncidentsAPI {
         &self,
         incident_id: String,
         todo_id: String,
-    ) -> Result<Option<crate::datadogV2::model::IncidentTodoResponse>, Error<GetIncidentTodoError>>
-    {
+    ) -> Result<crate::datadogV2::model::IncidentTodoResponse, Error<GetIncidentTodoError>> {
         match self
             .get_incident_todo_with_http_info(incident_id, todo_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1164,13 +1233,18 @@ impl IncidentsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::IncidentTodoResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::IncidentTodoResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetIncidentTodoError> =
                 serde_json::from_str(&local_content).ok();
@@ -1189,14 +1263,22 @@ impl IncidentsAPI {
         incident_id: String,
         params: ListIncidentAttachmentsOptionalParams,
     ) -> Result<
-        Option<crate::datadogV2::model::IncidentAttachmentsResponse>,
+        crate::datadogV2::model::IncidentAttachmentsResponse,
         Error<ListIncidentAttachmentsError>,
     > {
         match self
             .list_incident_attachments_with_http_info(incident_id, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1279,13 +1361,18 @@ impl IncidentsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::IncidentAttachmentsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::IncidentAttachmentsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListIncidentAttachmentsError> =
                 serde_json::from_str(&local_content).ok();
@@ -1303,14 +1390,22 @@ impl IncidentsAPI {
         &self,
         incident_id: String,
     ) -> Result<
-        Option<crate::datadogV2::model::IncidentIntegrationMetadataListResponse>,
+        crate::datadogV2::model::IncidentIntegrationMetadataListResponse,
         Error<ListIncidentIntegrationsError>,
     > {
         match self
             .list_incident_integrations_with_http_info(incident_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1365,14 +1460,19 @@ impl IncidentsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<
+            match serde_json::from_str::<
                 crate::datadogV2::model::IncidentIntegrationMetadataListResponse,
-            > = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListIncidentIntegrationsError> =
                 serde_json::from_str(&local_content).ok();
@@ -1389,12 +1489,18 @@ impl IncidentsAPI {
     pub async fn list_incident_todos(
         &self,
         incident_id: String,
-    ) -> Result<
-        Option<crate::datadogV2::model::IncidentTodoListResponse>,
-        Error<ListIncidentTodosError>,
-    > {
+    ) -> Result<crate::datadogV2::model::IncidentTodoListResponse, Error<ListIncidentTodosError>>
+    {
         match self.list_incident_todos_with_http_info(incident_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1449,13 +1555,18 @@ impl IncidentsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::IncidentTodoListResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::IncidentTodoListResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListIncidentTodosError> =
                 serde_json::from_str(&local_content).ok();
@@ -1472,9 +1583,17 @@ impl IncidentsAPI {
     pub async fn list_incidents(
         &self,
         params: ListIncidentsOptionalParams,
-    ) -> Result<Option<crate::datadogV2::model::IncidentsResponse>, Error<ListIncidentsError>> {
+    ) -> Result<crate::datadogV2::model::IncidentsResponse, Error<ListIncidentsError>> {
         match self.list_incidents_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1553,13 +1672,17 @@ impl IncidentsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::IncidentsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::IncidentsResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListIncidentsError> =
                 serde_json::from_str(&local_content).ok();
@@ -1577,10 +1700,17 @@ impl IncidentsAPI {
         &self,
         query: String,
         params: SearchIncidentsOptionalParams,
-    ) -> Result<Option<crate::datadogV2::model::IncidentSearchResponse>, Error<SearchIncidentsError>>
-    {
+    ) -> Result<crate::datadogV2::model::IncidentSearchResponse, Error<SearchIncidentsError>> {
         match self.search_incidents_with_http_info(query, params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1659,13 +1789,18 @@ impl IncidentsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::IncidentSearchResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::IncidentSearchResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<SearchIncidentsError> =
                 serde_json::from_str(&local_content).ok();
@@ -1684,12 +1819,20 @@ impl IncidentsAPI {
         incident_id: String,
         body: crate::datadogV2::model::IncidentUpdateRequest,
         params: UpdateIncidentOptionalParams,
-    ) -> Result<Option<crate::datadogV2::model::IncidentResponse>, Error<UpdateIncidentError>> {
+    ) -> Result<crate::datadogV2::model::IncidentResponse, Error<UpdateIncidentError>> {
         match self
             .update_incident_with_http_info(incident_id, body, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1768,13 +1911,17 @@ impl IncidentsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::IncidentResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::IncidentResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateIncidentError> =
                 serde_json::from_str(&local_content).ok();
@@ -1794,14 +1941,22 @@ impl IncidentsAPI {
         body: crate::datadogV2::model::IncidentAttachmentUpdateRequest,
         params: UpdateIncidentAttachmentsOptionalParams,
     ) -> Result<
-        Option<crate::datadogV2::model::IncidentAttachmentUpdateResponse>,
+        crate::datadogV2::model::IncidentAttachmentUpdateResponse,
         Error<UpdateIncidentAttachmentsError>,
     > {
         match self
             .update_incident_attachments_with_http_info(incident_id, body, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1880,13 +2035,18 @@ impl IncidentsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::IncidentAttachmentUpdateResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::IncidentAttachmentUpdateResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateIncidentAttachmentsError> =
                 serde_json::from_str(&local_content).ok();
@@ -1906,14 +2066,22 @@ impl IncidentsAPI {
         integration_metadata_id: String,
         body: crate::datadogV2::model::IncidentIntegrationMetadataPatchRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::IncidentIntegrationMetadataResponse>,
+        crate::datadogV2::model::IncidentIntegrationMetadataResponse,
         Error<UpdateIncidentIntegrationError>,
     > {
         match self
             .update_incident_integration_with_http_info(incident_id, integration_metadata_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1979,13 +2147,18 @@ impl IncidentsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::IncidentIntegrationMetadataResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::IncidentIntegrationMetadataResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateIncidentIntegrationError> =
                 serde_json::from_str(&local_content).ok();
@@ -2004,13 +2177,20 @@ impl IncidentsAPI {
         incident_id: String,
         todo_id: String,
         body: crate::datadogV2::model::IncidentTodoPatchRequest,
-    ) -> Result<Option<crate::datadogV2::model::IncidentTodoResponse>, Error<UpdateIncidentTodoError>>
-    {
+    ) -> Result<crate::datadogV2::model::IncidentTodoResponse, Error<UpdateIncidentTodoError>> {
         match self
             .update_incident_todo_with_http_info(incident_id, todo_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -2075,13 +2255,18 @@ impl IncidentsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::IncidentTodoResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::IncidentTodoResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateIncidentTodoError> =
                 serde_json::from_str(&local_content).ok();
