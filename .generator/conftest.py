@@ -141,16 +141,16 @@ def unique(request):
 
 
 TIME_FORMATTER = {
-    "now": "time.Now()",
-    "timestamp": "{sret}.Unix()",
+    "now": "SystemTime::now()",
+    "timestamp": "{sret}.duration_since(UNIX_EPOCH).unwrap()",
     "isoformat": "{sret}",  # .Format(time.RFC3339) we don't need to format it as time.Time{} is expected
     "units": {
-        "s": "{sret}.Add(time.Second*{num})",
-        "m": "{sret}.Add(time.Minute*{num})",
-        "h": "{sret}.Add(time.Hour*{num})",
-        "d": "{sret}.AddDate(0, 0, {num})",
-        "M": "{sret}.AddDate(0, {num}, 0)",
-        "y": "{sret}.AddDate({num}, 0, 0)",
+        "s": "{sret}.add(Duration::from_secs({num}))",
+        "m": "{sret}.add(Duration::from_secs({num}*60))",
+        "h": "{sret}.add(Duration::from_secs({num}*3600))",
+        "d": "{sret}.add(Duration::from_secs({num}*86400))",
+        "M": "{sret}.add(Duration::from_secs({num}*2592000))",
+        "y": "{sret}.add(Duration::from_secs({num}*31536000))",
     },
 }
 
@@ -187,9 +187,9 @@ def relative_time(imports, calls, freezed_time, iso):
             if iso:
                 return (
                     ret.isoformat(timespec="seconds"),
-                    TIME_FORMATTER["isoformat"].format(sret=sret),
+                    TIME_FORMATTER["isoformat"].format(sret=sret)+".as_secs() as i64",
                 )
-            return int(ret.timestamp()), TIME_FORMATTER["timestamp"].format(sret=sret)
+            return int(ret.timestamp()), TIME_FORMATTER["timestamp"].format(sret=sret)+".as_secs() as i64"
         return "", ""
 
     def store_calls(arg):
