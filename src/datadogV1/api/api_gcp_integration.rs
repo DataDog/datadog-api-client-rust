@@ -75,7 +75,15 @@ impl GCPIntegrationAPI {
         Error<CreateGCPIntegrationError>,
     > {
         match self.create_gcp_integration_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -161,7 +169,15 @@ impl GCPIntegrationAPI {
         Error<DeleteGCPIntegrationError>,
     > {
         match self.delete_gcp_integration_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -243,7 +259,15 @@ impl GCPIntegrationAPI {
         &self,
     ) -> Result<Vec<crate::datadogV1::model::GCPAccount>, Error<ListGCPIntegrationError>> {
         match self.list_gcp_integration_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -322,7 +346,15 @@ impl GCPIntegrationAPI {
         Error<UpdateGCPIntegrationError>,
     > {
         match self.update_gcp_integration_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

@@ -135,7 +135,15 @@ impl KeyManagementAPI {
         body: crate::datadogV1::model::ApiKey,
     ) -> Result<crate::datadogV1::model::ApiKeyResponse, Error<CreateAPIKeyError>> {
         match self.create_api_key_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -214,7 +222,15 @@ impl KeyManagementAPI {
     ) -> Result<crate::datadogV1::model::ApplicationKeyResponse, Error<CreateApplicationKeyError>>
     {
         match self.create_application_key_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -297,7 +313,15 @@ impl KeyManagementAPI {
         key: String,
     ) -> Result<crate::datadogV1::model::ApiKeyResponse, Error<DeleteAPIKeyError>> {
         match self.delete_api_key_with_http_info(key).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -370,7 +394,15 @@ impl KeyManagementAPI {
     ) -> Result<crate::datadogV1::model::ApplicationKeyResponse, Error<DeleteApplicationKeyError>>
     {
         match self.delete_application_key_with_http_info(key).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -447,7 +479,15 @@ impl KeyManagementAPI {
         key: String,
     ) -> Result<crate::datadogV1::model::ApiKeyResponse, Error<GetAPIKeyError>> {
         match self.get_api_key_with_http_info(key).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -520,7 +560,15 @@ impl KeyManagementAPI {
     ) -> Result<crate::datadogV1::model::ApplicationKeyResponse, Error<GetApplicationKeyError>>
     {
         match self.get_application_key_with_http_info(key).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -596,7 +644,15 @@ impl KeyManagementAPI {
         &self,
     ) -> Result<crate::datadogV1::model::ApiKeyListResponse, Error<ListAPIKeysError>> {
         match self.list_api_keys_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -668,7 +724,15 @@ impl KeyManagementAPI {
     ) -> Result<crate::datadogV1::model::ApplicationKeyListResponse, Error<ListApplicationKeysError>>
     {
         match self.list_application_keys_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -744,7 +808,15 @@ impl KeyManagementAPI {
         body: crate::datadogV1::model::ApiKey,
     ) -> Result<crate::datadogV1::model::ApiKeyResponse, Error<UpdateAPIKeyError>> {
         match self.update_api_key_with_http_info(key, body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -826,7 +898,15 @@ impl KeyManagementAPI {
     ) -> Result<crate::datadogV1::model::ApplicationKeyResponse, Error<UpdateApplicationKeyError>>
     {
         match self.update_application_key_with_http_info(key, body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

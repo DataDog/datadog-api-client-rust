@@ -79,7 +79,15 @@ impl PagerDutyIntegrationAPI {
             .create_pager_duty_integration_service_with_http_info(body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -238,7 +246,15 @@ impl PagerDutyIntegrationAPI {
             .get_pager_duty_integration_service_with_http_info(service_name)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

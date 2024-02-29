@@ -174,7 +174,15 @@ impl TagsAPI {
             .create_host_tags_with_http_info(host_name, body, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -348,7 +356,15 @@ impl TagsAPI {
         params: GetHostTagsOptionalParams,
     ) -> Result<crate::datadogV1::model::HostTags, Error<GetHostTagsError>> {
         match self.get_host_tags_with_http_info(host_name, params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -428,7 +444,15 @@ impl TagsAPI {
         params: ListHostTagsOptionalParams,
     ) -> Result<crate::datadogV1::model::TagToHosts, Error<ListHostTagsError>> {
         match self.list_host_tags_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -513,7 +537,15 @@ impl TagsAPI {
             .update_host_tags_with_http_info(host_name, body, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

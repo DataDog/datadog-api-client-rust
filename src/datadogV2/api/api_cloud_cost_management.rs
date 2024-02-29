@@ -129,7 +129,15 @@ impl CloudCostManagementAPI {
     ) -> Result<crate::datadogV2::model::AwsCURConfigResponse, Error<CreateCostAWSCURConfigError>>
     {
         match self.create_cost_awscur_config_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -215,7 +223,15 @@ impl CloudCostManagementAPI {
         Error<CreateCostAzureUCConfigsError>,
     > {
         match self.create_cost_azure_uc_configs_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -438,7 +454,15 @@ impl CloudCostManagementAPI {
     ) -> Result<crate::datadogV2::model::CloudCostActivityResponse, Error<GetCloudCostActivityError>>
     {
         match self.get_cloud_cost_activity_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -519,7 +543,15 @@ impl CloudCostManagementAPI {
             .list_aws_related_accounts_with_http_info(filter_management_account_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -600,7 +632,15 @@ impl CloudCostManagementAPI {
     ) -> Result<crate::datadogV2::model::AwsCURConfigsResponse, Error<ListCostAWSCURConfigsError>>
     {
         match self.list_cost_awscur_configs_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -675,7 +715,15 @@ impl CloudCostManagementAPI {
     ) -> Result<crate::datadogV2::model::AzureUCConfigsResponse, Error<ListCostAzureUCConfigsError>>
     {
         match self.list_cost_azure_uc_configs_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -755,7 +803,15 @@ impl CloudCostManagementAPI {
             .update_cost_awscur_config_with_http_info(cloud_account_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -847,7 +903,15 @@ impl CloudCostManagementAPI {
             .update_cost_azure_uc_configs_with_http_info(cloud_account_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

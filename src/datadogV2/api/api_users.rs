@@ -185,7 +185,15 @@ impl UsersAPI {
         body: crate::datadogV2::model::UserCreateRequest,
     ) -> Result<crate::datadogV2::model::UserResponse, Error<CreateUserError>> {
         match self.create_user_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -331,7 +339,15 @@ impl UsersAPI {
             .get_invitation_with_http_info(user_invitation_uuid)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -408,7 +424,15 @@ impl UsersAPI {
         user_id: String,
     ) -> Result<crate::datadogV2::model::UserResponse, Error<GetUserError>> {
         match self.get_user_with_http_info(user_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -480,7 +504,15 @@ impl UsersAPI {
         user_id: String,
     ) -> Result<crate::datadogV2::model::UserResponse, Error<ListUserOrganizationsError>> {
         match self.list_user_organizations_with_http_info(user_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -557,7 +589,15 @@ impl UsersAPI {
         user_id: String,
     ) -> Result<crate::datadogV2::model::PermissionsResponse, Error<ListUserPermissionsError>> {
         match self.list_user_permissions_with_http_info(user_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -636,7 +676,15 @@ impl UsersAPI {
         params: ListUsersOptionalParams,
     ) -> Result<crate::datadogV2::model::UsersResponse, Error<ListUsersError>> {
         match self.list_users_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -741,7 +789,15 @@ impl UsersAPI {
         body: crate::datadogV2::model::UserInvitationsRequest,
     ) -> Result<crate::datadogV2::model::UserInvitationsResponse, Error<SendInvitationsError>> {
         match self.send_invitations_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -826,7 +882,15 @@ impl UsersAPI {
         body: crate::datadogV2::model::UserUpdateRequest,
     ) -> Result<crate::datadogV2::model::UserResponse, Error<UpdateUserError>> {
         match self.update_user_with_http_info(user_id, body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

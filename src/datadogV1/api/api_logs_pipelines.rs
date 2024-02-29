@@ -101,7 +101,15 @@ impl LogsPipelinesAPI {
         body: crate::datadogV1::model::LogsPipeline,
     ) -> Result<crate::datadogV1::model::LogsPipeline, Error<CreateLogsPipelineError>> {
         match self.create_logs_pipeline_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -252,7 +260,15 @@ impl LogsPipelinesAPI {
         pipeline_id: String,
     ) -> Result<crate::datadogV1::model::LogsPipeline, Error<GetLogsPipelineError>> {
         match self.get_logs_pipeline_with_http_info(pipeline_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -326,7 +342,15 @@ impl LogsPipelinesAPI {
         &self,
     ) -> Result<crate::datadogV1::model::LogsPipelinesOrder, Error<GetLogsPipelineOrderError>> {
         match self.get_logs_pipeline_order_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -402,7 +426,15 @@ impl LogsPipelinesAPI {
         &self,
     ) -> Result<Vec<crate::datadogV1::model::LogsPipeline>, Error<ListLogsPipelinesError>> {
         match self.list_logs_pipelines_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -484,7 +516,15 @@ impl LogsPipelinesAPI {
             .update_logs_pipeline_with_http_info(pipeline_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -575,7 +615,15 @@ impl LogsPipelinesAPI {
     ) -> Result<crate::datadogV1::model::LogsPipelinesOrder, Error<UpdateLogsPipelineOrderError>>
     {
         match self.update_logs_pipeline_order_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

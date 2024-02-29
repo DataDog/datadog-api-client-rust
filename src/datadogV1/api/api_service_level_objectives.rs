@@ -289,7 +289,15 @@ impl ServiceLevelObjectivesAPI {
     ) -> Result<crate::datadogV1::model::CheckCanDeleteSLOResponse, Error<CheckCanDeleteSLOError>>
     {
         match self.check_can_delete_slo_with_http_info(ids).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -368,7 +376,15 @@ impl ServiceLevelObjectivesAPI {
         body: crate::datadogV1::model::ServiceLevelObjectiveRequest,
     ) -> Result<crate::datadogV1::model::SLOListResponse, Error<CreateSLOError>> {
         match self.create_slo_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -450,7 +466,15 @@ impl ServiceLevelObjectivesAPI {
         params: DeleteSLOOptionalParams,
     ) -> Result<crate::datadogV1::model::SLODeleteResponse, Error<DeleteSLOError>> {
         match self.delete_slo_with_http_info(slo_id, params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -540,7 +564,15 @@ impl ServiceLevelObjectivesAPI {
     ) -> Result<crate::datadogV1::model::SLOBulkDeleteResponse, Error<DeleteSLOTimeframeInBulkError>>
     {
         match self.delete_slo_timeframe_in_bulk_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -628,7 +660,15 @@ impl ServiceLevelObjectivesAPI {
         params: GetSLOOptionalParams,
     ) -> Result<crate::datadogV1::model::SLOResponse, Error<GetSLOError>> {
         match self.get_slo_with_http_info(slo_id, params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -709,7 +749,15 @@ impl ServiceLevelObjectivesAPI {
     ) -> Result<crate::datadogV1::model::SLOCorrectionListResponse, Error<GetSLOCorrectionsError>>
     {
         match self.get_slo_corrections_with_http_info(slo_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -799,7 +847,15 @@ impl ServiceLevelObjectivesAPI {
             .get_slo_history_with_http_info(slo_id, from_ts, to_ts, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -901,7 +957,15 @@ impl ServiceLevelObjectivesAPI {
         params: ListSLOsOptionalParams,
     ) -> Result<crate::datadogV1::model::SLOListResponse, Error<ListSLOsError>> {
         match self.list_slos_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1004,7 +1068,15 @@ impl ServiceLevelObjectivesAPI {
         params: SearchSLOOptionalParams,
     ) -> Result<crate::datadogV1::model::SearchSLOResponse, Error<SearchSLOError>> {
         match self.search_slo_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1100,7 +1172,15 @@ impl ServiceLevelObjectivesAPI {
         body: crate::datadogV1::model::ServiceLevelObjective,
     ) -> Result<crate::datadogV1::model::SLOListResponse, Error<UpdateSLOError>> {
         match self.update_slo_with_http_info(slo_id, body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

@@ -116,7 +116,15 @@ impl SpansAPI {
         body: crate::datadogV2::model::SpansAggregateRequest,
     ) -> Result<crate::datadogV2::model::SpansAggregateResponse, Error<AggregateSpansError>> {
         match self.aggregate_spans_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -206,7 +214,15 @@ impl SpansAPI {
         body: crate::datadogV2::model::SpansListRequest,
     ) -> Result<crate::datadogV2::model::SpansListResponse, Error<ListSpansError>> {
         match self.list_spans_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -297,7 +313,15 @@ impl SpansAPI {
         params: ListSpansGetOptionalParams,
     ) -> Result<crate::datadogV2::model::SpansListResponse, Error<ListSpansGetError>> {
         match self.list_spans_get_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

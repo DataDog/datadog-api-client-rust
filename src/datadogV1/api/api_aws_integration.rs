@@ -222,7 +222,15 @@ impl AWSIntegrationAPI {
     ) -> Result<crate::datadogV1::model::AWSAccountCreateResponse, Error<CreateAWSAccountError>>
     {
         match self.create_aws_account_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -314,7 +322,15 @@ impl AWSIntegrationAPI {
             .create_aws_event_bridge_source_with_http_info(body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -398,7 +414,15 @@ impl AWSIntegrationAPI {
     ) -> Result<std::collections::BTreeMap<String, serde_json::Value>, Error<CreateAWSTagFilterError>>
     {
         match self.create_aws_tag_filter_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -482,7 +506,15 @@ impl AWSIntegrationAPI {
     ) -> Result<crate::datadogV1::model::AWSAccountCreateResponse, Error<CreateNewAWSExternalIDError>>
     {
         match self.create_new_aws_external_id_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -566,7 +598,15 @@ impl AWSIntegrationAPI {
     ) -> Result<std::collections::BTreeMap<String, serde_json::Value>, Error<DeleteAWSAccountError>>
     {
         match self.delete_aws_account_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -655,7 +695,15 @@ impl AWSIntegrationAPI {
             .delete_aws_event_bridge_source_with_http_info(body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -739,7 +787,15 @@ impl AWSIntegrationAPI {
     ) -> Result<std::collections::BTreeMap<String, serde_json::Value>, Error<DeleteAWSTagFilterError>>
     {
         match self.delete_aws_tag_filter_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -822,7 +878,15 @@ impl AWSIntegrationAPI {
         params: ListAWSAccountsOptionalParams,
     ) -> Result<crate::datadogV1::model::AWSAccountListResponse, Error<ListAWSAccountsError>> {
         match self.list_aws_accounts_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -918,7 +982,15 @@ impl AWSIntegrationAPI {
         Error<ListAWSEventBridgeSourcesError>,
     > {
         match self.list_aws_event_bridge_sources_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -994,7 +1066,15 @@ impl AWSIntegrationAPI {
     ) -> Result<crate::datadogV1::model::AWSTagFilterListResponse, Error<ListAWSTagFiltersError>>
     {
         match self.list_aws_tag_filters_with_http_info(account_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1071,7 +1151,15 @@ impl AWSIntegrationAPI {
         &self,
     ) -> Result<Vec<String>, Error<ListAvailableAWSNamespacesError>> {
         match self.list_available_aws_namespaces_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1143,7 +1231,15 @@ impl AWSIntegrationAPI {
     ) -> Result<std::collections::BTreeMap<String, serde_json::Value>, Error<UpdateAWSAccountError>>
     {
         match self.update_aws_account_with_http_info(body, params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

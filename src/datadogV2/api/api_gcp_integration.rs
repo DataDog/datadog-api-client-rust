@@ -116,7 +116,15 @@ impl GCPIntegrationAPI {
         Error<CreateGCPSTSAccountError>,
     > {
         match self.create_gcpsts_account_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -266,7 +274,15 @@ impl GCPIntegrationAPI {
     ) -> Result<crate::datadogV2::model::GCPSTSDelegateAccountResponse, Error<GetGCPSTSDelegateError>>
     {
         match self.get_gcpsts_delegate_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -343,7 +359,15 @@ impl GCPIntegrationAPI {
         Error<ListGCPSTSAccountsError>,
     > {
         match self.list_gcpsts_accounts_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -421,7 +445,15 @@ impl GCPIntegrationAPI {
         Error<MakeGCPSTSDelegateError>,
     > {
         match self.make_gcpsts_delegate_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -514,7 +546,15 @@ impl GCPIntegrationAPI {
             .update_gcpsts_account_with_http_info(account_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

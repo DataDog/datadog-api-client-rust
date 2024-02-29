@@ -87,7 +87,15 @@ impl OktaIntegrationAPI {
         body: crate::datadogV2::model::OktaAccountRequest,
     ) -> Result<crate::datadogV2::model::OktaAccountResponse, Error<CreateOktaAccountError>> {
         match self.create_okta_account_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -237,7 +245,15 @@ impl OktaIntegrationAPI {
         account_id: String,
     ) -> Result<crate::datadogV2::model::OktaAccountResponse, Error<GetOktaAccountError>> {
         match self.get_okta_account_with_http_info(account_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -313,7 +329,15 @@ impl OktaIntegrationAPI {
         &self,
     ) -> Result<crate::datadogV2::model::OktaAccountsResponse, Error<ListOktaAccountsError>> {
         match self.list_okta_accounts_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -392,7 +416,15 @@ impl OktaIntegrationAPI {
             .update_okta_account_with_http_info(account_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

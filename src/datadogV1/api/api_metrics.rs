@@ -172,7 +172,15 @@ impl MetricsAPI {
         metric_name: String,
     ) -> Result<crate::datadogV1::model::MetricMetadata, Error<GetMetricMetadataError>> {
         match self.get_metric_metadata_with_http_info(metric_name).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -248,7 +256,15 @@ impl MetricsAPI {
         params: ListActiveMetricsOptionalParams,
     ) -> Result<crate::datadogV1::model::MetricsListResponse, Error<ListActiveMetricsError>> {
         match self.list_active_metrics_with_http_info(from, params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -339,7 +355,15 @@ impl MetricsAPI {
         q: String,
     ) -> Result<crate::datadogV1::model::MetricSearchResponse, Error<ListMetricsError>> {
         match self.list_metrics_with_http_info(q).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -418,7 +442,15 @@ impl MetricsAPI {
         query: String,
     ) -> Result<crate::datadogV1::model::MetricsQueryResponse, Error<QueryMetricsError>> {
         match self.query_metrics_with_http_info(from, to, query).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -504,7 +536,15 @@ impl MetricsAPI {
             .submit_distribution_points_with_http_info(body, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -603,7 +643,15 @@ impl MetricsAPI {
         params: SubmitMetricsOptionalParams,
     ) -> Result<crate::datadogV1::model::IntakePayloadAccepted, Error<SubmitMetricsError>> {
         match self.submit_metrics_with_http_info(body, params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -705,7 +753,15 @@ impl MetricsAPI {
             .update_metric_metadata_with_http_info(metric_name, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

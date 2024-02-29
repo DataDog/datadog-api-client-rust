@@ -125,7 +125,15 @@ impl AuditAPI {
         params: ListAuditLogsOptionalParams,
     ) -> Result<crate::datadogV2::model::AuditLogsEventsResponse, Error<ListAuditLogsError>> {
         match self.list_audit_logs_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -244,7 +252,15 @@ impl AuditAPI {
         params: SearchAuditLogsOptionalParams,
     ) -> Result<crate::datadogV2::model::AuditLogsEventsResponse, Error<SearchAuditLogsError>> {
         match self.search_audit_logs_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

@@ -239,7 +239,15 @@ impl DowntimesAPI {
         body: crate::datadogV2::model::DowntimeCreateRequest,
     ) -> Result<crate::datadogV2::model::DowntimeResponse, Error<CreateDowntimeError>> {
         match self.create_downtime_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -322,7 +330,15 @@ impl DowntimesAPI {
         params: GetDowntimeOptionalParams,
     ) -> Result<crate::datadogV2::model::DowntimeResponse, Error<GetDowntimeError>> {
         match self.get_downtime_with_http_info(downtime_id, params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -404,7 +420,15 @@ impl DowntimesAPI {
         params: ListDowntimesOptionalParams,
     ) -> Result<crate::datadogV2::model::ListDowntimesResponse, Error<ListDowntimesError>> {
         match self.list_downtimes_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -510,7 +534,15 @@ impl DowntimesAPI {
             .list_monitor_downtimes_with_http_info(monitor_id, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -602,7 +634,15 @@ impl DowntimesAPI {
         body: crate::datadogV2::model::DowntimeUpdateRequest,
     ) -> Result<crate::datadogV2::model::DowntimeResponse, Error<UpdateDowntimeError>> {
         match self.update_downtime_with_http_info(downtime_id, body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

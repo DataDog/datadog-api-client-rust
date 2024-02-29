@@ -262,7 +262,15 @@ impl RolesAPI {
             .add_permission_to_role_with_http_info(role_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -348,7 +356,15 @@ impl RolesAPI {
         body: crate::datadogV2::model::RelationshipToUser,
     ) -> Result<crate::datadogV2::model::UsersResponse, Error<AddUserToRoleError>> {
         match self.add_user_to_role_with_http_info(role_id, body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -430,7 +446,15 @@ impl RolesAPI {
         body: crate::datadogV2::model::RoleCloneRequest,
     ) -> Result<crate::datadogV2::model::RoleResponse, Error<CloneRoleError>> {
         match self.clone_role_with_http_info(role_id, body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -509,7 +533,15 @@ impl RolesAPI {
         body: crate::datadogV2::model::RoleCreateRequest,
     ) -> Result<crate::datadogV2::model::RoleCreateResponse, Error<CreateRoleError>> {
         match self.create_role_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -652,7 +684,15 @@ impl RolesAPI {
         role_id: String,
     ) -> Result<crate::datadogV2::model::RoleResponse, Error<GetRoleError>> {
         match self.get_role_with_http_info(role_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -722,7 +762,15 @@ impl RolesAPI {
         &self,
     ) -> Result<crate::datadogV2::model::PermissionsResponse, Error<ListPermissionsError>> {
         match self.list_permissions_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -797,7 +845,15 @@ impl RolesAPI {
         role_id: String,
     ) -> Result<crate::datadogV2::model::PermissionsResponse, Error<ListRolePermissionsError>> {
         match self.list_role_permissions_with_http_info(role_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -875,7 +931,15 @@ impl RolesAPI {
         params: ListRoleUsersOptionalParams,
     ) -> Result<crate::datadogV2::model::UsersResponse, Error<ListRoleUsersError>> {
         match self.list_role_users_with_http_info(role_id, params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -972,7 +1036,15 @@ impl RolesAPI {
         params: ListRolesOptionalParams,
     ) -> Result<crate::datadogV2::model::RolesResponse, Error<ListRolesError>> {
         match self.list_roles_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1076,7 +1148,15 @@ impl RolesAPI {
             .remove_permission_from_role_with_http_info(role_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1165,7 +1245,15 @@ impl RolesAPI {
             .remove_user_from_role_with_http_info(role_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1249,7 +1337,15 @@ impl RolesAPI {
         body: crate::datadogV2::model::RoleUpdateRequest,
     ) -> Result<crate::datadogV2::model::RoleUpdateResponse, Error<UpdateRoleError>> {
         match self.update_role_with_http_info(role_id, body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

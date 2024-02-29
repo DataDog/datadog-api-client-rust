@@ -52,7 +52,15 @@ impl IPAllowlistAPI {
         &self,
     ) -> Result<crate::datadogV2::model::IPAllowlistResponse, Error<GetIPAllowlistError>> {
         match self.get_ip_allowlist_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -127,7 +135,15 @@ impl IPAllowlistAPI {
         body: crate::datadogV2::model::IPAllowlistUpdateRequest,
     ) -> Result<crate::datadogV2::model::IPAllowlistResponse, Error<UpdateIPAllowlistError>> {
         match self.update_ip_allowlist_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

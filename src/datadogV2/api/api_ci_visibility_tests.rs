@@ -130,7 +130,15 @@ impl CIVisibilityTestsAPI {
         Error<AggregateCIAppTestEventsError>,
     > {
         match self.aggregate_ci_app_test_events_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -218,7 +226,15 @@ impl CIVisibilityTestsAPI {
     ) -> Result<crate::datadogV2::model::CIAppTestEventsResponse, Error<ListCIAppTestEventsError>>
     {
         match self.list_ci_app_test_events_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -334,7 +350,15 @@ impl CIVisibilityTestsAPI {
     ) -> Result<crate::datadogV2::model::CIAppTestEventsResponse, Error<SearchCIAppTestEventsError>>
     {
         match self.search_ci_app_test_events_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

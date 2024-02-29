@@ -90,7 +90,15 @@ impl LogsIndexesAPI {
         body: crate::datadogV1::model::LogsIndex,
     ) -> Result<crate::datadogV1::model::LogsIndex, Error<CreateLogsIndexError>> {
         match self.create_logs_index_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -169,7 +177,15 @@ impl LogsIndexesAPI {
         name: String,
     ) -> Result<crate::datadogV1::model::LogsIndex, Error<GetLogsIndexError>> {
         match self.get_logs_index_with_http_info(name).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -239,7 +255,15 @@ impl LogsIndexesAPI {
         &self,
     ) -> Result<crate::datadogV1::model::LogsIndexesOrder, Error<GetLogsIndexOrderError>> {
         match self.get_logs_index_order_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -313,7 +337,15 @@ impl LogsIndexesAPI {
         &self,
     ) -> Result<crate::datadogV1::model::LogsIndexListResponse, Error<ListLogIndexesError>> {
         match self.list_log_indexes_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -394,7 +426,15 @@ impl LogsIndexesAPI {
         body: crate::datadogV1::model::LogsIndexUpdateRequest,
     ) -> Result<crate::datadogV1::model::LogsIndex, Error<UpdateLogsIndexError>> {
         match self.update_logs_index_with_http_info(name, body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -480,7 +520,15 @@ impl LogsIndexesAPI {
         body: crate::datadogV1::model::LogsIndexesOrder,
     ) -> Result<crate::datadogV1::model::LogsIndexesOrder, Error<UpdateLogsIndexOrderError>> {
         match self.update_logs_index_order_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

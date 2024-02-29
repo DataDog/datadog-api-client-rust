@@ -122,7 +122,15 @@ impl AuthNMappingsAPI {
         body: crate::datadogV2::model::AuthNMappingCreateRequest,
     ) -> Result<crate::datadogV2::model::AuthNMappingResponse, Error<CreateAuthNMappingError>> {
         match self.create_authn_mapping_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -278,7 +286,15 @@ impl AuthNMappingsAPI {
             .get_authn_mapping_with_http_info(authn_mapping_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -355,7 +371,15 @@ impl AuthNMappingsAPI {
         params: ListAuthNMappingsOptionalParams,
     ) -> Result<crate::datadogV2::model::AuthNMappingsResponse, Error<ListAuthNMappingsError>> {
         match self.list_authn_mappings_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -458,7 +482,15 @@ impl AuthNMappingsAPI {
             .update_authn_mapping_with_http_info(authn_mapping_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

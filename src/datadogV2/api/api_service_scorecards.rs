@@ -248,7 +248,15 @@ impl ServiceScorecardsAPI {
             .create_scorecard_outcomes_batch_with_http_info(body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -339,7 +347,15 @@ impl ServiceScorecardsAPI {
         body: crate::datadogV2::model::CreateRuleRequest,
     ) -> Result<crate::datadogV2::model::CreateRuleResponse, Error<CreateScorecardRuleError>> {
         match self.create_scorecard_rule_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -505,7 +521,15 @@ impl ServiceScorecardsAPI {
         params: ListScorecardOutcomesOptionalParams,
     ) -> Result<crate::datadogV2::model::OutcomesResponse, Error<ListScorecardOutcomesError>> {
         match self.list_scorecard_outcomes_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -643,7 +667,15 @@ impl ServiceScorecardsAPI {
         params: ListScorecardRulesOptionalParams,
     ) -> Result<crate::datadogV2::model::ListRulesResponse, Error<ListScorecardRulesError>> {
         match self.list_scorecard_rules_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

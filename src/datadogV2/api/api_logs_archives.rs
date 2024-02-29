@@ -216,7 +216,15 @@ impl LogsArchivesAPI {
         body: crate::datadogV2::model::LogsArchiveCreateRequest,
     ) -> Result<crate::datadogV2::model::LogsArchive, Error<CreateLogsArchiveError>> {
         match self.create_logs_archive_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -362,7 +370,15 @@ impl LogsArchivesAPI {
         archive_id: String,
     ) -> Result<crate::datadogV2::model::LogsArchive, Error<GetLogsArchiveError>> {
         match self.get_logs_archive_with_http_info(archive_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -435,7 +451,15 @@ impl LogsArchivesAPI {
         &self,
     ) -> Result<crate::datadogV2::model::LogsArchiveOrder, Error<GetLogsArchiveOrderError>> {
         match self.get_logs_archive_order_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -513,7 +537,15 @@ impl LogsArchivesAPI {
             .list_archive_read_roles_with_http_info(archive_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -587,7 +619,15 @@ impl LogsArchivesAPI {
         &self,
     ) -> Result<crate::datadogV2::model::LogsArchives, Error<ListLogsArchivesError>> {
         match self.list_logs_archives_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -744,7 +784,15 @@ impl LogsArchivesAPI {
             .update_logs_archive_with_http_info(archive_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -832,7 +880,15 @@ impl LogsArchivesAPI {
         body: crate::datadogV2::model::LogsArchiveOrder,
     ) -> Result<crate::datadogV2::model::LogsArchiveOrder, Error<UpdateLogsArchiveOrderError>> {
         match self.update_logs_archive_order_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

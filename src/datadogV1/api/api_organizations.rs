@@ -102,7 +102,15 @@ impl OrganizationsAPI {
     ) -> Result<crate::datadogV1::model::OrganizationCreateResponse, Error<CreateChildOrgError>>
     {
         match self.create_child_org_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -194,7 +202,15 @@ impl OrganizationsAPI {
         public_id: String,
     ) -> Result<crate::datadogV1::model::OrgDowngradedResponse, Error<DowngradeOrgError>> {
         match self.downgrade_org_with_http_info(public_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -270,7 +286,15 @@ impl OrganizationsAPI {
         public_id: String,
     ) -> Result<crate::datadogV1::model::OrganizationResponse, Error<GetOrgError>> {
         match self.get_org_with_http_info(public_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -343,7 +367,15 @@ impl OrganizationsAPI {
         &self,
     ) -> Result<crate::datadogV1::model::OrganizationListResponse, Error<ListOrgsError>> {
         match self.list_orgs_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -418,7 +450,15 @@ impl OrganizationsAPI {
         body: crate::datadogV1::model::Organization,
     ) -> Result<crate::datadogV1::model::OrganizationResponse, Error<UpdateOrgError>> {
         match self.update_org_with_http_info(public_id, body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -509,7 +549,15 @@ impl OrganizationsAPI {
             .upload_idp_for_org_with_http_info(public_id, idp_file)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

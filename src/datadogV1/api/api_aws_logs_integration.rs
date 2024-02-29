@@ -109,7 +109,15 @@ impl AWSLogsIntegrationAPI {
     ) -> Result<crate::datadogV1::model::AWSLogsAsyncResponse, Error<CheckAWSLogsLambdaAsyncError>>
     {
         match self.check_aws_logs_lambda_async_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -212,7 +220,15 @@ impl AWSLogsIntegrationAPI {
             .check_aws_logs_services_async_with_http_info(body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -305,7 +321,15 @@ impl AWSLogsIntegrationAPI {
     ) -> Result<std::collections::BTreeMap<String, serde_json::Value>, Error<CreateAWSLambdaARNError>>
     {
         match self.create_aws_lambda_arn_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -389,7 +413,15 @@ impl AWSLogsIntegrationAPI {
     ) -> Result<std::collections::BTreeMap<String, serde_json::Value>, Error<DeleteAWSLambdaARNError>>
     {
         match self.delete_aws_lambda_arn_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -475,7 +507,15 @@ impl AWSLogsIntegrationAPI {
         Error<EnableAWSLogServicesError>,
     > {
         match self.enable_aws_log_services_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -560,7 +600,15 @@ impl AWSLogsIntegrationAPI {
         Error<ListAWSLogsIntegrationsError>,
     > {
         match self.list_aws_logs_integrations_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -637,7 +685,15 @@ impl AWSLogsIntegrationAPI {
         Error<ListAWSLogsServicesError>,
     > {
         match self.list_aws_logs_services_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

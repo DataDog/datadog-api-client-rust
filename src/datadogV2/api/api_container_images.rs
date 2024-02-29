@@ -89,7 +89,15 @@ impl ContainerImagesAPI {
     ) -> Result<crate::datadogV2::model::ContainerImagesResponse, Error<ListContainerImagesError>>
     {
         match self.list_container_images_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

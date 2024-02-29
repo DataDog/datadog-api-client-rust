@@ -107,7 +107,15 @@ impl ServiceLevelObjectiveCorrectionsAPI {
     ) -> Result<crate::datadogV1::model::SLOCorrectionResponse, Error<CreateSLOCorrectionError>>
     {
         match self.create_slo_correction_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -263,7 +271,15 @@ impl ServiceLevelObjectiveCorrectionsAPI {
             .get_slo_correction_with_http_info(slo_correction_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -341,7 +357,15 @@ impl ServiceLevelObjectiveCorrectionsAPI {
     ) -> Result<crate::datadogV1::model::SLOCorrectionListResponse, Error<ListSLOCorrectionError>>
     {
         match self.list_slo_correction_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -435,7 +459,15 @@ impl ServiceLevelObjectiveCorrectionsAPI {
             .update_slo_correction_with_http_info(slo_correction_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

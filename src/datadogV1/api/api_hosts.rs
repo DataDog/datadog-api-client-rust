@@ -154,7 +154,15 @@ impl HostsAPI {
         params: GetHostTotalsOptionalParams,
     ) -> Result<crate::datadogV1::model::HostTotals, Error<GetHostTotalsError>> {
         match self.get_host_totals_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -238,7 +246,15 @@ impl HostsAPI {
         params: ListHostsOptionalParams,
     ) -> Result<crate::datadogV1::model::HostListResponse, Error<ListHostsError>> {
         match self.list_hosts_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -357,7 +373,15 @@ impl HostsAPI {
         body: crate::datadogV1::model::HostMuteSettings,
     ) -> Result<crate::datadogV1::model::HostMuteResponse, Error<MuteHostError>> {
         match self.mute_host_with_http_info(host_name, body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -438,7 +462,15 @@ impl HostsAPI {
         host_name: String,
     ) -> Result<crate::datadogV1::model::HostMuteResponse, Error<UnmuteHostError>> {
         match self.unmute_host_with_http_info(host_name).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

@@ -194,7 +194,15 @@ impl DowntimesAPI {
     ) -> Result<crate::datadogV1::model::CanceledDowntimesIds, Error<CancelDowntimesByScopeError>>
     {
         match self.cancel_downtimes_by_scope_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -277,7 +285,15 @@ impl DowntimesAPI {
         body: crate::datadogV1::model::Downtime,
     ) -> Result<crate::datadogV1::model::Downtime, Error<CreateDowntimeError>> {
         match self.create_downtime_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -356,7 +372,15 @@ impl DowntimesAPI {
         downtime_id: i64,
     ) -> Result<crate::datadogV1::model::Downtime, Error<GetDowntimeError>> {
         match self.get_downtime_with_http_info(downtime_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -427,7 +451,15 @@ impl DowntimesAPI {
         params: ListDowntimesOptionalParams,
     ) -> Result<Vec<crate::datadogV1::model::Downtime>, Error<ListDowntimesError>> {
         match self.list_downtimes_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -512,7 +544,15 @@ impl DowntimesAPI {
         monitor_id: i64,
     ) -> Result<Vec<crate::datadogV1::model::Downtime>, Error<ListMonitorDowntimesError>> {
         match self.list_monitor_downtimes_with_http_info(monitor_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -588,7 +628,15 @@ impl DowntimesAPI {
         body: crate::datadogV1::model::Downtime,
     ) -> Result<crate::datadogV1::model::Downtime, Error<UpdateDowntimeError>> {
         match self.update_downtime_with_http_info(downtime_id, body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

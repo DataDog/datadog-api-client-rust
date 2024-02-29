@@ -146,7 +146,15 @@ impl IncidentTeamsAPI {
         body: crate::datadogV2::model::IncidentTeamCreateRequest,
     ) -> Result<crate::datadogV2::model::IncidentTeamResponse, Error<CreateIncidentTeamError>> {
         match self.create_incident_team_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -314,7 +322,15 @@ impl IncidentTeamsAPI {
         params: GetIncidentTeamOptionalParams,
     ) -> Result<crate::datadogV2::model::IncidentTeamResponse, Error<GetIncidentTeamError>> {
         match self.get_incident_team_with_http_info(team_id, params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -409,7 +425,15 @@ impl IncidentTeamsAPI {
         params: ListIncidentTeamsOptionalParams,
     ) -> Result<crate::datadogV2::model::IncidentTeamsResponse, Error<ListIncidentTeamsError>> {
         match self.list_incident_teams_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -520,7 +544,15 @@ impl IncidentTeamsAPI {
             .update_incident_team_with_http_info(team_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

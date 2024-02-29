@@ -100,7 +100,15 @@ impl PowerpackAPI {
         body: crate::datadogV2::model::Powerpack,
     ) -> Result<crate::datadogV2::model::PowerpackResponse, Error<CreatePowerpackError>> {
         match self.create_powerpack_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -249,7 +257,15 @@ impl PowerpackAPI {
         powerpack_id: String,
     ) -> Result<crate::datadogV2::model::PowerpackResponse, Error<GetPowerpackError>> {
         match self.get_powerpack_with_http_info(powerpack_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -322,7 +338,15 @@ impl PowerpackAPI {
         params: ListPowerpacksOptionalParams,
     ) -> Result<crate::datadogV2::model::ListPowerpacksResponse, Error<ListPowerpacksError>> {
         match self.list_powerpacks_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -415,7 +439,15 @@ impl PowerpackAPI {
             .update_powerpack_with_http_info(powerpack_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

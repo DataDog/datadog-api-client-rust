@@ -82,7 +82,15 @@ impl DashboardListsAPI {
         body: crate::datadogV1::model::DashboardList,
     ) -> Result<crate::datadogV1::model::DashboardList, Error<CreateDashboardListError>> {
         match self.create_dashboard_list_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -164,7 +172,15 @@ impl DashboardListsAPI {
     ) -> Result<crate::datadogV1::model::DashboardListDeleteResponse, Error<DeleteDashboardListError>>
     {
         match self.delete_dashboard_list_with_http_info(list_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -241,7 +257,15 @@ impl DashboardListsAPI {
         list_id: i64,
     ) -> Result<crate::datadogV1::model::DashboardList, Error<GetDashboardListError>> {
         match self.get_dashboard_list_with_http_info(list_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -314,7 +338,15 @@ impl DashboardListsAPI {
     ) -> Result<crate::datadogV1::model::DashboardListListResponse, Error<ListDashboardListsError>>
     {
         match self.list_dashboard_lists_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -393,7 +425,15 @@ impl DashboardListsAPI {
             .update_dashboard_list_with_http_info(list_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

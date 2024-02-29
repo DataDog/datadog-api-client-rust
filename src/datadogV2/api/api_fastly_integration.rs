@@ -143,7 +143,15 @@ impl FastlyIntegrationAPI {
     ) -> Result<crate::datadogV2::model::FastlyAccountResponse, Error<CreateFastlyAccountError>>
     {
         match self.create_fastly_account_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -231,7 +239,15 @@ impl FastlyIntegrationAPI {
             .create_fastly_service_with_http_info(account_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -456,7 +472,15 @@ impl FastlyIntegrationAPI {
         account_id: String,
     ) -> Result<crate::datadogV2::model::FastlyAccountResponse, Error<GetFastlyAccountError>> {
         match self.get_fastly_account_with_http_info(account_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -537,7 +561,15 @@ impl FastlyIntegrationAPI {
             .get_fastly_service_with_http_info(account_id, service_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -616,7 +648,15 @@ impl FastlyIntegrationAPI {
     ) -> Result<crate::datadogV2::model::FastlyAccountsResponse, Error<ListFastlyAccountsError>>
     {
         match self.list_fastly_accounts_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -692,7 +732,15 @@ impl FastlyIntegrationAPI {
     ) -> Result<crate::datadogV2::model::FastlyServicesResponse, Error<ListFastlyServicesError>>
     {
         match self.list_fastly_services_with_http_info(account_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -774,7 +822,15 @@ impl FastlyIntegrationAPI {
             .update_fastly_account_with_http_info(account_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -865,7 +921,15 @@ impl FastlyIntegrationAPI {
             .update_fastly_service_with_http_info(account_id, service_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

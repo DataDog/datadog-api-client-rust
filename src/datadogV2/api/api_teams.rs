@@ -300,7 +300,15 @@ impl TeamsAPI {
         body: crate::datadogV2::model::TeamCreateRequest,
     ) -> Result<crate::datadogV2::model::TeamResponse, Error<CreateTeamError>> {
         match self.create_team_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -380,7 +388,15 @@ impl TeamsAPI {
         body: crate::datadogV2::model::TeamLinkCreateRequest,
     ) -> Result<crate::datadogV2::model::TeamLinkResponse, Error<CreateTeamLinkError>> {
         match self.create_team_link_with_http_info(team_id, body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -468,7 +484,15 @@ impl TeamsAPI {
             .create_team_membership_with_http_info(team_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -758,7 +782,15 @@ impl TeamsAPI {
         team_id: String,
     ) -> Result<crate::datadogV2::model::TeamResponse, Error<GetTeamError>> {
         match self.get_team_with_http_info(team_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -830,7 +862,15 @@ impl TeamsAPI {
         link_id: String,
     ) -> Result<crate::datadogV2::model::TeamLinkResponse, Error<GetTeamLinkError>> {
         match self.get_team_link_with_http_info(team_id, link_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -905,7 +945,15 @@ impl TeamsAPI {
         team_id: String,
     ) -> Result<crate::datadogV2::model::TeamLinksResponse, Error<GetTeamLinksError>> {
         match self.get_team_links_with_http_info(team_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -982,7 +1030,15 @@ impl TeamsAPI {
             .get_team_memberships_with_http_info(team_id, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1088,7 +1144,15 @@ impl TeamsAPI {
             .get_team_permission_settings_with_http_info(team_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1165,7 +1229,15 @@ impl TeamsAPI {
         user_uuid: String,
     ) -> Result<crate::datadogV2::model::UserTeamsResponse, Error<GetUserMembershipsError>> {
         match self.get_user_memberships_with_http_info(user_uuid).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1242,7 +1314,15 @@ impl TeamsAPI {
         params: ListTeamsOptionalParams,
     ) -> Result<crate::datadogV2::model::TeamsResponse, Error<ListTeamsError>> {
         match self.list_teams_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1368,7 +1448,15 @@ impl TeamsAPI {
         body: crate::datadogV2::model::TeamUpdateRequest,
     ) -> Result<crate::datadogV2::model::TeamResponse, Error<UpdateTeamError>> {
         match self.update_team_with_http_info(team_id, body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1454,7 +1542,15 @@ impl TeamsAPI {
             .update_team_link_with_http_info(team_id, link_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1545,7 +1641,15 @@ impl TeamsAPI {
             .update_team_membership_with_http_info(team_id, user_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1639,7 +1743,15 @@ impl TeamsAPI {
             .update_team_permission_setting_with_http_info(team_id, action, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

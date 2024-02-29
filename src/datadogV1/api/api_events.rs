@@ -121,7 +121,15 @@ impl EventsAPI {
         body: crate::datadogV1::model::EventCreateRequest,
     ) -> Result<crate::datadogV1::model::EventCreateResponse, Error<CreateEventError>> {
         match self.create_event_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -204,7 +212,15 @@ impl EventsAPI {
         event_id: i64,
     ) -> Result<crate::datadogV1::model::EventResponse, Error<GetEventError>> {
         match self.get_event_with_http_info(event_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -288,7 +304,15 @@ impl EventsAPI {
         params: ListEventsOptionalParams,
     ) -> Result<crate::datadogV1::model::EventListResponse, Error<ListEventsError>> {
         match self.list_events_with_http_info(start, end, params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

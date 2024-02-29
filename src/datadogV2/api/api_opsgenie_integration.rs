@@ -88,7 +88,15 @@ impl OpsgenieIntegrationAPI {
     ) -> Result<crate::datadogV2::model::OpsgenieServiceResponse, Error<CreateOpsgenieServiceError>>
     {
         match self.create_opsgenie_service_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -245,7 +253,15 @@ impl OpsgenieIntegrationAPI {
             .get_opsgenie_service_with_http_info(integration_service_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -322,7 +338,15 @@ impl OpsgenieIntegrationAPI {
     ) -> Result<crate::datadogV2::model::OpsgenieServicesResponse, Error<ListOpsgenieServicesError>>
     {
         match self.list_opsgenie_services_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -402,7 +426,15 @@ impl OpsgenieIntegrationAPI {
             .update_opsgenie_service_with_http_info(integration_service_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

@@ -165,7 +165,15 @@ impl NotebooksAPI {
         body: crate::datadogV1::model::NotebookCreateRequest,
     ) -> Result<crate::datadogV1::model::NotebookResponse, Error<CreateNotebookError>> {
         match self.create_notebook_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -314,7 +322,15 @@ impl NotebooksAPI {
         notebook_id: i64,
     ) -> Result<crate::datadogV1::model::NotebookResponse, Error<GetNotebookError>> {
         match self.get_notebook_with_http_info(notebook_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -388,7 +404,15 @@ impl NotebooksAPI {
         params: ListNotebooksOptionalParams,
     ) -> Result<crate::datadogV1::model::NotebooksResponse, Error<ListNotebooksError>> {
         match self.list_notebooks_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -518,7 +542,15 @@ impl NotebooksAPI {
         body: crate::datadogV1::model::NotebookUpdateRequest,
     ) -> Result<crate::datadogV1::model::NotebookResponse, Error<UpdateNotebookError>> {
         match self.update_notebook_with_http_info(notebook_id, body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

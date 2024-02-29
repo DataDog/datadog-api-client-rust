@@ -91,7 +91,15 @@ impl AzureIntegrationAPI {
         Error<CreateAzureIntegrationError>,
     > {
         match self.create_azure_integration_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -183,7 +191,15 @@ impl AzureIntegrationAPI {
         Error<DeleteAzureIntegrationError>,
     > {
         match self.delete_azure_integration_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -265,7 +281,15 @@ impl AzureIntegrationAPI {
         &self,
     ) -> Result<Vec<crate::datadogV1::model::AzureAccount>, Error<ListAzureIntegrationError>> {
         match self.list_azure_integration_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -342,7 +366,15 @@ impl AzureIntegrationAPI {
         Error<UpdateAzureHostFiltersError>,
     > {
         match self.update_azure_host_filters_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -430,7 +462,15 @@ impl AzureIntegrationAPI {
         Error<UpdateAzureIntegrationError>,
     > {
         match self.update_azure_integration_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

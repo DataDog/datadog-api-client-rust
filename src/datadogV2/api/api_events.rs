@@ -120,7 +120,15 @@ impl EventsAPI {
         params: ListEventsOptionalParams,
     ) -> Result<crate::datadogV2::model::EventsListResponse, Error<ListEventsError>> {
         match self.list_events_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -232,7 +240,15 @@ impl EventsAPI {
         params: SearchEventsOptionalParams,
     ) -> Result<crate::datadogV2::model::EventsListResponse, Error<SearchEventsError>> {
         match self.search_events_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

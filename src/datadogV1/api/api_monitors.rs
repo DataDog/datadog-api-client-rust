@@ -372,7 +372,15 @@ impl MonitorsAPI {
             .check_can_delete_monitor_with_http_info(monitor_ids)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -639,7 +647,15 @@ impl MonitorsAPI {
         body: crate::datadogV1::model::Monitor,
     ) -> Result<crate::datadogV1::model::Monitor, Error<CreateMonitorError>> {
         match self.create_monitor_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -899,7 +915,15 @@ impl MonitorsAPI {
         params: DeleteMonitorOptionalParams,
     ) -> Result<crate::datadogV1::model::DeletedMonitor, Error<DeleteMonitorError>> {
         match self.delete_monitor_with_http_info(monitor_id, params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -982,7 +1006,15 @@ impl MonitorsAPI {
         params: GetMonitorOptionalParams,
     ) -> Result<crate::datadogV1::model::Monitor, Error<GetMonitorError>> {
         match self.get_monitor_with_http_info(monitor_id, params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1067,7 +1099,15 @@ impl MonitorsAPI {
         params: ListMonitorsOptionalParams,
     ) -> Result<Vec<crate::datadogV1::model::Monitor>, Error<ListMonitorsError>> {
         match self.list_monitors_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1182,7 +1222,15 @@ impl MonitorsAPI {
     ) -> Result<crate::datadogV1::model::MonitorGroupSearchResponse, Error<SearchMonitorGroupsError>>
     {
         match self.search_monitor_groups_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1281,7 +1329,15 @@ impl MonitorsAPI {
         params: SearchMonitorsOptionalParams,
     ) -> Result<crate::datadogV1::model::MonitorSearchResponse, Error<SearchMonitorsError>> {
         match self.search_monitors_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1381,7 +1437,15 @@ impl MonitorsAPI {
         body: crate::datadogV1::model::MonitorUpdateRequest,
     ) -> Result<crate::datadogV1::model::Monitor, Error<UpdateMonitorError>> {
         match self.update_monitor_with_http_info(monitor_id, body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1468,7 +1532,15 @@ impl MonitorsAPI {
             .validate_existing_monitor_with_http_info(monitor_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1556,7 +1628,15 @@ impl MonitorsAPI {
     ) -> Result<std::collections::BTreeMap<String, serde_json::Value>, Error<ValidateMonitorError>>
     {
         match self.validate_monitor_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

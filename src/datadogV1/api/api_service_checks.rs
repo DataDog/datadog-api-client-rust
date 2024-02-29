@@ -49,7 +49,15 @@ impl ServiceChecksAPI {
     ) -> Result<crate::datadogV1::model::IntakePayloadAccepted, Error<SubmitServiceCheckError>>
     {
         match self.submit_service_check_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

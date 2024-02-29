@@ -187,7 +187,15 @@ impl LogsAPI {
         body: crate::datadogV2::model::LogsAggregateRequest,
     ) -> Result<crate::datadogV2::model::LogsAggregateResponse, Error<AggregateLogsError>> {
         match self.aggregate_logs_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -280,7 +288,15 @@ impl LogsAPI {
         params: ListLogsOptionalParams,
     ) -> Result<crate::datadogV2::model::LogsListResponse, Error<ListLogsError>> {
         match self.list_logs_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -382,7 +398,15 @@ impl LogsAPI {
         params: ListLogsGetOptionalParams,
     ) -> Result<crate::datadogV2::model::LogsListResponse, Error<ListLogsGetError>> {
         match self.list_logs_get_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -538,7 +562,15 @@ impl LogsAPI {
         params: SubmitLogOptionalParams,
     ) -> Result<std::collections::BTreeMap<String, serde_json::Value>, Error<SubmitLogError>> {
         match self.submit_log_with_http_info(body, params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

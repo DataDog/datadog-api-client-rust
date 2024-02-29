@@ -59,7 +59,15 @@ impl DORAMetricsAPI {
     ) -> Result<crate::datadogV2::model::DORADeploymentResponse, Error<CreateDORADeploymentError>>
     {
         match self.create_dora_deployment_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -156,7 +164,15 @@ impl DORAMetricsAPI {
         body: crate::datadogV2::model::DORAIncidentRequest,
     ) -> Result<crate::datadogV2::model::DORAIncidentResponse, Error<CreateDORAIncidentError>> {
         match self.create_dora_incident_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

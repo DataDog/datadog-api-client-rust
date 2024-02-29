@@ -84,7 +84,15 @@ impl SpansMetricsAPI {
         body: crate::datadogV2::model::SpansMetricCreateRequest,
     ) -> Result<crate::datadogV2::model::SpansMetricResponse, Error<CreateSpansMetricError>> {
         match self.create_spans_metric_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -235,7 +243,15 @@ impl SpansMetricsAPI {
         metric_id: String,
     ) -> Result<crate::datadogV2::model::SpansMetricResponse, Error<GetSpansMetricError>> {
         match self.get_spans_metric_with_http_info(metric_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -311,7 +327,15 @@ impl SpansMetricsAPI {
         &self,
     ) -> Result<crate::datadogV2::model::SpansMetricsResponse, Error<ListSpansMetricsError>> {
         match self.list_spans_metrics_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -391,7 +415,15 @@ impl SpansMetricsAPI {
             .update_spans_metric_with_http_info(metric_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

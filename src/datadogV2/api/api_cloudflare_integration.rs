@@ -90,7 +90,15 @@ impl CloudflareIntegrationAPI {
         Error<CreateCloudflareAccountError>,
     > {
         match self.create_cloudflare_account_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -244,7 +252,15 @@ impl CloudflareIntegrationAPI {
     ) -> Result<crate::datadogV2::model::CloudflareAccountResponse, Error<GetCloudflareAccountError>>
     {
         match self.get_cloudflare_account_with_http_info(account_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -323,7 +339,15 @@ impl CloudflareIntegrationAPI {
         Error<ListCloudflareAccountsError>,
     > {
         match self.list_cloudflare_accounts_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -405,7 +429,15 @@ impl CloudflareIntegrationAPI {
             .update_cloudflare_account_with_http_info(account_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

@@ -403,7 +403,15 @@ impl SyntheticsAPI {
     ) -> Result<crate::datadogV1::model::SyntheticsGlobalVariable, Error<CreateGlobalVariableError>>
     {
         match self.create_global_variable_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -489,7 +497,15 @@ impl SyntheticsAPI {
         Error<CreatePrivateLocationError>,
     > {
         match self.create_private_location_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -574,7 +590,15 @@ impl SyntheticsAPI {
     ) -> Result<crate::datadogV1::model::SyntheticsAPITest, Error<CreateSyntheticsAPITestError>>
     {
         match self.create_synthetics_api_test_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -662,7 +686,15 @@ impl SyntheticsAPI {
             .create_synthetics_browser_test_with_http_info(body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -886,7 +918,15 @@ impl SyntheticsAPI {
     ) -> Result<crate::datadogV1::model::SyntheticsDeleteTestsResponse, Error<DeleteTestsError>>
     {
         match self.delete_tests_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -973,7 +1013,15 @@ impl SyntheticsAPI {
             .edit_global_variable_with_http_info(variable_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1059,7 +1107,15 @@ impl SyntheticsAPI {
         public_id: String,
     ) -> Result<crate::datadogV1::model::SyntheticsAPITest, Error<GetAPITestError>> {
         match self.get_api_test_with_http_info(public_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1140,7 +1196,15 @@ impl SyntheticsAPI {
             .get_api_test_latest_results_with_http_info(public_id, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1249,7 +1313,15 @@ impl SyntheticsAPI {
             .get_api_test_result_with_http_info(public_id, result_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1329,7 +1401,15 @@ impl SyntheticsAPI {
         public_id: String,
     ) -> Result<crate::datadogV1::model::SyntheticsBrowserTest, Error<GetBrowserTestError>> {
         match self.get_browser_test_with_http_info(public_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1414,7 +1494,15 @@ impl SyntheticsAPI {
             .get_browser_test_latest_results_with_http_info(public_id, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1525,7 +1613,15 @@ impl SyntheticsAPI {
             .get_browser_test_result_with_http_info(public_id, result_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1605,7 +1701,15 @@ impl SyntheticsAPI {
     ) -> Result<crate::datadogV1::model::SyntheticsGlobalVariable, Error<GetGlobalVariableError>>
     {
         match self.get_global_variable_with_http_info(variable_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1683,7 +1787,15 @@ impl SyntheticsAPI {
     ) -> Result<crate::datadogV1::model::SyntheticsPrivateLocation, Error<GetPrivateLocationError>>
     {
         match self.get_private_location_with_http_info(location_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1761,7 +1873,15 @@ impl SyntheticsAPI {
     ) -> Result<crate::datadogV1::model::SyntheticsBatchDetails, Error<GetSyntheticsCIBatchError>>
     {
         match self.get_synthetics_ci_batch_with_http_info(batch_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1837,7 +1957,15 @@ impl SyntheticsAPI {
         &self,
     ) -> Result<Vec<String>, Error<GetSyntheticsDefaultLocationsError>> {
         match self.get_synthetics_default_locations_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1907,7 +2035,15 @@ impl SyntheticsAPI {
         public_id: String,
     ) -> Result<crate::datadogV1::model::SyntheticsTestDetails, Error<GetTestError>> {
         match self.get_test_with_http_info(public_id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1983,7 +2119,15 @@ impl SyntheticsAPI {
         Error<ListGlobalVariablesError>,
     > {
         match self.list_global_variables_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -2059,7 +2203,15 @@ impl SyntheticsAPI {
         &self,
     ) -> Result<crate::datadogV1::model::SyntheticsLocations, Error<ListLocationsError>> {
         match self.list_locations_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -2135,7 +2287,15 @@ impl SyntheticsAPI {
         params: ListTestsOptionalParams,
     ) -> Result<crate::datadogV1::model::SyntheticsListTestsResponse, Error<ListTestsError>> {
         match self.list_tests_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -2224,7 +2384,15 @@ impl SyntheticsAPI {
         body: crate::datadogV1::model::SyntheticsPatchTestBody,
     ) -> Result<crate::datadogV1::model::SyntheticsTestDetails, Error<PatchTestError>> {
         match self.patch_test_with_http_info(public_id, body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -2309,7 +2477,15 @@ impl SyntheticsAPI {
     ) -> Result<crate::datadogV1::model::SyntheticsTriggerCITestsResponse, Error<TriggerCITestsError>>
     {
         match self.trigger_ci_tests_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -2393,7 +2569,15 @@ impl SyntheticsAPI {
     ) -> Result<crate::datadogV1::model::SyntheticsTriggerCITestsResponse, Error<TriggerTestsError>>
     {
         match self.trigger_tests_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -2476,7 +2660,15 @@ impl SyntheticsAPI {
         body: crate::datadogV1::model::SyntheticsAPITest,
     ) -> Result<crate::datadogV1::model::SyntheticsAPITest, Error<UpdateAPITestError>> {
         match self.update_api_test_with_http_info(public_id, body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -2564,7 +2756,15 @@ impl SyntheticsAPI {
             .update_browser_test_with_http_info(public_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -2654,7 +2854,15 @@ impl SyntheticsAPI {
             .update_private_location_with_http_info(location_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -2743,7 +2951,15 @@ impl SyntheticsAPI {
             .update_test_pause_status_with_http_info(public_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }

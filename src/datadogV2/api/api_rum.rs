@@ -163,7 +163,15 @@ impl RUMAPI {
         Error<AggregateRUMEventsError>,
     > {
         match self.aggregate_rum_events_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -247,7 +255,15 @@ impl RUMAPI {
     ) -> Result<crate::datadogV2::model::RUMApplicationResponse, Error<CreateRUMApplicationError>>
     {
         match self.create_rum_application_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -398,7 +414,15 @@ impl RUMAPI {
     ) -> Result<crate::datadogV2::model::RUMApplicationResponse, Error<GetRUMApplicationError>>
     {
         match self.get_rum_application_with_http_info(id).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -475,7 +499,15 @@ impl RUMAPI {
     ) -> Result<crate::datadogV2::model::RUMApplicationsResponse, Error<GetRUMApplicationsError>>
     {
         match self.get_rum_applications_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -555,7 +587,15 @@ impl RUMAPI {
         params: ListRUMEventsOptionalParams,
     ) -> Result<crate::datadogV2::model::RUMEventsResponse, Error<ListRUMEventsError>> {
         match self.list_rum_events_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -673,7 +713,15 @@ impl RUMAPI {
         body: crate::datadogV2::model::RUMSearchEventsRequest,
     ) -> Result<crate::datadogV2::model::RUMEventsResponse, Error<SearchRUMEventsError>> {
         match self.search_rum_events_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -762,7 +810,15 @@ impl RUMAPI {
     ) -> Result<crate::datadogV2::model::RUMApplicationResponse, Error<UpdateRUMApplicationError>>
     {
         match self.update_rum_application_with_http_info(id, body).await {
-            Ok(response_content) => Ok(response_content.entity.unwrap()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
