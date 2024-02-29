@@ -229,7 +229,13 @@ impl {{ structName }} {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            {%- if returnType %}
+            {%- if returnType == "Vec<u8>" %}
+            Ok(ResponseContent {
+                status: local_status,
+                content: local_content.clone(),
+                entity: Some(local_content.into_bytes()),
+            })
+            {%- elif returnType %}
             match serde_json::from_str::<{{ returnType }}>(&local_content) {
                 Ok(e) => return Ok(ResponseContent {
                     status: local_status,
