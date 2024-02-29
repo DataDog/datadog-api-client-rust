@@ -36,6 +36,7 @@ tokio = { version = "1.10", features = ["macros", "rt-multi-thread", "time"] }
 minijinja = "1.0.10"
 convert_case = "0.6.0"
 futures-util = "0.3.30"
+urlencoding = "2.1.3"
 
 [[test]]
 harness = false  # allows Cucumber to print output instead of libtest
