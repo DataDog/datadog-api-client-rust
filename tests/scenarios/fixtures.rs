@@ -170,6 +170,8 @@ pub async fn before_scenario(
         },
     );
 
+    world.config.set_retry(true, 3);
+
     let escaped_name = NON_ALNUM_RE
         .replace_all(scenario.name.as_str(), "_")
         .to_string();

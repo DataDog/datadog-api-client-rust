@@ -5,6 +5,24 @@ use lazy_static::lazy_static;
 use log::warn;
 use std::collections::HashMap;
 use std::env;
+use reqwest_retry::{
+    default_on_request_success, policies::ExponentialBackoff, RetryTransientMiddleware, Retryable,
+    RetryableStrategy,
+};
+use reqwest_middleware::ClientBuilder;
+
+struct RetryableStatus;
+impl RetryableStrategy for RetryableStatus {
+    fn handle(
+        &self,
+        res: &Result<reqwest::Response, reqwest_middleware::Error>,
+    ) -> Option<Retryable> {
+        match res {
+            Ok(success) => default_on_request_success(success),
+            Err(_) => None,
+        }
+    }
+}
 
 #[derive(Debug, Clone)]
 pub struct ServerVariable {
@@ -51,6 +69,8 @@ pub struct Configuration {
     pub server_variables: HashMap<String, String>,
     pub server_operation_index: HashMap<String, usize>,
     pub server_operation_variables: HashMap<String, HashMap<String, String>>,
+    pub enable_retry: bool,
+    pub max_retries: u32,
 }
 
 impl Configuration {
@@ -117,6 +137,22 @@ impl Configuration {
     pub fn set_auth_key(&mut self, operation_str: &str, api_key: APIKey) {
         self.auth_keys.insert(operation_str.to_string(), api_key);
     }
+
+    pub fn set_retry(&mut self, enable: bool, max: u32) {
+        if enable {
+            let backoff_policy = ExponentialBackoff::builder().build_with_max_retries(max);
+
+            let retry_middleware = RetryTransientMiddleware::new_with_policy_and_strategy(
+                backoff_policy,
+                RetryableStatus,
+            );
+            let client_builder = ClientBuilder::new(reqwest::Client::new()).with(retry_middleware);
+            self.client = client_builder.build();
+        } else {
+            self.client = ClientBuilder::new(reqwest::Client::new()).build();
+        }
+    }
+
 }
 
 impl Default for Configuration {
@@ -198,6 +234,8 @@ impl Default for Configuration {
             server_variables: HashMap::new(),
             server_operation_index: HashMap::new(),
             server_operation_variables: HashMap::new(),
+            enable_retry: false,
+            max_retries: 3,
         }
     }
 }
