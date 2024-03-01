@@ -11,6 +11,6 @@ pub enum SpansAggregateBucketValue {
     SpansAggregateBucketValueSingleString(String),
     SpansAggregateBucketValueSingleNumber(f64),
     SpansAggregateBucketValueTimeseries(
-        crate::datadogV2::model::SpansAggregateBucketValueTimeseries,
+        Vec<crate::datadogV2::model::SpansAggregateBucketValueTimeseriesPoint>,
     ),
 }
