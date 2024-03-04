@@ -39,7 +39,7 @@ async fn main() {
     let configuration = Configuration::new();
     let api = SensitiveDataScannerAPI::with_config(configuration);
     let resp = api.reorder_scanning_groups(body).await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());

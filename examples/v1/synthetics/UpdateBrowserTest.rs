@@ -93,7 +93,7 @@ async fn main() {
     let configuration = Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api.update_browser_test(body).await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());

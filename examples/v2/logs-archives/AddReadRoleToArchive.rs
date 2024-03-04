@@ -21,7 +21,7 @@ async fn main() {
     let configuration = Configuration::new();
     let api = LogsArchivesAPI::with_config(configuration);
     let resp = api.add_read_role_to_archive(body).await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());

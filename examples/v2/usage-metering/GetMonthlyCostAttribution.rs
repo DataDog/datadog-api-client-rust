@@ -15,7 +15,7 @@ async fn main() {
     configuration.set_unstable_operation_enabled("v2.GetMonthlyCostAttribution", true);
     let api = UsageMeteringAPI::with_config(configuration);
     let resp = api.get_monthly_cost_attribution().await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());

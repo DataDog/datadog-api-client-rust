@@ -52,7 +52,7 @@ async fn main() {
     let configuration = Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api.update_security_monitoring_rule(body).await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());

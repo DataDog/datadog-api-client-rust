@@ -45,7 +45,7 @@ async fn main() {
     {%- endfor %}
     let api = {{context["api_instance"]["name"]}}API::with_config(configuration);
     let resp = api.{{ context.api_request.operation_id | snake_case }}({%- if context.body %}body{%- endif %}).await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());

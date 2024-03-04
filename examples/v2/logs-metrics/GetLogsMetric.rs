@@ -16,7 +16,7 @@ async fn main() {
     let configuration = Configuration::new();
     let api = LogsMetricsAPI::with_config(configuration);
     let resp = api.get_logs_metric().await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());

@@ -14,7 +14,7 @@ async fn main() {
     let configuration = Configuration::new();
     let api = TagsAPI::with_config(configuration);
     let resp = api.delete_host_tags().await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());

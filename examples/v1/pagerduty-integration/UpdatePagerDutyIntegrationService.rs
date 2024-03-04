@@ -15,7 +15,7 @@ async fn main() {
     let configuration = Configuration::new();
     let api = PagerDutyIntegrationAPI::with_config(configuration);
     let resp = api.update_pager_duty_integration_service(body).await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());

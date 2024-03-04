@@ -35,7 +35,7 @@ async fn main() {
     configuration.set_unstable_operation_enabled("v2.CreateScorecardOutcomesBatch", true);
     let api = ServiceScorecardsAPI::with_config(configuration);
     let resp = api.create_scorecard_outcomes_batch(body).await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());

@@ -37,7 +37,7 @@ async fn main() {
     let configuration = Configuration::new();
     let api = CIVisibilityPipelinesAPI::with_config(configuration);
     let resp = api.aggregate_ci_app_pipeline_events(body).await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());

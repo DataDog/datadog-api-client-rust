@@ -14,7 +14,7 @@ async fn main() {
     let configuration = Configuration::new();
     let api = KeyManagementAPI::with_config(configuration);
     let resp = api.list_application_keys().await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());

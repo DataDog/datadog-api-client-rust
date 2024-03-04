@@ -16,7 +16,7 @@ async fn main() {
     let configuration = Configuration::new();
     let api = WebhooksIntegrationAPI::with_config(configuration);
     let resp = api.delete_webhooks_integration_custom_variable().await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());

@@ -21,7 +21,7 @@ async fn main() {
     let configuration = Configuration::new();
     let api = RUMAPI::with_config(configuration);
     let resp = api.create_rum_application(body).await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());

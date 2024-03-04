@@ -16,7 +16,7 @@ async fn main() {
     let configuration = Configuration::new();
     let api = MetricsAPI::with_config(configuration);
     let resp = api.list_tags_by_metric_name().await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());

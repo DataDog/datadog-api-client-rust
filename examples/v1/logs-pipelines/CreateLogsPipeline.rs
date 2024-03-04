@@ -38,7 +38,7 @@ rule_name_2 bar
     let configuration = Configuration::new();
     let api = LogsPipelinesAPI::with_config(configuration);
     let resp = api.create_logs_pipeline(body).await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());

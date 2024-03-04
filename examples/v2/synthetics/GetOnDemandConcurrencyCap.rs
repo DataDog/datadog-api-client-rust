@@ -14,7 +14,7 @@ async fn main() {
     let configuration = Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api.get_on_demand_concurrency_cap().await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());

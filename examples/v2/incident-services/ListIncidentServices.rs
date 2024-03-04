@@ -17,7 +17,7 @@ async fn main() {
     configuration.set_unstable_operation_enabled("v2.ListIncidentServices", true);
     let api = IncidentServicesAPI::with_config(configuration);
     let resp = api.list_incident_services().await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());

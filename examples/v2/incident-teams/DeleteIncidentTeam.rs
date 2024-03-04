@@ -17,7 +17,7 @@ async fn main() {
     configuration.set_unstable_operation_enabled("v2.DeleteIncidentTeam", true);
     let api = IncidentTeamsAPI::with_config(configuration);
     let resp = api.delete_incident_team().await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());

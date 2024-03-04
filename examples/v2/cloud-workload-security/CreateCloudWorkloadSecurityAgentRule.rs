@@ -26,7 +26,7 @@ async fn main() {
     let configuration = Configuration::new();
     let api = CloudWorkloadSecurityAPI::with_config(configuration);
     let resp = api.create_cloud_workload_security_agent_rule(body).await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());

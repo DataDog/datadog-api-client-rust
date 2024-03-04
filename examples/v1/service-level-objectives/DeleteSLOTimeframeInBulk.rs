@@ -15,7 +15,7 @@ async fn main() {
     let configuration = Configuration::new();
     let api = ServiceLevelObjectivesAPI::with_config(configuration);
     let resp = api.delete_slo_timeframe_in_bulk(body).await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());

@@ -14,7 +14,7 @@ async fn main() {
     let configuration = Configuration::new();
     let api = MetricsAPI::with_config(configuration);
     let resp = api.delete_tag_configuration().await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());

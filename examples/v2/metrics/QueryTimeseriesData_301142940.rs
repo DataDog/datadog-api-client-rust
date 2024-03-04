@@ -43,7 +43,7 @@ async fn main() {
     configuration.set_unstable_operation_enabled("v2.QueryTimeseriesData", true);
     let api = MetricsAPI::with_config(configuration);
     let resp = api.query_timeseries_data(body).await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());

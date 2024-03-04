@@ -15,7 +15,7 @@ async fn main() {
     configuration.set_unstable_operation_enabled("v2.GetFinding", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api.get_finding().await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());

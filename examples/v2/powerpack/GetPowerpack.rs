@@ -16,7 +16,7 @@ async fn main() {
     let configuration = Configuration::new();
     let api = PowerpackAPI::with_config(configuration);
     let resp = api.get_powerpack().await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());

@@ -19,7 +19,7 @@ async fn main() {
     let configuration = Configuration::new();
     let api = AWSLogsIntegrationAPI::with_config(configuration);
     let resp = api.check_aws_logs_lambda_async(body).await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());

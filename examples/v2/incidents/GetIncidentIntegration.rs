@@ -20,7 +20,7 @@ async fn main() {
     configuration.set_unstable_operation_enabled("v2.GetIncidentIntegration", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api.get_incident_integration().await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());

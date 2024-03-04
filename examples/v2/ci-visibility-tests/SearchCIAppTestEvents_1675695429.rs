@@ -24,7 +24,7 @@ async fn main() {
     let configuration = Configuration::new();
     let api = CIVisibilityTestsAPI::with_config(configuration);
     let resp = api.search_ci_app_test_events(body).await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());

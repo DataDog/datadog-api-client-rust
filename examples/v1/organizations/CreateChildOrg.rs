@@ -18,7 +18,7 @@ async fn main() {
     let configuration = Configuration::new();
     let api = OrganizationsAPI::with_config(configuration);
     let resp = api.create_child_org(body).await;
-    if let Ok(Some(value)) = resp {
+    if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());
