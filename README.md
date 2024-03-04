@@ -75,8 +75,9 @@ To provide your own set of credentials, you need to set some keys on the configu
 This client includes access to Datadog API endpoints while they are in an unstable state and may undergo breaking changes. An extra configuration step is required to enable these endpoints:
 
 ```rust
-configuration.set_unstable_operation_enabled(<OPERATION-NAME>, True )
+configuration.set_unstable_operation_enabled(<OPERATION_NAME>, True )
 ```
+where <OPERATION_NAME> is the name of the method used to interact with that endpoint. For example: listSLOCorrection, or getSLOHistory
 
 ## Documentation for API Endpoints
 
