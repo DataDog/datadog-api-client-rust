@@ -10,5 +10,7 @@ use serde::{Deserialize, Serialize};
 pub enum LogsAggregateBucketValue {
     LogsAggregateBucketValueSingleString(String),
     LogsAggregateBucketValueSingleNumber(f64),
-    LogsAggregateBucketValueTimeseries(crate::datadogV2::model::LogsAggregateBucketValueTimeseries),
+    LogsAggregateBucketValueTimeseries(
+        Vec<crate::datadogV2::model::LogsAggregateBucketValueTimeseriesPoint>,
+    ),
 }
