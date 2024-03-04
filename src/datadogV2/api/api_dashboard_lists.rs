@@ -75,14 +75,22 @@ impl DashboardListsAPI {
         dashboard_list_id: i64,
         body: crate::datadogV2::model::DashboardListAddItemsRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::DashboardListAddItemsResponse>,
+        crate::datadogV2::model::DashboardListAddItemsResponse,
         Error<CreateDashboardListItemsError>,
     > {
         match self
             .create_dashboard_list_items_with_http_info(dashboard_list_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -137,13 +145,18 @@ impl DashboardListsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::DashboardListAddItemsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::DashboardListAddItemsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateDashboardListItemsError> =
                 serde_json::from_str(&local_content).ok();
@@ -162,14 +175,22 @@ impl DashboardListsAPI {
         dashboard_list_id: i64,
         body: crate::datadogV2::model::DashboardListDeleteItemsRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::DashboardListDeleteItemsResponse>,
+        crate::datadogV2::model::DashboardListDeleteItemsResponse,
         Error<DeleteDashboardListItemsError>,
     > {
         match self
             .delete_dashboard_list_items_with_http_info(dashboard_list_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -224,13 +245,18 @@ impl DashboardListsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::DashboardListDeleteItemsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::DashboardListDeleteItemsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<DeleteDashboardListItemsError> =
                 serde_json::from_str(&local_content).ok();
@@ -247,15 +273,21 @@ impl DashboardListsAPI {
     pub async fn get_dashboard_list_items(
         &self,
         dashboard_list_id: i64,
-    ) -> Result<
-        Option<crate::datadogV2::model::DashboardListItems>,
-        Error<GetDashboardListItemsError>,
-    > {
+    ) -> Result<crate::datadogV2::model::DashboardListItems, Error<GetDashboardListItemsError>>
+    {
         match self
             .get_dashboard_list_items_with_http_info(dashboard_list_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -302,13 +334,18 @@ impl DashboardListsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::DashboardListItems> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::DashboardListItems>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetDashboardListItemsError> =
                 serde_json::from_str(&local_content).ok();
@@ -327,14 +364,22 @@ impl DashboardListsAPI {
         dashboard_list_id: i64,
         body: crate::datadogV2::model::DashboardListUpdateItemsRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::DashboardListUpdateItemsResponse>,
+        crate::datadogV2::model::DashboardListUpdateItemsResponse,
         Error<UpdateDashboardListItemsError>,
     > {
         match self
             .update_dashboard_list_items_with_http_info(dashboard_list_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -389,13 +434,18 @@ impl DashboardListsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::DashboardListUpdateItemsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::DashboardListUpdateItemsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateDashboardListItemsError> =
                 serde_json::from_str(&local_content).ok();

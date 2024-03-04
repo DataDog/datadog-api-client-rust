@@ -219,12 +219,18 @@ impl AWSIntegrationAPI {
     pub async fn create_aws_account(
         &self,
         body: crate::datadogV1::model::AWSAccount,
-    ) -> Result<
-        Option<crate::datadogV1::model::AWSAccountCreateResponse>,
-        Error<CreateAWSAccountError>,
-    > {
+    ) -> Result<crate::datadogV1::model::AWSAccountCreateResponse, Error<CreateAWSAccountError>>
+    {
         match self.create_aws_account_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -280,13 +286,18 @@ impl AWSIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::AWSAccountCreateResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::AWSAccountCreateResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateAWSAccountError> =
                 serde_json::from_str(&local_content).ok();
@@ -304,14 +315,22 @@ impl AWSIntegrationAPI {
         &self,
         body: crate::datadogV1::model::AWSEventBridgeCreateRequest,
     ) -> Result<
-        Option<crate::datadogV1::model::AWSEventBridgeCreateResponse>,
+        crate::datadogV1::model::AWSEventBridgeCreateResponse,
         Error<CreateAWSEventBridgeSourceError>,
     > {
         match self
             .create_aws_event_bridge_source_with_http_info(body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -364,13 +383,18 @@ impl AWSIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::AWSEventBridgeCreateResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::AWSEventBridgeCreateResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateAWSEventBridgeSourceError> =
                 serde_json::from_str(&local_content).ok();
@@ -387,12 +411,18 @@ impl AWSIntegrationAPI {
     pub async fn create_aws_tag_filter(
         &self,
         body: crate::datadogV1::model::AWSTagFilterCreateRequest,
-    ) -> Result<
-        Option<std::collections::BTreeMap<String, serde_json::Value>>,
-        Error<CreateAWSTagFilterError>,
-    > {
+    ) -> Result<std::collections::BTreeMap<String, serde_json::Value>, Error<CreateAWSTagFilterError>>
+    {
         match self.create_aws_tag_filter_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -445,13 +475,18 @@ impl AWSIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateAWSTagFilterError> =
                 serde_json::from_str(&local_content).ok();
@@ -468,12 +503,18 @@ impl AWSIntegrationAPI {
     pub async fn create_new_aws_external_id(
         &self,
         body: crate::datadogV1::model::AWSAccount,
-    ) -> Result<
-        Option<crate::datadogV1::model::AWSAccountCreateResponse>,
-        Error<CreateNewAWSExternalIDError>,
-    > {
+    ) -> Result<crate::datadogV1::model::AWSAccountCreateResponse, Error<CreateNewAWSExternalIDError>>
+    {
         match self.create_new_aws_external_id_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -526,13 +567,18 @@ impl AWSIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::AWSAccountCreateResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::AWSAccountCreateResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateNewAWSExternalIDError> =
                 serde_json::from_str(&local_content).ok();
@@ -549,12 +595,18 @@ impl AWSIntegrationAPI {
     pub async fn delete_aws_account(
         &self,
         body: crate::datadogV1::model::AWSAccountDeleteRequest,
-    ) -> Result<
-        Option<std::collections::BTreeMap<String, serde_json::Value>>,
-        Error<DeleteAWSAccountError>,
-    > {
+    ) -> Result<std::collections::BTreeMap<String, serde_json::Value>, Error<DeleteAWSAccountError>>
+    {
         match self.delete_aws_account_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -607,13 +659,18 @@ impl AWSIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<DeleteAWSAccountError> =
                 serde_json::from_str(&local_content).ok();
@@ -631,14 +688,22 @@ impl AWSIntegrationAPI {
         &self,
         body: crate::datadogV1::model::AWSEventBridgeDeleteRequest,
     ) -> Result<
-        Option<crate::datadogV1::model::AWSEventBridgeDeleteResponse>,
+        crate::datadogV1::model::AWSEventBridgeDeleteResponse,
         Error<DeleteAWSEventBridgeSourceError>,
     > {
         match self
             .delete_aws_event_bridge_source_with_http_info(body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -691,13 +756,18 @@ impl AWSIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::AWSEventBridgeDeleteResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::AWSEventBridgeDeleteResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<DeleteAWSEventBridgeSourceError> =
                 serde_json::from_str(&local_content).ok();
@@ -714,12 +784,18 @@ impl AWSIntegrationAPI {
     pub async fn delete_aws_tag_filter(
         &self,
         body: crate::datadogV1::model::AWSTagFilterDeleteRequest,
-    ) -> Result<
-        Option<std::collections::BTreeMap<String, serde_json::Value>>,
-        Error<DeleteAWSTagFilterError>,
-    > {
+    ) -> Result<std::collections::BTreeMap<String, serde_json::Value>, Error<DeleteAWSTagFilterError>>
+    {
         match self.delete_aws_tag_filter_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -772,13 +848,18 @@ impl AWSIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<DeleteAWSTagFilterError> =
                 serde_json::from_str(&local_content).ok();
@@ -795,10 +876,17 @@ impl AWSIntegrationAPI {
     pub async fn list_aws_accounts(
         &self,
         params: ListAWSAccountsOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::AWSAccountListResponse>, Error<ListAWSAccountsError>>
-    {
+    ) -> Result<crate::datadogV1::model::AWSAccountListResponse, Error<ListAWSAccountsError>> {
         match self.list_aws_accounts_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -862,13 +950,18 @@ impl AWSIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::AWSAccountListResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::AWSAccountListResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListAWSAccountsError> =
                 serde_json::from_str(&local_content).ok();
@@ -885,11 +978,19 @@ impl AWSIntegrationAPI {
     pub async fn list_aws_event_bridge_sources(
         &self,
     ) -> Result<
-        Option<crate::datadogV1::model::AWSEventBridgeListResponse>,
+        crate::datadogV1::model::AWSEventBridgeListResponse,
         Error<ListAWSEventBridgeSourcesError>,
     > {
         match self.list_aws_event_bridge_sources_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -934,13 +1035,18 @@ impl AWSIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::AWSEventBridgeListResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::AWSEventBridgeListResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListAWSEventBridgeSourcesError> =
                 serde_json::from_str(&local_content).ok();
@@ -957,12 +1063,18 @@ impl AWSIntegrationAPI {
     pub async fn list_aws_tag_filters(
         &self,
         account_id: String,
-    ) -> Result<
-        Option<crate::datadogV1::model::AWSTagFilterListResponse>,
-        Error<ListAWSTagFiltersError>,
-    > {
+    ) -> Result<crate::datadogV1::model::AWSTagFilterListResponse, Error<ListAWSTagFiltersError>>
+    {
         match self.list_aws_tag_filters_with_http_info(account_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1010,13 +1122,18 @@ impl AWSIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::AWSTagFilterListResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::AWSTagFilterListResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListAWSTagFiltersError> =
                 serde_json::from_str(&local_content).ok();
@@ -1032,9 +1149,17 @@ impl AWSIntegrationAPI {
     /// List all namespace rules for a given Datadog-AWS integration. This endpoint takes no arguments.
     pub async fn list_available_aws_namespaces(
         &self,
-    ) -> Result<Option<Vec<String>>, Error<ListAvailableAWSNamespacesError>> {
+    ) -> Result<Vec<String>, Error<ListAvailableAWSNamespacesError>> {
         match self.list_available_aws_namespaces_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1076,12 +1201,16 @@ impl AWSIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<Vec<String>> = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<Vec<String>>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListAvailableAWSNamespacesError> =
                 serde_json::from_str(&local_content).ok();
@@ -1099,12 +1228,18 @@ impl AWSIntegrationAPI {
         &self,
         body: crate::datadogV1::model::AWSAccount,
         params: UpdateAWSAccountOptionalParams,
-    ) -> Result<
-        Option<std::collections::BTreeMap<String, serde_json::Value>>,
-        Error<UpdateAWSAccountError>,
-    > {
+    ) -> Result<std::collections::BTreeMap<String, serde_json::Value>, Error<UpdateAWSAccountError>>
+    {
         match self.update_aws_account_with_http_info(body, params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1176,13 +1311,18 @@ impl AWSIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateAWSAccountError> =
                 serde_json::from_str(&local_content).ok();

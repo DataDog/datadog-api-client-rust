@@ -240,9 +240,17 @@ impl DashboardsAPI {
     pub async fn create_dashboard(
         &self,
         body: crate::datadogV1::model::Dashboard,
-    ) -> Result<Option<crate::datadogV1::model::Dashboard>, Error<CreateDashboardError>> {
+    ) -> Result<crate::datadogV1::model::Dashboard, Error<CreateDashboardError>> {
         match self.create_dashboard_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -294,13 +302,16 @@ impl DashboardsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::Dashboard> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::Dashboard>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateDashboardError> =
                 serde_json::from_str(&local_content).ok();
@@ -317,10 +328,17 @@ impl DashboardsAPI {
     pub async fn create_public_dashboard(
         &self,
         body: crate::datadogV1::model::SharedDashboard,
-    ) -> Result<Option<crate::datadogV1::model::SharedDashboard>, Error<CreatePublicDashboardError>>
-    {
+    ) -> Result<crate::datadogV1::model::SharedDashboard, Error<CreatePublicDashboardError>> {
         match self.create_public_dashboard_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -373,13 +391,16 @@ impl DashboardsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SharedDashboard> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SharedDashboard>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreatePublicDashboardError> =
                 serde_json::from_str(&local_content).ok();
@@ -396,10 +417,17 @@ impl DashboardsAPI {
     pub async fn delete_dashboard(
         &self,
         dashboard_id: String,
-    ) -> Result<Option<crate::datadogV1::model::DashboardDeleteResponse>, Error<DeleteDashboardError>>
-    {
+    ) -> Result<crate::datadogV1::model::DashboardDeleteResponse, Error<DeleteDashboardError>> {
         match self.delete_dashboard_with_http_info(dashboard_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -446,13 +474,18 @@ impl DashboardsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::DashboardDeleteResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::DashboardDeleteResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<DeleteDashboardError> =
                 serde_json::from_str(&local_content).ok();
@@ -469,9 +502,9 @@ impl DashboardsAPI {
     pub async fn delete_dashboards(
         &self,
         body: crate::datadogV1::model::DashboardBulkDeleteRequest,
-    ) -> Result<Option<()>, Error<DeleteDashboardsError>> {
+    ) -> Result<(), Error<DeleteDashboardsError>> {
         match self.delete_dashboards_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -543,11 +576,19 @@ impl DashboardsAPI {
         &self,
         token: String,
     ) -> Result<
-        Option<crate::datadogV1::model::DeleteSharedDashboardResponse>,
+        crate::datadogV1::model::DeleteSharedDashboardResponse,
         Error<DeletePublicDashboardError>,
     > {
         match self.delete_public_dashboard_with_http_info(token).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -594,13 +635,18 @@ impl DashboardsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::DeleteSharedDashboardResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::DeleteSharedDashboardResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<DeletePublicDashboardError> =
                 serde_json::from_str(&local_content).ok();
@@ -618,12 +664,12 @@ impl DashboardsAPI {
         &self,
         token: String,
         body: crate::datadogV1::model::SharedDashboardInvites,
-    ) -> Result<Option<()>, Error<DeletePublicDashboardInvitationError>> {
+    ) -> Result<(), Error<DeletePublicDashboardInvitationError>> {
         match self
             .delete_public_dashboard_invitation_with_http_info(token, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -696,9 +742,17 @@ impl DashboardsAPI {
     pub async fn get_dashboard(
         &self,
         dashboard_id: String,
-    ) -> Result<Option<crate::datadogV1::model::Dashboard>, Error<GetDashboardError>> {
+    ) -> Result<crate::datadogV1::model::Dashboard, Error<GetDashboardError>> {
         match self.get_dashboard_with_http_info(dashboard_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -742,13 +796,16 @@ impl DashboardsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::Dashboard> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::Dashboard>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetDashboardError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -764,10 +821,17 @@ impl DashboardsAPI {
     pub async fn get_public_dashboard(
         &self,
         token: String,
-    ) -> Result<Option<crate::datadogV1::model::SharedDashboard>, Error<GetPublicDashboardError>>
-    {
+    ) -> Result<crate::datadogV1::model::SharedDashboard, Error<GetPublicDashboardError>> {
         match self.get_public_dashboard_with_http_info(token).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -814,13 +878,16 @@ impl DashboardsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SharedDashboard> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SharedDashboard>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetPublicDashboardError> =
                 serde_json::from_str(&local_content).ok();
@@ -839,14 +906,22 @@ impl DashboardsAPI {
         token: String,
         params: GetPublicDashboardInvitationsOptionalParams,
     ) -> Result<
-        Option<crate::datadogV1::model::SharedDashboardInvites>,
+        crate::datadogV1::model::SharedDashboardInvites,
         Error<GetPublicDashboardInvitationsError>,
     > {
         match self
             .get_public_dashboard_invitations_with_http_info(token, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -907,13 +982,18 @@ impl DashboardsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SharedDashboardInvites> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SharedDashboardInvites>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetPublicDashboardInvitationsError> =
                 serde_json::from_str(&local_content).ok();
@@ -933,9 +1013,17 @@ impl DashboardsAPI {
     pub async fn list_dashboards(
         &self,
         params: ListDashboardsOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::DashboardSummary>, Error<ListDashboardsError>> {
+    ) -> Result<crate::datadogV1::model::DashboardSummary, Error<ListDashboardsError>> {
         match self.list_dashboards_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1007,13 +1095,17 @@ impl DashboardsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::DashboardSummary> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::DashboardSummary>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListDashboardsError> =
                 serde_json::from_str(&local_content).ok();
@@ -1030,9 +1122,9 @@ impl DashboardsAPI {
     pub async fn restore_dashboards(
         &self,
         body: crate::datadogV1::model::DashboardRestoreRequest,
-    ) -> Result<Option<()>, Error<RestoreDashboardsError>> {
+    ) -> Result<(), Error<RestoreDashboardsError>> {
         match self.restore_dashboards_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -1105,14 +1197,22 @@ impl DashboardsAPI {
         token: String,
         body: crate::datadogV1::model::SharedDashboardInvites,
     ) -> Result<
-        Option<crate::datadogV1::model::SharedDashboardInvites>,
+        crate::datadogV1::model::SharedDashboardInvites,
         Error<SendPublicDashboardInvitationError>,
     > {
         match self
             .send_public_dashboard_invitation_with_http_info(token, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1167,13 +1267,18 @@ impl DashboardsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SharedDashboardInvites> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SharedDashboardInvites>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<SendPublicDashboardInvitationError> =
                 serde_json::from_str(&local_content).ok();
@@ -1191,12 +1296,20 @@ impl DashboardsAPI {
         &self,
         dashboard_id: String,
         body: crate::datadogV1::model::Dashboard,
-    ) -> Result<Option<crate::datadogV1::model::Dashboard>, Error<UpdateDashboardError>> {
+    ) -> Result<crate::datadogV1::model::Dashboard, Error<UpdateDashboardError>> {
         match self
             .update_dashboard_with_http_info(dashboard_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1249,13 +1362,16 @@ impl DashboardsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::Dashboard> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::Dashboard>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateDashboardError> =
                 serde_json::from_str(&local_content).ok();
@@ -1273,13 +1389,20 @@ impl DashboardsAPI {
         &self,
         token: String,
         body: crate::datadogV1::model::SharedDashboardUpdateRequest,
-    ) -> Result<Option<crate::datadogV1::model::SharedDashboard>, Error<UpdatePublicDashboardError>>
-    {
+    ) -> Result<crate::datadogV1::model::SharedDashboard, Error<UpdatePublicDashboardError>> {
         match self
             .update_public_dashboard_with_http_info(token, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1334,13 +1457,16 @@ impl DashboardsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::SharedDashboard> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::SharedDashboard>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdatePublicDashboardError> =
                 serde_json::from_str(&local_content).ok();

@@ -50,10 +50,17 @@ impl IPAllowlistAPI {
     /// Returns the IP allowlist and its enabled or disabled state.
     pub async fn get_ip_allowlist(
         &self,
-    ) -> Result<Option<crate::datadogV2::model::IPAllowlistResponse>, Error<GetIPAllowlistError>>
-    {
+    ) -> Result<crate::datadogV2::model::IPAllowlistResponse, Error<GetIPAllowlistError>> {
         match self.get_ip_allowlist_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -98,13 +105,18 @@ impl IPAllowlistAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::IPAllowlistResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::IPAllowlistResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetIPAllowlistError> =
                 serde_json::from_str(&local_content).ok();
@@ -121,10 +133,17 @@ impl IPAllowlistAPI {
     pub async fn update_ip_allowlist(
         &self,
         body: crate::datadogV2::model::IPAllowlistUpdateRequest,
-    ) -> Result<Option<crate::datadogV2::model::IPAllowlistResponse>, Error<UpdateIPAllowlistError>>
-    {
+    ) -> Result<crate::datadogV2::model::IPAllowlistResponse, Error<UpdateIPAllowlistError>> {
         match self.update_ip_allowlist_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -177,13 +196,18 @@ impl IPAllowlistAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::IPAllowlistResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::IPAllowlistResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateIPAllowlistError> =
                 serde_json::from_str(&local_content).ok();

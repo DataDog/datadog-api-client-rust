@@ -169,12 +169,20 @@ impl TagsAPI {
         host_name: String,
         body: crate::datadogV1::model::HostTags,
         params: CreateHostTagsOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::HostTags>, Error<CreateHostTagsError>> {
+    ) -> Result<crate::datadogV1::model::HostTags, Error<CreateHostTagsError>> {
         match self
             .create_host_tags_with_http_info(host_name, body, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -237,13 +245,16 @@ impl TagsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::HostTags> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::HostTags>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateHostTagsError> =
                 serde_json::from_str(&local_content).ok();
@@ -262,12 +273,12 @@ impl TagsAPI {
         &self,
         host_name: String,
         params: DeleteHostTagsOptionalParams,
-    ) -> Result<Option<()>, Error<DeleteHostTagsError>> {
+    ) -> Result<(), Error<DeleteHostTagsError>> {
         match self
             .delete_host_tags_with_http_info(host_name, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -343,9 +354,17 @@ impl TagsAPI {
         &self,
         host_name: String,
         params: GetHostTagsOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::HostTags>, Error<GetHostTagsError>> {
+    ) -> Result<crate::datadogV1::model::HostTags, Error<GetHostTagsError>> {
         match self.get_host_tags_with_http_info(host_name, params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -398,13 +417,16 @@ impl TagsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::HostTags> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::HostTags>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetHostTagsError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -420,9 +442,17 @@ impl TagsAPI {
     pub async fn list_host_tags(
         &self,
         params: ListHostTagsOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::TagToHosts>, Error<ListHostTagsError>> {
+    ) -> Result<crate::datadogV1::model::TagToHosts, Error<ListHostTagsError>> {
         match self.list_host_tags_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -474,13 +504,16 @@ impl TagsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::TagToHosts> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::TagToHosts>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListHostTagsError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -499,12 +532,20 @@ impl TagsAPI {
         host_name: String,
         body: crate::datadogV1::model::HostTags,
         params: UpdateHostTagsOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::HostTags>, Error<UpdateHostTagsError>> {
+    ) -> Result<crate::datadogV1::model::HostTags, Error<UpdateHostTagsError>> {
         match self
             .update_host_tags_with_http_info(host_name, body, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -567,13 +608,16 @@ impl TagsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::HostTags> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::HostTags>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateHostTagsError> =
                 serde_json::from_str(&local_content).ok();

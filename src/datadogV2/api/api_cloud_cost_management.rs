@@ -126,12 +126,18 @@ impl CloudCostManagementAPI {
     pub async fn create_cost_awscur_config(
         &self,
         body: crate::datadogV2::model::AwsCURConfigPostRequest,
-    ) -> Result<
-        Option<crate::datadogV2::model::AwsCURConfigResponse>,
-        Error<CreateCostAWSCURConfigError>,
-    > {
+    ) -> Result<crate::datadogV2::model::AwsCURConfigResponse, Error<CreateCostAWSCURConfigError>>
+    {
         match self.create_cost_awscur_config_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -184,13 +190,18 @@ impl CloudCostManagementAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::AwsCURConfigResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::AwsCURConfigResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateCostAWSCURConfigError> =
                 serde_json::from_str(&local_content).ok();
@@ -208,11 +219,19 @@ impl CloudCostManagementAPI {
         &self,
         body: crate::datadogV2::model::AzureUCConfigPostRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::AzureUCConfigPairsResponse>,
+        crate::datadogV2::model::AzureUCConfigPairsResponse,
         Error<CreateCostAzureUCConfigsError>,
     > {
         match self.create_cost_azure_uc_configs_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -265,13 +284,18 @@ impl CloudCostManagementAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::AzureUCConfigPairsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::AzureUCConfigPairsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateCostAzureUCConfigsError> =
                 serde_json::from_str(&local_content).ok();
@@ -288,12 +312,12 @@ impl CloudCostManagementAPI {
     pub async fn delete_cost_awscur_config(
         &self,
         cloud_account_id: String,
-    ) -> Result<Option<()>, Error<DeleteCostAWSCURConfigError>> {
+    ) -> Result<(), Error<DeleteCostAWSCURConfigError>> {
         match self
             .delete_cost_awscur_config_with_http_info(cloud_account_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -358,12 +382,12 @@ impl CloudCostManagementAPI {
     pub async fn delete_cost_azure_uc_config(
         &self,
         cloud_account_id: String,
-    ) -> Result<Option<()>, Error<DeleteCostAzureUCConfigError>> {
+    ) -> Result<(), Error<DeleteCostAzureUCConfigError>> {
         match self
             .delete_cost_azure_uc_config_with_http_info(cloud_account_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -427,12 +451,18 @@ impl CloudCostManagementAPI {
     /// Get the Cloud Cost Management activity.
     pub async fn get_cloud_cost_activity(
         &self,
-    ) -> Result<
-        Option<crate::datadogV2::model::CloudCostActivityResponse>,
-        Error<GetCloudCostActivityError>,
-    > {
+    ) -> Result<crate::datadogV2::model::CloudCostActivityResponse, Error<GetCloudCostActivityError>>
+    {
         match self.get_cloud_cost_activity_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -477,13 +507,18 @@ impl CloudCostManagementAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::CloudCostActivityResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::CloudCostActivityResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetCloudCostActivityError> =
                 serde_json::from_str(&local_content).ok();
@@ -501,14 +536,22 @@ impl CloudCostManagementAPI {
         &self,
         filter_management_account_id: String,
     ) -> Result<
-        Option<crate::datadogV2::model::AWSRelatedAccountsResponse>,
+        crate::datadogV2::model::AWSRelatedAccountsResponse,
         Error<ListAWSRelatedAccountsError>,
     > {
         match self
             .list_aws_related_accounts_with_http_info(filter_management_account_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -559,13 +602,18 @@ impl CloudCostManagementAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::AWSRelatedAccountsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::AWSRelatedAccountsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListAWSRelatedAccountsError> =
                 serde_json::from_str(&local_content).ok();
@@ -581,12 +629,18 @@ impl CloudCostManagementAPI {
     /// List the AWS CUR configs.
     pub async fn list_cost_awscur_configs(
         &self,
-    ) -> Result<
-        Option<crate::datadogV2::model::AwsCURConfigsResponse>,
-        Error<ListCostAWSCURConfigsError>,
-    > {
+    ) -> Result<crate::datadogV2::model::AwsCURConfigsResponse, Error<ListCostAWSCURConfigsError>>
+    {
         match self.list_cost_awscur_configs_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -631,13 +685,18 @@ impl CloudCostManagementAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::AwsCURConfigsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::AwsCURConfigsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListCostAWSCURConfigsError> =
                 serde_json::from_str(&local_content).ok();
@@ -653,12 +712,18 @@ impl CloudCostManagementAPI {
     /// List the Azure configs.
     pub async fn list_cost_azure_uc_configs(
         &self,
-    ) -> Result<
-        Option<crate::datadogV2::model::AzureUCConfigsResponse>,
-        Error<ListCostAzureUCConfigsError>,
-    > {
+    ) -> Result<crate::datadogV2::model::AzureUCConfigsResponse, Error<ListCostAzureUCConfigsError>>
+    {
         match self.list_cost_azure_uc_configs_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -703,13 +768,18 @@ impl CloudCostManagementAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::AzureUCConfigsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::AzureUCConfigsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListCostAzureUCConfigsError> =
                 serde_json::from_str(&local_content).ok();
@@ -727,15 +797,21 @@ impl CloudCostManagementAPI {
         &self,
         cloud_account_id: String,
         body: crate::datadogV2::model::AwsCURConfigPatchRequest,
-    ) -> Result<
-        Option<crate::datadogV2::model::AwsCURConfigsResponse>,
-        Error<UpdateCostAWSCURConfigError>,
-    > {
+    ) -> Result<crate::datadogV2::model::AwsCURConfigsResponse, Error<UpdateCostAWSCURConfigError>>
+    {
         match self
             .update_cost_awscur_config_with_http_info(cloud_account_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -790,13 +866,18 @@ impl CloudCostManagementAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::AwsCURConfigsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::AwsCURConfigsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateCostAWSCURConfigError> =
                 serde_json::from_str(&local_content).ok();
@@ -815,14 +896,22 @@ impl CloudCostManagementAPI {
         cloud_account_id: String,
         body: crate::datadogV2::model::AzureUCConfigPatchRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::AzureUCConfigPairsResponse>,
+        crate::datadogV2::model::AzureUCConfigPairsResponse,
         Error<UpdateCostAzureUCConfigsError>,
     > {
         match self
             .update_cost_azure_uc_configs_with_http_info(cloud_account_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -877,13 +966,18 @@ impl CloudCostManagementAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::AzureUCConfigPairsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::AzureUCConfigPairsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateCostAzureUCConfigsError> =
                 serde_json::from_str(&local_content).ok();

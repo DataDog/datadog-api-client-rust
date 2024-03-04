@@ -85,10 +85,17 @@ impl OktaIntegrationAPI {
     pub async fn create_okta_account(
         &self,
         body: crate::datadogV2::model::OktaAccountRequest,
-    ) -> Result<Option<crate::datadogV2::model::OktaAccountResponse>, Error<CreateOktaAccountError>>
-    {
+    ) -> Result<crate::datadogV2::model::OktaAccountResponse, Error<CreateOktaAccountError>> {
         match self.create_okta_account_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -141,13 +148,18 @@ impl OktaIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::OktaAccountResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::OktaAccountResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateOktaAccountError> =
                 serde_json::from_str(&local_content).ok();
@@ -164,9 +176,9 @@ impl OktaIntegrationAPI {
     pub async fn delete_okta_account(
         &self,
         account_id: String,
-    ) -> Result<Option<()>, Error<DeleteOktaAccountError>> {
+    ) -> Result<(), Error<DeleteOktaAccountError>> {
         match self.delete_okta_account_with_http_info(account_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -231,10 +243,17 @@ impl OktaIntegrationAPI {
     pub async fn get_okta_account(
         &self,
         account_id: String,
-    ) -> Result<Option<crate::datadogV2::model::OktaAccountResponse>, Error<GetOktaAccountError>>
-    {
+    ) -> Result<crate::datadogV2::model::OktaAccountResponse, Error<GetOktaAccountError>> {
         match self.get_okta_account_with_http_info(account_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -281,13 +300,18 @@ impl OktaIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::OktaAccountResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::OktaAccountResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetOktaAccountError> =
                 serde_json::from_str(&local_content).ok();
@@ -303,10 +327,17 @@ impl OktaIntegrationAPI {
     /// List Okta accounts.
     pub async fn list_okta_accounts(
         &self,
-    ) -> Result<Option<crate::datadogV2::model::OktaAccountsResponse>, Error<ListOktaAccountsError>>
-    {
+    ) -> Result<crate::datadogV2::model::OktaAccountsResponse, Error<ListOktaAccountsError>> {
         match self.list_okta_accounts_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -351,13 +382,18 @@ impl OktaIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::OktaAccountsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::OktaAccountsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListOktaAccountsError> =
                 serde_json::from_str(&local_content).ok();
@@ -375,13 +411,20 @@ impl OktaIntegrationAPI {
         &self,
         account_id: String,
         body: crate::datadogV2::model::OktaAccountUpdateRequest,
-    ) -> Result<Option<crate::datadogV2::model::OktaAccountResponse>, Error<UpdateOktaAccountError>>
-    {
+    ) -> Result<crate::datadogV2::model::OktaAccountResponse, Error<UpdateOktaAccountError>> {
         match self
             .update_okta_account_with_http_info(account_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -436,13 +479,18 @@ impl OktaIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::OktaAccountResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::OktaAccountResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateOktaAccountError> =
                 serde_json::from_str(&local_content).ok();

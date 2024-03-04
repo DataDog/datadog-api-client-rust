@@ -112,11 +112,19 @@ impl GCPIntegrationAPI {
         &self,
         body: crate::datadogV2::model::GCPSTSServiceAccountCreateRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::GCPSTSServiceAccountResponse>,
+        crate::datadogV2::model::GCPSTSServiceAccountResponse,
         Error<CreateGCPSTSAccountError>,
     > {
         match self.create_gcpsts_account_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -169,13 +177,18 @@ impl GCPIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::GCPSTSServiceAccountResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::GCPSTSServiceAccountResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateGCPSTSAccountError> =
                 serde_json::from_str(&local_content).ok();
@@ -192,9 +205,9 @@ impl GCPIntegrationAPI {
     pub async fn delete_gcpsts_account(
         &self,
         account_id: String,
-    ) -> Result<Option<()>, Error<DeleteGCPSTSAccountError>> {
+    ) -> Result<(), Error<DeleteGCPSTSAccountError>> {
         match self.delete_gcpsts_account_with_http_info(account_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -258,12 +271,18 @@ impl GCPIntegrationAPI {
     /// List your Datadog-GCP STS delegate account configured in your Datadog account.
     pub async fn get_gcpsts_delegate(
         &self,
-    ) -> Result<
-        Option<crate::datadogV2::model::GCPSTSDelegateAccountResponse>,
-        Error<GetGCPSTSDelegateError>,
-    > {
+    ) -> Result<crate::datadogV2::model::GCPSTSDelegateAccountResponse, Error<GetGCPSTSDelegateError>>
+    {
         match self.get_gcpsts_delegate_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -308,13 +327,18 @@ impl GCPIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::GCPSTSDelegateAccountResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::GCPSTSDelegateAccountResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetGCPSTSDelegateError> =
                 serde_json::from_str(&local_content).ok();
@@ -331,11 +355,19 @@ impl GCPIntegrationAPI {
     pub async fn list_gcpsts_accounts(
         &self,
     ) -> Result<
-        Option<crate::datadogV2::model::GCPSTSServiceAccountsResponse>,
+        crate::datadogV2::model::GCPSTSServiceAccountsResponse,
         Error<ListGCPSTSAccountsError>,
     > {
         match self.list_gcpsts_accounts_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -380,13 +412,18 @@ impl GCPIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::GCPSTSServiceAccountsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::GCPSTSServiceAccountsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListGCPSTSAccountsError> =
                 serde_json::from_str(&local_content).ok();
@@ -404,11 +441,19 @@ impl GCPIntegrationAPI {
         &self,
         params: MakeGCPSTSDelegateOptionalParams,
     ) -> Result<
-        Option<crate::datadogV2::model::GCPSTSDelegateAccountResponse>,
+        crate::datadogV2::model::GCPSTSDelegateAccountResponse,
         Error<MakeGCPSTSDelegateError>,
     > {
         match self.make_gcpsts_delegate_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -464,13 +509,18 @@ impl GCPIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::GCPSTSDelegateAccountResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::GCPSTSDelegateAccountResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<MakeGCPSTSDelegateError> =
                 serde_json::from_str(&local_content).ok();
@@ -489,14 +539,22 @@ impl GCPIntegrationAPI {
         account_id: String,
         body: crate::datadogV2::model::GCPSTSServiceAccountUpdateRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::GCPSTSServiceAccountResponse>,
+        crate::datadogV2::model::GCPSTSServiceAccountResponse,
         Error<UpdateGCPSTSAccountError>,
     > {
         match self
             .update_gcpsts_account_with_http_info(account_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -551,13 +609,18 @@ impl GCPIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::GCPSTSServiceAccountResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::GCPSTSServiceAccountResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateGCPSTSAccountError> =
                 serde_json::from_str(&local_content).ok();

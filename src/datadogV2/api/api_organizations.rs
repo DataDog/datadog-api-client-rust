@@ -58,9 +58,9 @@ impl OrganizationsAPI {
     pub async fn upload_idp_metadata(
         &self,
         params: UploadIdPMetadataOptionalParams,
-    ) -> Result<Option<()>, Error<UploadIdPMetadataError>> {
+    ) -> Result<(), Error<UploadIdPMetadataError>> {
         match self.upload_idp_metadata_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }

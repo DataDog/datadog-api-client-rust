@@ -365,14 +365,22 @@ impl MonitorsAPI {
         &self,
         monitor_ids: Vec<i64>,
     ) -> Result<
-        Option<crate::datadogV1::model::CheckCanDeleteMonitorResponse>,
+        crate::datadogV1::model::CheckCanDeleteMonitorResponse,
         Error<CheckCanDeleteMonitorError>,
     > {
         match self
             .check_can_delete_monitor_with_http_info(monitor_ids)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -428,13 +436,18 @@ impl MonitorsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::CheckCanDeleteMonitorResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::CheckCanDeleteMonitorResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CheckCanDeleteMonitorError> =
                 serde_json::from_str(&local_content).ok();
@@ -632,9 +645,17 @@ impl MonitorsAPI {
     pub async fn create_monitor(
         &self,
         body: crate::datadogV1::model::Monitor,
-    ) -> Result<Option<crate::datadogV1::model::Monitor>, Error<CreateMonitorError>> {
+    ) -> Result<crate::datadogV1::model::Monitor, Error<CreateMonitorError>> {
         match self.create_monitor_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -865,13 +886,16 @@ impl MonitorsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::Monitor> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::Monitor>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateMonitorError> =
                 serde_json::from_str(&local_content).ok();
@@ -889,9 +913,17 @@ impl MonitorsAPI {
         &self,
         monitor_id: i64,
         params: DeleteMonitorOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::DeletedMonitor>, Error<DeleteMonitorError>> {
+    ) -> Result<crate::datadogV1::model::DeletedMonitor, Error<DeleteMonitorError>> {
         match self.delete_monitor_with_http_info(monitor_id, params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -945,13 +977,16 @@ impl MonitorsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::DeletedMonitor> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::DeletedMonitor>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<DeleteMonitorError> =
                 serde_json::from_str(&local_content).ok();
@@ -969,9 +1004,17 @@ impl MonitorsAPI {
         &self,
         monitor_id: i64,
         params: GetMonitorOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::Monitor>, Error<GetMonitorError>> {
+    ) -> Result<crate::datadogV1::model::Monitor, Error<GetMonitorError>> {
         match self.get_monitor_with_http_info(monitor_id, params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1029,13 +1072,16 @@ impl MonitorsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::Monitor> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::Monitor>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetMonitorError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -1051,9 +1097,17 @@ impl MonitorsAPI {
     pub async fn list_monitors(
         &self,
         params: ListMonitorsOptionalParams,
-    ) -> Result<Option<Vec<crate::datadogV1::model::Monitor>>, Error<ListMonitorsError>> {
+    ) -> Result<Vec<crate::datadogV1::model::Monitor>, Error<ListMonitorsError>> {
         match self.list_monitors_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1140,13 +1194,16 @@ impl MonitorsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<Vec<crate::datadogV1::model::Monitor>> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<Vec<crate::datadogV1::model::Monitor>>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListMonitorsError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -1162,12 +1219,18 @@ impl MonitorsAPI {
     pub async fn search_monitor_groups(
         &self,
         params: SearchMonitorGroupsOptionalParams,
-    ) -> Result<
-        Option<crate::datadogV1::model::MonitorGroupSearchResponse>,
-        Error<SearchMonitorGroupsError>,
-    > {
+    ) -> Result<crate::datadogV1::model::MonitorGroupSearchResponse, Error<SearchMonitorGroupsError>>
+    {
         match self.search_monitor_groups_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1236,13 +1299,18 @@ impl MonitorsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::MonitorGroupSearchResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::MonitorGroupSearchResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<SearchMonitorGroupsError> =
                 serde_json::from_str(&local_content).ok();
@@ -1259,10 +1327,17 @@ impl MonitorsAPI {
     pub async fn search_monitors(
         &self,
         params: SearchMonitorsOptionalParams,
-    ) -> Result<Option<crate::datadogV1::model::MonitorSearchResponse>, Error<SearchMonitorsError>>
-    {
+    ) -> Result<crate::datadogV1::model::MonitorSearchResponse, Error<SearchMonitorsError>> {
         match self.search_monitors_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1331,13 +1406,18 @@ impl MonitorsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::MonitorSearchResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::MonitorSearchResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<SearchMonitorsError> =
                 serde_json::from_str(&local_content).ok();
@@ -1355,9 +1435,17 @@ impl MonitorsAPI {
         &self,
         monitor_id: i64,
         body: crate::datadogV1::model::MonitorUpdateRequest,
-    ) -> Result<Option<crate::datadogV1::model::Monitor>, Error<UpdateMonitorError>> {
+    ) -> Result<crate::datadogV1::model::Monitor, Error<UpdateMonitorError>> {
         match self.update_monitor_with_http_info(monitor_id, body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1409,13 +1497,16 @@ impl MonitorsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::Monitor> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::Monitor>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateMonitorError> =
                 serde_json::from_str(&local_content).ok();
@@ -1434,14 +1525,22 @@ impl MonitorsAPI {
         monitor_id: i64,
         body: crate::datadogV1::model::Monitor,
     ) -> Result<
-        Option<std::collections::BTreeMap<String, serde_json::Value>>,
+        std::collections::BTreeMap<String, serde_json::Value>,
         Error<ValidateExistingMonitorError>,
     > {
         match self
             .validate_existing_monitor_with_http_info(monitor_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1496,13 +1595,18 @@ impl MonitorsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ValidateExistingMonitorError> =
                 serde_json::from_str(&local_content).ok();
@@ -1521,12 +1625,18 @@ impl MonitorsAPI {
     pub async fn validate_monitor(
         &self,
         body: crate::datadogV1::model::Monitor,
-    ) -> Result<
-        Option<std::collections::BTreeMap<String, serde_json::Value>>,
-        Error<ValidateMonitorError>,
-    > {
+    ) -> Result<std::collections::BTreeMap<String, serde_json::Value>, Error<ValidateMonitorError>>
+    {
         match self.validate_monitor_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1581,13 +1691,18 @@ impl MonitorsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ValidateMonitorError> =
                 serde_json::from_str(&local_content).ok();
