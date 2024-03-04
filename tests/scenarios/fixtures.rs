@@ -2,7 +2,7 @@ use crate::{
     scenarios::function_mappings::{collect_function_calls, initialize_api_instance, ApiInstances},
     GIVEN_MAP, UNDO_MAP,
 };
-use chrono::{DateTime, Duration, Months, SecondsFormat,Utc};
+use chrono::{DateTime, Duration, Months, SecondsFormat, Utc};
 use convert_case::{Case, Casing};
 use cucumber::{
     event::ScenarioFinished,
@@ -18,7 +18,13 @@ use rvcr::{VCRMiddleware, VCRMode};
 use serde_json::{json, Value};
 use sha256::digest;
 use std::{
-    collections::{HashMap, HashSet}, env, fs::{create_dir_all, read_to_string, remove_file, File}, io::Write, ops::Add, path::PathBuf, str::FromStr
+    collections::{HashMap, HashSet},
+    env,
+    fs::{create_dir_all, read_to_string, remove_file, File},
+    io::Write,
+    ops::Add,
+    path::PathBuf,
+    str::FromStr,
 };
 
 pub type TestCall = fn(&mut DatadogWorld, &HashMap<String, Value>);
@@ -106,7 +112,10 @@ pub async fn before_scenario(
             let mut freeze_file = File::create(freeze).expect("failed to write freeze file");
             freeze_file
                 .write_all(
-                    Utc::now().format("%Y-%m-%dT%H:%M:%S%.3fZ").to_string().as_bytes(),
+                    Utc::now()
+                        .format("%Y-%m-%dT%H:%M:%S%.3fZ")
+                        .to_string()
+                        .as_bytes(),
                 )
                 .expect("failed to write freeze file");
             let middleware: VCRMiddleware = VCRMiddleware::try_from(cassette)
