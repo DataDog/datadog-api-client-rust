@@ -317,16 +317,11 @@ impl CloudWorkloadSecurityAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<Vec<u8>>(&local_content) {
-                Ok(e) => {
-                    return Ok(ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
-            };
+            Ok(ResponseContent {
+                status: local_status,
+                content: local_content.clone(),
+                entity: Some(local_content.into_bytes()),
+            })
         } else {
             let local_entity: Option<DownloadCloudWorkloadPolicyFileError> =
                 serde_json::from_str(&local_content).ok();
