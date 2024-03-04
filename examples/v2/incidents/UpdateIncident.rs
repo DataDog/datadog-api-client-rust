@@ -20,7 +20,22 @@ async fn main() {
                 IncidentType::INCIDENTS,
             ).attributes(
                 IncidentUpdateAttributes::new()
-                    .fields(std::collections::BTreeMap::from([]))
+                    .fields(
+                        std::collections::BTreeMap::from(
+                            [
+                                (
+                                    "state".to_string(),
+                                    IncidentFieldAttributes::IncidentFieldAttributesSingleValue(
+                                        Box::new(
+                                            IncidentFieldAttributesSingleValue::new()
+                                                .type_(IncidentFieldAttributesSingleValueType::DROPDOWN)
+                                                .value(Some("resolved".to_string())),
+                                        ),
+                                    ),
+                                ),
+                            ],
+                        ),
+                    )
                     .title("A test incident title-updated".to_string()),
             ),
         );

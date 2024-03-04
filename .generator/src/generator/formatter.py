@@ -607,7 +607,7 @@ def format_data_with_schema_dict(
         if has_properties:
             parameters += f".additional_properties(std::collections::BTreeMap::from([{add_parameters}]))"
         else:
-            return f"std::collections::BTreeMap::from([{parameters}])"
+            return f"std::collections::BTreeMap::from([{add_parameters}])"
 
     if "oneOf" in schema:
         return _format_oneof(schema, data, name, name_prefix, replace_values, required, nullable, **kwargs)

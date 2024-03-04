@@ -104,7 +104,11 @@ async fn main() {
                                         .updated_at("2020-10-16T09:23:24.857Z".to_string()),
                                 ),
                         )
-                        .headers(std::collections::BTreeMap::from([]))
+                        .headers(
+                            std::collections::BTreeMap::from(
+                                [("unique".to_string(), "examplesynthetic".to_string())],
+                            ),
+                        )
                         .method("GET".to_string())
                         .proxy(
                             SyntheticsTestRequestProxy::new(

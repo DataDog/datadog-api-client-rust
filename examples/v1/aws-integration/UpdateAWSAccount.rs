@@ -14,7 +14,9 @@ async fn main() {
     let body =
         AWSAccount::new()
             .account_id("163662907100".to_string())
-            .account_specific_namespace_rules(std::collections::BTreeMap::from([]))
+            .account_specific_namespace_rules(
+                std::collections::BTreeMap::from([("auto_scaling".to_string(), false)]),
+            )
             .cspm_resource_collection_enabled(false)
             .excluded_regions(vec!["us-east-1".to_string(), "us-west-2".to_string()])
             .filter_tags(vec!["$KEY:$VALUE".to_string()])

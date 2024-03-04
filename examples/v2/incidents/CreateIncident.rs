@@ -19,7 +19,22 @@ async fn main() {
                 IncidentCreateAttributes::new(
                     false,
                     "Example-Incident".to_string(),
-                ).fields(std::collections::BTreeMap::from([])),
+                ).fields(
+                    std::collections::BTreeMap::from(
+                        [
+                            (
+                                "state".to_string(),
+                                IncidentFieldAttributes::IncidentFieldAttributesSingleValue(
+                                    Box::new(
+                                        IncidentFieldAttributesSingleValue::new()
+                                            .type_(IncidentFieldAttributesSingleValueType::DROPDOWN)
+                                            .value(Some("resolved".to_string())),
+                                    ),
+                                ),
+                            ),
+                        ],
+                    ),
+                ),
                 IncidentType::INCIDENTS,
             ).relationships(
                 IncidentCreateRelationships::new(

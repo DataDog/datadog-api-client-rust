@@ -11,7 +11,13 @@ use std::time::{
 
 #[tokio::main]
 async fn main() {
-    let body = std::collections::BTreeMap::from([]);
+    let body =
+        std::collections::BTreeMap::from(
+            [
+                ("id1".to_string(), vec![SLOTimeframe::SEVEN_DAYS, SLOTimeframe::THIRTY_DAYS]),
+                ("id2".to_string(), vec![SLOTimeframe::SEVEN_DAYS, SLOTimeframe::THIRTY_DAYS]),
+            ],
+        );
     let configuration = Configuration::new();
     let api = ServiceLevelObjectivesAPI::with_config(configuration);
     let resp = api.delete_slo_timeframe_in_bulk(body).await;
