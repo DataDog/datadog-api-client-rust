@@ -27,12 +27,12 @@ impl SLOResponse {
         }
     }
 
-    pub fn data(&mut self, value: crate::datadogV1::model::SLOResponseData) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV1::model::SLOResponseData) -> Self {
         self.data = Some(value);
         self
     }
 
-    pub fn errors(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn errors(mut self, value: Vec<String>) -> Self {
         self.errors = Some(value);
         self
     }

@@ -19,7 +19,7 @@ impl SpansMetricResponse {
         SpansMetricResponse { data: None }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::SpansMetricResponseData) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::SpansMetricResponseData) -> Self {
         self.data = Some(value);
         self
     }

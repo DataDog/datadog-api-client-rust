@@ -1,0 +1,24 @@
+// Get Confluent account returns "OK" response
+use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadogV2::api::api_confluent_cloud::ConfluentCloudAPI;
+use datadog_api_client::datadogV2::model::*;
+use std::ops::Add;
+use std::time::{
+    Duration,
+    SystemTime,
+    UNIX_EPOCH,
+};
+
+#[tokio::main]
+async fn main() {
+    // there is a valid "confluent_account" in the system
+    let confluent_account_data_id = std::env::var("CONFLUENT_ACCOUNT_DATA_ID").unwrap();
+    let configuration = Configuration::new();
+    let api = ConfluentCloudAPI::with_config(configuration);
+    let resp = api.get_confluent_account().await;
+    if let Ok(Some(value)) = resp {
+        println!("{:#?}", value);
+    } else {
+        println!("{:#?}", resp.unwrap_err());
+    }
+}

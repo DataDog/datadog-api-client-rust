@@ -29,15 +29,15 @@ impl FormulaAndFunctionEventQueryGroupBy {
         }
     }
 
-    pub fn limit(&mut self, value: i64) -> &mut Self {
+    pub fn limit(mut self, value: i64) -> Self {
         self.limit = Some(value);
         self
     }
 
     pub fn sort(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::FormulaAndFunctionEventQueryGroupBySort,
-    ) -> &mut Self {
+    ) -> Self {
         self.sort = Some(value);
         self
     }

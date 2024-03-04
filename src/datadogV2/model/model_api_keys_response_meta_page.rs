@@ -21,7 +21,7 @@ impl APIKeysResponseMetaPage {
         }
     }
 
-    pub fn total_filtered_count(&mut self, value: i64) -> &mut Self {
+    pub fn total_filtered_count(mut self, value: i64) -> Self {
         self.total_filtered_count = Some(value);
         self
     }

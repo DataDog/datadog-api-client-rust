@@ -21,7 +21,7 @@ impl ApplicationKeyResponse {
         }
     }
 
-    pub fn application_key(&mut self, value: crate::datadogV1::model::ApplicationKey) -> &mut Self {
+    pub fn application_key(mut self, value: crate::datadogV1::model::ApplicationKey) -> Self {
         self.application_key = Some(value);
         self
     }

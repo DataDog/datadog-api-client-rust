@@ -47,22 +47,22 @@ impl IncidentIntegrationMetadataAttributes {
         }
     }
 
-    pub fn created(&mut self, value: String) -> &mut Self {
+    pub fn created(mut self, value: String) -> Self {
         self.created = Some(value);
         self
     }
 
-    pub fn incident_id(&mut self, value: String) -> &mut Self {
+    pub fn incident_id(mut self, value: String) -> Self {
         self.incident_id = Some(value);
         self
     }
 
-    pub fn modified(&mut self, value: String) -> &mut Self {
+    pub fn modified(mut self, value: String) -> Self {
         self.modified = Some(value);
         self
     }
 
-    pub fn status(&mut self, value: i32) -> &mut Self {
+    pub fn status(mut self, value: i32) -> Self {
         self.status = Some(value);
         self
     }

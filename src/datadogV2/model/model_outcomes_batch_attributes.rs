@@ -20,9 +20,9 @@ impl OutcomesBatchAttributes {
     }
 
     pub fn results(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::OutcomesBatchRequestItem>,
-    ) -> &mut Self {
+    ) -> Self {
         self.results = Some(value);
         self
     }

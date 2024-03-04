@@ -37,27 +37,27 @@ impl Unit {
         }
     }
 
-    pub fn family(&mut self, value: String) -> &mut Self {
+    pub fn family(mut self, value: String) -> Self {
         self.family = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
-    pub fn plural(&mut self, value: String) -> &mut Self {
+    pub fn plural(mut self, value: String) -> Self {
         self.plural = Some(value);
         self
     }
 
-    pub fn scale_factor(&mut self, value: f64) -> &mut Self {
+    pub fn scale_factor(mut self, value: f64) -> Self {
         self.scale_factor = Some(value);
         self
     }
 
-    pub fn short_name(&mut self, value: String) -> &mut Self {
+    pub fn short_name(mut self, value: String) -> Self {
         self.short_name = Some(value);
         self
     }

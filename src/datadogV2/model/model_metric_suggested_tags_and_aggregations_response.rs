@@ -20,9 +20,9 @@ impl MetricSuggestedTagsAndAggregationsResponse {
     }
 
     pub fn data(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::MetricSuggestedTagsAndAggregations,
-    ) -> &mut Self {
+    ) -> Self {
         self.data = Some(value);
         self
     }

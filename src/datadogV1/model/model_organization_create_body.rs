@@ -33,16 +33,16 @@ impl OrganizationCreateBody {
     }
 
     #[allow(deprecated)]
-    pub fn billing(&mut self, value: crate::datadogV1::model::OrganizationBilling) -> &mut Self {
+    pub fn billing(mut self, value: crate::datadogV1::model::OrganizationBilling) -> Self {
         self.billing = Some(value);
         self
     }
 
     #[allow(deprecated)]
     pub fn subscription(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::OrganizationSubscription,
-    ) -> &mut Self {
+    ) -> Self {
         self.subscription = Some(value);
         self
     }

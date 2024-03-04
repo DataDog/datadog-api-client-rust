@@ -32,19 +32,19 @@ impl DashboardTemplateVariablePresetValue {
     }
 
     #[allow(deprecated)]
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn value(&mut self, value: String) -> &mut Self {
+    pub fn value(mut self, value: String) -> Self {
         self.value = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn values(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn values(mut self, value: Vec<String>) -> Self {
         self.values = Some(value);
         self
     }

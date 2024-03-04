@@ -22,7 +22,7 @@ impl SecurityMonitoringRuleImpossibleTravelOptions {
         }
     }
 
-    pub fn baseline_user_locations(&mut self, value: bool) -> &mut Self {
+    pub fn baseline_user_locations(mut self, value: bool) -> Self {
         self.baseline_user_locations = Some(value);
         self
     }

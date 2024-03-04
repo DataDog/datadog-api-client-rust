@@ -19,7 +19,7 @@ impl OnDemandConcurrencyCapResponse {
         OnDemandConcurrencyCapResponse { data: None }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::OnDemandConcurrencyCap) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::OnDemandConcurrencyCap) -> Self {
         self.data = Some(value);
         self
     }

@@ -22,9 +22,9 @@ impl SyntheticsTestCiOptions {
     }
 
     pub fn execution_rule(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SyntheticsTestExecutionRule,
-    ) -> &mut Self {
+    ) -> Self {
         self.execution_rule = Some(value);
         self
     }

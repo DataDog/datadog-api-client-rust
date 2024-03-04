@@ -41,32 +41,32 @@ impl MonitorStateGroup {
         }
     }
 
-    pub fn last_nodata_ts(&mut self, value: i64) -> &mut Self {
+    pub fn last_nodata_ts(mut self, value: i64) -> Self {
         self.last_nodata_ts = Some(value);
         self
     }
 
-    pub fn last_notified_ts(&mut self, value: i64) -> &mut Self {
+    pub fn last_notified_ts(mut self, value: i64) -> Self {
         self.last_notified_ts = Some(value);
         self
     }
 
-    pub fn last_resolved_ts(&mut self, value: i64) -> &mut Self {
+    pub fn last_resolved_ts(mut self, value: i64) -> Self {
         self.last_resolved_ts = Some(value);
         self
     }
 
-    pub fn last_triggered_ts(&mut self, value: i64) -> &mut Self {
+    pub fn last_triggered_ts(mut self, value: i64) -> Self {
         self.last_triggered_ts = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
-    pub fn status(&mut self, value: crate::datadogV1::model::MonitorOverallStates) -> &mut Self {
+    pub fn status(mut self, value: crate::datadogV1::model::MonitorOverallStates) -> Self {
         self.status = Some(value);
         self
     }

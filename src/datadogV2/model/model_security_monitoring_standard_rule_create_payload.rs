@@ -70,35 +70,35 @@ impl SecurityMonitoringStandardRuleCreatePayload {
     }
 
     pub fn filters(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::SecurityMonitoringFilter>,
-    ) -> &mut Self {
+    ) -> Self {
         self.filters = Some(value);
         self
     }
 
-    pub fn has_extended_title(&mut self, value: bool) -> &mut Self {
+    pub fn has_extended_title(mut self, value: bool) -> Self {
         self.has_extended_title = Some(value);
         self
     }
 
-    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
 
     pub fn third_party_cases(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRuleCaseCreate>,
-    ) -> &mut Self {
+    ) -> Self {
         self.third_party_cases = Some(value);
         self
     }
 
     pub fn type_(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::SecurityMonitoringRuleTypeCreate,
-    ) -> &mut Self {
+    ) -> Self {
         self.type_ = Some(value);
         self
     }

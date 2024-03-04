@@ -21,7 +21,7 @@ impl CanceledDowntimesIds {
         }
     }
 
-    pub fn cancelled_ids(&mut self, value: Vec<i64>) -> &mut Self {
+    pub fn cancelled_ids(mut self, value: Vec<i64>) -> Self {
         self.cancelled_ids = Some(value);
         self
     }

@@ -25,12 +25,12 @@ impl OrganizationSettingsSamlAutocreateUsersDomains {
         }
     }
 
-    pub fn domains(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn domains(mut self, value: Vec<String>) -> Self {
         self.domains = Some(value);
         self
     }
 
-    pub fn enabled(&mut self, value: bool) -> &mut Self {
+    pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }

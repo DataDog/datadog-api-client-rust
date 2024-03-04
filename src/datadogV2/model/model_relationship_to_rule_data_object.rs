@@ -25,12 +25,12 @@ impl RelationshipToRuleDataObject {
         }
     }
 
-    pub fn id(&mut self, value: String) -> &mut Self {
+    pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: crate::datadogV2::model::ScorecardType) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::ScorecardType) -> Self {
         self.type_ = Some(value);
         self
     }

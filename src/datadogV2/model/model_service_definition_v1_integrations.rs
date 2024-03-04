@@ -19,7 +19,7 @@ impl ServiceDefinitionV1Integrations {
         ServiceDefinitionV1Integrations { pagerduty: None }
     }
 
-    pub fn pagerduty(&mut self, value: String) -> &mut Self {
+    pub fn pagerduty(mut self, value: String) -> Self {
         self.pagerduty = Some(value);
         self
     }

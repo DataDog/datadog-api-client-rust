@@ -19,7 +19,7 @@ impl TeamLinksResponse {
         TeamLinksResponse { data: None }
     }
 
-    pub fn data(&mut self, value: Vec<crate::datadogV2::model::TeamLink>) -> &mut Self {
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::TeamLink>) -> Self {
         self.data = Some(value);
         self
     }

@@ -71,31 +71,31 @@ impl AwsCURConfigAttributes {
     }
 
     #[allow(deprecated)]
-    pub fn created_at(&mut self, value: String) -> &mut Self {
+    pub fn created_at(mut self, value: String) -> Self {
         self.created_at = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn error_messages(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn error_messages(mut self, value: Vec<String>) -> Self {
         self.error_messages = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn months(&mut self, value: i32) -> &mut Self {
+    pub fn months(mut self, value: i32) -> Self {
         self.months = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn status_updated_at(&mut self, value: String) -> &mut Self {
+    pub fn status_updated_at(mut self, value: String) -> Self {
         self.status_updated_at = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn updated_at(&mut self, value: String) -> &mut Self {
+    pub fn updated_at(mut self, value: String) -> Self {
         self.updated_at = Some(value);
         self
     }

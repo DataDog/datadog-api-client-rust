@@ -28,17 +28,17 @@ impl SyntheticsPrivateLocationSecrets {
     }
 
     pub fn authentication(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SyntheticsPrivateLocationSecretsAuthentication,
-    ) -> &mut Self {
+    ) -> Self {
         self.authentication = Some(value);
         self
     }
 
     pub fn config_decryption(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SyntheticsPrivateLocationSecretsConfigDecryption,
-    ) -> &mut Self {
+    ) -> Self {
         self.config_decryption = Some(value);
         self
     }

@@ -44,35 +44,35 @@ impl SLOHistoryMetricsSeriesMetadata {
         }
     }
 
-    pub fn aggr(&mut self, value: String) -> &mut Self {
+    pub fn aggr(mut self, value: String) -> Self {
         self.aggr = Some(value);
         self
     }
 
-    pub fn expression(&mut self, value: String) -> &mut Self {
+    pub fn expression(mut self, value: String) -> Self {
         self.expression = Some(value);
         self
     }
 
-    pub fn metric(&mut self, value: String) -> &mut Self {
+    pub fn metric(mut self, value: String) -> Self {
         self.metric = Some(value);
         self
     }
 
-    pub fn query_index(&mut self, value: i64) -> &mut Self {
+    pub fn query_index(mut self, value: i64) -> Self {
         self.query_index = Some(value);
         self
     }
 
-    pub fn scope(&mut self, value: String) -> &mut Self {
+    pub fn scope(mut self, value: String) -> Self {
         self.scope = Some(value);
         self
     }
 
     pub fn unit(
-        &mut self,
+        mut self,
         value: Option<Vec<Option<crate::datadogV1::model::SLOHistoryMetricsSeriesMetadataUnit>>>,
-    ) -> &mut Self {
+    ) -> Self {
         self.unit = Some(value);
         self
     }

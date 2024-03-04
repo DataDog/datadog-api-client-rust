@@ -107,88 +107,85 @@ impl SearchServiceLevelObjectiveAttributes {
         }
     }
 
-    pub fn all_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn all_tags(mut self, value: Vec<String>) -> Self {
         self.all_tags = Some(value);
         self
     }
 
-    pub fn created_at(&mut self, value: i64) -> &mut Self {
+    pub fn created_at(mut self, value: i64) -> Self {
         self.created_at = Some(value);
         self
     }
 
-    pub fn creator(&mut self, value: Option<crate::datadogV1::model::SLOCreator>) -> &mut Self {
+    pub fn creator(mut self, value: Option<crate::datadogV1::model::SLOCreator>) -> Self {
         self.creator = Some(value);
         self
     }
 
-    pub fn description(&mut self, value: Option<String>) -> &mut Self {
+    pub fn description(mut self, value: Option<String>) -> Self {
         self.description = Some(value);
         self
     }
 
-    pub fn env_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn env_tags(mut self, value: Vec<String>) -> Self {
         self.env_tags = Some(value);
         self
     }
 
-    pub fn groups(&mut self, value: Option<Vec<String>>) -> &mut Self {
+    pub fn groups(mut self, value: Option<Vec<String>>) -> Self {
         self.groups = Some(value);
         self
     }
 
-    pub fn modified_at(&mut self, value: i64) -> &mut Self {
+    pub fn modified_at(mut self, value: i64) -> Self {
         self.modified_at = Some(value);
         self
     }
 
-    pub fn monitor_ids(&mut self, value: Option<Vec<i64>>) -> &mut Self {
+    pub fn monitor_ids(mut self, value: Option<Vec<i64>>) -> Self {
         self.monitor_ids = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
     pub fn overall_status(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::SLOOverallStatuses>,
-    ) -> &mut Self {
+    ) -> Self {
         self.overall_status = Some(value);
         self
     }
 
-    pub fn query(&mut self, value: Option<crate::datadogV1::model::SearchSLOQuery>) -> &mut Self {
+    pub fn query(mut self, value: Option<crate::datadogV1::model::SearchSLOQuery>) -> Self {
         self.query = Some(value);
         self
     }
 
-    pub fn service_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn service_tags(mut self, value: Vec<String>) -> Self {
         self.service_tags = Some(value);
         self
     }
 
-    pub fn slo_type(&mut self, value: crate::datadogV1::model::SLOType) -> &mut Self {
+    pub fn slo_type(mut self, value: crate::datadogV1::model::SLOType) -> Self {
         self.slo_type = Some(value);
         self
     }
 
-    pub fn status(&mut self, value: crate::datadogV1::model::SLOStatus) -> &mut Self {
+    pub fn status(mut self, value: crate::datadogV1::model::SLOStatus) -> Self {
         self.status = Some(value);
         self
     }
 
-    pub fn team_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn team_tags(mut self, value: Vec<String>) -> Self {
         self.team_tags = Some(value);
         self
     }
 
-    pub fn thresholds(
-        &mut self,
-        value: Vec<crate::datadogV1::model::SearchSLOThreshold>,
-    ) -> &mut Self {
+    pub fn thresholds(mut self, value: Vec<crate::datadogV1::model::SearchSLOThreshold>) -> Self {
         self.thresholds = Some(value);
         self
     }

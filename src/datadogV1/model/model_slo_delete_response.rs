@@ -25,12 +25,12 @@ impl SLODeleteResponse {
         }
     }
 
-    pub fn data(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn data(mut self, value: Vec<String>) -> Self {
         self.data = Some(value);
         self
     }
 
-    pub fn errors(&mut self, value: std::collections::BTreeMap<String, String>) -> &mut Self {
+    pub fn errors(mut self, value: std::collections::BTreeMap<String, String>) -> Self {
         self.errors = Some(value);
         self
     }

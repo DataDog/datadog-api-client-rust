@@ -33,18 +33,15 @@ impl AuthNMapping {
         }
     }
 
-    pub fn attributes(
-        &mut self,
-        value: crate::datadogV2::model::AuthNMappingAttributes,
-    ) -> &mut Self {
+    pub fn attributes(mut self, value: crate::datadogV2::model::AuthNMappingAttributes) -> Self {
         self.attributes = Some(value);
         self
     }
 
     pub fn relationships(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::AuthNMappingRelationships,
-    ) -> &mut Self {
+    ) -> Self {
         self.relationships = Some(value);
         self
     }

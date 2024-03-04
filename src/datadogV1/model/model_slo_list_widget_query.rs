@@ -29,12 +29,12 @@ impl SLOListWidgetQuery {
         }
     }
 
-    pub fn limit(&mut self, value: i64) -> &mut Self {
+    pub fn limit(mut self, value: i64) -> Self {
         self.limit = Some(value);
         self
     }
 
-    pub fn sort(&mut self, value: Vec<crate::datadogV1::model::WidgetFieldSort>) -> &mut Self {
+    pub fn sort(mut self, value: Vec<crate::datadogV1::model::WidgetFieldSort>) -> Self {
         self.sort = Some(value);
         self
     }

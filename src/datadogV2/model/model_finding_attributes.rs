@@ -53,47 +53,47 @@ impl FindingAttributes {
         }
     }
 
-    pub fn evaluation(&mut self, value: crate::datadogV2::model::FindingEvaluation) -> &mut Self {
+    pub fn evaluation(mut self, value: crate::datadogV2::model::FindingEvaluation) -> Self {
         self.evaluation = Some(value);
         self
     }
 
-    pub fn evaluation_changed_at(&mut self, value: i64) -> &mut Self {
+    pub fn evaluation_changed_at(mut self, value: i64) -> Self {
         self.evaluation_changed_at = Some(value);
         self
     }
 
-    pub fn mute(&mut self, value: crate::datadogV2::model::FindingMute) -> &mut Self {
+    pub fn mute(mut self, value: crate::datadogV2::model::FindingMute) -> Self {
         self.mute = Some(value);
         self
     }
 
-    pub fn resource(&mut self, value: String) -> &mut Self {
+    pub fn resource(mut self, value: String) -> Self {
         self.resource = Some(value);
         self
     }
 
-    pub fn resource_discovery_date(&mut self, value: i64) -> &mut Self {
+    pub fn resource_discovery_date(mut self, value: i64) -> Self {
         self.resource_discovery_date = Some(value);
         self
     }
 
-    pub fn resource_type(&mut self, value: String) -> &mut Self {
+    pub fn resource_type(mut self, value: String) -> Self {
         self.resource_type = Some(value);
         self
     }
 
-    pub fn rule(&mut self, value: crate::datadogV2::model::FindingRule) -> &mut Self {
+    pub fn rule(mut self, value: crate::datadogV2::model::FindingRule) -> Self {
         self.rule = Some(value);
         self
     }
 
-    pub fn status(&mut self, value: crate::datadogV2::model::FindingStatus) -> &mut Self {
+    pub fn status(mut self, value: crate::datadogV2::model::FindingStatus) -> Self {
         self.status = Some(value);
         self
     }
 
-    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }

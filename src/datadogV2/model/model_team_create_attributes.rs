@@ -45,27 +45,27 @@ impl TeamCreateAttributes {
         }
     }
 
-    pub fn avatar(&mut self, value: Option<String>) -> &mut Self {
+    pub fn avatar(mut self, value: Option<String>) -> Self {
         self.avatar = Some(value);
         self
     }
 
-    pub fn banner(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn banner(mut self, value: Option<i64>) -> Self {
         self.banner = Some(value);
         self
     }
 
-    pub fn description(&mut self, value: String) -> &mut Self {
+    pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
 
-    pub fn hidden_modules(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn hidden_modules(mut self, value: Vec<String>) -> Self {
         self.hidden_modules = Some(value);
         self
     }
 
-    pub fn visible_modules(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn visible_modules(mut self, value: Vec<String>) -> Self {
         self.visible_modules = Some(value);
         self
     }

@@ -25,18 +25,12 @@ impl UsageAttributionResponse {
         }
     }
 
-    pub fn metadata(
-        &mut self,
-        value: crate::datadogV1::model::UsageAttributionMetadata,
-    ) -> &mut Self {
+    pub fn metadata(mut self, value: crate::datadogV1::model::UsageAttributionMetadata) -> Self {
         self.metadata = Some(value);
         self
     }
 
-    pub fn usage(
-        &mut self,
-        value: Vec<crate::datadogV1::model::UsageAttributionBody>,
-    ) -> &mut Self {
+    pub fn usage(mut self, value: Vec<crate::datadogV1::model::UsageAttributionBody>) -> Self {
         self.usage = Some(value);
         self
     }

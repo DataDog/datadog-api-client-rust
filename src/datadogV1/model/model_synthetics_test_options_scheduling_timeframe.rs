@@ -29,17 +29,17 @@ impl SyntheticsTestOptionsSchedulingTimeframe {
         }
     }
 
-    pub fn day(&mut self, value: i32) -> &mut Self {
+    pub fn day(mut self, value: i32) -> Self {
         self.day = Some(value);
         self
     }
 
-    pub fn from(&mut self, value: String) -> &mut Self {
+    pub fn from(mut self, value: String) -> Self {
         self.from = Some(value);
         self
     }
 
-    pub fn to(&mut self, value: String) -> &mut Self {
+    pub fn to(mut self, value: String) -> Self {
         self.to = Some(value);
         self
     }

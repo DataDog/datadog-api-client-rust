@@ -19,7 +19,7 @@ impl HTTPCIAppErrors {
         HTTPCIAppErrors { errors: None }
     }
 
-    pub fn errors(&mut self, value: Vec<crate::datadogV2::model::HTTPCIAppError>) -> &mut Self {
+    pub fn errors(mut self, value: Vec<crate::datadogV2::model::HTTPCIAppError>) -> Self {
         self.errors = Some(value);
         self
     }

@@ -25,15 +25,12 @@ impl CheckCanDeleteSLOResponse {
         }
     }
 
-    pub fn data(
-        &mut self,
-        value: crate::datadogV1::model::CheckCanDeleteSLOResponseData,
-    ) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV1::model::CheckCanDeleteSLOResponseData) -> Self {
         self.data = Some(value);
         self
     }
 
-    pub fn errors(&mut self, value: std::collections::BTreeMap<String, String>) -> &mut Self {
+    pub fn errors(mut self, value: std::collections::BTreeMap<String, String>) -> Self {
         self.errors = Some(value);
         self
     }

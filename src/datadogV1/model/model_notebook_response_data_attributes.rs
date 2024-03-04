@@ -53,27 +53,27 @@ impl NotebookResponseDataAttributes {
         }
     }
 
-    pub fn author(&mut self, value: crate::datadogV1::model::NotebookAuthor) -> &mut Self {
+    pub fn author(mut self, value: crate::datadogV1::model::NotebookAuthor) -> Self {
         self.author = Some(value);
         self
     }
 
-    pub fn created(&mut self, value: String) -> &mut Self {
+    pub fn created(mut self, value: String) -> Self {
         self.created = Some(value);
         self
     }
 
-    pub fn metadata(&mut self, value: crate::datadogV1::model::NotebookMetadata) -> &mut Self {
+    pub fn metadata(mut self, value: crate::datadogV1::model::NotebookMetadata) -> Self {
         self.metadata = Some(value);
         self
     }
 
-    pub fn modified(&mut self, value: String) -> &mut Self {
+    pub fn modified(mut self, value: String) -> Self {
         self.modified = Some(value);
         self
     }
 
-    pub fn status(&mut self, value: crate::datadogV1::model::NotebookStatus) -> &mut Self {
+    pub fn status(mut self, value: crate::datadogV1::model::NotebookStatus) -> Self {
         self.status = Some(value);
         self
     }

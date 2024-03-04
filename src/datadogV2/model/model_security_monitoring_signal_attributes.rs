@@ -37,26 +37,31 @@ impl SecurityMonitoringSignalAttributes {
         }
     }
 
-    pub fn custom(
-        &mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> &mut Self {
+    pub fn custom(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.custom = Some(value);
         self
     }
 
-    pub fn message(&mut self, value: String) -> &mut Self {
+    pub fn message(mut self, value: String) -> Self {
         self.message = Some(value);
         self
     }
 
-    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
 
-    pub fn timestamp(&mut self, value: String) -> &mut Self {
+    pub fn timestamp(mut self, value: String) -> Self {
         self.timestamp = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }

@@ -26,14 +26,14 @@ impl OktaAccountUpdateRequestData {
     }
 
     pub fn attributes(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::OktaAccountUpdateRequestAttributes,
-    ) -> &mut Self {
+    ) -> Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: crate::datadogV2::model::OktaAccountType) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::OktaAccountType) -> Self {
         self.type_ = Some(value);
         self
     }

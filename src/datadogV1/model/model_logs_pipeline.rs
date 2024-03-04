@@ -49,32 +49,32 @@ impl LogsPipeline {
         }
     }
 
-    pub fn filter(&mut self, value: crate::datadogV1::model::LogsFilter) -> &mut Self {
+    pub fn filter(mut self, value: crate::datadogV1::model::LogsFilter) -> Self {
         self.filter = Some(value);
         self
     }
 
-    pub fn id(&mut self, value: String) -> &mut Self {
+    pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
 
-    pub fn is_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn is_enabled(mut self, value: bool) -> Self {
         self.is_enabled = Some(value);
         self
     }
 
-    pub fn is_read_only(&mut self, value: bool) -> &mut Self {
+    pub fn is_read_only(mut self, value: bool) -> Self {
         self.is_read_only = Some(value);
         self
     }
 
-    pub fn processors(&mut self, value: Vec<crate::datadogV1::model::LogsProcessor>) -> &mut Self {
+    pub fn processors(mut self, value: Vec<crate::datadogV1::model::LogsProcessor>) -> Self {
         self.processors = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: String) -> &mut Self {
+    pub fn type_(mut self, value: String) -> Self {
         self.type_ = Some(value);
         self
     }

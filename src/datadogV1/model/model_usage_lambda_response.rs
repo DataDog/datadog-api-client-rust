@@ -20,7 +20,7 @@ impl UsageLambdaResponse {
         UsageLambdaResponse { usage: None }
     }
 
-    pub fn usage(&mut self, value: Vec<crate::datadogV1::model::UsageLambdaHour>) -> &mut Self {
+    pub fn usage(mut self, value: Vec<crate::datadogV1::model::UsageLambdaHour>) -> Self {
         self.usage = Some(value);
         self
     }

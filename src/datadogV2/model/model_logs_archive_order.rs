@@ -19,10 +19,7 @@ impl LogsArchiveOrder {
         LogsArchiveOrder { data: None }
     }
 
-    pub fn data(
-        &mut self,
-        value: crate::datadogV2::model::LogsArchiveOrderDefinition,
-    ) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::LogsArchiveOrderDefinition) -> Self {
         self.data = Some(value);
         self
     }

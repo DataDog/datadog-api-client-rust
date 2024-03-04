@@ -37,22 +37,22 @@ impl UsageOnlineArchiveHour {
         }
     }
 
-    pub fn hour(&mut self, value: String) -> &mut Self {
+    pub fn hour(mut self, value: String) -> Self {
         self.hour = Some(value);
         self
     }
 
-    pub fn online_archive_events_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn online_archive_events_count(mut self, value: Option<i64>) -> Self {
         self.online_archive_events_count = Some(value);
         self
     }
 
-    pub fn org_name(&mut self, value: String) -> &mut Self {
+    pub fn org_name(mut self, value: String) -> Self {
         self.org_name = Some(value);
         self
     }
 
-    pub fn public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }

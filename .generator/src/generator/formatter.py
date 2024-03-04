@@ -1,5 +1,6 @@
 """Data formatter."""
 from functools import singledispatch
+import json
 import re
 
 import dateutil.parser
@@ -198,7 +199,7 @@ def rust_name(name):
     Example:
 
     >>> rust_name("DASHBOARD_ID")
-    DashboardID
+    dashboard_id
     """
     return name.lower()
 
@@ -356,14 +357,12 @@ def _format_oneof(schema, data, name, name_prefix, replace_values, required, nul
     one_of_schema_name = schema_name(one_of_schema)
     if not one_of_schema_name:
         one_of_schema_name = simple_type(one_of_schema).title()
-    reference = "" if required or nullable else "&"
+
+    if not is_primitive(one_of_schema):
+        parameters = f"Box::new({parameters})"
     if name:
-        if one_of_schema.get("type") == "array":
-            parameters = f"&{parameters}"
-        return f"{reference}{name_prefix}{name}{{\n{one_of_schema_name}: {parameters}}}"
-    if one_of_schema.get("type") == "array":
-        reference = "&"
-    return f"{{{one_of_schema_name}: {reference}{parameters}}}"
+        return f"{name_prefix}{name}::{one_of_schema_name}({parameters})"
+    return f"{parameters}"
 
 
 @singledispatch
@@ -407,15 +406,13 @@ def format_data_with_schema(
             parameters = f"{simple_type_value}({parameters})"
     else:
         if nullable and data is None:
-            parameters = "nil"
+            parameters = "None"
         else:
-
             def format_string(x):
-                if "`" in x:
-                    x = re.sub(r"(`+)", r'` + "\1" + `', x)
-                if x and ('"' in x or "\n" in x):
-                    x = f"`{x}`"
-                    x = re.sub(r" \+ ``$", "", x)
+                if isinstance(x, bool):
+                    raise TypeError(f"{x} is not supported type {schema}")
+                if x and ("`" in x or '"' in x or "\n" in x):
+                    x = f"r#\"{x}\"#.to_string()"
                     return x
                 return f'"{x}".to_string()' if x else '"".to_string()'
 
@@ -532,14 +529,9 @@ def format_data_with_schema_list(
             in_list=True,
             **kwargs,
         )
-        parameters += f"{value},\n"
+        parameters += f"{value},"
 
-    if in_list:
-        for _ in range(depth):
-            parameters = f"{{\n{parameters}}}"
-        return parameters
-
-    if nullable and is_primitive(list_schema):
+    if nullable:
         return f"Some(vec![{parameters}])"
     return f"vec![{parameters}]"
 
@@ -561,33 +553,31 @@ def format_data_with_schema_dict(
     nullable = schema.get("nullable", False)
 
     name = schema_name(schema) or default_name
-
+    required = ""
     parameters = ""
     if "properties" in schema:
         required_properties = set(schema.get("required", []))
         missing = required_properties - set(data.keys())
         if missing:
             raise ValueError(f"missing required properties: {missing}")
-
-        for k, v in data.items():
-            if k not in schema["properties"]:
+        for k, v in schema["properties"].items():
+            if k not in data:
                 continue
             value = format_data_with_schema(
+                data[k],
                 v,
-                schema["properties"][k],
                 name_prefix=name_prefix,
                 replace_values=replace_values,
                 default_name=name + camel_case(k) if name else None,
                 required=k in required_properties,
                 **kwargs,
             )
-            parameters += f".{variable_name(k)}({value})"
+            if k in required_properties:
+                required += f"{value}, "
+            else:
+                parameters += f".{variable_name(k)}({value})"
 
     if schema.get("additionalProperties"):
-        saved_parameters = ""
-        if schema.get("properties"):
-            saved_parameters = parameters
-            parameters = ""
         nested_schema = schema["additionalProperties"]
         nested_schema_name = simple_type(nested_schema)
         if not nested_schema_name:
@@ -596,7 +586,7 @@ def format_data_with_schema_dict(
                 nested_schema_name = name_prefix + nested_schema_name
 
         has_properties = schema.get("properties")
-
+        add_parameters = ""
         for k, v in data.items():
             if has_properties and k in schema["properties"]:
                 continue
@@ -608,17 +598,14 @@ def format_data_with_schema_dict(
                 required=True,
                 **kwargs,
             )
-            parameters += f'("{k}".to_string(), {value}),\n'
+            add_parameters += f'("{k}".to_string(), {value}),'
 
             # IMPROVE: find a better way to get nested schema name
             if not nested_schema_name:
                 nested_schema_name = value.split("{")[0]
 
         if has_properties:
-            if parameters:
-                parameters = f"{saved_parameters}AdditionalProperties: map[string]{nested_schema_name}{{\n{parameters}}},\n"
-            else:
-                parameters = saved_parameters
+            parameters += f".additional_properties(std::collections::BTreeMap::from([{add_parameters}]))"
         else:
             return f"std::collections::BTreeMap::from([{parameters}])"
 
@@ -627,12 +614,11 @@ def format_data_with_schema_dict(
 
     if schema.get("type") == "object" and "properties" not in schema:
         if schema.get("additionalProperties") == {}:
-            name_prefix = ""
-            name = "map[string]interface{}"
             for k, v in data.items():
-                parameters += f'"{k}": "{v}",\n'
+                parameters += f'("{k}".to_string(), serde_json::from_str("{v}").unwrap()),'
+            return f"std::collections::BTreeMap::from([{parameters}])"
         else:
-            return "new(interface{})"
+            return "std::collections::BTreeMap::new()"
 
     if not name:
         raise ValueError(f"Unnamed schema {schema} for {data}")
@@ -641,8 +627,5 @@ def format_data_with_schema_dict(
         raise ValueError(f"No schema matched for {data}")
 
     if nullable:
-        return f"Some({{let mut object = {name_prefix}{name}::new(); object{parameters}; object}})"
-
-    if in_list:
-        return f"{{\n{parameters}}}"
-    return f"{name_prefix}{name}::new(); body{parameters}"
+        return f"Some({name_prefix}{name}::new({required}){parameters})"
+    return f"{name_prefix}{name}::new({required}){parameters}"

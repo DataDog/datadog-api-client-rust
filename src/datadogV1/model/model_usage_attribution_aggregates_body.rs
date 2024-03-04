@@ -29,17 +29,17 @@ impl UsageAttributionAggregatesBody {
         }
     }
 
-    pub fn agg_type(&mut self, value: String) -> &mut Self {
+    pub fn agg_type(mut self, value: String) -> Self {
         self.agg_type = Some(value);
         self
     }
 
-    pub fn field(&mut self, value: String) -> &mut Self {
+    pub fn field(mut self, value: String) -> Self {
         self.field = Some(value);
         self
     }
 
-    pub fn value(&mut self, value: f64) -> &mut Self {
+    pub fn value(mut self, value: f64) -> Self {
         self.value = Some(value);
         self
     }

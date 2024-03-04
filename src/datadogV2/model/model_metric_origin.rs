@@ -29,17 +29,17 @@ impl MetricOrigin {
         }
     }
 
-    pub fn metric_type(&mut self, value: i32) -> &mut Self {
+    pub fn metric_type(mut self, value: i32) -> Self {
         self.metric_type = Some(value);
         self
     }
 
-    pub fn product(&mut self, value: i32) -> &mut Self {
+    pub fn product(mut self, value: i32) -> Self {
         self.product = Some(value);
         self
     }
 
-    pub fn service(&mut self, value: i32) -> &mut Self {
+    pub fn service(mut self, value: i32) -> Self {
         self.service = Some(value);
         self
     }

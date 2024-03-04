@@ -19,10 +19,7 @@ impl UsageNetworkHostsResponse {
         UsageNetworkHostsResponse { usage: None }
     }
 
-    pub fn usage(
-        &mut self,
-        value: Vec<crate::datadogV1::model::UsageNetworkHostsHour>,
-    ) -> &mut Self {
+    pub fn usage(mut self, value: Vec<crate::datadogV1::model::UsageNetworkHostsHour>) -> Self {
         self.usage = Some(value);
         self
     }

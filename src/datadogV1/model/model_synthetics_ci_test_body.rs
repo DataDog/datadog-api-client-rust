@@ -19,7 +19,7 @@ impl SyntheticsCITestBody {
         SyntheticsCITestBody { tests: None }
     }
 
-    pub fn tests(&mut self, value: Vec<crate::datadogV1::model::SyntheticsCITest>) -> &mut Self {
+    pub fn tests(mut self, value: Vec<crate::datadogV1::model::SyntheticsCITest>) -> Self {
         self.tests = Some(value);
         self
     }

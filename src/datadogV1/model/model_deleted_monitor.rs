@@ -21,7 +21,7 @@ impl DeletedMonitor {
         }
     }
 
-    pub fn deleted_monitor_id(&mut self, value: i64) -> &mut Self {
+    pub fn deleted_monitor_id(mut self, value: i64) -> Self {
         self.deleted_monitor_id = Some(value);
         self
     }

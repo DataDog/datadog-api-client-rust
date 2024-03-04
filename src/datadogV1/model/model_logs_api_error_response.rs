@@ -19,7 +19,7 @@ impl LogsAPIErrorResponse {
         LogsAPIErrorResponse { error: None }
     }
 
-    pub fn error(&mut self, value: crate::datadogV1::model::LogsAPIError) -> &mut Self {
+    pub fn error(mut self, value: crate::datadogV1::model::LogsAPIError) -> Self {
         self.error = Some(value);
         self
     }

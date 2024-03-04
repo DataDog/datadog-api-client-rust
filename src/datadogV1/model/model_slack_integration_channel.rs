@@ -26,14 +26,14 @@ impl SlackIntegrationChannel {
     }
 
     pub fn display(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SlackIntegrationChannelDisplay,
-    ) -> &mut Self {
+    ) -> Self {
         self.display = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }

@@ -37,36 +37,30 @@ impl LogQueryDefinition {
         }
     }
 
-    pub fn compute(&mut self, value: crate::datadogV1::model::LogsQueryCompute) -> &mut Self {
+    pub fn compute(mut self, value: crate::datadogV1::model::LogsQueryCompute) -> Self {
         self.compute = Some(value);
         self
     }
 
     pub fn group_by(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::LogQueryDefinitionGroupBy>,
-    ) -> &mut Self {
+    ) -> Self {
         self.group_by = Some(value);
         self
     }
 
-    pub fn index(&mut self, value: String) -> &mut Self {
+    pub fn index(mut self, value: String) -> Self {
         self.index = Some(value);
         self
     }
 
-    pub fn multi_compute(
-        &mut self,
-        value: Vec<crate::datadogV1::model::LogsQueryCompute>,
-    ) -> &mut Self {
+    pub fn multi_compute(mut self, value: Vec<crate::datadogV1::model::LogsQueryCompute>) -> Self {
         self.multi_compute = Some(value);
         self
     }
 
-    pub fn search(
-        &mut self,
-        value: crate::datadogV1::model::LogQueryDefinitionSearch,
-    ) -> &mut Self {
+    pub fn search(mut self, value: crate::datadogV1::model::LogQueryDefinitionSearch) -> Self {
         self.search = Some(value);
         self
     }

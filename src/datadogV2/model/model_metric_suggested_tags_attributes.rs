@@ -26,14 +26,14 @@ impl MetricSuggestedTagsAttributes {
     }
 
     pub fn active_aggregations(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::MetricCustomAggregation>,
-    ) -> &mut Self {
+    ) -> Self {
         self.active_aggregations = Some(value);
         self
     }
 
-    pub fn active_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn active_tags(mut self, value: Vec<String>) -> Self {
         self.active_tags = Some(value);
         self
     }

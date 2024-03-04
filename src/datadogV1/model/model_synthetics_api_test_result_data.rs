@@ -56,62 +56,62 @@ impl SyntheticsAPITestResultData {
         }
     }
 
-    pub fn cert(&mut self, value: crate::datadogV1::model::SyntheticsSSLCertificate) -> &mut Self {
+    pub fn cert(mut self, value: crate::datadogV1::model::SyntheticsSSLCertificate) -> Self {
         self.cert = Some(value);
         self
     }
 
     pub fn event_type(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SyntheticsTestProcessStatus,
-    ) -> &mut Self {
+    ) -> Self {
         self.event_type = Some(value);
         self
     }
 
     pub fn failure(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SyntheticsApiTestResultFailure,
-    ) -> &mut Self {
+    ) -> Self {
         self.failure = Some(value);
         self
     }
 
-    pub fn http_status_code(&mut self, value: i64) -> &mut Self {
+    pub fn http_status_code(mut self, value: i64) -> Self {
         self.http_status_code = Some(value);
         self
     }
 
     pub fn request_headers(
-        &mut self,
+        mut self,
         value: std::collections::BTreeMap<
             String,
             std::collections::BTreeMap<String, serde_json::Value>,
         >,
-    ) -> &mut Self {
+    ) -> Self {
         self.request_headers = Some(value);
         self
     }
 
-    pub fn response_body(&mut self, value: String) -> &mut Self {
+    pub fn response_body(mut self, value: String) -> Self {
         self.response_body = Some(value);
         self
     }
 
     pub fn response_headers(
-        &mut self,
+        mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> &mut Self {
+    ) -> Self {
         self.response_headers = Some(value);
         self
     }
 
-    pub fn response_size(&mut self, value: i64) -> &mut Self {
+    pub fn response_size(mut self, value: i64) -> Self {
         self.response_size = Some(value);
         self
     }
 
-    pub fn timings(&mut self, value: crate::datadogV1::model::SyntheticsTiming) -> &mut Self {
+    pub fn timings(mut self, value: crate::datadogV1::model::SyntheticsTiming) -> Self {
         self.timings = Some(value);
         self
     }

@@ -20,9 +20,9 @@ impl UserTeamPermissionAttributes {
     }
 
     pub fn permissions(
-        &mut self,
+        mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> &mut Self {
+    ) -> Self {
         self.permissions = Some(value);
         self
     }

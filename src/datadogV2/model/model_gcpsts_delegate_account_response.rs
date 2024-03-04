@@ -19,7 +19,7 @@ impl GCPSTSDelegateAccountResponse {
         GCPSTSDelegateAccountResponse { data: None }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::GCPSTSDelegateAccount) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::GCPSTSDelegateAccount) -> Self {
         self.data = Some(value);
         self
     }

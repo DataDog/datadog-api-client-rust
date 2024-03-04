@@ -17,6 +17,15 @@ repos:
     pass_filenames: false
     additional_dependencies:
       - "poetry"
+  - id: examples
+    name: examples
+    language: python
+    entry: bash -c "cd .generator && poetry install && poetry run pytest"
+    files: "^.generator/"
+    stages: [manual]
+    pass_filenames: false
+    additional_dependencies:
+      - "poetry"
   - id: format
     name: Format
     language: system

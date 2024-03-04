@@ -20,9 +20,9 @@ impl UsageCloudSecurityPostureManagementResponse {
     }
 
     pub fn usage(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::UsageCloudSecurityPostureManagementHour>,
-    ) -> &mut Self {
+    ) -> Self {
         self.usage = Some(value);
         self
     }

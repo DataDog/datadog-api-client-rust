@@ -25,6 +25,7 @@ pre_commit_wrapper () {
 
 rm -rf src/* examples/*
 pre_commit_wrapper generator
+pre_commit_wrapper examples
 pre_commit_wrapper format
 pre_commit_wrapper lint
 pre_commit_wrapper license-check

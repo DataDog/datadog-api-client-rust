@@ -20,10 +20,7 @@ impl SyntheticsUpdateTestPauseStatusPayload {
         SyntheticsUpdateTestPauseStatusPayload { new_status: None }
     }
 
-    pub fn new_status(
-        &mut self,
-        value: crate::datadogV1::model::SyntheticsTestPauseStatus,
-    ) -> &mut Self {
+    pub fn new_status(mut self, value: crate::datadogV1::model::SyntheticsTestPauseStatus) -> Self {
         self.new_status = Some(value);
         self
     }

@@ -32,10 +32,7 @@ impl ServiceAccountCreateData {
         }
     }
 
-    pub fn relationships(
-        &mut self,
-        value: crate::datadogV2::model::UserRelationships,
-    ) -> &mut Self {
+    pub fn relationships(mut self, value: crate::datadogV2::model::UserRelationships) -> Self {
         self.relationships = Some(value);
         self
     }

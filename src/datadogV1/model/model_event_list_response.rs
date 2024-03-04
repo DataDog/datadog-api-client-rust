@@ -25,12 +25,12 @@ impl EventListResponse {
         }
     }
 
-    pub fn events(&mut self, value: Vec<crate::datadogV1::model::Event>) -> &mut Self {
+    pub fn events(mut self, value: Vec<crate::datadogV1::model::Event>) -> Self {
         self.events = Some(value);
         self
     }
 
-    pub fn status(&mut self, value: String) -> &mut Self {
+    pub fn status(mut self, value: String) -> Self {
         self.status = Some(value);
         self
     }

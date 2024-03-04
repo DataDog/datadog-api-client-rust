@@ -37,27 +37,27 @@ impl WidgetAxis {
         }
     }
 
-    pub fn include_zero(&mut self, value: bool) -> &mut Self {
+    pub fn include_zero(mut self, value: bool) -> Self {
         self.include_zero = Some(value);
         self
     }
 
-    pub fn label(&mut self, value: String) -> &mut Self {
+    pub fn label(mut self, value: String) -> Self {
         self.label = Some(value);
         self
     }
 
-    pub fn max(&mut self, value: String) -> &mut Self {
+    pub fn max(mut self, value: String) -> Self {
         self.max = Some(value);
         self
     }
 
-    pub fn min(&mut self, value: String) -> &mut Self {
+    pub fn min(mut self, value: String) -> Self {
         self.min = Some(value);
         self
     }
 
-    pub fn scale(&mut self, value: String) -> &mut Self {
+    pub fn scale(mut self, value: String) -> Self {
         self.scale = Some(value);
         self
     }

@@ -33,28 +33,28 @@ impl SecurityMonitoringRuleThirdPartyOptions {
         }
     }
 
-    pub fn default_notifications(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn default_notifications(mut self, value: Vec<String>) -> Self {
         self.default_notifications = Some(value);
         self
     }
 
     pub fn default_status(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::SecurityMonitoringRuleSeverity,
-    ) -> &mut Self {
+    ) -> Self {
         self.default_status = Some(value);
         self
     }
 
     pub fn root_queries(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRootQuery>,
-    ) -> &mut Self {
+    ) -> Self {
         self.root_queries = Some(value);
         self
     }
 
-    pub fn signal_title_template(&mut self, value: String) -> &mut Self {
+    pub fn signal_title_template(mut self, value: String) -> Self {
         self.signal_title_template = Some(value);
         self
     }

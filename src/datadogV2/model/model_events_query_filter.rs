@@ -29,17 +29,17 @@ impl EventsQueryFilter {
         }
     }
 
-    pub fn from(&mut self, value: String) -> &mut Self {
+    pub fn from(mut self, value: String) -> Self {
         self.from = Some(value);
         self
     }
 
-    pub fn query(&mut self, value: String) -> &mut Self {
+    pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }
 
-    pub fn to(&mut self, value: String) -> &mut Self {
+    pub fn to(mut self, value: String) -> Self {
         self.to = Some(value);
         self
     }

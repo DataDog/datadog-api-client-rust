@@ -26,17 +26,17 @@ impl CIAppCreatePipelineEventRequestData {
     }
 
     pub fn attributes(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::CIAppCreatePipelineEventRequestAttributes,
-    ) -> &mut Self {
+    ) -> Self {
         self.attributes = Some(value);
         self
     }
 
     pub fn type_(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::CIAppCreatePipelineEventRequestDataType,
-    ) -> &mut Self {
+    ) -> Self {
         self.type_ = Some(value);
         self
     }

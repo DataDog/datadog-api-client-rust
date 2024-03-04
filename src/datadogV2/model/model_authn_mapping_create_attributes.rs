@@ -25,12 +25,12 @@ impl AuthNMappingCreateAttributes {
         }
     }
 
-    pub fn attribute_key(&mut self, value: String) -> &mut Self {
+    pub fn attribute_key(mut self, value: String) -> Self {
         self.attribute_key = Some(value);
         self
     }
 
-    pub fn attribute_value(&mut self, value: String) -> &mut Self {
+    pub fn attribute_value(mut self, value: String) -> Self {
         self.attribute_value = Some(value);
         self
     }

@@ -19,7 +19,7 @@ impl SpansMetricFilter {
         SpansMetricFilter { query: None }
     }
 
-    pub fn query(&mut self, value: String) -> &mut Self {
+    pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }

@@ -116,94 +116,91 @@ impl Dashboard {
     }
 
     #[allow(deprecated)]
-    pub fn author_handle(&mut self, value: String) -> &mut Self {
+    pub fn author_handle(mut self, value: String) -> Self {
         self.author_handle = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn author_name(&mut self, value: Option<String>) -> &mut Self {
+    pub fn author_name(mut self, value: Option<String>) -> Self {
         self.author_name = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn created_at(&mut self, value: String) -> &mut Self {
+    pub fn created_at(mut self, value: String) -> Self {
         self.created_at = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn description(&mut self, value: Option<String>) -> &mut Self {
+    pub fn description(mut self, value: Option<String>) -> Self {
         self.description = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn id(&mut self, value: String) -> &mut Self {
+    pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn is_read_only(&mut self, value: bool) -> &mut Self {
+    pub fn is_read_only(mut self, value: bool) -> Self {
         self.is_read_only = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn modified_at(&mut self, value: String) -> &mut Self {
+    pub fn modified_at(mut self, value: String) -> Self {
         self.modified_at = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn notify_list(&mut self, value: Option<Vec<String>>) -> &mut Self {
+    pub fn notify_list(mut self, value: Option<Vec<String>>) -> Self {
         self.notify_list = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn reflow_type(
-        &mut self,
-        value: crate::datadogV1::model::DashboardReflowType,
-    ) -> &mut Self {
+    pub fn reflow_type(mut self, value: crate::datadogV1::model::DashboardReflowType) -> Self {
         self.reflow_type = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn restricted_roles(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn restricted_roles(mut self, value: Vec<String>) -> Self {
         self.restricted_roles = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn tags(&mut self, value: Option<Vec<String>>) -> &mut Self {
+    pub fn tags(mut self, value: Option<Vec<String>>) -> Self {
         self.tags = Some(value);
         self
     }
 
     #[allow(deprecated)]
     pub fn template_variable_presets(
-        &mut self,
+        mut self,
         value: Option<Vec<crate::datadogV1::model::DashboardTemplateVariablePreset>>,
-    ) -> &mut Self {
+    ) -> Self {
         self.template_variable_presets = Some(value);
         self
     }
 
     #[allow(deprecated)]
     pub fn template_variables(
-        &mut self,
+        mut self,
         value: Option<Vec<crate::datadogV1::model::DashboardTemplateVariable>>,
-    ) -> &mut Self {
+    ) -> Self {
         self.template_variables = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn url(&mut self, value: String) -> &mut Self {
+    pub fn url(mut self, value: String) -> Self {
         self.url = Some(value);
         self
     }

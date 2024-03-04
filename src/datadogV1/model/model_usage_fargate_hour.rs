@@ -61,37 +61,37 @@ impl UsageFargateHour {
         }
     }
 
-    pub fn apm_fargate_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn apm_fargate_count(mut self, value: Option<i64>) -> Self {
         self.apm_fargate_count = Some(value);
         self
     }
 
-    pub fn appsec_fargate_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn appsec_fargate_count(mut self, value: Option<i64>) -> Self {
         self.appsec_fargate_count = Some(value);
         self
     }
 
-    pub fn avg_profiled_fargate_tasks(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn avg_profiled_fargate_tasks(mut self, value: Option<i64>) -> Self {
         self.avg_profiled_fargate_tasks = Some(value);
         self
     }
 
-    pub fn hour(&mut self, value: String) -> &mut Self {
+    pub fn hour(mut self, value: String) -> Self {
         self.hour = Some(value);
         self
     }
 
-    pub fn org_name(&mut self, value: String) -> &mut Self {
+    pub fn org_name(mut self, value: String) -> Self {
         self.org_name = Some(value);
         self
     }
 
-    pub fn public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }
 
-    pub fn tasks_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn tasks_count(mut self, value: Option<i64>) -> Self {
         self.tasks_count = Some(value);
         self
     }

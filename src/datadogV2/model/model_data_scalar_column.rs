@@ -33,22 +33,22 @@ impl DataScalarColumn {
         }
     }
 
-    pub fn meta(&mut self, value: crate::datadogV2::model::ScalarMeta) -> &mut Self {
+    pub fn meta(mut self, value: crate::datadogV2::model::ScalarMeta) -> Self {
         self.meta = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: crate::datadogV2::model::ScalarColumnTypeNumber) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::ScalarColumnTypeNumber) -> Self {
         self.type_ = Some(value);
         self
     }
 
-    pub fn values(&mut self, value: Vec<Option<f64>>) -> &mut Self {
+    pub fn values(mut self, value: Vec<Option<f64>>) -> Self {
         self.values = Some(value);
         self
     }

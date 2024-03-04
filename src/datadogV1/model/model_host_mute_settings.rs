@@ -29,17 +29,17 @@ impl HostMuteSettings {
         }
     }
 
-    pub fn end(&mut self, value: i64) -> &mut Self {
+    pub fn end(mut self, value: i64) -> Self {
         self.end = Some(value);
         self
     }
 
-    pub fn message(&mut self, value: String) -> &mut Self {
+    pub fn message(mut self, value: String) -> Self {
         self.message = Some(value);
         self
     }
 
-    pub fn override_(&mut self, value: bool) -> &mut Self {
+    pub fn override_(mut self, value: bool) -> Self {
         self.override_ = Some(value);
         self
     }

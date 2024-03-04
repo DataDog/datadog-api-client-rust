@@ -20,9 +20,9 @@ impl RelationshipToPermissions {
     }
 
     pub fn data(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::RelationshipToPermissionData>,
-    ) -> &mut Self {
+    ) -> Self {
         self.data = Some(value);
         self
     }

@@ -57,53 +57,53 @@ impl HourlyUsageAttributionBody {
         }
     }
 
-    pub fn hour(&mut self, value: String) -> &mut Self {
+    pub fn hour(mut self, value: String) -> Self {
         self.hour = Some(value);
         self
     }
 
-    pub fn org_name(&mut self, value: String) -> &mut Self {
+    pub fn org_name(mut self, value: String) -> Self {
         self.org_name = Some(value);
         self
     }
 
-    pub fn public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }
 
-    pub fn region(&mut self, value: String) -> &mut Self {
+    pub fn region(mut self, value: String) -> Self {
         self.region = Some(value);
         self
     }
 
-    pub fn tag_config_source(&mut self, value: String) -> &mut Self {
+    pub fn tag_config_source(mut self, value: String) -> Self {
         self.tag_config_source = Some(value);
         self
     }
 
     pub fn tags(
-        &mut self,
+        mut self,
         value: Option<std::collections::BTreeMap<String, Option<Vec<String>>>>,
-    ) -> &mut Self {
+    ) -> Self {
         self.tags = Some(value);
         self
     }
 
-    pub fn total_usage_sum(&mut self, value: f64) -> &mut Self {
+    pub fn total_usage_sum(mut self, value: f64) -> Self {
         self.total_usage_sum = Some(value);
         self
     }
 
-    pub fn updated_at(&mut self, value: String) -> &mut Self {
+    pub fn updated_at(mut self, value: String) -> Self {
         self.updated_at = Some(value);
         self
     }
 
     pub fn usage_type(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::HourlyUsageAttributionUsageType,
-    ) -> &mut Self {
+    ) -> Self {
         self.usage_type = Some(value);
         self
     }

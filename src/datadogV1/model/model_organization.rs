@@ -53,52 +53,52 @@ impl Organization {
     }
 
     #[allow(deprecated)]
-    pub fn billing(&mut self, value: crate::datadogV1::model::OrganizationBilling) -> &mut Self {
+    pub fn billing(mut self, value: crate::datadogV1::model::OrganizationBilling) -> Self {
         self.billing = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn created(&mut self, value: String) -> &mut Self {
+    pub fn created(mut self, value: String) -> Self {
         self.created = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn description(&mut self, value: String) -> &mut Self {
+    pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn settings(&mut self, value: crate::datadogV1::model::OrganizationSettings) -> &mut Self {
+    pub fn settings(mut self, value: crate::datadogV1::model::OrganizationSettings) -> Self {
         self.settings = Some(value);
         self
     }
 
     #[allow(deprecated)]
     pub fn subscription(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::OrganizationSubscription,
-    ) -> &mut Self {
+    ) -> Self {
         self.subscription = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn trial(&mut self, value: bool) -> &mut Self {
+    pub fn trial(mut self, value: bool) -> Self {
         self.trial = Some(value);
         self
     }

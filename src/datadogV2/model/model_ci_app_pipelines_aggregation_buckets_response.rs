@@ -20,9 +20,9 @@ impl CIAppPipelinesAggregationBucketsResponse {
     }
 
     pub fn buckets(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::CIAppPipelinesBucketResponse>,
-    ) -> &mut Self {
+    ) -> Self {
         self.buckets = Some(value);
         self
     }

@@ -26,17 +26,17 @@ impl SyntheticsTestRequestCertificate {
     }
 
     pub fn cert(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SyntheticsTestRequestCertificateItem,
-    ) -> &mut Self {
+    ) -> Self {
         self.cert = Some(value);
         self
     }
 
     pub fn key(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SyntheticsTestRequestCertificateItem,
-    ) -> &mut Self {
+    ) -> Self {
         self.key = Some(value);
         self
     }

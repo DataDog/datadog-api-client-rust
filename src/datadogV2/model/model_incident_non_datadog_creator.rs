@@ -25,12 +25,12 @@ impl IncidentNonDatadogCreator {
         }
     }
 
-    pub fn image_48_px(&mut self, value: String) -> &mut Self {
+    pub fn image_48_px(mut self, value: String) -> Self {
         self.image_48_px = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }

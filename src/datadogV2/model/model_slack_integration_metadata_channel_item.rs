@@ -37,7 +37,7 @@ impl SlackIntegrationMetadataChannelItem {
         }
     }
 
-    pub fn team_id(&mut self, value: String) -> &mut Self {
+    pub fn team_id(mut self, value: String) -> Self {
         self.team_id = Some(value);
         self
     }

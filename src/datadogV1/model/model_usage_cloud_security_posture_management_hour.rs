@@ -85,52 +85,52 @@ impl UsageCloudSecurityPostureManagementHour {
         }
     }
 
-    pub fn aas_host_count(&mut self, value: Option<f64>) -> &mut Self {
+    pub fn aas_host_count(mut self, value: Option<f64>) -> Self {
         self.aas_host_count = Some(value);
         self
     }
 
-    pub fn aws_host_count(&mut self, value: Option<f64>) -> &mut Self {
+    pub fn aws_host_count(mut self, value: Option<f64>) -> Self {
         self.aws_host_count = Some(value);
         self
     }
 
-    pub fn azure_host_count(&mut self, value: Option<f64>) -> &mut Self {
+    pub fn azure_host_count(mut self, value: Option<f64>) -> Self {
         self.azure_host_count = Some(value);
         self
     }
 
-    pub fn compliance_host_count(&mut self, value: Option<f64>) -> &mut Self {
+    pub fn compliance_host_count(mut self, value: Option<f64>) -> Self {
         self.compliance_host_count = Some(value);
         self
     }
 
-    pub fn container_count(&mut self, value: Option<f64>) -> &mut Self {
+    pub fn container_count(mut self, value: Option<f64>) -> Self {
         self.container_count = Some(value);
         self
     }
 
-    pub fn gcp_host_count(&mut self, value: Option<f64>) -> &mut Self {
+    pub fn gcp_host_count(mut self, value: Option<f64>) -> Self {
         self.gcp_host_count = Some(value);
         self
     }
 
-    pub fn host_count(&mut self, value: Option<f64>) -> &mut Self {
+    pub fn host_count(mut self, value: Option<f64>) -> Self {
         self.host_count = Some(value);
         self
     }
 
-    pub fn hour(&mut self, value: String) -> &mut Self {
+    pub fn hour(mut self, value: String) -> Self {
         self.hour = Some(value);
         self
     }
 
-    pub fn org_name(&mut self, value: String) -> &mut Self {
+    pub fn org_name(mut self, value: String) -> Self {
         self.org_name = Some(value);
         self
     }
 
-    pub fn public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }

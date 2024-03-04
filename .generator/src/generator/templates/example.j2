@@ -7,11 +7,12 @@
 {%- set variables = given_variables(context) %}
 {%- set parameters = format_parameters(context.api_request.kwargs, spec=operation_spec, replace_values=context._replace_values, has_body=context.body, variables=variables, version=version|upper) %}
 {%- if context.body %}
-{%- set body = format_data_with_schema(context.body.value, context.api_request.schema.spec, name_prefix="datadog" ~ version|upper ~ "::model::", replace_values=context._replace_values, required=True, variables=variables, version=version|upper)%}
+{%- set body = format_data_with_schema(context.body.value, context.api_request.schema.spec, name_prefix="", replace_values=context._replace_values, required=True, variables=variables, version=version|upper)%}
 {%- endif %}
 
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadog{{ version|upper }};
+use datadog_api_client::datadog{{ version|upper }}::api::api_{{context["api_instance"]["name"] | snake_case}}::{{context["api_instance"]["name"]}}API;
+use datadog_api_client::datadog{{ version|upper }}::model::*;
 use std::ops::Add;
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
@@ -36,13 +37,13 @@ async fn main() {
 	{%- endfor %}
     {%- endfor %}
     {%- if context.body %}
-	let mut body = {{ body }};
+	let body = {{ body }};
     {%- endif%}
     let configuration = Configuration::new();
     {%- for operation in context._enable_operations %}
-	configuration.set_unstable_operation_enabled("{{ version }}.{{ operation }}", true)
+	configuration.set_unstable_operation_enabled("{{ version }}.{{ operation }}", true);
     {%- endfor %}
-    let api = datadog{{ version|upper }}::api::api_{{context["api_instance"]["name"] | snake_case}}::{{context["api_instance"]["name"]}}API::with_config(configuration.clone());
+    let api = {{context["api_instance"]["name"]}}API::with_config(configuration);
     let resp = api.{{ context.api_request.operation_id | snake_case }}({%- if context.body %}body{%- endif %}).await;
     if let Ok(Some(value)) = resp {
         println!("{:#?}", value);

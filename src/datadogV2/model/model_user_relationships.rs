@@ -19,7 +19,7 @@ impl UserRelationships {
         UserRelationships { roles: None }
     }
 
-    pub fn roles(&mut self, value: crate::datadogV2::model::RelationshipToRoles) -> &mut Self {
+    pub fn roles(mut self, value: crate::datadogV2::model::RelationshipToRoles) -> Self {
         self.roles = Some(value);
         self
     }

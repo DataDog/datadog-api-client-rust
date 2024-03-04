@@ -29,15 +29,12 @@ impl Organization {
         }
     }
 
-    pub fn attributes(
-        &mut self,
-        value: crate::datadogV2::model::OrganizationAttributes,
-    ) -> &mut Self {
+    pub fn attributes(mut self, value: crate::datadogV2::model::OrganizationAttributes) -> Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn id(&mut self, value: String) -> &mut Self {
+    pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }

@@ -87,7 +87,7 @@ def pytest_bdd_after_scenario(request, feature, scenario):
 
     status_code = context["status_code"]
     if status_code >= 300:
-        warnings.warn(f"do not generate example for {version}:{operation_id}:{status_code}")
+        # warnings.warn(f"do not generate example for {version}:{operation_id}:{status_code}")
         return
 
     operation_spec = operation_specs[version][operation_id]
