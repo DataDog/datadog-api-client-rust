@@ -7,15 +7,10 @@
 {%- endif %}
 
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadog{{ version|upper }}::api::api_{{context["api_instance"]["name"] | snake_case}}::{{context["api_instance"]["name"]}}API;
+use datadog_api_client::datadog{{ version|upper }}::api::api_{{context["api_instance"]["name"] | snake_case}}::*;
 use datadog_api_client::datadog{{ version|upper }}::model::*;
-{%- if "SystemTime::now()" in body %}
-use std::ops::Add;
-use std::time::{UNIX_EPOCH, Duration, SystemTime};
-{%- endif %}
-{%- if "BTreeMap::" in body %}
 use std::collections::BTreeMap;
-{%- endif %}
+use chrono::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -39,13 +34,17 @@ async fn main() {
     {%- endfor %}
     {%- if context.body %}
 	let body = {{ body }};
-    {%- endif%}
+    {%- endif %}
+	{%- if context._enable_operations %}
+    let mut configuration = Configuration::new();
+	{%- else %}
     let configuration = Configuration::new();
+    {%- endif %}
     {%- for operation in context._enable_operations %}
 	configuration.set_unstable_operation_enabled("{{ version }}.{{ operation }}", true);
     {%- endfor %}
     let api = {{context["api_instance"]["name"]}}API::with_config(configuration);
-    let resp = api.{{ context.api_request.operation_id | snake_case }}({%- if context.body %}body{%- endif %}).await;
+    let resp = api.{{ context.api_request.operation_id | snake_case }}({{ parameters }}).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

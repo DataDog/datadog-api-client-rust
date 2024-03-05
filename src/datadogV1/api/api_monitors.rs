@@ -15,7 +15,7 @@ pub struct DeleteMonitorOptionalParams {
 
 impl DeleteMonitorOptionalParams {
     /// Delete the monitor even if it's referenced by other resources (for example SLO, composite monitor).
-    pub fn force(&mut self, value: String) -> &mut Self {
+    pub fn force(mut self, value: String) -> Self {
         self.force = Some(value);
         self
     }
@@ -33,12 +33,12 @@ pub struct GetMonitorOptionalParams {
 
 impl GetMonitorOptionalParams {
     /// When specified, shows additional information about the group states. Choose one or more from `all`, `alert`, `warn`, and `no data`.
-    pub fn group_states(&mut self, value: String) -> &mut Self {
+    pub fn group_states(mut self, value: String) -> Self {
         self.group_states = Some(value);
         self
     }
     /// If this argument is set to true, then the returned data includes all current active downtimes for the monitor.
-    pub fn with_downtimes(&mut self, value: bool) -> &mut Self {
+    pub fn with_downtimes(mut self, value: bool) -> Self {
         self.with_downtimes = Some(value);
         self
     }
@@ -72,44 +72,44 @@ pub struct ListMonitorsOptionalParams {
 impl ListMonitorsOptionalParams {
     /// When specified, shows additional information about the group states.
     /// Choose one or more from `all`, `alert`, `warn`, and `no data`.
-    pub fn group_states(&mut self, value: String) -> &mut Self {
+    pub fn group_states(mut self, value: String) -> Self {
         self.group_states = Some(value);
         self
     }
     /// A string to filter monitors by name.
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
     /// A comma separated list indicating what tags, if any, should be used to filter the list of monitors by scope.
     /// For example, `host:host0`.
-    pub fn tags(&mut self, value: String) -> &mut Self {
+    pub fn tags(mut self, value: String) -> Self {
         self.tags = Some(value);
         self
     }
     /// A comma separated list indicating what service and/or custom tags, if any, should be used to filter the list of monitors.
     /// Tags created in the Datadog UI automatically have the service key prepended. For example, `service:my-app`.
-    pub fn monitor_tags(&mut self, value: String) -> &mut Self {
+    pub fn monitor_tags(mut self, value: String) -> Self {
         self.monitor_tags = Some(value);
         self
     }
     /// If this argument is set to true, then the returned data includes all current active downtimes for each monitor.
-    pub fn with_downtimes(&mut self, value: bool) -> &mut Self {
+    pub fn with_downtimes(mut self, value: bool) -> Self {
         self.with_downtimes = Some(value);
         self
     }
     /// Use this parameter for paginating through large sets of monitors. Start with a value of zero, make a request, set the value to the last ID of result set, and then repeat until the response is empty.
-    pub fn id_offset(&mut self, value: i64) -> &mut Self {
+    pub fn id_offset(mut self, value: i64) -> Self {
         self.id_offset = Some(value);
         self
     }
     /// The page to start paginating from. If this argument is not specified, the request returns all monitors without pagination.
-    pub fn page(&mut self, value: i64) -> &mut Self {
+    pub fn page(mut self, value: i64) -> Self {
         self.page = Some(value);
         self
     }
     /// The number of monitors to return per page. If the page argument is not specified, the default behavior returns all monitors without a `page_size` limit. However, if page is specified and `page_size` is not, the argument defaults to 100.
-    pub fn page_size(&mut self, value: i32) -> &mut Self {
+    pub fn page_size(mut self, value: i32) -> Self {
         self.page_size = Some(value);
         self
     }
@@ -149,17 +149,17 @@ impl SearchMonitorGroupsOptionalParams {
     ///
     /// [1]: <https://app.datadoghq.com/monitors/manage>
     /// [2]: /monitors/manage/#find-the-monitors
-    pub fn query(&mut self, value: String) -> &mut Self {
+    pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }
     /// Page to start paginating from.
-    pub fn page(&mut self, value: i64) -> &mut Self {
+    pub fn page(mut self, value: i64) -> Self {
         self.page = Some(value);
         self
     }
     /// Number of monitors to return per page.
-    pub fn per_page(&mut self, value: i64) -> &mut Self {
+    pub fn per_page(mut self, value: i64) -> Self {
         self.per_page = Some(value);
         self
     }
@@ -168,7 +168,7 @@ impl SearchMonitorGroupsOptionalParams {
     /// * `name`
     /// * `status`
     /// * `tags`
-    pub fn sort(&mut self, value: String) -> &mut Self {
+    pub fn sort(mut self, value: String) -> Self {
         self.sort = Some(value);
         self
     }
@@ -208,17 +208,17 @@ impl SearchMonitorsOptionalParams {
     ///
     /// [1]: <https://app.datadoghq.com/monitors/manage>
     /// [2]: /monitors/manage/#find-the-monitors
-    pub fn query(&mut self, value: String) -> &mut Self {
+    pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }
     /// Page to start paginating from.
-    pub fn page(&mut self, value: i64) -> &mut Self {
+    pub fn page(mut self, value: i64) -> Self {
         self.page = Some(value);
         self
     }
     /// Number of monitors to return per page.
-    pub fn per_page(&mut self, value: i64) -> &mut Self {
+    pub fn per_page(mut self, value: i64) -> Self {
         self.per_page = Some(value);
         self
     }
@@ -227,7 +227,7 @@ impl SearchMonitorsOptionalParams {
     /// * `name`
     /// * `status`
     /// * `tags`
-    pub fn sort(&mut self, value: String) -> &mut Self {
+    pub fn sort(mut self, value: String) -> Self {
         self.sort = Some(value);
         self
     }

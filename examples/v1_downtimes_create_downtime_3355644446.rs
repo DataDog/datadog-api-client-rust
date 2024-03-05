@@ -1,0 +1,27 @@
+// Schedule a monitor downtime returns "OK" response
+use chrono::prelude::*;
+use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadogV1::api::api_downtimes::*;
+use datadog_api_client::datadogV1::model::*;
+use std::collections::BTreeMap;
+
+#[tokio::main]
+async fn main() {
+    // there is a valid "monitor" in the system
+    let monitor_id: i64 = std::env::var("MONITOR_ID").unwrap().parse().unwrap();
+    let body =
+        Downtime::new()
+            .message(Some("Example-Downtime".to_string()))
+            .monitor_id(Some(monitor_id))
+            .scope(vec!["test:exampledowntime".to_string()])
+            .start((Utc::now()).timestamp())
+            .timezone("Etc/UTC".to_string());
+    let configuration = Configuration::new();
+    let api = DowntimesAPI::with_config(configuration);
+    let resp = api.create_downtime(body).await;
+    if let Ok(value) = resp {
+        println!("{:#?}", value);
+    } else {
+        println!("{:#?}", resp.unwrap_err());
+    }
+}

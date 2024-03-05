@@ -24,28 +24,28 @@ pub struct ListContainersOptionalParams {
 
 impl ListContainersOptionalParams {
     /// Comma-separated list of tags to filter containers by.
-    pub fn filter_tags(&mut self, value: String) -> &mut Self {
+    pub fn filter_tags(mut self, value: String) -> Self {
         self.filter_tags = Some(value);
         self
     }
     /// Comma-separated list of tags to group containers by.
-    pub fn group_by(&mut self, value: String) -> &mut Self {
+    pub fn group_by(mut self, value: String) -> Self {
         self.group_by = Some(value);
         self
     }
     /// Attribute to sort containers by.
-    pub fn sort(&mut self, value: String) -> &mut Self {
+    pub fn sort(mut self, value: String) -> Self {
         self.sort = Some(value);
         self
     }
     /// Maximum number of results returned.
-    pub fn page_size(&mut self, value: i32) -> &mut Self {
+    pub fn page_size(mut self, value: i32) -> Self {
         self.page_size = Some(value);
         self
     }
     /// String to query the next page of results.
     /// This key is provided with each valid response from the API in `meta.pagination.next_cursor`.
-    pub fn page_cursor(&mut self, value: String) -> &mut Self {
+    pub fn page_cursor(mut self, value: String) -> Self {
         self.page_cursor = Some(value);
         self
     }

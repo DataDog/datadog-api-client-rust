@@ -21,22 +21,22 @@ pub struct GetTeamMembershipsOptionalParams {
 
 impl GetTeamMembershipsOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Specific page number to return.
-    pub fn page_number(&mut self, value: i64) -> &mut Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
     /// Specifies the order of returned team memberships
-    pub fn sort(&mut self, value: crate::datadogV2::model::GetTeamMembershipsSort) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV2::model::GetTeamMembershipsSort) -> Self {
         self.sort = Some(value);
         self
     }
     /// Search query, can be user email or name
-    pub fn filter_keyword(&mut self, value: String) -> &mut Self {
+    pub fn filter_keyword(mut self, value: String) -> Self {
         self.filter_keyword = Some(value);
         self
     }
@@ -64,37 +64,37 @@ pub struct ListTeamsOptionalParams {
 
 impl ListTeamsOptionalParams {
     /// Specific page number to return.
-    pub fn page_number(&mut self, value: i64) -> &mut Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
     /// Size for a given page. The maximum allowed value is 100.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Specifies the order of the returned teams
-    pub fn sort(&mut self, value: crate::datadogV2::model::ListTeamsSort) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV2::model::ListTeamsSort) -> Self {
         self.sort = Some(value);
         self
     }
     /// Included related resources optionally requested. Allowed enum values: `team_links, user_team_permissions`
-    pub fn include(&mut self, value: Vec<crate::datadogV2::model::ListTeamsInclude>) -> &mut Self {
+    pub fn include(mut self, value: Vec<crate::datadogV2::model::ListTeamsInclude>) -> Self {
         self.include = Some(value);
         self
     }
     /// Search query. Can be team name, team handle, or email of team member
-    pub fn filter_keyword(&mut self, value: String) -> &mut Self {
+    pub fn filter_keyword(mut self, value: String) -> Self {
         self.filter_keyword = Some(value);
         self
     }
     /// When true, only returns teams the current user belongs to
-    pub fn filter_me(&mut self, value: bool) -> &mut Self {
+    pub fn filter_me(mut self, value: bool) -> Self {
         self.filter_me = Some(value);
         self
     }
     /// List of fields that need to be fetched.
-    pub fn fields_team(&mut self, value: Vec<crate::datadogV2::model::TeamsField>) -> &mut Self {
+    pub fn fields_team(mut self, value: Vec<crate::datadogV2::model::TeamsField>) -> Self {
         self.fields_team = Some(value);
         self
     }

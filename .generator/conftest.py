@@ -107,7 +107,7 @@ def pytest_bdd_after_scenario(request, feature, scenario):
         operation_spec=operation_spec.spec,
     )
 
-    output = ROOT_PATH / "examples" / version / group_name / f"{operation_id}{unique_suffix}.rs"
+    output = ROOT_PATH / "examples" / f"{version}_{group_name}_{snake_case(operation_id)}{unique_suffix}.rs"
     output.parent.mkdir(parents=True, exist_ok=True)
 
     with output.open("w") as f:
@@ -141,16 +141,16 @@ def unique(request):
 
 
 TIME_FORMATTER = {
-    "now": "SystemTime::now()",
-    "timestamp": "{sret}.duration_since(UNIX_EPOCH).unwrap()",
-    "isoformat": "{sret}",  # .Format(time.RFC3339) we don't need to format it as time.Time{} is expected
+    "now": "Utc::now()",
+    "timestamp": "({sret}).timestamp()",
+    "isoformat": "({sret}).to_rfc3339()",  # .Format(time.RFC3339) we don't need to format it as time.Time{} is expected
     "units": {
-        "s": "{sret}.add(Duration::from_secs({num}))",
-        "m": "{sret}.add(Duration::from_secs({num}*60))",
-        "h": "{sret}.add(Duration::from_secs({num}*3600))",
-        "d": "{sret}.add(Duration::from_secs({num}*86400))",
-        "M": "{sret}.add(Duration::from_secs({num}*2592000))",
-        "y": "{sret}.add(Duration::from_secs({num}*31536000))",
+        "s": "{sret} + chrono::Duration::seconds({num})",
+        "m": "{sret} + chrono::Duration::minutes({num})",
+        "h": "{sret} + chrono::Duration::hours({num})",
+        "d": "{sret} + chrono::Duration::days({num})",
+        "M": "{sret} {sign} chrono::Months::new(1)",
+        "y": "{sret} {sign} chrono::Months::new(12)",
     },
 }
 
@@ -181,14 +181,14 @@ def relative_time(imports, calls, freezed_time, iso):
                     ret += relativedelta(years=num)
                 else:
                     raise ValueError(f"Unknown unit {unit}")
-                sret = TIME_FORMATTER["units"][unit].format(sret=sret, num=num)
+                sret = TIME_FORMATTER["units"][unit].format(sret=sret, num=num, sign="+" if num > 0 else "-")
 
             if iso:
                 return (
                     ret.isoformat(timespec="seconds"),
-                    TIME_FORMATTER["isoformat"].format(sret=sret)+".as_secs() as i64",
+                    TIME_FORMATTER["isoformat"].format(sret=sret),
                 )
-            return int(ret.timestamp()), TIME_FORMATTER["timestamp"].format(sret=sret)+".as_secs() as i64"
+            return int(ret.timestamp()), TIME_FORMATTER["timestamp"].format(sret=sret)
         return "", ""
 
     def store_calls(arg):

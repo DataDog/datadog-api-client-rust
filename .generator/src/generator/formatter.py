@@ -222,8 +222,8 @@ def reference_to_value(schema, value, print_nullable=True, **kwargs):
         prefix = f"datadog{kwargs.get('version', '')}::"
 
     if nullable and print_nullable:
-        if value == "nil":
-            formatter = "None"
+        if value == "None":
+            return "None"
         else:
             formatter = "Some({value})"
     else:
@@ -244,7 +244,7 @@ def reference_to_value(schema, value, print_nullable=True, **kwargs):
             "double": "f64",
             None: "f32",
         }[type_format]
-        return formatter.format(prefix=prefix, function_name=function_name, value=value)
+        return formatter.format(prefix=prefix, function_name=function_name, value=f"{value} as {function_name}")
 
     if type_name == "string":
         function_name = {
@@ -253,17 +253,14 @@ def reference_to_value(schema, value, print_nullable=True, **kwargs):
             "email": "String",
             None: "String",
         }[type_format]
+        if function_name == "Time":
+            return formatter.format(prefix=prefix, function_name=function_name, value=f"({value}).to_rfc3339()")
         return formatter.format(prefix=prefix, function_name=function_name, value=value)
 
     if type_name == "boolean":
         return formatter.format(prefix=prefix, function_name="bool", value=value)
 
-    if nullable:
-        function_name = schema_name(schema)
-        if function_name is None:
-            raise NotImplementedError(f"nullable {schema} is not supported")
-        return formatter.format(prefix=prefix, function_name=function_name, value=value)
-    return f"&{value}"
+    return f"{value}"
 
 
 def format_parameters(data, spec, replace_values=None, has_body=False, **kwargs):
@@ -289,7 +286,7 @@ def format_parameters(data, spec, replace_values=None, has_body=False, **kwargs)
             value = format_data_with_schema(
                 v["value"],
                 p["schema"],
-                name_prefix=f"datadog{kwargs.get('version', '')}.",
+                name_prefix="",
                 replace_values=replace_values,
                 required=True,
                 **kwargs,
@@ -303,20 +300,20 @@ def format_parameters(data, spec, replace_values=None, has_body=False, **kwargs)
     if has_body and body_is_required:
         parameters += "body, "
     if has_optional or body_is_required is False:
-        parameters += f"*datadog{kwargs.get('version', '')}.New{spec['operationId'][0].upper()}{spec['operationId'][1:]}OptionalParameters()"
+        parameters += f"{spec['operationId']}OptionalParams::default()"
         if has_body and not body_is_required:
-            parameters += ".WithBody(body)"
+            parameters += ".body(body)"
 
         for k, v in data.items():
             value = format_data_with_schema(
                 v["value"],
                 parameters_spec[k]["schema"],
-                name_prefix=f"datadog{kwargs.get('version', '')}.",
+                name_prefix=f"",
                 replace_values=replace_values,
                 required=True,
                 **kwargs,
             )
-            parameters += f".With{camel_case(k)}({value})"
+            parameters += f".{variable_name(k)}({value})"
 
         parameters += ", "
 
@@ -358,7 +355,7 @@ def _format_oneof(schema, data, name, name_prefix, replace_values, required, nul
     if not one_of_schema_name:
         one_of_schema_name = simple_type(one_of_schema).title()
 
-    if not is_primitive(one_of_schema):
+    if not is_primitive(one_of_schema) and one_of_schema.get("type") != "array":
         # TODO: revisit possibility of removing all boxes
         parameters = f"Box::new({parameters})"
     if name:
@@ -420,7 +417,7 @@ def format_data_with_schema(
             def format_datetime(x):
                 # TODO: format date and datetime
                 d = dateutil.parser.isoparse(x)
-                return f"time.Date({d.year}, {d.month}, {d.day}, {d.hour}, {d.minute}, {d.second}, {d.microsecond}, time.UTC)"
+                return f"Utc.with_ymd_and_hms({d.year}, {d.month}, {d.day}, {d.hour}, {d.minute}, {d.second}).unwrap() + chrono::Duration::microseconds({d.microsecond})"
 
             def format_double(x):
                 if isinstance(x, (bool, str)):
@@ -446,8 +443,7 @@ def format_data_with_schema(
                 return "true" if x else "false"
 
             def open_file(x):
-                # TODO: handle file input as Vec<u8>
-                return f"func() *os.File {{ fp, _ := os.Open({format_string(x)}); return fp }}()"
+                return f"std::fs::read(\"{x}\").unwrap()"
 
             formatter = {
                 "int32": str,
@@ -488,7 +484,7 @@ def format_data_with_schema(
         schema["nullable"] = False
 
     if (not required or schema.get("nullable")) and schema.get("type") is not None:
-        return reference_to_value(schema, parameters, print_nullable=not in_list, **kwargs)
+        return reference_to_value(schema, parameters, print_nullable=True, **kwargs)
 
     if "oneOf" in schema:
         return _format_oneof(schema, data, name, name_prefix, replace_values, required, nullable, **kwargs)

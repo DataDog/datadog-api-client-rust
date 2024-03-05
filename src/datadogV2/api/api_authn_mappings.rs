@@ -21,22 +21,22 @@ pub struct ListAuthNMappingsOptionalParams {
 
 impl ListAuthNMappingsOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Specific page number to return.
-    pub fn page_number(&mut self, value: i64) -> &mut Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
     /// Sort AuthN Mappings depending on the given field.
-    pub fn sort(&mut self, value: crate::datadogV2::model::AuthNMappingsSort) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV2::model::AuthNMappingsSort) -> Self {
         self.sort = Some(value);
         self
     }
     /// Filter all mappings by the given string.
-    pub fn filter(&mut self, value: String) -> &mut Self {
+    pub fn filter(mut self, value: String) -> Self {
         self.filter = Some(value);
         self
     }

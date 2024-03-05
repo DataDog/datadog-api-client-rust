@@ -17,12 +17,12 @@ pub struct ListPowerpacksOptionalParams {
 
 impl ListPowerpacksOptionalParams {
     /// Maximum number of powerpacks in the response.
-    pub fn page_limit(&mut self, value: i64) -> &mut Self {
+    pub fn page_limit(mut self, value: i64) -> Self {
         self.page_limit = Some(value);
         self
     }
     /// Specific offset to use as the beginning of the returned page.
-    pub fn page_offset(&mut self, value: i64) -> &mut Self {
+    pub fn page_offset(mut self, value: i64) -> Self {
         self.page_offset = Some(value);
         self
     }

@@ -16,7 +16,7 @@ pub struct GetCostByOrgOptionalParams {
 
 impl GetCostByOrgOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
-    pub fn end_month(&mut self, value: String) -> &mut Self {
+    pub fn end_month(mut self, value: String) -> Self {
         self.end_month = Some(value);
         self
     }
@@ -40,27 +40,27 @@ pub struct GetEstimatedCostByOrgOptionalParams {
 
 impl GetEstimatedCostByOrgOptionalParams {
     /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`. Defaults to `summary`.
-    pub fn view(&mut self, value: String) -> &mut Self {
+    pub fn view(mut self, value: String) -> Self {
         self.view = Some(value);
         self
     }
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost beginning this month. Either start_month or start_date should be specified, but not both. (start_month cannot go beyond two months in the past). Provide an `end_month` to view month-over-month cost.
-    pub fn start_month(&mut self, value: String) -> &mut Self {
+    pub fn start_month(mut self, value: String) -> Self {
         self.start_month = Some(value);
         self
     }
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
-    pub fn end_month(&mut self, value: String) -> &mut Self {
+    pub fn end_month(mut self, value: String) -> Self {
         self.end_month = Some(value);
         self
     }
     /// Datetime in ISO-8601 format, UTC, precise to day: `[YYYY-MM-DD]` for cost beginning this day. Either start_month or start_date should be specified, but not both. (start_date cannot go beyond two months in the past). Provide an `end_date` to view day-over-day cumulative cost.
-    pub fn start_date(&mut self, value: String) -> &mut Self {
+    pub fn start_date(mut self, value: String) -> Self {
         self.start_date = Some(value);
         self
     }
     /// Datetime in ISO-8601 format, UTC, precise to day: `[YYYY-MM-DD]` for cost ending this day.
-    pub fn end_date(&mut self, value: String) -> &mut Self {
+    pub fn end_date(mut self, value: String) -> Self {
         self.end_date = Some(value);
         self
     }
@@ -78,12 +78,12 @@ pub struct GetHistoricalCostByOrgOptionalParams {
 
 impl GetHistoricalCostByOrgOptionalParams {
     /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`.  Defaults to `summary`.
-    pub fn view(&mut self, value: String) -> &mut Self {
+    pub fn view(mut self, value: String) -> Self {
         self.view = Some(value);
         self
     }
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
-    pub fn end_month(&mut self, value: String) -> &mut Self {
+    pub fn end_month(mut self, value: String) -> Self {
         self.end_month = Some(value);
         self
     }
@@ -111,34 +111,34 @@ pub struct GetHourlyUsageOptionalParams {
 
 impl GetHourlyUsageOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn filter_timestamp_end(&mut self, value: String) -> &mut Self {
+    pub fn filter_timestamp_end(mut self, value: String) -> Self {
         self.filter_timestamp_end = Some(value);
         self
     }
     /// Include child org usage in the response. Defaults to false.
-    pub fn filter_include_descendants(&mut self, value: bool) -> &mut Self {
+    pub fn filter_include_descendants(mut self, value: bool) -> Self {
         self.filter_include_descendants = Some(value);
         self
     }
     /// Include breakdown of usage by subcategories where applicable (for product family logs only). Defaults to false.
-    pub fn filter_include_breakdown(&mut self, value: bool) -> &mut Self {
+    pub fn filter_include_breakdown(mut self, value: bool) -> Self {
         self.filter_include_breakdown = Some(value);
         self
     }
     /// Comma separated list of product family versions to use in the format `product_family:version`. For example,
     /// `infra_hosts:1.0.0`. If this parameter is not used, the API will use the latest version of each requested
     /// product family. Currently all families have one version `1.0.0`.
-    pub fn filter_versions(&mut self, value: String) -> &mut Self {
+    pub fn filter_versions(mut self, value: String) -> Self {
         self.filter_versions = Some(value);
         self
     }
     /// Maximum number of results to return (between 1 and 500) - defaults to 500 if limit not specified.
-    pub fn page_limit(&mut self, value: i32) -> &mut Self {
+    pub fn page_limit(mut self, value: i32) -> Self {
         self.page_limit = Some(value);
         self
     }
     /// List following results with a next_record_id provided in the previous query.
-    pub fn page_next_record_id(&mut self, value: String) -> &mut Self {
+    pub fn page_next_record_id(mut self, value: String) -> Self {
         self.page_next_record_id = Some(value);
         self
     }
@@ -163,28 +163,28 @@ pub struct GetMonthlyCostAttributionOptionalParams {
 
 impl GetMonthlyCostAttributionOptionalParams {
     /// The direction to sort by: `[desc, asc]`.
-    pub fn sort_direction(&mut self, value: crate::datadogV2::model::SortDirection) -> &mut Self {
+    pub fn sort_direction(mut self, value: crate::datadogV2::model::SortDirection) -> Self {
         self.sort_direction = Some(value);
         self
     }
     /// The billing dimension to sort by. Always sorted by total cost. Example: `infra_host`.
-    pub fn sort_name(&mut self, value: String) -> &mut Self {
+    pub fn sort_name(mut self, value: String) -> Self {
         self.sort_name = Some(value);
         self
     }
     /// Comma separated list of tag keys used to group cost. If no value is provided the cost will not be broken down by tags.
     /// To see which tags are available, look for the value of `tag_config_source` in the API response.
-    pub fn tag_breakdown_keys(&mut self, value: String) -> &mut Self {
+    pub fn tag_breakdown_keys(mut self, value: String) -> Self {
         self.tag_breakdown_keys = Some(value);
         self
     }
     /// List following results with a next_record_id provided in the previous query.
-    pub fn next_record_id(&mut self, value: String) -> &mut Self {
+    pub fn next_record_id(mut self, value: String) -> Self {
         self.next_record_id = Some(value);
         self
     }
     /// Include child org cost in the response. Defaults to `true`.
-    pub fn include_descendants(&mut self, value: bool) -> &mut Self {
+    pub fn include_descendants(mut self, value: bool) -> Self {
         self.include_descendants = Some(value);
         self
     }
@@ -200,7 +200,7 @@ pub struct GetProjectedCostOptionalParams {
 
 impl GetProjectedCostOptionalParams {
     /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`. Defaults to `summary`.
-    pub fn view(&mut self, value: String) -> &mut Self {
+    pub fn view(mut self, value: String) -> Self {
         self.view = Some(value);
         self
     }
@@ -218,7 +218,7 @@ pub struct GetUsageApplicationSecurityMonitoringOptionalParams {
 impl GetUsageApplicationSecurityMonitoringOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -236,7 +236,7 @@ pub struct GetUsageLambdaTracedInvocationsOptionalParams {
 impl GetUsageLambdaTracedInvocationsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -254,7 +254,7 @@ pub struct GetUsageObservabilityPipelinesOptionalParams {
 impl GetUsageObservabilityPipelinesOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
