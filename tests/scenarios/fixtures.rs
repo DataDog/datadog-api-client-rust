@@ -2,7 +2,7 @@ use crate::{
     scenarios::function_mappings::{collect_function_calls, initialize_api_instance, ApiInstances},
     GIVEN_MAP, UNDO_MAP,
 };
-use chrono::{DateTime, Duration, Months, SecondsFormat};
+use chrono::{DateTime, Duration, Months, SecondsFormat, Utc};
 use convert_case::{Case, Casing};
 use cucumber::{
     event::ScenarioFinished,
@@ -20,7 +20,8 @@ use sha256::digest;
 use std::{
     collections::{HashMap, HashSet},
     env,
-    fs::{create_dir_all, read_to_string},
+    fs::{create_dir_all, read_to_string, remove_file, File},
+    io::Write,
     ops::Add,
     path::PathBuf,
     str::FromStr,
@@ -106,30 +107,28 @@ pub async fn before_scenario(
             vcr_client_builder.build()
         }
         "true" => {
-            // let _ = remove_file(cassette.clone());
-            // let _ = remove_file(freeze.clone());
-            // let mut freeze_file = File::create(freeze).expect("failed to write freeze file");
-            // freeze_file
-            //     .write_all(
-            //         DateTime::to_rfc3339(
-            //             &DateTime::from_timestamp(frozen_time.num_milliseconds() as i64, 0)
-            //                 .expect("failed to convert timestamp to datetime"),
-            //         )
-            //         .as_bytes(),
-            //     )
-            //     .expect("failed to write freeze file");
-            // let middleware: VCRMiddleware = VCRMiddleware::try_from(cassette)
-            //     .expect("Failed to initialize rVCR middleware")
-            //     .with_mode(VCRMode::Record)
-            //     .with_modify_request(|req| {
-            //         req.headers.remove_entry("dd-api-key");
-            //         req.headers.remove_entry("dd-application-key");
-            //     })
-            //     .with_modify_response(|res| {
-            //         res.headers.remove_entry("content-security-policy");
-            //     });
-            // vcr_client_builder.with(middleware).build()
-            panic!("Use the cassette transform in datadog-api-spec instead. This recording mode is only here for completeness.");
+            let _ = remove_file(cassette.clone());
+            let _ = remove_file(freeze.clone());
+            let mut freeze_file = File::create(freeze).expect("failed to write freeze file");
+            freeze_file
+                .write_all(
+                    Utc::now()
+                        .format("%Y-%m-%dT%H:%M:%S%.3fZ")
+                        .to_string()
+                        .as_bytes(),
+                )
+                .expect("failed to write freeze file");
+            let middleware: VCRMiddleware = VCRMiddleware::try_from(cassette)
+                .expect("Failed to initialize rVCR middleware")
+                .with_mode(VCRMode::Record)
+                .with_modify_request(|req| {
+                    req.headers.remove_entry("dd-api-key");
+                    req.headers.remove_entry("dd-application-key");
+                })
+                .with_modify_response(|res| {
+                    res.headers.remove_entry("content-security-policy");
+                });
+            vcr_client_builder.with(middleware).build()
         }
         _ => {
             frozen_time = DateTime::parse_from_rfc3339(
