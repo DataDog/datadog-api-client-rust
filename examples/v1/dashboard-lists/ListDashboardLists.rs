@@ -2,12 +2,6 @@
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_dashboard_lists::DashboardListsAPI;
 use datadog_api_client::datadogV1::model::*;
-use std::ops::Add;
-use std::time::{
-    Duration,
-    SystemTime,
-    UNIX_EPOCH,
-};
 
 #[tokio::main]
 async fn main() {

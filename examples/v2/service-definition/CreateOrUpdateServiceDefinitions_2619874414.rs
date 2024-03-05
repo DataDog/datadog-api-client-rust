@@ -2,12 +2,7 @@
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_service_definition::ServiceDefinitionAPI;
 use datadog_api_client::datadogV2::model::*;
-use std::ops::Add;
-use std::time::{
-    Duration,
-    SystemTime,
-    UNIX_EPOCH,
-};
+use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -31,7 +26,7 @@ async fn main() {
                         ],
                     )
                     .extensions(
-                        std::collections::BTreeMap::from(
+                        BTreeMap::from(
                             [("myorgextension".to_string(), serde_json::from_str("extensionvalue").unwrap())],
                         ),
                     )

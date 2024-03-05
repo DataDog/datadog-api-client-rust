@@ -2,12 +2,7 @@
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_aws_integration::AWSIntegrationAPI;
 use datadog_api_client::datadogV1::model::*;
-use std::ops::Add;
-use std::time::{
-    Duration,
-    SystemTime,
-    UNIX_EPOCH,
-};
+use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -15,9 +10,7 @@ async fn main() {
         AWSAccount::new()
             .account_id("123456789012".to_string())
             .account_specific_namespace_rules(
-                std::collections::BTreeMap::from(
-                    [("auto_scaling".to_string(), false), ("opswork".to_string(), false)],
-                ),
+                BTreeMap::from([("auto_scaling".to_string(), false), ("opswork".to_string(), false)]),
             )
             .cspm_resource_collection_enabled(true)
             .excluded_regions(vec!["us-east-1".to_string(), "us-west-2".to_string()])

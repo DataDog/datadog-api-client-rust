@@ -332,7 +332,7 @@ def _format_oneof(schema, data, name, name_prefix, replace_values, required, nul
                 continue
             if sub_schema.get("nullable") and data is None:
                 # only one schema can be nullable
-                formatted = "nil"
+                formatted = "None"
             else:
                 sub_schema["nullable"] = False
                 formatted = format_data_with_schema(
@@ -359,6 +359,7 @@ def _format_oneof(schema, data, name, name_prefix, replace_values, required, nul
         one_of_schema_name = simple_type(one_of_schema).title()
 
     if not is_primitive(one_of_schema):
+        # TODO: revisit possibility of removing all boxes
         parameters = f"Box::new({parameters})"
     if name:
         return f"{name_prefix}{name}::{one_of_schema_name}({parameters})"
@@ -393,7 +394,7 @@ def format_data_with_schema(
     if replace_values and data in replace_values:
         parameters = replace_values[data]
 
-        # Make sure that variables used in given statements are camelCase for Rust linter
+        # Make sure that variables used in given statements are lowercase snake_case for Rust linter
         if parameters in variables:
             parameters = rust_name(parameters)
 
@@ -417,6 +418,7 @@ def format_data_with_schema(
                 return f'"{x}".to_string()' if x else '"".to_string()'
 
             def format_datetime(x):
+                # TODO: format date and datetime
                 d = dateutil.parser.isoparse(x)
                 return f"time.Date({d.year}, {d.month}, {d.day}, {d.hour}, {d.minute}, {d.second}, {d.microsecond}, time.UTC)"
 
@@ -431,6 +433,7 @@ def format_data_with_schema(
                 return str(x)
 
             def format_interface(x):
+                # TODO: delete this?
                 if isinstance(x, (int, float)):
                     return str(x)
                 if isinstance(x, str):
@@ -443,6 +446,7 @@ def format_data_with_schema(
                 return "true" if x else "false"
 
             def open_file(x):
+                # TODO: handle file input as Vec<u8>
                 return f"func() *os.File {{ fp, _ := os.Open({format_string(x)}); return fp }}()"
 
             formatter = {
@@ -605,9 +609,9 @@ def format_data_with_schema_dict(
                 nested_schema_name = value.split("{")[0]
 
         if has_properties:
-            parameters += f".additional_properties(std::collections::BTreeMap::from([{add_parameters}]))"
+            parameters += f".additional_properties(BTreeMap::from([{add_parameters}]))"
         else:
-            return f"std::collections::BTreeMap::from([{add_parameters}])"
+            return f"BTreeMap::from([{add_parameters}])"
 
     if "oneOf" in schema:
         return _format_oneof(schema, data, name, name_prefix, replace_values, required, nullable, **kwargs)
@@ -616,9 +620,9 @@ def format_data_with_schema_dict(
         if schema.get("additionalProperties") == {}:
             for k, v in data.items():
                 parameters += f'("{k}".to_string(), serde_json::from_str("{v}").unwrap()),'
-            return f"std::collections::BTreeMap::from([{parameters}])"
+            return f"BTreeMap::from([{parameters}])"
         else:
-            return "std::collections::BTreeMap::new()"
+            return "BTreeMap::new()"
 
     if not name:
         raise ValueError(f"Unnamed schema {schema} for {data}")

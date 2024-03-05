@@ -2,12 +2,7 @@
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_powerpack::PowerpackAPI;
 use datadog_api_client::datadogV2::model::*;
-use std::ops::Add;
-use std::time::{
-    Duration,
-    SystemTime,
-    UNIX_EPOCH,
-};
+use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -25,7 +20,7 @@ async fn main() {
                                 "group".to_string(),
                                 vec![
                                     PowerpackInnerWidgets::new(
-                                        std::collections::BTreeMap::from(
+                                        BTreeMap::from(
                                             [
                                                 ("content".to_string(), serde_json::from_str("test").unwrap()),
                                                 ("type".to_string(), serde_json::from_str("note").unwrap()),

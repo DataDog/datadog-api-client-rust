@@ -4,9 +4,9 @@ use datadog_api_client::datadogV1::api::api_service_level_objective_corrections:
 use datadog_api_client::datadogV1::model::*;
 use std::ops::Add;
 use std::time::{
+    UNIX_EPOCH,
     Duration,
     SystemTime,
-    UNIX_EPOCH,
 };
 
 #[tokio::main]

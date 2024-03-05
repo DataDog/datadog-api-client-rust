@@ -159,7 +159,6 @@ def relative_time(imports, calls, freezed_time, iso):
     time_re = re.compile(r"now( *([+-]) *(\d+)([smhdMy]))?")
 
     def func(arg):
-        imports["time"].add(None)
         sret = TIME_FORMATTER["now"]
         ret = freezed_time
         m = time_re.match(arg)

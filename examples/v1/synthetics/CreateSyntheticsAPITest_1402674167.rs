@@ -2,12 +2,7 @@
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_synthetics::SyntheticsAPI;
 use datadog_api_client::datadogV1::model::*;
-use std::ops::Add;
-use std::time::{
-    Duration,
-    SystemTime,
-    UNIX_EPOCH,
-};
+use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -49,7 +44,7 @@ async fn main() {
                     SyntheticsTestRequest::new()
                         .host("localhost".to_string())
                         .message("".to_string())
-                        .metadata(std::collections::BTreeMap::from([]))
+                        .metadata(BTreeMap::from([]))
                         .method("GET".to_string())
                         .port(50051)
                         .service("Hello".to_string()),

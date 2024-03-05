@@ -2,12 +2,7 @@
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_synthetics::SyntheticsAPI;
 use datadog_api_client::datadogV1::model::*;
-use std::ops::Add;
-use std::time::{
-    Duration,
-    SystemTime,
-    UNIX_EPOCH,
-};
+use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -63,7 +58,7 @@ async fn main() {
                         .allow_failure(false)
                         .is_critical(true)
                         .name("Refresh page".to_string())
-                        .params(std::collections::BTreeMap::new())
+                        .params(BTreeMap::new())
                         .type_(SyntheticsStepType::REFRESH)
                 ],
             )

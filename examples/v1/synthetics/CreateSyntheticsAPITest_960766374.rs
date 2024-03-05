@@ -2,12 +2,7 @@
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_synthetics::SyntheticsAPI;
 use datadog_api_client::datadogV1::model::*;
-use std::ops::Add;
-use std::time::{
-    Duration,
-    SystemTime,
-    UNIX_EPOCH,
-};
+use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -104,16 +99,12 @@ async fn main() {
                                         .updated_at("2020-10-16T09:23:24.857Z".to_string()),
                                 ),
                         )
-                        .headers(
-                            std::collections::BTreeMap::from(
-                                [("unique".to_string(), "examplesynthetic".to_string())],
-                            ),
-                        )
+                        .headers(BTreeMap::from([("unique".to_string(), "examplesynthetic".to_string())]))
                         .method("GET".to_string())
                         .proxy(
                             SyntheticsTestRequestProxy::new(
                                 "https://datadoghq.com".to_string(),
-                            ).headers(std::collections::BTreeMap::from([])),
+                            ).headers(BTreeMap::from([])),
                         )
                         .timeout(10)
                         .url("https://datadoghq.com".to_string()),

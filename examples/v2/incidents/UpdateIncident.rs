@@ -2,12 +2,7 @@
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_incidents::IncidentsAPI;
 use datadog_api_client::datadogV2::model::*;
-use std::ops::Add;
-use std::time::{
-    Duration,
-    SystemTime,
-    UNIX_EPOCH,
-};
+use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -21,7 +16,7 @@ async fn main() {
             ).attributes(
                 IncidentUpdateAttributes::new()
                     .fields(
-                        std::collections::BTreeMap::from(
+                        BTreeMap::from(
                             [
                                 (
                                     "state".to_string(),

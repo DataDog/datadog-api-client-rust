@@ -4,9 +4,9 @@ use datadog_api_client::datadogV2::api::api_metrics::MetricsAPI;
 use datadog_api_client::datadogV2::model::*;
 use std::ops::Add;
 use std::time::{
+    UNIX_EPOCH,
     Duration,
     SystemTime,
-    UNIX_EPOCH,
 };
 
 #[tokio::main]

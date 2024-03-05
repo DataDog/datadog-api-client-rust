@@ -2,12 +2,7 @@
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_logs::LogsAPI;
 use datadog_api_client::datadogV1::model::*;
-use std::ops::Add;
-use std::time::{
-    Duration,
-    SystemTime,
-    UNIX_EPOCH,
-};
+use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -15,7 +10,7 @@ async fn main() {
         vec![
             HTTPLogItem::new("Example-Log".to_string())
                 .ddtags("host:ExampleLog".to_string())
-                .additional_properties(std::collections::BTreeMap::from([]))
+                .additional_properties(BTreeMap::from([]))
         ];
     let configuration = Configuration::new();
     let api = LogsAPI::with_config(configuration);

@@ -2,17 +2,12 @@
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_service_level_objectives::ServiceLevelObjectivesAPI;
 use datadog_api_client::datadogV1::model::*;
-use std::ops::Add;
-use std::time::{
-    Duration,
-    SystemTime,
-    UNIX_EPOCH,
-};
+use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
     let body =
-        std::collections::BTreeMap::from(
+        BTreeMap::from(
             [
                 ("id1".to_string(), vec![SLOTimeframe::SEVEN_DAYS, SLOTimeframe::THIRTY_DAYS]),
                 ("id2".to_string(), vec![SLOTimeframe::SEVEN_DAYS, SLOTimeframe::THIRTY_DAYS]),
