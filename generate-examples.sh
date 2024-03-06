@@ -26,3 +26,4 @@ pre_commit_wrapper () {
 cargo install genemichaels --quiet
 rm -rf examples/*
 pre_commit_wrapper examples
+cargo fmt
