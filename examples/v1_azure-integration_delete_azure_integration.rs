@@ -5,7 +5,9 @@ use datadog_api_client::datadogV1::model::*;
 
 #[tokio::main]
 async fn main() {
-    let body = AzureAccount::new().client_id("".to_string()).tenant_name("".to_string());
+    let body = AzureAccount::new()
+        .client_id("".to_string())
+        .tenant_name("".to_string());
     let configuration = Configuration::new();
     let api = AzureIntegrationAPI::with_config(configuration);
     let resp = api.delete_azure_integration(body).await;

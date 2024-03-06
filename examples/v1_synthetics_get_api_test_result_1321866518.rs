@@ -13,13 +13,12 @@ async fn main() {
         std::env::var("SYNTHETICS_API_TEST_WITH_WRONG_DNS_RESULT_RESULTS_0_RESULT_ID").unwrap();
     let configuration = Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
-    let resp =
-        api
-            .get_api_test_result(
-                synthetics_api_test_with_wrong_dns_public_id.clone(),
-                synthetics_api_test_with_wrong_dns_result_results_0_result_id.clone(),
-            )
-            .await;
+    let resp = api
+        .get_api_test_result(
+            synthetics_api_test_with_wrong_dns_public_id.clone(),
+            synthetics_api_test_with_wrong_dns_result_results_0_result_id.clone(),
+        )
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

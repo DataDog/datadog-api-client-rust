@@ -8,7 +8,9 @@ async fn main() {
     let dd_team_data_id = std::env::var("DD_TEAM_DATA_ID").unwrap();
     let configuration = Configuration::new();
     let api = TeamsAPI::with_config(configuration);
-    let resp = api.get_team_permission_settings(dd_team_data_id.clone()).await;
+    let resp = api
+        .get_team_permission_settings(dd_team_data_id.clone())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

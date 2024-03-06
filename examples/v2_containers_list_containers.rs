@@ -6,7 +6,9 @@ use datadog_api_client::datadogV2::api::api_containers::*;
 async fn main() {
     let configuration = Configuration::new();
     let api = ContainersAPI::with_config(configuration);
-    let resp = api.list_containers(ListContainersOptionalParams::default()).await;
+    let resp = api
+        .list_containers(ListContainersOptionalParams::default())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

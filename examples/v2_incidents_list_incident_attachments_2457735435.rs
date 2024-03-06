@@ -9,10 +9,12 @@ async fn main() {
     let mut configuration = Configuration::new();
     configuration.set_unstable_operation_enabled("v2.ListIncidentAttachments", true);
     let api = IncidentsAPI::with_config(configuration);
-    let resp =
-        api
-            .list_incident_attachments(incident_data_id.clone(), ListIncidentAttachmentsOptionalParams::default())
-            .await;
+    let resp = api
+        .list_incident_attachments(
+            incident_data_id.clone(),
+            ListIncidentAttachmentsOptionalParams::default(),
+        )
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

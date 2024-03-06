@@ -7,24 +7,20 @@ use datadog_api_client::datadogV2::model::*;
 async fn main() {
     // there is a valid "create_scorecard_rule" in the system
     let create_scorecard_rule_data_id = std::env::var("CREATE_SCORECARD_RULE_DATA_ID").unwrap();
-    let body =
-        OutcomesBatchRequest
-        ::new().data(
-            OutcomesBatchRequestData::new()
-                .attributes(
-                    OutcomesBatchAttributes
-                    ::new().results(
-                        vec![
-                            OutcomesBatchRequestItem::new(
-                                create_scorecard_rule_data_id.clone(),
-                                "my-service".to_string(),
-                                State::PASS,
-                            ).remarks(r#"See: <a href="https://app.datadoghq.com/services">Services</a>"#.to_string())
-                        ],
-                    ),
+    let body = OutcomesBatchRequest::new().data(
+        OutcomesBatchRequestData::new()
+            .attributes(
+                OutcomesBatchAttributes::new().results(vec![OutcomesBatchRequestItem::new(
+                    create_scorecard_rule_data_id.clone(),
+                    "my-service".to_string(),
+                    State::PASS,
                 )
-                .type_(OutcomesBatchType::BATCHED_OUTCOME),
-        );
+                .remarks(
+                    r#"See: <a href="https://app.datadoghq.com/services">Services</a>"#.to_string(),
+                )]),
+            )
+            .type_(OutcomesBatchType::BATCHED_OUTCOME),
+    );
     let mut configuration = Configuration::new();
     configuration.set_unstable_operation_enabled("v2.CreateScorecardOutcomesBatch", true);
     let api = ServiceScorecardsAPI::with_config(configuration);

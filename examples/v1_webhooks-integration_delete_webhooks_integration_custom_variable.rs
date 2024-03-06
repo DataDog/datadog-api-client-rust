@@ -8,7 +8,9 @@ async fn main() {
     let webhook_custom_variable_name = std::env::var("WEBHOOK_CUSTOM_VARIABLE_NAME").unwrap();
     let configuration = Configuration::new();
     let api = WebhooksIntegrationAPI::with_config(configuration);
-    let resp = api.delete_webhooks_integration_custom_variable(webhook_custom_variable_name.clone()).await;
+    let resp = api
+        .delete_webhooks_integration_custom_variable(webhook_custom_variable_name.clone())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

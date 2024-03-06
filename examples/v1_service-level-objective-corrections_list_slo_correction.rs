@@ -6,7 +6,13 @@ use datadog_api_client::datadogV1::api::api_service_level_objective_corrections:
 async fn main() {
     let configuration = Configuration::new();
     let api = ServiceLevelObjectiveCorrectionsAPI::with_config(configuration);
-    let resp = api.list_slo_correction(ListSLOCorrectionOptionalParams::default().offset(1).limit(1)).await;
+    let resp = api
+        .list_slo_correction(
+            ListSLOCorrectionOptionalParams::default()
+                .offset(1)
+                .limit(1),
+        )
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

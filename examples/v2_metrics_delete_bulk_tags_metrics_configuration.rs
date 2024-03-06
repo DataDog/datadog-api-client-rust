@@ -5,16 +5,16 @@ use datadog_api_client::datadogV2::model::*;
 
 #[tokio::main]
 async fn main() {
-    let body =
-        MetricBulkTagConfigDeleteRequest::new(
-            MetricBulkTagConfigDelete::new(
-                "kafka.lag".to_string(),
-                MetricBulkConfigureTagsType::BULK_MANAGE_TAGS,
-            ).attributes(
-                MetricBulkTagConfigDeleteAttributes
-                ::new().emails(vec!["sue@example.com".to_string(), "bob@example.com".to_string()]),
-            ),
-        );
+    let body = MetricBulkTagConfigDeleteRequest::new(
+        MetricBulkTagConfigDelete::new(
+            "kafka.lag".to_string(),
+            MetricBulkConfigureTagsType::BULK_MANAGE_TAGS,
+        )
+        .attributes(MetricBulkTagConfigDeleteAttributes::new().emails(vec![
+            "sue@example.com".to_string(),
+            "bob@example.com".to_string(),
+        ])),
+    );
     let configuration = Configuration::new();
     let api = MetricsAPI::with_config(configuration);
     let resp = api.delete_bulk_tags_metrics_configuration(body).await;

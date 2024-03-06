@@ -6,7 +6,9 @@ use datadog_api_client::datadogV2::api::api_service_definition::*;
 async fn main() {
     let configuration = Configuration::new();
     let api = ServiceDefinitionAPI::with_config(configuration);
-    let resp = api.delete_service_definition("service-definition-test".to_string()).await;
+    let resp = api
+        .delete_service_definition("service-definition-test".to_string())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

@@ -7,15 +7,14 @@ async fn main() {
     let mut configuration = Configuration::new();
     configuration.set_unstable_operation_enabled("v2.ListScorecardRules", true);
     let api = ServiceScorecardsAPI::with_config(configuration);
-    let resp =
-        api
-            .list_scorecard_rules(
-                ListScorecardRulesOptionalParams::default()
-                    .page_size(2)
-                    .fields_rule("name".to_string())
-                    .filter_rule_custom(true),
-            )
-            .await;
+    let resp = api
+        .list_scorecard_rules(
+            ListScorecardRulesOptionalParams::default()
+                .page_size(2)
+                .fields_rule("name".to_string())
+                .filter_rule_custom(true),
+        )
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

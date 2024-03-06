@@ -8,7 +8,9 @@ async fn main() {
     let body = PagerDutyServiceKey::new("".to_string());
     let configuration = Configuration::new();
     let api = PagerDutyIntegrationAPI::with_config(configuration);
-    let resp = api.update_pager_duty_integration_service("service_name".to_string(), body).await;
+    let resp = api
+        .update_pager_duty_integration_service("service_name".to_string(), body)
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

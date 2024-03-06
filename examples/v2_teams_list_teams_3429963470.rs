@@ -7,13 +7,13 @@ use datadog_api_client::datadogV2::model::*;
 async fn main() {
     let configuration = Configuration::new();
     let api = TeamsAPI::with_config(configuration);
-    let resp =
-        api
-            .list_teams(
-                ListTeamsOptionalParams
-                ::default().fields_team(vec![TeamsField::ID, TeamsField::NAME, TeamsField::HANDLE]),
-            )
-            .await;
+    let resp = api
+        .list_teams(ListTeamsOptionalParams::default().fields_team(vec![
+            TeamsField::ID,
+            TeamsField::NAME,
+            TeamsField::HANDLE,
+        ]))
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

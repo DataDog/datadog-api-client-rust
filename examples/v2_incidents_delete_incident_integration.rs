@@ -8,14 +8,17 @@ async fn main() {
     let incident_data_id = std::env::var("INCIDENT_DATA_ID").unwrap();
 
     // the "incident" has an "incident_integration_metadata"
-    let incident_integration_metadata_data_id = std::env::var("INCIDENT_INTEGRATION_METADATA_DATA_ID").unwrap();
+    let incident_integration_metadata_data_id =
+        std::env::var("INCIDENT_INTEGRATION_METADATA_DATA_ID").unwrap();
     let mut configuration = Configuration::new();
     configuration.set_unstable_operation_enabled("v2.DeleteIncidentIntegration", true);
     let api = IncidentsAPI::with_config(configuration);
-    let resp =
-        api
-            .delete_incident_integration(incident_data_id.clone(), incident_integration_metadata_data_id.clone())
-            .await;
+    let resp = api
+        .delete_incident_integration(
+            incident_data_id.clone(),
+            incident_integration_metadata_data_id.clone(),
+        )
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

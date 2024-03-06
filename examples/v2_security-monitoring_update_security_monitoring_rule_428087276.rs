@@ -61,7 +61,9 @@ results contains result if {
             .tags(vec![]);
     let configuration = Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
-    let resp = api.update_security_monitoring_rule(cloud_configuration_rule_id.clone(), body).await;
+    let resp = api
+        .update_security_monitoring_rule(cloud_configuration_rule_id.clone(), body)
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

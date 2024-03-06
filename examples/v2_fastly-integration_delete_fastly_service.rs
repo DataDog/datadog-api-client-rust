@@ -6,7 +6,9 @@ use datadog_api_client::datadogV2::api::api_fastly_integration::*;
 async fn main() {
     let configuration = Configuration::new();
     let api = FastlyIntegrationAPI::with_config(configuration);
-    let resp = api.delete_fastly_service("account_id".to_string(), "service_id".to_string()).await;
+    let resp = api
+        .delete_fastly_service("account_id".to_string(), "service_id".to_string())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

@@ -7,13 +7,13 @@ use datadog_api_client::datadogV2::model::*;
 async fn main() {
     let configuration = Configuration::new();
     let api = ServiceDefinitionAPI::with_config(configuration);
-    let resp =
-        api
-            .get_service_definition(
-                "service-definition-test".to_string(),
-                GetServiceDefinitionOptionalParams::default().schema_version(ServiceDefinitionSchemaVersions::V2_1),
-            )
-            .await;
+    let resp = api
+        .get_service_definition(
+            "service-definition-test".to_string(),
+            GetServiceDefinitionOptionalParams::default()
+                .schema_version(ServiceDefinitionSchemaVersions::V2_1),
+        )
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

@@ -6,15 +6,14 @@ use datadog_api_client::datadogV2::api::api_events::*;
 async fn main() {
     let configuration = Configuration::new();
     let api = EventsAPI::with_config(configuration);
-    let resp =
-        api
-            .list_events(
-                ListEventsOptionalParams::default()
-                    .filter_from("now-15m".to_string())
-                    .filter_to("now".to_string())
-                    .page_limit(2),
-            )
-            .await;
+    let resp = api
+        .list_events(
+            ListEventsOptionalParams::default()
+                .filter_from("now-15m".to_string())
+                .filter_to("now".to_string())
+                .page_limit(2),
+        )
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

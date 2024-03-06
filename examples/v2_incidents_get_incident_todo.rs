@@ -12,7 +12,9 @@ async fn main() {
     let mut configuration = Configuration::new();
     configuration.set_unstable_operation_enabled("v2.GetIncidentTodo", true);
     let api = IncidentsAPI::with_config(configuration);
-    let resp = api.get_incident_todo(incident_data_id.clone(), incident_todo_data_id.clone()).await;
+    let resp = api
+        .get_incident_todo(incident_data_id.clone(), incident_todo_data_id.clone())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

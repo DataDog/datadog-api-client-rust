@@ -8,7 +8,9 @@ async fn main() {
     let body = BTreeMap::new();
     let configuration = Configuration::new();
     let api = GCPIntegrationAPI::with_config(configuration);
-    let resp = api.make_gcpsts_delegate(MakeGCPSTSDelegateOptionalParams::default().body(body)).await;
+    let resp = api
+        .make_gcpsts_delegate(MakeGCPSTSDelegateOptionalParams::default().body(body))
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

@@ -6,7 +6,9 @@ use datadog_api_client::datadogV2::api::api_rum::*;
 async fn main() {
     let configuration = Configuration::new();
     let api = RUMAPI::with_config(configuration);
-    let resp = api.list_rum_events(ListRUMEventsOptionalParams::default()).await;
+    let resp = api
+        .list_rum_events(ListRUMEventsOptionalParams::default())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

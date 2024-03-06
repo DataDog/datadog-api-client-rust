@@ -5,13 +5,10 @@ use datadog_api_client::datadogV2::model::*;
 
 #[tokio::main]
 async fn main() {
-    let body =
-        ApplicationKeyCreateRequest::new(
-            ApplicationKeyCreateData::new(
-                ApplicationKeyCreateAttributes::new("Example-Key-Management".to_string()),
-                ApplicationKeysType::APPLICATION_KEYS,
-            ),
-        );
+    let body = ApplicationKeyCreateRequest::new(ApplicationKeyCreateData::new(
+        ApplicationKeyCreateAttributes::new("Example-Key-Management".to_string()),
+        ApplicationKeysType::APPLICATION_KEYS,
+    ));
     let configuration = Configuration::new();
     let api = KeyManagementAPI::with_config(configuration);
     let resp = api.create_current_user_application_key(body).await;

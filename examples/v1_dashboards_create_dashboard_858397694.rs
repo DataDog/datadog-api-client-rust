@@ -5,41 +5,32 @@ use datadog_api_client::datadogV1::model::*;
 
 #[tokio::main]
 async fn main() {
-    let body =
-        Dashboard::new(
-            DashboardLayoutType::ORDERED,
-            "".to_string(),
-            vec![
-                Widget::new(
-                    WidgetDefinition::HostMapWidgetDefinition(
-                        Box::new(
-                            HostMapWidgetDefinition::new(
-                                HostMapWidgetDefinitionRequests
-                                ::new().fill(HostMapRequest::new().q("avg:system.cpu.user{*}".to_string())),
-                                HostMapWidgetDefinitionType::HOSTMAP,
-                            ),
-                        ),
-                    ),
-                )
-            ],
-        )
-            .description(None)
-            .is_read_only(false)
-            .notify_list(Some(vec![]))
-            .reflow_type(DashboardReflowType::AUTO)
-            .restricted_roles(vec![])
-            .template_variables(
-                Some(
-                    vec![
-                        DashboardTemplateVariable::new("host1".to_string())
-                            .available_values(
-                                Some(vec!["my-host".to_string(), "host1".to_string(), "host2".to_string()]),
-                            )
-                            .defaults(vec!["my-host".to_string()])
-                            .prefix(Some("host".to_string()))
-                    ],
-                ),
-            );
+    let body = Dashboard::new(
+        DashboardLayoutType::ORDERED,
+        "".to_string(),
+        vec![Widget::new(WidgetDefinition::HostMapWidgetDefinition(
+            Box::new(HostMapWidgetDefinition::new(
+                HostMapWidgetDefinitionRequests::new()
+                    .fill(HostMapRequest::new().q("avg:system.cpu.user{*}".to_string())),
+                HostMapWidgetDefinitionType::HOSTMAP,
+            )),
+        ))],
+    )
+    .description(None)
+    .is_read_only(false)
+    .notify_list(Some(vec![]))
+    .reflow_type(DashboardReflowType::AUTO)
+    .restricted_roles(vec![])
+    .template_variables(Some(vec![DashboardTemplateVariable::new(
+        "host1".to_string(),
+    )
+    .available_values(Some(vec![
+        "my-host".to_string(),
+        "host1".to_string(),
+        "host2".to_string(),
+    ]))
+    .defaults(vec!["my-host".to_string()])
+    .prefix(Some("host".to_string()))]));
     let configuration = Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api.create_dashboard(body).await;

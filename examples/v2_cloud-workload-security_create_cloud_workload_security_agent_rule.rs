@@ -5,18 +5,17 @@ use datadog_api_client::datadogV2::model::*;
 
 #[tokio::main]
 async fn main() {
-    let body =
-        CloudWorkloadSecurityAgentRuleCreateRequest::new(
-            CloudWorkloadSecurityAgentRuleCreateData::new(
-                CloudWorkloadSecurityAgentRuleCreateAttributes::new(
-                    r#"exec.file.name == "sh""#.to_string(),
-                    "examplecloudworkloadsecurity".to_string(),
-                )
-                    .description("Test Agent rule".to_string())
-                    .enabled(true),
-                CloudWorkloadSecurityAgentRuleType::AGENT_RULE,
-            ),
-        );
+    let body = CloudWorkloadSecurityAgentRuleCreateRequest::new(
+        CloudWorkloadSecurityAgentRuleCreateData::new(
+            CloudWorkloadSecurityAgentRuleCreateAttributes::new(
+                r#"exec.file.name == "sh""#.to_string(),
+                "examplecloudworkloadsecurity".to_string(),
+            )
+            .description("Test Agent rule".to_string())
+            .enabled(true),
+            CloudWorkloadSecurityAgentRuleType::AGENT_RULE,
+        ),
+    );
     let configuration = Configuration::new();
     let api = CloudWorkloadSecurityAPI::with_config(configuration);
     let resp = api.create_cloud_workload_security_agent_rule(body).await;

@@ -8,10 +8,14 @@ async fn main() {
     let slo_data_0_id = std::env::var("SLO_DATA_0_ID").unwrap();
     let configuration = Configuration::new();
     let api = ServiceLevelObjectivesAPI::with_config(configuration);
-    let resp =
-        api
-            .get_slo_history(slo_data_0_id.clone(), 1636542671, 1636629071, GetSLOHistoryOptionalParams::default())
-            .await;
+    let resp = api
+        .get_slo_history(
+            slo_data_0_id.clone(),
+            1636542671,
+            1636629071,
+            GetSLOHistoryOptionalParams::default(),
+        )
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

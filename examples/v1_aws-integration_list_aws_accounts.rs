@@ -6,7 +6,9 @@ use datadog_api_client::datadogV1::api::api_aws_integration::*;
 async fn main() {
     let configuration = Configuration::new();
     let api = AWSIntegrationAPI::with_config(configuration);
-    let resp = api.list_aws_accounts(ListAWSAccountsOptionalParams::default()).await;
+    let resp = api
+        .list_aws_accounts(ListAWSAccountsOptionalParams::default())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

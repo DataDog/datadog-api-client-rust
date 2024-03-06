@@ -5,13 +5,10 @@ use datadog_api_client::datadogV2::model::*;
 
 #[tokio::main]
 async fn main() {
-    let body =
-        APIKeyCreateRequest::new(
-            APIKeyCreateData::new(
-                APIKeyCreateAttributes::new("Example-Key-Management".to_string()),
-                APIKeysType::API_KEYS,
-            ),
-        );
+    let body = APIKeyCreateRequest::new(APIKeyCreateData::new(
+        APIKeyCreateAttributes::new("Example-Key-Management".to_string()),
+        APIKeysType::API_KEYS,
+    ));
     let configuration = Configuration::new();
     let api = KeyManagementAPI::with_config(configuration);
     let resp = api.create_api_key(body).await;

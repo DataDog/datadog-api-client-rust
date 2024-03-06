@@ -5,11 +5,10 @@ use datadog_api_client::datadogV1::model::*;
 
 #[tokio::main]
 async fn main() {
-    let body =
-        HostMuteSettings::new()
-            .end(1579098130)
-            .message("Muting this host for a test!".to_string())
-            .override_(false);
+    let body = HostMuteSettings::new()
+        .end(1579098130)
+        .message("Muting this host for a test!".to_string())
+        .override_(false);
     let configuration = Configuration::new();
     let api = HostsAPI::with_config(configuration);
     let resp = api.mute_host("host_name".to_string(), body).await;

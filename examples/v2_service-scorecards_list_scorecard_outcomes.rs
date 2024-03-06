@@ -7,7 +7,9 @@ async fn main() {
     let mut configuration = Configuration::new();
     configuration.set_unstable_operation_enabled("v2.ListScorecardOutcomes", true);
     let api = ServiceScorecardsAPI::with_config(configuration);
-    let resp = api.list_scorecard_outcomes(ListScorecardOutcomesOptionalParams::default()).await;
+    let resp = api
+        .list_scorecard_outcomes(ListScorecardOutcomesOptionalParams::default())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

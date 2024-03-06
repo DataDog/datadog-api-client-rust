@@ -8,7 +8,9 @@ async fn main() {
     let confluent_account_data_id = std::env::var("CONFLUENT_ACCOUNT_DATA_ID").unwrap();
     let configuration = Configuration::new();
     let api = ConfluentCloudAPI::with_config(configuration);
-    let resp = api.delete_confluent_account(confluent_account_data_id.clone()).await;
+    let resp = api
+        .delete_confluent_account(confluent_account_data_id.clone())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

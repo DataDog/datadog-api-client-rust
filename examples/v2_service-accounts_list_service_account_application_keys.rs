@@ -8,13 +8,12 @@ async fn main() {
     let service_account_user_data_id = std::env::var("SERVICE_ACCOUNT_USER_DATA_ID").unwrap();
     let configuration = Configuration::new();
     let api = ServiceAccountsAPI::with_config(configuration);
-    let resp =
-        api
-            .list_service_account_application_keys(
-                service_account_user_data_id.clone(),
-                ListServiceAccountApplicationKeysOptionalParams::default(),
-            )
-            .await;
+    let resp = api
+        .list_service_account_application_keys(
+            service_account_user_data_id.clone(),
+            ListServiceAccountApplicationKeysOptionalParams::default(),
+        )
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

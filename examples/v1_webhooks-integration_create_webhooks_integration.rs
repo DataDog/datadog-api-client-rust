@@ -5,11 +5,10 @@ use datadog_api_client::datadogV1::model::*;
 
 #[tokio::main]
 async fn main() {
-    let body =
-        WebhooksIntegration::new(
-            "Example-Webhooks-Integration".to_string(),
-            "https://example.com/webhook".to_string(),
-        );
+    let body = WebhooksIntegration::new(
+        "Example-Webhooks-Integration".to_string(),
+        "https://example.com/webhook".to_string(),
+    );
     let configuration = Configuration::new();
     let api = WebhooksIntegrationAPI::with_config(configuration);
     let resp = api.create_webhooks_integration(body).await;

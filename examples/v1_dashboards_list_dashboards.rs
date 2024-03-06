@@ -6,7 +6,9 @@ use datadog_api_client::datadogV1::api::api_dashboards::*;
 async fn main() {
     let configuration = Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
-    let resp = api.list_dashboards(ListDashboardsOptionalParams::default().filter_shared(false)).await;
+    let resp = api
+        .list_dashboards(ListDashboardsOptionalParams::default().filter_shared(false))
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

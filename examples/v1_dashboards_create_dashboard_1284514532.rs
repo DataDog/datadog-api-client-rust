@@ -1,4 +1,5 @@
-// Create a new dashboard with a timeseries widget using formulas and functions cloud cost query
+// Create a new dashboard with a timeseries widget using formulas and functions
+// cloud cost query
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_dashboards::*;
 use datadog_api_client::datadogV1::model::*;

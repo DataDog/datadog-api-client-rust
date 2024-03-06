@@ -5,12 +5,11 @@ use datadog_api_client::datadogV1::model::*;
 
 #[tokio::main]
 async fn main() {
-    let body =
-        WebhooksIntegrationCustomVariable::new(
-            true,
-            "EXAMPLEWEBHOOKSINTEGRATION".to_string(),
-            "CUSTOM_VARIABLE_VALUE".to_string(),
-        );
+    let body = WebhooksIntegrationCustomVariable::new(
+        true,
+        "EXAMPLEWEBHOOKSINTEGRATION".to_string(),
+        "CUSTOM_VARIABLE_VALUE".to_string(),
+    );
     let configuration = Configuration::new();
     let api = WebhooksIntegrationAPI::with_config(configuration);
     let resp = api.create_webhooks_integration_custom_variable(body).await;

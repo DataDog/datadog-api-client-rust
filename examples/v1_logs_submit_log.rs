@@ -6,15 +6,14 @@ use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
-    let body =
-        vec![
-            HTTPLogItem::new("Example-Log".to_string())
-                .ddtags("host:ExampleLog".to_string())
-                .additional_properties(BTreeMap::from([]))
-        ];
+    let body = vec![HTTPLogItem::new("Example-Log".to_string())
+        .ddtags("host:ExampleLog".to_string())
+        .additional_properties(BTreeMap::from([]))];
     let configuration = Configuration::new();
     let api = LogsAPI::with_config(configuration);
-    let resp = api.submit_log(body, SubmitLogOptionalParams::default()).await;
+    let resp = api
+        .submit_log(body, SubmitLogOptionalParams::default())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

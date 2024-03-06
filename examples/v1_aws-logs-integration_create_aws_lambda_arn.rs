@@ -5,11 +5,10 @@ use datadog_api_client::datadogV1::model::*;
 
 #[tokio::main]
 async fn main() {
-    let body =
-        AWSAccountAndLambdaRequest::new(
-            "1234567".to_string(),
-            "arn:aws:lambda:us-east-1:1234567:function:LogsCollectionAPITest".to_string(),
-        );
+    let body = AWSAccountAndLambdaRequest::new(
+        "1234567".to_string(),
+        "arn:aws:lambda:us-east-1:1234567:function:LogsCollectionAPITest".to_string(),
+    );
     let configuration = Configuration::new();
     let api = AWSLogsIntegrationAPI::with_config(configuration);
     let resp = api.create_aws_lambda_arn(body).await;

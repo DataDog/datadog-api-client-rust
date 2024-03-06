@@ -6,7 +6,9 @@ use datadog_api_client::datadogV1::api::api_webhooks_integration::*;
 async fn main() {
     let configuration = Configuration::new();
     let api = WebhooksIntegrationAPI::with_config(configuration);
-    let resp = api.get_webhooks_integration_custom_variable("custom_variable_name".to_string()).await;
+    let resp = api
+        .get_webhooks_integration_custom_variable("custom_variable_name".to_string())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

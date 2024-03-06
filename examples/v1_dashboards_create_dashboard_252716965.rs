@@ -1,4 +1,5 @@
-// Create a distribution widget using a histogram request containing a formulas and functions metrics query
+// Create a distribution widget using a histogram request containing a formulas
+// and functions metrics query
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_dashboards::*;
 use datadog_api_client::datadogV1::model::*;

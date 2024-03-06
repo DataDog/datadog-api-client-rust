@@ -9,26 +9,23 @@ async fn main() {
     let service_account_user_data_id = std::env::var("SERVICE_ACCOUNT_USER_DATA_ID").unwrap();
 
     // there is a valid "service_account_application_key" for "service_account_user"
-    let service_account_application_key_data_id = std::env::var("SERVICE_ACCOUNT_APPLICATION_KEY_DATA_ID").unwrap();
-    let body =
-        ApplicationKeyUpdateRequest::new(
-            ApplicationKeyUpdateData::new(
-                ApplicationKeyUpdateAttributes
-                ::new().name("Application Key for managing dashboards-updated".to_string()),
-                service_account_application_key_data_id.clone(),
-                ApplicationKeysType::APPLICATION_KEYS,
-            ),
-        );
+    let service_account_application_key_data_id =
+        std::env::var("SERVICE_ACCOUNT_APPLICATION_KEY_DATA_ID").unwrap();
+    let body = ApplicationKeyUpdateRequest::new(ApplicationKeyUpdateData::new(
+        ApplicationKeyUpdateAttributes::new()
+            .name("Application Key for managing dashboards-updated".to_string()),
+        service_account_application_key_data_id.clone(),
+        ApplicationKeysType::APPLICATION_KEYS,
+    ));
     let configuration = Configuration::new();
     let api = ServiceAccountsAPI::with_config(configuration);
-    let resp =
-        api
-            .update_service_account_application_key(
-                service_account_user_data_id.clone(),
-                service_account_application_key_data_id.clone(),
-                body,
-            )
-            .await;
+    let resp = api
+        .update_service_account_application_key(
+            service_account_user_data_id.clone(),
+            service_account_application_key_data_id.clone(),
+            body,
+        )
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

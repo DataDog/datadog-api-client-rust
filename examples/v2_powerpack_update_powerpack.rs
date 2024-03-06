@@ -8,44 +8,33 @@ use std::collections::BTreeMap;
 async fn main() {
     // there is a valid "powerpack" in the system
     let powerpack_data_id = std::env::var("POWERPACK_DATA_ID").unwrap();
-    let body =
-        Powerpack
-        ::new().data(
-            PowerpackData::new()
-                .attributes(
-                    PowerpackAttributes::new(
-                        PowerpackGroupWidget::new(
-                            PowerpackGroupWidgetDefinition::new(
-                                "ordered".to_string(),
-                                "group".to_string(),
-                                vec![
-                                    PowerpackInnerWidgets::new(
-                                        BTreeMap::from(
-                                            [
-                                                ("content".to_string(), serde_json::from_str("test").unwrap()),
-                                                ("type".to_string(), serde_json::from_str("note").unwrap()),
-                                            ],
-                                        ),
-                                    )
-                                ],
-                            )
-                                .show_title(true)
-                                .title("Sample Powerpack".to_string()),
+    let body = Powerpack::new().data(
+        PowerpackData::new()
+            .attributes(
+                PowerpackAttributes::new(
+                    PowerpackGroupWidget::new(
+                        PowerpackGroupWidgetDefinition::new(
+                            "ordered".to_string(),
+                            "group".to_string(),
+                            vec![PowerpackInnerWidgets::new(BTreeMap::from([
+                                ("content".to_string(), serde_json::from_str("test").unwrap()),
+                                ("type".to_string(), serde_json::from_str("note").unwrap()),
+                            ]))],
                         )
-                            .layout(PowerpackGroupWidgetLayout::new(3, 12, 0, 0))
-                            .live_span(WidgetLiveSpan::PAST_ONE_HOUR),
-                        "Example-Powerpack".to_string(),
+                        .show_title(true)
+                        .title("Sample Powerpack".to_string()),
                     )
-                        .description("Sample powerpack".to_string())
-                        .tags(vec!["tag:sample".to_string()])
-                        .template_variables(
-                            vec![
-                                PowerpackTemplateVariable::new("sample".to_string()).defaults(vec!["*".to_string()])
-                            ],
-                        ),
+                    .layout(PowerpackGroupWidgetLayout::new(3, 12, 0, 0))
+                    .live_span(WidgetLiveSpan::PAST_ONE_HOUR),
+                    "Example-Powerpack".to_string(),
                 )
-                .type_("powerpack".to_string()),
-        );
+                .description("Sample powerpack".to_string())
+                .tags(vec!["tag:sample".to_string()])
+                .template_variables(vec![PowerpackTemplateVariable::new("sample".to_string())
+                    .defaults(vec!["*".to_string()])]),
+            )
+            .type_("powerpack".to_string()),
+    );
     let configuration = Configuration::new();
     let api = PowerpackAPI::with_config(configuration);
     let resp = api.update_powerpack(powerpack_data_id.clone(), body).await;

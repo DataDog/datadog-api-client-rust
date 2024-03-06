@@ -5,12 +5,11 @@ use datadog_api_client::datadogV2::model::*;
 
 #[tokio::main]
 async fn main() {
-    let body =
-        IncidentTeamCreateRequest::new(
-            IncidentTeamCreateData::new(
-                IncidentTeamType::TEAMS,
-            ).attributes(IncidentTeamCreateAttributes::new("Example-Incident-Team".to_string())),
-        );
+    let body = IncidentTeamCreateRequest::new(
+        IncidentTeamCreateData::new(IncidentTeamType::TEAMS).attributes(
+            IncidentTeamCreateAttributes::new("Example-Incident-Team".to_string()),
+        ),
+    );
     let mut configuration = Configuration::new();
     configuration.set_unstable_operation_enabled("v2.CreateIncidentTeam", true);
     let api = IncidentTeamsAPI::with_config(configuration);

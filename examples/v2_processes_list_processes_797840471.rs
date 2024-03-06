@@ -6,7 +6,9 @@ use datadog_api_client::datadogV2::api::api_processes::*;
 async fn main() {
     let configuration = Configuration::new();
     let api = ProcessesAPI::with_config(configuration);
-    let resp = api.list_processes(ListProcessesOptionalParams::default().page_limit(2)).await;
+    let resp = api
+        .list_processes(ListProcessesOptionalParams::default().page_limit(2))
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

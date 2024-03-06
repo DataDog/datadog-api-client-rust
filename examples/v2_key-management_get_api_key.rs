@@ -8,7 +8,9 @@ async fn main() {
     let api_key_data_id = std::env::var("API_KEY_DATA_ID").unwrap();
     let configuration = Configuration::new();
     let api = KeyManagementAPI::with_config(configuration);
-    let resp = api.get_api_key(api_key_data_id.clone(), GetAPIKeyOptionalParams::default()).await;
+    let resp = api
+        .get_api_key(api_key_data_id.clone(), GetAPIKeyOptionalParams::default())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

@@ -8,7 +8,9 @@ async fn main() {
     let retention_filter_data_id = std::env::var("RETENTION_FILTER_DATA_ID").unwrap();
     let configuration = Configuration::new();
     let api = APMRetentionFiltersAPI::with_config(configuration);
-    let resp = api.get_apm_retention_filter(retention_filter_data_id.clone()).await;
+    let resp = api
+        .get_apm_retention_filter(retention_filter_data_id.clone())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

@@ -5,33 +5,33 @@ use datadog_api_client::datadogV1::model::*;
 
 #[tokio::main]
 async fn main() {
-    let body =
-        LogsPipeline::new("".to_string())
-            .filter(LogsFilter::new().query("source:python".to_string()))
-            .processors(
-                vec![
-                    LogsProcessor::LogsGrokParser(
-                        Box::new(
-                            LogsGrokParser::new(
-                                LogsGrokParserRules::new(
-                                    r#"rule_name_1 foo
+    let body = LogsPipeline::new("".to_string())
+        .filter(LogsFilter::new().query("source:python".to_string()))
+        .processors(vec![LogsProcessor::LogsGrokParser(Box::new(
+            LogsGrokParser::new(
+                LogsGrokParserRules::new(
+                    r#"rule_name_1 foo
 rule_name_2 bar
-"#.to_string(),
-                                ).support_rules(r#"rule_name_1 foo
+"#
+                    .to_string(),
+                )
+                .support_rules(
+                    r#"rule_name_1 foo
 rule_name_2 bar
-"#.to_string()),
-                                "message".to_string(),
-                                LogsGrokParserType::GROK_PARSER,
-                            )
-                                .is_enabled(false)
-                                .samples(vec![]),
-                        ),
-                    )
-                ],
-            );
+"#
+                    .to_string(),
+                ),
+                "message".to_string(),
+                LogsGrokParserType::GROK_PARSER,
+            )
+            .is_enabled(false)
+            .samples(vec![]),
+        ))]);
     let configuration = Configuration::new();
     let api = LogsPipelinesAPI::with_config(configuration);
-    let resp = api.update_logs_pipeline("pipeline_id".to_string(), body).await;
+    let resp = api
+        .update_logs_pipeline("pipeline_id".to_string(), body)
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

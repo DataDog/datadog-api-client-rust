@@ -8,7 +8,9 @@ async fn main() {
     let opsgenie_service_data_id = std::env::var("OPSGENIE_SERVICE_DATA_ID").unwrap();
     let configuration = Configuration::new();
     let api = OpsgenieIntegrationAPI::with_config(configuration);
-    let resp = api.get_opsgenie_service(opsgenie_service_data_id.clone()).await;
+    let resp = api
+        .get_opsgenie_service(opsgenie_service_data_id.clone())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

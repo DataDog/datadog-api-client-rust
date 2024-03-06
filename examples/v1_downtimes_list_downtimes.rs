@@ -6,7 +6,9 @@ use datadog_api_client::datadogV1::api::api_downtimes::*;
 async fn main() {
     let configuration = Configuration::new();
     let api = DowntimesAPI::with_config(configuration);
-    let resp = api.list_downtimes(ListDowntimesOptionalParams::default().with_creator(true)).await;
+    let resp = api
+        .list_downtimes(ListDowntimesOptionalParams::default().with_creator(true))
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

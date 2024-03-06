@@ -8,7 +8,12 @@ async fn main() {
     let monitor_id: i64 = std::env::var("MONITOR_ID").unwrap().parse().unwrap();
     let configuration = Configuration::new();
     let api = MonitorsAPI::with_config(configuration);
-    let resp = api.get_monitor(monitor_id.clone(), GetMonitorOptionalParams::default().with_downtimes(true)).await;
+    let resp = api
+        .get_monitor(
+            monitor_id.clone(),
+            GetMonitorOptionalParams::default().with_downtimes(true),
+        )
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

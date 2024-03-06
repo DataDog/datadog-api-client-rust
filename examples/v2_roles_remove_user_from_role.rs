@@ -10,7 +10,10 @@ async fn main() {
 
     // there is a valid "user" in the system
     let user_data_id = std::env::var("USER_DATA_ID").unwrap();
-    let body = RelationshipToUser::new(RelationshipToUserData::new(user_data_id.clone(), UsersType::USERS));
+    let body = RelationshipToUser::new(RelationshipToUserData::new(
+        user_data_id.clone(),
+        UsersType::USERS,
+    ));
     let configuration = Configuration::new();
     let api = RolesAPI::with_config(configuration);
     let resp = api.remove_user_from_role(role_data_id.clone(), body).await;

@@ -5,24 +5,19 @@ use datadog_api_client::datadogV2::model::*;
 
 #[tokio::main]
 async fn main() {
-    let body =
-        MonitorConfigPolicyCreateRequest::new(
-            MonitorConfigPolicyCreateData::new(
-                MonitorConfigPolicyAttributeCreateRequest::new(
-                    MonitorConfigPolicyPolicyCreateRequest::MonitorConfigPolicyTagPolicyCreateRequest(
-                        Box::new(
-                            MonitorConfigPolicyTagPolicyCreateRequest::new(
-                                "examplemonitor".to_string(),
-                                false,
-                                vec!["prod".to_string(), "staging".to_string()],
-                            ),
-                        ),
-                    ),
-                    MonitorConfigPolicyType::TAG,
-                ),
-                MonitorConfigPolicyResourceType::MONITOR_CONFIG_POLICY,
+    let body = MonitorConfigPolicyCreateRequest::new(MonitorConfigPolicyCreateData::new(
+        MonitorConfigPolicyAttributeCreateRequest::new(
+            MonitorConfigPolicyPolicyCreateRequest::MonitorConfigPolicyTagPolicyCreateRequest(
+                Box::new(MonitorConfigPolicyTagPolicyCreateRequest::new(
+                    "examplemonitor".to_string(),
+                    false,
+                    vec!["prod".to_string(), "staging".to_string()],
+                )),
             ),
-        );
+            MonitorConfigPolicyType::TAG,
+        ),
+        MonitorConfigPolicyResourceType::MONITOR_CONFIG_POLICY,
+    ));
     let configuration = Configuration::new();
     let api = MonitorsAPI::with_config(configuration);
     let resp = api.create_monitor_config_policy(body).await;

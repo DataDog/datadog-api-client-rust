@@ -6,7 +6,9 @@ use datadog_api_client::datadogV2::api::api_teams::*;
 async fn main() {
     let configuration = Configuration::new();
     let api = TeamsAPI::with_config(configuration);
-    let resp = api.list_teams(ListTeamsOptionalParams::default().page_size(2)).await;
+    let resp = api
+        .list_teams(ListTeamsOptionalParams::default().page_size(2))
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

@@ -5,10 +5,9 @@ use datadog_api_client::datadogV1::model::*;
 
 #[tokio::main]
 async fn main() {
-    let body =
-        AWSAccountDeleteRequest::new()
-            .account_id("163662907100".to_string())
-            .role_name("DatadogAWSIntegrationRole".to_string());
+    let body = AWSAccountDeleteRequest::new()
+        .account_id("163662907100".to_string())
+        .role_name("DatadogAWSIntegrationRole".to_string());
     let configuration = Configuration::new();
     let api = AWSIntegrationAPI::with_config(configuration);
     let resp = api.delete_aws_account(body).await;

@@ -6,12 +6,13 @@ use datadog_api_client::datadogV1::api::api_monitors::*;
 async fn main() {
     let configuration = Configuration::new();
     let api = MonitorsAPI::with_config(configuration);
-    let resp =
-        api
-            .list_monitors(
-                ListMonitorsOptionalParams::default().tags("test:examplemonitor".to_string()).page_size(1),
-            )
-            .await;
+    let resp = api
+        .list_monitors(
+            ListMonitorsOptionalParams::default()
+                .tags("test:examplemonitor".to_string())
+                .page_size(1),
+        )
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

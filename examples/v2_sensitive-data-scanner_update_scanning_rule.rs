@@ -10,36 +10,33 @@ async fn main() {
 
     // there is a valid "scanning_group" in the system
     let group_data_id = std::env::var("GROUP_DATA_ID").unwrap();
-    let body =
-        SensitiveDataScannerRuleUpdateRequest::new(
-            SensitiveDataScannerRuleUpdate::new()
-                .attributes(
-                    SensitiveDataScannerRuleAttributes::new()
-                        .is_enabled(true)
-                        .name("Example-Sensitive-Data-Scanner".to_string())
-                        .pattern("pattern".to_string())
-                        .priority(5)
-                        .tags(vec!["sensitive_data:true".to_string()])
-                        .text_replacement(
-                            SensitiveDataScannerTextReplacement
-                            ::new().type_(SensitiveDataScannerTextReplacementType::NONE),
-                        ),
-                )
-                .id(rule_data_id.clone())
-                .relationships(
-                    SensitiveDataScannerRuleRelationships
-                    ::new().group(
-                        SensitiveDataScannerGroupData
-                        ::new().data(
-                            SensitiveDataScannerGroup::new()
-                                .id(group_data_id.clone())
-                                .type_(SensitiveDataScannerGroupType::SENSITIVE_DATA_SCANNER_GROUP),
-                        ),
+    let body = SensitiveDataScannerRuleUpdateRequest::new(
+        SensitiveDataScannerRuleUpdate::new()
+            .attributes(
+                SensitiveDataScannerRuleAttributes::new()
+                    .is_enabled(true)
+                    .name("Example-Sensitive-Data-Scanner".to_string())
+                    .pattern("pattern".to_string())
+                    .priority(5)
+                    .tags(vec!["sensitive_data:true".to_string()])
+                    .text_replacement(
+                        SensitiveDataScannerTextReplacement::new()
+                            .type_(SensitiveDataScannerTextReplacementType::NONE),
                     ),
-                )
-                .type_(SensitiveDataScannerRuleType::SENSITIVE_DATA_SCANNER_RULE),
-            SensitiveDataScannerMetaVersionOnly::new(),
-        );
+            )
+            .id(rule_data_id.clone())
+            .relationships(
+                SensitiveDataScannerRuleRelationships::new().group(
+                    SensitiveDataScannerGroupData::new().data(
+                        SensitiveDataScannerGroup::new()
+                            .id(group_data_id.clone())
+                            .type_(SensitiveDataScannerGroupType::SENSITIVE_DATA_SCANNER_GROUP),
+                    ),
+                ),
+            )
+            .type_(SensitiveDataScannerRuleType::SENSITIVE_DATA_SCANNER_RULE),
+        SensitiveDataScannerMetaVersionOnly::new(),
+    );
     let configuration = Configuration::new();
     let api = SensitiveDataScannerAPI::with_config(configuration);
     let resp = api.update_scanning_rule(rule_data_id.clone(), body).await;

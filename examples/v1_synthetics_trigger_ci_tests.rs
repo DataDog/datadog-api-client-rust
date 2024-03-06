@@ -6,34 +6,21 @@ use datadog_api_client::datadogV1::model::*;
 #[tokio::main]
 async fn main() {
     let body =
-        SyntheticsCITestBody
-        ::new().tests(
-            vec![
-                SyntheticsCITest::new("aaa-aaa-aaa".to_string())
-                    .basic_auth(
-                        SyntheticsBasicAuth::SyntheticsBasicAuthWeb(
-                            Box::new(
-                                SyntheticsBasicAuthWeb::new(
-                                    "PaSSw0RD!".to_string(),
-                                    "my_username".to_string(),
-                                ).type_(SyntheticsBasicAuthWebType::WEB),
-                            ),
-                        ),
-                    )
-                    .device_ids(vec![SyntheticsDeviceID::LAPTOP_LARGE])
-                    .locations(vec!["aws:eu-west-3".to_string()])
-                    .metadata(
-                        SyntheticsCIBatchMetadata::new()
-                            .ci(
-                                SyntheticsCIBatchMetadataCI::new()
-                                    .pipeline(SyntheticsCIBatchMetadataPipeline::new())
-                                    .provider(SyntheticsCIBatchMetadataProvider::new()),
-                            )
-                            .git(SyntheticsCIBatchMetadataGit::new()),
-                    )
-                    .retry(SyntheticsTestOptionsRetry::new())
-            ],
-        );
+        SyntheticsCITestBody::new().tests(vec![SyntheticsCITest::new("aaa-aaa-aaa".to_string())
+            .basic_auth(SyntheticsBasicAuth::SyntheticsBasicAuthWeb(Box::new(
+                SyntheticsBasicAuthWeb::new("PaSSw0RD!".to_string(), "my_username".to_string())
+                    .type_(SyntheticsBasicAuthWebType::WEB),
+            )))
+            .device_ids(vec![SyntheticsDeviceID::LAPTOP_LARGE])
+            .locations(vec!["aws:eu-west-3".to_string()])
+            .metadata(
+                SyntheticsCIBatchMetadata::new()
+                    .ci(SyntheticsCIBatchMetadataCI::new()
+                        .pipeline(SyntheticsCIBatchMetadataPipeline::new())
+                        .provider(SyntheticsCIBatchMetadataProvider::new()))
+                    .git(SyntheticsCIBatchMetadataGit::new()),
+            )
+            .retry(SyntheticsTestOptionsRetry::new())]);
     let configuration = Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api.trigger_ci_tests(body).await;

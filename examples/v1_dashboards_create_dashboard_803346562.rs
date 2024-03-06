@@ -5,37 +5,30 @@ use datadog_api_client::datadogV1::model::*;
 
 #[tokio::main]
 async fn main() {
-    let body =
-        Dashboard::new(
-            DashboardLayoutType::ORDERED,
-            "Example-Dashboard".to_string(),
-            vec![
-                Widget::new(
-                    WidgetDefinition::DistributionWidgetDefinition(
-                        Box::new(
-                            DistributionWidgetDefinition::new(
-                                vec![
-                                    DistributionWidgetRequest
-                                    ::new().apm_stats_query(
-                                        ApmStatsQueryDefinition::new(
-                                            "prod".to_string(),
-                                            "cassandra.query".to_string(),
-                                            "datacenter:dc1".to_string(),
-                                            ApmStatsQueryRowType::SERVICE,
-                                            "cassandra".to_string(),
-                                        ),
-                                    )
-                                ],
-                                DistributionWidgetDefinitionType::DISTRIBUTION,
-                            )
-                                .title("".to_string())
-                                .title_align(WidgetTextAlign::LEFT)
-                                .title_size("16".to_string()),
+    let body = Dashboard::new(
+        DashboardLayoutType::ORDERED,
+        "Example-Dashboard".to_string(),
+        vec![
+            Widget::new(WidgetDefinition::DistributionWidgetDefinition(Box::new(
+                DistributionWidgetDefinition::new(
+                    vec![DistributionWidgetRequest::new().apm_stats_query(
+                        ApmStatsQueryDefinition::new(
+                            "prod".to_string(),
+                            "cassandra.query".to_string(),
+                            "datacenter:dc1".to_string(),
+                            ApmStatsQueryRowType::SERVICE,
+                            "cassandra".to_string(),
                         ),
-                    ),
-                ).layout(WidgetLayout::new(4, 4, 0, 0))
-            ],
-        );
+                    )],
+                    DistributionWidgetDefinitionType::DISTRIBUTION,
+                )
+                .title("".to_string())
+                .title_align(WidgetTextAlign::LEFT)
+                .title_size("16".to_string()),
+            )))
+            .layout(WidgetLayout::new(4, 4, 0, 0)),
+        ],
+    );
     let configuration = Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api.create_dashboard(body).await;

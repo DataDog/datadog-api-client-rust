@@ -23,10 +23,11 @@ async fn main() {
             .sort(SecurityMonitoringSignalsSort::TIMESTAMP_ASCENDING);
     let configuration = Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
-    let resp =
-        api
-            .search_security_monitoring_signals(SearchSecurityMonitoringSignalsOptionalParams::default().body(body))
-            .await;
+    let resp = api
+        .search_security_monitoring_signals(
+            SearchSecurityMonitoringSignalsOptionalParams::default().body(body),
+        )
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

@@ -8,12 +8,14 @@ async fn main() {
     let slo_data_0_name = std::env::var("SLO_DATA_0_NAME").unwrap();
     let configuration = Configuration::new();
     let api = ServiceLevelObjectivesAPI::with_config(configuration);
-    let resp =
-        api
-            .search_slo(
-                SearchSLOOptionalParams::default().query(slo_data_0_name.clone()).page_size(20).page_number(0),
-            )
-            .await;
+    let resp = api
+        .search_slo(
+            SearchSLOOptionalParams::default()
+                .query(slo_data_0_name.clone())
+                .page_size(20)
+                .page_number(0),
+        )
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

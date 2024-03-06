@@ -6,7 +6,9 @@ use datadog_api_client::datadogV2::api::api_metrics::*;
 async fn main() {
     let configuration = Configuration::new();
     let api = MetricsAPI::with_config(configuration);
-    let resp = api.list_tag_configurations(ListTagConfigurationsOptionalParams::default()).await;
+    let resp = api
+        .list_tag_configurations(ListTagConfigurationsOptionalParams::default())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

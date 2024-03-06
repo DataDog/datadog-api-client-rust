@@ -8,7 +8,9 @@ async fn main() {
     let shared_dashboard_token = std::env::var("SHARED_DASHBOARD_TOKEN").unwrap();
     let configuration = Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
-    let resp = api.get_public_dashboard(shared_dashboard_token.clone()).await;
+    let resp = api
+        .get_public_dashboard(shared_dashboard_token.clone())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

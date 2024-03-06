@@ -6,13 +6,12 @@ use datadog_api_client::datadogV1::api::api_synthetics::*;
 async fn main() {
     let configuration = Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
-    let resp =
-        api
-            .get_browser_test_latest_results(
-                "2yy-sem-mjh".to_string(),
-                GetBrowserTestLatestResultsOptionalParams::default(),
-            )
-            .await;
+    let resp = api
+        .get_browser_test_latest_results(
+            "2yy-sem-mjh".to_string(),
+            GetBrowserTestLatestResultsOptionalParams::default(),
+        )
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

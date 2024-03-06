@@ -20,7 +20,7 @@ repos:
   - id: examples
     name: examples
     language: python
-    entry: bash -c "cd .generator && poetry install && poetry run pytest"
+    entry: bash -c "cd .generator && poetry install && poetry run pytest && cd .. && cargo fix --examples --allow-staged --allow-dirty && genemichaels examples/*.rs"
     files: "^.generator/"
     stages: [manual]
     pass_filenames: false

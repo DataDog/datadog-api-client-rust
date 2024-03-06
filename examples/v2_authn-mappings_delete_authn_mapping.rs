@@ -8,7 +8,9 @@ async fn main() {
     let authn_mapping_data_id = std::env::var("AUTHN_MAPPING_DATA_ID").unwrap();
     let configuration = Configuration::new();
     let api = AuthNMappingsAPI::with_config(configuration);
-    let resp = api.delete_authn_mapping(authn_mapping_data_id.clone()).await;
+    let resp = api
+        .delete_authn_mapping(authn_mapping_data_id.clone())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

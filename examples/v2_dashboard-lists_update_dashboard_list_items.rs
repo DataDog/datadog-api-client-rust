@@ -11,13 +11,15 @@ async fn main() {
     // there is a valid "screenboard_dashboard" in the system
     let screenboard_dashboard_id = std::env::var("SCREENBOARD_DASHBOARD_ID").unwrap();
     let body =
-        DashboardListUpdateItemsRequest
-        ::new().dashboards(
-            vec![DashboardListItemRequest::new(screenboard_dashboard_id.clone(), DashboardType::CUSTOM_SCREENBOARD)],
-        );
+        DashboardListUpdateItemsRequest::new().dashboards(vec![DashboardListItemRequest::new(
+            screenboard_dashboard_id.clone(),
+            DashboardType::CUSTOM_SCREENBOARD,
+        )]);
     let configuration = Configuration::new();
     let api = DashboardListsAPI::with_config(configuration);
-    let resp = api.update_dashboard_list_items(dashboard_list_id.clone(), body).await;
+    let resp = api
+        .update_dashboard_list_items(dashboard_list_id.clone(), body)
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

@@ -8,7 +8,9 @@ async fn main() {
     let monitor_id: i64 = std::env::var("MONITOR_ID").unwrap().parse().unwrap();
     let configuration = Configuration::new();
     let api = MonitorsAPI::with_config(configuration);
-    let resp = api.delete_monitor(monitor_id.clone(), DeleteMonitorOptionalParams::default()).await;
+    let resp = api
+        .delete_monitor(monitor_id.clone(), DeleteMonitorOptionalParams::default())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

@@ -5,43 +5,33 @@ use datadog_api_client::datadogV1::model::*;
 
 #[tokio::main]
 async fn main() {
-    let body =
-        Dashboard::new(
-            DashboardLayoutType::FREE,
-            "Example-Dashboard".to_string(),
-            vec![
-                Widget::new(
-                    WidgetDefinition::SLOListWidgetDefinition(
-                        Box::new(
-                            SLOListWidgetDefinition::new(
-                                vec![
-                                    SLOListWidgetRequest::new(
-                                        SLOListWidgetQuery::new("env:prod AND service:my-app".to_string())
-                                            .limit(75)
-                                            .sort(
-                                                vec![
-                                                    WidgetFieldSort::new(
-                                                        "status.sli".to_string(),
-                                                        WidgetSort::ASCENDING,
-                                                    )
-                                                ],
-                                            ),
-                                        SLOListWidgetRequestType::SLO_LIST,
-                                    )
-                                ],
-                                SLOListWidgetDefinitionType::SLO_LIST,
-                            )
-                                .title_align(WidgetTextAlign::LEFT)
-                                .title_size("16".to_string()),
-                        ),
-                    ),
-                ).layout(WidgetLayout::new(21, 60, 0, 0))
-            ],
-        )
-            .description(Some("".to_string()))
-            .is_read_only(false)
-            .notify_list(Some(vec![]))
-            .template_variables(Some(vec![]));
+    let body = Dashboard::new(
+        DashboardLayoutType::FREE,
+        "Example-Dashboard".to_string(),
+        vec![
+            Widget::new(WidgetDefinition::SLOListWidgetDefinition(Box::new(
+                SLOListWidgetDefinition::new(
+                    vec![SLOListWidgetRequest::new(
+                        SLOListWidgetQuery::new("env:prod AND service:my-app".to_string())
+                            .limit(75)
+                            .sort(vec![WidgetFieldSort::new(
+                                "status.sli".to_string(),
+                                WidgetSort::ASCENDING,
+                            )]),
+                        SLOListWidgetRequestType::SLO_LIST,
+                    )],
+                    SLOListWidgetDefinitionType::SLO_LIST,
+                )
+                .title_align(WidgetTextAlign::LEFT)
+                .title_size("16".to_string()),
+            )))
+            .layout(WidgetLayout::new(21, 60, 0, 0)),
+        ],
+    )
+    .description(Some("".to_string()))
+    .is_read_only(false)
+    .notify_list(Some(vec![]))
+    .template_variables(Some(vec![]));
     let configuration = Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api.create_dashboard(body).await;

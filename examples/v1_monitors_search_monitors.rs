@@ -6,7 +6,9 @@ use datadog_api_client::datadogV1::api::api_monitors::*;
 async fn main() {
     let configuration = Configuration::new();
     let api = MonitorsAPI::with_config(configuration);
-    let resp = api.search_monitors(SearchMonitorsOptionalParams::default()).await;
+    let resp = api
+        .search_monitors(SearchMonitorsOptionalParams::default())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

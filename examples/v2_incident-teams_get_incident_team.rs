@@ -9,7 +9,12 @@ async fn main() {
     let mut configuration = Configuration::new();
     configuration.set_unstable_operation_enabled("v2.GetIncidentTeam", true);
     let api = IncidentTeamsAPI::with_config(configuration);
-    let resp = api.get_incident_team(team_data_id.clone(), GetIncidentTeamOptionalParams::default()).await;
+    let resp = api
+        .get_incident_team(
+            team_data_id.clone(),
+            GetIncidentTeamOptionalParams::default(),
+        )
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

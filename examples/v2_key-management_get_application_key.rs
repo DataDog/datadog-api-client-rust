@@ -8,8 +8,12 @@ async fn main() {
     let application_key_data_id = std::env::var("APPLICATION_KEY_DATA_ID").unwrap();
     let configuration = Configuration::new();
     let api = KeyManagementAPI::with_config(configuration);
-    let resp =
-        api.get_application_key(application_key_data_id.clone(), GetApplicationKeyOptionalParams::default()).await;
+    let resp = api
+        .get_application_key(
+            application_key_data_id.clone(),
+            GetApplicationKeyOptionalParams::default(),
+        )
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

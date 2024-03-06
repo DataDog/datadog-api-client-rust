@@ -5,10 +5,9 @@ use datadog_api_client::datadogV1::model::*;
 
 #[tokio::main]
 async fn main() {
-    let body =
-        AWSTagFilterDeleteRequest::new()
-            .account_id("FAKEAC0FAKEAC2FAKEAC".to_string())
-            .namespace(AWSNamespace::ELB);
+    let body = AWSTagFilterDeleteRequest::new()
+        .account_id("FAKEAC0FAKEAC2FAKEAC".to_string())
+        .namespace(AWSNamespace::ELB);
     let configuration = Configuration::new();
     let api = AWSIntegrationAPI::with_config(configuration);
     let resp = api.delete_aws_tag_filter(body).await;

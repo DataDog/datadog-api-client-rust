@@ -8,7 +8,9 @@ async fn main() {
     let dashboard_list_id: i64 = std::env::var("DASHBOARD_LIST_ID").unwrap().parse().unwrap();
     let configuration = Configuration::new();
     let api = DashboardListsAPI::with_config(configuration);
-    let resp = api.get_dashboard_list_items(dashboard_list_id.clone()).await;
+    let resp = api
+        .get_dashboard_list_items(dashboard_list_id.clone())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

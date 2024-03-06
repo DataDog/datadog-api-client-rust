@@ -5,28 +5,19 @@ use datadog_api_client::datadogV1::model::*;
 
 #[tokio::main]
 async fn main() {
-    let body =
-        Dashboard::new(
-            DashboardLayoutType::ORDERED,
-            "Example-Dashboard with funnel widget".to_string(),
-            vec![
-                Widget::new(
-                    WidgetDefinition::FunnelWidgetDefinition(
-                        Box::new(
-                            FunnelWidgetDefinition::new(
-                                vec![
-                                    FunnelWidgetRequest::new(
-                                        FunnelQuery::new(FunnelSource::RUM, "".to_string(), vec![]),
-                                        FunnelRequestType::FUNNEL,
-                                    )
-                                ],
-                                FunnelWidgetDefinitionType::FUNNEL,
-                            ),
-                        ),
-                    ),
-                )
-            ],
-        );
+    let body = Dashboard::new(
+        DashboardLayoutType::ORDERED,
+        "Example-Dashboard with funnel widget".to_string(),
+        vec![Widget::new(WidgetDefinition::FunnelWidgetDefinition(
+            Box::new(FunnelWidgetDefinition::new(
+                vec![FunnelWidgetRequest::new(
+                    FunnelQuery::new(FunnelSource::RUM, "".to_string(), vec![]),
+                    FunnelRequestType::FUNNEL,
+                )],
+                FunnelWidgetDefinitionType::FUNNEL,
+            )),
+        ))],
+    );
     let configuration = Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api.create_dashboard(body).await;

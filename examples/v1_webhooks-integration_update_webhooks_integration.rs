@@ -7,10 +7,13 @@ use datadog_api_client::datadogV1::model::*;
 async fn main() {
     // there is a valid "webhook" in the system
     let webhook_name = std::env::var("WEBHOOK_NAME").unwrap();
-    let body = WebhooksIntegrationUpdateRequest::new().url("https://example.com/webhook-updated".to_string());
+    let body = WebhooksIntegrationUpdateRequest::new()
+        .url("https://example.com/webhook-updated".to_string());
     let configuration = Configuration::new();
     let api = WebhooksIntegrationAPI::with_config(configuration);
-    let resp = api.update_webhooks_integration(webhook_name.clone(), body).await;
+    let resp = api
+        .update_webhooks_integration(webhook_name.clone(), body)
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

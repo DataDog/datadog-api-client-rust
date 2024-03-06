@@ -8,7 +8,9 @@ async fn main() {
     let role_data_attributes_name = std::env::var("ROLE_DATA_ATTRIBUTES_NAME").unwrap();
     let configuration = Configuration::new();
     let api = RolesAPI::with_config(configuration);
-    let resp = api.list_roles(ListRolesOptionalParams::default().filter(role_data_attributes_name.clone())).await;
+    let resp = api
+        .list_roles(ListRolesOptionalParams::default().filter(role_data_attributes_name.clone()))
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

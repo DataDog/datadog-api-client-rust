@@ -8,7 +8,9 @@ async fn main() {
     let agent_rule_data_id = std::env::var("AGENT_RULE_DATA_ID").unwrap();
     let configuration = Configuration::new();
     let api = CloudWorkloadSecurityAPI::with_config(configuration);
-    let resp = api.get_cloud_workload_security_agent_rule(agent_rule_data_id.clone()).await;
+    let resp = api
+        .get_cloud_workload_security_agent_rule(agent_rule_data_id.clone())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

@@ -9,36 +9,35 @@ async fn main() {
     let incident_data_id = std::env::var("INCIDENT_DATA_ID").unwrap();
 
     // the "incident" has an "incident_integration_metadata"
-    let incident_integration_metadata_data_id = std::env::var("INCIDENT_INTEGRATION_METADATA_DATA_ID").unwrap();
+    let incident_integration_metadata_data_id =
+        std::env::var("INCIDENT_INTEGRATION_METADATA_DATA_ID").unwrap();
     let body =
-        IncidentIntegrationMetadataPatchRequest::new(
-            IncidentIntegrationMetadataPatchData::new(
-                IncidentIntegrationMetadataAttributes::new(
-                    1,
-                    IncidentIntegrationMetadataMetadata::SlackIntegrationMetadata(
-                        Box::new(
-                            SlackIntegrationMetadata::new(
-                                vec![
-                                    SlackIntegrationMetadataChannelItem::new(
-                                        "C0123456789".to_string(),
-                                        "#updated-channel-name".to_string(),
-                                        "https://slack.com/app_redirect?channel=C0123456789&team=T01234567".to_string(),
-                                    ).team_id("T01234567".to_string())
-                                ],
-                            ),
-                        ),
-                    ),
-                ).incident_id(incident_data_id.clone()),
-                IncidentIntegrationMetadataType::INCIDENT_INTEGRATIONS,
-            ),
-        );
+        IncidentIntegrationMetadataPatchRequest::new(IncidentIntegrationMetadataPatchData::new(
+            IncidentIntegrationMetadataAttributes::new(
+                1,
+                IncidentIntegrationMetadataMetadata::SlackIntegrationMetadata(Box::new(
+                    SlackIntegrationMetadata::new(vec![SlackIntegrationMetadataChannelItem::new(
+                        "C0123456789".to_string(),
+                        "#updated-channel-name".to_string(),
+                        "https://slack.com/app_redirect?channel=C0123456789&team=T01234567"
+                            .to_string(),
+                    )
+                    .team_id("T01234567".to_string())]),
+                )),
+            )
+            .incident_id(incident_data_id.clone()),
+            IncidentIntegrationMetadataType::INCIDENT_INTEGRATIONS,
+        ));
     let mut configuration = Configuration::new();
     configuration.set_unstable_operation_enabled("v2.UpdateIncidentIntegration", true);
     let api = IncidentsAPI::with_config(configuration);
-    let resp =
-        api
-            .update_incident_integration(incident_data_id.clone(), incident_integration_metadata_data_id.clone(), body)
-            .await;
+    let resp = api
+        .update_incident_integration(
+            incident_data_id.clone(),
+            incident_integration_metadata_data_id.clone(),
+            body,
+        )
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

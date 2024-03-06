@@ -5,11 +5,10 @@ use datadog_api_client::datadogV1::model::*;
 
 #[tokio::main]
 async fn main() {
-    let body =
-        GCPAccount::new()
-            .client_email("252bf553ef04b351@example.com".to_string())
-            .client_id("163662907116366290710".to_string())
-            .project_id("datadog-apitest".to_string());
+    let body = GCPAccount::new()
+        .client_email("252bf553ef04b351@example.com".to_string())
+        .client_id("163662907116366290710".to_string())
+        .project_id("datadog-apitest".to_string());
     let configuration = Configuration::new();
     let api = GCPIntegrationAPI::with_config(configuration);
     let resp = api.delete_gcp_integration(body).await;

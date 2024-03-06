@@ -6,7 +6,12 @@ use datadog_api_client::datadogV1::api::api_organizations::*;
 async fn main() {
     let configuration = Configuration::new();
     let api = OrganizationsAPI::with_config(configuration);
-    let resp = api.upload_idp_for_org("abc123".to_string(), std::fs::read("./idp_metadata.xml").unwrap()).await;
+    let resp = api
+        .upload_idp_for_org(
+            "abc123".to_string(),
+            std::fs::read("./idp_metadata.xml").unwrap(),
+        )
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

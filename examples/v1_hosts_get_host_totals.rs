@@ -6,7 +6,9 @@ use datadog_api_client::datadogV1::api::api_hosts::*;
 async fn main() {
     let configuration = Configuration::new();
     let api = HostsAPI::with_config(configuration);
-    let resp = api.get_host_totals(GetHostTotalsOptionalParams::default()).await;
+    let resp = api
+        .get_host_totals(GetHostTotalsOptionalParams::default())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

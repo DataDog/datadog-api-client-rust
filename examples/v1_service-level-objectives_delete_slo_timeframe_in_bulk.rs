@@ -6,13 +6,16 @@ use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
-    let body =
-        BTreeMap::from(
-            [
-                ("id1".to_string(), vec![SLOTimeframe::SEVEN_DAYS, SLOTimeframe::THIRTY_DAYS]),
-                ("id2".to_string(), vec![SLOTimeframe::SEVEN_DAYS, SLOTimeframe::THIRTY_DAYS]),
-            ],
-        );
+    let body = BTreeMap::from([
+        (
+            "id1".to_string(),
+            vec![SLOTimeframe::SEVEN_DAYS, SLOTimeframe::THIRTY_DAYS],
+        ),
+        (
+            "id2".to_string(),
+            vec![SLOTimeframe::SEVEN_DAYS, SLOTimeframe::THIRTY_DAYS],
+        ),
+    ]);
     let configuration = Configuration::new();
     let api = ServiceLevelObjectivesAPI::with_config(configuration);
     let resp = api.delete_slo_timeframe_in_bulk(body).await;

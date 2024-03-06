@@ -5,21 +5,20 @@ use datadog_api_client::datadogV1::model::*;
 
 #[tokio::main]
 async fn main() {
-    let body =
-        AzureAccount::new()
-            .app_service_plan_filters("key:value,filter:example".to_string())
-            .automute(true)
-            .client_id("".to_string())
-            .client_secret("testingx./Sw*g/Y33t..R1cH+hScMDt".to_string())
-            .container_app_filters("key:value,filter:example".to_string())
-            .cspm_enabled(true)
-            .custom_metrics_enabled(true)
-            .errors(vec!["*".to_string()])
-            .host_filters("key:value,filter:example".to_string())
-            .new_client_id("".to_string())
-            .new_tenant_name("".to_string())
-            .resource_collection_enabled(true)
-            .tenant_name("".to_string());
+    let body = AzureAccount::new()
+        .app_service_plan_filters("key:value,filter:example".to_string())
+        .automute(true)
+        .client_id("".to_string())
+        .client_secret("testingx./Sw*g/Y33t..R1cH+hScMDt".to_string())
+        .container_app_filters("key:value,filter:example".to_string())
+        .cspm_enabled(true)
+        .custom_metrics_enabled(true)
+        .errors(vec!["*".to_string()])
+        .host_filters("key:value,filter:example".to_string())
+        .new_client_id("".to_string())
+        .new_tenant_name("".to_string())
+        .resource_collection_enabled(true)
+        .tenant_name("".to_string());
     let configuration = Configuration::new();
     let api = AzureIntegrationAPI::with_config(configuration);
     let resp = api.create_azure_integration(body).await;

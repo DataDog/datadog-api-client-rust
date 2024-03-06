@@ -8,8 +8,11 @@ async fn main() {
     let api_key_data_attributes_name = std::env::var("API_KEY_DATA_ATTRIBUTES_NAME").unwrap();
     let configuration = Configuration::new();
     let api = KeyManagementAPI::with_config(configuration);
-    let resp =
-        api.list_api_keys(ListAPIKeysOptionalParams::default().filter(api_key_data_attributes_name.clone())).await;
+    let resp = api
+        .list_api_keys(
+            ListAPIKeysOptionalParams::default().filter(api_key_data_attributes_name.clone()),
+        )
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

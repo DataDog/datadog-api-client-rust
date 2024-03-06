@@ -7,13 +7,12 @@ async fn main() {
     let mut configuration = Configuration::new();
     configuration.set_unstable_operation_enabled("v2.SearchIncidents", true);
     let api = IncidentsAPI::with_config(configuration);
-    let resp =
-        api
-            .search_incidents(
-                "state:(active OR stable OR resolved)".to_string(),
-                SearchIncidentsOptionalParams::default().page_size(2),
-            )
-            .await;
+    let resp = api
+        .search_incidents(
+            "state:(active OR stable OR resolved)".to_string(),
+            SearchIncidentsOptionalParams::default().page_size(2),
+        )
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

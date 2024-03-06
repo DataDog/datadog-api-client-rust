@@ -5,24 +5,18 @@ use datadog_api_client::datadogV1::model::*;
 
 #[tokio::main]
 async fn main() {
-    let body =
-        Dashboard::new(
-            DashboardLayoutType::FREE,
-            "Example-Dashboard".to_string(),
-            vec![
-                Widget::new(
-                    WidgetDefinition::NoteWidgetDefinition(
-                        Box::new(
-                            NoteWidgetDefinition::new("# Example Note".to_string(), NoteWidgetDefinitionType::NOTE),
-                        ),
-                    ),
-                ).layout(WidgetLayout::new(24, 18, 0, 0))
-            ],
-        )
-            .description(Some("".to_string()))
-            .is_read_only(false)
-            .notify_list(Some(vec![]))
-            .template_variables(Some(vec![]));
+    let body = Dashboard::new(
+        DashboardLayoutType::FREE,
+        "Example-Dashboard".to_string(),
+        vec![Widget::new(WidgetDefinition::NoteWidgetDefinition(Box::new(
+            NoteWidgetDefinition::new("# Example Note".to_string(), NoteWidgetDefinitionType::NOTE),
+        )))
+        .layout(WidgetLayout::new(24, 18, 0, 0))],
+    )
+    .description(Some("".to_string()))
+    .is_read_only(false)
+    .notify_list(Some(vec![]))
+    .template_variables(Some(vec![]));
     let configuration = Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api.create_dashboard(body).await;

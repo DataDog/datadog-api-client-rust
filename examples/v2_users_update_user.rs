@@ -7,14 +7,13 @@ use datadog_api_client::datadogV2::model::*;
 async fn main() {
     // there is a valid "user" in the system
     let user_data_id = std::env::var("USER_DATA_ID").unwrap();
-    let body =
-        UserUpdateRequest::new(
-            UserUpdateData::new(
-                UserUpdateAttributes::new().disabled(true).name("updated".to_string()),
-                user_data_id.clone(),
-                UsersType::USERS,
-            ),
-        );
+    let body = UserUpdateRequest::new(UserUpdateData::new(
+        UserUpdateAttributes::new()
+            .disabled(true)
+            .name("updated".to_string()),
+        user_data_id.clone(),
+        UsersType::USERS,
+    ));
     let configuration = Configuration::new();
     let api = UsersAPI::with_config(configuration);
     let resp = api.update_user(user_data_id.clone(), body).await;

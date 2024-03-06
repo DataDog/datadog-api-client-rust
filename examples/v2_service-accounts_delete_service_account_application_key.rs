@@ -8,16 +8,16 @@ async fn main() {
     let service_account_user_data_id = std::env::var("SERVICE_ACCOUNT_USER_DATA_ID").unwrap();
 
     // there is a valid "service_account_application_key" for "service_account_user"
-    let service_account_application_key_data_id = std::env::var("SERVICE_ACCOUNT_APPLICATION_KEY_DATA_ID").unwrap();
+    let service_account_application_key_data_id =
+        std::env::var("SERVICE_ACCOUNT_APPLICATION_KEY_DATA_ID").unwrap();
     let configuration = Configuration::new();
     let api = ServiceAccountsAPI::with_config(configuration);
-    let resp =
-        api
-            .delete_service_account_application_key(
-                service_account_user_data_id.clone(),
-                service_account_application_key_data_id.clone(),
-            )
-            .await;
+    let resp = api
+        .delete_service_account_application_key(
+            service_account_user_data_id.clone(),
+            service_account_application_key_data_id.clone(),
+        )
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

@@ -7,7 +7,8 @@ use datadog_api_client::datadogV2::model::*;
 async fn main() {
     // the "scanning_group" has a "scanning_rule"
     let rule_data_id = std::env::var("RULE_DATA_ID").unwrap();
-    let body = SensitiveDataScannerRuleDeleteRequest::new(SensitiveDataScannerMetaVersionOnly::new());
+    let body =
+        SensitiveDataScannerRuleDeleteRequest::new(SensitiveDataScannerMetaVersionOnly::new());
     let configuration = Configuration::new();
     let api = SensitiveDataScannerAPI::with_config(configuration);
     let resp = api.delete_scanning_rule(rule_data_id.clone(), body).await;

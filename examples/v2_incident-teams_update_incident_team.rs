@@ -7,12 +7,11 @@ use datadog_api_client::datadogV2::model::*;
 async fn main() {
     // there is a valid "team" in the system
     let team_data_id = std::env::var("TEAM_DATA_ID").unwrap();
-    let body =
-        IncidentTeamUpdateRequest::new(
-            IncidentTeamUpdateData::new(
-                IncidentTeamType::TEAMS,
-            ).attributes(IncidentTeamUpdateAttributes::new("team name-updated".to_string())),
-        );
+    let body = IncidentTeamUpdateRequest::new(
+        IncidentTeamUpdateData::new(IncidentTeamType::TEAMS).attributes(
+            IncidentTeamUpdateAttributes::new("team name-updated".to_string()),
+        ),
+    );
     let mut configuration = Configuration::new();
     configuration.set_unstable_operation_enabled("v2.UpdateIncidentTeam", true);
     let api = IncidentTeamsAPI::with_config(configuration);

@@ -1,27 +1,21 @@
-// Create an Application key with scopes for current user returns "Created" response
+// Create an Application key with scopes for current user returns "Created"
+// response
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_key_management::*;
 use datadog_api_client::datadogV2::model::*;
 
 #[tokio::main]
 async fn main() {
-    let body =
-        ApplicationKeyCreateRequest::new(
-            ApplicationKeyCreateData::new(
-                ApplicationKeyCreateAttributes::new(
-                    "Example-Key-Management".to_string(),
-                ).scopes(
-                    Some(
-                        vec![
-                            "dashboards_read".to_string(),
-                            "dashboards_write".to_string(),
-                            "dashboards_public_share".to_string()
-                        ],
-                    ),
-                ),
-                ApplicationKeysType::APPLICATION_KEYS,
-            ),
-        );
+    let body = ApplicationKeyCreateRequest::new(ApplicationKeyCreateData::new(
+        ApplicationKeyCreateAttributes::new("Example-Key-Management".to_string()).scopes(Some(
+            vec![
+                "dashboards_read".to_string(),
+                "dashboards_write".to_string(),
+                "dashboards_public_share".to_string(),
+            ],
+        )),
+        ApplicationKeysType::APPLICATION_KEYS,
+    ));
     let configuration = Configuration::new();
     let api = KeyManagementAPI::with_config(configuration);
     let resp = api.create_current_user_application_key(body).await;

@@ -8,7 +8,9 @@ async fn main() {
     let security_filter_data_id = std::env::var("SECURITY_FILTER_DATA_ID").unwrap();
     let configuration = Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
-    let resp = api.delete_security_filter(security_filter_data_id.clone()).await;
+    let resp = api
+        .delete_security_filter(security_filter_data_id.clone())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

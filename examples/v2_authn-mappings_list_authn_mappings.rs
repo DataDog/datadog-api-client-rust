@@ -6,7 +6,9 @@ use datadog_api_client::datadogV2::api::api_authn_mappings::*;
 async fn main() {
     let configuration = Configuration::new();
     let api = AuthNMappingsAPI::with_config(configuration);
-    let resp = api.list_authn_mappings(ListAuthNMappingsOptionalParams::default()).await;
+    let resp = api
+        .list_authn_mappings(ListAuthNMappingsOptionalParams::default())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

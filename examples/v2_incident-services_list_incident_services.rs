@@ -9,12 +9,12 @@ async fn main() {
     let mut configuration = Configuration::new();
     configuration.set_unstable_operation_enabled("v2.ListIncidentServices", true);
     let api = IncidentServicesAPI::with_config(configuration);
-    let resp =
-        api
-            .list_incident_services(
-                ListIncidentServicesOptionalParams::default().filter(service_data_attributes_name.clone()),
-            )
-            .await;
+    let resp = api
+        .list_incident_services(
+            ListIncidentServicesOptionalParams::default()
+                .filter(service_data_attributes_name.clone()),
+        )
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

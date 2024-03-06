@@ -10,14 +10,16 @@ async fn main() {
 
     // there is a valid "permission" in the system
     let permission_id = std::env::var("PERMISSION_ID").unwrap();
-    let body =
-        RelationshipToPermission
-        ::new().data(
-            RelationshipToPermissionData::new().id(permission_id.clone()).type_(PermissionsType::PERMISSIONS),
-        );
+    let body = RelationshipToPermission::new().data(
+        RelationshipToPermissionData::new()
+            .id(permission_id.clone())
+            .type_(PermissionsType::PERMISSIONS),
+    );
     let configuration = Configuration::new();
     let api = RolesAPI::with_config(configuration);
-    let resp = api.remove_permission_from_role(role_data_id.clone(), body).await;
+    let resp = api
+        .remove_permission_from_role(role_data_id.clone(), body)
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

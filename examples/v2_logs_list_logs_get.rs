@@ -6,7 +6,9 @@ use datadog_api_client::datadogV2::api::api_logs::*;
 async fn main() {
     let configuration = Configuration::new();
     let api = LogsAPI::with_config(configuration);
-    let resp = api.list_logs_get(ListLogsGetOptionalParams::default()).await;
+    let resp = api
+        .list_logs_get(ListLogsGetOptionalParams::default())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

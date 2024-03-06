@@ -8,7 +8,9 @@ async fn main() {
     let rum_application_data_id = std::env::var("RUM_APPLICATION_DATA_ID").unwrap();
     let configuration = Configuration::new();
     let api = RUMAPI::with_config(configuration);
-    let resp = api.delete_rum_application(rum_application_data_id.clone()).await;
+    let resp = api
+        .delete_rum_application(rum_application_data_id.clone())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

@@ -10,26 +10,21 @@ async fn main() {
 
     // a valid "configuration" in the system
     let configuration_data_id = std::env::var("CONFIGURATION_DATA_ID").unwrap();
-    let body =
-        SensitiveDataScannerConfigRequest::new(
-            SensitiveDataScannerReorderConfig::new()
-                .id(configuration_data_id.clone())
-                .relationships(
-                    SensitiveDataScannerConfigurationRelationships
-                    ::new().groups(
-                        SensitiveDataScannerGroupList
-                        ::new().data(
-                            vec![
-                                SensitiveDataScannerGroupItem::new()
-                                    .id(group_data_id.clone())
-                                    .type_(SensitiveDataScannerGroupType::SENSITIVE_DATA_SCANNER_GROUP)
-                            ],
-                        ),
-                    ),
-                )
-                .type_(SensitiveDataScannerConfigurationType::SENSITIVE_DATA_SCANNER_CONFIGURATIONS),
-            SensitiveDataScannerMetaVersionOnly::new(),
-        );
+    let body = SensitiveDataScannerConfigRequest::new(
+        SensitiveDataScannerReorderConfig::new()
+            .id(configuration_data_id.clone())
+            .relationships(
+                SensitiveDataScannerConfigurationRelationships::new().groups(
+                    SensitiveDataScannerGroupList::new().data(vec![
+                        SensitiveDataScannerGroupItem::new()
+                            .id(group_data_id.clone())
+                            .type_(SensitiveDataScannerGroupType::SENSITIVE_DATA_SCANNER_GROUP),
+                    ]),
+                ),
+            )
+            .type_(SensitiveDataScannerConfigurationType::SENSITIVE_DATA_SCANNER_CONFIGURATIONS),
+        SensitiveDataScannerMetaVersionOnly::new(),
+    );
     let configuration = Configuration::new();
     let api = SensitiveDataScannerAPI::with_config(configuration);
     let resp = api.reorder_scanning_groups(body).await;
