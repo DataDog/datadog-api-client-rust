@@ -1,9 +1,7 @@
 // Update a single service object returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_opsgenie_integration::*;
 use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -16,13 +14,13 @@ async fn main() {
                     .name("fake-opsgenie-service-name--updated".to_string())
                     .opsgenie_api_key("00000000-0000-0000-0000-000000000000".to_string())
                     .region(OpsgenieServiceRegionType::EU),
-                opsgenie_service_data_id,
+                opsgenie_service_data_id.clone(),
                 OpsgenieServiceType::OPSGENIE_SERVICE,
             ),
         );
     let configuration = Configuration::new();
     let api = OpsgenieIntegrationAPI::with_config(configuration);
-    let resp = api.update_opsgenie_service(opsgenie_service_data_id, body).await;
+    let resp = api.update_opsgenie_service(opsgenie_service_data_id.clone(), body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

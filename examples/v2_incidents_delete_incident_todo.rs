@@ -1,9 +1,6 @@
 // Delete an incident todo returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_incidents::*;
-use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -15,7 +12,7 @@ async fn main() {
     let mut configuration = Configuration::new();
     configuration.set_unstable_operation_enabled("v2.DeleteIncidentTodo", true);
     let api = IncidentsAPI::with_config(configuration);
-    let resp = api.delete_incident_todo(incident_data_id, incident_todo_data_id).await;
+    let resp = api.delete_incident_todo(incident_data_id.clone(), incident_todo_data_id.clone()).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

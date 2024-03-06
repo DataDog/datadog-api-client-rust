@@ -1,5 +1,4 @@
 // Send gzip logs returns "Response from server (always 200 empty JSON)." response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_logs::*;
 use datadog_api_client::datadogV1::model::*;

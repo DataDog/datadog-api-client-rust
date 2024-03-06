@@ -1,9 +1,7 @@
 // Create an SLO correction with rrule returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_service_level_objective_corrections::*;
 use datadog_api_client::datadogV1::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -17,8 +15,8 @@ async fn main() {
             ).attributes(
                 SLOCorrectionCreateRequestAttributes::new(
                     SLOCorrectionCategory::SCHEDULED_MAINTENANCE,
-                    slo_data_0_id,
-                    (Utc::now()).timestamp(),
+                    slo_data_0_id.clone(),
+                    1636629071,
                 )
                     .description("Example-Service-Level-Objective-Correction".to_string())
                     .duration(3600)

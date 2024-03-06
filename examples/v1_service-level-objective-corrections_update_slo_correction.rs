@@ -1,9 +1,7 @@
 // Update an SLO correction returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_service_level_objective_corrections::*;
 use datadog_api_client::datadogV1::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -17,15 +15,15 @@ async fn main() {
                     SLOCorrectionUpdateRequestAttributes::new()
                         .category(SLOCorrectionCategory::DEPLOYMENT)
                         .description("Example-Service-Level-Objective-Correction".to_string())
-                        .end((Utc::now() + chrono::Duration::hours(1)).timestamp())
-                        .start((Utc::now()).timestamp())
+                        .end(1636632671)
+                        .start(1636629071)
                         .timezone("UTC".to_string()),
                 )
                 .type_(SLOCorrectionType::CORRECTION),
         );
     let configuration = Configuration::new();
     let api = ServiceLevelObjectiveCorrectionsAPI::with_config(configuration);
-    let resp = api.update_slo_correction(correction_data_id, body).await;
+    let resp = api.update_slo_correction(correction_data_id.clone(), body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

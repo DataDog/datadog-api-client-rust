@@ -1,9 +1,7 @@
 // Update an existing incident integration metadata returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_incidents::*;
 use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -30,14 +28,17 @@ async fn main() {
                             ),
                         ),
                     ),
-                ).incident_id(incident_data_id),
+                ).incident_id(incident_data_id.clone()),
                 IncidentIntegrationMetadataType::INCIDENT_INTEGRATIONS,
             ),
         );
     let mut configuration = Configuration::new();
     configuration.set_unstable_operation_enabled("v2.UpdateIncidentIntegration", true);
     let api = IncidentsAPI::with_config(configuration);
-    let resp = api.update_incident_integration(incident_data_id, incident_integration_metadata_data_id, body).await;
+    let resp =
+        api
+            .update_incident_integration(incident_data_id.clone(), incident_integration_metadata_data_id.clone(), body)
+            .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

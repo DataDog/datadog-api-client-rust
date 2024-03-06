@@ -1,9 +1,6 @@
 // Get an API test result returns result with failure object
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_synthetics::*;
-use datadog_api_client::datadogV1::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -19,8 +16,8 @@ async fn main() {
     let resp =
         api
             .get_api_test_result(
-                synthetics_api_test_with_wrong_dns_public_id,
-                synthetics_api_test_with_wrong_dns_result_results_0_result_id,
+                synthetics_api_test_with_wrong_dns_public_id.clone(),
+                synthetics_api_test_with_wrong_dns_result_results_0_result_id.clone(),
             )
             .await;
     if let Ok(value) = resp {

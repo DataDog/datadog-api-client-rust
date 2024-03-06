@@ -1,9 +1,6 @@
 // Get hourly usage for application security returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_usage_metering::*;
-use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -12,9 +9,9 @@ async fn main() {
     let resp =
         api
             .get_usage_application_security_monitoring(
-                (Utc::now() + chrono::Duration::days(-5)).to_rfc3339(),
+                "2021-11-06T11:11:11+00:00".to_string(),
                 GetUsageApplicationSecurityMonitoringOptionalParams
-                ::default().end_hr((Utc::now() + chrono::Duration::days(-3)).to_rfc3339()),
+                ::default().end_hr("2021-11-08T11:11:11+00:00".to_string()),
             )
             .await;
     if let Ok(value) = resp {

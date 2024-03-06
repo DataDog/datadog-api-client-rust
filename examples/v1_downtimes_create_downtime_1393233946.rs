@@ -1,15 +1,13 @@
 // Schedule a downtime with until occurrences
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_downtimes::*;
 use datadog_api_client::datadogV1::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
     let body =
         Downtime::new()
-            .end(Some((Utc::now() + chrono::Duration::hours(1)).timestamp()))
+            .end(Some(1636632671))
             .message(Some("Example-Downtime".to_string()))
             .monitor_tags(vec!["tag0".to_string()])
             .recurrence(
@@ -32,7 +30,7 @@ async fn main() {
                 ),
             )
             .scope(vec!["*".to_string()])
-            .start((Utc::now()).timestamp())
+            .start(1636629071)
             .timezone("Etc/UTC".to_string());
     let configuration = Configuration::new();
     let api = DowntimesAPI::with_config(configuration);

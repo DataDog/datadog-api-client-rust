@@ -1,9 +1,7 @@
 // Update a log-based metric with include_percentiles field returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_logs_metrics::*;
 use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -18,7 +16,7 @@ async fn main() {
         );
     let configuration = Configuration::new();
     let api = LogsMetricsAPI::with_config(configuration);
-    let resp = api.update_logs_metric(logs_metric_percentile_data_id, body).await;
+    let resp = api.update_logs_metric(logs_metric_percentile_data_id.clone(), body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

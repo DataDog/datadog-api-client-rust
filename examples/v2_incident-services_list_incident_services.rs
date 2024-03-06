@@ -1,9 +1,6 @@
 // Get a list of all incident services returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_incident_services::*;
-use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -15,7 +12,7 @@ async fn main() {
     let resp =
         api
             .list_incident_services(
-                ListIncidentServicesOptionalParams::default().filter(service_data_attributes_name),
+                ListIncidentServicesOptionalParams::default().filter(service_data_attributes_name.clone()),
             )
             .await;
     if let Ok(value) = resp {

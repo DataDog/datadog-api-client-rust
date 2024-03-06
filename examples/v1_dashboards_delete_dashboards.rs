@@ -1,9 +1,7 @@
 // Delete dashboards returns "No Content" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_dashboards::*;
 use datadog_api_client::datadogV1::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -11,7 +9,7 @@ async fn main() {
     let dashboard_id = std::env::var("DASHBOARD_ID").unwrap();
     let body =
         DashboardBulkDeleteRequest::new(
-            vec![DashboardBulkActionData::new(dashboard_id, DashboardResourceType::DASHBOARD)],
+            vec![DashboardBulkActionData::new(dashboard_id.clone(), DashboardResourceType::DASHBOARD)],
         );
     let configuration = Configuration::new();
     let api = DashboardsAPI::with_config(configuration);

@@ -1,9 +1,7 @@
 // Send invitation emails returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_users::*;
 use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -14,7 +12,7 @@ async fn main() {
             vec![
                 UserInvitationData::new(
                     UserInvitationRelationships::new(
-                        RelationshipToUser::new(RelationshipToUserData::new(user_data_id, UsersType::USERS)),
+                        RelationshipToUser::new(RelationshipToUserData::new(user_data_id.clone(), UsersType::USERS)),
                     ),
                     UserInvitationsType::USER_INVITATIONS,
                 )

@@ -1,9 +1,7 @@
 // Pause or start a test returns "OK - Returns a boolean indicating if the update was successful." response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_synthetics::*;
 use datadog_api_client::datadogV1::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {

@@ -1,9 +1,7 @@
 // Update permission setting for team returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_teams::*;
 use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -17,7 +15,8 @@ async fn main() {
         );
     let configuration = Configuration::new();
     let api = TeamsAPI::with_config(configuration);
-    let resp = api.update_team_permission_setting(dd_team_data_id, "manage_membership".to_string(), body).await;
+    let resp =
+        api.update_team_permission_setting(dd_team_data_id.clone(), "manage_membership".to_string(), body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

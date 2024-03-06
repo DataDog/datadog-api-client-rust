@@ -23,7 +23,7 @@ async fn main() {
                             SensitiveDataScannerConfigurationData
                             ::new().data(
                                 SensitiveDataScannerConfiguration::new()
-                                    .id(configuration_data_id)
+                                    .id(configuration_data_id.clone())
                                     .type_(
                                         SensitiveDataScannerConfigurationType::SENSITIVE_DATA_SCANNER_CONFIGURATIONS,
                                     ),

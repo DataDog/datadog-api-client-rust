@@ -1,9 +1,7 @@
 // Update a RUM application returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_rum::*;
 use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -12,7 +10,7 @@ async fn main() {
     let body =
         RUMApplicationUpdateRequest::new(
             RUMApplicationUpdate::new(
-                rum_application_data_id,
+                rum_application_data_id.clone(),
                 RUMApplicationUpdateType::RUM_APPLICATION_UPDATE,
             ).attributes(
                 RUMApplicationUpdateAttributes::new()
@@ -22,7 +20,7 @@ async fn main() {
         );
     let configuration = Configuration::new();
     let api = RUMAPI::with_config(configuration);
-    let resp = api.update_rum_application(rum_application_data_id, body).await;
+    let resp = api.update_rum_application(rum_application_data_id.clone(), body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

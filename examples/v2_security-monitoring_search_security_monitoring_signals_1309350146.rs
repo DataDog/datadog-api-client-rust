@@ -1,9 +1,7 @@
 // Get a list of security signals returns "OK" response with pagination
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_security_monitoring::*;
 use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -11,9 +9,9 @@ async fn main() {
         SecurityMonitoringSignalListRequest::new()
             .filter(
                 SecurityMonitoringSignalListRequestFilter::new()
-                    .from(((Utc::now() + chrono::Duration::minutes(-15)).to_rfc3339()).to_rfc3339())
+                    .from("2021-11-11T10:56:11+00:00".to_string())
                     .query("security:attack status:high".to_string())
-                    .to(((Utc::now()).to_rfc3339()).to_rfc3339()),
+                    .to("2021-11-11T11:11:11+00:00".to_string()),
             )
             .page(SecurityMonitoringSignalListRequestPage::new().limit(2))
             .sort(SecurityMonitoringSignalsSort::TIMESTAMP_ASCENDING);

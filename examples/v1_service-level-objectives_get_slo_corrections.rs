@@ -8,7 +8,7 @@ async fn main() {
     let slo_data_0_id = std::env::var("SLO_DATA_0_ID").unwrap();
     let configuration = Configuration::new();
     let api = ServiceLevelObjectivesAPI::with_config(configuration);
-    let resp = api.get_slo_corrections(slo_data_0_id).await;
+    let resp = api.get_slo_corrections(slo_data_0_id.clone()).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

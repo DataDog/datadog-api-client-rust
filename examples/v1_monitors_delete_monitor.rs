@@ -1,9 +1,6 @@
 // Delete a monitor returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_monitors::*;
-use datadog_api_client::datadogV1::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -11,7 +8,7 @@ async fn main() {
     let monitor_id: i64 = std::env::var("MONITOR_ID").unwrap().parse().unwrap();
     let configuration = Configuration::new();
     let api = MonitorsAPI::with_config(configuration);
-    let resp = api.delete_monitor(monitor_id, DeleteMonitorOptionalParams::default()).await;
+    let resp = api.delete_monitor(monitor_id.clone(), DeleteMonitorOptionalParams::default()).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

@@ -1,9 +1,7 @@
 // Create outcomes batch returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_service_scorecards::*;
 use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -18,7 +16,7 @@ async fn main() {
                     ::new().results(
                         vec![
                             OutcomesBatchRequestItem::new(
-                                create_scorecard_rule_data_id,
+                                create_scorecard_rule_data_id.clone(),
                                 "my-service".to_string(),
                                 State::PASS,
                             ).remarks(r#"See: <a href="https://app.datadoghq.com/services">Services</a>"#.to_string())

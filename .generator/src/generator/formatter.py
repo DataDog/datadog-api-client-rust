@@ -254,7 +254,7 @@ def reference_to_value(schema, value, print_nullable=True, **kwargs):
             None: "String",
         }[type_format]
         if function_name == "Time":
-            return formatter.format(prefix=prefix, function_name=function_name, value=f"({value}).to_rfc3339()")
+            return formatter.format(prefix=prefix, function_name=function_name, value=f"{value}")
         return formatter.format(prefix=prefix, function_name=function_name, value=value)
 
     if type_name == "boolean":
@@ -393,15 +393,14 @@ def format_data_with_schema(
 
         # Make sure that variables used in given statements are lowercase snake_case for Rust linter
         if parameters in variables:
-            parameters = rust_name(parameters)
-
-        simple_type_value = simple_type(schema)
-        if isinstance(data, int) and simple_type_value in {
-            "float",
-            "float32",
-            "float64",
-        }:
-            parameters = f"{simple_type_value}({parameters})"
+            parameters = rust_name(parameters) + ".clone()"
+        # simple_type_value = simple_type(schema)
+        # if isinstance(data, int) and simple_type_value in {
+        #     "float",
+        #     "float32",
+        #     "float64",
+        # }:
+        #     parameters = f"{simple_type_value}({parameters})"
     else:
         if nullable and data is None:
             parameters = "None"
@@ -417,7 +416,10 @@ def format_data_with_schema(
             def format_datetime(x):
                 # TODO: format date and datetime
                 d = dateutil.parser.isoparse(x)
-                return f"Utc.with_ymd_and_hms({d.year}, {d.month}, {d.day}, {d.hour}, {d.minute}, {d.second}).unwrap() + chrono::Duration::microseconds({d.microsecond})"
+                return f'"{d.isoformat()}".to_string()'
+                # if d.microsecond != 0:
+                #     return f"(Utc.with_ymd_and_hms({d.year}, {d.month}, {d.day}, {d.hour}, {d.minute}, {d.second}).unwrap() + chrono::Duration::microseconds({d.microsecond})).to_string()"
+                # return f"Utc.with_ymd_and_hms({d.year}, {d.month}, {d.day}, {d.hour}, {d.minute}, {d.second}).unwrap().to_string()"
 
             def format_double(x):
                 if isinstance(x, (bool, str)):
@@ -429,12 +431,11 @@ def format_data_with_schema(
                     raise TypeError(f"{x} is not supported type {schema}")
                 return str(x)
 
-            def format_interface(x):
-                # TODO: delete this?
+            def format_value(x):
                 if isinstance(x, (int, float)):
-                    return str(x)
+                    return f"serde_json::Value::from({x})"
                 if isinstance(x, str):
-                    return format_string(x)
+                    return f"serde_json::Value::from(\"{x}\")"
                 raise TypeError(f"{x} is not supported type {schema}")
 
             def format_bool(x):
@@ -456,7 +457,7 @@ def format_data_with_schema(
                 "string": format_string,
                 "email": format_string,
                 "binary": open_file,
-                None: format_interface,
+                None: format_value,
             }[schema.get("format", schema.get("type"))]
 
             # TODO format date and datetime
@@ -479,15 +480,13 @@ def format_data_with_schema(
             parameters = f"{parameters}"
         return parameters
 
-    if in_list and nullable:
-        schema = schema.copy()
-        schema["nullable"] = False
-
     if (not required or schema.get("nullable")) and schema.get("type") is not None:
         return reference_to_value(schema, parameters, print_nullable=True, **kwargs)
 
     if "oneOf" in schema:
-        return _format_oneof(schema, data, name, name_prefix, replace_values, required, nullable, **kwargs)
+        if default_name and schema_name(schema) is None:
+            return _format_oneof(schema, data, default_name+"Item", name_prefix, replace_values, required, nullable, **kwargs)
+        return _format_oneof(schema, data, schema_name(schema), name_prefix, replace_values, required, nullable, **kwargs)
 
     return parameters
 
@@ -509,6 +508,8 @@ def format_data_with_schema_list(
     nullable = schema.get("nullable")
 
     if "oneOf" in schema:
+        if default_name and schema_name(schema) is None:
+            return _format_oneof(schema, data, default_name+"Item", name_prefix, replace_values, required, nullable, **kwargs)
         return _format_oneof(schema, data, schema_name(schema), name_prefix, replace_values, required, nullable, **kwargs)
 
     parameters = ""
@@ -525,6 +526,7 @@ def format_data_with_schema_list(
             schema["items"],
             name_prefix=name_prefix,
             replace_values=replace_values,
+            default_name=schema_name(schema),
             required=not schema["items"].get("nullable", False),
             in_list=True,
             **kwargs,
@@ -568,7 +570,7 @@ def format_data_with_schema_dict(
                 v,
                 name_prefix=name_prefix,
                 replace_values=replace_values,
-                default_name=name + camel_case(k) if name else None,
+                default_name=name if name else None,
                 required=k in required_properties,
                 **kwargs,
             )

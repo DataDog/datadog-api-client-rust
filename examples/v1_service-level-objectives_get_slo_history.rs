@@ -1,9 +1,6 @@
 // Get an SLO's history returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_service_level_objectives::*;
-use datadog_api_client::datadogV1::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -13,12 +10,7 @@ async fn main() {
     let api = ServiceLevelObjectivesAPI::with_config(configuration);
     let resp =
         api
-            .get_slo_history(
-                slo_data_0_id,
-                (Utc::now() + chrono::Duration::days(-1)).timestamp(),
-                (Utc::now()).timestamp(),
-                GetSLOHistoryOptionalParams::default(),
-            )
+            .get_slo_history(slo_data_0_id.clone(), 1636542671, 1636629071, GetSLOHistoryOptionalParams::default())
             .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);

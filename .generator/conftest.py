@@ -143,14 +143,14 @@ def unique(request):
 TIME_FORMATTER = {
     "now": "Utc::now()",
     "timestamp": "({sret}).timestamp()",
-    "isoformat": "({sret}).to_rfc3339()",  # .Format(time.RFC3339) we don't need to format it as time.Time{} is expected
+    "isoformat": "{sret}",  # .Format(time.RFC3339) we don't need to format it as time.Time{} is expected
     "units": {
-        "s": "{sret} + chrono::Duration::seconds({num})",
-        "m": "{sret} + chrono::Duration::minutes({num})",
-        "h": "{sret} + chrono::Duration::hours({num})",
-        "d": "{sret} + chrono::Duration::days({num})",
-        "M": "{sret} {sign} chrono::Months::new(1)",
-        "y": "{sret} {sign} chrono::Months::new(12)",
+        "s": "{sret} + Duration::seconds({num})",
+        "m": "{sret} + Duration::minutes({num})",
+        "h": "{sret} + Duration::hours({num})",
+        "d": "{sret} + Duration::days({num})",
+        "M": "{sret} {sign} Months::new(1)",
+        "y": "{sret} {sign} Months::new(12)",
     },
 }
 
@@ -193,7 +193,7 @@ def relative_time(imports, calls, freezed_time, iso):
 
     def store_calls(arg):
         result, value = func(arg)
-        calls[result] = value
+        # calls[result] = value
         return result
 
     return store_calls

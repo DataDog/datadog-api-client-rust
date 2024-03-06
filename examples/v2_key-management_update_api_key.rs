@@ -1,9 +1,7 @@
 // Edit an API key returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_key_management::*;
 use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -13,13 +11,13 @@ async fn main() {
         APIKeyUpdateRequest::new(
             APIKeyUpdateData::new(
                 APIKeyUpdateAttributes::new("Example-Key-Management".to_string()),
-                api_key_data_id,
+                api_key_data_id.clone(),
                 APIKeysType::API_KEYS,
             ),
         );
     let configuration = Configuration::new();
     let api = KeyManagementAPI::with_config(configuration);
-    let resp = api.update_api_key(api_key_data_id, body).await;
+    let resp = api.update_api_key(api_key_data_id.clone(), body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

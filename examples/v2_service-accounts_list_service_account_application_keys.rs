@@ -11,7 +11,7 @@ async fn main() {
     let resp =
         api
             .list_service_account_application_keys(
-                service_account_user_data_id,
+                service_account_user_data_id.clone(),
                 ListServiceAccountApplicationKeysOptionalParams::default(),
             )
             .await;

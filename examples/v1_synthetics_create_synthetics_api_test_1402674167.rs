@@ -1,5 +1,4 @@
 // Create an API GRPC test returns "OK - Returns the created test details." response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_synthetics::*;
 use datadog_api_client::datadogV1::model::*;
@@ -16,7 +15,7 @@ async fn main() {
                             Box::new(
                                 SyntheticsAssertionTarget::new(
                                     SyntheticsAssertionOperator::IS,
-                                    1,
+                                    serde_json::Value::from(1),
                                     SyntheticsAssertionType::GRPC_HEALTHCHECK_STATUS,
                                 ),
                             ),
@@ -25,7 +24,7 @@ async fn main() {
                             Box::new(
                                 SyntheticsAssertionTarget::new(
                                     SyntheticsAssertionOperator::IS,
-                                    "proto target".to_string(),
+                                    serde_json::Value::from("proto target"),
                                     SyntheticsAssertionType::GRPC_PROTO,
                                 ),
                             ),
@@ -34,7 +33,7 @@ async fn main() {
                             Box::new(
                                 SyntheticsAssertionTarget::new(
                                     SyntheticsAssertionOperator::IS,
-                                    "123".to_string(),
+                                    serde_json::Value::from("123"),
                                     SyntheticsAssertionType::GRPC_METADATA,
                                 ).property("property".to_string()),
                             ),

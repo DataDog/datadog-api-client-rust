@@ -1,9 +1,7 @@
 // Get hourly usage attribution returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_usage_metering::*;
 use datadog_api_client::datadogV1::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -12,7 +10,7 @@ async fn main() {
     let resp =
         api
             .get_hourly_usage_attribution(
-                (Utc::now() + chrono::Duration::days(-3)).to_rfc3339(),
+                "2021-11-08T11:11:11+00:00".to_string(),
                 HourlyUsageAttributionUsageType::INFRA_HOST_USAGE,
                 GetHourlyUsageAttributionOptionalParams::default(),
             )

@@ -16,7 +16,7 @@ async fn main() {
                     WidgetDefinition::PowerpackWidgetDefinition(
                         Box::new(
                             PowerpackWidgetDefinition::new(
-                                powerpack_data_id,
+                                powerpack_data_id.clone(),
                                 PowerpackWidgetDefinitionType::POWERPACK,
                             ).template_variables(
                                 PowerpackTemplateVariables::new()

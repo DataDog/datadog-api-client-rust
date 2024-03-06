@@ -1,9 +1,7 @@
 // Create a new dashboard with slo widget
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_dashboards::*;
 use datadog_api_client::datadogV1::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -21,7 +19,7 @@ async fn main() {
                                 .additional_query_filters("!host:excluded_host".to_string())
                                 .global_time_target("0".to_string())
                                 .show_error_budget(true)
-                                .slo_id(slo_data_0_id)
+                                .slo_id(slo_data_0_id.clone())
                                 .time_windows(vec![WidgetTimeWindows::SEVEN_DAYS])
                                 .title_align(WidgetTextAlign::LEFT)
                                 .title_size("16".to_string())

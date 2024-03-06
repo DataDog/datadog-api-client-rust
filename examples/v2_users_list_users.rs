@@ -1,9 +1,6 @@
 // List all users returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_users::*;
-use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -11,7 +8,7 @@ async fn main() {
     let user_data_attributes_email = std::env::var("USER_DATA_ATTRIBUTES_EMAIL").unwrap();
     let configuration = Configuration::new();
     let api = UsersAPI::with_config(configuration);
-    let resp = api.list_users(ListUsersOptionalParams::default().filter(user_data_attributes_email)).await;
+    let resp = api.list_users(ListUsersOptionalParams::default().filter(user_data_attributes_email.clone())).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

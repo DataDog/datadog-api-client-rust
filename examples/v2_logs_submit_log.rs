@@ -1,5 +1,4 @@
 // Send logs returns "Request accepted for processing (always 202 empty JSON)." response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_logs::*;
 use datadog_api_client::datadogV2::model::*;

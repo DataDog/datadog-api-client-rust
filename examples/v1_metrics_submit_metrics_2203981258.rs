@@ -1,16 +1,14 @@
 // Submit deflate metrics returns "Payload accepted" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_metrics::*;
 use datadog_api_client::datadogV1::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
     let body =
         MetricsPayload::new(
             vec![
-                Series::new("system.load.1".to_string(), vec![vec![(Utc::now()).timestamp() as f64, 1.1 as f64]])
+                Series::new("system.load.1".to_string(), vec![vec![Some(1636629071 as f64), Some(1.1 as f64)]])
                     .tags(vec!["test:ExampleMetric".to_string()])
                     .type_("gauge".to_string())
             ],

@@ -1,9 +1,7 @@
 // Patch a Synthetic test returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_synthetics::*;
 use datadog_api_client::datadogV1::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -16,7 +14,7 @@ async fn main() {
                 SyntheticsPatchTestOperation::new()
                     .op(SyntheticsPatchTestOperationName::REPLACE)
                     .path("/name".to_string())
-                    .value("New test name".to_string()),
+                    .value(serde_json::Value::from("New test name")),
                 SyntheticsPatchTestOperation::new()
                     .op(SyntheticsPatchTestOperationName::REMOVE)
                     .path("/config/assertions/0".to_string())
@@ -24,7 +22,7 @@ async fn main() {
         );
     let configuration = Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
-    let resp = api.patch_test(synthetics_api_test_public_id, body).await;
+    let resp = api.patch_test(synthetics_api_test_public_id.clone(), body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

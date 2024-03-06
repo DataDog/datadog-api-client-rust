@@ -1,9 +1,7 @@
 // Create a detection rule with type 'signal_correlation' returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_security_monitoring::*;
 use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -30,11 +28,11 @@ async fn main() {
                         .keep_alive(SecurityMonitoringRuleKeepAlive::ONE_HOUR)
                         .max_signal_duration(SecurityMonitoringRuleMaxSignalDuration::ONE_DAY),
                     vec![
-                        SecurityMonitoringSignalRuleQuery::new(security_rule_id)
+                        SecurityMonitoringSignalRuleQuery::new(security_rule_id.clone())
                             .aggregation(SecurityMonitoringRuleQueryAggregation::EVENT_COUNT)
                             .correlated_by_fields(vec!["host".to_string()])
                             .correlated_query_index(1),
-                        SecurityMonitoringSignalRuleQuery::new(security_rule_bis_id)
+                        SecurityMonitoringSignalRuleQuery::new(security_rule_bis_id.clone())
                             .aggregation(SecurityMonitoringRuleQueryAggregation::EVENT_COUNT)
                             .correlated_by_fields(vec!["host".to_string()])
                     ],

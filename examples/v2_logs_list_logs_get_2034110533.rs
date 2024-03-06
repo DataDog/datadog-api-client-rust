@@ -1,9 +1,6 @@
 // Get a quick list of logs returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_logs::*;
-use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -15,12 +12,8 @@ async fn main() {
                 ListLogsGetOptionalParams::default()
                     .filter_query("datadog-agent".to_string())
                     .filter_indexes(vec!["main".to_string()])
-                    .filter_from(
-                        Utc.with_ymd_and_hms(2020, 9, 17, 11, 48, 36).unwrap() + chrono::Duration::microseconds(0),
-                    )
-                    .filter_to(
-                        Utc.with_ymd_and_hms(2020, 9, 17, 12, 48, 36).unwrap() + chrono::Duration::microseconds(0),
-                    )
+                    .filter_from("2020-09-17T11:48:36+01:00".to_string())
+                    .filter_to("2020-09-17T12:48:36+01:00".to_string())
                     .page_limit(5),
             )
             .await;

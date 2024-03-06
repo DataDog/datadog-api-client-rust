@@ -1,9 +1,7 @@
 // Update STS Service Account returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_gcp_integration::*;
 use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -18,12 +16,12 @@ async fn main() {
                         .client_email("252bf553ef04b351@example.com".to_string())
                         .host_filters(vec!["foo:bar".to_string()]),
                 )
-                .id(gcp_sts_account_data_id)
+                .id(gcp_sts_account_data_id.clone())
                 .type_(GCPServiceAccountType::GCP_SERVICE_ACCOUNT),
         );
     let configuration = Configuration::new();
     let api = GCPIntegrationAPI::with_config(configuration);
-    let resp = api.update_gcpsts_account(gcp_sts_account_data_id, body).await;
+    let resp = api.update_gcpsts_account(gcp_sts_account_data_id.clone(), body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

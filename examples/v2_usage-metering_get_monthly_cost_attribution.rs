@@ -1,9 +1,6 @@
 // Get Monthly Cost Attribution returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_usage_metering::*;
-use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -13,8 +10,8 @@ async fn main() {
     let resp =
         api
             .get_monthly_cost_attribution(
-                (Utc::now() + chrono::Duration::days(-5)).to_rfc3339(),
-                (Utc::now() + chrono::Duration::days(-3)).to_rfc3339(),
+                "2021-11-06T11:11:11+00:00".to_string(),
+                "2021-11-08T11:11:11+00:00".to_string(),
                 "infra_host_total_cost".to_string(),
                 GetMonthlyCostAttributionOptionalParams::default(),
             )

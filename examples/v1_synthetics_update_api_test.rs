@@ -1,5 +1,4 @@
 // Edit an API test returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_synthetics::*;
 use datadog_api_client::datadogV1::model::*;
@@ -18,7 +17,7 @@ async fn main() {
                             Box::new(
                                 SyntheticsAssertionTarget::new(
                                     SyntheticsAssertionOperator::IS,
-                                    "text/html".to_string(),
+                                    serde_json::Value::from("text/html"),
                                     SyntheticsAssertionType::HEADER,
                                 ).property("{{ PROPERTY }}".to_string()),
                             ),
@@ -27,7 +26,7 @@ async fn main() {
                             Box::new(
                                 SyntheticsAssertionTarget::new(
                                     SyntheticsAssertionOperator::LESS_THAN,
-                                    2000,
+                                    serde_json::Value::from(2000),
                                     SyntheticsAssertionType::RESPONSE_TIME,
                                 ),
                             ),
@@ -41,7 +40,7 @@ async fn main() {
                                     SyntheticsAssertionJSONPathTargetTarget::new()
                                         .json_path("topKey".to_string())
                                         .operator("isNot".to_string())
-                                        .target_value("0".to_string()),
+                                        .target_value(serde_json::Value::from("0")),
                                 ),
                             ),
                         )
@@ -94,7 +93,7 @@ async fn main() {
             .tags(vec!["testing:api".to_string()]);
     let configuration = Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
-    let resp = api.update_api_test(synthetics_api_test_public_id, body).await;
+    let resp = api.update_api_test(synthetics_api_test_public_id.clone(), body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

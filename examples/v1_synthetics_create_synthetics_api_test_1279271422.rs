@@ -1,9 +1,7 @@
 // Create an API test with multi subtype returns "OK - Returns the created test details." response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_synthetics::*;
 use datadog_api_client::datadogV1::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -25,7 +23,7 @@ async fn main() {
                                     Box::new(
                                         SyntheticsAssertionTarget::new(
                                             SyntheticsAssertionOperator::IS,
-                                            200,
+                                            serde_json::Value::from(200),
                                             SyntheticsAssertionType::STATUS_CODE,
                                         ),
                                     ),

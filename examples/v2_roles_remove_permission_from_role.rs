@@ -1,9 +1,7 @@
 // Revoke permission returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_roles::*;
 use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -14,10 +12,12 @@ async fn main() {
     let permission_id = std::env::var("PERMISSION_ID").unwrap();
     let body =
         RelationshipToPermission
-        ::new().data(RelationshipToPermissionData::new().id(permission_id).type_(PermissionsType::PERMISSIONS));
+        ::new().data(
+            RelationshipToPermissionData::new().id(permission_id.clone()).type_(PermissionsType::PERMISSIONS),
+        );
     let configuration = Configuration::new();
     let api = RolesAPI::with_config(configuration);
-    let resp = api.remove_permission_from_role(role_data_id, body).await;
+    let resp = api.remove_permission_from_role(role_data_id.clone(), body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

@@ -1,9 +1,6 @@
 // Get incident attachments returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_incidents::*;
-use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -13,7 +10,9 @@ async fn main() {
     configuration.set_unstable_operation_enabled("v2.ListIncidentAttachments", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp =
-        api.list_incident_attachments(incident_data_id, ListIncidentAttachmentsOptionalParams::default()).await;
+        api
+            .list_incident_attachments(incident_data_id.clone(), ListIncidentAttachmentsOptionalParams::default())
+            .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

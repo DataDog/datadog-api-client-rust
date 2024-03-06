@@ -1,9 +1,7 @@
 // Update an existing rule returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_security_monitoring::*;
 use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -47,7 +45,7 @@ async fn main() {
             .tags(vec![]);
     let configuration = Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
-    let resp = api.update_security_monitoring_rule(security_rule_id, body).await;
+    let resp = api.update_security_monitoring_rule(security_rule_id.clone(), body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

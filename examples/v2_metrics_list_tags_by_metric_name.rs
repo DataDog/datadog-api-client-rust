@@ -1,9 +1,6 @@
 // List tags by metric name returns "Success" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_metrics::*;
-use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -11,7 +8,7 @@ async fn main() {
     let metric_tag_configuration_data_id = std::env::var("METRIC_TAG_CONFIGURATION_DATA_ID").unwrap();
     let configuration = Configuration::new();
     let api = MetricsAPI::with_config(configuration);
-    let resp = api.list_tags_by_metric_name(metric_tag_configuration_data_id).await;
+    let resp = api.list_tags_by_metric_name(metric_tag_configuration_data_id.clone()).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

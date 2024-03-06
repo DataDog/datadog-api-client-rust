@@ -1,9 +1,7 @@
 // Update Scanning Group returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_sensitive_data_scanner::*;
 use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -22,14 +20,14 @@ async fn main() {
                         .name("Example-Sensitive-Data-Scanner".to_string())
                         .product_list(vec![SensitiveDataScannerProduct::LOGS]),
                 )
-                .id(group_data_id)
+                .id(group_data_id.clone())
                 .relationships(
                     SensitiveDataScannerGroupRelationships::new()
                         .configuration(
                             SensitiveDataScannerConfigurationData
                             ::new().data(
                                 SensitiveDataScannerConfiguration::new()
-                                    .id(configuration_data_id)
+                                    .id(configuration_data_id.clone())
                                     .type_(
                                         SensitiveDataScannerConfigurationType::SENSITIVE_DATA_SCANNER_CONFIGURATIONS,
                                     ),
@@ -42,7 +40,7 @@ async fn main() {
         );
     let configuration = Configuration::new();
     let api = SensitiveDataScannerAPI::with_config(configuration);
-    let resp = api.update_scanning_group(group_data_id, body).await;
+    let resp = api.update_scanning_group(group_data_id.clone(), body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

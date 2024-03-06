@@ -1,5 +1,4 @@
 // Create an API HTTP test returns "OK - Returns the created test details." response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_synthetics::*;
 use datadog_api_client::datadogV1::model::*;
@@ -16,7 +15,7 @@ async fn main() {
                             Box::new(
                                 SyntheticsAssertionTarget::new(
                                     SyntheticsAssertionOperator::IS,
-                                    "text/html".to_string(),
+                                    serde_json::Value::from("text/html"),
                                     SyntheticsAssertionType::HEADER,
                                 ).property("{{ PROPERTY }}".to_string()),
                             ),
@@ -25,7 +24,7 @@ async fn main() {
                             Box::new(
                                 SyntheticsAssertionTarget::new(
                                     SyntheticsAssertionOperator::LESS_THAN,
-                                    2000,
+                                    serde_json::Value::from(2000),
                                     SyntheticsAssertionType::RESPONSE_TIME,
                                 ).timings_scope(SyntheticsAssertionTimingsScope::WITHOUT_DNS),
                             ),
@@ -39,7 +38,7 @@ async fn main() {
                                     SyntheticsAssertionJSONPathTargetTarget::new()
                                         .json_path("topKey".to_string())
                                         .operator("isNot".to_string())
-                                        .target_value("0".to_string()),
+                                        .target_value(serde_json::Value::from("0")),
                                 ),
                             ),
                         ),
@@ -51,7 +50,7 @@ async fn main() {
                                 ).target(
                                     SyntheticsAssertionXPathTargetTarget::new()
                                         .operator("contains".to_string())
-                                        .target_value("0".to_string())
+                                        .target_value(serde_json::Value::from("0"))
                                         .x_path("target-xpath".to_string()),
                                 ),
                             ),

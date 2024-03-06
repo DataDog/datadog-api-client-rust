@@ -10,18 +10,16 @@ use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadog{{ version|upper }}::api::api_{{context["api_instance"]["name"] | snake_case}}::*;
 use datadog_api_client::datadog{{ version|upper }}::model::*;
 use std::collections::BTreeMap;
-use chrono::prelude::*;
+use chrono::prelude::{DateTime, Utc};
 
 #[tokio::main]
 async fn main() {
     {%- for name, values in context._given.items() %}
 	// {{ name|wordwrap(width=120, wrapstring="\n	// ") }}
-	{%- for value, schema in values.items()|sort %}
-	{%- if context._replace_values.is_used(value) %}
-	{%- if schema.type == 'string' and schema.format != 'uuid'%}
+	{%- for value, schema in values.items()|sort -%}
+	{%- if context._replace_values.is_used(value) -%}
+	{%- if schema.type == 'string' and schema.format != 'uuid' %}
 	let {{ value|rust_name }} = std::env::var("{{ value }}").unwrap();
-	{%- elif schema.type == 'string' and schema.format == 'uuid' %}
-	let {{ value|rust_name }} := std::env::var("{{ value }}").unwrap();
 	{%- elif schema.type == 'integer' %}
 	let {{ value|rust_name }}: i{{ '64' if schema.format == 'int64' else '32' }} = std::env::var("{{ value }}").unwrap().parse().unwrap();
 	{%- elif schema.type == 'boolean' %}
@@ -35,11 +33,9 @@ async fn main() {
     {%- if context.body %}
 	let body = {{ body }};
     {%- endif %}
-	{%- if context._enable_operations %}
-    let mut configuration = Configuration::new();
-	{%- else %}
-    let configuration = Configuration::new();
-    {%- endif %}
+	
+    let {% if context._enable_operations %}mut{% endif %} configuration = Configuration::new();
+    
     {%- for operation in context._enable_operations %}
 	configuration.set_unstable_operation_enabled("{{ version }}.{{ operation }}", true);
     {%- endfor %}

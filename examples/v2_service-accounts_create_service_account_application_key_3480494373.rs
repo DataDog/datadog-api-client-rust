@@ -26,7 +26,7 @@ async fn main() {
         );
     let configuration = Configuration::new();
     let api = ServiceAccountsAPI::with_config(configuration);
-    let resp = api.create_service_account_application_key(service_account_user_data_id, body).await;
+    let resp = api.create_service_account_application_key(service_account_user_data_id.clone(), body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

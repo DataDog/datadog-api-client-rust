@@ -1,9 +1,7 @@
 // Configure tags for multiple metrics returns "Accepted" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_metrics::*;
 use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -16,7 +14,7 @@ async fn main() {
                 MetricBulkConfigureTagsType::BULK_MANAGE_TAGS,
             ).attributes(
                 MetricBulkTagConfigCreateAttributes::new()
-                    .emails(vec![user_data_attributes_email])
+                    .emails(vec![user_data_attributes_email.clone()])
                     .tags(vec!["test".to_string(), "examplemetric".to_string()]),
             ),
         );

@@ -1,5 +1,4 @@
 // Create or update service definition using schema v2-2 returns "CREATED" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_service_definition::*;
 use datadog_api_client::datadogV2::model::*;

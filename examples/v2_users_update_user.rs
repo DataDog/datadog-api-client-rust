@@ -1,9 +1,7 @@
 // Update a user returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_users::*;
 use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -13,13 +11,13 @@ async fn main() {
         UserUpdateRequest::new(
             UserUpdateData::new(
                 UserUpdateAttributes::new().disabled(true).name("updated".to_string()),
-                user_data_id,
+                user_data_id.clone(),
                 UsersType::USERS,
             ),
         );
     let configuration = Configuration::new();
     let api = UsersAPI::with_config(configuration);
-    let resp = api.update_user(user_data_id, body).await;
+    let resp = api.update_user(user_data_id.clone(), body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

@@ -1,9 +1,7 @@
 // Create an API test returns "OK - Returns the created test details." response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_synthetics::*;
 use datadog_api_client::datadogV1::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -16,7 +14,7 @@ async fn main() {
                             Box::new(
                                 SyntheticsAssertionTarget::new(
                                     SyntheticsAssertionOperator::LESS_THAN,
-                                    1000,
+                                    serde_json::Value::from(1000),
                                     SyntheticsAssertionType::RESPONSE_TIME,
                                 ),
                             ),

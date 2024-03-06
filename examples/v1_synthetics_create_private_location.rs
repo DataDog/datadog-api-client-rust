@@ -1,9 +1,7 @@
 // Create a private location returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_synthetics::*;
 use datadog_api_client::datadogV1::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -14,7 +12,7 @@ async fn main() {
             "Test Example-Synthetic description".to_string(),
             "Example-Synthetic".to_string(),
             vec!["test:examplesynthetic".to_string()],
-        ).metadata(SyntheticsPrivateLocationMetadata::new().restricted_roles(vec![role_data_id]));
+        ).metadata(SyntheticsPrivateLocationMetadata::new().restricted_roles(vec![role_data_id.clone()]));
     let configuration = Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api.create_private_location(body).await;

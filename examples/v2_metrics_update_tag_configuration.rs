@@ -1,9 +1,7 @@
 // Update a tag configuration returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_metrics::*;
 use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -12,13 +10,13 @@ async fn main() {
     let body =
         MetricTagConfigurationUpdateRequest::new(
             MetricTagConfigurationUpdateData::new(
-                metric_tag_configuration_data_id,
+                metric_tag_configuration_data_id.clone(),
                 MetricTagConfigurationType::MANAGE_TAGS,
             ).attributes(MetricTagConfigurationUpdateAttributes::new().tags(vec!["app".to_string()])),
         );
     let configuration = Configuration::new();
     let api = MetricsAPI::with_config(configuration);
-    let resp = api.update_tag_configuration(metric_tag_configuration_data_id, body).await;
+    let resp = api.update_tag_configuration(metric_tag_configuration_data_id.clone(), body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

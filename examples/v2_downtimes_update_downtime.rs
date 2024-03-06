@@ -1,9 +1,7 @@
 // Update a downtime returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_downtimes::*;
 use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -13,13 +11,13 @@ async fn main() {
         DowntimeUpdateRequest::new(
             DowntimeUpdateRequestData::new(
                 DowntimeUpdateRequestAttributes::new().message(Some("light speed".to_string())),
-                downtime_v2_data_id,
+                downtime_v2_data_id.clone(),
                 DowntimeResourceType::DOWNTIME,
             ),
         );
     let configuration = Configuration::new();
     let api = DowntimesAPI::with_config(configuration);
-    let resp = api.update_downtime(downtime_v2_data_id, body).await;
+    let resp = api.update_downtime(downtime_v2_data_id.clone(), body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

@@ -1,9 +1,7 @@
 // Create Scanning Rule returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_sensitive_data_scanner::*;
 use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -29,7 +27,7 @@ async fn main() {
                     SensitiveDataScannerGroupData
                     ::new().data(
                         SensitiveDataScannerGroup::new()
-                            .id(group_data_id)
+                            .id(group_data_id.clone())
                             .type_(SensitiveDataScannerGroupType::SENSITIVE_DATA_SCANNER_GROUP),
                     ),
                 ),

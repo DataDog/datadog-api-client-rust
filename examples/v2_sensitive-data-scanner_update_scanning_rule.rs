@@ -1,9 +1,7 @@
 // Update Scanning Rule returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_sensitive_data_scanner::*;
 use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -27,14 +25,14 @@ async fn main() {
                             ::new().type_(SensitiveDataScannerTextReplacementType::NONE),
                         ),
                 )
-                .id(rule_data_id)
+                .id(rule_data_id.clone())
                 .relationships(
                     SensitiveDataScannerRuleRelationships
                     ::new().group(
                         SensitiveDataScannerGroupData
                         ::new().data(
                             SensitiveDataScannerGroup::new()
-                                .id(group_data_id)
+                                .id(group_data_id.clone())
                                 .type_(SensitiveDataScannerGroupType::SENSITIVE_DATA_SCANNER_GROUP),
                         ),
                     ),
@@ -44,7 +42,7 @@ async fn main() {
         );
     let configuration = Configuration::new();
     let api = SensitiveDataScannerAPI::with_config(configuration);
-    let resp = api.update_scanning_rule(rule_data_id, body).await;
+    let resp = api.update_scanning_rule(rule_data_id.clone(), body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

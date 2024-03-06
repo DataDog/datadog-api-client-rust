@@ -1,9 +1,7 @@
 // Submit deflate distribution points returns "Payload accepted" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_metrics::*;
 use datadog_api_client::datadogV1::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -12,7 +10,12 @@ async fn main() {
             vec![
                 DistributionPointsSeries::new(
                     "system.load.1.dist".to_string(),
-                    vec![vec![(Utc::now()).timestamp() as f64, vec![1.0, 2.0]]],
+                    vec![
+                        vec![
+                            DistributionPointItem::DistributionPointTimestamp(1636629071 as f64),
+                            DistributionPointItem::DistributionPointData(vec![1.0, 2.0])
+                        ]
+                    ],
                 )
             ],
         );

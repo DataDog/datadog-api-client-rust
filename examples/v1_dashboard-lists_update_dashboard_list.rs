@@ -1,9 +1,7 @@
 // Update a dashboard list returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_dashboard_lists::*;
 use datadog_api_client::datadogV1::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -12,7 +10,7 @@ async fn main() {
     let body = DashboardList::new("updated Example-Dashboard-List".to_string());
     let configuration = Configuration::new();
     let api = DashboardListsAPI::with_config(configuration);
-    let resp = api.update_dashboard_list(dashboard_list_id, body).await;
+    let resp = api.update_dashboard_list(dashboard_list_id.clone(), body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

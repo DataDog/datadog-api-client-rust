@@ -1,9 +1,7 @@
 // Create a new dashboard with a change widget using formulas and functions slo query
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_dashboards::*;
 use datadog_api_client::datadogV1::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -37,7 +35,7 @@ async fn main() {
                                                         FormulaAndFunctionSLOQueryDefinition::new(
                                                             FormulaAndFunctionSLODataSource::SLO,
                                                             FormulaAndFunctionSLOMeasure::SLO_STATUS,
-                                                            slo_data_0_id,
+                                                            slo_data_0_id.clone(),
                                                         )
                                                             .additional_query_filters("*".to_string())
                                                             .group_mode(FormulaAndFunctionSLOGroupMode::OVERALL)

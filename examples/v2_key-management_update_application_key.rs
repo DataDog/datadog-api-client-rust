@@ -1,9 +1,7 @@
 // Edit an application key returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_key_management::*;
 use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -14,13 +12,13 @@ async fn main() {
             ApplicationKeyUpdateData::new(
                 ApplicationKeyUpdateAttributes
                 ::new().name("Application Key for managing dashboards-updated".to_string()),
-                application_key_data_id,
+                application_key_data_id.clone(),
                 ApplicationKeysType::APPLICATION_KEYS,
             ),
         );
     let configuration = Configuration::new();
     let api = KeyManagementAPI::with_config(configuration);
-    let resp = api.update_application_key(application_key_data_id, body).await;
+    let resp = api.update_application_key(application_key_data_id.clone(), body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

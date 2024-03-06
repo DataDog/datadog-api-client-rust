@@ -1,9 +1,7 @@
 // Create a service account returns "OK" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_service_accounts::*;
 use datadog_api_client::datadogV2::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -21,7 +19,9 @@ async fn main() {
                 UserRelationships
                 ::new().roles(
                     RelationshipToRoles
-                    ::new().data(vec![RelationshipToRoleData::new().id(role_data_id).type_(RolesType::ROLES)]),
+                    ::new().data(
+                        vec![RelationshipToRoleData::new().id(role_data_id.clone()).type_(RolesType::ROLES)],
+                    ),
                 ),
             ),
         );

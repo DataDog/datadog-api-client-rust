@@ -1,5 +1,4 @@
 // Create an incident returns "CREATED" response
-use chrono::prelude::*;
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_incidents::*;
 use datadog_api_client::datadogV2::model::*;
@@ -36,7 +35,7 @@ async fn main() {
                 IncidentCreateRelationships::new(
                     Some(
                         NullableRelationshipToUser::new(
-                            Some(NullableRelationshipToUserData::new(user_data_id, UsersType::USERS)),
+                            Some(NullableRelationshipToUserData::new(user_data_id.clone(), UsersType::USERS)),
                         ),
                     ),
                 ),

@@ -8,7 +8,7 @@ async fn main() {
     let powerpack_data_id = std::env::var("POWERPACK_DATA_ID").unwrap();
     let configuration = Configuration::new();
     let api = PowerpackAPI::with_config(configuration);
-    let resp = api.delete_powerpack(powerpack_data_id).await;
+    let resp = api.delete_powerpack(powerpack_data_id.clone()).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
