@@ -18,7 +18,7 @@ async fn main() {
         .name("Team Email".to_string())])
         .extensions(BTreeMap::from([(
             "myorgextension".to_string(),
-            serde_json::from_str("extensionvalue").unwrap(),
+            serde_json::Value::from("extensionvalue"),
         )]))
         .integrations(
             ServiceDefinitionV2Dot2Integrations::new()

@@ -22,7 +22,7 @@ async fn main() {
         ])
         .extensions(BTreeMap::from([(
             "myorgextension".to_string(),
-            serde_json::from_str("extensionvalue").unwrap(),
+            serde_json::Value::from("extensionvalue"),
         )]))
         .integrations(
             ServiceDefinitionV2Dot1Integrations::new()

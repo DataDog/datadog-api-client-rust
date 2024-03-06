@@ -617,7 +617,10 @@ def format_data_with_schema_dict(
     if schema.get("type") == "object" and "properties" not in schema:
         if schema.get("additionalProperties") == {}:
             for k, v in data.items():
-                parameters += f'("{k}".to_string(), serde_json::from_str("{v}").unwrap()),'
+                if isinstance(v, (int, float)):
+                    parameters += f'("{k}".to_string(), serde_json::Value::from({v})),'
+                if isinstance(v, str):
+                    parameters += f'("{k}".to_string(), serde_json::Value::from(\"{v}\")),'
             return f"BTreeMap::from([{parameters}])"
         else:
             return "BTreeMap::new()"

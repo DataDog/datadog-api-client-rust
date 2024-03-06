@@ -28,7 +28,7 @@ async fn main() {
         .provider("google drive".to_string())])
         .extensions(BTreeMap::from([(
             "myorgextension".to_string(),
-            serde_json::from_str("extensionvalue").unwrap(),
+            serde_json::Value::from("extensionvalue"),
         )]))
         .integrations(
             ServiceDefinitionV2Integrations::new()

@@ -15,8 +15,8 @@ async fn main() {
                             "ordered".to_string(),
                             "group".to_string(),
                             vec![PowerpackInnerWidgets::new(BTreeMap::from([
-                                ("content".to_string(), serde_json::from_str("test").unwrap()),
-                                ("type".to_string(), serde_json::from_str("note").unwrap()),
+                                ("content".to_string(), serde_json::Value::from("test")),
+                                ("type".to_string(), serde_json::Value::from("note")),
                             ]))],
                         )
                         .show_title(true)
