@@ -10,7 +10,6 @@ pub enum LogsPipelineProcessorType {
     #[serde(rename = "pipeline")]
     PIPELINE,
 }
-
 impl ToString for LogsPipelineProcessorType {
     fn to_string(&self) -> String {
         match self {

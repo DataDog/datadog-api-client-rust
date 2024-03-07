@@ -12,7 +12,6 @@ pub enum CIAppSortOrder {
     #[serde(rename = "desc")]
     DESCENDING,
 }
-
 impl ToString for CIAppSortOrder {
     fn to_string(&self) -> String {
         match self {

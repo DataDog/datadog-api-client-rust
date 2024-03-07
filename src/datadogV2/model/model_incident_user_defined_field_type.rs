@@ -10,7 +10,6 @@ pub enum IncidentUserDefinedFieldType {
     #[serde(rename = "user_defined_field")]
     USER_DEFINED_FIELD,
 }
-
 impl ToString for IncidentUserDefinedFieldType {
     fn to_string(&self) -> String {
         match self {

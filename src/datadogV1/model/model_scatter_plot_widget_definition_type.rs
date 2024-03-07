@@ -10,7 +10,6 @@ pub enum ScatterPlotWidgetDefinitionType {
     #[serde(rename = "scatterplot")]
     SCATTERPLOT,
 }
-
 impl ToString for ScatterPlotWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

@@ -10,7 +10,6 @@ pub enum TableWidgetDefinitionType {
     #[serde(rename = "query_table")]
     QUERY_TABLE,
 }
-
 impl ToString for TableWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

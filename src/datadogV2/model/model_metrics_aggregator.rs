@@ -26,7 +26,6 @@ pub enum MetricsAggregator {
     #[serde(rename = "area")]
     AREA,
 }
-
 impl ToString for MetricsAggregator {
     fn to_string(&self) -> String {
         match self {

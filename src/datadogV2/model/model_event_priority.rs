@@ -12,7 +12,6 @@ pub enum EventPriority {
     #[serde(rename = "low")]
     LOW,
 }
-
 impl ToString for EventPriority {
     fn to_string(&self) -> String {
         match self {

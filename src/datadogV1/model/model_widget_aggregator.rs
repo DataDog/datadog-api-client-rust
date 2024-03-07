@@ -20,7 +20,6 @@ pub enum WidgetAggregator {
     #[serde(rename = "percentile")]
     PERCENTILE,
 }
-
 impl ToString for WidgetAggregator {
     fn to_string(&self) -> String {
         match self {

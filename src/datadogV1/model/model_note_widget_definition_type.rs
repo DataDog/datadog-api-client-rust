@@ -10,7 +10,6 @@ pub enum NoteWidgetDefinitionType {
     #[serde(rename = "note")]
     NOTE,
 }
-
 impl ToString for NoteWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

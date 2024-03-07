@@ -10,7 +10,6 @@ pub enum MetricActiveConfigurationType {
     #[serde(rename = "actively_queried_configurations")]
     ACTIVELY_QUERIED_CONFIGURATIONS,
 }
-
 impl ToString for MetricActiveConfigurationType {
     fn to_string(&self) -> String {
         match self {

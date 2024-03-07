@@ -18,7 +18,6 @@ pub enum CIAppPipelineLevel {
     #[serde(rename = "custom")]
     CUSTOM,
 }
-
 impl ToString for CIAppPipelineLevel {
     fn to_string(&self) -> String {
         match self {

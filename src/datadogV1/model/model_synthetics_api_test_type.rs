@@ -10,7 +10,6 @@ pub enum SyntheticsAPITestType {
     #[serde(rename = "api")]
     API,
 }
-
 impl ToString for SyntheticsAPITestType {
     fn to_string(&self) -> String {
         match self {

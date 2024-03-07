@@ -12,7 +12,6 @@ pub enum IncidentSearchSortOrder {
     #[serde(rename = "-created")]
     CREATED_DESCENDING,
 }
-
 impl ToString for IncidentSearchSortOrder {
     fn to_string(&self) -> String {
         match self {

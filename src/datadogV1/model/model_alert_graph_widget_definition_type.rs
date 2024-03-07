@@ -10,7 +10,6 @@ pub enum AlertGraphWidgetDefinitionType {
     #[serde(rename = "alert_graph")]
     ALERT_GRAPH,
 }
-
 impl ToString for AlertGraphWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

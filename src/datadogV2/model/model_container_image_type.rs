@@ -10,7 +10,6 @@ pub enum ContainerImageType {
     #[serde(rename = "container_image")]
     CONTAINER_IMAGE,
 }
-
 impl ToString for ContainerImageType {
     fn to_string(&self) -> String {
         match self {

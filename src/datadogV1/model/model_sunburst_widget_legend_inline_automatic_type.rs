@@ -12,7 +12,6 @@ pub enum SunburstWidgetLegendInlineAutomaticType {
     #[serde(rename = "automatic")]
     AUTOMATIC,
 }
-
 impl ToString for SunburstWidgetLegendInlineAutomaticType {
     fn to_string(&self) -> String {
         match self {

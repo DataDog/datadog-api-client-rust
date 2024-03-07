@@ -10,7 +10,6 @@ pub enum DashboardInviteType {
     #[serde(rename = "public_dashboard_invitation")]
     PUBLIC_DASHBOARD_INVITATION,
 }
-
 impl ToString for DashboardInviteType {
     fn to_string(&self) -> String {
         match self {

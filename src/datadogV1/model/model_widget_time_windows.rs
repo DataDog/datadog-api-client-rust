@@ -24,7 +24,6 @@ pub enum WidgetTimeWindows {
     #[serde(rename = "global_time")]
     GLOBAL_TIME,
 }
-
 impl ToString for WidgetTimeWindows {
     fn to_string(&self) -> String {
         match self {

@@ -14,7 +14,6 @@ pub enum TableWidgetHasSearchBar {
     #[serde(rename = "auto")]
     AUTO,
 }
-
 impl ToString for TableWidgetHasSearchBar {
     fn to_string(&self) -> String {
         match self {

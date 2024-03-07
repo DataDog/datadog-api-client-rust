@@ -10,7 +10,6 @@ pub enum CloudConfigurationRuleType {
     #[serde(rename = "cloud_configuration")]
     CLOUD_CONFIGURATION,
 }
-
 impl ToString for CloudConfigurationRuleType {
     fn to_string(&self) -> String {
         match self {

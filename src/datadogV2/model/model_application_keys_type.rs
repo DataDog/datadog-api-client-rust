@@ -10,7 +10,6 @@ pub enum ApplicationKeysType {
     #[serde(rename = "application_keys")]
     APPLICATION_KEYS,
 }
-
 impl ToString for ApplicationKeysType {
     fn to_string(&self) -> String {
         match self {

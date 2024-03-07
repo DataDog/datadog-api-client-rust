@@ -10,7 +10,6 @@ pub enum IFrameWidgetDefinitionType {
     #[serde(rename = "iframe")]
     IFRAME,
 }
-
 impl ToString for IFrameWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

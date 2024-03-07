@@ -16,7 +16,6 @@ pub enum IncidentFieldAttributesValueType {
     #[serde(rename = "autocomplete")]
     AUTOCOMPLETE,
 }
-
 impl ToString for IncidentFieldAttributesValueType {
     fn to_string(&self) -> String {
         match self {

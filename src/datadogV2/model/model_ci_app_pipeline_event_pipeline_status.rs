@@ -18,7 +18,6 @@ pub enum CIAppPipelineEventPipelineStatus {
     #[serde(rename = "blocked")]
     BLOCKED,
 }
-
 impl ToString for CIAppPipelineEventPipelineStatus {
     fn to_string(&self) -> String {
         match self {

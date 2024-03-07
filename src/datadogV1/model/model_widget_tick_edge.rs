@@ -16,7 +16,6 @@ pub enum WidgetTickEdge {
     #[serde(rename = "top")]
     TOP,
 }
-
 impl ToString for WidgetTickEdge {
     fn to_string(&self) -> String {
         match self {

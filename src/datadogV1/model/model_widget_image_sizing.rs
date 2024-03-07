@@ -24,7 +24,6 @@ pub enum WidgetImageSizing {
     #[serde(rename = "center")]
     CENTER,
 }
-
 impl ToString for WidgetImageSizing {
     fn to_string(&self) -> String {
         match self {

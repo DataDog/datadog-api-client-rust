@@ -36,7 +36,6 @@ pub enum SyntheticsCheckType {
     #[serde(rename = "notIsEmpty")]
     NOT_IS_EMPTY,
 }
-
 impl ToString for SyntheticsCheckType {
     fn to_string(&self) -> String {
         match self {

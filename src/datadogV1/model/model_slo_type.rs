@@ -12,7 +12,6 @@ pub enum SLOType {
     #[serde(rename = "monitor")]
     MONITOR,
 }
-
 impl ToString for SLOType {
     fn to_string(&self) -> String {
         match self {

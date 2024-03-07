@@ -18,7 +18,6 @@ pub enum WidgetComparator {
     #[serde(rename = "<=")]
     LESS_THAN_OR_EQUAL_TO,
 }
-
 impl ToString for WidgetComparator {
     fn to_string(&self) -> String {
         match self {

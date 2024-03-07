@@ -14,7 +14,6 @@ pub enum OpsgenieServiceRegionType {
     #[serde(rename = "custom")]
     CUSTOM,
 }
-
 impl ToString for OpsgenieServiceRegionType {
     fn to_string(&self) -> String {
         match self {

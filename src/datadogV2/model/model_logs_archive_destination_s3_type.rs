@@ -10,7 +10,6 @@ pub enum LogsArchiveDestinationS3Type {
     #[serde(rename = "s3")]
     S3,
 }
-
 impl ToString for LogsArchiveDestinationS3Type {
     fn to_string(&self) -> String {
         match self {

@@ -16,7 +16,6 @@ pub enum SyntheticsTestProcessStatus {
     #[serde(rename = "finished_with_error")]
     FINISHED_WITH_ERROR,
 }
-
 impl ToString for SyntheticsTestProcessStatus {
     fn to_string(&self) -> String {
         match self {

@@ -14,16 +14,6 @@ pub enum MetricIntakeType {
     GAUGE,
 }
 
-impl ToString for MetricIntakeType {
-    fn to_string(&self) -> String {
-        match self {
-            Self::UNSPECIFIED => String::from("0"),
-            Self::COUNT => String::from("1"),
-            Self::RATE => String::from("2"),
-            Self::GAUGE => String::from("3"),
-        }
-    }
-}
 impl Serialize for MetricIntakeType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where

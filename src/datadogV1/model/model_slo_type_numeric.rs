@@ -12,14 +12,6 @@ pub enum SLOTypeNumeric {
     METRIC,
 }
 
-impl ToString for SLOTypeNumeric {
-    fn to_string(&self) -> String {
-        match self {
-            Self::MONITOR => String::from("0"),
-            Self::METRIC => String::from("1"),
-        }
-    }
-}
 impl Serialize for SLOTypeNumeric {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where

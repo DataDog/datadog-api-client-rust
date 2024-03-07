@@ -32,7 +32,6 @@ pub enum FormulaAndFunctionEventAggregation {
     #[serde(rename = "avg")]
     AVG,
 }
-
 impl ToString for FormulaAndFunctionEventAggregation {
     fn to_string(&self) -> String {
         match self {

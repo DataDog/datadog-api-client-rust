@@ -10,7 +10,6 @@ pub enum MonitorConfigPolicyType {
     #[serde(rename = "tag")]
     TAG,
 }
-
 impl ToString for MonitorConfigPolicyType {
     fn to_string(&self) -> String {
         match self {

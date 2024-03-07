@@ -14,16 +14,6 @@ pub enum ServiceCheckStatus {
     UNKNOWN,
 }
 
-impl ToString for ServiceCheckStatus {
-    fn to_string(&self) -> String {
-        match self {
-            Self::OK => String::from("0"),
-            Self::WARNING => String::from("1"),
-            Self::CRITICAL => String::from("2"),
-            Self::UNKNOWN => String::from("3"),
-        }
-    }
-}
 impl Serialize for ServiceCheckStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where

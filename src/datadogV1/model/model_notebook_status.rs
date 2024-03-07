@@ -10,7 +10,6 @@ pub enum NotebookStatus {
     #[serde(rename = "published")]
     PUBLISHED,
 }
-
 impl ToString for NotebookStatus {
     fn to_string(&self) -> String {
         match self {

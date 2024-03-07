@@ -10,7 +10,6 @@ pub enum SyntheticsBasicAuthSigv4Type {
     #[serde(rename = "sigv4")]
     SIGV4,
 }
-
 impl ToString for SyntheticsBasicAuthSigv4Type {
     fn to_string(&self) -> String {
         match self {

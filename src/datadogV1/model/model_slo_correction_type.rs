@@ -10,7 +10,6 @@ pub enum SLOCorrectionType {
     #[serde(rename = "correction")]
     CORRECTION,
 }
-
 impl ToString for SLOCorrectionType {
     fn to_string(&self) -> String {
         match self {

@@ -16,7 +16,6 @@ pub enum SLOErrorTimeframe {
     #[serde(rename = "all")]
     ALL,
 }
-
 impl ToString for SLOErrorTimeframe {
     fn to_string(&self) -> String {
         match self {

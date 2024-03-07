@@ -22,24 +22,6 @@ pub enum SecurityMonitoringRuleMaxSignalDuration {
     ONE_DAY,
 }
 
-impl ToString for SecurityMonitoringRuleMaxSignalDuration {
-    fn to_string(&self) -> String {
-        match self {
-            Self::ZERO_MINUTES => String::from("0"),
-            Self::ONE_MINUTE => String::from("60"),
-            Self::FIVE_MINUTES => String::from("300"),
-            Self::TEN_MINUTES => String::from("600"),
-            Self::FIFTEEN_MINUTES => String::from("900"),
-            Self::THIRTY_MINUTES => String::from("1800"),
-            Self::ONE_HOUR => String::from("3600"),
-            Self::TWO_HOURS => String::from("7200"),
-            Self::THREE_HOURS => String::from("10800"),
-            Self::SIX_HOURS => String::from("21600"),
-            Self::TWELVE_HOURS => String::from("43200"),
-            Self::ONE_DAY => String::from("86400"),
-        }
-    }
-}
 impl Serialize for SecurityMonitoringRuleMaxSignalDuration {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where

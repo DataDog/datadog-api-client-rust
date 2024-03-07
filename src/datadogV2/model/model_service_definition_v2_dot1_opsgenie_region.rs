@@ -12,7 +12,6 @@ pub enum ServiceDefinitionV2Dot1OpsgenieRegion {
     #[serde(rename = "EU")]
     EU,
 }
-
 impl ToString for ServiceDefinitionV2Dot1OpsgenieRegion {
     fn to_string(&self) -> String {
         match self {

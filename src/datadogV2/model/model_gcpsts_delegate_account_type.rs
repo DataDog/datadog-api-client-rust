@@ -10,7 +10,6 @@ pub enum GCPSTSDelegateAccountType {
     #[serde(rename = "gcp_sts_delegate")]
     GCP_STS_DELEGATE,
 }
-
 impl ToString for GCPSTSDelegateAccountType {
     fn to_string(&self) -> String {
         match self {

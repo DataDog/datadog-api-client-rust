@@ -14,7 +14,6 @@ pub enum SyntheticsStatus {
     #[serde(rename = "failed")]
     failed,
 }
-
 impl ToString for SyntheticsStatus {
     fn to_string(&self) -> String {
         match self {

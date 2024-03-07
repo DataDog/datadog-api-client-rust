@@ -16,18 +16,6 @@ pub enum SecurityMonitoringRuleNewValueOptionsForgetAfter {
     FOUR_WEEKS,
 }
 
-impl ToString for SecurityMonitoringRuleNewValueOptionsForgetAfter {
-    fn to_string(&self) -> String {
-        match self {
-            Self::ONE_DAY => String::from("1"),
-            Self::TWO_DAYS => String::from("2"),
-            Self::ONE_WEEK => String::from("7"),
-            Self::TWO_WEEKS => String::from("14"),
-            Self::THREE_WEEKS => String::from("21"),
-            Self::FOUR_WEEKS => String::from("28"),
-        }
-    }
-}
 impl Serialize for SecurityMonitoringRuleNewValueOptionsForgetAfter {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where

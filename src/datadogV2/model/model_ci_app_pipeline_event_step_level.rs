@@ -10,7 +10,6 @@ pub enum CIAppPipelineEventStepLevel {
     #[serde(rename = "step")]
     STEP,
 }
-
 impl ToString for CIAppPipelineEventStepLevel {
     fn to_string(&self) -> String {
         match self {

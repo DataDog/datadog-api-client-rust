@@ -10,7 +10,6 @@ pub enum MonitorConfigPolicyResourceType {
     #[serde(rename = "monitor-config-policy")]
     MONITOR_CONFIG_POLICY,
 }
-
 impl ToString for MonitorConfigPolicyResourceType {
     fn to_string(&self) -> String {
         match self {

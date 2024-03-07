@@ -14,7 +14,6 @@ pub enum HourlyUsageType {
     #[serde(rename = "lambda_traced_invocations_count")]
     LAMBDA_TRACED_INVOCATIONS_COUNT,
 }
-
 impl ToString for HourlyUsageType {
     fn to_string(&self) -> String {
         match self {

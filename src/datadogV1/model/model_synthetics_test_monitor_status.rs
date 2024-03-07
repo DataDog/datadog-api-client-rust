@@ -13,21 +13,12 @@ pub enum SyntheticsTestMonitorStatus {
     NO_DATA,
 }
 
-impl ToString for SyntheticsTestMonitorStatus {
-    fn to_string(&self) -> String {
-        match self {
-            Self::UNTRIGGERED => String::from("0"),
-            Self::TRIGGERED => String::from("1"),
-            Self::NO_DATA => String::from("2"),
-        }
-    }
-}
 impl Serialize for SyntheticsTestMonitorStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
     {
-        serializer.serialize_i32(match self {
+        serializer.serialize_i64(match self {
             SyntheticsTestMonitorStatus::UNTRIGGERED => 0,
             SyntheticsTestMonitorStatus::TRIGGERED => 1,
             SyntheticsTestMonitorStatus::NO_DATA => 2,
@@ -40,7 +31,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestMonitorStatus {
     where
         D: Deserializer<'de>,
     {
-        let s: i32 = i32::deserialize(deserializer)?;
+        let s: i64 = i64::deserialize(deserializer)?;
         Ok(match s {
             0 => SyntheticsTestMonitorStatus::UNTRIGGERED,
             1 => SyntheticsTestMonitorStatus::TRIGGERED,

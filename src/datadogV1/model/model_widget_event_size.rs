@@ -12,7 +12,6 @@ pub enum WidgetEventSize {
     #[serde(rename = "l")]
     LARGE,
 }
-
 impl ToString for WidgetEventSize {
     fn to_string(&self) -> String {
         match self {

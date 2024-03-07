@@ -14,7 +14,6 @@ pub enum MetricEstimateType {
     #[serde(rename = "percentile")]
     PERCENTILE,
 }
-
 impl ToString for MetricEstimateType {
     fn to_string(&self) -> String {
         match self {

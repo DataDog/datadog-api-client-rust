@@ -12,7 +12,6 @@ pub enum AuditLogsSort {
     #[serde(rename = "-timestamp")]
     TIMESTAMP_DESCENDING,
 }
-
 impl ToString for AuditLogsSort {
     fn to_string(&self) -> String {
         match self {

@@ -10,7 +10,6 @@ pub enum RestrictionPolicyType {
     #[serde(rename = "restriction_policy")]
     RESTRICTION_POLICY,
 }
-
 impl ToString for RestrictionPolicyType {
     fn to_string(&self) -> String {
         match self {

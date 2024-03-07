@@ -16,7 +16,6 @@ pub enum TargetFormatType {
     #[serde(rename = "double")]
     DOUBLE,
 }
-
 impl ToString for TargetFormatType {
     fn to_string(&self) -> String {
         match self {

@@ -10,7 +10,6 @@ pub enum FastlyServiceType {
     #[serde(rename = "fastly-services")]
     FASTLY_SERVICES,
 }
-
 impl ToString for FastlyServiceType {
     fn to_string(&self) -> String {
         match self {

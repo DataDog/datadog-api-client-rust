@@ -10,7 +10,6 @@ pub enum SpansType {
     #[serde(rename = "spans")]
     SPANS,
 }
-
 impl ToString for SpansType {
     fn to_string(&self) -> String {
         match self {

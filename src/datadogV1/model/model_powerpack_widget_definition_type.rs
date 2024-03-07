@@ -10,7 +10,6 @@ pub enum PowerpackWidgetDefinitionType {
     #[serde(rename = "powerpack")]
     POWERPACK,
 }
-
 impl ToString for PowerpackWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

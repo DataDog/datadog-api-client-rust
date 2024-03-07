@@ -12,7 +12,6 @@ pub enum WidgetColorPreference {
     #[serde(rename = "text")]
     TEXT,
 }
-
 impl ToString for WidgetColorPreference {
     fn to_string(&self) -> String {
         match self {

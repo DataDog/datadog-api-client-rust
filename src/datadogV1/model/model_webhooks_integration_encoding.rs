@@ -12,7 +12,6 @@ pub enum WebhooksIntegrationEncoding {
     #[serde(rename = "form")]
     FORM,
 }
-
 impl ToString for WebhooksIntegrationEncoding {
     fn to_string(&self) -> String {
         match self {

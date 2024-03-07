@@ -12,7 +12,6 @@ pub enum DashboardShareType {
     #[serde(rename = "invite")]
     INVITE,
 }
-
 impl ToString for DashboardShareType {
     fn to_string(&self) -> String {
         match self {

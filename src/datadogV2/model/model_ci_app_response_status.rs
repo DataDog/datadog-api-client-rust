@@ -12,7 +12,6 @@ pub enum CIAppResponseStatus {
     #[serde(rename = "timeout")]
     TIMEOUT,
 }
-
 impl ToString for CIAppResponseStatus {
     fn to_string(&self) -> String {
         match self {

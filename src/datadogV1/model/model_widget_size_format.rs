@@ -14,7 +14,6 @@ pub enum WidgetSizeFormat {
     #[serde(rename = "large")]
     LARGE,
 }
-
 impl ToString for WidgetSizeFormat {
     fn to_string(&self) -> String {
         match self {

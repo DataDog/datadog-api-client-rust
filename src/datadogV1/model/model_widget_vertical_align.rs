@@ -14,7 +14,6 @@ pub enum WidgetVerticalAlign {
     #[serde(rename = "bottom")]
     BOTTOM,
 }
-
 impl ToString for WidgetVerticalAlign {
     fn to_string(&self) -> String {
         match self {

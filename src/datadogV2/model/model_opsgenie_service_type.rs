@@ -10,7 +10,6 @@ pub enum OpsgenieServiceType {
     #[serde(rename = "opsgenie-service")]
     OPSGENIE_SERVICE,
 }
-
 impl ToString for OpsgenieServiceType {
     fn to_string(&self) -> String {
         match self {

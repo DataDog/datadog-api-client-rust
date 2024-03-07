@@ -12,7 +12,6 @@ pub enum MetricsDataSource {
     #[serde(rename = "cloud_cost")]
     CLOUD_COST,
 }
-
 impl ToString for MetricsDataSource {
     fn to_string(&self) -> String {
         match self {

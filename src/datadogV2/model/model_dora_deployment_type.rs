@@ -10,7 +10,6 @@ pub enum DORADeploymentType {
     #[serde(rename = "dora_deployment")]
     DORA_DEPLOYMENT,
 }
-
 impl ToString for DORADeploymentType {
     fn to_string(&self) -> String {
         match self {

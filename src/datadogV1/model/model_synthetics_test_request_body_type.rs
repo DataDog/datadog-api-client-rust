@@ -20,7 +20,6 @@ pub enum SyntheticsTestRequestBodyType {
     #[serde(rename = "graphql")]
     GRAPHQL,
 }
-
 impl ToString for SyntheticsTestRequestBodyType {
     fn to_string(&self) -> String {
         match self {

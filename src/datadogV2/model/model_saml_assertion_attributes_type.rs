@@ -10,7 +10,6 @@ pub enum SAMLAssertionAttributesType {
     #[serde(rename = "saml_assertion_attributes")]
     SAML_ASSERTION_ATTRIBUTES,
 }
-
 impl ToString for SAMLAssertionAttributesType {
     fn to_string(&self) -> String {
         match self {

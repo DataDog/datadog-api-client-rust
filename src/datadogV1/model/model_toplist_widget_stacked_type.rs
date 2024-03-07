@@ -10,7 +10,6 @@ pub enum ToplistWidgetStackedType {
     #[serde(rename = "stacked")]
     STACKED,
 }
-
 impl ToString for ToplistWidgetStackedType {
     fn to_string(&self) -> String {
         match self {

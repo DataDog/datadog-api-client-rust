@@ -10,7 +10,6 @@ pub enum DowntimeIncludedMonitorType {
     #[serde(rename = "monitors")]
     MONITORS,
 }
-
 impl ToString for DowntimeIncludedMonitorType {
     fn to_string(&self) -> String {
         match self {

@@ -10,7 +10,6 @@ pub enum SecurityMonitoringRuleHardcodedEvaluatorType {
     #[serde(rename = "log4shell")]
     LOG4SHELL,
 }
-
 impl ToString for SecurityMonitoringRuleHardcodedEvaluatorType {
     fn to_string(&self) -> String {
         match self {

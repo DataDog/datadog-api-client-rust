@@ -10,7 +10,6 @@ pub enum AwsCURConfigType {
     #[serde(rename = "aws_cur_config")]
     AWS_CUR_CONFIG,
 }
-
 impl ToString for AwsCURConfigType {
     fn to_string(&self) -> String {
         match self {

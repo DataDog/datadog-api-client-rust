@@ -40,7 +40,6 @@ pub enum CIAppAggregationFunction {
     #[serde(rename = "delta")]
     DELTA,
 }
-
 impl ToString for CIAppAggregationFunction {
     fn to_string(&self) -> String {
         match self {

@@ -10,7 +10,6 @@ pub enum AWSEventBridgeCreateStatus {
     #[serde(rename = "created")]
     CREATED,
 }
-
 impl ToString for AWSEventBridgeCreateStatus {
     fn to_string(&self) -> String {
         match self {

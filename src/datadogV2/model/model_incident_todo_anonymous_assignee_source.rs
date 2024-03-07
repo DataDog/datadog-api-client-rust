@@ -12,7 +12,6 @@ pub enum IncidentTodoAnonymousAssigneeSource {
     #[serde(rename = "microsoft_teams")]
     MICROSOFT_TEAMS,
 }
-
 impl ToString for IncidentTodoAnonymousAssigneeSource {
     fn to_string(&self) -> String {
         match self {

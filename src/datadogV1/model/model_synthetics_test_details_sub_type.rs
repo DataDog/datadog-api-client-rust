@@ -26,7 +26,6 @@ pub enum SyntheticsTestDetailsSubType {
     #[serde(rename = "grpc")]
     GRPC,
 }
-
 impl ToString for SyntheticsTestDetailsSubType {
     fn to_string(&self) -> String {
         match self {

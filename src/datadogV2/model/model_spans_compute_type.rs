@@ -12,7 +12,6 @@ pub enum SpansComputeType {
     #[serde(rename = "total")]
     TOTAL,
 }
-
 impl ToString for SpansComputeType {
     fn to_string(&self) -> String {
         match self {

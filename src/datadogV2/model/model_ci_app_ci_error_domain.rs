@@ -14,7 +14,6 @@ pub enum CIAppCIErrorDomain {
     #[serde(rename = "unknown")]
     UNKNOWN,
 }
-
 impl ToString for CIAppCIErrorDomain {
     fn to_string(&self) -> String {
         match self {

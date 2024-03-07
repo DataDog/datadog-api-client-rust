@@ -10,7 +10,6 @@ pub enum EventTimelineWidgetDefinitionType {
     #[serde(rename = "event_timeline")]
     EVENT_TIMELINE,
 }
-
 impl ToString for EventTimelineWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

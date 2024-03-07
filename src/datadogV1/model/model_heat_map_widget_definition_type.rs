@@ -10,7 +10,6 @@ pub enum HeatMapWidgetDefinitionType {
     #[serde(rename = "heatmap")]
     HEATMAP,
 }
-
 impl ToString for HeatMapWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

@@ -10,7 +10,6 @@ pub enum LogsArchiveDestinationAzureType {
     #[serde(rename = "azure")]
     AZURE,
 }
-
 impl ToString for LogsArchiveDestinationAzureType {
     fn to_string(&self) -> String {
         match self {

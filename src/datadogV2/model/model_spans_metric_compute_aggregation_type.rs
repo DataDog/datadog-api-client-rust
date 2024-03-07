@@ -12,7 +12,6 @@ pub enum SpansMetricComputeAggregationType {
     #[serde(rename = "distribution")]
     DISTRIBUTION,
 }
-
 impl ToString for SpansMetricComputeAggregationType {
     fn to_string(&self) -> String {
         match self {

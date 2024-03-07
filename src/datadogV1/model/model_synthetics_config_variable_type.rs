@@ -12,7 +12,6 @@ pub enum SyntheticsConfigVariableType {
     #[serde(rename = "text")]
     TEXT,
 }
-
 impl ToString for SyntheticsConfigVariableType {
     fn to_string(&self) -> String {
         match self {

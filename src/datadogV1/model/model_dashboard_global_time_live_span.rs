@@ -24,7 +24,6 @@ pub enum DashboardGlobalTimeLiveSpan {
     #[serde(rename = "3mo")]
     PAST_THREE_MONTHS,
 }
-
 impl ToString for DashboardGlobalTimeLiveSpan {
     fn to_string(&self) -> String {
         match self {

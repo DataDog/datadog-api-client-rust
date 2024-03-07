@@ -14,7 +14,6 @@ pub enum RetentionFilterAllType {
     #[serde(rename = "spans-appsec-sampling-processor")]
     SPANS_APPSEC_SAMPLING_PROCESSOR,
 }
-
 impl ToString for RetentionFilterAllType {
     fn to_string(&self) -> String {
         match self {

@@ -10,7 +10,6 @@ pub enum FormulaAndFunctionMetricDataSource {
     #[serde(rename = "metrics")]
     METRICS,
 }
-
 impl ToString for FormulaAndFunctionMetricDataSource {
     fn to_string(&self) -> String {
         match self {

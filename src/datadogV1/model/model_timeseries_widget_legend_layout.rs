@@ -14,7 +14,6 @@ pub enum TimeseriesWidgetLegendLayout {
     #[serde(rename = "vertical")]
     VERTICAL,
 }
-
 impl ToString for TimeseriesWidgetLegendLayout {
     fn to_string(&self) -> String {
         match self {

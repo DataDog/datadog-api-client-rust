@@ -12,7 +12,6 @@ pub enum EventsSort {
     #[serde(rename = "-timestamp")]
     TIMESTAMP_DESCENDING,
 }
-
 impl ToString for EventsSort {
     fn to_string(&self) -> String {
         match self {

@@ -10,7 +10,6 @@ pub enum LogStreamWidgetDefinitionType {
     #[serde(rename = "log_stream")]
     LOG_STREAM,
 }
-
 impl ToString for LogStreamWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

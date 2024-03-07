@@ -10,7 +10,6 @@ pub enum RolesType {
     #[serde(rename = "roles")]
     ROLES,
 }
-
 impl ToString for RolesType {
     fn to_string(&self) -> String {
         match self {

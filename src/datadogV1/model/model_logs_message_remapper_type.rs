@@ -10,7 +10,6 @@ pub enum LogsMessageRemapperType {
     #[serde(rename = "message-remapper")]
     MESSAGE_REMAPPER,
 }
-
 impl ToString for LogsMessageRemapperType {
     fn to_string(&self) -> String {
         match self {

@@ -10,7 +10,6 @@ pub enum FreeTextWidgetDefinitionType {
     #[serde(rename = "free_text")]
     FREE_TEXT,
 }
-
 impl ToString for FreeTextWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

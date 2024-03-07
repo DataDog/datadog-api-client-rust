@@ -12,7 +12,6 @@ pub enum SecurityMonitoringRuleNewValueOptionsLearningMethod {
     #[serde(rename = "threshold")]
     THRESHOLD,
 }
-
 impl ToString for SecurityMonitoringRuleNewValueOptionsLearningMethod {
     fn to_string(&self) -> String {
         match self {

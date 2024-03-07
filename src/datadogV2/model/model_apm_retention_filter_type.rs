@@ -10,7 +10,6 @@ pub enum ApmRetentionFilterType {
     #[serde(rename = "apm_retention_filter")]
     apm_retention_filter,
 }
-
 impl ToString for ApmRetentionFilterType {
     fn to_string(&self) -> String {
         match self {

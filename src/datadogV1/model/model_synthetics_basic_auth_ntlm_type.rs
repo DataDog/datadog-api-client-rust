@@ -10,7 +10,6 @@ pub enum SyntheticsBasicAuthNTLMType {
     #[serde(rename = "ntlm")]
     NTLM,
 }
-
 impl ToString for SyntheticsBasicAuthNTLMType {
     fn to_string(&self) -> String {
         match self {

@@ -24,7 +24,6 @@ pub enum GetTeamMembershipsSort {
     #[serde(rename = "-email")]
     _EMAIL,
 }
-
 impl ToString for GetTeamMembershipsSort {
     fn to_string(&self) -> String {
         match self {

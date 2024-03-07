@@ -10,7 +10,6 @@ pub enum HostMapWidgetDefinitionType {
     #[serde(rename = "hostmap")]
     HOSTMAP,
 }
-
 impl ToString for HostMapWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

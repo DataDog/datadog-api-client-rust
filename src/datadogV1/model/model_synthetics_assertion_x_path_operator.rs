@@ -10,7 +10,6 @@ pub enum SyntheticsAssertionXPathOperator {
     #[serde(rename = "validatesXPath")]
     VALIDATES_X_PATH,
 }
-
 impl ToString for SyntheticsAssertionXPathOperator {
     fn to_string(&self) -> String {
         match self {

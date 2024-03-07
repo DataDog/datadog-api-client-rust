@@ -10,7 +10,6 @@ pub enum ListStreamResponseFormat {
     #[serde(rename = "event_list")]
     EVENT_LIST,
 }
-
 impl ToString for ListStreamResponseFormat {
     fn to_string(&self) -> String {
         match self {

@@ -12,7 +12,6 @@ pub enum IncidentAttachmentAttachmentType {
     #[serde(rename = "postmortem")]
     POSTMORTEM,
 }
-
 impl ToString for IncidentAttachmentAttachmentType {
     fn to_string(&self) -> String {
         match self {

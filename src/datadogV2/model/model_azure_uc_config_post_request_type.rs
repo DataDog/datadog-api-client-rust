@@ -10,7 +10,6 @@ pub enum AzureUCConfigPostRequestType {
     #[serde(rename = "azure_uc_config_post_request")]
     AZURE_UC_CONFIG_POST_REQUEST,
 }
-
 impl ToString for AzureUCConfigPostRequestType {
     fn to_string(&self) -> String {
         match self {

@@ -10,7 +10,6 @@ pub enum ListStreamWidgetDefinitionType {
     #[serde(rename = "list_stream")]
     LIST_STREAM,
 }
-
 impl ToString for ListStreamWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

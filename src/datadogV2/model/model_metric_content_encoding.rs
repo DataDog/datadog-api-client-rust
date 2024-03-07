@@ -14,7 +14,6 @@ pub enum MetricContentEncoding {
     #[serde(rename = "gzip")]
     GZIP,
 }
-
 impl ToString for MetricContentEncoding {
     fn to_string(&self) -> String {
         match self {

@@ -10,7 +10,6 @@ pub enum ConfluentAccountType {
     #[serde(rename = "confluent-cloud-accounts")]
     CONFLUENT_CLOUD_ACCOUNTS,
 }
-
 impl ToString for ConfluentAccountType {
     fn to_string(&self) -> String {
         match self {

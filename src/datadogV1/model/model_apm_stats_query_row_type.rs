@@ -14,7 +14,6 @@ pub enum ApmStatsQueryRowType {
     #[serde(rename = "span")]
     SPAN,
 }
-
 impl ToString for ApmStatsQueryRowType {
     fn to_string(&self) -> String {
         match self {

@@ -10,7 +10,6 @@ pub enum AwsCURConfigPostRequestType {
     #[serde(rename = "aws_cur_config_post_request")]
     AWS_CUR_CONFIG_POST_REQUEST,
 }
-
 impl ToString for AwsCURConfigPostRequestType {
     fn to_string(&self) -> String {
         match self {

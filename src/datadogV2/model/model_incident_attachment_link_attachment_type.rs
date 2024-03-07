@@ -10,7 +10,6 @@ pub enum IncidentAttachmentLinkAttachmentType {
     #[serde(rename = "link")]
     LINK,
 }
-
 impl ToString for IncidentAttachmentLinkAttachmentType {
     fn to_string(&self) -> String {
         match self {

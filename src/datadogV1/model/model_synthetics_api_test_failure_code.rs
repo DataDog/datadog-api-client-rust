@@ -60,7 +60,6 @@ pub enum SyntheticsApiTestFailureCode {
     #[serde(rename = "INTERNAL_ERROR")]
     INTERNAL_ERROR,
 }
-
 impl ToString for SyntheticsApiTestFailureCode {
     fn to_string(&self) -> String {
         match self {

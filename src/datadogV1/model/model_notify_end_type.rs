@@ -12,7 +12,6 @@ pub enum NotifyEndType {
     #[serde(rename = "expired")]
     EXPIRED,
 }
-
 impl ToString for NotifyEndType {
     fn to_string(&self) -> String {
         match self {

@@ -12,7 +12,6 @@ pub enum QuerySortOrder {
     #[serde(rename = "desc")]
     DESC,
 }
-
 impl ToString for QuerySortOrder {
     fn to_string(&self) -> String {
         match self {

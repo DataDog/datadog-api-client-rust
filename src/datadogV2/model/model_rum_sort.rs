@@ -12,7 +12,6 @@ pub enum RUMSort {
     #[serde(rename = "-timestamp")]
     TIMESTAMP_DESCENDING,
 }
-
 impl ToString for RUMSort {
     fn to_string(&self) -> String {
         match self {

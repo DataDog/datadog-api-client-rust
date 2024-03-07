@@ -22,7 +22,6 @@ pub enum EventAlertType {
     #[serde(rename = "snapshot")]
     SNAPSHOT,
 }
-
 impl ToString for EventAlertType {
     fn to_string(&self) -> String {
         match self {

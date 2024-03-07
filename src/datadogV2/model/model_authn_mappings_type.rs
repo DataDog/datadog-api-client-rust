@@ -10,7 +10,6 @@ pub enum AuthNMappingsType {
     #[serde(rename = "authn_mappings")]
     AUTHN_MAPPINGS,
 }
-
 impl ToString for AuthNMappingsType {
     fn to_string(&self) -> String {
         match self {

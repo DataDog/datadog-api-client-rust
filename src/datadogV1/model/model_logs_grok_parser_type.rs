@@ -10,7 +10,6 @@ pub enum LogsGrokParserType {
     #[serde(rename = "grok-parser")]
     GROK_PARSER,
 }
-
 impl ToString for LogsGrokParserType {
     fn to_string(&self) -> String {
         match self {

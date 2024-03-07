@@ -14,7 +14,6 @@ pub enum TreeMapGroupBy {
     #[serde(rename = "process")]
     PROCESS,
 }
-
 impl ToString for TreeMapGroupBy {
     fn to_string(&self) -> String {
         match self {

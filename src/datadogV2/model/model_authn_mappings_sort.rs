@@ -32,7 +32,6 @@ pub enum AuthNMappingsSort {
     #[serde(rename = "-saml_assertion_attribute.attribute_value")]
     SAML_ASSERTION_ATTRIBUTE_VALUE_DESCENDING,
 }
-
 impl ToString for AuthNMappingsSort {
     fn to_string(&self) -> String {
         match self {

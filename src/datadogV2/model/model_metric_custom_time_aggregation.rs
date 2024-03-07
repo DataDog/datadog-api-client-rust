@@ -18,7 +18,6 @@ pub enum MetricCustomTimeAggregation {
     #[serde(rename = "sum")]
     SUM,
 }
-
 impl ToString for MetricCustomTimeAggregation {
     fn to_string(&self) -> String {
         match self {

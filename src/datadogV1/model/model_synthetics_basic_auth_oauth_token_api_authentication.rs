@@ -12,7 +12,6 @@ pub enum SyntheticsBasicAuthOauthTokenApiAuthentication {
     #[serde(rename = "body")]
     BODY,
 }
-
 impl ToString for SyntheticsBasicAuthOauthTokenApiAuthentication {
     fn to_string(&self) -> String {
         match self {

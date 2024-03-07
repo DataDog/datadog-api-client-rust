@@ -10,7 +10,6 @@ pub enum SLOListWidgetDefinitionType {
     #[serde(rename = "slo_list")]
     SLO_LIST,
 }
-
 impl ToString for SLOListWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

@@ -10,7 +10,6 @@ pub enum TopologyMapWidgetDefinitionType {
     #[serde(rename = "topology_map")]
     TOPOLOGY_MAP,
 }
-
 impl ToString for TopologyMapWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

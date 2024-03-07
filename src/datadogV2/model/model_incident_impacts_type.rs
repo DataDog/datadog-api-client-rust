@@ -10,7 +10,6 @@ pub enum IncidentImpactsType {
     #[serde(rename = "incident_impacts")]
     INCIDENT_IMPACTS,
 }
-
 impl ToString for IncidentImpactsType {
     fn to_string(&self) -> String {
         match self {

@@ -15,23 +15,12 @@ pub enum SyntheticsPlayingTab {
     TAB_3,
 }
 
-impl ToString for SyntheticsPlayingTab {
-    fn to_string(&self) -> String {
-        match self {
-            Self::MAIN_TAB => String::from("-1"),
-            Self::NEW_TAB => String::from("0"),
-            Self::TAB_1 => String::from("1"),
-            Self::TAB_2 => String::from("2"),
-            Self::TAB_3 => String::from("3"),
-        }
-    }
-}
 impl Serialize for SyntheticsPlayingTab {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
     {
-        serializer.serialize_i32(match self {
+        serializer.serialize_i64(match self {
             SyntheticsPlayingTab::MAIN_TAB => -1,
             SyntheticsPlayingTab::NEW_TAB => 0,
             SyntheticsPlayingTab::TAB_1 => 1,
@@ -46,7 +35,7 @@ impl<'de> Deserialize<'de> for SyntheticsPlayingTab {
     where
         D: Deserializer<'de>,
     {
-        let s: i32 = i32::deserialize(deserializer)?;
+        let s: i64 = i64::deserialize(deserializer)?;
         Ok(match s {
             -1 => SyntheticsPlayingTab::MAIN_TAB,
             0 => SyntheticsPlayingTab::NEW_TAB,

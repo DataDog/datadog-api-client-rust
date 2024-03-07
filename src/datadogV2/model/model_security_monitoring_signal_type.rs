@@ -10,7 +10,6 @@ pub enum SecurityMonitoringSignalType {
     #[serde(rename = "signal")]
     SIGNAL,
 }
-
 impl ToString for SecurityMonitoringSignalType {
     fn to_string(&self) -> String {
         match self {

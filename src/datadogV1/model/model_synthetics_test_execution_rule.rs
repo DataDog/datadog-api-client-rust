@@ -14,7 +14,6 @@ pub enum SyntheticsTestExecutionRule {
     #[serde(rename = "skipped")]
     SKIPPED,
 }
-
 impl ToString for SyntheticsTestExecutionRule {
     fn to_string(&self) -> String {
         match self {

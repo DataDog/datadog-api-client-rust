@@ -14,7 +14,6 @@ pub enum FormulaAndFunctionResponseFormat {
     #[serde(rename = "event_list")]
     EVENT_LIST,
 }
-
 impl ToString for FormulaAndFunctionResponseFormat {
     fn to_string(&self) -> String {
         match self {

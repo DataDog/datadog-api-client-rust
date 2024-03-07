@@ -14,7 +14,6 @@ pub enum WidgetMonitorSummaryDisplayFormat {
     #[serde(rename = "list")]
     LIST,
 }
-
 impl ToString for WidgetMonitorSummaryDisplayFormat {
     fn to_string(&self) -> String {
         match self {

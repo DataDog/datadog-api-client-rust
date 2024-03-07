@@ -10,7 +10,6 @@ pub enum ScalarColumnTypeNumber {
     #[serde(rename = "number")]
     NUMBER,
 }
-
 impl ToString for ScalarColumnTypeNumber {
     fn to_string(&self) -> String {
         match self {

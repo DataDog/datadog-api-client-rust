@@ -10,7 +10,6 @@ pub enum MetricIngestedIndexedVolumeType {
     #[serde(rename = "metric_volumes")]
     METRIC_VOLUMES,
 }
-
 impl ToString for MetricIngestedIndexedVolumeType {
     fn to_string(&self) -> String {
         match self {

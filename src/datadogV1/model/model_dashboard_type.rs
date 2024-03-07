@@ -12,7 +12,6 @@ pub enum DashboardType {
     #[serde(rename = "custom_screenboard")]
     CUSTOM_SCREENBOARD,
 }
-
 impl ToString for DashboardType {
     fn to_string(&self) -> String {
         match self {

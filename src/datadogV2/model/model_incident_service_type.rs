@@ -10,7 +10,6 @@ pub enum IncidentServiceType {
     #[serde(rename = "services")]
     SERVICES,
 }
-
 impl ToString for IncidentServiceType {
     fn to_string(&self) -> String {
         match self {

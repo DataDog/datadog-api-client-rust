@@ -10,7 +10,6 @@ pub enum CIAppPipelineEventTypeName {
     #[serde(rename = "cipipeline")]
     CIPIPELINE,
 }
-
 impl ToString for CIAppPipelineEventTypeName {
     fn to_string(&self) -> String {
         match self {

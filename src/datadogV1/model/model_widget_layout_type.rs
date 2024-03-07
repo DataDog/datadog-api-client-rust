@@ -10,7 +10,6 @@ pub enum WidgetLayoutType {
     #[serde(rename = "ordered")]
     ORDERED,
 }
-
 impl ToString for WidgetLayoutType {
     fn to_string(&self) -> String {
         match self {

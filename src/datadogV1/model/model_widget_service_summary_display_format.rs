@@ -14,7 +14,6 @@ pub enum WidgetServiceSummaryDisplayFormat {
     #[serde(rename = "three_column")]
     THREE_COLUMN,
 }
-
 impl ToString for WidgetServiceSummaryDisplayFormat {
     fn to_string(&self) -> String {
         match self {

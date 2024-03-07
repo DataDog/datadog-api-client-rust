@@ -10,7 +10,6 @@ pub enum SunburstWidgetDefinitionType {
     #[serde(rename = "sunburst")]
     SUNBURST,
 }
-
 impl ToString for SunburstWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

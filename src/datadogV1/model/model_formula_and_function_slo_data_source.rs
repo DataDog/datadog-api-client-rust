@@ -10,7 +10,6 @@ pub enum FormulaAndFunctionSLODataSource {
     #[serde(rename = "slo")]
     SLO,
 }
-
 impl ToString for FormulaAndFunctionSLODataSource {
     fn to_string(&self) -> String {
         match self {

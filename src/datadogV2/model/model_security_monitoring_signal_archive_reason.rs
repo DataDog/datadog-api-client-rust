@@ -18,7 +18,6 @@ pub enum SecurityMonitoringSignalArchiveReason {
     #[serde(rename = "other")]
     OTHER,
 }
-
 impl ToString for SecurityMonitoringSignalArchiveReason {
     fn to_string(&self) -> String {
         match self {

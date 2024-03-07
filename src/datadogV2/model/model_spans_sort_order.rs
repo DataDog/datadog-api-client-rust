@@ -12,7 +12,6 @@ pub enum SpansSortOrder {
     #[serde(rename = "desc")]
     DESCENDING,
 }
-
 impl ToString for SpansSortOrder {
     fn to_string(&self) -> String {
         match self {

@@ -13,15 +13,6 @@ pub enum SecurityMonitoringRuleNewValueOptionsLearningDuration {
     SEVEN_DAYS,
 }
 
-impl ToString for SecurityMonitoringRuleNewValueOptionsLearningDuration {
-    fn to_string(&self) -> String {
-        match self {
-            Self::ZERO_DAYS => String::from("0"),
-            Self::ONE_DAY => String::from("1"),
-            Self::SEVEN_DAYS => String::from("7"),
-        }
-    }
-}
 impl Serialize for SecurityMonitoringRuleNewValueOptionsLearningDuration {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where

@@ -20,7 +20,6 @@ pub enum IncidentSeverity {
     #[serde(rename = "SEV-5")]
     SEV_5,
 }
-
 impl ToString for IncidentSeverity {
     fn to_string(&self) -> String {
         match self {

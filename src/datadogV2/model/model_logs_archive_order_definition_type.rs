@@ -10,7 +10,6 @@ pub enum LogsArchiveOrderDefinitionType {
     #[serde(rename = "archive_order")]
     ARCHIVE_ORDER,
 }
-
 impl ToString for LogsArchiveOrderDefinitionType {
     fn to_string(&self) -> String {
         match self {

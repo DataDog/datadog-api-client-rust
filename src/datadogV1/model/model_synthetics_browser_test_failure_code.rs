@@ -74,7 +74,6 @@ pub enum SyntheticsBrowserTestFailureCode {
     #[serde(rename = "UPLOAD_FILES_NAME")]
     UPLOAD_FILES_NAME,
 }
-
 impl ToString for SyntheticsBrowserTestFailureCode {
     fn to_string(&self) -> String {
         match self {

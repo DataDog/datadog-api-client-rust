@@ -12,7 +12,6 @@ pub enum TreeMapSizeBy {
     #[serde(rename = "pct_mem")]
     PCT_MEM,
 }
-
 impl ToString for TreeMapSizeBy {
     fn to_string(&self) -> String {
         match self {

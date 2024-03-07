@@ -10,7 +10,6 @@ pub enum ToplistWidgetDefinitionType {
     #[serde(rename = "toplist")]
     TOPLIST,
 }
-
 impl ToString for ToplistWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

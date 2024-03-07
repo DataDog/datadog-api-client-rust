@@ -12,7 +12,6 @@ pub enum SyntheticsBrowserErrorType {
     #[serde(rename = "js")]
     JS,
 }
-
 impl ToString for SyntheticsBrowserErrorType {
     fn to_string(&self) -> String {
         match self {

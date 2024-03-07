@@ -18,7 +18,6 @@ pub enum SignalArchiveReason {
     #[serde(rename = "other")]
     OTHER,
 }
-
 impl ToString for SignalArchiveReason {
     fn to_string(&self) -> String {
         match self {

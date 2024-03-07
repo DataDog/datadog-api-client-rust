@@ -14,7 +14,6 @@ pub enum WidgetMessageDisplay {
     #[serde(rename = "expanded-lg")]
     EXPANDED_LARGE,
 }
-
 impl ToString for WidgetMessageDisplay {
     fn to_string(&self) -> String {
         match self {

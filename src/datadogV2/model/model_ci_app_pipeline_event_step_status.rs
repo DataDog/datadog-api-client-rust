@@ -12,7 +12,6 @@ pub enum CIAppPipelineEventStepStatus {
     #[serde(rename = "error")]
     ERROR,
 }
-
 impl ToString for CIAppPipelineEventStepStatus {
     fn to_string(&self) -> String {
         match self {

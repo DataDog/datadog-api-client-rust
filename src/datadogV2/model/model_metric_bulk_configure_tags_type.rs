@@ -10,7 +10,6 @@ pub enum MetricBulkConfigureTagsType {
     #[serde(rename = "metric_bulk_configure_tags")]
     BULK_MANAGE_TAGS,
 }
-
 impl ToString for MetricBulkConfigureTagsType {
     fn to_string(&self) -> String {
         match self {

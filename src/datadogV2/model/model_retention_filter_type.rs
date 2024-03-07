@@ -10,7 +10,6 @@ pub enum RetentionFilterType {
     #[serde(rename = "spans-sampling-processor")]
     SPANS_SAMPLING_PROCESSOR,
 }
-
 impl ToString for RetentionFilterType {
     fn to_string(&self) -> String {
         match self {

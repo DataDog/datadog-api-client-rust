@@ -18,20 +18,6 @@ pub enum SecurityMonitoringRuleEvaluationWindow {
     TWO_HOURS,
 }
 
-impl ToString for SecurityMonitoringRuleEvaluationWindow {
-    fn to_string(&self) -> String {
-        match self {
-            Self::ZERO_MINUTES => String::from("0"),
-            Self::ONE_MINUTE => String::from("60"),
-            Self::FIVE_MINUTES => String::from("300"),
-            Self::TEN_MINUTES => String::from("600"),
-            Self::FIFTEEN_MINUTES => String::from("900"),
-            Self::THIRTY_MINUTES => String::from("1800"),
-            Self::ONE_HOUR => String::from("3600"),
-            Self::TWO_HOURS => String::from("7200"),
-        }
-    }
-}
 impl Serialize for SecurityMonitoringRuleEvaluationWindow {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where

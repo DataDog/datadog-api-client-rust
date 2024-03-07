@@ -10,7 +10,6 @@ pub enum ServiceDefinitionV2Dot1MSTeamsType {
     #[serde(rename = "microsoft-teams")]
     MICROSOFT_TEAMS,
 }
-
 impl ToString for ServiceDefinitionV2Dot1MSTeamsType {
     fn to_string(&self) -> String {
         match self {

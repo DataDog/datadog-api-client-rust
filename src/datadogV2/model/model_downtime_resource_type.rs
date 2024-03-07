@@ -10,7 +10,6 @@ pub enum DowntimeResourceType {
     #[serde(rename = "downtime")]
     DOWNTIME,
 }
-
 impl ToString for DowntimeResourceType {
     fn to_string(&self) -> String {
         match self {

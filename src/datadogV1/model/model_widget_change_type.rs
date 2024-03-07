@@ -12,7 +12,6 @@ pub enum WidgetChangeType {
     #[serde(rename = "relative")]
     RELATIVE,
 }
-
 impl ToString for WidgetChangeType {
     fn to_string(&self) -> String {
         match self {

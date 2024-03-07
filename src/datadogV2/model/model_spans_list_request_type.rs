@@ -10,7 +10,6 @@ pub enum SpansListRequestType {
     #[serde(rename = "search_request")]
     SEARCH_REQUEST,
 }
-
 impl ToString for SpansListRequestType {
     fn to_string(&self) -> String {
         match self {

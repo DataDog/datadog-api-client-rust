@@ -10,7 +10,6 @@ pub enum IncidentAttachmentType {
     #[serde(rename = "incident_attachments")]
     INCIDENT_ATTACHMENTS,
 }
-
 impl ToString for IncidentAttachmentType {
     fn to_string(&self) -> String {
         match self {

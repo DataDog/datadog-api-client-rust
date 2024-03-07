@@ -10,7 +10,6 @@ pub enum SecurityMonitoringSignalRuleType {
     #[serde(rename = "signal_correlation")]
     SIGNAL_CORRELATION,
 }
-
 impl ToString for SecurityMonitoringSignalRuleType {
     fn to_string(&self) -> String {
         match self {

@@ -16,7 +16,6 @@ pub enum SLOCorrectionCategory {
     #[serde(rename = "Other")]
     OTHER,
 }
-
 impl ToString for SLOCorrectionCategory {
     fn to_string(&self) -> String {
         match self {

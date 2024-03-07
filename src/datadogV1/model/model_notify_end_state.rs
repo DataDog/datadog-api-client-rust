@@ -14,7 +14,6 @@ pub enum NotifyEndState {
     #[serde(rename = "warn")]
     WARN,
 }
-
 impl ToString for NotifyEndState {
     fn to_string(&self) -> String {
         match self {

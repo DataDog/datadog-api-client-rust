@@ -12,14 +12,6 @@ pub enum SecurityMonitoringRuleNewValueOptionsLearningThreshold {
     ONE_OCCURRENCE,
 }
 
-impl ToString for SecurityMonitoringRuleNewValueOptionsLearningThreshold {
-    fn to_string(&self) -> String {
-        match self {
-            Self::ZERO_OCCURRENCES => String::from("0"),
-            Self::ONE_OCCURRENCE => String::from("1"),
-        }
-    }
-}
 impl Serialize for SecurityMonitoringRuleNewValueOptionsLearningThreshold {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where

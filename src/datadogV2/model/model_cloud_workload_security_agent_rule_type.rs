@@ -10,7 +10,6 @@ pub enum CloudWorkloadSecurityAgentRuleType {
     #[serde(rename = "agent_rule")]
     AGENT_RULE,
 }
-
 impl ToString for CloudWorkloadSecurityAgentRuleType {
     fn to_string(&self) -> String {
         match self {

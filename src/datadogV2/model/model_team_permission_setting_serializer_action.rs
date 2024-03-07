@@ -12,7 +12,6 @@ pub enum TeamPermissionSettingSerializerAction {
     #[serde(rename = "edit")]
     EDIT,
 }
-
 impl ToString for TeamPermissionSettingSerializerAction {
     fn to_string(&self) -> String {
         match self {

@@ -10,7 +10,6 @@ pub enum DistributionPointsContentEncoding {
     #[serde(rename = "deflate")]
     DEFLATE,
 }
-
 impl ToString for DistributionPointsContentEncoding {
     fn to_string(&self) -> String {
         match self {

@@ -10,7 +10,6 @@ pub enum FunnelSource {
     #[serde(rename = "rum")]
     RUM,
 }
-
 impl ToString for FunnelSource {
     fn to_string(&self) -> String {
         match self {

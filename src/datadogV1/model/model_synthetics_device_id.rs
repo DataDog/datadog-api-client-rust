@@ -32,7 +32,6 @@ pub enum SyntheticsDeviceID {
     #[serde(rename = "edge.mobile_small")]
     EDGE_MOBILE_SMALL,
 }
-
 impl ToString for SyntheticsDeviceID {
     fn to_string(&self) -> String {
         match self {

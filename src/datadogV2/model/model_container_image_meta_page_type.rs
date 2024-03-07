@@ -10,7 +10,6 @@ pub enum ContainerImageMetaPageType {
     #[serde(rename = "cursor_limit")]
     CURSOR_LIMIT,
 }
-
 impl ToString for ContainerImageMetaPageType {
     fn to_string(&self) -> String {
         match self {

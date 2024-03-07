@@ -12,7 +12,6 @@ pub enum SunburstWidgetLegendTableType {
     #[serde(rename = "none")]
     NONE,
 }
-
 impl ToString for SunburstWidgetLegendTableType {
     fn to_string(&self) -> String {
         match self {

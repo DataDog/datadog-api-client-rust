@@ -16,7 +16,6 @@ pub enum DowntimeStatus {
     #[serde(rename = "scheduled")]
     SCHEDULED,
 }
-
 impl ToString for DowntimeStatus {
     fn to_string(&self) -> String {
         match self {

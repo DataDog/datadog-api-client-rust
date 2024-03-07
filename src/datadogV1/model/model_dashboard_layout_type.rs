@@ -12,7 +12,6 @@ pub enum DashboardLayoutType {
     #[serde(rename = "free")]
     FREE,
 }
-
 impl ToString for DashboardLayoutType {
     fn to_string(&self) -> String {
         match self {

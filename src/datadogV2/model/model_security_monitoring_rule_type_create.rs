@@ -14,7 +14,6 @@ pub enum SecurityMonitoringRuleTypeCreate {
     #[serde(rename = "workload_security")]
     WORKLOAD_SECURITY,
 }
-
 impl ToString for SecurityMonitoringRuleTypeCreate {
     fn to_string(&self) -> String {
         match self {

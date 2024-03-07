@@ -18,7 +18,6 @@ pub enum NotebookGraphSize {
     #[serde(rename = "xl")]
     EXTRA_LARGE,
 }
-
 impl ToString for NotebookGraphSize {
     fn to_string(&self) -> String {
         match self {

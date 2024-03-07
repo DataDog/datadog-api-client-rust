@@ -10,7 +10,6 @@ pub enum LogsTraceRemapperType {
     #[serde(rename = "trace-id-remapper")]
     TRACE_ID_REMAPPER,
 }
-
 impl ToString for LogsTraceRemapperType {
     fn to_string(&self) -> String {
         match self {

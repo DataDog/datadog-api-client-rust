@@ -14,7 +14,6 @@ pub enum WidgetSummaryType {
     #[serde(rename = "combined")]
     COMBINED,
 }
-
 impl ToString for WidgetSummaryType {
     fn to_string(&self) -> String {
         match self {

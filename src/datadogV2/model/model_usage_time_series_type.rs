@@ -10,7 +10,6 @@ pub enum UsageTimeSeriesType {
     #[serde(rename = "usage_timeseries")]
     USAGE_TIMESERIES,
 }
-
 impl ToString for UsageTimeSeriesType {
     fn to_string(&self) -> String {
         match self {

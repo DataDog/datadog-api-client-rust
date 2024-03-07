@@ -10,7 +10,6 @@ pub enum RuleType {
     #[serde(rename = "rule")]
     RULE,
 }
-
 impl ToString for RuleType {
     fn to_string(&self) -> String {
         match self {

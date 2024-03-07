@@ -14,7 +14,6 @@ pub enum SignalTriageState {
     #[serde(rename = "under_review")]
     UNDER_REVIEW,
 }
-
 impl ToString for SignalTriageState {
     fn to_string(&self) -> String {
         match self {

@@ -10,7 +10,6 @@ pub enum CostByOrgType {
     #[serde(rename = "cost_by_org")]
     COST_BY_ORG,
 }
-
 impl ToString for CostByOrgType {
     fn to_string(&self) -> String {
         match self {

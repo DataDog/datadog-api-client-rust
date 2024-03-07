@@ -10,7 +10,6 @@ pub enum APIKeysType {
     #[serde(rename = "api_keys")]
     API_KEYS,
 }
-
 impl ToString for APIKeysType {
     fn to_string(&self) -> String {
         match self {

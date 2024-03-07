@@ -10,7 +10,6 @@ pub enum LogsURLParserType {
     #[serde(rename = "url-parser")]
     URL_PARSER,
 }
-
 impl ToString for LogsURLParserType {
     fn to_string(&self) -> String {
         match self {

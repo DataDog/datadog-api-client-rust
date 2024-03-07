@@ -10,7 +10,6 @@ pub enum CheckStatusWidgetDefinitionType {
     #[serde(rename = "check_status")]
     CHECK_STATUS,
 }
-
 impl ToString for CheckStatusWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

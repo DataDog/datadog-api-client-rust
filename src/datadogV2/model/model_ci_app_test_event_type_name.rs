@@ -10,7 +10,6 @@ pub enum CIAppTestEventTypeName {
     #[serde(rename = "citest")]
     CITEST,
 }
-
 impl ToString for CIAppTestEventTypeName {
     fn to_string(&self) -> String {
         match self {

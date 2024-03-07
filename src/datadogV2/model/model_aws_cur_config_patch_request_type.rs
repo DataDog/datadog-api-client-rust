@@ -10,7 +10,6 @@ pub enum AwsCURConfigPatchRequestType {
     #[serde(rename = "aws_cur_config_patch_request")]
     AWS_CUR_CONFIG_PATCH_REQUEST,
 }
-
 impl ToString for AwsCURConfigPatchRequestType {
     fn to_string(&self) -> String {
         match self {

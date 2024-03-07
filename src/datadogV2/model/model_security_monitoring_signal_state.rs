@@ -14,7 +14,6 @@ pub enum SecurityMonitoringSignalState {
     #[serde(rename = "under_review")]
     UNDER_REVIEW,
 }
-
 impl ToString for SecurityMonitoringSignalState {
     fn to_string(&self) -> String {
         match self {

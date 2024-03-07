@@ -10,7 +10,6 @@ pub enum SensitiveDataScannerRuleType {
     #[serde(rename = "sensitive_data_scanner_rule")]
     SENSITIVE_DATA_SCANNER_RULE,
 }
-
 impl ToString for SensitiveDataScannerRuleType {
     fn to_string(&self) -> String {
         match self {

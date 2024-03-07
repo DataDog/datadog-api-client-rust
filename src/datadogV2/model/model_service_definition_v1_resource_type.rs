@@ -26,7 +26,6 @@ pub enum ServiceDefinitionV1ResourceType {
     #[serde(rename = "link")]
     LINK,
 }
-
 impl ToString for ServiceDefinitionV1ResourceType {
     fn to_string(&self) -> String {
         match self {

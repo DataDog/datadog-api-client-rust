@@ -16,7 +16,6 @@ pub enum OnMissingDataOption {
     #[serde(rename = "resolve")]
     RESOLVE,
 }
-
 impl ToString for OnMissingDataOption {
     fn to_string(&self) -> String {
         match self {

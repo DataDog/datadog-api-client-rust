@@ -16,7 +16,6 @@ pub enum SensitiveDataScannerProduct {
     #[serde(rename = "apm")]
     APM,
 }
-
 impl ToString for SensitiveDataScannerProduct {
     fn to_string(&self) -> String {
         match self {

@@ -14,7 +14,6 @@ pub enum SyntheticsGlobalVariableParseTestOptionsType {
     #[serde(rename = "local_variable")]
     LOCAL_VARIABLE,
 }
-
 impl ToString for SyntheticsGlobalVariableParseTestOptionsType {
     fn to_string(&self) -> String {
         match self {

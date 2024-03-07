@@ -16,7 +16,6 @@ pub enum LogsArchiveState {
     #[serde(rename = "WORKING_AUTH_LEGACY")]
     WORKING_AUTH_LEGACY,
 }
-
 impl ToString for LogsArchiveState {
     fn to_string(&self) -> String {
         match self {

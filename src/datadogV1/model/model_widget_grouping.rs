@@ -12,7 +12,6 @@ pub enum WidgetGrouping {
     #[serde(rename = "cluster")]
     CLUSTER,
 }
-
 impl ToString for WidgetGrouping {
     fn to_string(&self) -> String {
         match self {

@@ -10,7 +10,6 @@ pub enum GroupWidgetDefinitionType {
     #[serde(rename = "group")]
     GROUP,
 }
-
 impl ToString for GroupWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

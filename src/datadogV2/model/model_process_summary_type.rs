@@ -10,7 +10,6 @@ pub enum ProcessSummaryType {
     #[serde(rename = "process")]
     PROCESS,
 }
-
 impl ToString for ProcessSummaryType {
     fn to_string(&self) -> String {
         match self {

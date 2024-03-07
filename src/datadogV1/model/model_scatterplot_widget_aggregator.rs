@@ -18,7 +18,6 @@ pub enum ScatterplotWidgetAggregator {
     #[serde(rename = "sum")]
     SUM,
 }
-
 impl ToString for ScatterplotWidgetAggregator {
     fn to_string(&self) -> String {
         match self {
