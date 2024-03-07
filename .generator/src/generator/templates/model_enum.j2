@@ -22,6 +22,7 @@ pub enum {{ name }} {
 	{{ model["x-enum-varnames"][index] or value.upper() }},
 {%- endif %}
 {%- endfor %}
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 {%- if not model["type"] == "integer" %}
@@ -32,6 +33,7 @@ impl ToString for {{ name }} {
 {%- for index, value in enumerate(model.enum) %}
             Self::{{model["x-enum-varnames"][index] or value.upper()}} => String::from("{{value}}"),
 {%- endfor %}
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -44,11 +46,12 @@ impl Serialize for {{ name }} {
     where
         S: Serializer,
     {
-        serializer.serialize_{{ model|simple_type(render_option=False) }}(match self {
+        match self {
             {%- for index, value in enumerate(model.enum) %}
-            Self::{{ model["x-enum-varnames"][index] or value.upper() }} => {{ value }},
+            Self::{{ model["x-enum-varnames"][index] or value.upper() }} => serializer.serialize_{{ model|simple_type(render_option=False) }}({{ value }}),
             {%- endfor %}
-        })
+            Self::UnparsedObject(v) => v.serialize(serializer),
+        }
     }
 }
 
