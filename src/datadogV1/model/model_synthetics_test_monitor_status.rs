@@ -18,23 +18,23 @@ impl Serialize for SyntheticsTestMonitorStatus {
         S: Serializer,
     {
         serializer.serialize_i64(match self {
-            SyntheticsTestMonitorStatus::UNTRIGGERED => 0,
-            SyntheticsTestMonitorStatus::TRIGGERED => 1,
-            SyntheticsTestMonitorStatus::NO_DATA => 2,
+            Self::UNTRIGGERED => 0,
+            Self::TRIGGERED => 1,
+            Self::NO_DATA => 2,
         })
     }
 }
 
 impl<'de> Deserialize<'de> for SyntheticsTestMonitorStatus {
-    fn deserialize<D>(deserializer: D) -> Result<SyntheticsTestMonitorStatus, D::Error>
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: i64 = i64::deserialize(deserializer)?;
         Ok(match s {
-            0 => SyntheticsTestMonitorStatus::UNTRIGGERED,
-            1 => SyntheticsTestMonitorStatus::TRIGGERED,
-            2 => SyntheticsTestMonitorStatus::NO_DATA,
+            0 => Self::UNTRIGGERED,
+            1 => Self::TRIGGERED,
+            2 => Self::NO_DATA,
             _ => {
                 return Err(serde::de::Error::custom(format!(
                     "Invalid value for SyntheticsTestMonitorStatus: {}",

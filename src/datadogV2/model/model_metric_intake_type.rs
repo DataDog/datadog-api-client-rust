@@ -19,25 +19,25 @@ impl Serialize for MetricIntakeType {
         S: Serializer,
     {
         serializer.serialize_i32(match self {
-            MetricIntakeType::UNSPECIFIED => 0,
-            MetricIntakeType::COUNT => 1,
-            MetricIntakeType::RATE => 2,
-            MetricIntakeType::GAUGE => 3,
+            Self::UNSPECIFIED => 0,
+            Self::COUNT => 1,
+            Self::RATE => 2,
+            Self::GAUGE => 3,
         })
     }
 }
 
 impl<'de> Deserialize<'de> for MetricIntakeType {
-    fn deserialize<D>(deserializer: D) -> Result<MetricIntakeType, D::Error>
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: i32 = i32::deserialize(deserializer)?;
         Ok(match s {
-            0 => MetricIntakeType::UNSPECIFIED,
-            1 => MetricIntakeType::COUNT,
-            2 => MetricIntakeType::RATE,
-            3 => MetricIntakeType::GAUGE,
+            0 => Self::UNSPECIFIED,
+            1 => Self::COUNT,
+            2 => Self::RATE,
+            3 => Self::GAUGE,
             _ => {
                 return Err(serde::de::Error::custom(format!(
                     "Invalid value for MetricIntakeType: {}",

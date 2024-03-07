@@ -23,33 +23,33 @@ impl Serialize for SecurityMonitoringRuleEvaluationWindow {
         S: Serializer,
     {
         serializer.serialize_i32(match self {
-            SecurityMonitoringRuleEvaluationWindow::ZERO_MINUTES => 0,
-            SecurityMonitoringRuleEvaluationWindow::ONE_MINUTE => 60,
-            SecurityMonitoringRuleEvaluationWindow::FIVE_MINUTES => 300,
-            SecurityMonitoringRuleEvaluationWindow::TEN_MINUTES => 600,
-            SecurityMonitoringRuleEvaluationWindow::FIFTEEN_MINUTES => 900,
-            SecurityMonitoringRuleEvaluationWindow::THIRTY_MINUTES => 1800,
-            SecurityMonitoringRuleEvaluationWindow::ONE_HOUR => 3600,
-            SecurityMonitoringRuleEvaluationWindow::TWO_HOURS => 7200,
+            Self::ZERO_MINUTES => 0,
+            Self::ONE_MINUTE => 60,
+            Self::FIVE_MINUTES => 300,
+            Self::TEN_MINUTES => 600,
+            Self::FIFTEEN_MINUTES => 900,
+            Self::THIRTY_MINUTES => 1800,
+            Self::ONE_HOUR => 3600,
+            Self::TWO_HOURS => 7200,
         })
     }
 }
 
 impl<'de> Deserialize<'de> for SecurityMonitoringRuleEvaluationWindow {
-    fn deserialize<D>(deserializer: D) -> Result<SecurityMonitoringRuleEvaluationWindow, D::Error>
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: i32 = i32::deserialize(deserializer)?;
         Ok(match s {
-            0 => SecurityMonitoringRuleEvaluationWindow::ZERO_MINUTES,
-            60 => SecurityMonitoringRuleEvaluationWindow::ONE_MINUTE,
-            300 => SecurityMonitoringRuleEvaluationWindow::FIVE_MINUTES,
-            600 => SecurityMonitoringRuleEvaluationWindow::TEN_MINUTES,
-            900 => SecurityMonitoringRuleEvaluationWindow::FIFTEEN_MINUTES,
-            1800 => SecurityMonitoringRuleEvaluationWindow::THIRTY_MINUTES,
-            3600 => SecurityMonitoringRuleEvaluationWindow::ONE_HOUR,
-            7200 => SecurityMonitoringRuleEvaluationWindow::TWO_HOURS,
+            0 => Self::ZERO_MINUTES,
+            60 => Self::ONE_MINUTE,
+            300 => Self::FIVE_MINUTES,
+            600 => Self::TEN_MINUTES,
+            900 => Self::FIFTEEN_MINUTES,
+            1800 => Self::THIRTY_MINUTES,
+            3600 => Self::ONE_HOUR,
+            7200 => Self::TWO_HOURS,
             _ => {
                 return Err(serde::de::Error::custom(format!(
                     "Invalid value for SecurityMonitoringRuleEvaluationWindow: {}",

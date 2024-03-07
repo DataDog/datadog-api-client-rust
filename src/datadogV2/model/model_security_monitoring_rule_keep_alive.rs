@@ -25,37 +25,37 @@ impl Serialize for SecurityMonitoringRuleKeepAlive {
         S: Serializer,
     {
         serializer.serialize_i32(match self {
-            SecurityMonitoringRuleKeepAlive::ZERO_MINUTES => 0,
-            SecurityMonitoringRuleKeepAlive::ONE_MINUTE => 60,
-            SecurityMonitoringRuleKeepAlive::FIVE_MINUTES => 300,
-            SecurityMonitoringRuleKeepAlive::TEN_MINUTES => 600,
-            SecurityMonitoringRuleKeepAlive::FIFTEEN_MINUTES => 900,
-            SecurityMonitoringRuleKeepAlive::THIRTY_MINUTES => 1800,
-            SecurityMonitoringRuleKeepAlive::ONE_HOUR => 3600,
-            SecurityMonitoringRuleKeepAlive::TWO_HOURS => 7200,
-            SecurityMonitoringRuleKeepAlive::THREE_HOURS => 10800,
-            SecurityMonitoringRuleKeepAlive::SIX_HOURS => 21600,
+            Self::ZERO_MINUTES => 0,
+            Self::ONE_MINUTE => 60,
+            Self::FIVE_MINUTES => 300,
+            Self::TEN_MINUTES => 600,
+            Self::FIFTEEN_MINUTES => 900,
+            Self::THIRTY_MINUTES => 1800,
+            Self::ONE_HOUR => 3600,
+            Self::TWO_HOURS => 7200,
+            Self::THREE_HOURS => 10800,
+            Self::SIX_HOURS => 21600,
         })
     }
 }
 
 impl<'de> Deserialize<'de> for SecurityMonitoringRuleKeepAlive {
-    fn deserialize<D>(deserializer: D) -> Result<SecurityMonitoringRuleKeepAlive, D::Error>
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: i32 = i32::deserialize(deserializer)?;
         Ok(match s {
-            0 => SecurityMonitoringRuleKeepAlive::ZERO_MINUTES,
-            60 => SecurityMonitoringRuleKeepAlive::ONE_MINUTE,
-            300 => SecurityMonitoringRuleKeepAlive::FIVE_MINUTES,
-            600 => SecurityMonitoringRuleKeepAlive::TEN_MINUTES,
-            900 => SecurityMonitoringRuleKeepAlive::FIFTEEN_MINUTES,
-            1800 => SecurityMonitoringRuleKeepAlive::THIRTY_MINUTES,
-            3600 => SecurityMonitoringRuleKeepAlive::ONE_HOUR,
-            7200 => SecurityMonitoringRuleKeepAlive::TWO_HOURS,
-            10800 => SecurityMonitoringRuleKeepAlive::THREE_HOURS,
-            21600 => SecurityMonitoringRuleKeepAlive::SIX_HOURS,
+            0 => Self::ZERO_MINUTES,
+            60 => Self::ONE_MINUTE,
+            300 => Self::FIVE_MINUTES,
+            600 => Self::TEN_MINUTES,
+            900 => Self::FIFTEEN_MINUTES,
+            1800 => Self::THIRTY_MINUTES,
+            3600 => Self::ONE_HOUR,
+            7200 => Self::TWO_HOURS,
+            10800 => Self::THREE_HOURS,
+            21600 => Self::SIX_HOURS,
             _ => {
                 return Err(serde::de::Error::custom(format!(
                     "Invalid value for SecurityMonitoringRuleKeepAlive: {}",

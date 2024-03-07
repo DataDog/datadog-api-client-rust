@@ -17,23 +17,21 @@ impl Serialize for SecurityMonitoringRuleNewValueOptionsLearningThreshold {
         S: Serializer,
     {
         serializer.serialize_i32(match self {
-            SecurityMonitoringRuleNewValueOptionsLearningThreshold::ZERO_OCCURRENCES => 0,
-            SecurityMonitoringRuleNewValueOptionsLearningThreshold::ONE_OCCURRENCE => 1,
+            Self::ZERO_OCCURRENCES => 0,
+            Self::ONE_OCCURRENCE => 1,
         })
     }
 }
 
 impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptionsLearningThreshold {
-    fn deserialize<D>(
-        deserializer: D,
-    ) -> Result<SecurityMonitoringRuleNewValueOptionsLearningThreshold, D::Error>
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: i32 = i32::deserialize(deserializer)?;
         Ok(match s {
-            0 => SecurityMonitoringRuleNewValueOptionsLearningThreshold::ZERO_OCCURRENCES,
-            1 => SecurityMonitoringRuleNewValueOptionsLearningThreshold::ONE_OCCURRENCE,
+            0 => Self::ZERO_OCCURRENCES,
+            1 => Self::ONE_OCCURRENCE,
             _ => {
                 return Err(serde::de::Error::custom(format!(
                     "Invalid value for SecurityMonitoringRuleNewValueOptionsLearningThreshold: {}",

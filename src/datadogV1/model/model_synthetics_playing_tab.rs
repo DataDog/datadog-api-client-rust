@@ -20,27 +20,27 @@ impl Serialize for SyntheticsPlayingTab {
         S: Serializer,
     {
         serializer.serialize_i64(match self {
-            SyntheticsPlayingTab::MAIN_TAB => -1,
-            SyntheticsPlayingTab::NEW_TAB => 0,
-            SyntheticsPlayingTab::TAB_1 => 1,
-            SyntheticsPlayingTab::TAB_2 => 2,
-            SyntheticsPlayingTab::TAB_3 => 3,
+            Self::MAIN_TAB => -1,
+            Self::NEW_TAB => 0,
+            Self::TAB_1 => 1,
+            Self::TAB_2 => 2,
+            Self::TAB_3 => 3,
         })
     }
 }
 
 impl<'de> Deserialize<'de> for SyntheticsPlayingTab {
-    fn deserialize<D>(deserializer: D) -> Result<SyntheticsPlayingTab, D::Error>
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: i64 = i64::deserialize(deserializer)?;
         Ok(match s {
-            -1 => SyntheticsPlayingTab::MAIN_TAB,
-            0 => SyntheticsPlayingTab::NEW_TAB,
-            1 => SyntheticsPlayingTab::TAB_1,
-            2 => SyntheticsPlayingTab::TAB_2,
-            3 => SyntheticsPlayingTab::TAB_3,
+            -1 => Self::MAIN_TAB,
+            0 => Self::NEW_TAB,
+            1 => Self::TAB_1,
+            2 => Self::TAB_2,
+            3 => Self::TAB_3,
             _ => {
                 return Err(serde::de::Error::custom(format!(
                     "Invalid value for SyntheticsPlayingTab: {}",

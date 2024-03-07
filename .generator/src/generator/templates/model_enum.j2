@@ -13,7 +13,7 @@ use serde::{Serialize, Deserialize};
 {%- else %}
 #[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
 {%- endif %}
-pub enum {{name}} {
+pub enum {{ name }} {
 {%- for index, value in enumerate(model.enum) %}
 {%- if model["type"] == "integer" %}
 	{{ model["x-enum-varnames"][index] or value.upper() }},
@@ -26,7 +26,7 @@ pub enum {{name}} {
 
 {%- if not model["type"] == "integer" %}
 
-impl ToString for {{name}} {
+impl ToString for {{ name }} {
     fn to_string(&self) -> String {
         match self {
 {%- for index, value in enumerate(model.enum) %}
@@ -39,28 +39,28 @@ impl ToString for {{name}} {
 
 {%- if model["type"] == "integer" %}
 
-impl Serialize for {{name}} {
+impl Serialize for {{ name }} {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
     {
         serializer.serialize_{{ model|simple_type(render_option=False) }}(match self {
             {%- for index, value in enumerate(model.enum) %}
-            {{ name }}::{{ model["x-enum-varnames"][index] or value.upper() }} => {{ value }},
+            Self::{{ model["x-enum-varnames"][index] or value.upper() }} => {{ value }},
             {%- endfor %}
         })
     }
 }
 
-impl<'de> Deserialize<'de> for {{name}} {
-    fn deserialize<D>(deserializer: D) -> Result<{{name}}, D::Error>
+impl<'de> Deserialize<'de> for {{ name }} {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: {{ model|simple_type(render_option=False) }} = {{ model|simple_type(render_option=False) }}::deserialize(deserializer)?;
         Ok(match s {
             {%- for index, value in enumerate(model.enum) %}
-            {{ value }} => {{ name }}::{{ model["x-enum-varnames"][index] or value.upper() }},
+            {{ value }} => Self::{{ model["x-enum-varnames"][index] or value.upper() }},
             {%- endfor %}
             _ => return Err(serde::de::Error::custom(format!("Invalid value for {{ name }}: {}", s))),
         })

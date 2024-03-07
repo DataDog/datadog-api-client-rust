@@ -17,21 +17,21 @@ impl Serialize for SLOTypeNumeric {
         S: Serializer,
     {
         serializer.serialize_i32(match self {
-            SLOTypeNumeric::MONITOR => 0,
-            SLOTypeNumeric::METRIC => 1,
+            Self::MONITOR => 0,
+            Self::METRIC => 1,
         })
     }
 }
 
 impl<'de> Deserialize<'de> for SLOTypeNumeric {
-    fn deserialize<D>(deserializer: D) -> Result<SLOTypeNumeric, D::Error>
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: i32 = i32::deserialize(deserializer)?;
         Ok(match s {
-            0 => SLOTypeNumeric::MONITOR,
-            1 => SLOTypeNumeric::METRIC,
+            0 => Self::MONITOR,
+            1 => Self::METRIC,
             _ => {
                 return Err(serde::de::Error::custom(format!(
                     "Invalid value for SLOTypeNumeric: {}",

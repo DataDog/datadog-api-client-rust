@@ -19,25 +19,25 @@ impl Serialize for ServiceCheckStatus {
         S: Serializer,
     {
         serializer.serialize_i32(match self {
-            ServiceCheckStatus::OK => 0,
-            ServiceCheckStatus::WARNING => 1,
-            ServiceCheckStatus::CRITICAL => 2,
-            ServiceCheckStatus::UNKNOWN => 3,
+            Self::OK => 0,
+            Self::WARNING => 1,
+            Self::CRITICAL => 2,
+            Self::UNKNOWN => 3,
         })
     }
 }
 
 impl<'de> Deserialize<'de> for ServiceCheckStatus {
-    fn deserialize<D>(deserializer: D) -> Result<ServiceCheckStatus, D::Error>
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: i32 = i32::deserialize(deserializer)?;
         Ok(match s {
-            0 => ServiceCheckStatus::OK,
-            1 => ServiceCheckStatus::WARNING,
-            2 => ServiceCheckStatus::CRITICAL,
-            3 => ServiceCheckStatus::UNKNOWN,
+            0 => Self::OK,
+            1 => Self::WARNING,
+            2 => Self::CRITICAL,
+            3 => Self::UNKNOWN,
             _ => {
                 return Err(serde::de::Error::custom(format!(
                     "Invalid value for ServiceCheckStatus: {}",

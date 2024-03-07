@@ -21,31 +21,29 @@ impl Serialize for SecurityMonitoringRuleNewValueOptionsForgetAfter {
         S: Serializer,
     {
         serializer.serialize_i32(match self {
-            SecurityMonitoringRuleNewValueOptionsForgetAfter::ONE_DAY => 1,
-            SecurityMonitoringRuleNewValueOptionsForgetAfter::TWO_DAYS => 2,
-            SecurityMonitoringRuleNewValueOptionsForgetAfter::ONE_WEEK => 7,
-            SecurityMonitoringRuleNewValueOptionsForgetAfter::TWO_WEEKS => 14,
-            SecurityMonitoringRuleNewValueOptionsForgetAfter::THREE_WEEKS => 21,
-            SecurityMonitoringRuleNewValueOptionsForgetAfter::FOUR_WEEKS => 28,
+            Self::ONE_DAY => 1,
+            Self::TWO_DAYS => 2,
+            Self::ONE_WEEK => 7,
+            Self::TWO_WEEKS => 14,
+            Self::THREE_WEEKS => 21,
+            Self::FOUR_WEEKS => 28,
         })
     }
 }
 
 impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptionsForgetAfter {
-    fn deserialize<D>(
-        deserializer: D,
-    ) -> Result<SecurityMonitoringRuleNewValueOptionsForgetAfter, D::Error>
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: i32 = i32::deserialize(deserializer)?;
         Ok(match s {
-            1 => SecurityMonitoringRuleNewValueOptionsForgetAfter::ONE_DAY,
-            2 => SecurityMonitoringRuleNewValueOptionsForgetAfter::TWO_DAYS,
-            7 => SecurityMonitoringRuleNewValueOptionsForgetAfter::ONE_WEEK,
-            14 => SecurityMonitoringRuleNewValueOptionsForgetAfter::TWO_WEEKS,
-            21 => SecurityMonitoringRuleNewValueOptionsForgetAfter::THREE_WEEKS,
-            28 => SecurityMonitoringRuleNewValueOptionsForgetAfter::FOUR_WEEKS,
+            1 => Self::ONE_DAY,
+            2 => Self::TWO_DAYS,
+            7 => Self::ONE_WEEK,
+            14 => Self::TWO_WEEKS,
+            21 => Self::THREE_WEEKS,
+            28 => Self::FOUR_WEEKS,
             _ => {
                 return Err(serde::de::Error::custom(format!(
                     "Invalid value for SecurityMonitoringRuleNewValueOptionsForgetAfter: {}",
