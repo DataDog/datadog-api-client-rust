@@ -6,7 +6,6 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-#[repr(i64)]
 pub enum SyntheticsPlayingTab {
     MAIN_TAB,
     NEW_TAB,

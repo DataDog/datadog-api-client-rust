@@ -10,7 +10,6 @@ use serde::{Serialize, Deserialize};
 #[non_exhaustive]
 {%- if model["type"] == "integer" %}
 #[derive(Clone, Debug, Eq, PartialEq)]
-#[repr({{model | simple_type(false, false)}})]
 {%- else %}
 #[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
 {%- endif %}

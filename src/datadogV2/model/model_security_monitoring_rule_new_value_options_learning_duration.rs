@@ -6,7 +6,6 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-#[repr(i32)]
 pub enum SecurityMonitoringRuleNewValueOptionsLearningDuration {
     ZERO_DAYS,
     ONE_DAY,
