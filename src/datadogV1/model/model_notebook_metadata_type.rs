@@ -18,6 +18,7 @@ pub enum NotebookMetadataType {
     #[serde(rename = "report")]
     REPORT,
 }
+
 impl ToString for NotebookMetadataType {
     fn to_string(&self) -> String {
         match self {

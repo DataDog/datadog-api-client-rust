@@ -10,6 +10,7 @@ pub enum OutcomesBatchType {
     #[serde(rename = "batched-outcome")]
     BATCHED_OUTCOME,
 }
+
 impl ToString for OutcomesBatchType {
     fn to_string(&self) -> String {
         match self {

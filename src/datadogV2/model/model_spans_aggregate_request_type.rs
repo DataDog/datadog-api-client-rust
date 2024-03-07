@@ -10,6 +10,7 @@ pub enum SpansAggregateRequestType {
     #[serde(rename = "aggregate_request")]
     AGGREGATE_REQUEST,
 }
+
 impl ToString for SpansAggregateRequestType {
     fn to_string(&self) -> String {
         match self {

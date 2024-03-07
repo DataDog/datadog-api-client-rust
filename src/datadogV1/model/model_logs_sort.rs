@@ -12,6 +12,7 @@ pub enum LogsSort {
     #[serde(rename = "desc")]
     TIME_DESCENDING,
 }
+
 impl ToString for LogsSort {
     fn to_string(&self) -> String {
         match self {

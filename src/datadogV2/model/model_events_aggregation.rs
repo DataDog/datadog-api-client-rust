@@ -30,6 +30,7 @@ pub enum EventsAggregation {
     #[serde(rename = "avg")]
     AVG,
 }
+
 impl ToString for EventsAggregation {
     fn to_string(&self) -> String {
         match self {

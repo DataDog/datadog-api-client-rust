@@ -12,6 +12,7 @@ pub enum LogsAggregateResponseStatus {
     #[serde(rename = "timeout")]
     TIMEOUT,
 }
+
 impl ToString for LogsAggregateResponseStatus {
     fn to_string(&self) -> String {
         match self {

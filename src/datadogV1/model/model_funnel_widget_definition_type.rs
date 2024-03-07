@@ -10,6 +10,7 @@ pub enum FunnelWidgetDefinitionType {
     #[serde(rename = "funnel")]
     FUNNEL,
 }
+
 impl ToString for FunnelWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

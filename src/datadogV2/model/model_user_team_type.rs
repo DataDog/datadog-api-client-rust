@@ -10,6 +10,7 @@ pub enum UserTeamType {
     #[serde(rename = "team_memberships")]
     TEAM_MEMBERSHIPS,
 }
+
 impl ToString for UserTeamType {
     fn to_string(&self) -> String {
         match self {

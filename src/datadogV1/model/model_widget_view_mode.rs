@@ -14,6 +14,7 @@ pub enum WidgetViewMode {
     #[serde(rename = "both")]
     BOTH,
 }
+
 impl ToString for WidgetViewMode {
     fn to_string(&self) -> String {
         match self {

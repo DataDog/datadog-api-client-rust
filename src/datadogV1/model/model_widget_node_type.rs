@@ -12,6 +12,7 @@ pub enum WidgetNodeType {
     #[serde(rename = "container")]
     CONTAINER,
 }
+
 impl ToString for WidgetNodeType {
     fn to_string(&self) -> String {
         match self {

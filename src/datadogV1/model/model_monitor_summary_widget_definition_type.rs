@@ -10,6 +10,7 @@ pub enum MonitorSummaryWidgetDefinitionType {
     #[serde(rename = "manage_status")]
     MANAGE_STATUS,
 }
+
 impl ToString for MonitorSummaryWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

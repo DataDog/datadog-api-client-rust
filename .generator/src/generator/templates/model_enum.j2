@@ -26,6 +26,7 @@ pub enum {{name}} {
 }
 
 {%- if not model["type"] == "integer" %}
+
 impl ToString for {{name}} {
     fn to_string(&self) -> String {
         match self {

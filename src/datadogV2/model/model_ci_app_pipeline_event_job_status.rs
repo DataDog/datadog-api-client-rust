@@ -16,6 +16,7 @@ pub enum CIAppPipelineEventJobStatus {
     #[serde(rename = "skipped")]
     SKIPPED,
 }
+
 impl ToString for CIAppPipelineEventJobStatus {
     fn to_string(&self) -> String {
         match self {

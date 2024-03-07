@@ -12,6 +12,7 @@ pub enum DowntimeNotifyEndStateActions {
     #[serde(rename = "expired")]
     EXPIRED,
 }
+
 impl ToString for DowntimeNotifyEndStateActions {
     fn to_string(&self) -> String {
         match self {

@@ -10,6 +10,7 @@ pub enum MetricTagConfigurationType {
     #[serde(rename = "manage_tags")]
     MANAGE_TAGS,
 }
+
 impl ToString for MetricTagConfigurationType {
     fn to_string(&self) -> String {
         match self {

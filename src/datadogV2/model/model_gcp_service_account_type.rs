@@ -10,6 +10,7 @@ pub enum GCPServiceAccountType {
     #[serde(rename = "gcp_service_account")]
     GCP_SERVICE_ACCOUNT,
 }
+
 impl ToString for GCPServiceAccountType {
     fn to_string(&self) -> String {
         match self {

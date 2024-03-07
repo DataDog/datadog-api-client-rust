@@ -10,6 +10,7 @@ pub enum LogsDateRemapperType {
     #[serde(rename = "date-remapper")]
     DATE_REMAPPER,
 }
+
 impl ToString for LogsDateRemapperType {
     fn to_string(&self) -> String {
         match self {

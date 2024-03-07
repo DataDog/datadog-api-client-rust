@@ -38,6 +38,7 @@ pub enum ListStreamComputeAggregation {
     #[serde(rename = "most_frequent")]
     MOST_FREQUENT,
 }
+
 impl ToString for ListStreamComputeAggregation {
     fn to_string(&self) -> String {
         match self {

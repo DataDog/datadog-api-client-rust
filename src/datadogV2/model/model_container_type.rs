@@ -10,6 +10,7 @@ pub enum ContainerType {
     #[serde(rename = "container")]
     CONTAINER,
 }
+
 impl ToString for ContainerType {
     fn to_string(&self) -> String {
         match self {

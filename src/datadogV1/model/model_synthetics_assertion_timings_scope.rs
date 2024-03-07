@@ -12,6 +12,7 @@ pub enum SyntheticsAssertionTimingsScope {
     #[serde(rename = "withoutDNS")]
     WITHOUT_DNS,
 }
+
 impl ToString for SyntheticsAssertionTimingsScope {
     fn to_string(&self) -> String {
         match self {

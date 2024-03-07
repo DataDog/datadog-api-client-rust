@@ -10,6 +10,7 @@ pub enum SecurityFilterFilteredDataType {
     #[serde(rename = "logs")]
     LOGS,
 }
+
 impl ToString for SecurityFilterFilteredDataType {
     fn to_string(&self) -> String {
         match self {

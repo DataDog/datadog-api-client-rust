@@ -10,6 +10,7 @@ pub enum ImageWidgetDefinitionType {
     #[serde(rename = "image")]
     IMAGE,
 }
+
 impl ToString for ImageWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

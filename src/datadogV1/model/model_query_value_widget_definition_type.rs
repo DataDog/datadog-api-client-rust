@@ -10,6 +10,7 @@ pub enum QueryValueWidgetDefinitionType {
     #[serde(rename = "query_value")]
     QUERY_VALUE,
 }
+
 impl ToString for QueryValueWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

@@ -18,6 +18,7 @@ pub enum TeamPermissionSettingValue {
     #[serde(rename = "teams_manage")]
     TEAMS_MANAGE,
 }
+
 impl ToString for TeamPermissionSettingValue {
     fn to_string(&self) -> String {
         match self {

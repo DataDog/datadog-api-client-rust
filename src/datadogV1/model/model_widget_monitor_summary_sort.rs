@@ -42,6 +42,7 @@ pub enum WidgetMonitorSummarySort {
     #[serde(rename = "priority,desc")]
     PRIORITY_DESCENDING,
 }
+
 impl ToString for WidgetMonitorSummarySort {
     fn to_string(&self) -> String {
         match self {

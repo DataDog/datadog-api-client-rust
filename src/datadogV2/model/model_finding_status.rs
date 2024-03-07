@@ -18,6 +18,7 @@ pub enum FindingStatus {
     #[serde(rename = "info")]
     INFO,
 }
+
 impl ToString for FindingStatus {
     fn to_string(&self) -> String {
         match self {

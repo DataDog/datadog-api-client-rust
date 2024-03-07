@@ -12,6 +12,7 @@ pub enum SpansAggregateSortType {
     #[serde(rename = "measure")]
     MEASURE,
 }
+
 impl ToString for SpansAggregateSortType {
     fn to_string(&self) -> String {
         match self {

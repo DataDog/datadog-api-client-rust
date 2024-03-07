@@ -28,6 +28,7 @@ pub enum FormulaAndFunctionEventsDataSource {
     #[serde(rename = "ci_pipelines")]
     CI_PIPELINES,
 }
+
 impl ToString for FormulaAndFunctionEventsDataSource {
     fn to_string(&self) -> String {
         match self {

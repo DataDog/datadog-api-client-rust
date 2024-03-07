@@ -10,6 +10,7 @@ pub enum SyntheticsWarningType {
     #[serde(rename = "user_locator")]
     USER_LOCATOR,
 }
+
 impl ToString for SyntheticsWarningType {
     fn to_string(&self) -> String {
         match self {

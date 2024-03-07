@@ -10,6 +10,7 @@ pub enum ProjectedCostType {
     #[serde(rename = "projected_cost")]
     PROJECt_COST,
 }
+
 impl ToString for ProjectedCostType {
     fn to_string(&self) -> String {
         match self {

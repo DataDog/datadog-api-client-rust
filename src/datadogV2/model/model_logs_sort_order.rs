@@ -12,6 +12,7 @@ pub enum LogsSortOrder {
     #[serde(rename = "desc")]
     DESCENDING,
 }
+
 impl ToString for LogsSortOrder {
     fn to_string(&self) -> String {
         match self {

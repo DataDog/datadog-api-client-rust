@@ -10,6 +10,7 @@ pub enum SyntheticsBrowserTestType {
     #[serde(rename = "browser")]
     BROWSER,
 }
+
 impl ToString for SyntheticsBrowserTestType {
     fn to_string(&self) -> String {
         match self {

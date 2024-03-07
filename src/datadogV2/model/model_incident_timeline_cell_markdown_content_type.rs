@@ -10,6 +10,7 @@ pub enum IncidentTimelineCellMarkdownContentType {
     #[serde(rename = "markdown")]
     MARKDOWN,
 }
+
 impl ToString for IncidentTimelineCellMarkdownContentType {
     fn to_string(&self) -> String {
         match self {

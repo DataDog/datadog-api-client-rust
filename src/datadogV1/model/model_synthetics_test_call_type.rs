@@ -12,6 +12,7 @@ pub enum SyntheticsTestCallType {
     #[serde(rename = "unary")]
     UNARY,
 }
+
 impl ToString for SyntheticsTestCallType {
     fn to_string(&self) -> String {
         match self {

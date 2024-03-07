@@ -16,6 +16,7 @@ pub enum SLOState {
     #[serde(rename = "no_data")]
     NO_DATA,
 }
+
 impl ToString for SLOState {
     fn to_string(&self) -> String {
         match self {

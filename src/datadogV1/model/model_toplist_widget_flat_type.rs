@@ -10,6 +10,7 @@ pub enum ToplistWidgetFlatType {
     #[serde(rename = "flat")]
     FLAT,
 }
+
 impl ToString for ToplistWidgetFlatType {
     fn to_string(&self) -> String {
         match self {

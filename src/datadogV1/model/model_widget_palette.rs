@@ -46,6 +46,7 @@ pub enum WidgetPalette {
     #[serde(rename = "black_on_light_red")]
     BLACK_ON_LIGHT_RED,
 }
+
 impl ToString for WidgetPalette {
     fn to_string(&self) -> String {
         match self {

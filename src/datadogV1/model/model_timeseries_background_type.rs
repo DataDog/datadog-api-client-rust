@@ -12,6 +12,7 @@ pub enum TimeseriesBackgroundType {
     #[serde(rename = "area")]
     AREA,
 }
+
 impl ToString for TimeseriesBackgroundType {
     fn to_string(&self) -> String {
         match self {

@@ -14,6 +14,7 @@ pub enum ToplistWidgetLegend {
     #[serde(rename = "none")]
     NONE,
 }
+
 impl ToString for ToplistWidgetLegend {
     fn to_string(&self) -> String {
         match self {

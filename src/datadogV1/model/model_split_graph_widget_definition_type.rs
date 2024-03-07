@@ -10,6 +10,7 @@ pub enum SplitGraphWidgetDefinitionType {
     #[serde(rename = "split_group")]
     SPLIT_GROUP,
 }
+
 impl ToString for SplitGraphWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

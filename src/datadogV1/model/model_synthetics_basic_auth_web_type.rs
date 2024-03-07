@@ -10,6 +10,7 @@ pub enum SyntheticsBasicAuthWebType {
     #[serde(rename = "web")]
     WEB,
 }
+
 impl ToString for SyntheticsBasicAuthWebType {
     fn to_string(&self) -> String {
         match self {

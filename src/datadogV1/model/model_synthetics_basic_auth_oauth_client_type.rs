@@ -10,6 +10,7 @@ pub enum SyntheticsBasicAuthOauthClientType {
     #[serde(rename = "oauth-client")]
     OAUTH_CLIENT,
 }
+
 impl ToString for SyntheticsBasicAuthOauthClientType {
     fn to_string(&self) -> String {
         match self {

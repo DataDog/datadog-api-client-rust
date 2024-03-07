@@ -12,6 +12,7 @@ pub enum RUMComputeType {
     #[serde(rename = "total")]
     TOTAL,
 }
+
 impl ToString for RUMComputeType {
     fn to_string(&self) -> String {
         match self {

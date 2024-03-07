@@ -10,6 +10,7 @@ pub enum CostAttributionType {
     #[serde(rename = "cost_by_tag")]
     COST_BY_TAG,
 }
+
 impl ToString for CostAttributionType {
     fn to_string(&self) -> String {
         match self {

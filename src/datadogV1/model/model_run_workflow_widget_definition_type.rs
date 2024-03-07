@@ -10,6 +10,7 @@ pub enum RunWorkflowWidgetDefinitionType {
     #[serde(rename = "run_workflow")]
     RUN_WORKFLOW,
 }
+
 impl ToString for RunWorkflowWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

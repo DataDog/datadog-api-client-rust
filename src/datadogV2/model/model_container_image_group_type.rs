@@ -10,6 +10,7 @@ pub enum ContainerImageGroupType {
     #[serde(rename = "container_image_group")]
     CONTAINER_IMAGE_GROUP,
 }
+
 impl ToString for ContainerImageGroupType {
     fn to_string(&self) -> String {
         match self {

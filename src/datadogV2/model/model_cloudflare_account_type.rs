@@ -10,6 +10,7 @@ pub enum CloudflareAccountType {
     #[serde(rename = "cloudflare-accounts")]
     CLOUDFLARE_ACCOUNTS,
 }
+
 impl ToString for CloudflareAccountType {
     fn to_string(&self) -> String {
         match self {

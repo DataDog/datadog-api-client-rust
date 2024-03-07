@@ -24,6 +24,7 @@ pub enum APIKeysSort {
     #[serde(rename = "-name")]
     NAME_DESCENDING,
 }
+
 impl ToString for APIKeysSort {
     fn to_string(&self) -> String {
         match self {

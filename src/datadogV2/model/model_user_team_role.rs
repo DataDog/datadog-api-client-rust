@@ -10,6 +10,7 @@ pub enum UserTeamRole {
     #[serde(rename = "admin")]
     ADMIN,
 }
+
 impl ToString for UserTeamRole {
     fn to_string(&self) -> String {
         match self {

@@ -80,6 +80,7 @@ pub enum UsageAttributionSort {
     #[serde(rename = "estimated_rum_usage_attribution_percentage")]
     ESTIMATED_RUM_USAGE_ATTRIBUTION_PERCENTAGE,
 }
+
 impl ToString for UsageAttributionSort {
     fn to_string(&self) -> String {
         match self {

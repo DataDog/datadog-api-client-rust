@@ -24,6 +24,7 @@ pub enum SecurityMonitoringRuleQueryAggregation {
     #[serde(rename = "none")]
     NONE,
 }
+
 impl ToString for SecurityMonitoringRuleQueryAggregation {
     fn to_string(&self) -> String {
         match self {

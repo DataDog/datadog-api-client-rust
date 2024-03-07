@@ -12,6 +12,7 @@ pub enum SyntheticsTestPauseStatus {
     #[serde(rename = "paused")]
     PAUSED,
 }
+
 impl ToString for SyntheticsTestPauseStatus {
     fn to_string(&self) -> String {
         match self {

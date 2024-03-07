@@ -38,6 +38,7 @@ pub enum SyntheticsAssertionOperator {
     #[serde(rename = "isUndefined")]
     IS_UNDEFINED,
 }
+
 impl ToString for SyntheticsAssertionOperator {
     fn to_string(&self) -> String {
         match self {

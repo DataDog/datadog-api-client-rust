@@ -12,6 +12,7 @@ pub enum LogsMetricResponseComputeAggregationType {
     #[serde(rename = "distribution")]
     DISTRIBUTION,
 }
+
 impl ToString for LogsMetricResponseComputeAggregationType {
     fn to_string(&self) -> String {
         match self {

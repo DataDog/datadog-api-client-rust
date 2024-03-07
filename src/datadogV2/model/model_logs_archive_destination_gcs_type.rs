@@ -10,6 +10,7 @@ pub enum LogsArchiveDestinationGCSType {
     #[serde(rename = "gcs")]
     GCS,
 }
+
 impl ToString for LogsArchiveDestinationGCSType {
     fn to_string(&self) -> String {
         match self {

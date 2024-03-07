@@ -10,6 +10,7 @@ pub enum DashboardResourceType {
     #[serde(rename = "dashboard")]
     DASHBOARD,
 }
+
 impl ToString for DashboardResourceType {
     fn to_string(&self) -> String {
         match self {

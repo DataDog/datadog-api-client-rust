@@ -10,6 +10,7 @@ pub enum AWSEventBridgeDeleteStatus {
     #[serde(rename = "empty")]
     EMPTY,
 }
+
 impl ToString for AWSEventBridgeDeleteStatus {
     fn to_string(&self) -> String {
         match self {

@@ -58,6 +58,7 @@ pub enum SyntheticsStepType {
     #[serde(rename = "wait")]
     WAIT,
 }
+
 impl ToString for SyntheticsStepType {
     fn to_string(&self) -> String {
         match self {

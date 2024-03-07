@@ -10,6 +10,7 @@ pub enum MonitorDowntimeMatchResourceType {
     #[serde(rename = "downtime_match")]
     DOWNTIME_MATCH,
 }
+
 impl ToString for MonitorDowntimeMatchResourceType {
     fn to_string(&self) -> String {
         match self {

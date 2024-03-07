@@ -10,6 +10,7 @@ pub enum OrganizationsType {
     #[serde(rename = "orgs")]
     ORGS,
 }
+
 impl ToString for OrganizationsType {
     fn to_string(&self) -> String {
         match self {

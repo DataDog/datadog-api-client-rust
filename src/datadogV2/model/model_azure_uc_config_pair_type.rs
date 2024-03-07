@@ -10,6 +10,7 @@ pub enum AzureUCConfigPairType {
     #[serde(rename = "azure_uc_configs")]
     AZURE_UC_CONFIGS,
 }
+
 impl ToString for AzureUCConfigPairType {
     fn to_string(&self) -> String {
         match self {

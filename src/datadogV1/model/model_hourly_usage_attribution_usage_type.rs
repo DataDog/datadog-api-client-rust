@@ -128,6 +128,7 @@ pub enum HourlyUsageAttributionUsageType {
     #[serde(rename = "vuln_management_hosts_usage")]
     VULN_MANAGEMENT_HOSTS_USAGE,
 }
+
 impl ToString for HourlyUsageAttributionUsageType {
     fn to_string(&self) -> String {
         match self {

@@ -12,6 +12,7 @@ pub enum WidgetSort {
     #[serde(rename = "desc")]
     DESCENDING,
 }
+
 impl ToString for WidgetSort {
     fn to_string(&self) -> String {
         match self {

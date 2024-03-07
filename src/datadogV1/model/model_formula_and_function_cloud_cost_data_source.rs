@@ -10,6 +10,7 @@ pub enum FormulaAndFunctionCloudCostDataSource {
     #[serde(rename = "cloud_cost")]
     CLOUD_COST,
 }
+
 impl ToString for FormulaAndFunctionCloudCostDataSource {
     fn to_string(&self) -> String {
         match self {

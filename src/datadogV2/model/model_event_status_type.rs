@@ -24,6 +24,7 @@ pub enum EventStatusType {
     #[serde(rename = "snapshot")]
     SNAPSHOT,
 }
+
 impl ToString for EventStatusType {
     fn to_string(&self) -> String {
         match self {

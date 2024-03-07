@@ -12,6 +12,7 @@ pub enum SpansSort {
     #[serde(rename = "-timestamp")]
     TIMESTAMP_DESCENDING,
 }
+
 impl ToString for SpansSort {
     fn to_string(&self) -> String {
         match self {

@@ -10,6 +10,7 @@ pub enum OktaAccountType {
     #[serde(rename = "okta-accounts")]
     OKTA_ACCOUNTS,
 }
+
 impl ToString for OktaAccountType {
     fn to_string(&self) -> String {
         match self {

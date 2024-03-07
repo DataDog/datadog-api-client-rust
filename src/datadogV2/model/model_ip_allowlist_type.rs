@@ -10,6 +10,7 @@ pub enum IPAllowlistType {
     #[serde(rename = "ip_allowlist")]
     IP_ALLOWLIST,
 }
+
 impl ToString for IPAllowlistType {
     fn to_string(&self) -> String {
         match self {

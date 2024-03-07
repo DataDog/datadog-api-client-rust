@@ -10,6 +10,7 @@ pub enum AlertValueWidgetDefinitionType {
     #[serde(rename = "alert_value")]
     ALERT_VALUE,
 }
+
 impl ToString for AlertValueWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

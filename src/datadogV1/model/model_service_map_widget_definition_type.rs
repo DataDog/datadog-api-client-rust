@@ -10,6 +10,7 @@ pub enum ServiceMapWidgetDefinitionType {
     #[serde(rename = "servicemap")]
     SERVICEMAP,
 }
+
 impl ToString for ServiceMapWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

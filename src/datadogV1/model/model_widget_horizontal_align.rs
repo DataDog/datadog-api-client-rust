@@ -14,6 +14,7 @@ pub enum WidgetHorizontalAlign {
     #[serde(rename = "right")]
     RIGHT,
 }
+
 impl ToString for WidgetHorizontalAlign {
     fn to_string(&self) -> String {
         match self {

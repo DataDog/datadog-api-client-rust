@@ -14,6 +14,7 @@ pub enum WidgetLineType {
     #[serde(rename = "solid")]
     SOLID,
 }
+
 impl ToString for WidgetLineType {
     fn to_string(&self) -> String {
         match self {

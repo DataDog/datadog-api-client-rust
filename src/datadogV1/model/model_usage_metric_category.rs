@@ -12,6 +12,7 @@ pub enum UsageMetricCategory {
     #[serde(rename = "custom")]
     CUSTOM,
 }
+
 impl ToString for UsageMetricCategory {
     fn to_string(&self) -> String {
         match self {

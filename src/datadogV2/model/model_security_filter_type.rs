@@ -10,6 +10,7 @@ pub enum SecurityFilterType {
     #[serde(rename = "security_filters")]
     SECURITY_FILTERS,
 }
+
 impl ToString for SecurityFilterType {
     fn to_string(&self) -> String {
         match self {

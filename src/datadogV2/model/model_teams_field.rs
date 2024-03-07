@@ -38,6 +38,7 @@ pub enum TeamsField {
     #[serde(rename = "user_team_permissions")]
     USER_TEAM_PERMISSIONS,
 }
+
 impl ToString for TeamsField {
     fn to_string(&self) -> String {
         match self {

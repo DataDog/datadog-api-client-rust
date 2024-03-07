@@ -10,6 +10,7 @@ pub enum TeamLinkType {
     #[serde(rename = "team_links")]
     TEAM_LINKS,
 }
+
 impl ToString for TeamLinkType {
     fn to_string(&self) -> String {
         match self {

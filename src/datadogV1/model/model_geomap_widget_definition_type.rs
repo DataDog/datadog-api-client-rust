@@ -10,6 +10,7 @@ pub enum GeomapWidgetDefinitionType {
     #[serde(rename = "geomap")]
     GEOMAP,
 }
+
 impl ToString for GeomapWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

@@ -22,6 +22,7 @@ pub enum ServiceDefinitionV2Dot2Type {
     #[serde(rename = "custom")]
     CUSTOM,
 }
+
 impl ToString for ServiceDefinitionV2Dot2Type {
     fn to_string(&self) -> String {
         match self {

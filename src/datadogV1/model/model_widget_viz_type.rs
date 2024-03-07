@@ -12,6 +12,7 @@ pub enum WidgetVizType {
     #[serde(rename = "toplist")]
     TOPLIST,
 }
+
 impl ToString for WidgetVizType {
     fn to_string(&self) -> String {
         match self {

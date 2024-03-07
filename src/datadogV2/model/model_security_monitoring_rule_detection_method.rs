@@ -20,6 +20,7 @@ pub enum SecurityMonitoringRuleDetectionMethod {
     #[serde(rename = "third_party")]
     THIRD_PARTY,
 }
+
 impl ToString for SecurityMonitoringRuleDetectionMethod {
     fn to_string(&self) -> String {
         match self {

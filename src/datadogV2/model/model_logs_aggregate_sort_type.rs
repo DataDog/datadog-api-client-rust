@@ -12,6 +12,7 @@ pub enum LogsAggregateSortType {
     #[serde(rename = "measure")]
     MEASURE,
 }
+
 impl ToString for LogsAggregateSortType {
     fn to_string(&self) -> String {
         match self {

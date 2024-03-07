@@ -10,6 +10,7 @@ pub enum SyntheticsBasicAuthDigestType {
     #[serde(rename = "digest")]
     DIGEST,
 }
+
 impl ToString for SyntheticsBasicAuthDigestType {
     fn to_string(&self) -> String {
         match self {

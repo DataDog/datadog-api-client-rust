@@ -20,6 +20,7 @@ pub enum RolesSort {
     #[serde(rename = "-user_count")]
     USER_COUNT_DESCENDING,
 }
+
 impl ToString for RolesSort {
     fn to_string(&self) -> String {
         match self {

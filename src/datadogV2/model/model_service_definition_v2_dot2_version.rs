@@ -10,6 +10,7 @@ pub enum ServiceDefinitionV2Dot2Version {
     #[serde(rename = "v2.2")]
     V2_2,
 }
+
 impl ToString for ServiceDefinitionV2Dot2Version {
     fn to_string(&self) -> String {
         match self {

@@ -20,6 +20,7 @@ pub enum FormulaAndFunctionSLOMeasure {
     #[serde(rename = "error_budget_burndown")]
     ERROR_BUDGET_BURNDOWN,
 }
+
 impl ToString for FormulaAndFunctionSLOMeasure {
     fn to_string(&self) -> String {
         match self {

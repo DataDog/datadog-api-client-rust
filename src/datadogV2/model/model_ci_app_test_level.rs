@@ -16,6 +16,7 @@ pub enum CIAppTestLevel {
     #[serde(rename = "test")]
     TEST,
 }
+
 impl ToString for CIAppTestLevel {
     fn to_string(&self) -> String {
         match self {

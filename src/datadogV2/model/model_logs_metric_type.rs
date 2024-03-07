@@ -10,6 +10,7 @@ pub enum LogsMetricType {
     #[serde(rename = "logs_metrics")]
     LOGS_METRICS,
 }
+
 impl ToString for LogsMetricType {
     fn to_string(&self) -> String {
         match self {

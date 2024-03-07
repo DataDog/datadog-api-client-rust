@@ -16,6 +16,7 @@ pub enum UsageSort {
     #[serde(rename = "end_date")]
     END_DATE,
 }
+
 impl ToString for UsageSort {
     fn to_string(&self) -> String {
         match self {

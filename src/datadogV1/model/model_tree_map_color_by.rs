@@ -10,6 +10,7 @@ pub enum TreeMapColorBy {
     #[serde(rename = "user")]
     USER,
 }
+
 impl ToString for TreeMapColorBy {
     fn to_string(&self) -> String {
         match self {

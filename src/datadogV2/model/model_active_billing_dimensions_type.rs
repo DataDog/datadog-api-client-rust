@@ -10,6 +10,7 @@ pub enum ActiveBillingDimensionsType {
     #[serde(rename = "billing_dimensions")]
     BILLING_DIMENSIONS,
 }
+
 impl ToString for ActiveBillingDimensionsType {
     fn to_string(&self) -> String {
         match self {

@@ -10,6 +10,7 @@ pub enum SpansAggregateBucketType {
     #[serde(rename = "bucket")]
     BUCKET,
 }
+
 impl ToString for SpansAggregateBucketType {
     fn to_string(&self) -> String {
         match self {

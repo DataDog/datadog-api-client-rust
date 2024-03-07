@@ -10,6 +10,7 @@ pub enum MetricEstimateResourceType {
     #[serde(rename = "metric_cardinality_estimate")]
     METRIC_CARDINALITY_ESTIMATE,
 }
+
 impl ToString for MetricEstimateResourceType {
     fn to_string(&self) -> String {
         match self {

@@ -10,6 +10,7 @@ pub enum OutcomeType {
     #[serde(rename = "outcome")]
     OUTCOME,
 }
+
 impl ToString for OutcomeType {
     fn to_string(&self) -> String {
         match self {

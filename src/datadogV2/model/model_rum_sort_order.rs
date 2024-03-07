@@ -12,6 +12,7 @@ pub enum RUMSortOrder {
     #[serde(rename = "desc")]
     DESCENDING,
 }
+
 impl ToString for RUMSortOrder {
     fn to_string(&self) -> String {
         match self {

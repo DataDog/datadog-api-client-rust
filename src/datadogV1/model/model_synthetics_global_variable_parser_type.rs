@@ -16,6 +16,7 @@ pub enum SyntheticsGlobalVariableParserType {
     #[serde(rename = "x_path")]
     X_PATH,
 }
+
 impl ToString for SyntheticsGlobalVariableParserType {
     fn to_string(&self) -> String {
         match self {

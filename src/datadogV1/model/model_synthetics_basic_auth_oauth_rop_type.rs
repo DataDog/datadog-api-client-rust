@@ -10,6 +10,7 @@ pub enum SyntheticsBasicAuthOauthROPType {
     #[serde(rename = "oauth-rop")]
     OAUTH_ROP,
 }
+
 impl ToString for SyntheticsBasicAuthOauthROPType {
     fn to_string(&self) -> String {
         match self {

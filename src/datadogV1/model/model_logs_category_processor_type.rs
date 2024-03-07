@@ -10,6 +10,7 @@ pub enum LogsCategoryProcessorType {
     #[serde(rename = "category-processor")]
     CATEGORY_PROCESSOR,
 }
+
 impl ToString for LogsCategoryProcessorType {
     fn to_string(&self) -> String {
         match self {

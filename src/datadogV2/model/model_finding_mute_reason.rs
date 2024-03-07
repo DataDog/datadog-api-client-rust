@@ -22,6 +22,7 @@ pub enum FindingMuteReason {
     #[serde(rename = "OTHER")]
     OTHER,
 }
+
 impl ToString for FindingMuteReason {
     fn to_string(&self) -> String {
         match self {

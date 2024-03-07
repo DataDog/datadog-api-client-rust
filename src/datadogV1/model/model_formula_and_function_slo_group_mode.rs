@@ -12,6 +12,7 @@ pub enum FormulaAndFunctionSLOGroupMode {
     #[serde(rename = "components")]
     COMPONENTS,
 }
+
 impl ToString for FormulaAndFunctionSLOGroupMode {
     fn to_string(&self) -> String {
         match self {

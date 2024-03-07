@@ -12,6 +12,7 @@ pub enum CIAppSort {
     #[serde(rename = "-timestamp")]
     TIMESTAMP_DESCENDING,
 }
+
 impl ToString for CIAppSort {
     fn to_string(&self) -> String {
         match self {

@@ -10,6 +10,7 @@ pub enum SyntheticsAssertionJSONPathOperator {
     #[serde(rename = "validatesJSONPath")]
     VALIDATES_JSON_PATH,
 }
+
 impl ToString for SyntheticsAssertionJSONPathOperator {
     fn to_string(&self) -> String {
         match self {

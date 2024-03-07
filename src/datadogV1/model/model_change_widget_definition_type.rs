@@ -10,6 +10,7 @@ pub enum ChangeWidgetDefinitionType {
     #[serde(rename = "change")]
     CHANGE,
 }
+
 impl ToString for ChangeWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

@@ -10,6 +10,7 @@ pub enum AuditLogsEventType {
     #[serde(rename = "audit")]
     Audit,
 }
+
 impl ToString for AuditLogsEventType {
     fn to_string(&self) -> String {
         match self {

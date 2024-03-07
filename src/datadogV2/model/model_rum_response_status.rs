@@ -12,6 +12,7 @@ pub enum RUMResponseStatus {
     #[serde(rename = "timeout")]
     TIMEOUT,
 }
+
 impl ToString for RUMResponseStatus {
     fn to_string(&self) -> String {
         match self {

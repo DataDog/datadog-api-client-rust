@@ -42,6 +42,7 @@ pub enum MonitorType {
     #[serde(rename = "database-monitoring alert")]
     DATABASE_MONITORING_ALERT,
 }
+
 impl ToString for MonitorType {
     fn to_string(&self) -> String {
         match self {

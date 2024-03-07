@@ -12,6 +12,7 @@ pub enum ToplistWidgetScaling {
     #[serde(rename = "relative")]
     RELATIVE,
 }
+
 impl ToString for ToplistWidgetScaling {
     fn to_string(&self) -> String {
         match self {

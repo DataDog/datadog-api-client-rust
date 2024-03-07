@@ -10,6 +10,7 @@ pub enum SLOWidgetDefinitionType {
     #[serde(rename = "slo")]
     SLO,
 }
+
 impl ToString for SLOWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

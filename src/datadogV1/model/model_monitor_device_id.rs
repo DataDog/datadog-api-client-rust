@@ -26,6 +26,7 @@ pub enum MonitorDeviceID {
     #[serde(rename = "firefox.mobile_small")]
     FIREFOX_MOBILE_SMALL,
 }
+
 impl ToString for MonitorDeviceID {
     fn to_string(&self) -> String {
         match self {

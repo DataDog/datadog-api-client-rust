@@ -10,6 +10,7 @@ pub enum LogsLookupProcessorType {
     #[serde(rename = "lookup-processor")]
     LOOKUP_PROCESSOR,
 }
+
 impl ToString for LogsLookupProcessorType {
     fn to_string(&self) -> String {
         match self {

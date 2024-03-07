@@ -10,6 +10,7 @@ pub enum LogType {
     #[serde(rename = "log")]
     LOG,
 }
+
 impl ToString for LogType {
     fn to_string(&self) -> String {
         match self {

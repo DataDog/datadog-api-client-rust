@@ -10,6 +10,7 @@ pub enum ScalarFormulaResponseType {
     #[serde(rename = "scalar_response")]
     SCALAR_RESPONSE,
 }
+
 impl ToString for ScalarFormulaResponseType {
     fn to_string(&self) -> String {
         match self {

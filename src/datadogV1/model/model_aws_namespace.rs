@@ -22,6 +22,7 @@ pub enum AWSNamespace {
     #[serde(rename = "lambda")]
     LAMBDA,
 }
+
 impl ToString for AWSNamespace {
     fn to_string(&self) -> String {
         match self {

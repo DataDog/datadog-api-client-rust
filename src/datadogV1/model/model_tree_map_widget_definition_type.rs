@@ -10,6 +10,7 @@ pub enum TreeMapWidgetDefinitionType {
     #[serde(rename = "treemap")]
     TREEMAP,
 }
+
 impl ToString for TreeMapWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

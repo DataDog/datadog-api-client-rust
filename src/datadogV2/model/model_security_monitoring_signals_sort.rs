@@ -12,6 +12,7 @@ pub enum SecurityMonitoringSignalsSort {
     #[serde(rename = "-timestamp")]
     TIMESTAMP_DESCENDING,
 }
+
 impl ToString for SecurityMonitoringSignalsSort {
     fn to_string(&self) -> String {
         match self {

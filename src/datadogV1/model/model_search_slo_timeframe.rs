@@ -14,6 +14,7 @@ pub enum SearchSLOTimeframe {
     #[serde(rename = "90d")]
     NINETY_DAYS,
 }
+
 impl ToString for SearchSLOTimeframe {
     fn to_string(&self) -> String {
         match self {

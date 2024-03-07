@@ -12,6 +12,7 @@ pub enum FindingEvaluation {
     #[serde(rename = "fail")]
     FAIL,
 }
+
 impl ToString for FindingEvaluation {
     fn to_string(&self) -> String {
         match self {

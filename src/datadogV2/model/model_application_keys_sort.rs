@@ -20,6 +20,7 @@ pub enum ApplicationKeysSort {
     #[serde(rename = "-name")]
     NAME_DESCENDING,
 }
+
 impl ToString for ApplicationKeysSort {
     fn to_string(&self) -> String {
         match self {

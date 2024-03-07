@@ -10,6 +10,7 @@ pub enum ServiceDefinitionV2Dot1EmailType {
     #[serde(rename = "email")]
     EMAIL,
 }
+
 impl ToString for ServiceDefinitionV2Dot1EmailType {
     fn to_string(&self) -> String {
         match self {

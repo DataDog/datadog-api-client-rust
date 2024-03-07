@@ -10,6 +10,7 @@ pub enum NotebookResourceType {
     #[serde(rename = "notebooks")]
     NOTEBOOKS,
 }
+
 impl ToString for NotebookResourceType {
     fn to_string(&self) -> String {
         match self {

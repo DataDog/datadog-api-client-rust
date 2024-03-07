@@ -12,6 +12,7 @@ pub enum TopologyQueryDataSource {
     #[serde(rename = "service_map")]
     SERVICE_MAP,
 }
+
 impl ToString for TopologyQueryDataSource {
     fn to_string(&self) -> String {
         match self {

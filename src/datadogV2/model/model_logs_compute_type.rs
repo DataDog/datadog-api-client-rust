@@ -12,6 +12,7 @@ pub enum LogsComputeType {
     #[serde(rename = "total")]
     TOTAL,
 }
+
 impl ToString for LogsComputeType {
     fn to_string(&self) -> String {
         match self {

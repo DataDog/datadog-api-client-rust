@@ -10,6 +10,7 @@ pub enum LogsStatusRemapperType {
     #[serde(rename = "status-remapper")]
     STATUS_REMAPPER,
 }
+
 impl ToString for LogsStatusRemapperType {
     fn to_string(&self) -> String {
         match self {

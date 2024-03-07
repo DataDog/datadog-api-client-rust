@@ -10,6 +10,7 @@ pub enum EventStreamWidgetDefinitionType {
     #[serde(rename = "event_stream")]
     EVENT_STREAM,
 }
+
 impl ToString for EventStreamWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

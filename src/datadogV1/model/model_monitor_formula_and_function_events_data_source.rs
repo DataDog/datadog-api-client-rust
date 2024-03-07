@@ -22,6 +22,7 @@ pub enum MonitorFormulaAndFunctionEventsDataSource {
     #[serde(rename = "spans")]
     SPANS,
 }
+
 impl ToString for MonitorFormulaAndFunctionEventsDataSource {
     fn to_string(&self) -> String {
         match self {

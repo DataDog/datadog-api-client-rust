@@ -10,6 +10,7 @@ pub enum AWSRelatedAccountType {
     #[serde(rename = "aws_account")]
     AWS_ACCOUNT,
 }
+
 impl ToString for AWSRelatedAccountType {
     fn to_string(&self) -> String {
         match self {

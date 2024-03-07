@@ -16,6 +16,7 @@ pub enum MetricTagConfigurationMetricTypes {
     #[serde(rename = "distribution")]
     DISTRIBUTION,
 }
+
 impl ToString for MetricTagConfigurationMetricTypes {
     fn to_string(&self) -> String {
         match self {

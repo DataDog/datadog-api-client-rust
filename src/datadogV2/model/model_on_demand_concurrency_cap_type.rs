@@ -10,6 +10,7 @@ pub enum OnDemandConcurrencyCapType {
     #[serde(rename = "on_demand_concurrency_cap")]
     ON_DEMAND_CONCURRENCY_CAP,
 }
+
 impl ToString for OnDemandConcurrencyCapType {
     fn to_string(&self) -> String {
         match self {

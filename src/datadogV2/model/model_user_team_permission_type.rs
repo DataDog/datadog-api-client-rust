@@ -10,6 +10,7 @@ pub enum UserTeamPermissionType {
     #[serde(rename = "user_team_permissions")]
     USER_TEAM_PERMISSIONS,
 }
+
 impl ToString for UserTeamPermissionType {
     fn to_string(&self) -> String {
         match self {

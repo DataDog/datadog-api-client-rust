@@ -10,6 +10,7 @@ pub enum ServiceSummaryWidgetDefinitionType {
     #[serde(rename = "trace_service")]
     TRACE_SERVICE,
 }
+
 impl ToString for ServiceSummaryWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

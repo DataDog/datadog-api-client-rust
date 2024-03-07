@@ -10,6 +10,7 @@ pub enum CIAppCreatePipelineEventRequestDataType {
     #[serde(rename = "cipipeline_resource_request")]
     CIPIPELINE_RESOURCE_REQUEST,
 }
+
 impl ToString for CIAppCreatePipelineEventRequestDataType {
     fn to_string(&self) -> String {
         match self {

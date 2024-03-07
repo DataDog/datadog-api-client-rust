@@ -18,6 +18,7 @@ pub enum SecurityMonitoringRuleSeverity {
     #[serde(rename = "critical")]
     CRITICAL,
 }
+
 impl ToString for SecurityMonitoringRuleSeverity {
     fn to_string(&self) -> String {
         match self {

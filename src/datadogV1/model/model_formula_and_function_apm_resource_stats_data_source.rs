@@ -10,6 +10,7 @@ pub enum FormulaAndFunctionApmResourceStatsDataSource {
     #[serde(rename = "apm_resource_stats")]
     APM_RESOURCE_STATS,
 }
+
 impl ToString for FormulaAndFunctionApmResourceStatsDataSource {
     fn to_string(&self) -> String {
         match self {

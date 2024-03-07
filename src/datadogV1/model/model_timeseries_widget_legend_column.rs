@@ -18,6 +18,7 @@ pub enum TimeseriesWidgetLegendColumn {
     #[serde(rename = "max")]
     MAX,
 }
+
 impl ToString for TimeseriesWidgetLegendColumn {
     fn to_string(&self) -> String {
         match self {

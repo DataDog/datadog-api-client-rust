@@ -10,6 +10,7 @@ pub enum CloudCostActivityType {
     #[serde(rename = "cloud_cost_activity")]
     CLOUD_COST_ACTIVITY,
 }
+
 impl ToString for CloudCostActivityType {
     fn to_string(&self) -> String {
         match self {

@@ -16,6 +16,7 @@ pub enum MonitorOptionsNotificationPresets {
     #[serde(rename = "hide_all")]
     HIDE_ALL,
 }
+
 impl ToString for MonitorOptionsNotificationPresets {
     fn to_string(&self) -> String {
         match self {

@@ -10,6 +10,7 @@ pub enum IncidentIntegrationMetadataType {
     #[serde(rename = "incident_integrations")]
     INCIDENT_INTEGRATIONS,
 }
+
 impl ToString for IncidentIntegrationMetadataType {
     fn to_string(&self) -> String {
         match self {

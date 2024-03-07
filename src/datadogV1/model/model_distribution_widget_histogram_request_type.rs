@@ -10,6 +10,7 @@ pub enum DistributionWidgetHistogramRequestType {
     #[serde(rename = "histogram")]
     HISTOGRAM,
 }
+
 impl ToString for DistributionWidgetHistogramRequestType {
     fn to_string(&self) -> String {
         match self {

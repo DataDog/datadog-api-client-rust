@@ -10,6 +10,7 @@ pub enum TopologyRequestType {
     #[serde(rename = "topology")]
     TOPOLOGY,
 }
+
 impl ToString for TopologyRequestType {
     fn to_string(&self) -> String {
         match self {

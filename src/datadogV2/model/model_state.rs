@@ -14,6 +14,7 @@ pub enum State {
     #[serde(rename = "skip")]
     SKIP,
 }
+
 impl ToString for State {
     fn to_string(&self) -> String {
         match self {

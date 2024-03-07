@@ -10,6 +10,7 @@ pub enum MetricDistinctVolumeType {
     #[serde(rename = "distinct_metric_volumes")]
     DISTINCT_METRIC_VOLUMES,
 }
+
 impl ToString for MetricDistinctVolumeType {
     fn to_string(&self) -> String {
         match self {

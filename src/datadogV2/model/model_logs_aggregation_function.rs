@@ -32,6 +32,7 @@ pub enum LogsAggregationFunction {
     #[serde(rename = "median")]
     MEDIAN,
 }
+
 impl ToString for LogsAggregationFunction {
     fn to_string(&self) -> String {
         match self {

@@ -16,6 +16,7 @@ pub enum AccessRole {
     #[serde(rename = "ERROR")]
     ERROR,
 }
+
 impl ToString for AccessRole {
     fn to_string(&self) -> String {
         match self {

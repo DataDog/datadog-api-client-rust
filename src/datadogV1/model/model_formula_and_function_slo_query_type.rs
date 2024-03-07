@@ -10,6 +10,7 @@ pub enum FormulaAndFunctionSLOQueryType {
     #[serde(rename = "metric")]
     METRIC,
 }
+
 impl ToString for FormulaAndFunctionSLOQueryType {
     fn to_string(&self) -> String {
         match self {

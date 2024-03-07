@@ -18,6 +18,7 @@ pub enum WidgetMargin {
     #[serde(rename = "large")]
     LARGE,
 }
+
 impl ToString for WidgetMargin {
     fn to_string(&self) -> String {
         match self {

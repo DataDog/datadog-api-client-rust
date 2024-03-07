@@ -14,6 +14,7 @@ pub enum DowntimeNotifyEndStateTypes {
     #[serde(rename = "warn")]
     WARN,
 }
+
 impl ToString for DowntimeNotifyEndStateTypes {
     fn to_string(&self) -> String {
         match self {

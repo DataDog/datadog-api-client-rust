@@ -14,6 +14,7 @@ pub enum MonitorRenotifyStatusType {
     #[serde(rename = "no data")]
     NO_DATA,
 }
+
 impl ToString for MonitorRenotifyStatusType {
     fn to_string(&self) -> String {
         match self {

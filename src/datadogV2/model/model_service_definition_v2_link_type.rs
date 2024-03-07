@@ -26,6 +26,7 @@ pub enum ServiceDefinitionV2LinkType {
     #[serde(rename = "link")]
     LINK,
 }
+
 impl ToString for ServiceDefinitionV2LinkType {
     fn to_string(&self) -> String {
         match self {

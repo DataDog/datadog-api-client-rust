@@ -12,6 +12,7 @@ pub enum SecurityMonitoringFilterAction {
     #[serde(rename = "suppress")]
     SUPPRESS,
 }
+
 impl ToString for SecurityMonitoringFilterAction {
     fn to_string(&self) -> String {
         match self {

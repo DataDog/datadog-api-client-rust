@@ -10,6 +10,7 @@ pub enum RUMEventType {
     #[serde(rename = "rum")]
     RUM,
 }
+
 impl ToString for RUMEventType {
     fn to_string(&self) -> String {
         match self {

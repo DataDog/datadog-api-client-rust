@@ -10,6 +10,7 @@ pub enum LogsUserAgentParserType {
     #[serde(rename = "user-agent-parser")]
     USER_AGENT_PARSER,
 }
+
 impl ToString for LogsUserAgentParserType {
     fn to_string(&self) -> String {
         match self {

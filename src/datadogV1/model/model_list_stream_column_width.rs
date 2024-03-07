@@ -14,6 +14,7 @@ pub enum ListStreamColumnWidth {
     #[serde(rename = "full")]
     FULL,
 }
+
 impl ToString for ListStreamColumnWidth {
     fn to_string(&self) -> String {
         match self {

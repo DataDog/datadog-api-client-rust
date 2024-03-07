@@ -12,6 +12,7 @@ pub enum LogsStorageTier {
     #[serde(rename = "online-archives")]
     ONLINE_ARCHIVES,
 }
+
 impl ToString for LogsStorageTier {
     fn to_string(&self) -> String {
         match self {

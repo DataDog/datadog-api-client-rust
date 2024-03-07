@@ -12,6 +12,7 @@ pub enum RUMAggregateSortType {
     #[serde(rename = "measure")]
     MEASURE,
 }
+
 impl ToString for RUMAggregateSortType {
     fn to_string(&self) -> String {
         match self {

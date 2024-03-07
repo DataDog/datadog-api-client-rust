@@ -10,6 +10,7 @@ pub enum LogsStringBuilderProcessorType {
     #[serde(rename = "string-builder-processor")]
     STRING_BUILDER_PROCESSOR,
 }
+
 impl ToString for LogsStringBuilderProcessorType {
     fn to_string(&self) -> String {
         match self {

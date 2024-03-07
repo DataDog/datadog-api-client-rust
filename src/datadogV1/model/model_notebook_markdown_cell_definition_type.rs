@@ -10,6 +10,7 @@ pub enum NotebookMarkdownCellDefinitionType {
     #[serde(rename = "markdown")]
     MARKDOWN,
 }
+
 impl ToString for NotebookMarkdownCellDefinitionType {
     fn to_string(&self) -> String {
         match self {

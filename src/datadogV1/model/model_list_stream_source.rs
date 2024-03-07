@@ -30,6 +30,7 @@ pub enum ListStreamSource {
     #[serde(rename = "event_stream")]
     EVENT_STREAM,
 }
+
 impl ToString for ListStreamSource {
     fn to_string(&self) -> String {
         match self {

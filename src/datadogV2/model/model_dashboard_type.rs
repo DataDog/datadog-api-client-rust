@@ -18,6 +18,7 @@ pub enum DashboardType {
     #[serde(rename = "host_timeboard")]
     HOST_TIMEBOARD,
 }
+
 impl ToString for DashboardType {
     fn to_string(&self) -> String {
         match self {

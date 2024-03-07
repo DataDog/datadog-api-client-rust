@@ -14,6 +14,7 @@ pub enum SyntheticsTestOptionsHTTPVersion {
     #[serde(rename = "any")]
     ANY,
 }
+
 impl ToString for SyntheticsTestOptionsHTTPVersion {
     fn to_string(&self) -> String {
         match self {

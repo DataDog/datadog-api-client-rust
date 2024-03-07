@@ -12,6 +12,7 @@ pub enum SortDirection {
     #[serde(rename = "asc")]
     ASC,
 }
+
 impl ToString for SortDirection {
     fn to_string(&self) -> String {
         match self {

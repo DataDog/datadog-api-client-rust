@@ -10,6 +10,7 @@ pub enum IncidentAttachmentRelatedObject {
     #[serde(rename = "users")]
     USERS,
 }
+
 impl ToString for IncidentAttachmentRelatedObject {
     fn to_string(&self) -> String {
         match self {

@@ -250,6 +250,7 @@ pub enum MonthlyUsageAttributionSupportedMetrics {
     #[serde(rename = "*")]
     ALL,
 }
+
 impl ToString for MonthlyUsageAttributionSupportedMetrics {
     fn to_string(&self) -> String {
         match self {

@@ -12,6 +12,7 @@ pub enum CIAppAggregateSortType {
     #[serde(rename = "measure")]
     MEASURE,
 }
+
 impl ToString for CIAppAggregateSortType {
     fn to_string(&self) -> String {
         match self {

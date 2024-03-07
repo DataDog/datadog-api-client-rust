@@ -16,6 +16,7 @@ pub enum SLOTimeframe {
     #[serde(rename = "custom")]
     CUSTOM,
 }
+
 impl ToString for SLOTimeframe {
     fn to_string(&self) -> String {
         match self {

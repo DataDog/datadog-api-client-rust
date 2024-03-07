@@ -46,6 +46,7 @@ pub enum SyntheticsAssertionType {
     #[serde(rename = "connection")]
     CONNECTION,
 }
+
 impl ToString for SyntheticsAssertionType {
     fn to_string(&self) -> String {
         match self {

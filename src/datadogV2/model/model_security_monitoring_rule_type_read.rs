@@ -18,6 +18,7 @@ pub enum SecurityMonitoringRuleTypeRead {
     #[serde(rename = "application_security")]
     APPLICATION_SECURITY,
 }
+
 impl ToString for SecurityMonitoringRuleTypeRead {
     fn to_string(&self) -> String {
         match self {

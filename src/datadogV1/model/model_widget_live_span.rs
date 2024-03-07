@@ -42,6 +42,7 @@ pub enum WidgetLiveSpan {
     #[serde(rename = "alert")]
     ALERT,
 }
+
 impl ToString for WidgetLiveSpan {
     fn to_string(&self) -> String {
         match self {

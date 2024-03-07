@@ -10,6 +10,7 @@ pub enum RUMApplicationListType {
     #[serde(rename = "rum_application")]
     RUM_APPLICATION,
 }
+
 impl ToString for RUMApplicationListType {
     fn to_string(&self) -> String {
         match self {

@@ -10,6 +10,7 @@ pub enum CIAppPipelineEventJobLevel {
     #[serde(rename = "job")]
     JOB,
 }
+
 impl ToString for CIAppPipelineEventJobLevel {
     fn to_string(&self) -> String {
         match self {

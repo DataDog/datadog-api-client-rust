@@ -10,6 +10,7 @@ pub enum DetailedFindingType {
     #[serde(rename = "detailed_finding")]
     DETAILED_FINDING,
 }
+
 impl ToString for DetailedFindingType {
     fn to_string(&self) -> String {
         match self {

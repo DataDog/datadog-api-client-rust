@@ -10,6 +10,7 @@ pub enum LogsGeoIPParserType {
     #[serde(rename = "geo-ip-parser")]
     GEO_IP_PARSER,
 }
+
 impl ToString for LogsGeoIPParserType {
     fn to_string(&self) -> String {
         match self {

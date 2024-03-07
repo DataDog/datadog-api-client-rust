@@ -10,6 +10,7 @@ pub enum TimeseriesFormulaRequestType {
     #[serde(rename = "timeseries_request")]
     TIMESERIES_REQUEST,
 }
+
 impl ToString for TimeseriesFormulaRequestType {
     fn to_string(&self) -> String {
         match self {

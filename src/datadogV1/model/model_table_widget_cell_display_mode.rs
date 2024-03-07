@@ -12,6 +12,7 @@ pub enum TableWidgetCellDisplayMode {
     #[serde(rename = "bar")]
     BAR,
 }
+
 impl ToString for TableWidgetCellDisplayMode {
     fn to_string(&self) -> String {
         match self {

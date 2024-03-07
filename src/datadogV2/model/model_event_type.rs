@@ -10,6 +10,7 @@ pub enum EventType {
     #[serde(rename = "event")]
     EVENT,
 }
+
 impl ToString for EventType {
     fn to_string(&self) -> String {
         match self {

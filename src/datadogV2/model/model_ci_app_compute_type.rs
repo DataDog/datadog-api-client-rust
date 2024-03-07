@@ -12,6 +12,7 @@ pub enum CIAppComputeType {
     #[serde(rename = "total")]
     TOTAL,
 }
+
 impl ToString for CIAppComputeType {
     fn to_string(&self) -> String {
         match self {

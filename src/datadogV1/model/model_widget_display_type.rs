@@ -16,6 +16,7 @@ pub enum WidgetDisplayType {
     #[serde(rename = "overlay")]
     OVERLAY,
 }
+
 impl ToString for WidgetDisplayType {
     fn to_string(&self) -> String {
         match self {

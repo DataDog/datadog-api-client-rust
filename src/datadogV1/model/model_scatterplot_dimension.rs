@@ -16,6 +16,7 @@ pub enum ScatterplotDimension {
     #[serde(rename = "color")]
     COLOR,
 }
+
 impl ToString for ScatterplotDimension {
     fn to_string(&self) -> String {
         match self {

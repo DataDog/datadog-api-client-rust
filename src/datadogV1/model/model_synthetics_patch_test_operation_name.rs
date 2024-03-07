@@ -20,6 +20,7 @@ pub enum SyntheticsPatchTestOperationName {
     #[serde(rename = "test")]
     TEST,
 }
+
 impl ToString for SyntheticsPatchTestOperationName {
     fn to_string(&self) -> String {
         match self {

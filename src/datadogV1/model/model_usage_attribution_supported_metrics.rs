@@ -102,6 +102,7 @@ pub enum UsageAttributionSupportedMetrics {
     #[serde(rename = "*")]
     ALL,
 }
+
 impl ToString for UsageAttributionSupportedMetrics {
     fn to_string(&self) -> String {
         match self {

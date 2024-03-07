@@ -12,6 +12,7 @@ pub enum ListTeamsInclude {
     #[serde(rename = "user_team_permissions")]
     USER_TEAM_PERMISSIONS,
 }
+
 impl ToString for ListTeamsInclude {
     fn to_string(&self) -> String {
         match self {

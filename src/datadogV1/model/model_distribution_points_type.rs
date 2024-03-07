@@ -10,6 +10,7 @@ pub enum DistributionPointsType {
     #[serde(rename = "distribution")]
     DISTRIBUTION,
 }
+
 impl ToString for DistributionPointsType {
     fn to_string(&self) -> String {
         match self {

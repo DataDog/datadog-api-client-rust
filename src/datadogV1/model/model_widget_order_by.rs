@@ -16,6 +16,7 @@ pub enum WidgetOrderBy {
     #[serde(rename = "past")]
     PAST,
 }
+
 impl ToString for WidgetOrderBy {
     fn to_string(&self) -> String {
         match self {

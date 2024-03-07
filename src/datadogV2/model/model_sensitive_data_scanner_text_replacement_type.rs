@@ -18,6 +18,7 @@ pub enum SensitiveDataScannerTextReplacementType {
     #[serde(rename = "partial_replacement_from_end")]
     PARTIAL_REPLACEMENT_FROM_END,
 }
+
 impl ToString for SensitiveDataScannerTextReplacementType {
     fn to_string(&self) -> String {
         match self {

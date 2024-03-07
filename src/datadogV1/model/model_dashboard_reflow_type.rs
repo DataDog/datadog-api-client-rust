@@ -12,6 +12,7 @@ pub enum DashboardReflowType {
     #[serde(rename = "fixed")]
     FIXED,
 }
+
 impl ToString for DashboardReflowType {
     fn to_string(&self) -> String {
         match self {

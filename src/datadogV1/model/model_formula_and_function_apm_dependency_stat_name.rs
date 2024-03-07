@@ -22,6 +22,7 @@ pub enum FormulaAndFunctionApmDependencyStatName {
     #[serde(rename = "total_traces_count")]
     TOTAL_TRACES_COUNT,
 }
+
 impl ToString for FormulaAndFunctionApmDependencyStatName {
     fn to_string(&self) -> String {
         match self {

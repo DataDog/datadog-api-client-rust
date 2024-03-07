@@ -10,6 +10,7 @@ pub enum ConfluentResourceType {
     #[serde(rename = "confluent-cloud-resources")]
     CONFLUENT_CLOUD_RESOURCES,
 }
+
 impl ToString for ConfluentResourceType {
     fn to_string(&self) -> String {
         match self {

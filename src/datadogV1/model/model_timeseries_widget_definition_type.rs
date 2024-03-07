@@ -10,6 +10,7 @@ pub enum TimeseriesWidgetDefinitionType {
     #[serde(rename = "timeseries")]
     TIMESERIES,
 }
+
 impl ToString for TimeseriesWidgetDefinitionType {
     fn to_string(&self) -> String {
         match self {

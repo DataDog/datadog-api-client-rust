@@ -22,6 +22,7 @@ pub enum MonitorOverallStates {
     #[serde(rename = "Warn")]
     WARN,
 }
+
 impl ToString for MonitorOverallStates {
     fn to_string(&self) -> String {
         match self {

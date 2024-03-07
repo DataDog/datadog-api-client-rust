@@ -24,6 +24,7 @@ pub enum FormulaAndFunctionMetricAggregation {
     #[serde(rename = "percentile")]
     PERCENTILE,
 }
+
 impl ToString for FormulaAndFunctionMetricAggregation {
     fn to_string(&self) -> String {
         match self {

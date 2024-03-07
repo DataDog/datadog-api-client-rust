@@ -10,6 +10,7 @@ pub enum CIAppPipelineEventPipelineLevel {
     #[serde(rename = "pipeline")]
     PIPELINE,
 }
+
 impl ToString for CIAppPipelineEventPipelineLevel {
     fn to_string(&self) -> String {
         match self {

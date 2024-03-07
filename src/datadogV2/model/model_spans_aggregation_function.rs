@@ -32,6 +32,7 @@ pub enum SpansAggregationFunction {
     #[serde(rename = "median")]
     MEDIAN,
 }
+
 impl ToString for SpansAggregationFunction {
     fn to_string(&self) -> String {
         match self {

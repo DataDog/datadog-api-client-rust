@@ -16,6 +16,7 @@ pub enum ListTeamsSort {
     #[serde(rename = "-user_count")]
     _USER_COUNT,
 }
+
 impl ToString for ListTeamsSort {
     fn to_string(&self) -> String {
         match self {

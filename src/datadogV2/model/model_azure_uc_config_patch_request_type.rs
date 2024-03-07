@@ -10,6 +10,7 @@ pub enum AzureUCConfigPatchRequestType {
     #[serde(rename = "azure_uc_config_patch_request")]
     AZURE_UC_CONFIG_PATCH_REQUEST,
 }
+
 impl ToString for AzureUCConfigPatchRequestType {
     fn to_string(&self) -> String {
         match self {

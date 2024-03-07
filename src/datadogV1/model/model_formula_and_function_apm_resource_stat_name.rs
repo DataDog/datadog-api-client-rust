@@ -30,6 +30,7 @@ pub enum FormulaAndFunctionApmResourceStatName {
     #[serde(rename = "latency_p99")]
     LATENCY_P99,
 }
+
 impl ToString for FormulaAndFunctionApmResourceStatName {
     fn to_string(&self) -> String {
         match self {

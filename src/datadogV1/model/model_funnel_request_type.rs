@@ -10,6 +10,7 @@ pub enum FunnelRequestType {
     #[serde(rename = "funnel")]
     FUNNEL,
 }
+
 impl ToString for FunnelRequestType {
     fn to_string(&self) -> String {
         match self {

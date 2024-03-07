@@ -12,6 +12,7 @@ pub enum IncidentFieldAttributesSingleValueType {
     #[serde(rename = "textbox")]
     TEXTBOX,
 }
+
 impl ToString for IncidentFieldAttributesSingleValueType {
     fn to_string(&self) -> String {
         match self {

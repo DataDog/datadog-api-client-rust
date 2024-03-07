@@ -10,6 +10,7 @@ pub enum DORAIncidentType {
     #[serde(rename = "dora_incident")]
     DORA_INCIDENT,
 }
+
 impl ToString for DORAIncidentType {
     fn to_string(&self) -> String {
         match self {

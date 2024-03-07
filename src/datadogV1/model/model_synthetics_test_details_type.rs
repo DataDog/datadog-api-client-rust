@@ -12,6 +12,7 @@ pub enum SyntheticsTestDetailsType {
     #[serde(rename = "browser")]
     BROWSER,
 }
+
 impl ToString for SyntheticsTestDetailsType {
     fn to_string(&self) -> String {
         match self {
