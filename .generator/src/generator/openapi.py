@@ -66,8 +66,6 @@ def type_to_rust(schema, alternative_name=None, render_nullable=False, render_op
             return option_wrapper(f"serde_json::Value", render_option, render_nullable)
 
     if type_ == "array":
-        if name and schema.get("x-generate-alias-as-model", False):
-            return name
         if name or alternative_name:
             alternative_name = (name or alternative_name) + "Item"
         nullable_item = schema["items"].get("nullable")
@@ -161,12 +159,6 @@ def child_models(schema, alternative_name=None, seen=None, parent=None):
             yield from child_models(schema["anyOf"][index], seen=seen, parent=schema)
 
     if "items" in schema:
-        if current_name is not None and schema.get("x-generate-alias-as-model", False):
-            if name in seen:
-                return
-            seen.add(name)
-            yield name, schema
-
         yield from child_models(
             schema["items"],
             alternative_name=name + "Item" if name is not None else None,
