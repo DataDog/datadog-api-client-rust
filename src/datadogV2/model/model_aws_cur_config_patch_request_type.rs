@@ -5,7 +5,7 @@
 use serde::{Deserialize, Serialize};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
 pub enum AwsCURConfigPatchRequestType {
     #[serde(rename = "aws_cur_config_patch_request")]
     AWS_CUR_CONFIG_PATCH_REQUEST,

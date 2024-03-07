@@ -2,18 +2,16 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde_repr::{Deserialize_repr, Serialize_repr};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(
-    Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize_repr, Deserialize_repr,
-)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[repr(i32)]
 pub enum ServiceCheckStatus {
-    OK = 0,
-    WARNING = 1,
-    CRITICAL = 2,
-    UNKNOWN = 3,
+    OK,
+    WARNING,
+    CRITICAL,
+    UNKNOWN,
 }
 
 impl ToString for ServiceCheckStatus {
@@ -24,5 +22,39 @@ impl ToString for ServiceCheckStatus {
             Self::CRITICAL => String::from("2"),
             Self::UNKNOWN => String::from("3"),
         }
+    }
+}
+impl Serialize for ServiceCheckStatus {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_i32(match self {
+            ServiceCheckStatus::OK => 0,
+            ServiceCheckStatus::WARNING => 1,
+            ServiceCheckStatus::CRITICAL => 2,
+            ServiceCheckStatus::UNKNOWN => 3,
+        })
+    }
+}
+
+impl<'de> Deserialize<'de> for ServiceCheckStatus {
+    fn deserialize<D>(deserializer: D) -> Result<ServiceCheckStatus, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: i32 = i32::deserialize(deserializer)?;
+        Ok(match s {
+            0 => ServiceCheckStatus::OK,
+            1 => ServiceCheckStatus::WARNING,
+            2 => ServiceCheckStatus::CRITICAL,
+            3 => ServiceCheckStatus::UNKNOWN,
+            _ => {
+                return Err(serde::de::Error::custom(format!(
+                    "Invalid value for ServiceCheckStatus: {}",
+                    s
+                )))
+            }
+        })
     }
 }

@@ -5,7 +5,7 @@
 use serde::{Deserialize, Serialize};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
 pub enum MetricActiveConfigurationType {
     #[serde(rename = "actively_queried_configurations")]
     ACTIVELY_QUERIED_CONFIGURATIONS,

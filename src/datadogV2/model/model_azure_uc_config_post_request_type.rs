@@ -5,7 +5,7 @@
 use serde::{Deserialize, Serialize};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
 pub enum AzureUCConfigPostRequestType {
     #[serde(rename = "azure_uc_config_post_request")]
     AZURE_UC_CONFIG_POST_REQUEST,

@@ -5,7 +5,7 @@
 use serde::{Deserialize, Serialize};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
 pub enum CIAppCreatePipelineEventRequestDataType {
     #[serde(rename = "cipipeline_resource_request")]
     CIPIPELINE_RESOURCE_REQUEST,
