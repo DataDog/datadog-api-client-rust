@@ -286,7 +286,6 @@ def format_parameters(data, spec, replace_values=None, has_body=False, **kwargs)
             value = format_data_with_schema(
                 v["value"],
                 p["schema"],
-                name_prefix="",
                 replace_values=replace_values,
                 required=True,
                 **kwargs,
@@ -308,7 +307,6 @@ def format_parameters(data, spec, replace_values=None, has_body=False, **kwargs)
             value = format_data_with_schema(
                 v["value"],
                 parameters_spec[k]["schema"],
-                name_prefix=f"",
                 replace_values=replace_values,
                 required=True,
                 **kwargs,
@@ -320,7 +318,7 @@ def format_parameters(data, spec, replace_values=None, has_body=False, **kwargs)
     return parameters
 
 
-def _format_oneof(schema, data, name, name_prefix, replace_values, required, nullable, **kwargs):
+def _format_oneof(schema, data, name, replace_values, required, nullable, **kwargs):
     matched = 0
     one_of_schema = None
     for sub_schema in schema["oneOf"]:
@@ -335,7 +333,6 @@ def _format_oneof(schema, data, name, name_prefix, replace_values, required, nul
                 formatted = format_data_with_schema(
                     data,
                     sub_schema,
-                    name_prefix=name_prefix,
                     replace_values=replace_values,
                     **kwargs,
                 )
@@ -359,7 +356,7 @@ def _format_oneof(schema, data, name, name_prefix, replace_values, required, nul
         # TODO: revisit possibility of removing all boxes
         parameters = f"Box::new({parameters})"
     if name:
-        return f"{name_prefix}{name}::{one_of_schema_name}({parameters})"
+        return f"{name}::{one_of_schema_name}({parameters})"
     return f"{parameters}"
 
 
@@ -367,7 +364,6 @@ def _format_oneof(schema, data, name, name_prefix, replace_values, required, nul
 def format_data_with_schema(
     data,
     schema,
-    name_prefix="",
     replace_values=None,
     default_name=None,
     required=False,
@@ -394,13 +390,6 @@ def format_data_with_schema(
         # Make sure that variables used in given statements are lowercase snake_case for Rust linter
         if parameters in variables:
             parameters = rust_name(parameters) + ".clone()"
-        # simple_type_value = simple_type(schema)
-        # if isinstance(data, int) and simple_type_value in {
-        #     "float",
-        #     "float32",
-        #     "float64",
-        # }:
-        #     parameters = f"{simple_type_value}({parameters})"
     else:
         if nullable and data is None:
             parameters = "None"
@@ -470,7 +459,7 @@ def format_data_with_schema(
             # find schema index and get name from x-enum-varnames
             index = schema["enum"].index(data)
             enum_varnames = schema["x-enum-varnames"][index]
-            parameters = f"{name_prefix}{name}::{enum_varnames}"
+            parameters = f"{name}::{enum_varnames}"
 
         if not required:
             if nullable:
@@ -485,8 +474,8 @@ def format_data_with_schema(
 
     if "oneOf" in schema:
         if default_name and schema_name(schema) is None:
-            return _format_oneof(schema, data, default_name+"Item", name_prefix, replace_values, required, nullable, **kwargs)
-        return _format_oneof(schema, data, schema_name(schema), name_prefix, replace_values, required, nullable, **kwargs)
+            return _format_oneof(schema, data, default_name+"Item", replace_values, required, nullable, **kwargs)
+        return _format_oneof(schema, data, schema_name(schema), replace_values, required, nullable, **kwargs)
 
     return parameters
 
@@ -495,7 +484,6 @@ def format_data_with_schema(
 def format_data_with_schema_list(
     data,
     schema,
-    name_prefix="",
     replace_values=None,
     default_name=None,
     required=False,
@@ -509,8 +497,8 @@ def format_data_with_schema_list(
 
     if "oneOf" in schema:
         if default_name and schema_name(schema) is None:
-            return _format_oneof(schema, data, default_name+"Item", name_prefix, replace_values, required, nullable, **kwargs)
-        return _format_oneof(schema, data, schema_name(schema), name_prefix, replace_values, required, nullable, **kwargs)
+            return _format_oneof(schema, data, default_name+"Item", replace_values, required, nullable, **kwargs)
+        return _format_oneof(schema, data, schema_name(schema), replace_values, required, nullable, **kwargs)
 
     parameters = ""
     list_schema = schema["items"]
@@ -524,7 +512,6 @@ def format_data_with_schema_list(
         value = format_data_with_schema(
             d,
             schema["items"],
-            name_prefix=name_prefix,
             replace_values=replace_values,
             default_name=schema_name(schema),
             required=not schema["items"].get("nullable", False),
@@ -542,7 +529,6 @@ def format_data_with_schema_list(
 def format_data_with_schema_dict(
     data,
     schema,
-    name_prefix="",
     replace_values=None,
     default_name=None,
     required=False,
@@ -568,7 +554,6 @@ def format_data_with_schema_dict(
             value = format_data_with_schema(
                 data[k],
                 v,
-                name_prefix=name_prefix,
                 replace_values=replace_values,
                 default_name=name if name else None,
                 required=k in required_properties,
@@ -580,13 +565,6 @@ def format_data_with_schema_dict(
                 parameters += f".{variable_name(k)}({value})"
 
     if schema.get("additionalProperties"):
-        nested_schema = schema["additionalProperties"]
-        nested_schema_name = simple_type(nested_schema)
-        if not nested_schema_name:
-            nested_schema_name = schema_name(nested_schema)
-            if nested_schema_name:
-                nested_schema_name = name_prefix + nested_schema_name
-
         has_properties = schema.get("properties")
         add_parameters = ""
         for k, v in data.items():
@@ -595,16 +573,11 @@ def format_data_with_schema_dict(
             value = format_data_with_schema(
                 v,
                 schema["additionalProperties"],
-                name_prefix=name_prefix,
                 replace_values=replace_values,
                 required=True,
                 **kwargs,
             )
             add_parameters += f'("{k}".to_string(), {value}),'
-
-            # IMPROVE: find a better way to get nested schema name
-            if not nested_schema_name:
-                nested_schema_name = value.split("{")[0]
 
         if has_properties:
             parameters += f".additional_properties(BTreeMap::from([{add_parameters}]))"
@@ -612,7 +585,7 @@ def format_data_with_schema_dict(
             return f"BTreeMap::from([{add_parameters}])"
 
     if "oneOf" in schema:
-        return _format_oneof(schema, data, name, name_prefix, replace_values, required, nullable, **kwargs)
+        return _format_oneof(schema, data, name, replace_values, required, nullable, **kwargs)
 
     if schema.get("type") == "object" and "properties" not in schema:
         if schema.get("additionalProperties") == {}:
@@ -632,5 +605,5 @@ def format_data_with_schema_dict(
         raise ValueError(f"No schema matched for {data}")
 
     if nullable:
-        return f"Some({name_prefix}{name}::new({required}){parameters})"
-    return f"{name_prefix}{name}::new({required}){parameters}"
+        return f"Some({name}::new({required}){parameters})"
+    return f"{name}::new({required}){parameters}"

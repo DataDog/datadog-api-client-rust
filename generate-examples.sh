@@ -26,4 +26,6 @@ pre_commit_wrapper () {
 cargo install genemichaels --quiet
 rm -rf examples/*
 pre_commit_wrapper examples
+cargo fix --examples --allow-staged --allow-dirty
+genemichaels examples/*.rs
 cargo fmt

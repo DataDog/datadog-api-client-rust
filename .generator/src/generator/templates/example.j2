@@ -3,7 +3,7 @@
 {%- set variables = given_variables(context) %}
 {%- set parameters = format_parameters(context.api_request.kwargs, spec=operation_spec, replace_values=context._replace_values, has_body=context.body, variables=variables, version=version|upper) %}
 {%- if context.body %}
-{%- set body = format_data_with_schema(context.body.value, context.api_request.schema.spec, name_prefix="", replace_values=context._replace_values, required=True, variables=variables, version=version|upper)%}
+{%- set body = format_data_with_schema(context.body.value, context.api_request.schema.spec, replace_values=context._replace_values, required=True, variables=variables, version=version|upper)%}
 {%- endif %}
 
 use datadog_api_client::datadog::configuration::Configuration;
