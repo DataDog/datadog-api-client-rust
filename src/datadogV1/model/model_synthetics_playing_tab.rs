@@ -19,13 +19,13 @@ impl Serialize for SyntheticsPlayingTab {
     where
         S: Serializer,
     {
-        serializer.serialize_i64(match self {
-            Self::MAIN_TAB => -1,
-            Self::NEW_TAB => 0,
-            Self::TAB_1 => 1,
-            Self::TAB_2 => 2,
-            Self::TAB_3 => 3,
-        })
+        match self {
+            Self::MAIN_TAB => serializer.serialize_i64(-1),
+            Self::NEW_TAB => serializer.serialize_i64(0),
+            Self::TAB_1 => serializer.serialize_i64(1),
+            Self::TAB_2 => serializer.serialize_i64(2),
+            Self::TAB_3 => serializer.serialize_i64(3),
+        }
     }
 }
 
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for SyntheticsPlayingTab {
             3 => Self::TAB_3,
             _ => {
                 return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsPlayingTab: {}",
+                    "Invalid value for SyntheticsDeviceID: {}",
                     s
                 )))
             }

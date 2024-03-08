@@ -2,32 +2,21 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum FormulaAndFunctionApmResourceStatName {
-    #[serde(rename = "errors")]
     ERRORS,
-    #[serde(rename = "error_rate")]
     ERROR_RATE,
-    #[serde(rename = "hits")]
     HITS,
-    #[serde(rename = "latency_avg")]
     LATENCY_AVG,
-    #[serde(rename = "latency_distribution")]
     LATENCY_DISTRIBUTION,
-    #[serde(rename = "latency_max")]
     LATENCY_MAX,
-    #[serde(rename = "latency_p50")]
     LATENCY_P50,
-    #[serde(rename = "latency_p75")]
     LATENCY_P75,
-    #[serde(rename = "latency_p90")]
     LATENCY_P90,
-    #[serde(rename = "latency_p95")]
     LATENCY_P95,
-    #[serde(rename = "latency_p99")]
     LATENCY_P99,
 }
 
@@ -46,5 +35,44 @@ impl ToString for FormulaAndFunctionApmResourceStatName {
             Self::LATENCY_P95 => String::from("latency_p95"),
             Self::LATENCY_P99 => String::from("latency_p99"),
         }
+    }
+}
+
+impl Serialize for FormulaAndFunctionApmResourceStatName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for FormulaAndFunctionApmResourceStatName {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "errors" => Self::ERRORS,
+            "error_rate" => Self::ERROR_RATE,
+            "hits" => Self::HITS,
+            "latency_avg" => Self::LATENCY_AVG,
+            "latency_distribution" => Self::LATENCY_DISTRIBUTION,
+            "latency_max" => Self::LATENCY_MAX,
+            "latency_p50" => Self::LATENCY_P50,
+            "latency_p75" => Self::LATENCY_P75,
+            "latency_p90" => Self::LATENCY_P90,
+            "latency_p95" => Self::LATENCY_P95,
+            "latency_p99" => Self::LATENCY_P99,
+            _ => {
+                return Err(serde::de::Error::custom(format!(
+                    "Invalid value for SyntheticsDeviceID: {}",
+                    s
+                )))
+            }
+        })
     }
 }

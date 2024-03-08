@@ -2,26 +2,18 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum APIKeysSort {
-    #[serde(rename = "created_at")]
     CREATED_AT_ASCENDING,
-    #[serde(rename = "-created_at")]
     CREATED_AT_DESCENDING,
-    #[serde(rename = "last4")]
     LAST4_ASCENDING,
-    #[serde(rename = "-last4")]
     LAST4_DESCENDING,
-    #[serde(rename = "modified_at")]
     MODIFIED_AT_ASCENDING,
-    #[serde(rename = "-modified_at")]
     MODIFIED_AT_DESCENDING,
-    #[serde(rename = "name")]
     NAME_ASCENDING,
-    #[serde(rename = "-name")]
     NAME_DESCENDING,
 }
 
@@ -37,5 +29,41 @@ impl ToString for APIKeysSort {
             Self::NAME_ASCENDING => String::from("name"),
             Self::NAME_DESCENDING => String::from("-name"),
         }
+    }
+}
+
+impl Serialize for APIKeysSort {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for APIKeysSort {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "created_at" => Self::CREATED_AT_ASCENDING,
+            "-created_at" => Self::CREATED_AT_DESCENDING,
+            "last4" => Self::LAST4_ASCENDING,
+            "-last4" => Self::LAST4_DESCENDING,
+            "modified_at" => Self::MODIFIED_AT_ASCENDING,
+            "-modified_at" => Self::MODIFIED_AT_DESCENDING,
+            "name" => Self::NAME_ASCENDING,
+            "-name" => Self::NAME_DESCENDING,
+            _ => {
+                return Err(serde::de::Error::custom(format!(
+                    "Invalid value for SyntheticsDeviceID: {}",
+                    s
+                )))
+            }
+        })
     }
 }

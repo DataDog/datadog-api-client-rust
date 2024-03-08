@@ -26,20 +26,20 @@ impl Serialize for SecurityMonitoringRuleMaxSignalDuration {
     where
         S: Serializer,
     {
-        serializer.serialize_i32(match self {
-            Self::ZERO_MINUTES => 0,
-            Self::ONE_MINUTE => 60,
-            Self::FIVE_MINUTES => 300,
-            Self::TEN_MINUTES => 600,
-            Self::FIFTEEN_MINUTES => 900,
-            Self::THIRTY_MINUTES => 1800,
-            Self::ONE_HOUR => 3600,
-            Self::TWO_HOURS => 7200,
-            Self::THREE_HOURS => 10800,
-            Self::SIX_HOURS => 21600,
-            Self::TWELVE_HOURS => 43200,
-            Self::ONE_DAY => 86400,
-        })
+        match self {
+            Self::ZERO_MINUTES => serializer.serialize_i32(0),
+            Self::ONE_MINUTE => serializer.serialize_i32(60),
+            Self::FIVE_MINUTES => serializer.serialize_i32(300),
+            Self::TEN_MINUTES => serializer.serialize_i32(600),
+            Self::FIFTEEN_MINUTES => serializer.serialize_i32(900),
+            Self::THIRTY_MINUTES => serializer.serialize_i32(1800),
+            Self::ONE_HOUR => serializer.serialize_i32(3600),
+            Self::TWO_HOURS => serializer.serialize_i32(7200),
+            Self::THREE_HOURS => serializer.serialize_i32(10800),
+            Self::SIX_HOURS => serializer.serialize_i32(21600),
+            Self::TWELVE_HOURS => serializer.serialize_i32(43200),
+            Self::ONE_DAY => serializer.serialize_i32(86400),
+        }
     }
 }
 
@@ -64,7 +64,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleMaxSignalDuration {
             86400 => Self::ONE_DAY,
             _ => {
                 return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SecurityMonitoringRuleMaxSignalDuration: {}",
+                    "Invalid value for SyntheticsDeviceID: {}",
                     s
                 )))
             }

@@ -18,12 +18,12 @@ impl Serialize for ServiceCheckStatus {
     where
         S: Serializer,
     {
-        serializer.serialize_i32(match self {
-            Self::OK => 0,
-            Self::WARNING => 1,
-            Self::CRITICAL => 2,
-            Self::UNKNOWN => 3,
-        })
+        match self {
+            Self::OK => serializer.serialize_i32(0),
+            Self::WARNING => serializer.serialize_i32(1),
+            Self::CRITICAL => serializer.serialize_i32(2),
+            Self::UNKNOWN => serializer.serialize_i32(3),
+        }
     }
 }
 
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for ServiceCheckStatus {
             3 => Self::UNKNOWN,
             _ => {
                 return Err(serde::de::Error::custom(format!(
-                    "Invalid value for ServiceCheckStatus: {}",
+                    "Invalid value for SyntheticsDeviceID: {}",
                     s
                 )))
             }

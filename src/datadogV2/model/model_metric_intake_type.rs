@@ -18,12 +18,12 @@ impl Serialize for MetricIntakeType {
     where
         S: Serializer,
     {
-        serializer.serialize_i32(match self {
-            Self::UNSPECIFIED => 0,
-            Self::COUNT => 1,
-            Self::RATE => 2,
-            Self::GAUGE => 3,
-        })
+        match self {
+            Self::UNSPECIFIED => serializer.serialize_i32(0),
+            Self::COUNT => serializer.serialize_i32(1),
+            Self::RATE => serializer.serialize_i32(2),
+            Self::GAUGE => serializer.serialize_i32(3),
+        }
     }
 }
 
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for MetricIntakeType {
             3 => Self::GAUGE,
             _ => {
                 return Err(serde::de::Error::custom(format!(
-                    "Invalid value for MetricIntakeType: {}",
+                    "Invalid value for SyntheticsDeviceID: {}",
                     s
                 )))
             }

@@ -2,60 +2,35 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SyntheticsStepType {
-    #[serde(rename = "assertCurrentUrl")]
     ASSERT_CURRENT_URL,
-    #[serde(rename = "assertElementAttribute")]
     ASSERT_ELEMENT_ATTRIBUTE,
-    #[serde(rename = "assertElementContent")]
     ASSERT_ELEMENT_CONTENT,
-    #[serde(rename = "assertElementPresent")]
     ASSERT_ELEMENT_PRESENT,
-    #[serde(rename = "assertEmail")]
     ASSERT_EMAIL,
-    #[serde(rename = "assertFileDownload")]
     ASSERT_FILE_DOWNLOAD,
-    #[serde(rename = "assertFromJavascript")]
     ASSERT_FROM_JAVASCRIPT,
-    #[serde(rename = "assertPageContains")]
     ASSERT_PAGE_CONTAINS,
-    #[serde(rename = "assertPageLacks")]
     ASSERT_PAGE_LACKS,
-    #[serde(rename = "click")]
     CLICK,
-    #[serde(rename = "extractFromJavascript")]
     EXTRACT_FROM_JAVASCRIPT,
-    #[serde(rename = "extractVariable")]
     EXTRACT_VARIABLE,
-    #[serde(rename = "goToEmailLink")]
     GO_TO_EMAIL_LINK,
-    #[serde(rename = "goToUrl")]
     GO_TO_URL,
-    #[serde(rename = "goToUrlAndMeasureTti")]
     GO_TO_URL_AND_MEASURE_TTI,
-    #[serde(rename = "hover")]
     HOVER,
-    #[serde(rename = "playSubTest")]
     PLAY_SUB_TEST,
-    #[serde(rename = "pressKey")]
     PRESS_KEY,
-    #[serde(rename = "refresh")]
     REFRESH,
-    #[serde(rename = "runApiTest")]
     RUN_API_TEST,
-    #[serde(rename = "scroll")]
     SCROLL,
-    #[serde(rename = "selectOption")]
     SELECT_OPTION,
-    #[serde(rename = "typeText")]
     TYPE_TEXT,
-    #[serde(rename = "uploadFiles")]
     UPLOAD_FILES,
-    #[serde(rename = "wait")]
     WAIT,
 }
 
@@ -88,5 +63,58 @@ impl ToString for SyntheticsStepType {
             Self::UPLOAD_FILES => String::from("uploadFiles"),
             Self::WAIT => String::from("wait"),
         }
+    }
+}
+
+impl Serialize for SyntheticsStepType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for SyntheticsStepType {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "assertCurrentUrl" => Self::ASSERT_CURRENT_URL,
+            "assertElementAttribute" => Self::ASSERT_ELEMENT_ATTRIBUTE,
+            "assertElementContent" => Self::ASSERT_ELEMENT_CONTENT,
+            "assertElementPresent" => Self::ASSERT_ELEMENT_PRESENT,
+            "assertEmail" => Self::ASSERT_EMAIL,
+            "assertFileDownload" => Self::ASSERT_FILE_DOWNLOAD,
+            "assertFromJavascript" => Self::ASSERT_FROM_JAVASCRIPT,
+            "assertPageContains" => Self::ASSERT_PAGE_CONTAINS,
+            "assertPageLacks" => Self::ASSERT_PAGE_LACKS,
+            "click" => Self::CLICK,
+            "extractFromJavascript" => Self::EXTRACT_FROM_JAVASCRIPT,
+            "extractVariable" => Self::EXTRACT_VARIABLE,
+            "goToEmailLink" => Self::GO_TO_EMAIL_LINK,
+            "goToUrl" => Self::GO_TO_URL,
+            "goToUrlAndMeasureTti" => Self::GO_TO_URL_AND_MEASURE_TTI,
+            "hover" => Self::HOVER,
+            "playSubTest" => Self::PLAY_SUB_TEST,
+            "pressKey" => Self::PRESS_KEY,
+            "refresh" => Self::REFRESH,
+            "runApiTest" => Self::RUN_API_TEST,
+            "scroll" => Self::SCROLL,
+            "selectOption" => Self::SELECT_OPTION,
+            "typeText" => Self::TYPE_TEXT,
+            "uploadFiles" => Self::UPLOAD_FILES,
+            "wait" => Self::WAIT,
+            _ => {
+                return Err(serde::de::Error::custom(format!(
+                    "Invalid value for SyntheticsDeviceID: {}",
+                    s
+                )))
+            }
+        })
     }
 }
