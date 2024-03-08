@@ -32,7 +32,7 @@ pub struct {{ name }} {
 {%- endif %}
     #[serde(skip)]
     #[serde(default)]
-    _unparsed: bool
+    pub(crate) _unparsed: bool
 }
 
 impl {{ name }} {
@@ -119,16 +119,14 @@ impl<'de> Deserialize<'de> for {{ name }} {
                         "{{ attr }}" => {
                             {{ propertyName }} = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             {%- if schema.enum or schema.oneOf %}
-                            {%- if not required %}
                             if let Some(ref _{{ propertyName }}) = {{ propertyName }} {
                                 match _{{ propertyName }} {
-                                    {% if not required and nullable%}Some({% endif %}{{ dataType }}::UnparsedObject(_{{ propertyName }}){% if not required and nullable%}){% endif %} => {
+                                    {% if nullable%}Some({% endif %}{{ dataType }}::UnparsedObject(_{{ propertyName }}){% if nullable%}){% endif %} => {
                                         _unparsed = true;
                                     },
                                     _ => {}
                                 }
                             }
-                            {%- endif %}
                             {%- endif %}
                         },
                         {%- endfor %}
