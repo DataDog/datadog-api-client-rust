@@ -1,26 +1,14 @@
-{%- if model["type"] == "integer" %}
+{%- set dataType = model|simple_type(render_option=False) %}
 use serde::{Serialize, Deserialize, Serializer, Deserializer};
-{%- else %}
-use serde::{Serialize, Deserialize};
-{%- endif %}
 {% if description is defined %}
 {{ description | block_comment }}
 {%- endif %}
 
 #[non_exhaustive]
-{%- if model["type"] == "integer" %}
 #[derive(Clone, Debug, Eq, PartialEq)]
-{%- else %}
-#[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
-{%- endif %}
 pub enum {{ name }} {
 {%- for index, value in enumerate(model.enum) %}
-{%- if model["type"] == "integer" %}
 	{{ model["x-enum-varnames"][index] or value.upper() }},
-{%- else %}
-    #[serde(rename = "{{value}}")]
-	{{ model["x-enum-varnames"][index] or value.upper() }},
-{%- endif %}
 {%- endfor %}
     UnparsedObject(crate::datadog::UnparsedObejct),
 }
@@ -39,8 +27,6 @@ impl ToString for {{ name }} {
 }
 {%- endif %}
 
-{%- if model["type"] == "integer" %}
-
 impl Serialize for {{ name }} {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -48,7 +34,7 @@ impl Serialize for {{ name }} {
     {
         match self {
             {%- for index, value in enumerate(model.enum) %}
-            Self::{{ model["x-enum-varnames"][index] or value.upper() }} => serializer.serialize_{{ model|simple_type(render_option=False) }}({{ value }}),
+            Self::{{ model["x-enum-varnames"][index] or value.upper() }} => serializer.serialize_{%- if model["type"] == "string"%}str{% else %}{{ dataType }}{%- endif %}({%- if model["type"] == "string" %}"{%- endif %}{{ value }}{%- if model["type"] == "string" %}"{%- endif %}),
             {%- endfor %}
             Self::UnparsedObject(v) => v.serialize(serializer),
         }
@@ -60,13 +46,12 @@ impl<'de> Deserialize<'de> for {{ name }} {
     where
         D: Deserializer<'de>,
     {
-        let s: {{ model|simple_type(render_option=False) }} = {{ model|simple_type(render_option=False) }}::deserialize(deserializer)?;
-        Ok(match s {
+        let s: {{ dataType }} = {{ dataType }}::deserialize(deserializer)?;
+        Ok(match s{%- if model["type"] == "string" %}.as_str(){% endif %} {
             {%- for index, value in enumerate(model.enum) %}
-            {{ value }} => Self::{{ model["x-enum-varnames"][index] or value.upper() }},
+            {%- if model["type"] == "string" %}"{%- endif %}{{ value }}{%- if model["type"] == "string" %}"{%- endif %} => Self::{{ model["x-enum-varnames"][index] or value.upper() }},
             {%- endfor %}
-            _ => return Err(serde::de::Error::custom(format!("Invalid value for {{ name }}: {}", s))),
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct { value: serde_json::Value::{%- if model["type"] == "string" %}String{%- else %}Number{%- endif %}(s.into()) }),
         })
     }
 }
-{%- endif %}
