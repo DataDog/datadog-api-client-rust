@@ -2,28 +2,19 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ServiceDefinitionV2LinkType {
-    #[serde(rename = "doc")]
     DOC,
-    #[serde(rename = "wiki")]
     WIKI,
-    #[serde(rename = "runbook")]
     RUNBOOK,
-    #[serde(rename = "url")]
     URL,
-    #[serde(rename = "repo")]
     REPO,
-    #[serde(rename = "dashboard")]
     DASHBOARD,
-    #[serde(rename = "oncall")]
     ONCALL,
-    #[serde(rename = "code")]
     CODE,
-    #[serde(rename = "link")]
     LINK,
 }
 
@@ -40,5 +31,42 @@ impl ToString for ServiceDefinitionV2LinkType {
             Self::CODE => String::from("code"),
             Self::LINK => String::from("link"),
         }
+    }
+}
+
+impl Serialize for ServiceDefinitionV2LinkType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for ServiceDefinitionV2LinkType {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "doc" => Self::DOC,
+            "wiki" => Self::WIKI,
+            "runbook" => Self::RUNBOOK,
+            "url" => Self::URL,
+            "repo" => Self::REPO,
+            "dashboard" => Self::DASHBOARD,
+            "oncall" => Self::ONCALL,
+            "code" => Self::CODE,
+            "link" => Self::LINK,
+            _ => {
+                return Err(serde::de::Error::custom(format!(
+                    "Invalid value for SyntheticsDeviceID: {}",
+                    s
+                )))
+            }
+        })
     }
 }

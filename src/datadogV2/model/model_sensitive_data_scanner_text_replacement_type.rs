@@ -2,20 +2,15 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SensitiveDataScannerTextReplacementType {
-    #[serde(rename = "none")]
     NONE,
-    #[serde(rename = "hash")]
     HASH,
-    #[serde(rename = "replacement_string")]
     REPLACEMENT_STRING,
-    #[serde(rename = "partial_replacement_from_beginning")]
     PARTIAL_REPLACEMENT_FROM_BEGINNING,
-    #[serde(rename = "partial_replacement_from_end")]
     PARTIAL_REPLACEMENT_FROM_END,
 }
 
@@ -30,5 +25,38 @@ impl ToString for SensitiveDataScannerTextReplacementType {
             }
             Self::PARTIAL_REPLACEMENT_FROM_END => String::from("partial_replacement_from_end"),
         }
+    }
+}
+
+impl Serialize for SensitiveDataScannerTextReplacementType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for SensitiveDataScannerTextReplacementType {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "none" => Self::NONE,
+            "hash" => Self::HASH,
+            "replacement_string" => Self::REPLACEMENT_STRING,
+            "partial_replacement_from_beginning" => Self::PARTIAL_REPLACEMENT_FROM_BEGINNING,
+            "partial_replacement_from_end" => Self::PARTIAL_REPLACEMENT_FROM_END,
+            _ => {
+                return Err(serde::de::Error::custom(format!(
+                    "Invalid value for SyntheticsDeviceID: {}",
+                    s
+                )))
+            }
+        })
     }
 }

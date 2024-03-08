@@ -16,10 +16,10 @@ impl Serialize for SLOTypeNumeric {
     where
         S: Serializer,
     {
-        serializer.serialize_i32(match self {
-            Self::MONITOR => 0,
-            Self::METRIC => 1,
-        })
+        match self {
+            Self::MONITOR => serializer.serialize_i32(0),
+            Self::METRIC => serializer.serialize_i32(1),
+        }
     }
 }
 
@@ -34,7 +34,7 @@ impl<'de> Deserialize<'de> for SLOTypeNumeric {
             1 => Self::METRIC,
             _ => {
                 return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SLOTypeNumeric: {}",
+                    "Invalid value for SyntheticsDeviceID: {}",
                     s
                 )))
             }

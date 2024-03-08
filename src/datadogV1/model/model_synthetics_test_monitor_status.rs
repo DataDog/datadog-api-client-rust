@@ -17,11 +17,11 @@ impl Serialize for SyntheticsTestMonitorStatus {
     where
         S: Serializer,
     {
-        serializer.serialize_i64(match self {
-            Self::UNTRIGGERED => 0,
-            Self::TRIGGERED => 1,
-            Self::NO_DATA => 2,
-        })
+        match self {
+            Self::UNTRIGGERED => serializer.serialize_i64(0),
+            Self::TRIGGERED => serializer.serialize_i64(1),
+            Self::NO_DATA => serializer.serialize_i64(2),
+        }
     }
 }
 
@@ -37,7 +37,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestMonitorStatus {
             2 => Self::NO_DATA,
             _ => {
                 return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsTestMonitorStatus: {}",
+                    "Invalid value for SyntheticsDeviceID: {}",
                     s
                 )))
             }

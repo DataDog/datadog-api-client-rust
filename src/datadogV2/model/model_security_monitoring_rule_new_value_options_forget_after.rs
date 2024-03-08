@@ -20,14 +20,14 @@ impl Serialize for SecurityMonitoringRuleNewValueOptionsForgetAfter {
     where
         S: Serializer,
     {
-        serializer.serialize_i32(match self {
-            Self::ONE_DAY => 1,
-            Self::TWO_DAYS => 2,
-            Self::ONE_WEEK => 7,
-            Self::TWO_WEEKS => 14,
-            Self::THREE_WEEKS => 21,
-            Self::FOUR_WEEKS => 28,
-        })
+        match self {
+            Self::ONE_DAY => serializer.serialize_i32(1),
+            Self::TWO_DAYS => serializer.serialize_i32(2),
+            Self::ONE_WEEK => serializer.serialize_i32(7),
+            Self::TWO_WEEKS => serializer.serialize_i32(14),
+            Self::THREE_WEEKS => serializer.serialize_i32(21),
+            Self::FOUR_WEEKS => serializer.serialize_i32(28),
+        }
     }
 }
 
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptionsForgetAfter 
             28 => Self::FOUR_WEEKS,
             _ => {
                 return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SecurityMonitoringRuleNewValueOptionsForgetAfter: {}",
+                    "Invalid value for SyntheticsDeviceID: {}",
                     s
                 )))
             }

@@ -2,34 +2,22 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum AuthNMappingsSort {
-    #[serde(rename = "created_at")]
     CREATED_AT_ASCENDING,
-    #[serde(rename = "-created_at")]
     CREATED_AT_DESCENDING,
-    #[serde(rename = "role_id")]
     ROLE_ID_ASCENDING,
-    #[serde(rename = "-role_id")]
     ROLE_ID_DESCENDING,
-    #[serde(rename = "saml_assertion_attribute_id")]
     SAML_ASSERTION_ATTRIBUTE_ID_ASCENDING,
-    #[serde(rename = "-saml_assertion_attribute_id")]
     SAML_ASSERTION_ATTRIBUTE_ID_DESCENDING,
-    #[serde(rename = "role.name")]
     ROLE_NAME_ASCENDING,
-    #[serde(rename = "-role.name")]
     ROLE_NAME_DESCENDING,
-    #[serde(rename = "saml_assertion_attribute.attribute_key")]
     SAML_ASSERTION_ATTRIBUTE_KEY_ASCENDING,
-    #[serde(rename = "-saml_assertion_attribute.attribute_key")]
     SAML_ASSERTION_ATTRIBUTE_KEY_DESCENDING,
-    #[serde(rename = "saml_assertion_attribute.attribute_value")]
     SAML_ASSERTION_ATTRIBUTE_VALUE_ASCENDING,
-    #[serde(rename = "-saml_assertion_attribute.attribute_value")]
     SAML_ASSERTION_ATTRIBUTE_VALUE_DESCENDING,
 }
 
@@ -61,5 +49,53 @@ impl ToString for AuthNMappingsSort {
                 String::from("-saml_assertion_attribute.attribute_value")
             }
         }
+    }
+}
+
+impl Serialize for AuthNMappingsSort {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for AuthNMappingsSort {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "created_at" => Self::CREATED_AT_ASCENDING,
+            "-created_at" => Self::CREATED_AT_DESCENDING,
+            "role_id" => Self::ROLE_ID_ASCENDING,
+            "-role_id" => Self::ROLE_ID_DESCENDING,
+            "saml_assertion_attribute_id" => Self::SAML_ASSERTION_ATTRIBUTE_ID_ASCENDING,
+            "-saml_assertion_attribute_id" => Self::SAML_ASSERTION_ATTRIBUTE_ID_DESCENDING,
+            "role.name" => Self::ROLE_NAME_ASCENDING,
+            "-role.name" => Self::ROLE_NAME_DESCENDING,
+            "saml_assertion_attribute.attribute_key" => {
+                Self::SAML_ASSERTION_ATTRIBUTE_KEY_ASCENDING
+            }
+            "-saml_assertion_attribute.attribute_key" => {
+                Self::SAML_ASSERTION_ATTRIBUTE_KEY_DESCENDING
+            }
+            "saml_assertion_attribute.attribute_value" => {
+                Self::SAML_ASSERTION_ATTRIBUTE_VALUE_ASCENDING
+            }
+            "-saml_assertion_attribute.attribute_value" => {
+                Self::SAML_ASSERTION_ATTRIBUTE_VALUE_DESCENDING
+            }
+            _ => {
+                return Err(serde::de::Error::custom(format!(
+                    "Invalid value for SyntheticsDeviceID: {}",
+                    s
+                )))
+            }
+        })
     }
 }

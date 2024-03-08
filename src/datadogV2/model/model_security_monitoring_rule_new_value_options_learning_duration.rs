@@ -17,11 +17,11 @@ impl Serialize for SecurityMonitoringRuleNewValueOptionsLearningDuration {
     where
         S: Serializer,
     {
-        serializer.serialize_i32(match self {
-            Self::ZERO_DAYS => 0,
-            Self::ONE_DAY => 1,
-            Self::SEVEN_DAYS => 7,
-        })
+        match self {
+            Self::ZERO_DAYS => serializer.serialize_i32(0),
+            Self::ONE_DAY => serializer.serialize_i32(1),
+            Self::SEVEN_DAYS => serializer.serialize_i32(7),
+        }
     }
 }
 
@@ -37,7 +37,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptionsLearningDura
             7 => Self::SEVEN_DAYS,
             _ => {
                 return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SecurityMonitoringRuleNewValueOptionsLearningDuration: {}",
+                    "Invalid value for SyntheticsDeviceID: {}",
                     s
                 )))
             }

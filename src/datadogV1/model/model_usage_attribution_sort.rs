@@ -2,82 +2,46 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum UsageAttributionSort {
-    #[serde(rename = "api_percentage")]
     API_PERCENTAGE,
-    #[serde(rename = "snmp_usage")]
     SNMP_USAGE,
-    #[serde(rename = "apm_host_usage")]
     APM_HOST_USAGE,
-    #[serde(rename = "api_usage")]
     API_USAGE,
-    #[serde(rename = "appsec_usage")]
     APPSEC_USAGE,
-    #[serde(rename = "appsec_percentage")]
     APPSEC_PERCENTAGE,
-    #[serde(rename = "container_usage")]
     CONTAINER_USAGE,
-    #[serde(rename = "custom_timeseries_percentage")]
     CUSTOM_TIMESERIES_PERCENTAGE,
-    #[serde(rename = "container_percentage")]
     CONTAINER_PERCENTAGE,
-    #[serde(rename = "apm_host_percentage")]
     APM_HOST_PERCENTAGE,
-    #[serde(rename = "npm_host_percentage")]
     NPM_HOST_PERCENTAGE,
-    #[serde(rename = "browser_percentage")]
     BROWSER_PERCENTAGE,
-    #[serde(rename = "browser_usage")]
     BROWSER_USAGE,
-    #[serde(rename = "infra_host_percentage")]
     INFRA_HOST_PERCENTAGE,
-    #[serde(rename = "snmp_percentage")]
     SNMP_PERCENTAGE,
-    #[serde(rename = "npm_host_usage")]
     NPM_HOST_USAGE,
-    #[serde(rename = "infra_host_usage")]
     INFRA_HOST_USAGE,
-    #[serde(rename = "custom_timeseries_usage")]
     CUSTOM_TIMESERIES_USAGE,
-    #[serde(rename = "lambda_functions_usage")]
     LAMBDA_FUNCTIONS_USAGE,
-    #[serde(rename = "lambda_functions_percentage")]
     LAMBDA_FUNCTIONS_PERCENTAGE,
-    #[serde(rename = "lambda_invocations_usage")]
     LAMBDA_INVOCATIONS_USAGE,
-    #[serde(rename = "lambda_invocations_percentage")]
     LAMBDA_INVOCATIONS_PERCENTAGE,
-    #[serde(rename = "estimated_indexed_logs_usage")]
     ESTIMATED_INDEXED_LOGS_USAGE,
-    #[serde(rename = "estimated_indexed_logs_percentage")]
     ESTIMATED_INDEXED_LOGS_PERCENTAGE,
-    #[serde(rename = "estimated_ingested_logs_usage")]
     ESTIMATED_INGESTED_LOGS_USAGE,
-    #[serde(rename = "estimated_ingested_logs_percentage")]
     ESTIMATED_INGESTED_LOGS_PERCENTAGE,
-    #[serde(rename = "estimated_indexed_spans_usage")]
     ESTIMATED_INDEXED_SPANS_USAGE,
-    #[serde(rename = "estimated_indexed_spans_percentage")]
     ESTIMATED_INDEXED_SPANS_PERCENTAGE,
-    #[serde(rename = "estimated_ingested_spans_usage")]
     ESTIMATED_INGESTED_SPANS_USAGE,
-    #[serde(rename = "estimated_ingested_spans_percentage")]
     ESTIMATED_INGESTED_SPANS_PERCENTAGE,
-    #[serde(rename = "apm_fargate_usage")]
     APM_FARGATE_USAGE,
-    #[serde(rename = "apm_fargate_percentage")]
     APM_FARGATE_PERCENTAGE,
-    #[serde(rename = "appsec_fargate_usage")]
     APPSEC_FARGATE_USAGE,
-    #[serde(rename = "appsec_fargate_percentage")]
     APPSEC_FARGATE_PERCENTAGE,
-    #[serde(rename = "estimated_rum_usage_attribution_usage")]
     ESTIMATED_RUM_USAGE_ATTRIBUTION_USAGE,
-    #[serde(rename = "estimated_rum_usage_attribution_percentage")]
     ESTIMATED_RUM_USAGE_ATTRIBUTION_PERCENTAGE,
 }
 
@@ -133,5 +97,71 @@ impl ToString for UsageAttributionSort {
                 String::from("estimated_rum_usage_attribution_percentage")
             }
         }
+    }
+}
+
+impl Serialize for UsageAttributionSort {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for UsageAttributionSort {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "api_percentage" => Self::API_PERCENTAGE,
+            "snmp_usage" => Self::SNMP_USAGE,
+            "apm_host_usage" => Self::APM_HOST_USAGE,
+            "api_usage" => Self::API_USAGE,
+            "appsec_usage" => Self::APPSEC_USAGE,
+            "appsec_percentage" => Self::APPSEC_PERCENTAGE,
+            "container_usage" => Self::CONTAINER_USAGE,
+            "custom_timeseries_percentage" => Self::CUSTOM_TIMESERIES_PERCENTAGE,
+            "container_percentage" => Self::CONTAINER_PERCENTAGE,
+            "apm_host_percentage" => Self::APM_HOST_PERCENTAGE,
+            "npm_host_percentage" => Self::NPM_HOST_PERCENTAGE,
+            "browser_percentage" => Self::BROWSER_PERCENTAGE,
+            "browser_usage" => Self::BROWSER_USAGE,
+            "infra_host_percentage" => Self::INFRA_HOST_PERCENTAGE,
+            "snmp_percentage" => Self::SNMP_PERCENTAGE,
+            "npm_host_usage" => Self::NPM_HOST_USAGE,
+            "infra_host_usage" => Self::INFRA_HOST_USAGE,
+            "custom_timeseries_usage" => Self::CUSTOM_TIMESERIES_USAGE,
+            "lambda_functions_usage" => Self::LAMBDA_FUNCTIONS_USAGE,
+            "lambda_functions_percentage" => Self::LAMBDA_FUNCTIONS_PERCENTAGE,
+            "lambda_invocations_usage" => Self::LAMBDA_INVOCATIONS_USAGE,
+            "lambda_invocations_percentage" => Self::LAMBDA_INVOCATIONS_PERCENTAGE,
+            "estimated_indexed_logs_usage" => Self::ESTIMATED_INDEXED_LOGS_USAGE,
+            "estimated_indexed_logs_percentage" => Self::ESTIMATED_INDEXED_LOGS_PERCENTAGE,
+            "estimated_ingested_logs_usage" => Self::ESTIMATED_INGESTED_LOGS_USAGE,
+            "estimated_ingested_logs_percentage" => Self::ESTIMATED_INGESTED_LOGS_PERCENTAGE,
+            "estimated_indexed_spans_usage" => Self::ESTIMATED_INDEXED_SPANS_USAGE,
+            "estimated_indexed_spans_percentage" => Self::ESTIMATED_INDEXED_SPANS_PERCENTAGE,
+            "estimated_ingested_spans_usage" => Self::ESTIMATED_INGESTED_SPANS_USAGE,
+            "estimated_ingested_spans_percentage" => Self::ESTIMATED_INGESTED_SPANS_PERCENTAGE,
+            "apm_fargate_usage" => Self::APM_FARGATE_USAGE,
+            "apm_fargate_percentage" => Self::APM_FARGATE_PERCENTAGE,
+            "appsec_fargate_usage" => Self::APPSEC_FARGATE_USAGE,
+            "appsec_fargate_percentage" => Self::APPSEC_FARGATE_PERCENTAGE,
+            "estimated_rum_usage_attribution_usage" => Self::ESTIMATED_RUM_USAGE_ATTRIBUTION_USAGE,
+            "estimated_rum_usage_attribution_percentage" => {
+                Self::ESTIMATED_RUM_USAGE_ATTRIBUTION_PERCENTAGE
+            }
+            _ => {
+                return Err(serde::de::Error::custom(format!(
+                    "Invalid value for SyntheticsDeviceID: {}",
+                    s
+                )))
+            }
+        })
     }
 }

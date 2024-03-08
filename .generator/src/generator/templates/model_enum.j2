@@ -33,10 +33,14 @@ impl Serialize for {{ name }} {
         S: Serializer,
     {
         match self {
-            {%- for index, value in enumerate(model.enum) %}
-            Self::{{ model["x-enum-varnames"][index] or value.upper() }} => serializer.serialize_{%- if model["type"] == "string"%}str{% else %}{{ dataType }}{%- endif %}({%- if model["type"] == "string" %}"{%- endif %}{{ value }}{%- if model["type"] == "string" %}"{%- endif %}),
-            {%- endfor %}
             Self::UnparsedObject(v) => v.serialize(serializer),
+        {%- if model["type"] == "string"%}
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        {%- else %}
+            {%- for index, value in enumerate(model.enum) %}
+            Self::{{ model["x-enum-varnames"][index] or value.upper() }} => serializer.serialize_{{ dataType }}({{ value }}),
+            {%- endfor %}
+        {%- endif %}
         }
     }
 }

@@ -2,22 +2,16 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum FormulaAndFunctionSLOMeasure {
-    #[serde(rename = "good_events")]
     GOOD_EVENTS,
-    #[serde(rename = "bad_events")]
     BAD_EVENTS,
-    #[serde(rename = "slo_status")]
     SLO_STATUS,
-    #[serde(rename = "error_budget_remaining")]
     ERROR_BUDGET_REMAINING,
-    #[serde(rename = "burn_rate")]
     BURN_RATE,
-    #[serde(rename = "error_budget_burndown")]
     ERROR_BUDGET_BURNDOWN,
 }
 
@@ -31,5 +25,39 @@ impl ToString for FormulaAndFunctionSLOMeasure {
             Self::BURN_RATE => String::from("burn_rate"),
             Self::ERROR_BUDGET_BURNDOWN => String::from("error_budget_burndown"),
         }
+    }
+}
+
+impl Serialize for FormulaAndFunctionSLOMeasure {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for FormulaAndFunctionSLOMeasure {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "good_events" => Self::GOOD_EVENTS,
+            "bad_events" => Self::BAD_EVENTS,
+            "slo_status" => Self::SLO_STATUS,
+            "error_budget_remaining" => Self::ERROR_BUDGET_REMAINING,
+            "burn_rate" => Self::BURN_RATE,
+            "error_budget_burndown" => Self::ERROR_BUDGET_BURNDOWN,
+            _ => {
+                return Err(serde::de::Error::custom(format!(
+                    "Invalid value for SyntheticsDeviceID: {}",
+                    s
+                )))
+            }
+        })
     }
 }

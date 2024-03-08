@@ -16,10 +16,10 @@ impl Serialize for SecurityMonitoringRuleNewValueOptionsLearningThreshold {
     where
         S: Serializer,
     {
-        serializer.serialize_i32(match self {
-            Self::ZERO_OCCURRENCES => 0,
-            Self::ONE_OCCURRENCE => 1,
-        })
+        match self {
+            Self::ZERO_OCCURRENCES => serializer.serialize_i32(0),
+            Self::ONE_OCCURRENCE => serializer.serialize_i32(1),
+        }
     }
 }
 
@@ -34,7 +34,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptionsLearningThre
             1 => Self::ONE_OCCURRENCE,
             _ => {
                 return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SecurityMonitoringRuleNewValueOptionsLearningThreshold: {}",
+                    "Invalid value for SyntheticsDeviceID: {}",
                     s
                 )))
             }

@@ -2,14 +2,12 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum MetricsDataSource {
-    #[serde(rename = "metrics")]
     METRICS,
-    #[serde(rename = "cloud_cost")]
     CLOUD_COST,
 }
 
@@ -19,5 +17,35 @@ impl ToString for MetricsDataSource {
             Self::METRICS => String::from("metrics"),
             Self::CLOUD_COST => String::from("cloud_cost"),
         }
+    }
+}
+
+impl Serialize for MetricsDataSource {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for MetricsDataSource {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "metrics" => Self::METRICS,
+            "cloud_cost" => Self::CLOUD_COST,
+            _ => {
+                return Err(serde::de::Error::custom(format!(
+                    "Invalid value for SyntheticsDeviceID: {}",
+                    s
+                )))
+            }
+        })
     }
 }
