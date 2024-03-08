@@ -77,7 +77,7 @@ This client includes access to Datadog API endpoints while they are in an unstab
 ```rust
 configuration.set_unstable_operation_enabled(<OPERATION_NAME>, True )
 ```
-where <OPERATION_NAME> is the name of the method used to interact with that endpoint. For example: listSLOCorrection, or getSLOHistory
+where <OPERATION_NAME> is the API version and name of the method used to interact with that endpoint. For example: `v2.list_incidents`, or `v2.query_timeseries_data`
 
 ## Documentation for API Endpoints
 
