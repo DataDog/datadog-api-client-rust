@@ -2,44 +2,27 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum MonitorType {
-    #[serde(rename = "composite")]
     COMPOSITE,
-    #[serde(rename = "event alert")]
     EVENT_ALERT,
-    #[serde(rename = "log alert")]
     LOG_ALERT,
-    #[serde(rename = "metric alert")]
     METRIC_ALERT,
-    #[serde(rename = "process alert")]
     PROCESS_ALERT,
-    #[serde(rename = "query alert")]
     QUERY_ALERT,
-    #[serde(rename = "rum alert")]
     RUM_ALERT,
-    #[serde(rename = "service check")]
     SERVICE_CHECK,
-    #[serde(rename = "synthetics alert")]
     SYNTHETICS_ALERT,
-    #[serde(rename = "trace-analytics alert")]
     TRACE_ANALYTICS_ALERT,
-    #[serde(rename = "slo alert")]
     SLO_ALERT,
-    #[serde(rename = "event-v2 alert")]
     EVENT_V2_ALERT,
-    #[serde(rename = "audit alert")]
     AUDIT_ALERT,
-    #[serde(rename = "ci-pipelines alert")]
     CI_PIPELINES_ALERT,
-    #[serde(rename = "ci-tests alert")]
     CI_TESTS_ALERT,
-    #[serde(rename = "error-tracking alert")]
     ERROR_TRACKING_ALERT,
-    #[serde(rename = "database-monitoring alert")]
     DATABASE_MONITORING_ALERT,
 }
 
@@ -64,5 +47,50 @@ impl ToString for MonitorType {
             Self::ERROR_TRACKING_ALERT => String::from("error-tracking alert"),
             Self::DATABASE_MONITORING_ALERT => String::from("database-monitoring alert"),
         }
+    }
+}
+
+impl Serialize for MonitorType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for MonitorType {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "composite" => Self::COMPOSITE,
+            "event alert" => Self::EVENT_ALERT,
+            "log alert" => Self::LOG_ALERT,
+            "metric alert" => Self::METRIC_ALERT,
+            "process alert" => Self::PROCESS_ALERT,
+            "query alert" => Self::QUERY_ALERT,
+            "rum alert" => Self::RUM_ALERT,
+            "service check" => Self::SERVICE_CHECK,
+            "synthetics alert" => Self::SYNTHETICS_ALERT,
+            "trace-analytics alert" => Self::TRACE_ANALYTICS_ALERT,
+            "slo alert" => Self::SLO_ALERT,
+            "event-v2 alert" => Self::EVENT_V2_ALERT,
+            "audit alert" => Self::AUDIT_ALERT,
+            "ci-pipelines alert" => Self::CI_PIPELINES_ALERT,
+            "ci-tests alert" => Self::CI_TESTS_ALERT,
+            "error-tracking alert" => Self::ERROR_TRACKING_ALERT,
+            "database-monitoring alert" => Self::DATABASE_MONITORING_ALERT,
+            _ => {
+                return Err(serde::de::Error::custom(format!(
+                    "Invalid value for SyntheticsDeviceID: {}",
+                    s
+                )))
+            }
+        })
     }
 }
