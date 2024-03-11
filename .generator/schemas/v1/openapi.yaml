@@ -5,7 +5,7 @@ components:
   links: {}
   parameters:
     SignalID:
-      description: The ID of the signal. Test.
+      description: The ID of the signal.
       in: path
       name: signal_id
       required: true
@@ -52,7 +52,7 @@ components:
       properties:
         access_key_id:
           description: Your AWS access key ID. Only required if your AWS account is
-            a GovCloud or China account.
+            a GovCloud or China account. Test.
           type: string
         account_id:
           description: Your AWS Account ID without dashes.
