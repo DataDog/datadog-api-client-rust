@@ -105,8 +105,6 @@ async fn main() {
                 false
             } else if is_replay && sc.tags.contains(&"integration-only".into()) {
                 false
-            } else if sc.tags.contains(&"with-pagination".into()) {
-                false
             } else {
                 true
             }

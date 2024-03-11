@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -1109,6 +1111,38 @@ impl MonitorsAPI {
                 }
             }
             Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_monitors_with_pagination(
+        &self,
+        mut params: ListMonitorsOptionalParams,
+    ) -> impl Stream<Item = Result<crate::datadogV1::model::Monitor, Error<ListMonitorsError>>> + '_
+    {
+        try_stream! {
+            let mut page_size: i32 = 100;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            if params.page.is_none() {
+                params.page = Some(0);
+            }
+            loop {
+                let resp = self.list_monitors(params.clone()).await?;
+
+                let r = resp;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                params.page = Some(params.page.unwrap() + 1);
+            }
         }
     }
 
