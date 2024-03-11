@@ -60,7 +60,11 @@ impl<'de> Deserialize<'de> for DowntimeMonitorIdentifierId {
                         "monitor_id" => {
                             monitor_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let monitor_id = monitor_id.ok_or_else(|| M::Error::missing_field("monitor_id"))?;

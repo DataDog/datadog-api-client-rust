@@ -135,7 +135,13 @@ impl<'de> Deserialize<'de> for {{ name }} {
                             {%- endif %}
                         },
                         {%- endfor %}
-                        &_ => {},
+                        &_ => {
+                            {%- if model.additionalProperties is defined and model.additionalProperties != false %}
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                            {%- endif %}
+                        },
                     }
                 }
 

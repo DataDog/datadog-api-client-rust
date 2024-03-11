@@ -86,7 +86,11 @@ impl<'de> Deserialize<'de> for DowntimeScheduleOneTimeCreateUpdateRequest {
                         "start" => {
                             start = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
