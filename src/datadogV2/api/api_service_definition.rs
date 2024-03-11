@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -408,6 +410,44 @@ impl ServiceDefinitionAPI {
                 }
             }
             Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_service_definitions_with_pagination(
+        &self,
+        mut params: ListServiceDefinitionsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::ServiceDefinitionData,
+            Error<ListServiceDefinitionsError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 10;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_service_definitions(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                if params.page_number.is_none() {
+                    params.page_number = Some(page_size.clone());
+                } else {
+                    params.page_number = Some(params.page_number.unwrap() + page_size.clone());
+                }
+            }
         }
     }
 
