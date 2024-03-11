@@ -2,6 +2,12 @@
 use reqwest;
 use serde::{Serialize, Deserialize};
 use crate::datadog::*;
+{%- for _, _, operation in operations if "x-pagination" in operation %}
+{%- if loop.first %}
+use async_stream::try_stream;
+use futures_core::stream::Stream;
+{%- endif %}
+{%- endfor %}
 {%- for _, _, operation in operations if "x-unstable" in operation %}
 {%- if loop.first %}
 use log::warn;
@@ -11,7 +17,7 @@ use log::warn;
 {%- set structName = name.replace(" ", "")+"API" %}
 {% for path, method, operation in operations|sort(attribute="2.operationId", case_sensitive=true) %}
 {%- set httpMethod = method.upper() %}
-{%- set returnType = operation|return_type(version) %}
+{%- set returnType, _ = operation|return_type(version) %}
 {%- set formParameter = operation|form_parameter %}
 {%- set optionalBody = false if "required" in operation.requestBody and operation.requestBody.required else true %}
 {%- set optionalParams = operation|parameters|rejectattr('1.required', 'equalto', true) | list %}
@@ -53,7 +59,7 @@ impl {{operation.operationId}}OptionalParams {
 
 {% for path, method, operation in operations|sort(attribute="2.operationId", case_sensitive=true) %}
 {%- set httpMethod = method.upper() %}
-{%- set returnType = operation|return_type(version) %}
+{%- set returnType, _ = operation|return_type(version) %}
 {%- set formParameter = operation|form_parameter %}
 
 /// {{ operation.operationId }}Error is a struct for typed errors of method [`{{ structName }}::{{operation.operationId | snake_case}}`]
@@ -92,7 +98,7 @@ impl {{ structName }} {
 
     {% for path, method, operation in operations|sort(attribute="2.operationId", case_sensitive=true) %}
     {%- set httpMethod = method.upper() %}
-    {%- set returnType = operation|return_type(version) %}
+    {%- set returnType, returnSchema = operation|return_type(version) %}
     {%- set formParameter = operation|form_parameter %}
     {%- set requiredParams = operation|parameters|selectattr('1.required', 'equalto', true) | list %}
     {% if operation.description is defined %}
@@ -114,6 +120,114 @@ impl {{ structName }} {
             Err(err) => Err(err),
         }
     }
+
+    {%- if operation["x-pagination"] is defined %}
+    {%- set pagination = operation["x-pagination"] %}
+    {%- set itemType = get_type_at_path(operation, pagination.resultsPath, version=version) %}
+    {%- set pageParam = operation|parameters|selectattr('0', 'equalto', pagination.pageParam)|list|last|last %}
+    {%- set limitParam = operation|parameters|selectattr('0', 'equalto', pagination.limitParam)|list|last|last %}
+    {%- set limitParamParts = pagination.limitParam.split(".") %}
+
+    pub fn {{operation.operationId | snake_case}}_with_pagination(
+        &self{% for name, parameter in requiredParams %}, {% if limitParamParts[0] == name|variable_name %}mut {% endif %} {{name|variable_name}}: {{ get_type_for_parameter(parameter, version) }}{% endfor %}{% if operation|has_optional_parameter %}, mut params: {{operation.operationId}}OptionalParams{% endif %}
+    ) -> impl Stream<Item = Result<{{ itemType }}, Error<{{ operation.operationId }}Error>>> + '_
+    {
+        try_stream! {
+            {#- Limit param part fields #}
+            let mut page_size: {{ get_container_type(operation, pagination.limitParam, render_option=false, version=version) }} = {{ get_default(operation, pagination.limitParam) }};
+
+            {%- for i in range(limitParamParts|length) %}
+            {%- set tempLimitParam = ".".join(limitParamParts[:i + 1]) %}
+            {%- set getter, setter, required, schema = get_accessors(operation, tempLimitParam) %}
+            {%- if loop.nextitem %}
+            {%- if not required %}
+            if {{ getter }}.is_none() {
+                {{ setter }} = {% if not required %}Some({% endif %}{% if schema.nullable %}Some({% endif %}{{ get_container_type(operation, tempLimitParam, render_option=false, version=version) }}::new(){% if not required %}){% endif %}{% if schema.nullable %}){% endif %};
+            }
+            {%- endif %}
+            {%- else %}
+            if {{ getter }}.is_none() {
+                {{ setter }} = {% if not required %}Some({% endif %}{% if schema.nullable %}Some({% endif %}page_size{% if not required %}){% endif %}{% if schema.nullable %}){% endif %};
+            } else {
+                page_size = {{ getter }}{% if not required %}.unwrap(){% endif%}.clone();
+            }
+            {%- endif %}
+            {%- endfor %}
+
+        {%- if pagination.pageParam %}
+            {%- set getter, setter, required, schema = get_accessors(operation, pagination.pageParam) %}
+            if {{ getter }}.is_none() {
+                {{ setter }} = {% if not required %}Some({% endif %}0{% if not required %}){% endif %};
+            }
+        {%- endif %}
+            loop {
+                let resp = self.{{operation.operationId | snake_case}}({% for name, parameter in requiredParams %} {{name|variable_name}}.clone(),{% endfor %}{% if operation|has_optional_parameter %}params.clone(){% endif %}).await?;
+                {%- set ns = namespace(respGetter="resp", parentSchema=returnSchema) %}
+                {%- if pagination.resultsPath %}
+                {%- set resultsPathParts = pagination.resultsPath.split(".") %}
+                {%- for i in range(resultsPathParts|length) %}
+                {%- set required = resultsPathParts[i] in ns.parentSchema.get("required", []) %}
+
+                {%- if required %}
+                {%- set ns.respGetter = ns.respGetter ~ "." ~ resultsPathParts[i] %}
+                {%- else %}
+                {%- set attrName = resultsPathParts[i]|variable_name %}
+                let Some({{ attrName }}) = {{ ns.respGetter }}.{{ attrName }} else { break };
+                {%- set ns.respGetter = attrName %}
+                {%- endif %}
+
+                {%- set ns.parentSchema = ns.parentSchema.properties[resultsPathParts[i]] %}
+                {%- endfor %}
+                {%- endif %}
+
+                let r = {{ ns.respGetter }};
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+
+                {%- if pagination.pageParam %}
+                {%- set getter, setter, required, schema = get_accessors(operation, pagination.pageParam) %}
+                {{ setter }} = {% if not required %}Some({% endif %}{{ getter }}.unwrap() + 1{% if not required %}){% endif %};
+                {%- endif %}
+
+                {%- if pagination.pageOffsetParam %}
+                {%- set getter, setter, required, schema = get_accessors(operation, pagination.pageOffsetParam) %}
+                if {{ get_container(operation, pagination.pageOffsetParam) }}.is_none() {
+                    {{ setter }} = {% if not required %}Some({% endif %}page_size.clone(){% if not required %}){% endif %};
+                } else {
+                    {{ setter }} = {% if not required %}Some({% endif %}{{ getter }}.unwrap() + page_size.clone(){% if not required %}){% endif %};
+                }
+                {%- endif %}
+
+                {%- if pagination.cursorParam %}
+                {%- set _, cursorParamSetter, required, schema = get_accessors(operation, pagination.cursorParam) %}
+                {%- set ns = namespace(cursorGetter="resp", parentSchema=returnSchema, required=False) %}
+                {%- set cursorPathParts = pagination.cursorPath.split(".") %}
+                {%- for i in range(cursorPathParts|length) %}
+                {%- set ns.required = cursorPathParts[i] in ns.parentSchema.get("required", []) %}
+
+                {%- if ns.required %}
+                {%- set ns.cursorGetter = ns.cursorGetter ~ "." ~ cursorPathParts[i] %}
+                {%- else %}
+                {%- set attrName = cursorPathParts[i]|variable_name %}
+                let Some({{ attrName }}) = {{ ns.cursorGetter }}.{{ attrName }} else { break };
+                {%- set ns.cursorGetter = attrName %}
+                {%- endif %}
+
+                {%- set ns.parentSchema = ns.parentSchema.properties[cursorPathParts[i]] %}
+                {%- endfor %}
+
+                {{ cursorParamSetter }} = {% if not required%}Some({% endif %}{{ ns.cursorGetter }}{% if not required%}){% endif %};
+                {%- endif %}
+            }
+        }
+    }
+    {%- endif %}
 
     {% if operation.description is defined %}
     {{ operation.description | block_comment }}

@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use log::warn;
 use reqwest;
 use serde::{Deserialize, Serialize};
@@ -1598,6 +1600,40 @@ impl IncidentsAPI {
         }
     }
 
+    pub fn list_incidents_with_pagination(
+        &self,
+        mut params: ListIncidentsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<crate::datadogV2::model::IncidentResponseData, Error<ListIncidentsError>>,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 10;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_incidents(params.clone()).await?;
+
+                let r = resp.data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                if params.page_offset.is_none() {
+                    params.page_offset = Some(page_size.clone());
+                } else {
+                    params.page_offset = Some(params.page_offset.unwrap() + page_size.clone());
+                }
+            }
+        }
+    }
+
     /// Get all incidents for the user's organization.
     pub async fn list_incidents_with_http_info(
         &self,
@@ -1712,6 +1748,45 @@ impl IncidentsAPI {
                 }
             }
             Err(err) => Err(err),
+        }
+    }
+
+    pub fn search_incidents_with_pagination(
+        &self,
+        query: String,
+        mut params: SearchIncidentsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::IncidentSearchResponseIncidentsData,
+            Error<SearchIncidentsError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 10;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            loop {
+                let resp = self.search_incidents( query.clone(),params.clone()).await?;
+                let Some(attributes) = resp.data.attributes else { break };
+
+                let r = attributes.incidents;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                if params.page_offset.is_none() {
+                    params.page_offset = Some(page_size.clone());
+                } else {
+                    params.page_offset = Some(params.page_offset.unwrap() + page_size.clone());
+                }
+            }
         }
     }
 
