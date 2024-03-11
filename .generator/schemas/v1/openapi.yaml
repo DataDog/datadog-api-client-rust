@@ -5,7 +5,7 @@ components:
   links: {}
   parameters:
     SignalID:
-      description: The ID of the signal.
+      description: The ID of the signal. Test.
       in: path
       name: signal_id
       required: true
