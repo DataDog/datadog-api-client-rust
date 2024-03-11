@@ -24,17 +24,17 @@ jobs:
        !contains(github.event.pull_request.head.ref, 'datadog-api-spec/test/')) ||
       github.event_name == 'schedule'
     steps:
-      # - name: Get GitHub App token
-      #   id: get_token
-      #   uses: tibdex/github-app-token@v1
-      #   with:
-      #     app_id: ${{ secrets.PIPELINE_GITHUB_APP_ID }}
-      #     private_key: ${{ secrets.PIPELINE_GITHUB_APP_PRIVATE_KEY }}
+      - name: Get GitHub App token
+        id: get_token
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: ${{ secrets.PIPELINE_GITHUB_APP_ID }}
+          private_key: ${{ secrets.PIPELINE_GITHUB_APP_PRIVATE_KEY }}
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
-      #    token: ${{ steps.get_token.outputs.token }}
+          token: ${{ steps.get_token.outputs.token }}
       - name: Install pre-commit
         run: python -m pip install pre-commit
       - name: set PY
@@ -51,17 +51,17 @@ jobs:
         env:
           FROM_REF: ${{ github.event.pull_request.base.sha }}
           TO_REF: ${{ github.event.pull_request.head.sha }}
-      # - name: Commit changes
-      #   if: ${{ failure() }}
-      #   run: |-
-      #     git add -A
-      #     git config user.name "${GIT_AUTHOR_NAME}"
-      #     git config user.email "${GIT_AUTHOR_EMAIL}"
-      #     git commit -m "pre-commit fixes"
-      #     git push origin "HEAD:${HEAD_REF}"
-      #     exit 1
-      #   env:
-      #     HEAD_REF: ${{ github.event.pull_request.head.ref }}
+      - name: Commit changes
+        if: ${{ failure() }}
+        run: |-
+          git add -A
+          git config user.name "${GIT_AUTHOR_NAME}"
+          git config user.email "${GIT_AUTHOR_EMAIL}"
+          git commit -m "pre-commit fixes"
+          git push origin "HEAD:${HEAD_REF}"
+          exit 1
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
       - id: pre_commit_schedule
         name: Run pre-commit in schedule
         if: github.event_name == 'schedule'
