@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -414,6 +416,41 @@ impl NotebooksAPI {
                 }
             }
             Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_notebooks_with_pagination(
+        &self,
+        mut params: ListNotebooksOptionalParams,
+    ) -> impl Stream<
+        Item = Result<crate::datadogV1::model::NotebooksResponseData, Error<ListNotebooksError>>,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 100;
+            if params.count.is_none() {
+                params.count = Some(page_size);
+            } else {
+                page_size = params.count.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_notebooks(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                if params.start.is_none() {
+                    params.start = Some(page_size.clone());
+                } else {
+                    params.start = Some(params.start.unwrap() + page_size.clone());
+                }
+            }
         }
     }
 

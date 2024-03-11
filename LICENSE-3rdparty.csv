@@ -4,6 +4,7 @@ adler,https://github.com/jonas-schievink/adler,0BSD OR MIT OR Apache-2.0,Jonas S
 android-tzdata,https://github.com/RumovZ/android-tzdata,MIT OR Apache-2.0,RumovZ
 android_system_properties,https://github.com/nical/android_system_properties,MIT OR Apache-2.0,Nicolas Silva <nical@fastmail.com>
 anyhow,https://github.com/dtolnay/anyhow,MIT OR Apache-2.0,David Tolnay <dtolnay@gmail.com>
+async-stream,https://github.com/tokio-rs/async-stream,MIT,Carl Lerche <me@carllerche.com>
 async-trait,https://github.com/dtolnay/async-trait,MIT OR Apache-2.0,David Tolnay <dtolnay@gmail.com>
 backtrace,https://github.com/rust-lang/backtrace-rs,MIT OR Apache-2.0,The Rust Project Developers
 base64,https://github.com/marshallpierce/rust-base64,MIT OR Apache-2.0,"Alice Maz <alice@alicemaz.com>, Marshall Pierce <marshall@mpierce.org>"
