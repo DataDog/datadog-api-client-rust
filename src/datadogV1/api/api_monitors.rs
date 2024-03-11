@@ -1132,8 +1132,6 @@ impl MonitorsAPI {
             loop {
                 let resp = self.list_monitors(params.clone()).await?;
 
-                let Some(resp) = resp else { break };
-
                 let r = resp;
                 let count = r.len();
                 for team in r {

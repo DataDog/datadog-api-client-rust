@@ -2320,8 +2320,6 @@ impl SyntheticsAPI {
             }
             loop {
                 let resp = self.list_tests(params.clone()).await?;
-
-                let Some(resp) = resp else { break };
                 let Some(tests) = resp.tests else { break };
 
                 let r = tests;

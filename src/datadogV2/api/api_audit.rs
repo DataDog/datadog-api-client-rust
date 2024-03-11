@@ -154,8 +154,6 @@ impl AuditAPI {
             }
             loop {
                 let resp = self.list_audit_logs(params.clone()).await?;
-
-                let Some(resp) = resp else { break };
                 let Some(data) = resp.data else { break };
 
                 let r = data;
@@ -324,8 +322,6 @@ impl AuditAPI {
             }
             loop {
                 let resp = self.search_audit_logs(params.clone()).await?;
-
-                let Some(resp) = resp else { break };
                 let Some(data) = resp.data else { break };
 
                 let r = data;

@@ -251,8 +251,6 @@ impl SpansAPI {
             }
             loop {
                 let resp = self.list_spans( body.clone(),).await?;
-
-                let Some(resp) = resp else { break };
                 let Some(data) = resp.data else { break };
 
                 let r = data;
@@ -386,8 +384,6 @@ impl SpansAPI {
             }
             loop {
                 let resp = self.list_spans_get(params.clone()).await?;
-
-                let Some(resp) = resp else { break };
                 let Some(data) = resp.data else { break };
 
                 let r = data;

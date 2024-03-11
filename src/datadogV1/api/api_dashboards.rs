@@ -1048,8 +1048,6 @@ impl DashboardsAPI {
             }
             loop {
                 let resp = self.list_dashboards(params.clone()).await?;
-
-                let Some(resp) = resp else { break };
                 let Some(dashboards) = resp.dashboards else { break };
 
                 let r = dashboards;

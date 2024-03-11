@@ -380,8 +380,6 @@ impl CIVisibilityPipelinesAPI {
             }
             loop {
                 let resp = self.list_ci_app_pipeline_events(params.clone()).await?;
-
-                let Some(resp) = resp else { break };
                 let Some(data) = resp.data else { break };
 
                 let r = data;
@@ -555,8 +553,6 @@ impl CIVisibilityPipelinesAPI {
             }
             loop {
                 let resp = self.search_ci_app_pipeline_events(params.clone()).await?;
-
-                let Some(resp) = resp else { break };
                 let Some(data) = resp.data else { break };
 
                 let r = data;

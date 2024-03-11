@@ -1345,8 +1345,6 @@ impl TeamsAPI {
             }
             loop {
                 let resp = self.list_teams(params.clone()).await?;
-
-                let Some(resp) = resp else { break };
                 let Some(data) = resp.data else { break };
 
                 let r = data;

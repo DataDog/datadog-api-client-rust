@@ -450,8 +450,6 @@ impl DowntimesAPI {
             }
             loop {
                 let resp = self.list_downtimes(params.clone()).await?;
-
-                let Some(resp) = resp else { break };
                 let Some(data) = resp.data else { break };
 
                 let r = data;
@@ -605,8 +603,6 @@ impl DowntimesAPI {
             }
             loop {
                 let resp = self.list_monitor_downtimes( monitor_id.clone(),params.clone()).await?;
-
-                let Some(resp) = resp else { break };
                 let Some(data) = resp.data else { break };
 
                 let r = data;

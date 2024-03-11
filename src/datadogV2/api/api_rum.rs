@@ -616,8 +616,6 @@ impl RUMAPI {
             }
             loop {
                 let resp = self.list_rum_events(params.clone()).await?;
-
-                let Some(resp) = resp else { break };
                 let Some(data) = resp.data else { break };
 
                 let r = data;
@@ -781,8 +779,6 @@ impl RUMAPI {
             }
             loop {
                 let resp = self.search_rum_events( body.clone(),).await?;
-
-                let Some(resp) = resp else { break };
                 let Some(data) = resp.data else { break };
 
                 let r = data;

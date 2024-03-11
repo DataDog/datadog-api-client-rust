@@ -149,8 +149,6 @@ impl EventsAPI {
             }
             loop {
                 let resp = self.list_events(params.clone()).await?;
-
-                let Some(resp) = resp else { break };
                 let Some(data) = resp.data else { break };
 
                 let r = data;
@@ -311,8 +309,6 @@ impl EventsAPI {
             }
             loop {
                 let resp = self.search_events(params.clone()).await?;
-
-                let Some(resp) = resp else { break };
                 let Some(data) = resp.data else { break };
 
                 let r = data;

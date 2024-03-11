@@ -1616,8 +1616,6 @@ impl IncidentsAPI {
             loop {
                 let resp = self.list_incidents(params.clone()).await?;
 
-                let Some(resp) = resp else { break };
-
                 let r = resp.data;
                 let count = r.len();
                 for team in r {
@@ -1772,8 +1770,6 @@ impl IncidentsAPI {
             }
             loop {
                 let resp = self.search_incidents( query.clone(),params.clone()).await?;
-
-                let Some(resp) = resp else { break };
                 let Some(attributes) = resp.data.attributes else { break };
 
                 let r = attributes.incidents;

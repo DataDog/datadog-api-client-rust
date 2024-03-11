@@ -1512,8 +1512,6 @@ impl SecurityMonitoringAPI {
             loop {
                 let resp = self.list_findings(params.clone()).await?;
 
-                let Some(resp) = resp else { break };
-
                 let r = resp.data;
                 let count = r.len();
                 for team in r {
@@ -1931,8 +1929,6 @@ impl SecurityMonitoringAPI {
             }
             loop {
                 let resp = self.list_security_monitoring_signals(params.clone()).await?;
-
-                let Some(resp) = resp else { break };
                 let Some(data) = resp.data else { break };
 
                 let r = data;
@@ -2203,8 +2199,6 @@ impl SecurityMonitoringAPI {
             }
             loop {
                 let resp = self.search_security_monitoring_signals(params.clone()).await?;
-
-                let Some(resp) = resp else { break };
                 let Some(data) = resp.data else { break };
 
                 let r = data;

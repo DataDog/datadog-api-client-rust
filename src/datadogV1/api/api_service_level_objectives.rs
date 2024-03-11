@@ -987,8 +987,6 @@ impl ServiceLevelObjectivesAPI {
             }
             loop {
                 let resp = self.list_slos(params.clone()).await?;
-
-                let Some(resp) = resp else { break };
                 let Some(data) = resp.data else { break };
 
                 let r = data;

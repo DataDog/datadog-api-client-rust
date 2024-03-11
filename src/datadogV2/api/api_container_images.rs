@@ -119,8 +119,6 @@ impl ContainerImagesAPI {
             }
             loop {
                 let resp = self.list_container_images(params.clone()).await?;
-
-                let Some(resp) = resp else { break };
                 let Some(data) = resp.data else { break };
 
                 let r = data;

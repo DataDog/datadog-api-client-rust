@@ -367,8 +367,6 @@ impl PowerpackAPI {
             }
             loop {
                 let resp = self.list_powerpacks(params.clone()).await?;
-
-                let Some(resp) = resp else { break };
                 let Some(data) = resp.data else { break };
 
                 let r = data;

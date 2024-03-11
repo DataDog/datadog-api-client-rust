@@ -322,8 +322,6 @@ impl LogsAPI {
             }
             loop {
                 let resp = self.list_logs(params.clone()).await?;
-
-                let Some(resp) = resp else { break };
                 let Some(data) = resp.data else { break };
 
                 let r = data;
@@ -468,8 +466,6 @@ impl LogsAPI {
             }
             loop {
                 let resp = self.list_logs_get(params.clone()).await?;
-
-                let Some(resp) = resp else { break };
                 let Some(data) = resp.data else { break };
 
                 let r = data;

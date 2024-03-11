@@ -554,8 +554,6 @@ impl ServiceScorecardsAPI {
             }
             loop {
                 let resp = self.list_scorecard_outcomes(params.clone()).await?;
-
-                let Some(resp) = resp else { break };
                 let Some(data) = resp.data else { break };
 
                 let r = data;
@@ -740,8 +738,6 @@ impl ServiceScorecardsAPI {
             }
             loop {
                 let resp = self.list_scorecard_rules(params.clone()).await?;
-
-                let Some(resp) = resp else { break };
                 let Some(data) = resp.data else { break };
 
                 let r = data;
