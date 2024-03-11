@@ -146,14 +146,22 @@ impl CIVisibilityPipelinesAPI {
         &self,
         body: crate::datadogV2::model::CIAppPipelinesAggregateRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::CIAppPipelinesAnalyticsAggregateResponse>,
+        crate::datadogV2::model::CIAppPipelinesAnalyticsAggregateResponse,
         Error<AggregateCIAppPipelineEventsError>,
     > {
         match self
             .aggregate_ci_app_pipeline_events_with_http_info(body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -206,14 +214,19 @@ impl CIVisibilityPipelinesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<
+            match serde_json::from_str::<
                 crate::datadogV2::model::CIAppPipelinesAnalyticsAggregateResponse,
-            > = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<AggregateCIAppPipelineEventsError> =
                 serde_json::from_str(&local_content).ok();
@@ -233,11 +246,19 @@ impl CIVisibilityPipelinesAPI {
         &self,
         body: crate::datadogV2::model::CIAppCreatePipelineEventRequest,
     ) -> Result<
-        Option<std::collections::BTreeMap<String, serde_json::Value>>,
+        std::collections::BTreeMap<String, serde_json::Value>,
         Error<CreateCIAppPipelineEventError>,
     > {
         match self.create_ci_app_pipeline_event_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -289,13 +310,18 @@ impl CIVisibilityPipelinesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateCIAppPipelineEventError> =
                 serde_json::from_str(&local_content).ok();
@@ -316,14 +342,22 @@ impl CIVisibilityPipelinesAPI {
         &self,
         params: ListCIAppPipelineEventsOptionalParams,
     ) -> Result<
-        Option<crate::datadogV2::model::CIAppPipelineEventsResponse>,
+        crate::datadogV2::model::CIAppPipelineEventsResponse,
         Error<ListCIAppPipelineEventsError>,
     > {
         match self
             .list_ci_app_pipeline_events_with_http_info(params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -445,13 +479,18 @@ impl CIVisibilityPipelinesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::CIAppPipelineEventsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::CIAppPipelineEventsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListCIAppPipelineEventsError> =
                 serde_json::from_str(&local_content).ok();
@@ -472,14 +511,22 @@ impl CIVisibilityPipelinesAPI {
         &self,
         params: SearchCIAppPipelineEventsOptionalParams,
     ) -> Result<
-        Option<crate::datadogV2::model::CIAppPipelineEventsResponse>,
+        crate::datadogV2::model::CIAppPipelineEventsResponse,
         Error<SearchCIAppPipelineEventsError>,
     > {
         match self
             .search_ci_app_pipeline_events_with_http_info(params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -584,13 +631,18 @@ impl CIVisibilityPipelinesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::CIAppPipelineEventsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::CIAppPipelineEventsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<SearchCIAppPipelineEventsError> =
                 serde_json::from_str(&local_content).ok();

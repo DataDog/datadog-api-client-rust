@@ -99,12 +99,18 @@ impl OrganizationsAPI {
     pub async fn create_child_org(
         &self,
         body: crate::datadogV1::model::OrganizationCreateBody,
-    ) -> Result<
-        Option<crate::datadogV1::model::OrganizationCreateResponse>,
-        Error<CreateChildOrgError>,
-    > {
+    ) -> Result<crate::datadogV1::model::OrganizationCreateResponse, Error<CreateChildOrgError>>
+    {
         match self.create_child_org_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -166,13 +172,18 @@ impl OrganizationsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::OrganizationCreateResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::OrganizationCreateResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateChildOrgError> =
                 serde_json::from_str(&local_content).ok();
@@ -189,10 +200,17 @@ impl OrganizationsAPI {
     pub async fn downgrade_org(
         &self,
         public_id: String,
-    ) -> Result<Option<crate::datadogV1::model::OrgDowngradedResponse>, Error<DowngradeOrgError>>
-    {
+    ) -> Result<crate::datadogV1::model::OrgDowngradedResponse, Error<DowngradeOrgError>> {
         match self.downgrade_org_with_http_info(public_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -239,13 +257,18 @@ impl OrganizationsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::OrgDowngradedResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::OrgDowngradedResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<DowngradeOrgError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -261,9 +284,17 @@ impl OrganizationsAPI {
     pub async fn get_org(
         &self,
         public_id: String,
-    ) -> Result<Option<crate::datadogV1::model::OrganizationResponse>, Error<GetOrgError>> {
+    ) -> Result<crate::datadogV1::model::OrganizationResponse, Error<GetOrgError>> {
         match self.get_org_with_http_info(public_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -308,13 +339,18 @@ impl OrganizationsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::OrganizationResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::OrganizationResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetOrgError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -329,10 +365,17 @@ impl OrganizationsAPI {
     /// This endpoint returns data on your top-level organization.
     pub async fn list_orgs(
         &self,
-    ) -> Result<Option<crate::datadogV1::model::OrganizationListResponse>, Error<ListOrgsError>>
-    {
+    ) -> Result<crate::datadogV1::model::OrganizationListResponse, Error<ListOrgsError>> {
         match self.list_orgs_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -377,13 +420,18 @@ impl OrganizationsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::OrganizationListResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::OrganizationListResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListOrgsError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -400,9 +448,17 @@ impl OrganizationsAPI {
         &self,
         public_id: String,
         body: crate::datadogV1::model::Organization,
-    ) -> Result<Option<crate::datadogV1::model::OrganizationResponse>, Error<UpdateOrgError>> {
+    ) -> Result<crate::datadogV1::model::OrganizationResponse, Error<UpdateOrgError>> {
         match self.update_org_with_http_info(public_id, body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -455,13 +511,18 @@ impl OrganizationsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::OrganizationResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::OrganizationResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateOrgError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -483,12 +544,20 @@ impl OrganizationsAPI {
         &self,
         public_id: String,
         idp_file: Vec<u8>,
-    ) -> Result<Option<crate::datadogV1::model::IdpResponse>, Error<UploadIdPForOrgError>> {
+    ) -> Result<crate::datadogV1::model::IdpResponse, Error<UploadIdPForOrgError>> {
         match self
             .upload_idp_for_org_with_http_info(public_id, idp_file)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -547,13 +616,16 @@ impl OrganizationsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::IdpResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::IdpResponse>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UploadIdPForOrgError> =
                 serde_json::from_str(&local_content).ok();

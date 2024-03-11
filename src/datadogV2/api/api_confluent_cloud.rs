@@ -140,12 +140,18 @@ impl ConfluentCloudAPI {
     pub async fn create_confluent_account(
         &self,
         body: crate::datadogV2::model::ConfluentAccountCreateRequest,
-    ) -> Result<
-        Option<crate::datadogV2::model::ConfluentAccountResponse>,
-        Error<CreateConfluentAccountError>,
-    > {
+    ) -> Result<crate::datadogV2::model::ConfluentAccountResponse, Error<CreateConfluentAccountError>>
+    {
         match self.create_confluent_account_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -198,13 +204,18 @@ impl ConfluentCloudAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::ConfluentAccountResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::ConfluentAccountResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateConfluentAccountError> =
                 serde_json::from_str(&local_content).ok();
@@ -223,14 +234,22 @@ impl ConfluentCloudAPI {
         account_id: String,
         body: crate::datadogV2::model::ConfluentResourceRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::ConfluentResourceResponse>,
+        crate::datadogV2::model::ConfluentResourceResponse,
         Error<CreateConfluentResourceError>,
     > {
         match self
             .create_confluent_resource_with_http_info(account_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -285,13 +304,18 @@ impl ConfluentCloudAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::ConfluentResourceResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::ConfluentResourceResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateConfluentResourceError> =
                 serde_json::from_str(&local_content).ok();
@@ -308,12 +332,12 @@ impl ConfluentCloudAPI {
     pub async fn delete_confluent_account(
         &self,
         account_id: String,
-    ) -> Result<Option<()>, Error<DeleteConfluentAccountError>> {
+    ) -> Result<(), Error<DeleteConfluentAccountError>> {
         match self
             .delete_confluent_account_with_http_info(account_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -379,12 +403,12 @@ impl ConfluentCloudAPI {
         &self,
         account_id: String,
         resource_id: String,
-    ) -> Result<Option<()>, Error<DeleteConfluentResourceError>> {
+    ) -> Result<(), Error<DeleteConfluentResourceError>> {
         match self
             .delete_confluent_resource_with_http_info(account_id, resource_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -451,12 +475,18 @@ impl ConfluentCloudAPI {
     pub async fn get_confluent_account(
         &self,
         account_id: String,
-    ) -> Result<
-        Option<crate::datadogV2::model::ConfluentAccountResponse>,
-        Error<GetConfluentAccountError>,
-    > {
+    ) -> Result<crate::datadogV2::model::ConfluentAccountResponse, Error<GetConfluentAccountError>>
+    {
         match self.get_confluent_account_with_http_info(account_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -503,13 +533,18 @@ impl ConfluentCloudAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::ConfluentAccountResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::ConfluentAccountResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetConfluentAccountError> =
                 serde_json::from_str(&local_content).ok();
@@ -527,15 +562,21 @@ impl ConfluentCloudAPI {
         &self,
         account_id: String,
         resource_id: String,
-    ) -> Result<
-        Option<crate::datadogV2::model::ConfluentResourceResponse>,
-        Error<GetConfluentResourceError>,
-    > {
+    ) -> Result<crate::datadogV2::model::ConfluentResourceResponse, Error<GetConfluentResourceError>>
+    {
         match self
             .get_confluent_resource_with_http_info(account_id, resource_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -584,13 +625,18 @@ impl ConfluentCloudAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::ConfluentResourceResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::ConfluentResourceResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetConfluentResourceError> =
                 serde_json::from_str(&local_content).ok();
@@ -606,12 +652,18 @@ impl ConfluentCloudAPI {
     /// List Confluent accounts.
     pub async fn list_confluent_account(
         &self,
-    ) -> Result<
-        Option<crate::datadogV2::model::ConfluentAccountsResponse>,
-        Error<ListConfluentAccountError>,
-    > {
+    ) -> Result<crate::datadogV2::model::ConfluentAccountsResponse, Error<ListConfluentAccountError>>
+    {
         match self.list_confluent_account_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -656,13 +708,18 @@ impl ConfluentCloudAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::ConfluentAccountsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::ConfluentAccountsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListConfluentAccountError> =
                 serde_json::from_str(&local_content).ok();
@@ -680,14 +737,22 @@ impl ConfluentCloudAPI {
         &self,
         account_id: String,
     ) -> Result<
-        Option<crate::datadogV2::model::ConfluentResourcesResponse>,
+        crate::datadogV2::model::ConfluentResourcesResponse,
         Error<ListConfluentResourceError>,
     > {
         match self
             .list_confluent_resource_with_http_info(account_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -734,13 +799,18 @@ impl ConfluentCloudAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::ConfluentResourcesResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::ConfluentResourcesResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListConfluentResourceError> =
                 serde_json::from_str(&local_content).ok();
@@ -758,15 +828,21 @@ impl ConfluentCloudAPI {
         &self,
         account_id: String,
         body: crate::datadogV2::model::ConfluentAccountUpdateRequest,
-    ) -> Result<
-        Option<crate::datadogV2::model::ConfluentAccountResponse>,
-        Error<UpdateConfluentAccountError>,
-    > {
+    ) -> Result<crate::datadogV2::model::ConfluentAccountResponse, Error<UpdateConfluentAccountError>>
+    {
         match self
             .update_confluent_account_with_http_info(account_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -821,13 +897,18 @@ impl ConfluentCloudAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::ConfluentAccountResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::ConfluentAccountResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateConfluentAccountError> =
                 serde_json::from_str(&local_content).ok();
@@ -847,14 +928,22 @@ impl ConfluentCloudAPI {
         resource_id: String,
         body: crate::datadogV2::model::ConfluentResourceRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::ConfluentResourceResponse>,
+        crate::datadogV2::model::ConfluentResourceResponse,
         Error<UpdateConfluentResourceError>,
     > {
         match self
             .update_confluent_resource_with_http_info(account_id, resource_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -911,13 +1000,18 @@ impl ConfluentCloudAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::ConfluentResourceResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::ConfluentResourceResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateConfluentResourceError> =
                 serde_json::from_str(&local_content).ok();

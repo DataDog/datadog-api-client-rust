@@ -10,5 +10,7 @@ use serde::{Deserialize, Serialize};
 pub enum RUMAggregateBucketValue {
     RUMAggregateBucketValueSingleString(String),
     RUMAggregateBucketValueSingleNumber(f64),
-    RUMAggregateBucketValueTimeseries(crate::datadogV2::model::RUMAggregateBucketValueTimeseries),
+    RUMAggregateBucketValueTimeseries(
+        Vec<crate::datadogV2::model::RUMAggregateBucketValueTimeseriesPoint>,
+    ),
 }

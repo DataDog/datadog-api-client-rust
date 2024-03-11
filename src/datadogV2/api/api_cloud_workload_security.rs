@@ -92,14 +92,22 @@ impl CloudWorkloadSecurityAPI {
         &self,
         body: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse>,
+        crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse,
         Error<CreateCloudWorkloadSecurityAgentRuleError>,
     > {
         match self
             .create_cloud_workload_security_agent_rule_with_http_info(body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -152,14 +160,19 @@ impl CloudWorkloadSecurityAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<
+            match serde_json::from_str::<
                 crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse,
-            > = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateCloudWorkloadSecurityAgentRuleError> =
                 serde_json::from_str(&local_content).ok();
@@ -176,12 +189,12 @@ impl CloudWorkloadSecurityAPI {
     pub async fn delete_cloud_workload_security_agent_rule(
         &self,
         agent_rule_id: String,
-    ) -> Result<Option<()>, Error<DeleteCloudWorkloadSecurityAgentRuleError>> {
+    ) -> Result<(), Error<DeleteCloudWorkloadSecurityAgentRuleError>> {
         match self
             .delete_cloud_workload_security_agent_rule_with_http_info(agent_rule_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -247,12 +260,20 @@ impl CloudWorkloadSecurityAPI {
     /// your Agents to update the policy running in your environment.
     pub async fn download_cloud_workload_policy_file(
         &self,
-    ) -> Result<Option<Vec<u8>>, Error<DownloadCloudWorkloadPolicyFileError>> {
+    ) -> Result<Vec<u8>, Error<DownloadCloudWorkloadPolicyFileError>> {
         match self
             .download_cloud_workload_policy_file_with_http_info()
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -296,11 +317,10 @@ impl CloudWorkloadSecurityAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<Vec<u8>> = serde_json::from_str(&local_content).ok();
             Ok(ResponseContent {
                 status: local_status,
-                content: local_content,
-                entity: local_entity,
+                content: local_content.clone(),
+                entity: Some(local_content.into_bytes()),
             })
         } else {
             let local_entity: Option<DownloadCloudWorkloadPolicyFileError> =
@@ -319,14 +339,22 @@ impl CloudWorkloadSecurityAPI {
         &self,
         agent_rule_id: String,
     ) -> Result<
-        Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse>,
+        crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse,
         Error<GetCloudWorkloadSecurityAgentRuleError>,
     > {
         match self
             .get_cloud_workload_security_agent_rule_with_http_info(agent_rule_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -373,14 +401,19 @@ impl CloudWorkloadSecurityAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<
+            match serde_json::from_str::<
                 crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse,
-            > = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetCloudWorkloadSecurityAgentRuleError> =
                 serde_json::from_str(&local_content).ok();
@@ -397,14 +430,22 @@ impl CloudWorkloadSecurityAPI {
     pub async fn list_cloud_workload_security_agent_rules(
         &self,
     ) -> Result<
-        Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRulesListResponse>,
+        crate::datadogV2::model::CloudWorkloadSecurityAgentRulesListResponse,
         Error<ListCloudWorkloadSecurityAgentRulesError>,
     > {
         match self
             .list_cloud_workload_security_agent_rules_with_http_info()
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -449,14 +490,19 @@ impl CloudWorkloadSecurityAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<
+            match serde_json::from_str::<
                 crate::datadogV2::model::CloudWorkloadSecurityAgentRulesListResponse,
-            > = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListCloudWorkloadSecurityAgentRulesError> =
                 serde_json::from_str(&local_content).ok();
@@ -476,14 +522,22 @@ impl CloudWorkloadSecurityAPI {
         agent_rule_id: String,
         body: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleUpdateRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse>,
+        crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse,
         Error<UpdateCloudWorkloadSecurityAgentRuleError>,
     > {
         match self
             .update_cloud_workload_security_agent_rule_with_http_info(agent_rule_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -539,14 +593,19 @@ impl CloudWorkloadSecurityAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<
+            match serde_json::from_str::<
                 crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse,
-            > = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateCloudWorkloadSecurityAgentRuleError> =
                 serde_json::from_str(&local_content).ok();

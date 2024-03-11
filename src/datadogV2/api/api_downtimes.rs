@@ -172,9 +172,9 @@ impl DowntimesAPI {
     pub async fn cancel_downtime(
         &self,
         downtime_id: String,
-    ) -> Result<Option<()>, Error<CancelDowntimeError>> {
+    ) -> Result<(), Error<CancelDowntimeError>> {
         match self.cancel_downtime_with_http_info(downtime_id).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -239,9 +239,17 @@ impl DowntimesAPI {
     pub async fn create_downtime(
         &self,
         body: crate::datadogV2::model::DowntimeCreateRequest,
-    ) -> Result<Option<crate::datadogV2::model::DowntimeResponse>, Error<CreateDowntimeError>> {
+    ) -> Result<crate::datadogV2::model::DowntimeResponse, Error<CreateDowntimeError>> {
         match self.create_downtime_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -294,13 +302,17 @@ impl DowntimesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::DowntimeResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::DowntimeResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateDowntimeError> =
                 serde_json::from_str(&local_content).ok();
@@ -318,9 +330,17 @@ impl DowntimesAPI {
         &self,
         downtime_id: String,
         params: GetDowntimeOptionalParams,
-    ) -> Result<Option<crate::datadogV2::model::DowntimeResponse>, Error<GetDowntimeError>> {
+    ) -> Result<crate::datadogV2::model::DowntimeResponse, Error<GetDowntimeError>> {
         match self.get_downtime_with_http_info(downtime_id, params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -374,13 +394,17 @@ impl DowntimesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::DowntimeResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::DowntimeResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetDowntimeError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -396,10 +420,17 @@ impl DowntimesAPI {
     pub async fn list_downtimes(
         &self,
         params: ListDowntimesOptionalParams,
-    ) -> Result<Option<crate::datadogV2::model::ListDowntimesResponse>, Error<ListDowntimesError>>
-    {
+    ) -> Result<crate::datadogV2::model::ListDowntimesResponse, Error<ListDowntimesError>> {
         match self.list_downtimes_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -505,13 +536,18 @@ impl DowntimesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::ListDowntimesResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::ListDowntimesResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListDowntimesError> =
                 serde_json::from_str(&local_content).ok();
@@ -530,14 +566,22 @@ impl DowntimesAPI {
         monitor_id: i64,
         params: ListMonitorDowntimesOptionalParams,
     ) -> Result<
-        Option<crate::datadogV2::model::MonitorDowntimeMatchResponse>,
+        crate::datadogV2::model::MonitorDowntimeMatchResponse,
         Error<ListMonitorDowntimesError>,
     > {
         match self
             .list_monitor_downtimes_with_http_info(monitor_id, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -639,13 +683,18 @@ impl DowntimesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::MonitorDowntimeMatchResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::MonitorDowntimeMatchResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListMonitorDowntimesError> =
                 serde_json::from_str(&local_content).ok();
@@ -663,9 +712,17 @@ impl DowntimesAPI {
         &self,
         downtime_id: String,
         body: crate::datadogV2::model::DowntimeUpdateRequest,
-    ) -> Result<Option<crate::datadogV2::model::DowntimeResponse>, Error<UpdateDowntimeError>> {
+    ) -> Result<crate::datadogV2::model::DowntimeResponse, Error<UpdateDowntimeError>> {
         match self.update_downtime_with_http_info(downtime_id, body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -720,13 +777,17 @@ impl DowntimesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::DowntimeResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::DowntimeResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateDowntimeError> =
                 serde_json::from_str(&local_content).ok();

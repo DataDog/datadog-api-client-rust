@@ -385,11 +385,19 @@ impl UsageMeteringAPI {
     pub async fn get_active_billing_dimensions(
         &self,
     ) -> Result<
-        Option<crate::datadogV2::model::ActiveBillingDimensionsResponse>,
+        crate::datadogV2::model::ActiveBillingDimensionsResponse,
         Error<GetActiveBillingDimensionsError>,
     > {
         match self.get_active_billing_dimensions_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -442,13 +450,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::ActiveBillingDimensionsResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::ActiveBillingDimensionsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetActiveBillingDimensionsError> =
                 serde_json::from_str(&local_content).ok();
@@ -470,12 +483,20 @@ impl UsageMeteringAPI {
         &self,
         start_month: String,
         params: GetCostByOrgOptionalParams,
-    ) -> Result<Option<crate::datadogV2::model::CostByOrgResponse>, Error<GetCostByOrgError>> {
+    ) -> Result<crate::datadogV2::model::CostByOrgResponse, Error<GetCostByOrgError>> {
         match self
             .get_cost_by_org_with_http_info(start_month, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -533,13 +554,17 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::CostByOrgResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::CostByOrgResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetCostByOrgError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -558,10 +583,17 @@ impl UsageMeteringAPI {
     pub async fn get_estimated_cost_by_org(
         &self,
         params: GetEstimatedCostByOrgOptionalParams,
-    ) -> Result<Option<crate::datadogV2::model::CostByOrgResponse>, Error<GetEstimatedCostByOrgError>>
-    {
+    ) -> Result<crate::datadogV2::model::CostByOrgResponse, Error<GetEstimatedCostByOrgError>> {
         match self.get_estimated_cost_by_org_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -638,13 +670,17 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::CostByOrgResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::CostByOrgResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetEstimatedCostByOrgError> =
                 serde_json::from_str(&local_content).ok();
@@ -663,15 +699,21 @@ impl UsageMeteringAPI {
         &self,
         start_month: String,
         params: GetHistoricalCostByOrgOptionalParams,
-    ) -> Result<
-        Option<crate::datadogV2::model::CostByOrgResponse>,
-        Error<GetHistoricalCostByOrgError>,
-    > {
+    ) -> Result<crate::datadogV2::model::CostByOrgResponse, Error<GetHistoricalCostByOrgError>>
+    {
         match self
             .get_historical_cost_by_org_with_http_info(start_month, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -733,13 +775,17 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::CostByOrgResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::CostByOrgResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetHistoricalCostByOrgError> =
                 serde_json::from_str(&local_content).ok();
@@ -758,8 +804,7 @@ impl UsageMeteringAPI {
         filter_timestamp_start: String,
         filter_product_families: String,
         params: GetHourlyUsageOptionalParams,
-    ) -> Result<Option<crate::datadogV2::model::HourlyUsageResponse>, Error<GetHourlyUsageError>>
-    {
+    ) -> Result<crate::datadogV2::model::HourlyUsageResponse, Error<GetHourlyUsageError>> {
         match self
             .get_hourly_usage_with_http_info(
                 filter_timestamp_start,
@@ -768,7 +813,15 @@ impl UsageMeteringAPI {
             )
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -859,13 +912,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::HourlyUsageResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::HourlyUsageResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetHourlyUsageError> =
                 serde_json::from_str(&local_content).ok();
@@ -899,14 +957,22 @@ impl UsageMeteringAPI {
         fields: String,
         params: GetMonthlyCostAttributionOptionalParams,
     ) -> Result<
-        Option<crate::datadogV2::model::MonthlyCostAttributionResponse>,
+        crate::datadogV2::model::MonthlyCostAttributionResponse,
         Error<GetMonthlyCostAttributionError>,
     > {
         match self
             .get_monthly_cost_attribution_with_http_info(start_month, end_month, fields, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1007,13 +1073,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::MonthlyCostAttributionResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::MonthlyCostAttributionResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetMonthlyCostAttributionError> =
                 serde_json::from_str(&local_content).ok();
@@ -1032,10 +1103,17 @@ impl UsageMeteringAPI {
     pub async fn get_projected_cost(
         &self,
         params: GetProjectedCostOptionalParams,
-    ) -> Result<Option<crate::datadogV2::model::ProjectedCostResponse>, Error<GetProjectedCostError>>
-    {
+    ) -> Result<crate::datadogV2::model::ProjectedCostResponse, Error<GetProjectedCostError>> {
         match self.get_projected_cost_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1091,13 +1169,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::ProjectedCostResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::ProjectedCostResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetProjectedCostError> =
                 serde_json::from_str(&local_content).ok();
@@ -1117,14 +1200,22 @@ impl UsageMeteringAPI {
         start_hr: String,
         params: GetUsageApplicationSecurityMonitoringOptionalParams,
     ) -> Result<
-        Option<crate::datadogV2::model::UsageApplicationSecurityMonitoringResponse>,
+        crate::datadogV2::model::UsageApplicationSecurityMonitoringResponse,
         Error<GetUsageApplicationSecurityMonitoringError>,
     > {
         match self
             .get_usage_application_security_monitoring_with_http_info(start_hr, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1181,14 +1272,19 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<
+            match serde_json::from_str::<
                 crate::datadogV2::model::UsageApplicationSecurityMonitoringResponse,
-            > = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageApplicationSecurityMonitoringError> =
                 serde_json::from_str(&local_content).ok();
@@ -1208,14 +1304,22 @@ impl UsageMeteringAPI {
         start_hr: String,
         params: GetUsageLambdaTracedInvocationsOptionalParams,
     ) -> Result<
-        Option<crate::datadogV2::model::UsageLambdaTracedInvocationsResponse>,
+        crate::datadogV2::model::UsageLambdaTracedInvocationsResponse,
         Error<GetUsageLambdaTracedInvocationsError>,
     > {
         match self
             .get_usage_lambda_traced_invocations_with_http_info(start_hr, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1272,14 +1376,19 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<
+            match serde_json::from_str::<
                 crate::datadogV2::model::UsageLambdaTracedInvocationsResponse,
-            > = serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageLambdaTracedInvocationsError> =
                 serde_json::from_str(&local_content).ok();
@@ -1299,14 +1408,22 @@ impl UsageMeteringAPI {
         start_hr: String,
         params: GetUsageObservabilityPipelinesOptionalParams,
     ) -> Result<
-        Option<crate::datadogV2::model::UsageObservabilityPipelinesResponse>,
+        crate::datadogV2::model::UsageObservabilityPipelinesResponse,
         Error<GetUsageObservabilityPipelinesError>,
     > {
         match self
             .get_usage_observability_pipelines_with_http_info(start_hr, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -1363,13 +1480,18 @@ impl UsageMeteringAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::UsageObservabilityPipelinesResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::UsageObservabilityPipelinesResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUsageObservabilityPipelinesError> =
                 serde_json::from_str(&local_content).ok();

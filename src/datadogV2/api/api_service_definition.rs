@@ -128,14 +128,22 @@ impl ServiceDefinitionAPI {
         &self,
         body: crate::datadogV2::model::ServiceDefinitionsCreateRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::ServiceDefinitionCreateResponse>,
+        crate::datadogV2::model::ServiceDefinitionCreateResponse,
         Error<CreateOrUpdateServiceDefinitionsError>,
     > {
         match self
             .create_or_update_service_definitions_with_http_info(body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -188,13 +196,18 @@ impl ServiceDefinitionAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::ServiceDefinitionCreateResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::ServiceDefinitionCreateResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateOrUpdateServiceDefinitionsError> =
                 serde_json::from_str(&local_content).ok();
@@ -211,12 +224,12 @@ impl ServiceDefinitionAPI {
     pub async fn delete_service_definition(
         &self,
         service_name: String,
-    ) -> Result<Option<()>, Error<DeleteServiceDefinitionError>> {
+    ) -> Result<(), Error<DeleteServiceDefinitionError>> {
         match self
             .delete_service_definition_with_http_info(service_name)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -283,14 +296,22 @@ impl ServiceDefinitionAPI {
         service_name: String,
         params: GetServiceDefinitionOptionalParams,
     ) -> Result<
-        Option<crate::datadogV2::model::ServiceDefinitionGetResponse>,
+        crate::datadogV2::model::ServiceDefinitionGetResponse,
         Error<GetServiceDefinitionError>,
     > {
         match self
             .get_service_definition_with_http_info(service_name, params)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -346,13 +367,18 @@ impl ServiceDefinitionAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::ServiceDefinitionGetResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::ServiceDefinitionGetResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetServiceDefinitionError> =
                 serde_json::from_str(&local_content).ok();
@@ -370,11 +396,19 @@ impl ServiceDefinitionAPI {
         &self,
         params: ListServiceDefinitionsOptionalParams,
     ) -> Result<
-        Option<crate::datadogV2::model::ServiceDefinitionsListResponse>,
+        crate::datadogV2::model::ServiceDefinitionsListResponse,
         Error<ListServiceDefinitionsError>,
     > {
         match self.list_service_definitions_with_http_info(params).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -478,13 +512,18 @@ impl ServiceDefinitionAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::ServiceDefinitionsListResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::ServiceDefinitionsListResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListServiceDefinitionsError> =
                 serde_json::from_str(&local_content).ok();

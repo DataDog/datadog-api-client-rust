@@ -85,9 +85,17 @@ impl UsersAPI {
     pub async fn create_user(
         &self,
         body: crate::datadogV1::model::User,
-    ) -> Result<Option<crate::datadogV1::model::UserResponse>, Error<CreateUserError>> {
+    ) -> Result<crate::datadogV1::model::UserResponse, Error<CreateUserError>> {
         match self.create_user_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -141,13 +149,16 @@ impl UsersAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UserResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UserResponse>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateUserError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -166,9 +177,17 @@ impl UsersAPI {
     pub async fn disable_user(
         &self,
         user_handle: String,
-    ) -> Result<Option<crate::datadogV1::model::UserDisableResponse>, Error<DisableUserError>> {
+    ) -> Result<crate::datadogV1::model::UserDisableResponse, Error<DisableUserError>> {
         match self.disable_user_with_http_info(user_handle).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -218,13 +237,18 @@ impl UsersAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UserDisableResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UserDisableResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<DisableUserError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -240,9 +264,17 @@ impl UsersAPI {
     pub async fn get_user(
         &self,
         user_handle: String,
-    ) -> Result<Option<crate::datadogV1::model::UserResponse>, Error<GetUserError>> {
+    ) -> Result<crate::datadogV1::model::UserResponse, Error<GetUserError>> {
         match self.get_user_with_http_info(user_handle).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -286,13 +318,16 @@ impl UsersAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UserResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UserResponse>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetUserError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -307,9 +342,17 @@ impl UsersAPI {
     /// List all users for your organization.
     pub async fn list_users(
         &self,
-    ) -> Result<Option<crate::datadogV1::model::UserListResponse>, Error<ListUsersError>> {
+    ) -> Result<crate::datadogV1::model::UserListResponse, Error<ListUsersError>> {
         match self.list_users_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -352,13 +395,17 @@ impl UsersAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UserListResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UserListResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListUsersError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
@@ -377,9 +424,17 @@ impl UsersAPI {
         &self,
         user_handle: String,
         body: crate::datadogV1::model::User,
-    ) -> Result<Option<crate::datadogV1::model::UserResponse>, Error<UpdateUserError>> {
+    ) -> Result<crate::datadogV1::model::UserResponse, Error<UpdateUserError>> {
         match self.update_user_with_http_info(user_handle, body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -434,13 +489,16 @@ impl UsersAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV1::model::UserResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV1::model::UserResponse>(&local_content) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateUserError> = serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {

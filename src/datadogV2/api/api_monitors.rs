@@ -82,11 +82,19 @@ impl MonitorsAPI {
         &self,
         body: crate::datadogV2::model::MonitorConfigPolicyCreateRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::MonitorConfigPolicyResponse>,
+        crate::datadogV2::model::MonitorConfigPolicyResponse,
         Error<CreateMonitorConfigPolicyError>,
     > {
         match self.create_monitor_config_policy_with_http_info(body).await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -139,13 +147,18 @@ impl MonitorsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::MonitorConfigPolicyResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::MonitorConfigPolicyResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<CreateMonitorConfigPolicyError> =
                 serde_json::from_str(&local_content).ok();
@@ -162,12 +175,12 @@ impl MonitorsAPI {
     pub async fn delete_monitor_config_policy(
         &self,
         policy_id: String,
-    ) -> Result<Option<()>, Error<DeleteMonitorConfigPolicyError>> {
+    ) -> Result<(), Error<DeleteMonitorConfigPolicyError>> {
         match self
             .delete_monitor_config_policy_with_http_info(policy_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -233,14 +246,22 @@ impl MonitorsAPI {
         &self,
         policy_id: String,
     ) -> Result<
-        Option<crate::datadogV2::model::MonitorConfigPolicyResponse>,
+        crate::datadogV2::model::MonitorConfigPolicyResponse,
         Error<GetMonitorConfigPolicyError>,
     > {
         match self
             .get_monitor_config_policy_with_http_info(policy_id)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -287,13 +308,18 @@ impl MonitorsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::MonitorConfigPolicyResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::MonitorConfigPolicyResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<GetMonitorConfigPolicyError> =
                 serde_json::from_str(&local_content).ok();
@@ -310,11 +336,19 @@ impl MonitorsAPI {
     pub async fn list_monitor_config_policies(
         &self,
     ) -> Result<
-        Option<crate::datadogV2::model::MonitorConfigPolicyListResponse>,
+        crate::datadogV2::model::MonitorConfigPolicyListResponse,
         Error<ListMonitorConfigPoliciesError>,
     > {
         match self.list_monitor_config_policies_with_http_info().await {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -359,13 +393,18 @@ impl MonitorsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::MonitorConfigPolicyListResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::MonitorConfigPolicyListResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ListMonitorConfigPoliciesError> =
                 serde_json::from_str(&local_content).ok();
@@ -384,14 +423,22 @@ impl MonitorsAPI {
         policy_id: String,
         body: crate::datadogV2::model::MonitorConfigPolicyEditRequest,
     ) -> Result<
-        Option<crate::datadogV2::model::MonitorConfigPolicyResponse>,
+        crate::datadogV2::model::MonitorConfigPolicyResponse,
         Error<UpdateMonitorConfigPolicyError>,
     > {
         match self
             .update_monitor_config_policy_with_http_info(policy_id, body)
             .await
         {
-            Ok(response_content) => Ok(response_content.entity),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
@@ -446,13 +493,18 @@ impl MonitorsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            let local_entity: Option<crate::datadogV2::model::MonitorConfigPolicyResponse> =
-                serde_json::from_str(&local_content).ok();
-            Ok(ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::MonitorConfigPolicyResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<UpdateMonitorConfigPolicyError> =
                 serde_json::from_str(&local_content).ok();

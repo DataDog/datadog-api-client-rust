@@ -11,6 +11,6 @@ pub enum CIAppAggregateBucketValue {
     CIAppAggregateBucketValueSingleString(String),
     CIAppAggregateBucketValueSingleNumber(f64),
     CIAppAggregateBucketValueTimeseries(
-        crate::datadogV2::model::CIAppAggregateBucketValueTimeseries,
+        Vec<crate::datadogV2::model::CIAppAggregateBucketValueTimeseriesPoint>,
     ),
 }
