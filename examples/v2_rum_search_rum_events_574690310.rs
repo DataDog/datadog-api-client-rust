@@ -2,6 +2,8 @@
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_rum::*;
 use datadog_api_client::datadogV2::model::*;
+use futures_util::pin_mut;
+use futures_util::stream::StreamExt;
 
 #[tokio::main]
 async fn main() {
@@ -21,10 +23,13 @@ async fn main() {
         .sort(RUMSort::TIMESTAMP_ASCENDING);
     let configuration = Configuration::new();
     let api = RUMAPI::with_config(configuration);
-    let resp = api.search_rum_events(body).await;
-    if let Ok(value) = resp {
-        println!("{:#?}", value);
-    } else {
-        println!("{:#?}", resp.unwrap_err());
+    let response = api.search_rum_events_with_pagination(body);
+    pin_mut!(response);
+    while let Some(resp) = response.next().await {
+        if let Ok(value) = resp {
+            println!("{:#?}", value);
+        } else {
+            println!("{:#?}", resp.unwrap_err());
+        }
     }
 }

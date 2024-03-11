@@ -5,12 +5,15 @@
 {%- if context.body %}
 {%- set body = format_data_with_schema(context.body.value, context.api_request.schema.spec, replace_values=context._replace_values, required=True, variables=variables, version=version|upper)%}
 {%- endif %}
-
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadog{{ version|upper }}::api::api_{{context["api_instance"]["name"] | snake_case}}::*;
 use datadog_api_client::datadog{{ version|upper }}::model::*;
 use std::collections::BTreeMap;
 use chrono::prelude::{DateTime, Utc};
+{%- if context.pagination %}
+use futures_util::pin_mut;
+use futures_util::stream::StreamExt;
+{%- endif %}
 
 #[tokio::main]
 async fn main() {
@@ -40,11 +43,24 @@ async fn main() {
 	configuration.set_unstable_operation_enabled("{{ version }}.{{ operation }}", true);
     {%- endfor %}
     let api = {{context["api_instance"]["name"]}}API::with_config(configuration);
+	{%- if context.pagination %}
+	let response = api.{{ context.api_request.operation_id | snake_case }}_with_pagination({{ parameters }});
+	pin_mut!(response);
+
+    while let Some(resp) = response.next().await {
+        if let Ok(value) = resp {
+            println!("{:#?}", value);
+        } else {
+            println!("{:#?}", resp.unwrap_err());
+        }    
+    }
+	{%- else %}
     let resp = api.{{ context.api_request.operation_id | snake_case }}({{ parameters }}).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
         println!("{:#?}", resp.unwrap_err());
     }
+	{%- endif %}
 }
 
