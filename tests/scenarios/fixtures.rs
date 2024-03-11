@@ -499,6 +499,13 @@ fn response_has_field(world: &mut DatadogWorld, path: String, field_path: String
     assert!(field.is_some());
 }
 
+#[then(expr = "the response {string} does not have field {string}")]
+fn response_does_not_have_field(world: &mut DatadogWorld, path: String, field_path: String) {
+    let found = lookup(&path, &world.response.object).expect("value not found in response");
+    let field = lookup(&field_path, &found);
+    assert!(field.is_none());
+}
+
 #[then(expr = "the response {string} has item with field {string} with value {}")]
 fn response_has_item_with_field(
     world: &mut DatadogWorld,
