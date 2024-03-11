@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -433,6 +435,41 @@ impl DowntimesAPI {
         }
     }
 
+    pub fn list_downtimes_with_pagination(
+        &self,
+        mut params: ListDowntimesOptionalParams,
+    ) -> impl Stream<
+        Item = Result<crate::datadogV2::model::DowntimeResponseData, Error<ListDowntimesError>>,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 30;
+            if params.page_limit.is_none() {
+                params.page_limit = Some(page_size);
+            } else {
+                page_size = params.page_limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_downtimes(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                if params.page_offset.is_none() {
+                    params.page_offset = Some(page_size.clone());
+                } else {
+                    params.page_offset = Some(params.page_offset.unwrap() + page_size.clone());
+                }
+            }
+        }
+    }
+
     /// Get all scheduled downtimes.
     pub async fn list_downtimes_with_http_info(
         &self,
@@ -544,6 +581,45 @@ impl DowntimesAPI {
                 }
             }
             Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_monitor_downtimes_with_pagination(
+        &self,
+        monitor_id: i64,
+        mut params: ListMonitorDowntimesOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::MonitorDowntimeMatchResponseData,
+            Error<ListMonitorDowntimesError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 30;
+            if params.page_limit.is_none() {
+                params.page_limit = Some(page_size);
+            } else {
+                page_size = params.page_limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_monitor_downtimes( monitor_id.clone(),params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                if params.page_offset.is_none() {
+                    params.page_offset = Some(page_size.clone());
+                } else {
+                    params.page_offset = Some(params.page_offset.unwrap() + page_size.clone());
+                }
+            }
         }
     }
 

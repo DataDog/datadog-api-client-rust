@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -600,6 +602,40 @@ impl RUMAPI {
         }
     }
 
+    pub fn list_rum_events_with_pagination(
+        &self,
+        mut params: ListRUMEventsOptionalParams,
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::RUMEvent, Error<ListRUMEventsError>>> + '_
+    {
+        try_stream! {
+            let mut page_size: i32 = 10;
+            if params.page_limit.is_none() {
+                params.page_limit = Some(page_size);
+            } else {
+                page_size = params.page_limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_rum_events(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                let Some(meta) = resp.meta else { break };
+                let Some(page) = meta.page else { break };
+                let Some(after) = page.after else { break };
+
+                params.page_cursor = Some(after);
+            }
+        }
+    }
+
     /// List endpoint returns events that match a RUM search query.
     /// [Results are paginated][1].
     ///
@@ -723,6 +759,43 @@ impl RUMAPI {
                 }
             }
             Err(err) => Err(err),
+        }
+    }
+
+    pub fn search_rum_events_with_pagination(
+        &self,
+        mut body: crate::datadogV2::model::RUMSearchEventsRequest,
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::RUMEvent, Error<SearchRUMEventsError>>> + '_
+    {
+        try_stream! {
+            let mut page_size: i32 = 10;
+            if body.page.is_none() {
+                body.page = Some(crate::datadogV2::model::RUMQueryPageOptions::new());
+            }
+            if body.page.as_ref().unwrap().limit.is_none() {
+                body.page.as_mut().unwrap().limit = Some(page_size);
+            } else {
+                page_size = body.page.as_ref().unwrap().limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.search_rum_events( body.clone(),).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                let Some(meta) = resp.meta else { break };
+                let Some(page) = meta.page else { break };
+                let Some(after) = page.after else { break };
+
+                body.page.as_mut().unwrap().cursor = Some(after);
+            }
         }
     }
 

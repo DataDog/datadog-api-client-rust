@@ -2,24 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum FindingMuteReason {
-    #[serde(rename = "PENDING_FIX")]
     PENDING_FIX,
-    #[serde(rename = "FALSE_POSITIVE")]
     FALSE_POSITIVE,
-    #[serde(rename = "ACCEPTED_RISK")]
     ACCEPTED_RISK,
-    #[serde(rename = "NO_PENDING_FIX")]
     NO_PENDING_FIX,
-    #[serde(rename = "HUMAN_ERROR")]
     HUMAN_ERROR,
-    #[serde(rename = "NO_LONGER_ACCEPTED_RISK")]
     NO_LONGER_ACCEPTED_RISK,
-    #[serde(rename = "OTHER")]
     OTHER,
 }
 
@@ -34,5 +27,40 @@ impl ToString for FindingMuteReason {
             Self::NO_LONGER_ACCEPTED_RISK => String::from("NO_LONGER_ACCEPTED_RISK"),
             Self::OTHER => String::from("OTHER"),
         }
+    }
+}
+
+impl Serialize for FindingMuteReason {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for FindingMuteReason {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "PENDING_FIX" => Self::PENDING_FIX,
+            "FALSE_POSITIVE" => Self::FALSE_POSITIVE,
+            "ACCEPTED_RISK" => Self::ACCEPTED_RISK,
+            "NO_PENDING_FIX" => Self::NO_PENDING_FIX,
+            "HUMAN_ERROR" => Self::HUMAN_ERROR,
+            "NO_LONGER_ACCEPTED_RISK" => Self::NO_LONGER_ACCEPTED_RISK,
+            "OTHER" => Self::OTHER,
+            _ => {
+                return Err(serde::de::Error::custom(format!(
+                    "Invalid value for SyntheticsDeviceID: {}",
+                    s
+                )))
+            }
+        })
     }
 }
