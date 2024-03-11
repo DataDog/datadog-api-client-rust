@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Paging attributes for listing spans.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SpansListRequestPage {
     /// List following results with a cursor provided in the previous query.
     #[serde(rename = "cursor")]
@@ -15,6 +17,9 @@ pub struct SpansListRequestPage {
     /// Maximum number of spans in the response.
     #[serde(rename = "limit")]
     pub limit: Option<i32>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl SpansListRequestPage {
@@ -22,6 +27,7 @@ impl SpansListRequestPage {
         SpansListRequestPage {
             cursor: None,
             limit: None,
+            _unparsed: false,
         }
     }
 
@@ -39,5 +45,58 @@ impl SpansListRequestPage {
 impl Default for SpansListRequestPage {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for SpansListRequestPage {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct SpansListRequestPageVisitor;
+        impl<'a> Visitor<'a> for SpansListRequestPageVisitor {
+            type Value = SpansListRequestPage;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut cursor: Option<String> = None;
+                let mut limit: Option<i32> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "cursor" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cursor = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "limit" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = SpansListRequestPage {
+                    cursor,
+                    limit,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(SpansListRequestPageVisitor)
     }
 }

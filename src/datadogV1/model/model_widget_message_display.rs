@@ -10,6 +10,7 @@ pub enum WidgetMessageDisplay {
     INLINE,
     EXPANDED_MEDIUM,
     EXPANDED_LARGE,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for WidgetMessageDisplay {
@@ -18,6 +19,7 @@ impl ToString for WidgetMessageDisplay {
             Self::INLINE => String::from("inline"),
             Self::EXPANDED_MEDIUM => String::from("expanded-md"),
             Self::EXPANDED_LARGE => String::from("expanded-lg"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -28,6 +30,7 @@ impl Serialize for WidgetMessageDisplay {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -43,12 +46,9 @@ impl<'de> Deserialize<'de> for WidgetMessageDisplay {
             "inline" => Self::INLINE,
             "expanded-md" => Self::EXPANDED_MEDIUM,
             "expanded-lg" => Self::EXPANDED_LARGE,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

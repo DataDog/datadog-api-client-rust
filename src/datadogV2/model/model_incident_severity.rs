@@ -13,6 +13,7 @@ pub enum IncidentSeverity {
     SEV_3,
     SEV_4,
     SEV_5,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for IncidentSeverity {
@@ -24,6 +25,7 @@ impl ToString for IncidentSeverity {
             Self::SEV_3 => String::from("SEV-3"),
             Self::SEV_4 => String::from("SEV-4"),
             Self::SEV_5 => String::from("SEV-5"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -34,6 +36,7 @@ impl Serialize for IncidentSeverity {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -52,12 +55,9 @@ impl<'de> Deserialize<'de> for IncidentSeverity {
             "SEV-3" => Self::SEV_3,
             "SEV-4" => Self::SEV_4,
             "SEV-5" => Self::SEV_5,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

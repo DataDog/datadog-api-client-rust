@@ -10,6 +10,7 @@ pub enum SyntheticsGlobalVariableParseTestOptionsType {
     HTTP_BODY,
     HTTP_HEADER,
     LOCAL_VARIABLE,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for SyntheticsGlobalVariableParseTestOptionsType {
@@ -18,6 +19,7 @@ impl ToString for SyntheticsGlobalVariableParseTestOptionsType {
             Self::HTTP_BODY => String::from("http_body"),
             Self::HTTP_HEADER => String::from("http_header"),
             Self::LOCAL_VARIABLE => String::from("local_variable"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -28,6 +30,7 @@ impl Serialize for SyntheticsGlobalVariableParseTestOptionsType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -43,12 +46,9 @@ impl<'de> Deserialize<'de> for SyntheticsGlobalVariableParseTestOptionsType {
             "http_body" => Self::HTTP_BODY,
             "http_header" => Self::HTTP_HEADER,
             "local_variable" => Self::LOCAL_VARIABLE,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

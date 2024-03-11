@@ -12,6 +12,7 @@ pub enum MetricCustomTimeAggregation {
     MAX,
     MIN,
     SUM,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for MetricCustomTimeAggregation {
@@ -22,6 +23,7 @@ impl ToString for MetricCustomTimeAggregation {
             Self::MAX => String::from("max"),
             Self::MIN => String::from("min"),
             Self::SUM => String::from("sum"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -32,6 +34,7 @@ impl Serialize for MetricCustomTimeAggregation {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -49,12 +52,9 @@ impl<'de> Deserialize<'de> for MetricCustomTimeAggregation {
             "max" => Self::MAX,
             "min" => Self::MIN,
             "sum" => Self::SUM,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

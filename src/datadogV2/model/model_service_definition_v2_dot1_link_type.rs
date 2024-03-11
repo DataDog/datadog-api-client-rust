@@ -12,6 +12,7 @@ pub enum ServiceDefinitionV2Dot1LinkType {
     RUNBOOK,
     DASHBOARD,
     OTHER,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for ServiceDefinitionV2Dot1LinkType {
@@ -22,6 +23,7 @@ impl ToString for ServiceDefinitionV2Dot1LinkType {
             Self::RUNBOOK => String::from("runbook"),
             Self::DASHBOARD => String::from("dashboard"),
             Self::OTHER => String::from("other"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -32,6 +34,7 @@ impl Serialize for ServiceDefinitionV2Dot1LinkType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -49,12 +52,9 @@ impl<'de> Deserialize<'de> for ServiceDefinitionV2Dot1LinkType {
             "runbook" => Self::RUNBOOK,
             "dashboard" => Self::DASHBOARD,
             "other" => Self::OTHER,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

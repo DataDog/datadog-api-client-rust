@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum IncidentTodoAnonymousAssigneeSource {
     SLACK,
     MICROSOFT_TEAMS,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for IncidentTodoAnonymousAssigneeSource {
@@ -16,6 +17,7 @@ impl ToString for IncidentTodoAnonymousAssigneeSource {
         match self {
             Self::SLACK => String::from("slack"),
             Self::MICROSOFT_TEAMS => String::from("microsoft_teams"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -26,6 +28,7 @@ impl Serialize for IncidentTodoAnonymousAssigneeSource {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -40,12 +43,9 @@ impl<'de> Deserialize<'de> for IncidentTodoAnonymousAssigneeSource {
         Ok(match s.as_str() {
             "slack" => Self::SLACK,
             "microsoft_teams" => Self::MICROSOFT_TEAMS,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum LogsSortOrder {
     ASCENDING,
     DESCENDING,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for LogsSortOrder {
@@ -16,6 +17,7 @@ impl ToString for LogsSortOrder {
         match self {
             Self::ASCENDING => String::from("asc"),
             Self::DESCENDING => String::from("desc"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -26,6 +28,7 @@ impl Serialize for LogsSortOrder {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -40,12 +43,9 @@ impl<'de> Deserialize<'de> for LogsSortOrder {
         Ok(match s.as_str() {
             "asc" => Self::ASCENDING,
             "desc" => Self::DESCENDING,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

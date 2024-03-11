@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum EventsSort {
     TIMESTAMP_ASCENDING,
     TIMESTAMP_DESCENDING,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for EventsSort {
@@ -16,6 +17,7 @@ impl ToString for EventsSort {
         match self {
             Self::TIMESTAMP_ASCENDING => String::from("timestamp"),
             Self::TIMESTAMP_DESCENDING => String::from("-timestamp"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -26,6 +28,7 @@ impl Serialize for EventsSort {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -40,12 +43,9 @@ impl<'de> Deserialize<'de> for EventsSort {
         Ok(match s.as_str() {
             "timestamp" => Self::TIMESTAMP_ASCENDING,
             "-timestamp" => Self::TIMESTAMP_DESCENDING,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

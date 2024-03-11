@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum TimeseriesBackgroundType {
     BARS,
     AREA,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for TimeseriesBackgroundType {
@@ -16,6 +17,7 @@ impl ToString for TimeseriesBackgroundType {
         match self {
             Self::BARS => String::from("bars"),
             Self::AREA => String::from("area"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -26,6 +28,7 @@ impl Serialize for TimeseriesBackgroundType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -40,12 +43,9 @@ impl<'de> Deserialize<'de> for TimeseriesBackgroundType {
         Ok(match s.as_str() {
             "bars" => Self::BARS,
             "area" => Self::AREA,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

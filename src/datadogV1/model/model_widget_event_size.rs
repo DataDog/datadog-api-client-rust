@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum WidgetEventSize {
     SMALL,
     LARGE,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for WidgetEventSize {
@@ -16,6 +17,7 @@ impl ToString for WidgetEventSize {
         match self {
             Self::SMALL => String::from("s"),
             Self::LARGE => String::from("l"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -26,6 +28,7 @@ impl Serialize for WidgetEventSize {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -40,12 +43,9 @@ impl<'de> Deserialize<'de> for WidgetEventSize {
         Ok(match s.as_str() {
             "s" => Self::SMALL,
             "l" => Self::LARGE,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

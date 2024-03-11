@@ -1,14 +1,16 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// A metric to submit to Datadog.
 /// See [Datadog metrics](<https://docs.datadoghq.com/developers/metrics/#custom-metrics-properties>).
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MetricSeries {
     /// If the type of the metric is rate or count, define the corresponding interval.
     #[serde(rename = "interval")]
@@ -37,6 +39,9 @@ pub struct MetricSeries {
     /// The unit of point value.
     #[serde(rename = "unit")]
     pub unit: Option<String>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl MetricSeries {
@@ -51,6 +56,7 @@ impl MetricSeries {
             tags: None,
             type_: None,
             unit: None,
+            _unparsed: false,
         }
     }
 
@@ -87,5 +93,121 @@ impl MetricSeries {
     pub fn unit(&mut self, value: String) -> &mut Self {
         self.unit = Some(value);
         self
+    }
+}
+
+impl<'de> Deserialize<'de> for MetricSeries {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct MetricSeriesVisitor;
+        impl<'a> Visitor<'a> for MetricSeriesVisitor {
+            type Value = MetricSeries;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut interval: Option<i64> = None;
+                let mut metadata: Option<crate::datadogV2::model::MetricMetadata> = None;
+                let mut metric: Option<String> = None;
+                let mut points: Option<Vec<crate::datadogV2::model::MetricPoint>> = None;
+                let mut resources: Option<Vec<crate::datadogV2::model::MetricResource>> = None;
+                let mut source_type_name: Option<String> = None;
+                let mut tags: Option<Vec<String>> = None;
+                let mut type_: Option<crate::datadogV2::model::MetricIntakeType> = None;
+                let mut unit: Option<String> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "interval" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            interval = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "metadata" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "metric" => {
+                            metric = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "points" => {
+                            points = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "resources" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            resources = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "source_type_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            source_type_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV2::model::MetricIntakeType::UnparsedObject(
+                                        _type_,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "unit" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            unit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+                let metric = metric.ok_or_else(|| M::Error::missing_field("metric"))?;
+                let points = points.ok_or_else(|| M::Error::missing_field("points"))?;
+
+                let content = MetricSeries {
+                    interval,
+                    metadata,
+                    metric,
+                    points,
+                    resources,
+                    source_type_name,
+                    tags,
+                    type_,
+                    unit,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(MetricSeriesVisitor)
     }
 }

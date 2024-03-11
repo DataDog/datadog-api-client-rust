@@ -54,6 +54,7 @@ pub enum UsageAttributionSupportedMetrics {
     ESTIMATED_RUM_USAGE_ATTRIBUTION_USAGE,
     ESTIMATED_RUM_USAGE_ATTRIBUTION_PERCENTAGE,
     ALL,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for UsageAttributionSupportedMetrics {
@@ -118,6 +119,7 @@ impl ToString for UsageAttributionSupportedMetrics {
                 String::from("estimated_rum_usage_attribution_percentage")
             }
             Self::ALL => String::from("*"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -128,6 +130,7 @@ impl Serialize for UsageAttributionSupportedMetrics {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -189,12 +192,9 @@ impl<'de> Deserialize<'de> for UsageAttributionSupportedMetrics {
                 Self::ESTIMATED_RUM_USAGE_ATTRIBUTION_PERCENTAGE
             }
             "*" => Self::ALL,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

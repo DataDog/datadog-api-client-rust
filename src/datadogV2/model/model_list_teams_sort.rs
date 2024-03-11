@@ -11,6 +11,7 @@ pub enum ListTeamsSort {
     _NAME,
     USER_COUNT,
     _USER_COUNT,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for ListTeamsSort {
@@ -20,6 +21,7 @@ impl ToString for ListTeamsSort {
             Self::_NAME => String::from("-name"),
             Self::USER_COUNT => String::from("user_count"),
             Self::_USER_COUNT => String::from("-user_count"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -30,6 +32,7 @@ impl Serialize for ListTeamsSort {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -46,12 +49,9 @@ impl<'de> Deserialize<'de> for ListTeamsSort {
             "-name" => Self::_NAME,
             "user_count" => Self::USER_COUNT,
             "-user_count" => Self::_USER_COUNT,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

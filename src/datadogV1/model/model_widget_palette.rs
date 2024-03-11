@@ -26,6 +26,7 @@ pub enum WidgetPalette {
     BLACK_ON_LIGHT_YELLOW,
     BLACK_ON_LIGHT_GREEN,
     BLACK_ON_LIGHT_RED,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for WidgetPalette {
@@ -50,6 +51,7 @@ impl ToString for WidgetPalette {
             Self::BLACK_ON_LIGHT_YELLOW => String::from("black_on_light_yellow"),
             Self::BLACK_ON_LIGHT_GREEN => String::from("black_on_light_green"),
             Self::BLACK_ON_LIGHT_RED => String::from("black_on_light_red"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -60,6 +62,7 @@ impl Serialize for WidgetPalette {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -91,12 +94,9 @@ impl<'de> Deserialize<'de> for WidgetPalette {
             "black_on_light_yellow" => Self::BLACK_ON_LIGHT_YELLOW,
             "black_on_light_green" => Self::BLACK_ON_LIGHT_GREEN,
             "black_on_light_red" => Self::BLACK_ON_LIGHT_RED,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

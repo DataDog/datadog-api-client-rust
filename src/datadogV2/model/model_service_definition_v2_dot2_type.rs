@@ -14,6 +14,7 @@ pub enum ServiceDefinitionV2Dot2Type {
     BROSWER,
     MOBILE,
     CUSTOM,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for ServiceDefinitionV2Dot2Type {
@@ -26,6 +27,7 @@ impl ToString for ServiceDefinitionV2Dot2Type {
             Self::BROSWER => String::from("browser"),
             Self::MOBILE => String::from("mobile"),
             Self::CUSTOM => String::from("custom"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -36,6 +38,7 @@ impl Serialize for ServiceDefinitionV2Dot2Type {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -55,12 +58,9 @@ impl<'de> Deserialize<'de> for ServiceDefinitionV2Dot2Type {
             "browser" => Self::BROSWER,
             "mobile" => Self::MOBILE,
             "custom" => Self::CUSTOM,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

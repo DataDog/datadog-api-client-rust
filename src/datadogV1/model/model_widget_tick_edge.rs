@@ -11,6 +11,7 @@ pub enum WidgetTickEdge {
     LEFT,
     RIGHT,
     TOP,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for WidgetTickEdge {
@@ -20,6 +21,7 @@ impl ToString for WidgetTickEdge {
             Self::LEFT => String::from("left"),
             Self::RIGHT => String::from("right"),
             Self::TOP => String::from("top"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -30,6 +32,7 @@ impl Serialize for WidgetTickEdge {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -46,12 +49,9 @@ impl<'de> Deserialize<'de> for WidgetTickEdge {
             "left" => Self::LEFT,
             "right" => Self::RIGHT,
             "top" => Self::TOP,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

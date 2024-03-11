@@ -10,6 +10,7 @@ pub enum TreeMapGroupBy {
     USER,
     FAMILY,
     PROCESS,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for TreeMapGroupBy {
@@ -18,6 +19,7 @@ impl ToString for TreeMapGroupBy {
             Self::USER => String::from("user"),
             Self::FAMILY => String::from("family"),
             Self::PROCESS => String::from("process"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -28,6 +30,7 @@ impl Serialize for TreeMapGroupBy {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -43,12 +46,9 @@ impl<'de> Deserialize<'de> for TreeMapGroupBy {
             "user" => Self::USER,
             "family" => Self::FAMILY,
             "process" => Self::PROCESS,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

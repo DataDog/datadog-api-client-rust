@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SyntheticsBrowserErrorType {
     NETWORK,
     JS,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for SyntheticsBrowserErrorType {
@@ -16,6 +17,7 @@ impl ToString for SyntheticsBrowserErrorType {
         match self {
             Self::NETWORK => String::from("network"),
             Self::JS => String::from("js"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -26,6 +28,7 @@ impl Serialize for SyntheticsBrowserErrorType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -40,12 +43,9 @@ impl<'de> Deserialize<'de> for SyntheticsBrowserErrorType {
         Ok(match s.as_str() {
             "network" => Self::NETWORK,
             "js" => Self::JS,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

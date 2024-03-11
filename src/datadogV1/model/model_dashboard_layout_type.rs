@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum DashboardLayoutType {
     ORDERED,
     FREE,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for DashboardLayoutType {
@@ -16,6 +17,7 @@ impl ToString for DashboardLayoutType {
         match self {
             Self::ORDERED => String::from("ordered"),
             Self::FREE => String::from("free"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -26,6 +28,7 @@ impl Serialize for DashboardLayoutType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -40,12 +43,9 @@ impl<'de> Deserialize<'de> for DashboardLayoutType {
         Ok(match s.as_str() {
             "ordered" => Self::ORDERED,
             "free" => Self::FREE,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

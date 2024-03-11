@@ -1,8 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Downtiming gives you greater control over monitor notifications by
 /// allowing you to globally exclude scopes from alerting.
@@ -10,7 +12,7 @@ use serde_with::skip_serializing_none;
 /// prevent all alerting related to specified Datadog tags.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct Downtime {
     /// If a scheduled downtime currently exists.
     #[serde(rename = "active")]
@@ -115,6 +117,9 @@ pub struct Downtime {
         with = "::serde_with::rust::double_option"
     )]
     pub updater_id: Option<Option<i32>>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl Downtime {
@@ -140,6 +145,7 @@ impl Downtime {
             start: None,
             timezone: None,
             updater_id: None,
+            _unparsed: false,
         }
     }
 
@@ -259,5 +265,187 @@ impl Downtime {
 impl Default for Downtime {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for Downtime {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct DowntimeVisitor;
+        impl<'a> Visitor<'a> for DowntimeVisitor {
+            type Value = Downtime;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut active: Option<bool> = None;
+                let mut active_child: Option<Option<crate::datadogV1::model::DowntimeChild>> = None;
+                let mut canceled: Option<Option<i64>> = None;
+                let mut creator_id: Option<i32> = None;
+                let mut disabled: Option<bool> = None;
+                let mut downtime_type: Option<i32> = None;
+                let mut end: Option<Option<i64>> = None;
+                let mut id: Option<i64> = None;
+                let mut message: Option<Option<String>> = None;
+                let mut monitor_id: Option<Option<i64>> = None;
+                let mut monitor_tags: Option<Vec<String>> = None;
+                let mut mute_first_recovery_notification: Option<bool> = None;
+                let mut notify_end_states: Option<Vec<crate::datadogV1::model::NotifyEndState>> =
+                    None;
+                let mut notify_end_types: Option<Vec<crate::datadogV1::model::NotifyEndType>> =
+                    None;
+                let mut parent_id: Option<Option<i64>> = None;
+                let mut recurrence: Option<Option<crate::datadogV1::model::DowntimeRecurrence>> =
+                    None;
+                let mut scope: Option<Vec<String>> = None;
+                let mut start: Option<i64> = None;
+                let mut timezone: Option<String> = None;
+                let mut updater_id: Option<Option<i32>> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "active" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            active = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "active_child" => {
+                            active_child =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "canceled" => {
+                            canceled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "creator_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            creator_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "disabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            disabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "downtime_type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            downtime_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "end" => {
+                            end = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "message" => {
+                            message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "monitor_id" => {
+                            monitor_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "monitor_tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            monitor_tags =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "mute_first_recovery_notification" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            mute_first_recovery_notification =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "notify_end_states" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            notify_end_states =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "notify_end_types" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            notify_end_types =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "parent_id" => {
+                            parent_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "recurrence" => {
+                            recurrence = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "scope" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "start" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            start = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "timezone" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            timezone = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "updater_id" => {
+                            updater_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = Downtime {
+                    active,
+                    active_child,
+                    canceled,
+                    creator_id,
+                    disabled,
+                    downtime_type,
+                    end,
+                    id,
+                    message,
+                    monitor_id,
+                    monitor_tags,
+                    mute_first_recovery_notification,
+                    notify_end_states,
+                    notify_end_types,
+                    parent_id,
+                    recurrence,
+                    scope,
+                    start,
+                    timezone,
+                    updater_id,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(DowntimeVisitor)
     }
 }

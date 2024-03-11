@@ -10,6 +10,7 @@ pub enum TimeseriesWidgetLegendLayout {
     AUTO,
     HORIZONTAL,
     VERTICAL,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for TimeseriesWidgetLegendLayout {
@@ -18,6 +19,7 @@ impl ToString for TimeseriesWidgetLegendLayout {
             Self::AUTO => String::from("auto"),
             Self::HORIZONTAL => String::from("horizontal"),
             Self::VERTICAL => String::from("vertical"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -28,6 +30,7 @@ impl Serialize for TimeseriesWidgetLegendLayout {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -43,12 +46,9 @@ impl<'de> Deserialize<'de> for TimeseriesWidgetLegendLayout {
             "auto" => Self::AUTO,
             "horizontal" => Self::HORIZONTAL,
             "vertical" => Self::VERTICAL,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

@@ -11,6 +11,7 @@ pub enum ServiceCheckStatus {
     WARNING,
     CRITICAL,
     UNKNOWN,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl Serialize for ServiceCheckStatus {
@@ -19,6 +20,7 @@ impl Serialize for ServiceCheckStatus {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             Self::OK => serializer.serialize_i32(0),
             Self::WARNING => serializer.serialize_i32(1),
             Self::CRITICAL => serializer.serialize_i32(2),
@@ -38,12 +40,9 @@ impl<'de> Deserialize<'de> for ServiceCheckStatus {
             1 => Self::WARNING,
             2 => Self::CRITICAL,
             3 => Self::UNKNOWN,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::Number(s.into()),
+            }),
         })
     }
 }

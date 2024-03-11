@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Azure config.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AzureUCConfig {
     /// The tenant ID of the azure account.
     #[serde(rename = "account_id")]
@@ -55,6 +57,9 @@ pub struct AzureUCConfig {
     /// The timestamp when the Azure config was last updated.
     #[serde(rename = "updated_at")]
     pub updated_at: Option<String>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl AzureUCConfig {
@@ -86,6 +91,7 @@ impl AzureUCConfig {
             storage_account,
             storage_container,
             updated_at: None,
+            _unparsed: false,
         }
     }
 
@@ -123,5 +129,156 @@ impl AzureUCConfig {
     pub fn updated_at(&mut self, value: String) -> &mut Self {
         self.updated_at = Some(value);
         self
+    }
+}
+
+impl<'de> Deserialize<'de> for AzureUCConfig {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct AzureUCConfigVisitor;
+        impl<'a> Visitor<'a> for AzureUCConfigVisitor {
+            type Value = AzureUCConfig;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut account_id: Option<String> = None;
+                let mut client_id: Option<String> = None;
+                let mut created_at: Option<String> = None;
+                let mut dataset_type: Option<String> = None;
+                let mut error_messages: Option<Vec<String>> = None;
+                let mut export_name: Option<String> = None;
+                let mut export_path: Option<String> = None;
+                let mut id: Option<i64> = None;
+                let mut months: Option<i32> = None;
+                let mut scope: Option<String> = None;
+                let mut status: Option<String> = None;
+                let mut status_updated_at: Option<String> = None;
+                let mut storage_account: Option<String> = None;
+                let mut storage_container: Option<String> = None;
+                let mut updated_at: Option<String> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "account_id" => {
+                            account_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "client_id" => {
+                            client_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "created_at" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "dataset_type" => {
+                            dataset_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "error_messages" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            error_messages =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "export_name" => {
+                            export_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "export_path" => {
+                            export_path =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "months" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            months = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "scope" => {
+                            scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "status" => {
+                            status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "status_updated_at" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            status_updated_at =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "storage_account" => {
+                            storage_account =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "storage_container" => {
+                            storage_container =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "updated_at" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+                let account_id = account_id.ok_or_else(|| M::Error::missing_field("account_id"))?;
+                let client_id = client_id.ok_or_else(|| M::Error::missing_field("client_id"))?;
+                let dataset_type =
+                    dataset_type.ok_or_else(|| M::Error::missing_field("dataset_type"))?;
+                let export_name =
+                    export_name.ok_or_else(|| M::Error::missing_field("export_name"))?;
+                let export_path =
+                    export_path.ok_or_else(|| M::Error::missing_field("export_path"))?;
+                let scope = scope.ok_or_else(|| M::Error::missing_field("scope"))?;
+                let status = status.ok_or_else(|| M::Error::missing_field("status"))?;
+                let storage_account =
+                    storage_account.ok_or_else(|| M::Error::missing_field("storage_account"))?;
+                let storage_container = storage_container
+                    .ok_or_else(|| M::Error::missing_field("storage_container"))?;
+
+                let content = AzureUCConfig {
+                    account_id,
+                    client_id,
+                    created_at,
+                    dataset_type,
+                    error_messages,
+                    export_name,
+                    export_path,
+                    id,
+                    months,
+                    scope,
+                    status,
+                    status_updated_at,
+                    storage_account,
+                    storage_container,
+                    updated_at,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(AzureUCConfigVisitor)
     }
 }

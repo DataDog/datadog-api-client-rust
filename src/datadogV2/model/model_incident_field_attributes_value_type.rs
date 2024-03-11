@@ -11,6 +11,7 @@ pub enum IncidentFieldAttributesValueType {
     TEXTARRAY,
     METRICTAG,
     AUTOCOMPLETE,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for IncidentFieldAttributesValueType {
@@ -20,6 +21,7 @@ impl ToString for IncidentFieldAttributesValueType {
             Self::TEXTARRAY => String::from("textarray"),
             Self::METRICTAG => String::from("metrictag"),
             Self::AUTOCOMPLETE => String::from("autocomplete"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -30,6 +32,7 @@ impl Serialize for IncidentFieldAttributesValueType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -46,12 +49,9 @@ impl<'de> Deserialize<'de> for IncidentFieldAttributesValueType {
             "textarray" => Self::TEXTARRAY,
             "metrictag" => Self::METRICTAG,
             "autocomplete" => Self::AUTOCOMPLETE,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

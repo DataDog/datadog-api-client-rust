@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Response with aggregated usage types.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UsageBillableSummaryKeys {
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "apm_fargate_average")]
@@ -278,6 +280,9 @@ pub struct UsageBillableSummaryKeys {
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "timeseries_sum")]
     pub timeseries_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl UsageBillableSummaryKeys {
@@ -371,6 +376,7 @@ impl UsageBillableSummaryKeys {
             synthetics_browser_checks_sum: None,
             timeseries_average: None,
             timeseries_sum: None,
+            _unparsed: false,
         }
     }
 
@@ -1082,5 +1088,980 @@ impl UsageBillableSummaryKeys {
 impl Default for UsageBillableSummaryKeys {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for UsageBillableSummaryKeys {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct UsageBillableSummaryKeysVisitor;
+        impl<'a> Visitor<'a> for UsageBillableSummaryKeysVisitor {
+            type Value = UsageBillableSummaryKeys;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut apm_fargate_average: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut apm_fargate_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
+                    None;
+                let mut apm_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
+                    None;
+                let mut apm_host_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
+                    None;
+                let mut apm_profiler_host_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut apm_profiler_host_top99p: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut apm_trace_search_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut application_security_fargate_average: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut application_security_host_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut application_security_host_top99p: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut ci_pipeline_indexed_spans_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut ci_pipeline_maximum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut ci_pipeline_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
+                    None;
+                let mut ci_test_indexed_spans_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut ci_testing_maximum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut ci_testing_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
+                    None;
+                let mut cloud_cost_management_average: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut cloud_cost_management_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut cspm_container_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut cspm_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
+                    None;
+                let mut cspm_host_top99p: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut custom_event_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut cws_container_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut cws_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
+                    None;
+                let mut cws_host_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
+                    None;
+                let mut dbm_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
+                    None;
+                let mut dbm_host_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
+                    None;
+                let mut dbm_normalized_queries_average: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut dbm_normalized_queries_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut fargate_container_apm_and_profiler_average: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut fargate_container_apm_and_profiler_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut fargate_container_average: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut fargate_container_profiler_average: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut fargate_container_profiler_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut fargate_container_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut incident_management_maximum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut incident_management_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut infra_and_apm_host_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut infra_and_apm_host_top99p: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut infra_container_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut infra_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
+                    None;
+                let mut infra_host_top99p: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut ingested_spans_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut ingested_timeseries_average: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut ingested_timeseries_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut iot_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut iot_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
+                    None;
+                let mut lambda_function_average: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut lambda_function_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut logs_forwarding_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut logs_indexed_15day_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut logs_indexed_180day_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut logs_indexed_30day_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut logs_indexed_360day_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut logs_indexed_3day_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut logs_indexed_45day_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut logs_indexed_60day_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut logs_indexed_7day_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut logs_indexed_90day_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut logs_indexed_custom_retention_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut logs_indexed_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut logs_ingested_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut network_device_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut network_device_top99p: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut npm_flow_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
+                    None;
+                let mut npm_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
+                    None;
+                let mut npm_host_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
+                    None;
+                let mut observability_pipeline_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut online_archive_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut prof_container_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut prof_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
+                    None;
+                let mut prof_host_top99p: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut rum_lite_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
+                    None;
+                let mut rum_replay_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
+                    None;
+                let mut rum_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut rum_units_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
+                    None;
+                let mut sensitive_data_scanner_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut serverless_apm_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut serverless_infra_average: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut serverless_infra_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut serverless_invocation_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut siem_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut standard_timeseries_average: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut synthetics_api_tests_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut synthetics_app_testing_maximum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut synthetics_browser_checks_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut timeseries_average: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut timeseries_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
+                    None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "apm_fargate_average" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            apm_fargate_average =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "apm_fargate_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            apm_fargate_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "apm_host_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            apm_host_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "apm_host_top99p" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            apm_host_top99p =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "apm_profiler_host_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            apm_profiler_host_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "apm_profiler_host_top99p" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            apm_profiler_host_top99p =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "apm_trace_search_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            apm_trace_search_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "application_security_fargate_average" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            application_security_fargate_average =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "application_security_host_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            application_security_host_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "application_security_host_top99p" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            application_security_host_top99p =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ci_pipeline_indexed_spans_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ci_pipeline_indexed_spans_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ci_pipeline_maximum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ci_pipeline_maximum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ci_pipeline_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ci_pipeline_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ci_test_indexed_spans_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ci_test_indexed_spans_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ci_testing_maximum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ci_testing_maximum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ci_testing_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ci_testing_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cloud_cost_management_average" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cloud_cost_management_average =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cloud_cost_management_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cloud_cost_management_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cspm_container_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cspm_container_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cspm_host_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cspm_host_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cspm_host_top99p" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cspm_host_top99p =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "custom_event_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            custom_event_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cws_container_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cws_container_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cws_host_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cws_host_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cws_host_top99p" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cws_host_top99p =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "dbm_host_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            dbm_host_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "dbm_host_top99p" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            dbm_host_top99p =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "dbm_normalized_queries_average" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            dbm_normalized_queries_average =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "dbm_normalized_queries_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            dbm_normalized_queries_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "fargate_container_apm_and_profiler_average" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            fargate_container_apm_and_profiler_average =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "fargate_container_apm_and_profiler_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            fargate_container_apm_and_profiler_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "fargate_container_average" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            fargate_container_average =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "fargate_container_profiler_average" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            fargate_container_profiler_average =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "fargate_container_profiler_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            fargate_container_profiler_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "fargate_container_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            fargate_container_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "incident_management_maximum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            incident_management_maximum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "incident_management_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            incident_management_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "infra_and_apm_host_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_and_apm_host_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "infra_and_apm_host_top99p" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_and_apm_host_top99p =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "infra_container_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_container_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "infra_host_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_host_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "infra_host_top99p" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_host_top99p =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ingested_spans_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ingested_spans_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ingested_timeseries_average" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ingested_timeseries_average =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ingested_timeseries_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ingested_timeseries_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "iot_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            iot_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "iot_top99p" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            iot_top99p = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "lambda_function_average" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            lambda_function_average =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "lambda_function_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            lambda_function_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_forwarding_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_forwarding_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_15day_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_15day_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_180day_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_180day_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_30day_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_30day_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_360day_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_360day_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_3day_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_3day_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_45day_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_45day_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_60day_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_60day_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_7day_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_7day_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_90day_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_90day_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_custom_retention_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_custom_retention_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_ingested_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_ingested_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "network_device_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            network_device_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "network_device_top99p" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            network_device_top99p =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "npm_flow_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            npm_flow_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "npm_host_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            npm_host_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "npm_host_top99p" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            npm_host_top99p =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "observability_pipeline_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            observability_pipeline_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "online_archive_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            online_archive_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "prof_container_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            prof_container_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "prof_host_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            prof_host_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "prof_host_top99p" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            prof_host_top99p =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_lite_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_lite_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_replay_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_replay_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_units_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_units_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "sensitive_data_scanner_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            sensitive_data_scanner_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "serverless_apm_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apm_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "serverless_infra_average" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_infra_average =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "serverless_infra_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_infra_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "serverless_invocation_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_invocation_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "siem_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            siem_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "standard_timeseries_average" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            standard_timeseries_average =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "synthetics_api_tests_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            synthetics_api_tests_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "synthetics_app_testing_maximum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            synthetics_app_testing_maximum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "synthetics_browser_checks_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            synthetics_browser_checks_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "timeseries_average" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            timeseries_average =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "timeseries_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            timeseries_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = UsageBillableSummaryKeys {
+                    apm_fargate_average,
+                    apm_fargate_sum,
+                    apm_host_sum,
+                    apm_host_top99p,
+                    apm_profiler_host_sum,
+                    apm_profiler_host_top99p,
+                    apm_trace_search_sum,
+                    application_security_fargate_average,
+                    application_security_host_sum,
+                    application_security_host_top99p,
+                    ci_pipeline_indexed_spans_sum,
+                    ci_pipeline_maximum,
+                    ci_pipeline_sum,
+                    ci_test_indexed_spans_sum,
+                    ci_testing_maximum,
+                    ci_testing_sum,
+                    cloud_cost_management_average,
+                    cloud_cost_management_sum,
+                    cspm_container_sum,
+                    cspm_host_sum,
+                    cspm_host_top99p,
+                    custom_event_sum,
+                    cws_container_sum,
+                    cws_host_sum,
+                    cws_host_top99p,
+                    dbm_host_sum,
+                    dbm_host_top99p,
+                    dbm_normalized_queries_average,
+                    dbm_normalized_queries_sum,
+                    fargate_container_apm_and_profiler_average,
+                    fargate_container_apm_and_profiler_sum,
+                    fargate_container_average,
+                    fargate_container_profiler_average,
+                    fargate_container_profiler_sum,
+                    fargate_container_sum,
+                    incident_management_maximum,
+                    incident_management_sum,
+                    infra_and_apm_host_sum,
+                    infra_and_apm_host_top99p,
+                    infra_container_sum,
+                    infra_host_sum,
+                    infra_host_top99p,
+                    ingested_spans_sum,
+                    ingested_timeseries_average,
+                    ingested_timeseries_sum,
+                    iot_sum,
+                    iot_top99p,
+                    lambda_function_average,
+                    lambda_function_sum,
+                    logs_forwarding_sum,
+                    logs_indexed_15day_sum,
+                    logs_indexed_180day_sum,
+                    logs_indexed_30day_sum,
+                    logs_indexed_360day_sum,
+                    logs_indexed_3day_sum,
+                    logs_indexed_45day_sum,
+                    logs_indexed_60day_sum,
+                    logs_indexed_7day_sum,
+                    logs_indexed_90day_sum,
+                    logs_indexed_custom_retention_sum,
+                    logs_indexed_sum,
+                    logs_ingested_sum,
+                    network_device_sum,
+                    network_device_top99p,
+                    npm_flow_sum,
+                    npm_host_sum,
+                    npm_host_top99p,
+                    observability_pipeline_sum,
+                    online_archive_sum,
+                    prof_container_sum,
+                    prof_host_sum,
+                    prof_host_top99p,
+                    rum_lite_sum,
+                    rum_replay_sum,
+                    rum_sum,
+                    rum_units_sum,
+                    sensitive_data_scanner_sum,
+                    serverless_apm_sum,
+                    serverless_infra_average,
+                    serverless_infra_sum,
+                    serverless_invocation_sum,
+                    siem_sum,
+                    standard_timeseries_average,
+                    synthetics_api_tests_sum,
+                    synthetics_app_testing_maximum,
+                    synthetics_browser_checks_sum,
+                    timeseries_average,
+                    timeseries_sum,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(UsageBillableSummaryKeysVisitor)
     }
 }

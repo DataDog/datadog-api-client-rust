@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Metadata associated with your host.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct HostMeta {
     /// A list of Agent checks running on the host.
     #[serde(rename = "agent_checks")]
@@ -54,6 +56,9 @@ pub struct HostMeta {
     /// An array of Windows versions.
     #[serde(rename = "winV")]
     pub win_v: Option<Vec<serde_json::Value>>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl HostMeta {
@@ -74,6 +79,7 @@ impl HostMeta {
             socket_fqdn: None,
             socket_hostname: None,
             win_v: None,
+            _unparsed: false,
         }
     }
 
@@ -159,5 +165,168 @@ impl HostMeta {
 impl Default for HostMeta {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for HostMeta {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct HostMetaVisitor;
+        impl<'a> Visitor<'a> for HostMetaVisitor {
+            type Value = HostMeta;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut agent_checks: Option<Vec<Vec<serde_json::Value>>> = None;
+                let mut agent_version: Option<String> = None;
+                let mut cpu_cores: Option<i64> = None;
+                let mut fbsd_v: Option<Vec<serde_json::Value>> = None;
+                let mut gohai: Option<String> = None;
+                let mut install_method: Option<crate::datadogV1::model::HostMetaInstallMethod> =
+                    None;
+                let mut mac_v: Option<Vec<serde_json::Value>> = None;
+                let mut machine: Option<String> = None;
+                let mut nix_v: Option<Vec<serde_json::Value>> = None;
+                let mut platform: Option<String> = None;
+                let mut processor: Option<String> = None;
+                let mut python_v: Option<String> = None;
+                let mut socket_fqdn: Option<String> = None;
+                let mut socket_hostname: Option<String> = None;
+                let mut win_v: Option<Vec<serde_json::Value>> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "agent_checks" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            agent_checks =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "agent_version" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            agent_version =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cpuCores" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cpu_cores = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "fbsdV" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            fbsd_v = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "gohai" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            gohai = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "install_method" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            install_method =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "macV" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            mac_v = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "machine" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            machine = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "nixV" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            nix_v = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "platform" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            platform = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "processor" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            processor = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "pythonV" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            python_v = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "socket-fqdn" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            socket_fqdn =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "socket-hostname" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            socket_hostname =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "winV" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            win_v = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = HostMeta {
+                    agent_checks,
+                    agent_version,
+                    cpu_cores,
+                    fbsd_v,
+                    gohai,
+                    install_method,
+                    mac_v,
+                    machine,
+                    nix_v,
+                    platform,
+                    processor,
+                    python_v,
+                    socket_fqdn,
+                    socket_hostname,
+                    win_v,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(HostMetaVisitor)
     }
 }

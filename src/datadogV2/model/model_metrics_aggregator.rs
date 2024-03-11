@@ -16,6 +16,7 @@ pub enum MetricsAggregator {
     MEAN,
     L2NORM,
     AREA,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for MetricsAggregator {
@@ -30,6 +31,7 @@ impl ToString for MetricsAggregator {
             Self::MEAN => String::from("mean"),
             Self::L2NORM => String::from("l2norm"),
             Self::AREA => String::from("area"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -40,6 +42,7 @@ impl Serialize for MetricsAggregator {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -61,12 +64,9 @@ impl<'de> Deserialize<'de> for MetricsAggregator {
             "mean" => Self::MEAN,
             "l2norm" => Self::L2NORM,
             "area" => Self::AREA,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum ListTeamsInclude {
     TEAM_LINKS,
     USER_TEAM_PERMISSIONS,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for ListTeamsInclude {
@@ -16,6 +17,7 @@ impl ToString for ListTeamsInclude {
         match self {
             Self::TEAM_LINKS => String::from("team_links"),
             Self::USER_TEAM_PERMISSIONS => String::from("user_team_permissions"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -26,6 +28,7 @@ impl Serialize for ListTeamsInclude {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -40,12 +43,9 @@ impl<'de> Deserialize<'de> for ListTeamsInclude {
         Ok(match s.as_str() {
             "team_links" => Self::TEAM_LINKS,
             "user_team_permissions" => Self::USER_TEAM_PERMISSIONS,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

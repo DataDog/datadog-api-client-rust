@@ -8,12 +8,14 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ServiceDefinitionV2Dot1MSTeamsType {
     MICROSOFT_TEAMS,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for ServiceDefinitionV2Dot1MSTeamsType {
     fn to_string(&self) -> String {
         match self {
             Self::MICROSOFT_TEAMS => String::from("microsoft-teams"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -24,6 +26,7 @@ impl Serialize for ServiceDefinitionV2Dot1MSTeamsType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -37,12 +40,9 @@ impl<'de> Deserialize<'de> for ServiceDefinitionV2Dot1MSTeamsType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "microsoft-teams" => Self::MICROSOFT_TEAMS,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

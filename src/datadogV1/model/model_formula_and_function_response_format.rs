@@ -10,6 +10,7 @@ pub enum FormulaAndFunctionResponseFormat {
     TIMESERIES,
     SCALAR,
     EVENT_LIST,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for FormulaAndFunctionResponseFormat {
@@ -18,6 +19,7 @@ impl ToString for FormulaAndFunctionResponseFormat {
             Self::TIMESERIES => String::from("timeseries"),
             Self::SCALAR => String::from("scalar"),
             Self::EVENT_LIST => String::from("event_list"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -28,6 +30,7 @@ impl Serialize for FormulaAndFunctionResponseFormat {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -43,12 +46,9 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionResponseFormat {
             "timeseries" => Self::TIMESERIES,
             "scalar" => Self::SCALAR,
             "event_list" => Self::EVENT_LIST,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

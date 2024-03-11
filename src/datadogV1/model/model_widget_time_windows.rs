@@ -15,6 +15,7 @@ pub enum WidgetTimeWindows {
     MONTH_TO_DATE,
     PREVIOUS_MONTH,
     GLOBAL_TIME,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for WidgetTimeWindows {
@@ -28,6 +29,7 @@ impl ToString for WidgetTimeWindows {
             Self::MONTH_TO_DATE => String::from("month_to_date"),
             Self::PREVIOUS_MONTH => String::from("previous_month"),
             Self::GLOBAL_TIME => String::from("global_time"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -38,6 +40,7 @@ impl Serialize for WidgetTimeWindows {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -58,12 +61,9 @@ impl<'de> Deserialize<'de> for WidgetTimeWindows {
             "month_to_date" => Self::MONTH_TO_DATE,
             "previous_month" => Self::PREVIOUS_MONTH,
             "global_time" => Self::GLOBAL_TIME,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

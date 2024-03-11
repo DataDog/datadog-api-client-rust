@@ -12,6 +12,7 @@ pub enum SecurityMonitoringSignalArchiveReason {
     TESTING_OR_MAINTENANCE,
     INVESTIGATED_CASE_OPENED,
     OTHER,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for SecurityMonitoringSignalArchiveReason {
@@ -22,6 +23,7 @@ impl ToString for SecurityMonitoringSignalArchiveReason {
             Self::TESTING_OR_MAINTENANCE => String::from("testing_or_maintenance"),
             Self::INVESTIGATED_CASE_OPENED => String::from("investigated_case_opened"),
             Self::OTHER => String::from("other"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -32,6 +34,7 @@ impl Serialize for SecurityMonitoringSignalArchiveReason {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -49,12 +52,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalArchiveReason {
             "testing_or_maintenance" => Self::TESTING_OR_MAINTENANCE,
             "investigated_case_opened" => Self::INVESTIGATED_CASE_OPENED,
             "other" => Self::OTHER,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

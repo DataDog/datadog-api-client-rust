@@ -8,12 +8,14 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ProcessSummaryType {
     PROCESS,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for ProcessSummaryType {
     fn to_string(&self) -> String {
         match self {
             Self::PROCESS => String::from("process"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -24,6 +26,7 @@ impl Serialize for ProcessSummaryType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -37,12 +40,9 @@ impl<'de> Deserialize<'de> for ProcessSummaryType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "process" => Self::PROCESS,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

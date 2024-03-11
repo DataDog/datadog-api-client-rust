@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Facet data for incidents returned by a search query.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IncidentSearchResponseFacetsData {
     /// Facet data for incident commander users.
     #[serde(rename = "commander")]
@@ -44,6 +46,9 @@ pub struct IncidentSearchResponseFacetsData {
     #[serde(rename = "time_to_resolve")]
     pub time_to_resolve:
         Option<Vec<crate::datadogV2::model::IncidentSearchResponseNumericFacetData>>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl IncidentSearchResponseFacetsData {
@@ -60,6 +65,7 @@ impl IncidentSearchResponseFacetsData {
             state: None,
             time_to_repair: None,
             time_to_resolve: None,
+            _unparsed: false,
         }
     }
 
@@ -155,5 +161,155 @@ impl IncidentSearchResponseFacetsData {
 impl Default for IncidentSearchResponseFacetsData {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for IncidentSearchResponseFacetsData {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct IncidentSearchResponseFacetsDataVisitor;
+        impl<'a> Visitor<'a> for IncidentSearchResponseFacetsDataVisitor {
+            type Value = IncidentSearchResponseFacetsData;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut commander: Option<
+                    Vec<crate::datadogV2::model::IncidentSearchResponseUserFacetData>,
+                > = None;
+                let mut created_by: Option<
+                    Vec<crate::datadogV2::model::IncidentSearchResponseUserFacetData>,
+                > = None;
+                let mut fields: Option<
+                    Vec<crate::datadogV2::model::IncidentSearchResponsePropertyFieldFacetData>,
+                > = None;
+                let mut impact: Option<
+                    Vec<crate::datadogV2::model::IncidentSearchResponseFieldFacetData>,
+                > = None;
+                let mut last_modified_by: Option<
+                    Vec<crate::datadogV2::model::IncidentSearchResponseUserFacetData>,
+                > = None;
+                let mut postmortem: Option<
+                    Vec<crate::datadogV2::model::IncidentSearchResponseFieldFacetData>,
+                > = None;
+                let mut responder: Option<
+                    Vec<crate::datadogV2::model::IncidentSearchResponseUserFacetData>,
+                > = None;
+                let mut severity: Option<
+                    Vec<crate::datadogV2::model::IncidentSearchResponseFieldFacetData>,
+                > = None;
+                let mut state: Option<
+                    Vec<crate::datadogV2::model::IncidentSearchResponseFieldFacetData>,
+                > = None;
+                let mut time_to_repair: Option<
+                    Vec<crate::datadogV2::model::IncidentSearchResponseNumericFacetData>,
+                > = None;
+                let mut time_to_resolve: Option<
+                    Vec<crate::datadogV2::model::IncidentSearchResponseNumericFacetData>,
+                > = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "commander" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            commander = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "created_by" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            created_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "fields" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            fields = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "impact" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            impact = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "last_modified_by" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            last_modified_by =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "postmortem" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            postmortem = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "responder" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            responder = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "severity" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            severity = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "state" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            state = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "time_to_repair" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            time_to_repair =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "time_to_resolve" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            time_to_resolve =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = IncidentSearchResponseFacetsData {
+                    commander,
+                    created_by,
+                    fields,
+                    impact,
+                    last_modified_by,
+                    postmortem,
+                    responder,
+                    severity,
+                    state,
+                    time_to_repair,
+                    time_to_resolve,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(IncidentSearchResponseFacetsDataVisitor)
     }
 }

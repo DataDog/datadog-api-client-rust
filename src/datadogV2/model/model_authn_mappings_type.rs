@@ -8,12 +8,14 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum AuthNMappingsType {
     AUTHN_MAPPINGS,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for AuthNMappingsType {
     fn to_string(&self) -> String {
         match self {
             Self::AUTHN_MAPPINGS => String::from("authn_mappings"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -24,6 +26,7 @@ impl Serialize for AuthNMappingsType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -37,12 +40,9 @@ impl<'de> Deserialize<'de> for AuthNMappingsType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "authn_mappings" => Self::AUTHN_MAPPINGS,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

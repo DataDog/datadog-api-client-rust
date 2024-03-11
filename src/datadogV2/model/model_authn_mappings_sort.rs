@@ -19,6 +19,7 @@ pub enum AuthNMappingsSort {
     SAML_ASSERTION_ATTRIBUTE_KEY_DESCENDING,
     SAML_ASSERTION_ATTRIBUTE_VALUE_ASCENDING,
     SAML_ASSERTION_ATTRIBUTE_VALUE_DESCENDING,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for AuthNMappingsSort {
@@ -48,6 +49,7 @@ impl ToString for AuthNMappingsSort {
             Self::SAML_ASSERTION_ATTRIBUTE_VALUE_DESCENDING => {
                 String::from("-saml_assertion_attribute.attribute_value")
             }
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -58,6 +60,7 @@ impl Serialize for AuthNMappingsSort {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -90,12 +93,9 @@ impl<'de> Deserialize<'de> for AuthNMappingsSort {
             "-saml_assertion_attribute.attribute_value" => {
                 Self::SAML_ASSERTION_ATTRIBUTE_VALUE_DESCENDING
             }
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

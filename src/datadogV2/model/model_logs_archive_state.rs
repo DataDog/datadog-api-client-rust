@@ -11,6 +11,7 @@ pub enum LogsArchiveState {
     WORKING,
     FAILING,
     WORKING_AUTH_LEGACY,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for LogsArchiveState {
@@ -20,6 +21,7 @@ impl ToString for LogsArchiveState {
             Self::WORKING => String::from("WORKING"),
             Self::FAILING => String::from("FAILING"),
             Self::WORKING_AUTH_LEGACY => String::from("WORKING_AUTH_LEGACY"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -30,6 +32,7 @@ impl Serialize for LogsArchiveState {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -46,12 +49,9 @@ impl<'de> Deserialize<'de> for LogsArchiveState {
             "WORKING" => Self::WORKING,
             "FAILING" => Self::FAILING,
             "WORKING_AUTH_LEGACY" => Self::WORKING_AUTH_LEGACY,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

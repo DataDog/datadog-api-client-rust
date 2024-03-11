@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Object representing an event.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EventCreateRequest {
     /// An arbitrary string to use for aggregation. Limited to 100 characters.
     /// If you specify a key, all events using that key are grouped together in the Event Stream.
@@ -54,6 +56,9 @@ pub struct EventCreateRequest {
     /// The event title.
     #[serde(rename = "title")]
     pub title: String,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl EventCreateRequest {
@@ -70,6 +75,7 @@ impl EventCreateRequest {
             tags: None,
             text,
             title,
+            _unparsed: false,
         }
     }
 
@@ -116,5 +122,150 @@ impl EventCreateRequest {
     pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
         self.tags = Some(value);
         self
+    }
+}
+
+impl<'de> Deserialize<'de> for EventCreateRequest {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct EventCreateRequestVisitor;
+        impl<'a> Visitor<'a> for EventCreateRequestVisitor {
+            type Value = EventCreateRequest;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut aggregation_key: Option<String> = None;
+                let mut alert_type: Option<crate::datadogV1::model::EventAlertType> = None;
+                let mut date_happened: Option<i64> = None;
+                let mut device_name: Option<String> = None;
+                let mut host: Option<String> = None;
+                let mut priority: Option<Option<crate::datadogV1::model::EventPriority>> = None;
+                let mut related_event_id: Option<i64> = None;
+                let mut source_type_name: Option<String> = None;
+                let mut tags: Option<Vec<String>> = None;
+                let mut text: Option<String> = None;
+                let mut title: Option<String> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "aggregation_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            aggregation_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "alert_type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            alert_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _alert_type) = alert_type {
+                                match _alert_type {
+                                    crate::datadogV1::model::EventAlertType::UnparsedObject(
+                                        _alert_type,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "date_happened" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            date_happened =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "device_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            device_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "host" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            host = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "priority" => {
+                            priority = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _priority) = priority {
+                                match _priority {
+                                    Some(
+                                        crate::datadogV1::model::EventPriority::UnparsedObject(
+                                            _priority,
+                                        ),
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "related_event_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            related_event_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "source_type_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            source_type_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "text" => {
+                            text = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "title" => {
+                            title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+                let text = text.ok_or_else(|| M::Error::missing_field("text"))?;
+                let title = title.ok_or_else(|| M::Error::missing_field("title"))?;
+
+                let content = EventCreateRequest {
+                    aggregation_key,
+                    alert_type,
+                    date_happened,
+                    device_name,
+                    host,
+                    priority,
+                    related_event_id,
+                    source_type_name,
+                    tags,
+                    text,
+                    title,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(EventCreateRequestVisitor)
     }
 }

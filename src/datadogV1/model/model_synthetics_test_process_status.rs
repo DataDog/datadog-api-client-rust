@@ -11,6 +11,7 @@ pub enum SyntheticsTestProcessStatus {
     SCHEDULED,
     FINISHED,
     FINISHED_WITH_ERROR,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for SyntheticsTestProcessStatus {
@@ -20,6 +21,7 @@ impl ToString for SyntheticsTestProcessStatus {
             Self::SCHEDULED => String::from("scheduled"),
             Self::FINISHED => String::from("finished"),
             Self::FINISHED_WITH_ERROR => String::from("finished_with_error"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -30,6 +32,7 @@ impl Serialize for SyntheticsTestProcessStatus {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -46,12 +49,9 @@ impl<'de> Deserialize<'de> for SyntheticsTestProcessStatus {
             "scheduled" => Self::SCHEDULED,
             "finished" => Self::FINISHED,
             "finished_with_error" => Self::FINISHED_WITH_ERROR,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

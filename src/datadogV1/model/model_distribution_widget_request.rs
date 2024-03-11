@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Updated distribution widget.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DistributionWidgetRequest {
     /// The log query.
     #[serde(rename = "apm_query")]
@@ -48,6 +50,9 @@ pub struct DistributionWidgetRequest {
     /// Widget style definition.
     #[serde(rename = "style")]
     pub style: Option<crate::datadogV1::model::WidgetStyle>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl DistributionWidgetRequest {
@@ -66,6 +71,7 @@ impl DistributionWidgetRequest {
             rum_query: None,
             security_query: None,
             style: None,
+            _unparsed: false,
         }
     }
 
@@ -159,5 +165,176 @@ impl DistributionWidgetRequest {
 impl Default for DistributionWidgetRequest {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for DistributionWidgetRequest {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct DistributionWidgetRequestVisitor;
+        impl<'a> Visitor<'a> for DistributionWidgetRequestVisitor {
+            type Value = DistributionWidgetRequest;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut apm_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
+                let mut apm_stats_query: Option<crate::datadogV1::model::ApmStatsQueryDefinition> =
+                    None;
+                let mut event_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
+                let mut log_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
+                let mut network_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
+                let mut process_query: Option<crate::datadogV1::model::ProcessQueryDefinition> =
+                    None;
+                let mut profile_metrics_query: Option<crate::datadogV1::model::LogQueryDefinition> =
+                    None;
+                let mut q: Option<String> = None;
+                let mut query: Option<
+                    crate::datadogV1::model::DistributionWidgetHistogramRequestQuery,
+                > = None;
+                let mut request_type: Option<
+                    crate::datadogV1::model::DistributionWidgetHistogramRequestType,
+                > = None;
+                let mut rum_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
+                let mut security_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
+                let mut style: Option<crate::datadogV1::model::WidgetStyle> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "apm_query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            apm_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "apm_stats_query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            apm_stats_query =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "event_query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            event_query =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "log_query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            log_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "network_query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            network_query =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "process_query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            process_query =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "profile_metrics_query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            profile_metrics_query =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "q" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            q = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _query) = query {
+                                match _query {
+                                    crate::datadogV1::model::DistributionWidgetHistogramRequestQuery::UnparsedObject(_query) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "request_type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            request_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _request_type) = request_type {
+                                match _request_type {
+                                    crate::datadogV1::model::DistributionWidgetHistogramRequestType::UnparsedObject(_request_type) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "rum_query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "security_query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            security_query =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "style" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            style = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = DistributionWidgetRequest {
+                    apm_query,
+                    apm_stats_query,
+                    event_query,
+                    log_query,
+                    network_query,
+                    process_query,
+                    profile_metrics_query,
+                    q,
+                    query,
+                    request_type,
+                    rum_query,
+                    security_query,
+                    style,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(DistributionWidgetRequestVisitor)
     }
 }

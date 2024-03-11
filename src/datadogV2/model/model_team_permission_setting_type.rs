@@ -8,12 +8,14 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum TeamPermissionSettingType {
     TEAM_PERMISSION_SETTINGS,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for TeamPermissionSettingType {
     fn to_string(&self) -> String {
         match self {
             Self::TEAM_PERMISSION_SETTINGS => String::from("team_permission_settings"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -24,6 +26,7 @@ impl Serialize for TeamPermissionSettingType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -37,12 +40,9 @@ impl<'de> Deserialize<'de> for TeamPermissionSettingType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "team_permission_settings" => Self::TEAM_PERMISSION_SETTINGS,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

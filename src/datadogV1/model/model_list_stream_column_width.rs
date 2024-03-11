@@ -10,6 +10,7 @@ pub enum ListStreamColumnWidth {
     AUTO,
     COMPACT,
     FULL,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for ListStreamColumnWidth {
@@ -18,6 +19,7 @@ impl ToString for ListStreamColumnWidth {
             Self::AUTO => String::from("auto"),
             Self::COMPACT => String::from("compact"),
             Self::FULL => String::from("full"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -28,6 +30,7 @@ impl Serialize for ListStreamColumnWidth {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -43,12 +46,9 @@ impl<'de> Deserialize<'de> for ListStreamColumnWidth {
             "auto" => Self::AUTO,
             "compact" => Self::COMPACT,
             "full" => Self::FULL,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

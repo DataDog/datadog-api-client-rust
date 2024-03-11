@@ -10,6 +10,7 @@ pub enum State {
     PASS,
     FAIL,
     SKIP,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for State {
@@ -18,6 +19,7 @@ impl ToString for State {
             Self::PASS => String::from("pass"),
             Self::FAIL => String::from("fail"),
             Self::SKIP => String::from("skip"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -28,6 +30,7 @@ impl Serialize for State {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -43,12 +46,9 @@ impl<'de> Deserialize<'de> for State {
             "pass" => Self::PASS,
             "fail" => Self::FAIL,
             "skip" => Self::SKIP,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

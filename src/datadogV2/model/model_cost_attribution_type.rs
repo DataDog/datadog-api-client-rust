@@ -8,12 +8,14 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum CostAttributionType {
     COST_BY_TAG,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for CostAttributionType {
     fn to_string(&self) -> String {
         match self {
             Self::COST_BY_TAG => String::from("cost_by_tag"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -24,6 +26,7 @@ impl Serialize for CostAttributionType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -37,12 +40,9 @@ impl<'de> Deserialize<'de> for CostAttributionType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "cost_by_tag" => Self::COST_BY_TAG,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

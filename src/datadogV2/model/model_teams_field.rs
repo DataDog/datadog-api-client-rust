@@ -22,6 +22,7 @@ pub enum TeamsField {
     LINK_COUNT,
     TEAM_LINKS,
     USER_TEAM_PERMISSIONS,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for TeamsField {
@@ -42,6 +43,7 @@ impl ToString for TeamsField {
             Self::LINK_COUNT => String::from("link_count"),
             Self::TEAM_LINKS => String::from("team_links"),
             Self::USER_TEAM_PERMISSIONS => String::from("user_team_permissions"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -52,6 +54,7 @@ impl Serialize for TeamsField {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -79,12 +82,9 @@ impl<'de> Deserialize<'de> for TeamsField {
             "link_count" => Self::LINK_COUNT,
             "team_links" => Self::TEAM_LINKS,
             "user_team_permissions" => Self::USER_TEAM_PERMISSIONS,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

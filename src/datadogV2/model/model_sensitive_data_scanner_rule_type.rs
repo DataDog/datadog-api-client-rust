@@ -8,12 +8,14 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SensitiveDataScannerRuleType {
     SENSITIVE_DATA_SCANNER_RULE,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for SensitiveDataScannerRuleType {
     fn to_string(&self) -> String {
         match self {
             Self::SENSITIVE_DATA_SCANNER_RULE => String::from("sensitive_data_scanner_rule"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -24,6 +26,7 @@ impl Serialize for SensitiveDataScannerRuleType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -37,12 +40,9 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerRuleType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "sensitive_data_scanner_rule" => Self::SENSITIVE_DATA_SCANNER_RULE,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

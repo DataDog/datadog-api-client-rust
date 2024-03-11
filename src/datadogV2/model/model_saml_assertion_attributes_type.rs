@@ -8,12 +8,14 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SAMLAssertionAttributesType {
     SAML_ASSERTION_ATTRIBUTES,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for SAMLAssertionAttributesType {
     fn to_string(&self) -> String {
         match self {
             Self::SAML_ASSERTION_ATTRIBUTES => String::from("saml_assertion_attributes"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -24,6 +26,7 @@ impl Serialize for SAMLAssertionAttributesType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -37,12 +40,9 @@ impl<'de> Deserialize<'de> for SAMLAssertionAttributesType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "saml_assertion_attributes" => Self::SAML_ASSERTION_ATTRIBUTES,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

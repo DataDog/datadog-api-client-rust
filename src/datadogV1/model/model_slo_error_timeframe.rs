@@ -11,6 +11,7 @@ pub enum SLOErrorTimeframe {
     THIRTY_DAYS,
     NINETY_DAYS,
     ALL,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for SLOErrorTimeframe {
@@ -20,6 +21,7 @@ impl ToString for SLOErrorTimeframe {
             Self::THIRTY_DAYS => String::from("30d"),
             Self::NINETY_DAYS => String::from("90d"),
             Self::ALL => String::from("all"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -30,6 +32,7 @@ impl Serialize for SLOErrorTimeframe {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -46,12 +49,9 @@ impl<'de> Deserialize<'de> for SLOErrorTimeframe {
             "30d" => Self::THIRTY_DAYS,
             "90d" => Self::NINETY_DAYS,
             "all" => Self::ALL,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

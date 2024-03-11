@@ -10,6 +10,7 @@ pub enum MetricEstimateType {
     COUNT_OR_GAUGE,
     DISTRIBUTION,
     PERCENTILE,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for MetricEstimateType {
@@ -18,6 +19,7 @@ impl ToString for MetricEstimateType {
             Self::COUNT_OR_GAUGE => String::from("count_or_gauge"),
             Self::DISTRIBUTION => String::from("distribution"),
             Self::PERCENTILE => String::from("percentile"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -28,6 +30,7 @@ impl Serialize for MetricEstimateType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -43,12 +46,9 @@ impl<'de> Deserialize<'de> for MetricEstimateType {
             "count_or_gauge" => Self::COUNT_OR_GAUGE,
             "distribution" => Self::DISTRIBUTION,
             "percentile" => Self::PERCENTILE,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

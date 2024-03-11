@@ -11,6 +11,7 @@ pub enum SyntheticsGlobalVariableParserType {
     JSON_PATH,
     REGEX,
     X_PATH,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for SyntheticsGlobalVariableParserType {
@@ -20,6 +21,7 @@ impl ToString for SyntheticsGlobalVariableParserType {
             Self::JSON_PATH => String::from("json_path"),
             Self::REGEX => String::from("regex"),
             Self::X_PATH => String::from("x_path"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -30,6 +32,7 @@ impl Serialize for SyntheticsGlobalVariableParserType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -46,12 +49,9 @@ impl<'de> Deserialize<'de> for SyntheticsGlobalVariableParserType {
             "json_path" => Self::JSON_PATH,
             "regex" => Self::REGEX,
             "x_path" => Self::X_PATH,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

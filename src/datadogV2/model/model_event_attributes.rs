@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Object description of attributes from your event.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EventAttributes {
     /// Aggregation key of the event.
     #[serde(rename = "aggregation_key")]
@@ -88,6 +90,9 @@ pub struct EventAttributes {
     /// The event title.
     #[serde(rename = "title")]
     pub title: Option<String>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl EventAttributes {
@@ -112,6 +117,7 @@ impl EventAttributes {
             tags: None,
             timestamp: None,
             title: None,
+            _unparsed: false,
         }
     }
 
@@ -214,5 +220,212 @@ impl EventAttributes {
 impl Default for EventAttributes {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for EventAttributes {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct EventAttributesVisitor;
+        impl<'a> Visitor<'a> for EventAttributesVisitor {
+            type Value = EventAttributes;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut aggregation_key: Option<String> = None;
+                let mut date_happened: Option<i64> = None;
+                let mut device_name: Option<String> = None;
+                let mut duration: Option<i64> = None;
+                let mut event_object: Option<String> = None;
+                let mut evt: Option<crate::datadogV2::model::Event> = None;
+                let mut hostname: Option<String> = None;
+                let mut monitor: Option<Option<crate::datadogV2::model::MonitorType>> = None;
+                let mut monitor_groups: Option<Option<Vec<String>>> = None;
+                let mut monitor_id: Option<Option<i64>> = None;
+                let mut priority: Option<Option<crate::datadogV2::model::EventPriority>> = None;
+                let mut related_event_id: Option<i64> = None;
+                let mut service: Option<String> = None;
+                let mut source_type_name: Option<String> = None;
+                let mut sourcecategory: Option<String> = None;
+                let mut status: Option<crate::datadogV2::model::EventStatusType> = None;
+                let mut tags: Option<Vec<String>> = None;
+                let mut timestamp: Option<i64> = None;
+                let mut title: Option<String> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "aggregation_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            aggregation_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "date_happened" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            date_happened =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "device_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            device_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "duration" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            duration = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "event_object" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            event_object =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "evt" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            evt = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "hostname" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            hostname = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "monitor" => {
+                            monitor = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "monitor_groups" => {
+                            monitor_groups =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "monitor_id" => {
+                            monitor_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "priority" => {
+                            priority = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _priority) = priority {
+                                match _priority {
+                                    Some(
+                                        crate::datadogV2::model::EventPriority::UnparsedObject(
+                                            _priority,
+                                        ),
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "related_event_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            related_event_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "service" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "source_type_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            source_type_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "sourcecategory" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            sourcecategory =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "status" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _status) = status {
+                                match _status {
+                                    crate::datadogV2::model::EventStatusType::UnparsedObject(
+                                        _status,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "timestamp" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            timestamp = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "title" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = EventAttributes {
+                    aggregation_key,
+                    date_happened,
+                    device_name,
+                    duration,
+                    event_object,
+                    evt,
+                    hostname,
+                    monitor,
+                    monitor_groups,
+                    monitor_id,
+                    priority,
+                    related_event_id,
+                    service,
+                    source_type_name,
+                    sourcecategory,
+                    status,
+                    tags,
+                    timestamp,
+                    title,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(EventAttributesVisitor)
     }
 }

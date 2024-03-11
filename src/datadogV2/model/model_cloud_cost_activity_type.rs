@@ -8,12 +8,14 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum CloudCostActivityType {
     CLOUD_COST_ACTIVITY,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for CloudCostActivityType {
     fn to_string(&self) -> String {
         match self {
             Self::CLOUD_COST_ACTIVITY => String::from("cloud_cost_activity"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -24,6 +26,7 @@ impl Serialize for CloudCostActivityType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -37,12 +40,9 @@ impl<'de> Deserialize<'de> for CloudCostActivityType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "cloud_cost_activity" => Self::CLOUD_COST_ACTIVITY,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

@@ -15,6 +15,7 @@ pub enum SecurityMonitoringRuleEvaluationWindow {
     THIRTY_MINUTES,
     ONE_HOUR,
     TWO_HOURS,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl Serialize for SecurityMonitoringRuleEvaluationWindow {
@@ -23,6 +24,7 @@ impl Serialize for SecurityMonitoringRuleEvaluationWindow {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             Self::ZERO_MINUTES => serializer.serialize_i32(0),
             Self::ONE_MINUTE => serializer.serialize_i32(60),
             Self::FIVE_MINUTES => serializer.serialize_i32(300),
@@ -50,12 +52,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleEvaluationWindow {
             1800 => Self::THIRTY_MINUTES,
             3600 => Self::ONE_HOUR,
             7200 => Self::TWO_HOURS,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::Number(s.into()),
+            }),
         })
     }
 }

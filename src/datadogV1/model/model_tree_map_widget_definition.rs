@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// The treemap visualization enables you to display hierarchical and nested data. It is well suited for queries that describe part-whole relationships, such as resource usage by availability zone, data center, or team.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TreeMapWidgetDefinition {
     /// (deprecated) The attribute formerly used to determine color in the widget.
     #[deprecated]
@@ -36,6 +38,9 @@ pub struct TreeMapWidgetDefinition {
     /// Type of the treemap widget.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::TreeMapWidgetDefinitionType,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl TreeMapWidgetDefinition {
@@ -53,6 +58,7 @@ impl TreeMapWidgetDefinition {
             time: None,
             title: None,
             type_,
+            _unparsed: false,
         }
     }
 
@@ -93,5 +99,141 @@ impl TreeMapWidgetDefinition {
     pub fn title(&mut self, value: String) -> &mut Self {
         self.title = Some(value);
         self
+    }
+}
+
+impl<'de> Deserialize<'de> for TreeMapWidgetDefinition {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct TreeMapWidgetDefinitionVisitor;
+        impl<'a> Visitor<'a> for TreeMapWidgetDefinitionVisitor {
+            type Value = TreeMapWidgetDefinition;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut color_by: Option<crate::datadogV1::model::TreeMapColorBy> = None;
+                let mut custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>> = None;
+                let mut group_by: Option<crate::datadogV1::model::TreeMapGroupBy> = None;
+                let mut requests: Option<Vec<crate::datadogV1::model::TreeMapWidgetRequest>> = None;
+                let mut size_by: Option<crate::datadogV1::model::TreeMapSizeBy> = None;
+                let mut time: Option<crate::datadogV1::model::WidgetTime> = None;
+                let mut title: Option<String> = None;
+                let mut type_: Option<crate::datadogV1::model::TreeMapWidgetDefinitionType> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "color_by" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            color_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _color_by) = color_by {
+                                match _color_by {
+                                    crate::datadogV1::model::TreeMapColorBy::UnparsedObject(
+                                        _color_by,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "custom_links" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            custom_links =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "group_by" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            group_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _group_by) = group_by {
+                                match _group_by {
+                                    crate::datadogV1::model::TreeMapGroupBy::UnparsedObject(
+                                        _group_by,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "requests" => {
+                            requests = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "size_by" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            size_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _size_by) = size_by {
+                                match _size_by {
+                                    crate::datadogV1::model::TreeMapSizeBy::UnparsedObject(
+                                        _size_by,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "time" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            time = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "title" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "type" => {
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV1::model::TreeMapWidgetDefinitionType::UnparsedObject(_type_) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        &_ => {}
+                    }
+                }
+                let requests = requests.ok_or_else(|| M::Error::missing_field("requests"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
+
+                let content = TreeMapWidgetDefinition {
+                    color_by,
+                    custom_links,
+                    group_by,
+                    requests,
+                    size_by,
+                    time,
+                    title,
+                    type_,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(TreeMapWidgetDefinitionVisitor)
     }
 }

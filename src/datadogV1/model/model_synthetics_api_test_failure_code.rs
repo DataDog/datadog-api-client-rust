@@ -33,6 +33,7 @@ pub enum SyntheticsApiTestFailureCode {
     WEBSOCKET,
     UNKNOWN,
     INTERNAL_ERROR,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for SyntheticsApiTestFailureCode {
@@ -68,6 +69,7 @@ impl ToString for SyntheticsApiTestFailureCode {
             Self::WEBSOCKET => String::from("WEBSOCKET"),
             Self::UNKNOWN => String::from("UNKNOWN"),
             Self::INTERNAL_ERROR => String::from("INTERNAL_ERROR"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -78,6 +80,7 @@ impl Serialize for SyntheticsApiTestFailureCode {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -116,12 +119,9 @@ impl<'de> Deserialize<'de> for SyntheticsApiTestFailureCode {
             "WEBSOCKET" => Self::WEBSOCKET,
             "UNKNOWN" => Self::UNKNOWN,
             "INTERNAL_ERROR" => Self::INTERNAL_ERROR,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

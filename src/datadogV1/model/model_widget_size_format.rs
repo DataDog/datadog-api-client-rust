@@ -10,6 +10,7 @@ pub enum WidgetSizeFormat {
     SMALL,
     MEDIUM,
     LARGE,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for WidgetSizeFormat {
@@ -18,6 +19,7 @@ impl ToString for WidgetSizeFormat {
             Self::SMALL => String::from("small"),
             Self::MEDIUM => String::from("medium"),
             Self::LARGE => String::from("large"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -28,6 +30,7 @@ impl Serialize for WidgetSizeFormat {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -43,12 +46,9 @@ impl<'de> Deserialize<'de> for WidgetSizeFormat {
             "small" => Self::SMALL,
             "medium" => Self::MEDIUM,
             "large" => Self::LARGE,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

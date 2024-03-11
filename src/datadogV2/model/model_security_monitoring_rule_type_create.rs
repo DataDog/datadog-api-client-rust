@@ -10,6 +10,7 @@ pub enum SecurityMonitoringRuleTypeCreate {
     APPLICATION_SECURITY,
     LOG_DETECTION,
     WORKLOAD_SECURITY,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for SecurityMonitoringRuleTypeCreate {
@@ -18,6 +19,7 @@ impl ToString for SecurityMonitoringRuleTypeCreate {
             Self::APPLICATION_SECURITY => String::from("application_security"),
             Self::LOG_DETECTION => String::from("log_detection"),
             Self::WORKLOAD_SECURITY => String::from("workload_security"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -28,6 +30,7 @@ impl Serialize for SecurityMonitoringRuleTypeCreate {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -43,12 +46,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleTypeCreate {
             "application_security" => Self::APPLICATION_SECURITY,
             "log_detection" => Self::LOG_DETECTION,
             "workload_security" => Self::WORKLOAD_SECURITY,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

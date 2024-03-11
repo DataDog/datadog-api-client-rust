@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Downtime details.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DowntimeCreateRequestAttributes {
     /// The timezone in which to display the downtime's start and end times in Datadog applications. This is not used
     /// as an offset for scheduling.
@@ -43,6 +45,9 @@ pub struct DowntimeCreateRequestAttributes {
     /// The scope to which the downtime applies. Must follow the [common search syntax](<https://docs.datadoghq.com/logs/explorer/search_syntax/>).
     #[serde(rename = "scope")]
     pub scope: String,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl DowntimeCreateRequestAttributes {
@@ -59,6 +64,7 @@ impl DowntimeCreateRequestAttributes {
             notify_end_types: None,
             schedule: None,
             scope,
+            _unparsed: false,
         }
     }
 
@@ -99,5 +105,125 @@ impl DowntimeCreateRequestAttributes {
     ) -> &mut Self {
         self.schedule = Some(value);
         self
+    }
+}
+
+impl<'de> Deserialize<'de> for DowntimeCreateRequestAttributes {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct DowntimeCreateRequestAttributesVisitor;
+        impl<'a> Visitor<'a> for DowntimeCreateRequestAttributesVisitor {
+            type Value = DowntimeCreateRequestAttributes;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut display_timezone: Option<Option<String>> = None;
+                let mut message: Option<Option<String>> = None;
+                let mut monitor_identifier: Option<
+                    crate::datadogV2::model::DowntimeMonitorIdentifier,
+                > = None;
+                let mut mute_first_recovery_notification: Option<bool> = None;
+                let mut notify_end_states: Option<
+                    Vec<crate::datadogV2::model::DowntimeNotifyEndStateTypes>,
+                > = None;
+                let mut notify_end_types: Option<
+                    Vec<crate::datadogV2::model::DowntimeNotifyEndStateActions>,
+                > = None;
+                let mut schedule: Option<crate::datadogV2::model::DowntimeScheduleCreateRequest> =
+                    None;
+                let mut scope: Option<String> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "display_timezone" => {
+                            display_timezone =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "message" => {
+                            message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "monitor_identifier" => {
+                            monitor_identifier =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _monitor_identifier) = monitor_identifier {
+                                match _monitor_identifier {
+                                    crate::datadogV2::model::DowntimeMonitorIdentifier::UnparsedObject(_monitor_identifier) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "mute_first_recovery_notification" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            mute_first_recovery_notification =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "notify_end_states" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            notify_end_states =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "notify_end_types" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            notify_end_types =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "schedule" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            schedule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _schedule) = schedule {
+                                match _schedule {
+                                    crate::datadogV2::model::DowntimeScheduleCreateRequest::UnparsedObject(_schedule) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "scope" => {
+                            scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+                let monitor_identifier = monitor_identifier
+                    .ok_or_else(|| M::Error::missing_field("monitor_identifier"))?;
+                let scope = scope.ok_or_else(|| M::Error::missing_field("scope"))?;
+
+                let content = DowntimeCreateRequestAttributes {
+                    display_timezone,
+                    message,
+                    monitor_identifier,
+                    mute_first_recovery_notification,
+                    notify_end_states,
+                    notify_end_types,
+                    schedule,
+                    scope,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(DowntimeCreateRequestAttributesVisitor)
     }
 }

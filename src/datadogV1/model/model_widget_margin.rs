@@ -12,6 +12,7 @@ pub enum WidgetMargin {
     LG,
     SMALL,
     LARGE,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for WidgetMargin {
@@ -22,6 +23,7 @@ impl ToString for WidgetMargin {
             Self::LG => String::from("lg"),
             Self::SMALL => String::from("small"),
             Self::LARGE => String::from("large"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -32,6 +34,7 @@ impl Serialize for WidgetMargin {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -49,12 +52,9 @@ impl<'de> Deserialize<'de> for WidgetMargin {
             "lg" => Self::LG,
             "small" => Self::SMALL,
             "large" => Self::LARGE,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

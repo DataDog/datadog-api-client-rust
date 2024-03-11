@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Object describing a monitor.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct Monitor {
     /// Timestamp of the monitor creation.
     #[serde(rename = "created")]
@@ -72,6 +74,9 @@ pub struct Monitor {
     /// The type of the monitor. For more information about `type`, see the [monitor options](<https://docs.datadoghq.com/monitors/guide/monitor_api_options/>) docs.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::MonitorType,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl Monitor {
@@ -94,6 +99,7 @@ impl Monitor {
             state: None,
             tags: None,
             type_,
+            _unparsed: false,
         }
     }
 
@@ -176,5 +182,187 @@ impl Monitor {
     pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
         self.tags = Some(value);
         self
+    }
+}
+
+impl<'de> Deserialize<'de> for Monitor {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct MonitorVisitor;
+        impl<'a> Visitor<'a> for MonitorVisitor {
+            type Value = Monitor;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut created: Option<String> = None;
+                let mut creator: Option<crate::datadogV1::model::Creator> = None;
+                let mut deleted: Option<Option<String>> = None;
+                let mut id: Option<i64> = None;
+                let mut matching_downtimes: Option<Vec<crate::datadogV1::model::MatchingDowntime>> =
+                    None;
+                let mut message: Option<String> = None;
+                let mut modified: Option<String> = None;
+                let mut multi: Option<bool> = None;
+                let mut name: Option<String> = None;
+                let mut options: Option<crate::datadogV1::model::MonitorOptions> = None;
+                let mut overall_state: Option<crate::datadogV1::model::MonitorOverallStates> = None;
+                let mut priority: Option<Option<i64>> = None;
+                let mut query: Option<String> = None;
+                let mut restricted_roles: Option<Option<Vec<String>>> = None;
+                let mut state: Option<crate::datadogV1::model::MonitorState> = None;
+                let mut tags: Option<Vec<String>> = None;
+                let mut type_: Option<crate::datadogV1::model::MonitorType> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "created" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            created = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "creator" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            creator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "deleted" => {
+                            deleted = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "matching_downtimes" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            matching_downtimes =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "message" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "modified" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            modified = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "multi" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            multi = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "options" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            options = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "overall_state" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            overall_state =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _overall_state) = overall_state {
+                                match _overall_state {
+                                    crate::datadogV1::model::MonitorOverallStates::UnparsedObject(_overall_state) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "priority" => {
+                            priority = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "query" => {
+                            query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "restricted_roles" => {
+                            restricted_roles =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "state" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            state = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "type" => {
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV1::model::MonitorType::UnparsedObject(
+                                        _type_,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        &_ => {}
+                    }
+                }
+                let query = query.ok_or_else(|| M::Error::missing_field("query"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
+
+                let content = Monitor {
+                    created,
+                    creator,
+                    deleted,
+                    id,
+                    matching_downtimes,
+                    message,
+                    modified,
+                    multi,
+                    name,
+                    options,
+                    overall_state,
+                    priority,
+                    query,
+                    restricted_roles,
+                    state,
+                    tags,
+                    type_,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(MonitorVisitor)
     }
 }

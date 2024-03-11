@@ -11,6 +11,7 @@ pub enum SplitGraphVizSize {
     SM,
     MD,
     LG,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for SplitGraphVizSize {
@@ -20,6 +21,7 @@ impl ToString for SplitGraphVizSize {
             Self::SM => String::from("sm"),
             Self::MD => String::from("md"),
             Self::LG => String::from("lg"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -30,6 +32,7 @@ impl Serialize for SplitGraphVizSize {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -46,12 +49,9 @@ impl<'de> Deserialize<'de> for SplitGraphVizSize {
             "sm" => Self::SM,
             "md" => Self::MD,
             "lg" => Self::LG,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

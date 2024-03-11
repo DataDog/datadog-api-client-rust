@@ -11,6 +11,7 @@ pub enum SLOState {
     WARNING,
     OK,
     NO_DATA,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for SLOState {
@@ -20,6 +21,7 @@ impl ToString for SLOState {
             Self::WARNING => String::from("warning"),
             Self::OK => String::from("ok"),
             Self::NO_DATA => String::from("no_data"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -30,6 +32,7 @@ impl Serialize for SLOState {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -46,12 +49,9 @@ impl<'de> Deserialize<'de> for SLOState {
             "warning" => Self::WARNING,
             "ok" => Self::OK,
             "no_data" => Self::NO_DATA,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

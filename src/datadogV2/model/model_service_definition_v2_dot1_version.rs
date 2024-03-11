@@ -8,12 +8,14 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ServiceDefinitionV2Dot1Version {
     V2_1,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for ServiceDefinitionV2Dot1Version {
     fn to_string(&self) -> String {
         match self {
             Self::V2_1 => String::from("v2.1"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -24,6 +26,7 @@ impl Serialize for ServiceDefinitionV2Dot1Version {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -37,12 +40,9 @@ impl<'de> Deserialize<'de> for ServiceDefinitionV2Dot1Version {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "v2.1" => Self::V2_1,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SecurityMonitoringRuleNewValueOptionsLearningMethod {
     DURATION,
     THRESHOLD,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for SecurityMonitoringRuleNewValueOptionsLearningMethod {
@@ -16,6 +17,7 @@ impl ToString for SecurityMonitoringRuleNewValueOptionsLearningMethod {
         match self {
             Self::DURATION => String::from("duration"),
             Self::THRESHOLD => String::from("threshold"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -26,6 +28,7 @@ impl Serialize for SecurityMonitoringRuleNewValueOptionsLearningMethod {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -40,12 +43,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptionsLearningMeth
         Ok(match s.as_str() {
             "duration" => Self::DURATION,
             "threshold" => Self::THRESHOLD,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

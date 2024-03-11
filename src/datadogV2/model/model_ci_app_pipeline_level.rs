@@ -12,6 +12,7 @@ pub enum CIAppPipelineLevel {
     JOB,
     STEP,
     CUSTOM,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for CIAppPipelineLevel {
@@ -22,6 +23,7 @@ impl ToString for CIAppPipelineLevel {
             Self::JOB => String::from("job"),
             Self::STEP => String::from("step"),
             Self::CUSTOM => String::from("custom"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -32,6 +34,7 @@ impl Serialize for CIAppPipelineLevel {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -49,12 +52,9 @@ impl<'de> Deserialize<'de> for CIAppPipelineLevel {
             "job" => Self::JOB,
             "step" => Self::STEP,
             "custom" => Self::CUSTOM,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

@@ -22,6 +22,7 @@ pub enum SyntheticsAssertionOperator {
     IS_IN_LESS_DAYS_THAN,
     DOES_NOT_EXIST,
     IS_UNDEFINED,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for SyntheticsAssertionOperator {
@@ -42,6 +43,7 @@ impl ToString for SyntheticsAssertionOperator {
             Self::IS_IN_LESS_DAYS_THAN => String::from("isInLessThan"),
             Self::DOES_NOT_EXIST => String::from("doesNotExist"),
             Self::IS_UNDEFINED => String::from("isUndefined"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -52,6 +54,7 @@ impl Serialize for SyntheticsAssertionOperator {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -79,12 +82,9 @@ impl<'de> Deserialize<'de> for SyntheticsAssertionOperator {
             "isInLessThan" => Self::IS_IN_LESS_DAYS_THAN,
             "doesNotExist" => Self::DOES_NOT_EXIST,
             "isUndefined" => Self::IS_UNDEFINED,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

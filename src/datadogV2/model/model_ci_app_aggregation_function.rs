@@ -23,6 +23,7 @@ pub enum CIAppAggregationFunction {
     EARLIEST,
     MOST_FREQUENT,
     DELTA,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for CIAppAggregationFunction {
@@ -44,6 +45,7 @@ impl ToString for CIAppAggregationFunction {
             Self::EARLIEST => String::from("earliest"),
             Self::MOST_FREQUENT => String::from("most_frequent"),
             Self::DELTA => String::from("delta"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -54,6 +56,7 @@ impl Serialize for CIAppAggregationFunction {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -82,12 +85,9 @@ impl<'de> Deserialize<'de> for CIAppAggregationFunction {
             "earliest" => Self::EARLIEST,
             "most_frequent" => Self::MOST_FREQUENT,
             "delta" => Self::DELTA,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Fields in Usage Summary by tag(s).
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MonthlyUsageAttributionValues {
     /// The percentage of synthetic API test usage by tag(s).
     #[serde(rename = "api_percentage")]
@@ -369,6 +371,9 @@ pub struct MonthlyUsageAttributionValues {
     /// The Application Vulnerability Management usage by tag(s).
     #[serde(rename = "vuln_management_hosts_usage")]
     pub vuln_management_hosts_usage: Option<f64>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl MonthlyUsageAttributionValues {
@@ -494,6 +499,7 @@ impl MonthlyUsageAttributionValues {
             universal_service_monitoring_usage: None,
             vuln_management_hosts_percentage: None,
             vuln_management_hosts_usage: None,
+            _unparsed: false,
         }
     }
 
@@ -1101,5 +1107,1120 @@ impl MonthlyUsageAttributionValues {
 impl Default for MonthlyUsageAttributionValues {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct MonthlyUsageAttributionValuesVisitor;
+        impl<'a> Visitor<'a> for MonthlyUsageAttributionValuesVisitor {
+            type Value = MonthlyUsageAttributionValues;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut api_percentage: Option<f64> = None;
+                let mut api_usage: Option<f64> = None;
+                let mut apm_fargate_percentage: Option<f64> = None;
+                let mut apm_fargate_usage: Option<f64> = None;
+                let mut apm_host_percentage: Option<f64> = None;
+                let mut apm_host_usage: Option<f64> = None;
+                let mut apm_usm_percentage: Option<f64> = None;
+                let mut apm_usm_usage: Option<f64> = None;
+                let mut appsec_fargate_percentage: Option<f64> = None;
+                let mut appsec_fargate_usage: Option<f64> = None;
+                let mut appsec_percentage: Option<f64> = None;
+                let mut appsec_usage: Option<f64> = None;
+                let mut browser_percentage: Option<f64> = None;
+                let mut browser_usage: Option<f64> = None;
+                let mut ci_pipeline_indexed_spans_percentage: Option<f64> = None;
+                let mut ci_pipeline_indexed_spans_usage: Option<f64> = None;
+                let mut ci_test_indexed_spans_percentage: Option<f64> = None;
+                let mut ci_test_indexed_spans_usage: Option<f64> = None;
+                let mut ci_visibility_itr_percentage: Option<f64> = None;
+                let mut ci_visibility_itr_usage: Option<f64> = None;
+                let mut cloud_siem_percentage: Option<f64> = None;
+                let mut cloud_siem_usage: Option<f64> = None;
+                let mut container_excl_agent_percentage: Option<f64> = None;
+                let mut container_excl_agent_usage: Option<f64> = None;
+                let mut container_percentage: Option<f64> = None;
+                let mut container_usage: Option<f64> = None;
+                let mut cspm_containers_percentage: Option<f64> = None;
+                let mut cspm_containers_usage: Option<f64> = None;
+                let mut cspm_hosts_percentage: Option<f64> = None;
+                let mut cspm_hosts_usage: Option<f64> = None;
+                let mut custom_event_percentage: Option<f64> = None;
+                let mut custom_event_usage: Option<f64> = None;
+                let mut custom_ingested_timeseries_percentage: Option<f64> = None;
+                let mut custom_ingested_timeseries_usage: Option<f64> = None;
+                let mut custom_timeseries_percentage: Option<f64> = None;
+                let mut custom_timeseries_usage: Option<f64> = None;
+                let mut cws_containers_percentage: Option<f64> = None;
+                let mut cws_containers_usage: Option<f64> = None;
+                let mut cws_hosts_percentage: Option<f64> = None;
+                let mut cws_hosts_usage: Option<f64> = None;
+                let mut dbm_hosts_percentage: Option<f64> = None;
+                let mut dbm_hosts_usage: Option<f64> = None;
+                let mut dbm_queries_percentage: Option<f64> = None;
+                let mut dbm_queries_usage: Option<f64> = None;
+                let mut estimated_indexed_logs_percentage: Option<f64> = None;
+                let mut estimated_indexed_logs_usage: Option<f64> = None;
+                let mut estimated_indexed_spans_percentage: Option<f64> = None;
+                let mut estimated_indexed_spans_usage: Option<f64> = None;
+                let mut estimated_ingested_logs_percentage: Option<f64> = None;
+                let mut estimated_ingested_logs_usage: Option<f64> = None;
+                let mut estimated_ingested_spans_percentage: Option<f64> = None;
+                let mut estimated_ingested_spans_usage: Option<f64> = None;
+                let mut estimated_rum_sessions_percentage: Option<f64> = None;
+                let mut estimated_rum_sessions_usage: Option<f64> = None;
+                let mut fargate_percentage: Option<f64> = None;
+                let mut fargate_usage: Option<f64> = None;
+                let mut functions_percentage: Option<f64> = None;
+                let mut functions_usage: Option<f64> = None;
+                let mut indexed_spans_percentage: Option<f64> = None;
+                let mut indexed_spans_usage: Option<f64> = None;
+                let mut infra_host_percentage: Option<f64> = None;
+                let mut infra_host_usage: Option<f64> = None;
+                let mut ingested_logs_bytes_percentage: Option<f64> = None;
+                let mut ingested_logs_bytes_usage: Option<f64> = None;
+                let mut ingested_spans_bytes_percentage: Option<f64> = None;
+                let mut ingested_spans_bytes_usage: Option<f64> = None;
+                let mut invocations_percentage: Option<f64> = None;
+                let mut invocations_usage: Option<f64> = None;
+                let mut lambda_traced_invocations_percentage: Option<f64> = None;
+                let mut lambda_traced_invocations_usage: Option<f64> = None;
+                let mut logs_indexed_15day_percentage: Option<f64> = None;
+                let mut logs_indexed_15day_usage: Option<f64> = None;
+                let mut logs_indexed_180day_percentage: Option<f64> = None;
+                let mut logs_indexed_180day_usage: Option<f64> = None;
+                let mut logs_indexed_30day_percentage: Option<f64> = None;
+                let mut logs_indexed_30day_usage: Option<f64> = None;
+                let mut logs_indexed_360day_percentage: Option<f64> = None;
+                let mut logs_indexed_360day_usage: Option<f64> = None;
+                let mut logs_indexed_3day_percentage: Option<f64> = None;
+                let mut logs_indexed_3day_usage: Option<f64> = None;
+                let mut logs_indexed_45day_percentage: Option<f64> = None;
+                let mut logs_indexed_45day_usage: Option<f64> = None;
+                let mut logs_indexed_60day_percentage: Option<f64> = None;
+                let mut logs_indexed_60day_usage: Option<f64> = None;
+                let mut logs_indexed_7day_percentage: Option<f64> = None;
+                let mut logs_indexed_7day_usage: Option<f64> = None;
+                let mut logs_indexed_90day_percentage: Option<f64> = None;
+                let mut logs_indexed_90day_usage: Option<f64> = None;
+                let mut logs_indexed_custom_retention_percentage: Option<f64> = None;
+                let mut logs_indexed_custom_retention_usage: Option<f64> = None;
+                let mut mobile_app_testing_percentage: Option<f64> = None;
+                let mut mobile_app_testing_usage: Option<f64> = None;
+                let mut ndm_netflow_percentage: Option<f64> = None;
+                let mut ndm_netflow_usage: Option<f64> = None;
+                let mut npm_host_percentage: Option<f64> = None;
+                let mut npm_host_usage: Option<f64> = None;
+                let mut obs_pipeline_bytes_percentage: Option<f64> = None;
+                let mut obs_pipeline_bytes_usage: Option<f64> = None;
+                let mut profiled_container_percentage: Option<f64> = None;
+                let mut profiled_container_usage: Option<f64> = None;
+                let mut profiled_fargate_percentage: Option<f64> = None;
+                let mut profiled_fargate_usage: Option<f64> = None;
+                let mut profiled_host_percentage: Option<f64> = None;
+                let mut profiled_host_usage: Option<f64> = None;
+                let mut rum_browser_mobile_sessions_percentage: Option<f64> = None;
+                let mut rum_browser_mobile_sessions_usage: Option<f64> = None;
+                let mut rum_replay_sessions_percentage: Option<f64> = None;
+                let mut rum_replay_sessions_usage: Option<f64> = None;
+                let mut sds_scanned_bytes_percentage: Option<f64> = None;
+                let mut sds_scanned_bytes_usage: Option<f64> = None;
+                let mut serverless_apps_percentage: Option<f64> = None;
+                let mut serverless_apps_usage: Option<f64> = None;
+                let mut siem_ingested_bytes_percentage: Option<f64> = None;
+                let mut siem_ingested_bytes_usage: Option<f64> = None;
+                let mut snmp_percentage: Option<f64> = None;
+                let mut snmp_usage: Option<f64> = None;
+                let mut universal_service_monitoring_percentage: Option<f64> = None;
+                let mut universal_service_monitoring_usage: Option<f64> = None;
+                let mut vuln_management_hosts_percentage: Option<f64> = None;
+                let mut vuln_management_hosts_usage: Option<f64> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "api_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            api_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "api_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            api_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "apm_fargate_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            apm_fargate_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "apm_fargate_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            apm_fargate_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "apm_host_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            apm_host_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "apm_host_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            apm_host_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "apm_usm_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            apm_usm_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "apm_usm_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            apm_usm_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "appsec_fargate_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            appsec_fargate_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "appsec_fargate_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            appsec_fargate_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "appsec_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            appsec_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "appsec_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            appsec_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "browser_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            browser_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "browser_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            browser_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ci_pipeline_indexed_spans_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ci_pipeline_indexed_spans_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ci_pipeline_indexed_spans_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ci_pipeline_indexed_spans_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ci_test_indexed_spans_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ci_test_indexed_spans_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ci_test_indexed_spans_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ci_test_indexed_spans_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ci_visibility_itr_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ci_visibility_itr_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ci_visibility_itr_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ci_visibility_itr_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cloud_siem_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cloud_siem_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cloud_siem_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cloud_siem_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "container_excl_agent_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            container_excl_agent_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "container_excl_agent_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            container_excl_agent_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "container_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            container_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "container_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            container_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cspm_containers_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cspm_containers_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cspm_containers_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cspm_containers_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cspm_hosts_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cspm_hosts_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cspm_hosts_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cspm_hosts_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "custom_event_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            custom_event_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "custom_event_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            custom_event_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "custom_ingested_timeseries_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            custom_ingested_timeseries_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "custom_ingested_timeseries_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            custom_ingested_timeseries_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "custom_timeseries_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            custom_timeseries_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "custom_timeseries_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            custom_timeseries_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cws_containers_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cws_containers_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cws_containers_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cws_containers_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cws_hosts_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cws_hosts_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cws_hosts_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cws_hosts_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "dbm_hosts_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            dbm_hosts_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "dbm_hosts_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            dbm_hosts_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "dbm_queries_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            dbm_queries_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "dbm_queries_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            dbm_queries_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "estimated_indexed_logs_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            estimated_indexed_logs_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "estimated_indexed_logs_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            estimated_indexed_logs_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "estimated_indexed_spans_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            estimated_indexed_spans_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "estimated_indexed_spans_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            estimated_indexed_spans_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "estimated_ingested_logs_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            estimated_ingested_logs_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "estimated_ingested_logs_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            estimated_ingested_logs_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "estimated_ingested_spans_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            estimated_ingested_spans_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "estimated_ingested_spans_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            estimated_ingested_spans_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "estimated_rum_sessions_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            estimated_rum_sessions_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "estimated_rum_sessions_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            estimated_rum_sessions_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "fargate_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            fargate_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "fargate_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            fargate_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "functions_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            functions_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "functions_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            functions_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "indexed_spans_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            indexed_spans_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "indexed_spans_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            indexed_spans_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "infra_host_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_host_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "infra_host_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_host_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ingested_logs_bytes_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ingested_logs_bytes_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ingested_logs_bytes_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ingested_logs_bytes_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ingested_spans_bytes_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ingested_spans_bytes_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ingested_spans_bytes_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ingested_spans_bytes_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "invocations_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            invocations_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "invocations_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            invocations_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "lambda_traced_invocations_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            lambda_traced_invocations_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "lambda_traced_invocations_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            lambda_traced_invocations_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_15day_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_15day_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_15day_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_15day_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_180day_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_180day_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_180day_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_180day_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_30day_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_30day_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_30day_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_30day_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_360day_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_360day_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_360day_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_360day_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_3day_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_3day_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_3day_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_3day_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_45day_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_45day_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_45day_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_45day_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_60day_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_60day_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_60day_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_60day_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_7day_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_7day_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_7day_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_7day_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_90day_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_90day_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_90day_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_90day_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_custom_retention_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_custom_retention_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_custom_retention_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_custom_retention_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "mobile_app_testing_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            mobile_app_testing_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "mobile_app_testing_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            mobile_app_testing_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ndm_netflow_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ndm_netflow_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ndm_netflow_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ndm_netflow_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "npm_host_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            npm_host_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "npm_host_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            npm_host_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "obs_pipeline_bytes_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            obs_pipeline_bytes_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "obs_pipeline_bytes_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            obs_pipeline_bytes_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "profiled_container_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            profiled_container_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "profiled_container_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            profiled_container_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "profiled_fargate_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            profiled_fargate_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "profiled_fargate_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            profiled_fargate_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "profiled_host_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            profiled_host_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "profiled_host_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            profiled_host_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_browser_mobile_sessions_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_browser_mobile_sessions_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_browser_mobile_sessions_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_browser_mobile_sessions_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_replay_sessions_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_replay_sessions_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_replay_sessions_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_replay_sessions_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "sds_scanned_bytes_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            sds_scanned_bytes_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "sds_scanned_bytes_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            sds_scanned_bytes_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "serverless_apps_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "serverless_apps_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "siem_ingested_bytes_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            siem_ingested_bytes_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "siem_ingested_bytes_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            siem_ingested_bytes_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "snmp_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            snmp_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "snmp_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            snmp_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "universal_service_monitoring_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            universal_service_monitoring_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "universal_service_monitoring_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            universal_service_monitoring_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "vuln_management_hosts_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            vuln_management_hosts_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "vuln_management_hosts_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            vuln_management_hosts_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = MonthlyUsageAttributionValues {
+                    api_percentage,
+                    api_usage,
+                    apm_fargate_percentage,
+                    apm_fargate_usage,
+                    apm_host_percentage,
+                    apm_host_usage,
+                    apm_usm_percentage,
+                    apm_usm_usage,
+                    appsec_fargate_percentage,
+                    appsec_fargate_usage,
+                    appsec_percentage,
+                    appsec_usage,
+                    browser_percentage,
+                    browser_usage,
+                    ci_pipeline_indexed_spans_percentage,
+                    ci_pipeline_indexed_spans_usage,
+                    ci_test_indexed_spans_percentage,
+                    ci_test_indexed_spans_usage,
+                    ci_visibility_itr_percentage,
+                    ci_visibility_itr_usage,
+                    cloud_siem_percentage,
+                    cloud_siem_usage,
+                    container_excl_agent_percentage,
+                    container_excl_agent_usage,
+                    container_percentage,
+                    container_usage,
+                    cspm_containers_percentage,
+                    cspm_containers_usage,
+                    cspm_hosts_percentage,
+                    cspm_hosts_usage,
+                    custom_event_percentage,
+                    custom_event_usage,
+                    custom_ingested_timeseries_percentage,
+                    custom_ingested_timeseries_usage,
+                    custom_timeseries_percentage,
+                    custom_timeseries_usage,
+                    cws_containers_percentage,
+                    cws_containers_usage,
+                    cws_hosts_percentage,
+                    cws_hosts_usage,
+                    dbm_hosts_percentage,
+                    dbm_hosts_usage,
+                    dbm_queries_percentage,
+                    dbm_queries_usage,
+                    estimated_indexed_logs_percentage,
+                    estimated_indexed_logs_usage,
+                    estimated_indexed_spans_percentage,
+                    estimated_indexed_spans_usage,
+                    estimated_ingested_logs_percentage,
+                    estimated_ingested_logs_usage,
+                    estimated_ingested_spans_percentage,
+                    estimated_ingested_spans_usage,
+                    estimated_rum_sessions_percentage,
+                    estimated_rum_sessions_usage,
+                    fargate_percentage,
+                    fargate_usage,
+                    functions_percentage,
+                    functions_usage,
+                    indexed_spans_percentage,
+                    indexed_spans_usage,
+                    infra_host_percentage,
+                    infra_host_usage,
+                    ingested_logs_bytes_percentage,
+                    ingested_logs_bytes_usage,
+                    ingested_spans_bytes_percentage,
+                    ingested_spans_bytes_usage,
+                    invocations_percentage,
+                    invocations_usage,
+                    lambda_traced_invocations_percentage,
+                    lambda_traced_invocations_usage,
+                    logs_indexed_15day_percentage,
+                    logs_indexed_15day_usage,
+                    logs_indexed_180day_percentage,
+                    logs_indexed_180day_usage,
+                    logs_indexed_30day_percentage,
+                    logs_indexed_30day_usage,
+                    logs_indexed_360day_percentage,
+                    logs_indexed_360day_usage,
+                    logs_indexed_3day_percentage,
+                    logs_indexed_3day_usage,
+                    logs_indexed_45day_percentage,
+                    logs_indexed_45day_usage,
+                    logs_indexed_60day_percentage,
+                    logs_indexed_60day_usage,
+                    logs_indexed_7day_percentage,
+                    logs_indexed_7day_usage,
+                    logs_indexed_90day_percentage,
+                    logs_indexed_90day_usage,
+                    logs_indexed_custom_retention_percentage,
+                    logs_indexed_custom_retention_usage,
+                    mobile_app_testing_percentage,
+                    mobile_app_testing_usage,
+                    ndm_netflow_percentage,
+                    ndm_netflow_usage,
+                    npm_host_percentage,
+                    npm_host_usage,
+                    obs_pipeline_bytes_percentage,
+                    obs_pipeline_bytes_usage,
+                    profiled_container_percentage,
+                    profiled_container_usage,
+                    profiled_fargate_percentage,
+                    profiled_fargate_usage,
+                    profiled_host_percentage,
+                    profiled_host_usage,
+                    rum_browser_mobile_sessions_percentage,
+                    rum_browser_mobile_sessions_usage,
+                    rum_replay_sessions_percentage,
+                    rum_replay_sessions_usage,
+                    sds_scanned_bytes_percentage,
+                    sds_scanned_bytes_usage,
+                    serverless_apps_percentage,
+                    serverless_apps_usage,
+                    siem_ingested_bytes_percentage,
+                    siem_ingested_bytes_usage,
+                    snmp_percentage,
+                    snmp_usage,
+                    universal_service_monitoring_percentage,
+                    universal_service_monitoring_usage,
+                    vuln_management_hosts_percentage,
+                    vuln_management_hosts_usage,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(MonthlyUsageAttributionValuesVisitor)
     }
 }

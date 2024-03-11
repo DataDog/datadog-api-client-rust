@@ -8,12 +8,14 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum IncidentIntegrationMetadataType {
     INCIDENT_INTEGRATIONS,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for IncidentIntegrationMetadataType {
     fn to_string(&self) -> String {
         match self {
             Self::INCIDENT_INTEGRATIONS => String::from("incident_integrations"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -24,6 +26,7 @@ impl Serialize for IncidentIntegrationMetadataType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -37,12 +40,9 @@ impl<'de> Deserialize<'de> for IncidentIntegrationMetadataType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "incident_integrations" => Self::INCIDENT_INTEGRATIONS,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

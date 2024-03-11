@@ -24,6 +24,7 @@ pub enum WidgetMonitorSummarySort {
     TRIGGERED_DESCENDING,
     PRIORITY_ASCENDING,
     PRIORITY_DESCENDING,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for WidgetMonitorSummarySort {
@@ -46,6 +47,7 @@ impl ToString for WidgetMonitorSummarySort {
             Self::TRIGGERED_DESCENDING => String::from("triggered,desc"),
             Self::PRIORITY_ASCENDING => String::from("priority,asc"),
             Self::PRIORITY_DESCENDING => String::from("priority,desc"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -56,6 +58,7 @@ impl Serialize for WidgetMonitorSummarySort {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -85,12 +88,9 @@ impl<'de> Deserialize<'de> for WidgetMonitorSummarySort {
             "triggered,desc" => Self::TRIGGERED_DESCENDING,
             "priority,asc" => Self::PRIORITY_ASCENDING,
             "priority,desc" => Self::PRIORITY_DESCENDING,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

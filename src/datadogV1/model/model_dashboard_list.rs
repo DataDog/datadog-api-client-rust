@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Your Datadog Dashboards.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DashboardList {
     /// Object describing the creator of the shared element.
     #[serde(rename = "author")]
@@ -33,6 +35,9 @@ pub struct DashboardList {
     /// The type of dashboard list.
     #[serde(rename = "type")]
     pub type_: Option<String>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl DashboardList {
@@ -46,6 +51,7 @@ impl DashboardList {
             modified: None,
             name,
             type_: None,
+            _unparsed: false,
         }
     }
 
@@ -82,5 +88,106 @@ impl DashboardList {
     pub fn type_(&mut self, value: String) -> &mut Self {
         self.type_ = Some(value);
         self
+    }
+}
+
+impl<'de> Deserialize<'de> for DashboardList {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct DashboardListVisitor;
+        impl<'a> Visitor<'a> for DashboardListVisitor {
+            type Value = DashboardList;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut author: Option<crate::datadogV1::model::Creator> = None;
+                let mut created: Option<String> = None;
+                let mut dashboard_count: Option<i64> = None;
+                let mut id: Option<i64> = None;
+                let mut is_favorite: Option<bool> = None;
+                let mut modified: Option<String> = None;
+                let mut name: Option<String> = None;
+                let mut type_: Option<String> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "author" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            author = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "created" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            created = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "dashboard_count" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            dashboard_count =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "is_favorite" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_favorite =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "modified" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            modified = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "name" => {
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
+
+                let content = DashboardList {
+                    author,
+                    created,
+                    dashboard_count,
+                    id,
+                    is_favorite,
+                    modified,
+                    name,
+                    type_,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(DashboardListVisitor)
     }
 }

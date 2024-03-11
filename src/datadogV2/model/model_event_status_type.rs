@@ -15,6 +15,7 @@ pub enum EventStatusType {
     USER_UPDATE,
     RECOMMENDATION,
     SNAPSHOT,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for EventStatusType {
@@ -28,6 +29,7 @@ impl ToString for EventStatusType {
             Self::USER_UPDATE => String::from("user_update"),
             Self::RECOMMENDATION => String::from("recommendation"),
             Self::SNAPSHOT => String::from("snapshot"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -38,6 +40,7 @@ impl Serialize for EventStatusType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -58,12 +61,9 @@ impl<'de> Deserialize<'de> for EventStatusType {
             "user_update" => Self::USER_UPDATE,
             "recommendation" => Self::RECOMMENDATION,
             "snapshot" => Self::SNAPSHOT,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

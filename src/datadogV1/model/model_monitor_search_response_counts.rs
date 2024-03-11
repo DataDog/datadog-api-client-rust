@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// The counts of monitors per different criteria.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MonitorSearchResponseCounts {
     /// Search facets.
     #[serde(rename = "muted")]
@@ -21,6 +23,9 @@ pub struct MonitorSearchResponseCounts {
     /// Search facets.
     #[serde(rename = "type")]
     pub type_: Option<Vec<crate::datadogV1::model::MonitorSearchCountItem>>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl MonitorSearchResponseCounts {
@@ -30,6 +35,7 @@ impl MonitorSearchResponseCounts {
             status: None,
             tag: None,
             type_: None,
+            _unparsed: false,
         }
     }
 
@@ -69,5 +75,74 @@ impl MonitorSearchResponseCounts {
 impl Default for MonitorSearchResponseCounts {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for MonitorSearchResponseCounts {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct MonitorSearchResponseCountsVisitor;
+        impl<'a> Visitor<'a> for MonitorSearchResponseCountsVisitor {
+            type Value = MonitorSearchResponseCounts;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut muted: Option<Vec<crate::datadogV1::model::MonitorSearchCountItem>> = None;
+                let mut status: Option<Vec<crate::datadogV1::model::MonitorSearchCountItem>> = None;
+                let mut tag: Option<Vec<crate::datadogV1::model::MonitorSearchCountItem>> = None;
+                let mut type_: Option<Vec<crate::datadogV1::model::MonitorSearchCountItem>> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "muted" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            muted = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "status" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "tag" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tag = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = MonitorSearchResponseCounts {
+                    muted,
+                    status,
+                    tag,
+                    type_,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(MonitorSearchResponseCountsVisitor)
     }
 }

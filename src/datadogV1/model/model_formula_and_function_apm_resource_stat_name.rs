@@ -18,6 +18,7 @@ pub enum FormulaAndFunctionApmResourceStatName {
     LATENCY_P90,
     LATENCY_P95,
     LATENCY_P99,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for FormulaAndFunctionApmResourceStatName {
@@ -34,6 +35,7 @@ impl ToString for FormulaAndFunctionApmResourceStatName {
             Self::LATENCY_P90 => String::from("latency_p90"),
             Self::LATENCY_P95 => String::from("latency_p95"),
             Self::LATENCY_P99 => String::from("latency_p99"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -44,6 +46,7 @@ impl Serialize for FormulaAndFunctionApmResourceStatName {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -67,12 +70,9 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionApmResourceStatName {
             "latency_p90" => Self::LATENCY_P90,
             "latency_p95" => Self::LATENCY_P95,
             "latency_p99" => Self::LATENCY_P99,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

@@ -11,6 +11,7 @@ pub enum SLOCorrectionCategory {
     OUTSIDE_BUSINESS_HOURS,
     DEPLOYMENT,
     OTHER,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for SLOCorrectionCategory {
@@ -20,6 +21,7 @@ impl ToString for SLOCorrectionCategory {
             Self::OUTSIDE_BUSINESS_HOURS => String::from("Outside Business Hours"),
             Self::DEPLOYMENT => String::from("Deployment"),
             Self::OTHER => String::from("Other"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -30,6 +32,7 @@ impl Serialize for SLOCorrectionCategory {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -46,12 +49,9 @@ impl<'de> Deserialize<'de> for SLOCorrectionCategory {
             "Outside Business Hours" => Self::OUTSIDE_BUSINESS_HOURS,
             "Deployment" => Self::DEPLOYMENT,
             "Other" => Self::OTHER,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

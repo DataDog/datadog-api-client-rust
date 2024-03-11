@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SLOType {
     METRIC,
     MONITOR,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for SLOType {
@@ -16,6 +17,7 @@ impl ToString for SLOType {
         match self {
             Self::METRIC => String::from("metric"),
             Self::MONITOR => String::from("monitor"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -26,6 +28,7 @@ impl Serialize for SLOType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -40,12 +43,9 @@ impl<'de> Deserialize<'de> for SLOType {
         Ok(match s.as_str() {
             "metric" => Self::METRIC,
             "monitor" => Self::MONITOR,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

@@ -11,6 +11,7 @@ pub enum ScatterplotDimension {
     Y,
     RADIUS,
     COLOR,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for ScatterplotDimension {
@@ -20,6 +21,7 @@ impl ToString for ScatterplotDimension {
             Self::Y => String::from("y"),
             Self::RADIUS => String::from("radius"),
             Self::COLOR => String::from("color"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -30,6 +32,7 @@ impl Serialize for ScatterplotDimension {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -46,12 +49,9 @@ impl<'de> Deserialize<'de> for ScatterplotDimension {
             "y" => Self::Y,
             "radius" => Self::RADIUS,
             "color" => Self::COLOR,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

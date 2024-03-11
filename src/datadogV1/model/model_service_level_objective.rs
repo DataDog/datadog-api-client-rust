@@ -1,14 +1,16 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// A service level objective object includes a service level indicator, thresholds
 /// for one or more timeframes, and metadata (`name`, `description`, `tags`, etc.).
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ServiceLevelObjective {
     /// Creation timestamp (UNIX time in seconds)
     ///
@@ -90,6 +92,9 @@ pub struct ServiceLevelObjective {
     /// threshold.
     #[serde(rename = "warning_threshold")]
     pub warning_threshold: Option<f64>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl ServiceLevelObjective {
@@ -115,6 +120,7 @@ impl ServiceLevelObjective {
             timeframe: None,
             type_,
             warning_threshold: None,
+            _unparsed: false,
         }
     }
 
@@ -184,5 +190,185 @@ impl ServiceLevelObjective {
     pub fn warning_threshold(&mut self, value: f64) -> &mut Self {
         self.warning_threshold = Some(value);
         self
+    }
+}
+
+impl<'de> Deserialize<'de> for ServiceLevelObjective {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct ServiceLevelObjectiveVisitor;
+        impl<'a> Visitor<'a> for ServiceLevelObjectiveVisitor {
+            type Value = ServiceLevelObjective;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut created_at: Option<i64> = None;
+                let mut creator: Option<crate::datadogV1::model::Creator> = None;
+                let mut description: Option<Option<String>> = None;
+                let mut groups: Option<Vec<String>> = None;
+                let mut id: Option<String> = None;
+                let mut modified_at: Option<i64> = None;
+                let mut monitor_ids: Option<Vec<i64>> = None;
+                let mut monitor_tags: Option<Vec<String>> = None;
+                let mut name: Option<String> = None;
+                let mut query: Option<crate::datadogV1::model::ServiceLevelObjectiveQuery> = None;
+                let mut tags: Option<Vec<String>> = None;
+                let mut target_threshold: Option<f64> = None;
+                let mut thresholds: Option<Vec<crate::datadogV1::model::SLOThreshold>> = None;
+                let mut timeframe: Option<crate::datadogV1::model::SLOTimeframe> = None;
+                let mut type_: Option<crate::datadogV1::model::SLOType> = None;
+                let mut warning_threshold: Option<f64> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "created_at" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "creator" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            creator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "groups" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            groups = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "modified_at" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            modified_at =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "monitor_ids" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            monitor_ids =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "monitor_tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            monitor_tags =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "name" => {
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "target_threshold" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            target_threshold =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "thresholds" => {
+                            thresholds = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "timeframe" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            timeframe = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _timeframe) = timeframe {
+                                match _timeframe {
+                                    crate::datadogV1::model::SLOTimeframe::UnparsedObject(
+                                        _timeframe,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "type" => {
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV1::model::SLOType::UnparsedObject(_type_) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "warning_threshold" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            warning_threshold =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
+                let thresholds = thresholds.ok_or_else(|| M::Error::missing_field("thresholds"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
+
+                let content = ServiceLevelObjective {
+                    created_at,
+                    creator,
+                    description,
+                    groups,
+                    id,
+                    modified_at,
+                    monitor_ids,
+                    monitor_tags,
+                    name,
+                    query,
+                    tags,
+                    target_threshold,
+                    thresholds,
+                    timeframe,
+                    type_,
+                    warning_threshold,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(ServiceLevelObjectiveVisitor)
     }
 }

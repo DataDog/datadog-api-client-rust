@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Details of the top level pipeline, build, or workflow of your CI.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CIAppPipelineEventPipeline {
     /// Time when the pipeline run finished. It cannot be older than 18 hours in the past from the current time. The time format must be RFC3339.
     #[serde(rename = "end")]
@@ -102,6 +104,9 @@ pub struct CIAppPipelineEventPipeline {
     /// The URL to look at the pipeline in the CI provider UI.
     #[serde(rename = "url")]
     pub url: String,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl CIAppPipelineEventPipeline {
@@ -136,6 +141,7 @@ impl CIAppPipelineEventPipeline {
             tags: None,
             unique_id,
             url,
+            _unparsed: false,
         }
     }
 
@@ -206,5 +212,181 @@ impl CIAppPipelineEventPipeline {
     pub fn tags(&mut self, value: Option<Vec<String>>) -> &mut Self {
         self.tags = Some(value);
         self
+    }
+}
+
+impl<'de> Deserialize<'de> for CIAppPipelineEventPipeline {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct CIAppPipelineEventPipelineVisitor;
+        impl<'a> Visitor<'a> for CIAppPipelineEventPipelineVisitor {
+            type Value = CIAppPipelineEventPipeline;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut end: Option<String> = None;
+                let mut error: Option<Option<crate::datadogV2::model::CIAppCIError>> = None;
+                let mut git: Option<Option<crate::datadogV2::model::CIAppGitInfo>> = None;
+                let mut is_manual: Option<Option<bool>> = None;
+                let mut is_resumed: Option<Option<bool>> = None;
+                let mut level: Option<crate::datadogV2::model::CIAppPipelineEventPipelineLevel> =
+                    None;
+                let mut metrics: Option<Option<Vec<String>>> = None;
+                let mut name: Option<String> = None;
+                let mut node: Option<Option<crate::datadogV2::model::CIAppHostInfo>> = None;
+                let mut parameters: Option<Option<std::collections::BTreeMap<String, String>>> =
+                    None;
+                let mut parent_pipeline: Option<
+                    Option<crate::datadogV2::model::CIAppPipelineEventParentPipeline>,
+                > = None;
+                let mut partial_retry: Option<bool> = None;
+                let mut pipeline_id: Option<String> = None;
+                let mut previous_attempt: Option<
+                    Option<crate::datadogV2::model::CIAppPipelineEventPreviousPipeline>,
+                > = None;
+                let mut queue_time: Option<Option<i64>> = None;
+                let mut start: Option<String> = None;
+                let mut status: Option<crate::datadogV2::model::CIAppPipelineEventPipelineStatus> =
+                    None;
+                let mut tags: Option<Option<Vec<String>>> = None;
+                let mut unique_id: Option<String> = None;
+                let mut url: Option<String> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "end" => {
+                            end = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "error" => {
+                            error = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "git" => {
+                            git = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "is_manual" => {
+                            is_manual = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "is_resumed" => {
+                            is_resumed = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "level" => {
+                            level = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _level) = level {
+                                match _level {
+                                    crate::datadogV2::model::CIAppPipelineEventPipelineLevel::UnparsedObject(_level) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "metrics" => {
+                            metrics = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "name" => {
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "node" => {
+                            node = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "parameters" => {
+                            parameters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "parent_pipeline" => {
+                            parent_pipeline =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "partial_retry" => {
+                            partial_retry =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "pipeline_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            pipeline_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "previous_attempt" => {
+                            previous_attempt =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "queue_time" => {
+                            queue_time = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "start" => {
+                            start = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "status" => {
+                            status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _status) = status {
+                                match _status {
+                                    crate::datadogV2::model::CIAppPipelineEventPipelineStatus::UnparsedObject(_status) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "tags" => {
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "unique_id" => {
+                            unique_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "url" => {
+                            url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+                let end = end.ok_or_else(|| M::Error::missing_field("end"))?;
+                let level = level.ok_or_else(|| M::Error::missing_field("level"))?;
+                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
+                let partial_retry =
+                    partial_retry.ok_or_else(|| M::Error::missing_field("partial_retry"))?;
+                let start = start.ok_or_else(|| M::Error::missing_field("start"))?;
+                let status = status.ok_or_else(|| M::Error::missing_field("status"))?;
+                let unique_id = unique_id.ok_or_else(|| M::Error::missing_field("unique_id"))?;
+                let url = url.ok_or_else(|| M::Error::missing_field("url"))?;
+
+                let content = CIAppPipelineEventPipeline {
+                    end,
+                    error,
+                    git,
+                    is_manual,
+                    is_resumed,
+                    level,
+                    metrics,
+                    name,
+                    node,
+                    parameters,
+                    parent_pipeline,
+                    partial_retry,
+                    pipeline_id,
+                    previous_attempt,
+                    queue_time,
+                    start,
+                    status,
+                    tags,
+                    unique_id,
+                    url,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(CIAppPipelineEventPipelineVisitor)
     }
 }

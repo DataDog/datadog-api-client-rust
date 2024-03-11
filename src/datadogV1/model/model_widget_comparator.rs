@@ -12,6 +12,7 @@ pub enum WidgetComparator {
     GREATER_THAN_OR_EQUAL_TO,
     LESS_THAN,
     LESS_THAN_OR_EQUAL_TO,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for WidgetComparator {
@@ -22,6 +23,7 @@ impl ToString for WidgetComparator {
             Self::GREATER_THAN_OR_EQUAL_TO => String::from(">="),
             Self::LESS_THAN => String::from("<"),
             Self::LESS_THAN_OR_EQUAL_TO => String::from("<="),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -32,6 +34,7 @@ impl Serialize for WidgetComparator {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -49,12 +52,9 @@ impl<'de> Deserialize<'de> for WidgetComparator {
             ">=" => Self::GREATER_THAN_OR_EQUAL_TO,
             "<" => Self::LESS_THAN,
             "<=" => Self::LESS_THAN_OR_EQUAL_TO,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

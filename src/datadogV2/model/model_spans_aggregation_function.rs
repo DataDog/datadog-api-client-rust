@@ -19,6 +19,7 @@ pub enum SpansAggregationFunction {
     MAX,
     AVG,
     MEDIAN,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for SpansAggregationFunction {
@@ -36,6 +37,7 @@ impl ToString for SpansAggregationFunction {
             Self::MAX => String::from("max"),
             Self::AVG => String::from("avg"),
             Self::MEDIAN => String::from("median"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -46,6 +48,7 @@ impl Serialize for SpansAggregationFunction {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -70,12 +73,9 @@ impl<'de> Deserialize<'de> for SpansAggregationFunction {
             "max" => Self::MAX,
             "avg" => Self::AVG,
             "median" => Self::MEDIAN,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

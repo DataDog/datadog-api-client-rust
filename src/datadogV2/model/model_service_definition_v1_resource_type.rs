@@ -16,6 +16,7 @@ pub enum ServiceDefinitionV1ResourceType {
     ONCALL,
     CODE,
     LINK,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for ServiceDefinitionV1ResourceType {
@@ -30,6 +31,7 @@ impl ToString for ServiceDefinitionV1ResourceType {
             Self::ONCALL => String::from("oncall"),
             Self::CODE => String::from("code"),
             Self::LINK => String::from("link"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -40,6 +42,7 @@ impl Serialize for ServiceDefinitionV1ResourceType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -61,12 +64,9 @@ impl<'de> Deserialize<'de> for ServiceDefinitionV1ResourceType {
             "oncall" => Self::ONCALL,
             "code" => Self::CODE,
             "link" => Self::LINK,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

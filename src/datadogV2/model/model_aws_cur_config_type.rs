@@ -8,12 +8,14 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum AwsCURConfigType {
     AWS_CUR_CONFIG,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for AwsCURConfigType {
     fn to_string(&self) -> String {
         match self {
             Self::AWS_CUR_CONFIG => String::from("aws_cur_config"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -24,6 +26,7 @@ impl Serialize for AwsCURConfigType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -37,12 +40,9 @@ impl<'de> Deserialize<'de> for AwsCURConfigType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "aws_cur_config" => Self::AWS_CUR_CONFIG,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

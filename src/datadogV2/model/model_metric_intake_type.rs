@@ -11,6 +11,7 @@ pub enum MetricIntakeType {
     COUNT,
     RATE,
     GAUGE,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl Serialize for MetricIntakeType {
@@ -19,6 +20,7 @@ impl Serialize for MetricIntakeType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             Self::UNSPECIFIED => serializer.serialize_i32(0),
             Self::COUNT => serializer.serialize_i32(1),
             Self::RATE => serializer.serialize_i32(2),
@@ -38,12 +40,9 @@ impl<'de> Deserialize<'de> for MetricIntakeType {
             1 => Self::COUNT,
             2 => Self::RATE,
             3 => Self::GAUGE,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::Number(s.into()),
+            }),
         })
     }
 }

@@ -11,6 +11,7 @@ pub enum OnMissingDataOption {
     SHOW_NO_DATA,
     SHOW_AND_NOTIFY_NO_DATA,
     RESOLVE,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for OnMissingDataOption {
@@ -20,6 +21,7 @@ impl ToString for OnMissingDataOption {
             Self::SHOW_NO_DATA => String::from("show_no_data"),
             Self::SHOW_AND_NOTIFY_NO_DATA => String::from("show_and_notify_no_data"),
             Self::RESOLVE => String::from("resolve"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -30,6 +32,7 @@ impl Serialize for OnMissingDataOption {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -46,12 +49,9 @@ impl<'de> Deserialize<'de> for OnMissingDataOption {
             "show_no_data" => Self::SHOW_NO_DATA,
             "show_and_notify_no_data" => Self::SHOW_AND_NOTIFY_NO_DATA,
             "resolve" => Self::RESOLVE,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

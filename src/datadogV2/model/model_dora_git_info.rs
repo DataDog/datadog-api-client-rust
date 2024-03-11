@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Git info for DORA Metrics events.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DORAGitInfo {
     /// Git Commit SHA.
     #[serde(rename = "commit_sha")]
@@ -15,6 +17,9 @@ pub struct DORAGitInfo {
     /// Git Repository URL
     #[serde(rename = "repository_url")]
     pub repository_url: String,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl DORAGitInfo {
@@ -22,6 +27,58 @@ impl DORAGitInfo {
         DORAGitInfo {
             commit_sha,
             repository_url,
+            _unparsed: false,
         }
+    }
+}
+
+impl<'de> Deserialize<'de> for DORAGitInfo {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct DORAGitInfoVisitor;
+        impl<'a> Visitor<'a> for DORAGitInfoVisitor {
+            type Value = DORAGitInfo;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut commit_sha: Option<String> = None;
+                let mut repository_url: Option<String> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "commit_sha" => {
+                            commit_sha = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "repository_url" => {
+                            repository_url =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+                let commit_sha = commit_sha.ok_or_else(|| M::Error::missing_field("commit_sha"))?;
+                let repository_url =
+                    repository_url.ok_or_else(|| M::Error::missing_field("repository_url"))?;
+
+                let content = DORAGitInfo {
+                    commit_sha,
+                    repository_url,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(DORAGitInfoVisitor)
     }
 }

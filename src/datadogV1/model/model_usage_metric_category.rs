@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum UsageMetricCategory {
     STANDARD,
     CUSTOM,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for UsageMetricCategory {
@@ -16,6 +17,7 @@ impl ToString for UsageMetricCategory {
         match self {
             Self::STANDARD => String::from("standard"),
             Self::CUSTOM => String::from("custom"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -26,6 +28,7 @@ impl Serialize for UsageMetricCategory {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -40,12 +43,9 @@ impl<'de> Deserialize<'de> for UsageMetricCategory {
         Ok(match s.as_str() {
             "standard" => Self::STANDARD,
             "custom" => Self::CUSTOM,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

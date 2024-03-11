@@ -8,12 +8,14 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SecurityMonitoringSignalMetadataType {
     SIGNAL_METADATA,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for SecurityMonitoringSignalMetadataType {
     fn to_string(&self) -> String {
         match self {
             Self::SIGNAL_METADATA => String::from("signal_metadata"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -24,6 +26,7 @@ impl Serialize for SecurityMonitoringSignalMetadataType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -37,12 +40,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalMetadataType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "signal_metadata" => Self::SIGNAL_METADATA,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

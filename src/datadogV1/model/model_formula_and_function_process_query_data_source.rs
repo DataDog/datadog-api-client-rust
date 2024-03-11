@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum FormulaAndFunctionProcessQueryDataSource {
     PROCESS,
     CONTAINER,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for FormulaAndFunctionProcessQueryDataSource {
@@ -16,6 +17,7 @@ impl ToString for FormulaAndFunctionProcessQueryDataSource {
         match self {
             Self::PROCESS => String::from("process"),
             Self::CONTAINER => String::from("container"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -26,6 +28,7 @@ impl Serialize for FormulaAndFunctionProcessQueryDataSource {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -40,12 +43,9 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionProcessQueryDataSource {
         Ok(match s.as_str() {
             "process" => Self::PROCESS,
             "container" => Self::CONTAINER,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

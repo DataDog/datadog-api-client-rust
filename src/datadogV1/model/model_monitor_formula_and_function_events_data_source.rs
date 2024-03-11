@@ -14,6 +14,7 @@ pub enum MonitorFormulaAndFunctionEventsDataSource {
     EVENTS,
     LOGS,
     SPANS,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for MonitorFormulaAndFunctionEventsDataSource {
@@ -26,6 +27,7 @@ impl ToString for MonitorFormulaAndFunctionEventsDataSource {
             Self::EVENTS => String::from("events"),
             Self::LOGS => String::from("logs"),
             Self::SPANS => String::from("spans"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -36,6 +38,7 @@ impl Serialize for MonitorFormulaAndFunctionEventsDataSource {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -55,12 +58,9 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionEventsDataSource {
             "events" => Self::EVENTS,
             "logs" => Self::LOGS,
             "spans" => Self::SPANS,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

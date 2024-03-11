@@ -10,6 +10,7 @@ pub enum SyntheticsTestExecutionRule {
     BLOCKING,
     NON_BLOCKING,
     SKIPPED,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for SyntheticsTestExecutionRule {
@@ -18,6 +19,7 @@ impl ToString for SyntheticsTestExecutionRule {
             Self::BLOCKING => String::from("blocking"),
             Self::NON_BLOCKING => String::from("non_blocking"),
             Self::SKIPPED => String::from("skipped"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -28,6 +30,7 @@ impl Serialize for SyntheticsTestExecutionRule {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -43,12 +46,9 @@ impl<'de> Deserialize<'de> for SyntheticsTestExecutionRule {
             "blocking" => Self::BLOCKING,
             "non_blocking" => Self::NON_BLOCKING,
             "skipped" => Self::SKIPPED,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

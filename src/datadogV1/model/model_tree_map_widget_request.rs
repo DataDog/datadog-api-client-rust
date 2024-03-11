@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// An updated treemap widget.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TreeMapWidgetRequest {
     /// List of formulas that operate on queries.
     #[serde(rename = "formulas")]
@@ -21,6 +23,9 @@ pub struct TreeMapWidgetRequest {
     /// Timeseries, scalar, or event list response. Event list response formats are supported by Geomap widgets.
     #[serde(rename = "response_format")]
     pub response_format: Option<crate::datadogV1::model::FormulaAndFunctionResponseFormat>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl TreeMapWidgetRequest {
@@ -30,6 +35,7 @@ impl TreeMapWidgetRequest {
             q: None,
             queries: None,
             response_format: None,
+            _unparsed: false,
         }
     }
 
@@ -63,5 +69,87 @@ impl TreeMapWidgetRequest {
 impl Default for TreeMapWidgetRequest {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for TreeMapWidgetRequest {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct TreeMapWidgetRequestVisitor;
+        impl<'a> Visitor<'a> for TreeMapWidgetRequestVisitor {
+            type Value = TreeMapWidgetRequest;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut formulas: Option<Vec<crate::datadogV1::model::WidgetFormula>> = None;
+                let mut q: Option<String> = None;
+                let mut queries: Option<
+                    Vec<crate::datadogV1::model::FormulaAndFunctionQueryDefinition>,
+                > = None;
+                let mut response_format: Option<
+                    crate::datadogV1::model::FormulaAndFunctionResponseFormat,
+                > = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "formulas" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            formulas = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "q" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            q = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "queries" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            queries = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "response_format" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            response_format =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _response_format) = response_format {
+                                match _response_format {
+                                    crate::datadogV1::model::FormulaAndFunctionResponseFormat::UnparsedObject(_response_format) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = TreeMapWidgetRequest {
+                    formulas,
+                    q,
+                    queries,
+                    response_format,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(TreeMapWidgetRequestVisitor)
     }
 }

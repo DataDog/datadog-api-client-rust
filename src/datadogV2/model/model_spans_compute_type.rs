@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SpansComputeType {
     TIMESERIES,
     TOTAL,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for SpansComputeType {
@@ -16,6 +17,7 @@ impl ToString for SpansComputeType {
         match self {
             Self::TIMESERIES => String::from("timeseries"),
             Self::TOTAL => String::from("total"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -26,6 +28,7 @@ impl Serialize for SpansComputeType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -40,12 +43,9 @@ impl<'de> Deserialize<'de> for SpansComputeType {
         Ok(match s.as_str() {
             "timeseries" => Self::TIMESERIES,
             "total" => Self::TOTAL,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

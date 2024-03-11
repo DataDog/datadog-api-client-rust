@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// The JSON:API attributes of the detailed finding.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DetailedFindingAttributes {
     /// The evaluation of the finding.
     #[serde(rename = "evaluation")]
@@ -42,6 +44,9 @@ pub struct DetailedFindingAttributes {
     /// The tags associated with this finding.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl DetailedFindingAttributes {
@@ -58,6 +63,7 @@ impl DetailedFindingAttributes {
             rule: None,
             status: None,
             tags: None,
+            _unparsed: false,
         }
     }
 
@@ -123,5 +129,156 @@ impl DetailedFindingAttributes {
 impl Default for DetailedFindingAttributes {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for DetailedFindingAttributes {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct DetailedFindingAttributesVisitor;
+        impl<'a> Visitor<'a> for DetailedFindingAttributesVisitor {
+            type Value = DetailedFindingAttributes;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut evaluation: Option<crate::datadogV2::model::FindingEvaluation> = None;
+                let mut evaluation_changed_at: Option<i64> = None;
+                let mut message: Option<String> = None;
+                let mut mute: Option<crate::datadogV2::model::FindingMute> = None;
+                let mut resource: Option<String> = None;
+                let mut resource_configuration: Option<
+                    std::collections::BTreeMap<String, serde_json::Value>,
+                > = None;
+                let mut resource_discovery_date: Option<i64> = None;
+                let mut resource_type: Option<String> = None;
+                let mut rule: Option<crate::datadogV2::model::FindingRule> = None;
+                let mut status: Option<crate::datadogV2::model::FindingStatus> = None;
+                let mut tags: Option<Vec<String>> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "evaluation" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            evaluation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _evaluation) = evaluation {
+                                match _evaluation {
+                                    crate::datadogV2::model::FindingEvaluation::UnparsedObject(
+                                        _evaluation,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "evaluation_changed_at" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            evaluation_changed_at =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "message" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "mute" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            mute = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "resource" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            resource = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "resource_configuration" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            resource_configuration =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "resource_discovery_date" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            resource_discovery_date =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "resource_type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            resource_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rule" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "status" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _status) = status {
+                                match _status {
+                                    crate::datadogV2::model::FindingStatus::UnparsedObject(
+                                        _status,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = DetailedFindingAttributes {
+                    evaluation,
+                    evaluation_changed_at,
+                    message,
+                    mute,
+                    resource,
+                    resource_configuration,
+                    resource_discovery_date,
+                    resource_type,
+                    rule,
+                    status,
+                    tags,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(DetailedFindingAttributesVisitor)
     }
 }

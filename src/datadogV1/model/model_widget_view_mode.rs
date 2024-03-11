@@ -10,6 +10,7 @@ pub enum WidgetViewMode {
     OVERALL,
     COMPONENT,
     BOTH,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for WidgetViewMode {
@@ -18,6 +19,7 @@ impl ToString for WidgetViewMode {
             Self::OVERALL => String::from("overall"),
             Self::COMPONENT => String::from("component"),
             Self::BOTH => String::from("both"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -28,6 +30,7 @@ impl Serialize for WidgetViewMode {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -43,12 +46,9 @@ impl<'de> Deserialize<'de> for WidgetViewMode {
             "overall" => Self::OVERALL,
             "component" => Self::COMPONENT,
             "both" => Self::BOTH,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

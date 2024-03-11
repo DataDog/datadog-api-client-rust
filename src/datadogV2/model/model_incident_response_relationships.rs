@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// The incident's relationships from a response.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IncidentResponseRelationships {
     /// A relationship reference for attachments.
     #[serde(rename = "attachments")]
@@ -38,6 +40,9 @@ pub struct IncidentResponseRelationships {
     #[serde(rename = "user_defined_fields")]
     pub user_defined_fields:
         Option<crate::datadogV2::model::RelationshipToIncidentUserDefinedFields>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl IncidentResponseRelationships {
@@ -51,6 +56,7 @@ impl IncidentResponseRelationships {
             last_modified_by_user: None,
             responders: None,
             user_defined_fields: None,
+            _unparsed: false,
         }
     }
 
@@ -122,5 +128,121 @@ impl IncidentResponseRelationships {
 impl Default for IncidentResponseRelationships {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for IncidentResponseRelationships {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct IncidentResponseRelationshipsVisitor;
+        impl<'a> Visitor<'a> for IncidentResponseRelationshipsVisitor {
+            type Value = IncidentResponseRelationships;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut attachments: Option<
+                    crate::datadogV2::model::RelationshipToIncidentAttachment,
+                > = None;
+                let mut commander_user: Option<
+                    Option<crate::datadogV2::model::NullableRelationshipToUser>,
+                > = None;
+                let mut created_by_user: Option<crate::datadogV2::model::RelationshipToUser> = None;
+                let mut impacts: Option<crate::datadogV2::model::RelationshipToIncidentImpacts> =
+                    None;
+                let mut integrations: Option<
+                    crate::datadogV2::model::RelationshipToIncidentIntegrationMetadatas,
+                > = None;
+                let mut last_modified_by_user: Option<crate::datadogV2::model::RelationshipToUser> =
+                    None;
+                let mut responders: Option<
+                    crate::datadogV2::model::RelationshipToIncidentResponders,
+                > = None;
+                let mut user_defined_fields: Option<
+                    crate::datadogV2::model::RelationshipToIncidentUserDefinedFields,
+                > = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "attachments" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            attachments =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "commander_user" => {
+                            commander_user =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "created_by_user" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            created_by_user =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "impacts" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            impacts = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "integrations" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            integrations =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "last_modified_by_user" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            last_modified_by_user =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "responders" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            responders = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "user_defined_fields" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            user_defined_fields =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = IncidentResponseRelationships {
+                    attachments,
+                    commander_user,
+                    created_by_user,
+                    impacts,
+                    integrations,
+                    last_modified_by_user,
+                    responders,
+                    user_defined_fields,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(IncidentResponseRelationshipsVisitor)
     }
 }

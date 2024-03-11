@@ -13,6 +13,7 @@ pub enum RolesSort {
     MODIFIED_AT_DESCENDING,
     USER_COUNT_ASCENDING,
     USER_COUNT_DESCENDING,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for RolesSort {
@@ -24,6 +25,7 @@ impl ToString for RolesSort {
             Self::MODIFIED_AT_DESCENDING => String::from("-modified_at"),
             Self::USER_COUNT_ASCENDING => String::from("user_count"),
             Self::USER_COUNT_DESCENDING => String::from("-user_count"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -34,6 +36,7 @@ impl Serialize for RolesSort {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -52,12 +55,9 @@ impl<'de> Deserialize<'de> for RolesSort {
             "-modified_at" => Self::MODIFIED_AT_DESCENDING,
             "user_count" => Self::USER_COUNT_ASCENDING,
             "-user_count" => Self::USER_COUNT_DESCENDING,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

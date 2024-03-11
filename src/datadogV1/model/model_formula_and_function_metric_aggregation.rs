@@ -15,6 +15,7 @@ pub enum FormulaAndFunctionMetricAggregation {
     AREA,
     L2NORM,
     PERCENTILE,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for FormulaAndFunctionMetricAggregation {
@@ -28,6 +29,7 @@ impl ToString for FormulaAndFunctionMetricAggregation {
             Self::AREA => String::from("area"),
             Self::L2NORM => String::from("l2norm"),
             Self::PERCENTILE => String::from("percentile"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -38,6 +40,7 @@ impl Serialize for FormulaAndFunctionMetricAggregation {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -58,12 +61,9 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionMetricAggregation {
             "area" => Self::AREA,
             "l2norm" => Self::L2NORM,
             "percentile" => Self::PERCENTILE,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

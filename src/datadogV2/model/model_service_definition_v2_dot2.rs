@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Service definition v2.2 for providing service metadata and integrations.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ServiceDefinitionV2Dot2 {
     /// Identifier for a group of related services serving a product feature, which the service is a part of.
     #[serde(rename = "application")]
@@ -51,6 +53,9 @@ pub struct ServiceDefinitionV2Dot2 {
     /// The type of service.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::ServiceDefinitionV2Dot2Type>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl ServiceDefinitionV2Dot2 {
@@ -73,6 +78,7 @@ impl ServiceDefinitionV2Dot2 {
             team: None,
             tier: None,
             type_: None,
+            _unparsed: false,
         }
     }
 
@@ -149,5 +155,179 @@ impl ServiceDefinitionV2Dot2 {
     ) -> &mut Self {
         self.type_ = Some(value);
         self
+    }
+}
+
+impl<'de> Deserialize<'de> for ServiceDefinitionV2Dot2 {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct ServiceDefinitionV2Dot2Visitor;
+        impl<'a> Visitor<'a> for ServiceDefinitionV2Dot2Visitor {
+            type Value = ServiceDefinitionV2Dot2;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut application: Option<String> = None;
+                let mut contacts: Option<
+                    Vec<crate::datadogV2::model::ServiceDefinitionV2Dot2Contact>,
+                > = None;
+                let mut dd_service: Option<String> = None;
+                let mut description: Option<String> = None;
+                let mut extensions: Option<std::collections::BTreeMap<String, serde_json::Value>> =
+                    None;
+                let mut integrations: Option<
+                    crate::datadogV2::model::ServiceDefinitionV2Dot2Integrations,
+                > = None;
+                let mut languages: Option<Vec<String>> = None;
+                let mut lifecycle: Option<String> = None;
+                let mut links: Option<Vec<crate::datadogV2::model::ServiceDefinitionV2Dot2Link>> =
+                    None;
+                let mut schema_version: Option<
+                    crate::datadogV2::model::ServiceDefinitionV2Dot2Version,
+                > = None;
+                let mut tags: Option<Vec<String>> = None;
+                let mut team: Option<String> = None;
+                let mut tier: Option<String> = None;
+                let mut type_: Option<crate::datadogV2::model::ServiceDefinitionV2Dot2Type> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "application" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            application =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "contacts" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            contacts = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "dd-service" => {
+                            dd_service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "extensions" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            extensions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "integrations" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            integrations =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "languages" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            languages = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "lifecycle" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            lifecycle = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "links" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "schema-version" => {
+                            schema_version =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _schema_version) = schema_version {
+                                match _schema_version {
+                                    crate::datadogV2::model::ServiceDefinitionV2Dot2Version::UnparsedObject(_schema_version) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "team" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            team = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "tier" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tier = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV2::model::ServiceDefinitionV2Dot2Type::UnparsedObject(_type_) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        &_ => {}
+                    }
+                }
+                let dd_service = dd_service.ok_or_else(|| M::Error::missing_field("dd_service"))?;
+                let schema_version =
+                    schema_version.ok_or_else(|| M::Error::missing_field("schema_version"))?;
+
+                let content = ServiceDefinitionV2Dot2 {
+                    application,
+                    contacts,
+                    dd_service,
+                    description,
+                    extensions,
+                    integrations,
+                    languages,
+                    lifecycle,
+                    links,
+                    schema_version,
+                    tags,
+                    team,
+                    tier,
+                    type_,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(ServiceDefinitionV2Dot2Visitor)
     }
 }

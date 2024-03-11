@@ -32,6 +32,7 @@ pub enum SyntheticsStepType {
     TYPE_TEXT,
     UPLOAD_FILES,
     WAIT,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for SyntheticsStepType {
@@ -62,6 +63,7 @@ impl ToString for SyntheticsStepType {
             Self::TYPE_TEXT => String::from("typeText"),
             Self::UPLOAD_FILES => String::from("uploadFiles"),
             Self::WAIT => String::from("wait"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -72,6 +74,7 @@ impl Serialize for SyntheticsStepType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -109,12 +112,9 @@ impl<'de> Deserialize<'de> for SyntheticsStepType {
             "typeText" => Self::TYPE_TEXT,
             "uploadFiles" => Self::UPLOAD_FILES,
             "wait" => Self::WAIT,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

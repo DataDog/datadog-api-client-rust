@@ -19,6 +19,7 @@ pub enum SecurityMonitoringRuleMaxSignalDuration {
     SIX_HOURS,
     TWELVE_HOURS,
     ONE_DAY,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl Serialize for SecurityMonitoringRuleMaxSignalDuration {
@@ -27,6 +28,7 @@ impl Serialize for SecurityMonitoringRuleMaxSignalDuration {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             Self::ZERO_MINUTES => serializer.serialize_i32(0),
             Self::ONE_MINUTE => serializer.serialize_i32(60),
             Self::FIVE_MINUTES => serializer.serialize_i32(300),
@@ -62,12 +64,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleMaxSignalDuration {
             21600 => Self::SIX_HOURS,
             43200 => Self::TWELVE_HOURS,
             86400 => Self::ONE_DAY,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::Number(s.into()),
+            }),
         })
     }
 }

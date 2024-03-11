@@ -16,6 +16,7 @@ pub enum MonitorDeviceID {
     FIREFOX_LAPTOP_LARGE,
     FIREFOX_TABLET,
     FIREFOX_MOBILE_SMALL,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for MonitorDeviceID {
@@ -30,6 +31,7 @@ impl ToString for MonitorDeviceID {
             Self::FIREFOX_LAPTOP_LARGE => String::from("firefox.laptop_large"),
             Self::FIREFOX_TABLET => String::from("firefox.tablet"),
             Self::FIREFOX_MOBILE_SMALL => String::from("firefox.mobile_small"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -40,6 +42,7 @@ impl Serialize for MonitorDeviceID {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -61,12 +64,9 @@ impl<'de> Deserialize<'de> for MonitorDeviceID {
             "firefox.laptop_large" => Self::FIREFOX_LAPTOP_LARGE,
             "firefox.tablet" => Self::FIREFOX_TABLET,
             "firefox.mobile_small" => Self::FIREFOX_MOBILE_SMALL,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

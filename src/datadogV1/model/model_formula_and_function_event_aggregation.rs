@@ -19,6 +19,7 @@ pub enum FormulaAndFunctionEventAggregation {
     MIN,
     MAX,
     AVG,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for FormulaAndFunctionEventAggregation {
@@ -36,6 +37,7 @@ impl ToString for FormulaAndFunctionEventAggregation {
             Self::MIN => String::from("min"),
             Self::MAX => String::from("max"),
             Self::AVG => String::from("avg"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -46,6 +48,7 @@ impl Serialize for FormulaAndFunctionEventAggregation {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -70,12 +73,9 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionEventAggregation {
             "min" => Self::MIN,
             "max" => Self::MAX,
             "avg" => Self::AVG,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

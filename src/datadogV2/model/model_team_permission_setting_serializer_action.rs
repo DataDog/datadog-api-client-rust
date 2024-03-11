@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum TeamPermissionSettingSerializerAction {
     MANAGE_MEMBERSHIP,
     EDIT,
+    UnparsedObject(crate::datadog::UnparsedObejct),
 }
 
 impl ToString for TeamPermissionSettingSerializerAction {
@@ -16,6 +17,7 @@ impl ToString for TeamPermissionSettingSerializerAction {
         match self {
             Self::MANAGE_MEMBERSHIP => String::from("manage_membership"),
             Self::EDIT => String::from("edit"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -26,6 +28,7 @@ impl Serialize for TeamPermissionSettingSerializerAction {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -40,12 +43,9 @@ impl<'de> Deserialize<'de> for TeamPermissionSettingSerializerAction {
         Ok(match s.as_str() {
             "manage_membership" => Self::MANAGE_MEMBERSHIP,
             "edit" => Self::EDIT,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

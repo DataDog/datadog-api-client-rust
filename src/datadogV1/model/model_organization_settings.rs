@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// A JSON array of settings.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct OrganizationSettings {
     /// Whether or not the organization users can share widgets outside of Datadog.
     #[serde(rename = "private_widget_share")]
@@ -46,6 +48,9 @@ pub struct OrganizationSettings {
     /// Has one property enabled (boolean).
     #[serde(rename = "saml_strict_mode")]
     pub saml_strict_mode: Option<crate::datadogV1::model::OrganizationSettingsSamlStrictMode>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl OrganizationSettings {
@@ -61,6 +66,7 @@ impl OrganizationSettings {
             saml_idp_metadata_uploaded: None,
             saml_login_url: None,
             saml_strict_mode: None,
+            _unparsed: false,
         }
     }
 
@@ -130,5 +136,148 @@ impl OrganizationSettings {
 impl Default for OrganizationSettings {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for OrganizationSettings {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct OrganizationSettingsVisitor;
+        impl<'a> Visitor<'a> for OrganizationSettingsVisitor {
+            type Value = OrganizationSettings;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut private_widget_share: Option<bool> = None;
+                let mut saml: Option<crate::datadogV1::model::OrganizationSettingsSaml> = None;
+                let mut saml_autocreate_access_role: Option<
+                    Option<crate::datadogV1::model::AccessRole>,
+                > = None;
+                let mut saml_autocreate_users_domains: Option<
+                    crate::datadogV1::model::OrganizationSettingsSamlAutocreateUsersDomains,
+                > = None;
+                let mut saml_can_be_enabled: Option<bool> = None;
+                let mut saml_idp_endpoint: Option<String> = None;
+                let mut saml_idp_initiated_login: Option<
+                    crate::datadogV1::model::OrganizationSettingsSamlIdpInitiatedLogin,
+                > = None;
+                let mut saml_idp_metadata_uploaded: Option<bool> = None;
+                let mut saml_login_url: Option<String> = None;
+                let mut saml_strict_mode: Option<
+                    crate::datadogV1::model::OrganizationSettingsSamlStrictMode,
+                > = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "private_widget_share" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            private_widget_share =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "saml" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            saml = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "saml_autocreate_access_role" => {
+                            saml_autocreate_access_role =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _saml_autocreate_access_role) =
+                                saml_autocreate_access_role
+                            {
+                                match _saml_autocreate_access_role {
+                                    Some(crate::datadogV1::model::AccessRole::UnparsedObject(
+                                        _saml_autocreate_access_role,
+                                    )) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "saml_autocreate_users_domains" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            saml_autocreate_users_domains =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "saml_can_be_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            saml_can_be_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "saml_idp_endpoint" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            saml_idp_endpoint =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "saml_idp_initiated_login" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            saml_idp_initiated_login =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "saml_idp_metadata_uploaded" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            saml_idp_metadata_uploaded =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "saml_login_url" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            saml_login_url =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "saml_strict_mode" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            saml_strict_mode =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = OrganizationSettings {
+                    private_widget_share,
+                    saml,
+                    saml_autocreate_access_role,
+                    saml_autocreate_users_domains,
+                    saml_can_be_enabled,
+                    saml_idp_endpoint,
+                    saml_idp_initiated_login,
+                    saml_idp_metadata_uploaded,
+                    saml_login_url,
+                    saml_strict_mode,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(OrganizationSettingsVisitor)
     }
 }
