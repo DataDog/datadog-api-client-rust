@@ -143,6 +143,7 @@ def simple_type(schema, render_nullable=False, render_option=True, render_new=Fa
             "date": "String",
             "date-time": "String",
             "email": "String",
+            "uuid": "String",
             "binary": "Vec<u8>",
             None: "String",
         }[type_format]
