@@ -27,6 +27,6 @@ cargo install genemichaels --quiet
 rm -rf examples/*
 pre_commit_wrapper examples
 cargo fix --examples --allow-staged --allow-dirty
-genemichaels examples/*.rs --log silent
+genemichaels --log silent examples/*.rs
 cargo fmt
 cargo fmt # don't think too hard about this... cargo fmt idempotency edge case
