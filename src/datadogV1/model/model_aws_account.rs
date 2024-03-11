@@ -9,7 +9,7 @@ use serde_with::skip_serializing_none;
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AWSAccount {
-    /// Your AWS access key ID. Only required if your AWS account is a GovCloud or China account.
+    /// Your AWS access key ID. Only required if your AWS account is a GovCloud or China account. Test.
     #[serde(rename = "access_key_id")]
     pub access_key_id: Option<String>,
     /// Your AWS Account ID without dashes.
