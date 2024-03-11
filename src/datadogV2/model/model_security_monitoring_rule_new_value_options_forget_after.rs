@@ -2,31 +2,54 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde_repr::{Deserialize_repr, Serialize_repr};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(
-    Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize_repr, Deserialize_repr,
-)]
-#[repr(i32)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SecurityMonitoringRuleNewValueOptionsForgetAfter {
-    ONE_DAY = 1,
-    TWO_DAYS = 2,
-    ONE_WEEK = 7,
-    TWO_WEEKS = 14,
-    THREE_WEEKS = 21,
-    FOUR_WEEKS = 28,
+    ONE_DAY,
+    TWO_DAYS,
+    ONE_WEEK,
+    TWO_WEEKS,
+    THREE_WEEKS,
+    FOUR_WEEKS,
 }
 
-impl ToString for SecurityMonitoringRuleNewValueOptionsForgetAfter {
-    fn to_string(&self) -> String {
+impl Serialize for SecurityMonitoringRuleNewValueOptionsForgetAfter {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
         match self {
-            Self::ONE_DAY => String::from("1"),
-            Self::TWO_DAYS => String::from("2"),
-            Self::ONE_WEEK => String::from("7"),
-            Self::TWO_WEEKS => String::from("14"),
-            Self::THREE_WEEKS => String::from("21"),
-            Self::FOUR_WEEKS => String::from("28"),
+            Self::ONE_DAY => serializer.serialize_i32(1),
+            Self::TWO_DAYS => serializer.serialize_i32(2),
+            Self::ONE_WEEK => serializer.serialize_i32(7),
+            Self::TWO_WEEKS => serializer.serialize_i32(14),
+            Self::THREE_WEEKS => serializer.serialize_i32(21),
+            Self::FOUR_WEEKS => serializer.serialize_i32(28),
         }
+    }
+}
+
+impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptionsForgetAfter {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: i32 = i32::deserialize(deserializer)?;
+        Ok(match s {
+            1 => Self::ONE_DAY,
+            2 => Self::TWO_DAYS,
+            7 => Self::ONE_WEEK,
+            14 => Self::TWO_WEEKS,
+            21 => Self::THREE_WEEKS,
+            28 => Self::FOUR_WEEKS,
+            _ => {
+                return Err(serde::de::Error::custom(format!(
+                    "Invalid value for SyntheticsDeviceID: {}",
+                    s
+                )))
+            }
+        })
     }
 }

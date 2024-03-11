@@ -2,18 +2,14 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SLOErrorTimeframe {
-    #[serde(rename = "7d")]
     SEVEN_DAYS,
-    #[serde(rename = "30d")]
     THIRTY_DAYS,
-    #[serde(rename = "90d")]
     NINETY_DAYS,
-    #[serde(rename = "all")]
     ALL,
 }
 
@@ -25,5 +21,37 @@ impl ToString for SLOErrorTimeframe {
             Self::NINETY_DAYS => String::from("90d"),
             Self::ALL => String::from("all"),
         }
+    }
+}
+
+impl Serialize for SLOErrorTimeframe {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for SLOErrorTimeframe {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "7d" => Self::SEVEN_DAYS,
+            "30d" => Self::THIRTY_DAYS,
+            "90d" => Self::NINETY_DAYS,
+            "all" => Self::ALL,
+            _ => {
+                return Err(serde::de::Error::custom(format!(
+                    "Invalid value for SyntheticsDeviceID: {}",
+                    s
+                )))
+            }
+        })
     }
 }
