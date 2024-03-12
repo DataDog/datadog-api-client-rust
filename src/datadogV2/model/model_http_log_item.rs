@@ -46,23 +46,31 @@ impl HTTPLogItem {
         }
     }
 
-    pub fn ddsource(&mut self, value: String) -> &mut Self {
+    pub fn ddsource(mut self, value: String) -> Self {
         self.ddsource = Some(value);
         self
     }
 
-    pub fn ddtags(&mut self, value: String) -> &mut Self {
+    pub fn ddtags(mut self, value: String) -> Self {
         self.ddtags = Some(value);
         self
     }
 
-    pub fn hostname(&mut self, value: String) -> &mut Self {
+    pub fn hostname(mut self, value: String) -> Self {
         self.hostname = Some(value);
         self
     }
 
-    pub fn service(&mut self, value: String) -> &mut Self {
+    pub fn service(mut self, value: String) -> Self {
         self.service = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, String>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }

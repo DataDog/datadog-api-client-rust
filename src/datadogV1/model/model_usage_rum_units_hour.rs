@@ -49,27 +49,27 @@ impl UsageRumUnitsHour {
         }
     }
 
-    pub fn browser_rum_units(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn browser_rum_units(mut self, value: Option<i64>) -> Self {
         self.browser_rum_units = Some(value);
         self
     }
 
-    pub fn mobile_rum_units(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn mobile_rum_units(mut self, value: Option<i64>) -> Self {
         self.mobile_rum_units = Some(value);
         self
     }
 
-    pub fn org_name(&mut self, value: String) -> &mut Self {
+    pub fn org_name(mut self, value: String) -> Self {
         self.org_name = Some(value);
         self
     }
 
-    pub fn public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }
 
-    pub fn rum_units(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn rum_units(mut self, value: Option<i64>) -> Self {
         self.rum_units = Some(value);
         self
     }

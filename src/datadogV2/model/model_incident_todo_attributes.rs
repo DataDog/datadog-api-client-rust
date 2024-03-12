@@ -56,27 +56,27 @@ impl IncidentTodoAttributes {
         }
     }
 
-    pub fn completed(&mut self, value: Option<String>) -> &mut Self {
+    pub fn completed(mut self, value: Option<String>) -> Self {
         self.completed = Some(value);
         self
     }
 
-    pub fn created(&mut self, value: String) -> &mut Self {
+    pub fn created(mut self, value: String) -> Self {
         self.created = Some(value);
         self
     }
 
-    pub fn due_date(&mut self, value: Option<String>) -> &mut Self {
+    pub fn due_date(mut self, value: Option<String>) -> Self {
         self.due_date = Some(value);
         self
     }
 
-    pub fn incident_id(&mut self, value: String) -> &mut Self {
+    pub fn incident_id(mut self, value: String) -> Self {
         self.incident_id = Some(value);
         self
     }
 
-    pub fn modified(&mut self, value: String) -> &mut Self {
+    pub fn modified(mut self, value: String) -> Self {
         self.modified = Some(value);
         self
     }

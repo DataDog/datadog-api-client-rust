@@ -38,8 +38,16 @@ impl DowntimeScheduleRecurrenceCreateUpdateRequest {
         }
     }
 
-    pub fn start(&mut self, value: Option<String>) -> &mut Self {
+    pub fn start(mut self, value: Option<String>) -> Self {
         self.start = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }

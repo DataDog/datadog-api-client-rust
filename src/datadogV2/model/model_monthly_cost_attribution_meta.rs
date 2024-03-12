@@ -26,17 +26,17 @@ impl MonthlyCostAttributionMeta {
     }
 
     pub fn aggregates(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::CostAttributionAggregatesBody>,
-    ) -> &mut Self {
+    ) -> Self {
         self.aggregates = Some(value);
         self
     }
 
     pub fn pagination(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::MonthlyCostAttributionPagination,
-    ) -> &mut Self {
+    ) -> Self {
         self.pagination = Some(value);
         self
     }

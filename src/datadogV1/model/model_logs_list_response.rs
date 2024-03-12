@@ -34,17 +34,17 @@ impl LogsListResponse {
         }
     }
 
-    pub fn logs(&mut self, value: Vec<crate::datadogV1::model::Log>) -> &mut Self {
+    pub fn logs(mut self, value: Vec<crate::datadogV1::model::Log>) -> Self {
         self.logs = Some(value);
         self
     }
 
-    pub fn next_log_id(&mut self, value: Option<String>) -> &mut Self {
+    pub fn next_log_id(mut self, value: Option<String>) -> Self {
         self.next_log_id = Some(value);
         self
     }
 
-    pub fn status(&mut self, value: String) -> &mut Self {
+    pub fn status(mut self, value: String) -> Self {
         self.status = Some(value);
         self
     }

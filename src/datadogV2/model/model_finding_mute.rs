@@ -41,32 +41,32 @@ impl FindingMute {
         }
     }
 
-    pub fn description(&mut self, value: String) -> &mut Self {
+    pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
 
-    pub fn expiration_date(&mut self, value: i64) -> &mut Self {
+    pub fn expiration_date(mut self, value: i64) -> Self {
         self.expiration_date = Some(value);
         self
     }
 
-    pub fn muted(&mut self, value: bool) -> &mut Self {
+    pub fn muted(mut self, value: bool) -> Self {
         self.muted = Some(value);
         self
     }
 
-    pub fn reason(&mut self, value: crate::datadogV2::model::FindingMuteReason) -> &mut Self {
+    pub fn reason(mut self, value: crate::datadogV2::model::FindingMuteReason) -> Self {
         self.reason = Some(value);
         self
     }
 
-    pub fn start_date(&mut self, value: i64) -> &mut Self {
+    pub fn start_date(mut self, value: i64) -> Self {
         self.start_date = Some(value);
         self
     }
 
-    pub fn uuid(&mut self, value: String) -> &mut Self {
+    pub fn uuid(mut self, value: String) -> Self {
         self.uuid = Some(value);
         self
     }

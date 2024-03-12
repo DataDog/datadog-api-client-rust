@@ -118,130 +118,124 @@ impl SyntheticsTestOptions {
         }
     }
 
-    pub fn accept_self_signed(&mut self, value: bool) -> &mut Self {
+    pub fn accept_self_signed(mut self, value: bool) -> Self {
         self.accept_self_signed = Some(value);
         self
     }
 
-    pub fn allow_insecure(&mut self, value: bool) -> &mut Self {
+    pub fn allow_insecure(mut self, value: bool) -> Self {
         self.allow_insecure = Some(value);
         self
     }
 
-    pub fn check_certificate_revocation(&mut self, value: bool) -> &mut Self {
+    pub fn check_certificate_revocation(mut self, value: bool) -> Self {
         self.check_certificate_revocation = Some(value);
         self
     }
 
-    pub fn ci(&mut self, value: crate::datadogV1::model::SyntheticsTestCiOptions) -> &mut Self {
+    pub fn ci(mut self, value: crate::datadogV1::model::SyntheticsTestCiOptions) -> Self {
         self.ci = Some(value);
         self
     }
 
-    pub fn device_ids(
-        &mut self,
-        value: Vec<crate::datadogV1::model::SyntheticsDeviceID>,
-    ) -> &mut Self {
+    pub fn device_ids(mut self, value: Vec<crate::datadogV1::model::SyntheticsDeviceID>) -> Self {
         self.device_ids = Some(value);
         self
     }
 
-    pub fn disable_cors(&mut self, value: bool) -> &mut Self {
+    pub fn disable_cors(mut self, value: bool) -> Self {
         self.disable_cors = Some(value);
         self
     }
 
-    pub fn disable_csp(&mut self, value: bool) -> &mut Self {
+    pub fn disable_csp(mut self, value: bool) -> Self {
         self.disable_csp = Some(value);
         self
     }
 
-    pub fn follow_redirects(&mut self, value: bool) -> &mut Self {
+    pub fn follow_redirects(mut self, value: bool) -> Self {
         self.follow_redirects = Some(value);
         self
     }
 
     pub fn http_version(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SyntheticsTestOptionsHTTPVersion,
-    ) -> &mut Self {
+    ) -> Self {
         self.http_version = Some(value);
         self
     }
 
-    pub fn ignore_server_certificate_error(&mut self, value: bool) -> &mut Self {
+    pub fn ignore_server_certificate_error(mut self, value: bool) -> Self {
         self.ignore_server_certificate_error = Some(value);
         self
     }
 
-    pub fn initial_navigation_timeout(&mut self, value: i64) -> &mut Self {
+    pub fn initial_navigation_timeout(mut self, value: i64) -> Self {
         self.initial_navigation_timeout = Some(value);
         self
     }
 
-    pub fn min_failure_duration(&mut self, value: i64) -> &mut Self {
+    pub fn min_failure_duration(mut self, value: i64) -> Self {
         self.min_failure_duration = Some(value);
         self
     }
 
-    pub fn min_location_failed(&mut self, value: i64) -> &mut Self {
+    pub fn min_location_failed(mut self, value: i64) -> Self {
         self.min_location_failed = Some(value);
         self
     }
 
-    pub fn monitor_name(&mut self, value: String) -> &mut Self {
+    pub fn monitor_name(mut self, value: String) -> Self {
         self.monitor_name = Some(value);
         self
     }
 
     pub fn monitor_options(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SyntheticsTestOptionsMonitorOptions,
-    ) -> &mut Self {
+    ) -> Self {
         self.monitor_options = Some(value);
         self
     }
 
-    pub fn monitor_priority(&mut self, value: i32) -> &mut Self {
+    pub fn monitor_priority(mut self, value: i32) -> Self {
         self.monitor_priority = Some(value);
         self
     }
 
-    pub fn no_screenshot(&mut self, value: bool) -> &mut Self {
+    pub fn no_screenshot(mut self, value: bool) -> Self {
         self.no_screenshot = Some(value);
         self
     }
 
-    pub fn restricted_roles(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn restricted_roles(mut self, value: Vec<String>) -> Self {
         self.restricted_roles = Some(value);
         self
     }
 
-    pub fn retry(
-        &mut self,
-        value: crate::datadogV1::model::SyntheticsTestOptionsRetry,
-    ) -> &mut Self {
+    pub fn retry(mut self, value: crate::datadogV1::model::SyntheticsTestOptionsRetry) -> Self {
         self.retry = Some(value);
         self
     }
 
     pub fn rum_settings(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SyntheticsBrowserTestRumSettings,
-    ) -> &mut Self {
+    ) -> Self {
         self.rum_settings = Some(value);
         self
     }
 
     pub fn scheduling(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SyntheticsTestOptionsScheduling,
-    ) -> &mut Self {
+    ) -> Self {
         self.scheduling = Some(value);
         self
     }
 
-    pub fn tick_every(&mut self, value: i64) -> &mut Self {
+    pub fn tick_every(mut self, value: i64) -> Self {
         self.tick_every = Some(value);
         self
     }

@@ -33,31 +33,28 @@ impl SyntheticsTestConfig {
         }
     }
 
-    pub fn assertions(
-        &mut self,
-        value: Vec<crate::datadogV1::model::SyntheticsAssertion>,
-    ) -> &mut Self {
+    pub fn assertions(mut self, value: Vec<crate::datadogV1::model::SyntheticsAssertion>) -> Self {
         self.assertions = Some(value);
         self
     }
 
     pub fn config_variables(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::SyntheticsConfigVariable>,
-    ) -> &mut Self {
+    ) -> Self {
         self.config_variables = Some(value);
         self
     }
 
-    pub fn request(&mut self, value: crate::datadogV1::model::SyntheticsTestRequest) -> &mut Self {
+    pub fn request(mut self, value: crate::datadogV1::model::SyntheticsTestRequest) -> Self {
         self.request = Some(value);
         self
     }
 
     pub fn variables(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::SyntheticsBrowserVariable>,
-    ) -> &mut Self {
+    ) -> Self {
         self.variables = Some(value);
         self
     }

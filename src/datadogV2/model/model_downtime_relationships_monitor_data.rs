@@ -25,15 +25,12 @@ impl DowntimeRelationshipsMonitorData {
         }
     }
 
-    pub fn id(&mut self, value: String) -> &mut Self {
+    pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
 
-    pub fn type_(
-        &mut self,
-        value: crate::datadogV2::model::DowntimeIncludedMonitorType,
-    ) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::DowntimeIncludedMonitorType) -> Self {
         self.type_ = Some(value);
         self
     }

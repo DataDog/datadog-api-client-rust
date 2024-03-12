@@ -21,7 +21,7 @@ impl OnDemandConcurrencyCapAttributes {
         }
     }
 
-    pub fn on_demand_concurrency_cap(&mut self, value: f64) -> &mut Self {
+    pub fn on_demand_concurrency_cap(mut self, value: f64) -> Self {
         self.on_demand_concurrency_cap = Some(value);
         self
     }

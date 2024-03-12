@@ -33,25 +33,22 @@ impl UsageTopAvgMetricsHour {
         }
     }
 
-    pub fn avg_metric_hour(&mut self, value: i64) -> &mut Self {
+    pub fn avg_metric_hour(mut self, value: i64) -> Self {
         self.avg_metric_hour = Some(value);
         self
     }
 
-    pub fn max_metric_hour(&mut self, value: i64) -> &mut Self {
+    pub fn max_metric_hour(mut self, value: i64) -> Self {
         self.max_metric_hour = Some(value);
         self
     }
 
-    pub fn metric_category(
-        &mut self,
-        value: crate::datadogV1::model::UsageMetricCategory,
-    ) -> &mut Self {
+    pub fn metric_category(mut self, value: crate::datadogV1::model::UsageMetricCategory) -> Self {
         self.metric_category = Some(value);
         self
     }
 
-    pub fn metric_name(&mut self, value: String) -> &mut Self {
+    pub fn metric_name(mut self, value: String) -> Self {
         self.metric_name = Some(value);
         self
     }

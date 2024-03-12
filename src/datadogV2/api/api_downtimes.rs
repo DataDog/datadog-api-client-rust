@@ -19,7 +19,7 @@ pub struct GetDowntimeOptionalParams {
 impl GetDowntimeOptionalParams {
     /// Comma-separated list of resource paths for related resources to include in the response. Supported resource
     /// paths are `created_by` and `monitor`.
-    pub fn include(&mut self, value: String) -> &mut Self {
+    pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
         self
     }
@@ -42,23 +42,23 @@ pub struct ListDowntimesOptionalParams {
 
 impl ListDowntimesOptionalParams {
     /// Only return downtimes that are active when the request is made.
-    pub fn current_only(&mut self, value: bool) -> &mut Self {
+    pub fn current_only(mut self, value: bool) -> Self {
         self.current_only = Some(value);
         self
     }
     /// Comma-separated list of resource paths for related resources to include in the response. Supported resource
     /// paths are `created_by` and `monitor`.
-    pub fn include(&mut self, value: String) -> &mut Self {
+    pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
         self
     }
     /// Specific offset to use as the beginning of the returned page.
-    pub fn page_offset(&mut self, value: i64) -> &mut Self {
+    pub fn page_offset(mut self, value: i64) -> Self {
         self.page_offset = Some(value);
         self
     }
     /// Maximum number of downtimes in the response.
-    pub fn page_limit(&mut self, value: i64) -> &mut Self {
+    pub fn page_limit(mut self, value: i64) -> Self {
         self.page_limit = Some(value);
         self
     }
@@ -76,12 +76,12 @@ pub struct ListMonitorDowntimesOptionalParams {
 
 impl ListMonitorDowntimesOptionalParams {
     /// Specific offset to use as the beginning of the returned page.
-    pub fn page_offset(&mut self, value: i64) -> &mut Self {
+    pub fn page_offset(mut self, value: i64) -> Self {
         self.page_offset = Some(value);
         self
     }
     /// Maximum number of downtimes in the response.
-    pub fn page_limit(&mut self, value: i64) -> &mut Self {
+    pub fn page_limit(mut self, value: i64) -> Self {
         self.page_limit = Some(value);
         self
     }

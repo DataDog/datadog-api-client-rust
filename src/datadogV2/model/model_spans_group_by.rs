@@ -42,30 +42,27 @@ impl SpansGroupBy {
         }
     }
 
-    pub fn histogram(
-        &mut self,
-        value: crate::datadogV2::model::SpansGroupByHistogram,
-    ) -> &mut Self {
+    pub fn histogram(mut self, value: crate::datadogV2::model::SpansGroupByHistogram) -> Self {
         self.histogram = Some(value);
         self
     }
 
-    pub fn limit(&mut self, value: i64) -> &mut Self {
+    pub fn limit(mut self, value: i64) -> Self {
         self.limit = Some(value);
         self
     }
 
-    pub fn missing(&mut self, value: crate::datadogV2::model::SpansGroupByMissing) -> &mut Self {
+    pub fn missing(mut self, value: crate::datadogV2::model::SpansGroupByMissing) -> Self {
         self.missing = Some(value);
         self
     }
 
-    pub fn sort(&mut self, value: crate::datadogV2::model::SpansAggregateSort) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV2::model::SpansAggregateSort) -> Self {
         self.sort = Some(value);
         self
     }
 
-    pub fn total(&mut self, value: crate::datadogV2::model::SpansGroupByTotal) -> &mut Self {
+    pub fn total(mut self, value: crate::datadogV2::model::SpansGroupByTotal) -> Self {
         self.total = Some(value);
         self
     }

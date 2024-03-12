@@ -20,9 +20,9 @@ impl CIAppTestsAggregationBucketsResponse {
     }
 
     pub fn buckets(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::CIAppTestsBucketResponse>,
-    ) -> &mut Self {
+    ) -> Self {
         self.buckets = Some(value);
         self
     }

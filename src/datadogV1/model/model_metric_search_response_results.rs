@@ -19,7 +19,7 @@ impl MetricSearchResponseResults {
         MetricSearchResponseResults { metrics: None }
     }
 
-    pub fn metrics(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn metrics(mut self, value: Vec<String>) -> Self {
         self.metrics = Some(value);
         self
     }

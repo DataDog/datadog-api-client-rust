@@ -19,7 +19,7 @@ impl CheckCanDeleteMonitorResponseData {
         CheckCanDeleteMonitorResponseData { ok: None }
     }
 
-    pub fn ok(&mut self, value: Vec<i64>) -> &mut Self {
+    pub fn ok(mut self, value: Vec<i64>) -> Self {
         self.ok = Some(value);
         self
     }

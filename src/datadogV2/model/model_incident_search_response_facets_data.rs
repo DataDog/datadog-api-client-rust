@@ -64,89 +64,89 @@ impl IncidentSearchResponseFacetsData {
     }
 
     pub fn commander(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::IncidentSearchResponseUserFacetData>,
-    ) -> &mut Self {
+    ) -> Self {
         self.commander = Some(value);
         self
     }
 
     pub fn created_by(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::IncidentSearchResponseUserFacetData>,
-    ) -> &mut Self {
+    ) -> Self {
         self.created_by = Some(value);
         self
     }
 
     pub fn fields(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::IncidentSearchResponsePropertyFieldFacetData>,
-    ) -> &mut Self {
+    ) -> Self {
         self.fields = Some(value);
         self
     }
 
     pub fn impact(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::IncidentSearchResponseFieldFacetData>,
-    ) -> &mut Self {
+    ) -> Self {
         self.impact = Some(value);
         self
     }
 
     pub fn last_modified_by(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::IncidentSearchResponseUserFacetData>,
-    ) -> &mut Self {
+    ) -> Self {
         self.last_modified_by = Some(value);
         self
     }
 
     pub fn postmortem(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::IncidentSearchResponseFieldFacetData>,
-    ) -> &mut Self {
+    ) -> Self {
         self.postmortem = Some(value);
         self
     }
 
     pub fn responder(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::IncidentSearchResponseUserFacetData>,
-    ) -> &mut Self {
+    ) -> Self {
         self.responder = Some(value);
         self
     }
 
     pub fn severity(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::IncidentSearchResponseFieldFacetData>,
-    ) -> &mut Self {
+    ) -> Self {
         self.severity = Some(value);
         self
     }
 
     pub fn state(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::IncidentSearchResponseFieldFacetData>,
-    ) -> &mut Self {
+    ) -> Self {
         self.state = Some(value);
         self
     }
 
     pub fn time_to_repair(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::IncidentSearchResponseNumericFacetData>,
-    ) -> &mut Self {
+    ) -> Self {
         self.time_to_repair = Some(value);
         self
     }
 
     pub fn time_to_resolve(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::IncidentSearchResponseNumericFacetData>,
-    ) -> &mut Self {
+    ) -> Self {
         self.time_to_resolve = Some(value);
         self
     }

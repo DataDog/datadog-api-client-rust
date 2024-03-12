@@ -29,20 +29,17 @@ impl ProcessSummary {
         }
     }
 
-    pub fn attributes(
-        &mut self,
-        value: crate::datadogV2::model::ProcessSummaryAttributes,
-    ) -> &mut Self {
+    pub fn attributes(mut self, value: crate::datadogV2::model::ProcessSummaryAttributes) -> Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn id(&mut self, value: String) -> &mut Self {
+    pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: crate::datadogV2::model::ProcessSummaryType) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::ProcessSummaryType) -> Self {
         self.type_ = Some(value);
         self
     }

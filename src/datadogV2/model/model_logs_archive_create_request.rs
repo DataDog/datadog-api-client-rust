@@ -20,9 +20,9 @@ impl LogsArchiveCreateRequest {
     }
 
     pub fn data(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::LogsArchiveCreateRequestDefinition,
-    ) -> &mut Self {
+    ) -> Self {
         self.data = Some(value);
         self
     }

@@ -49,42 +49,42 @@ impl ProcessSummaryAttributes {
         }
     }
 
-    pub fn cmdline(&mut self, value: String) -> &mut Self {
+    pub fn cmdline(mut self, value: String) -> Self {
         self.cmdline = Some(value);
         self
     }
 
-    pub fn host(&mut self, value: String) -> &mut Self {
+    pub fn host(mut self, value: String) -> Self {
         self.host = Some(value);
         self
     }
 
-    pub fn pid(&mut self, value: i64) -> &mut Self {
+    pub fn pid(mut self, value: i64) -> Self {
         self.pid = Some(value);
         self
     }
 
-    pub fn ppid(&mut self, value: i64) -> &mut Self {
+    pub fn ppid(mut self, value: i64) -> Self {
         self.ppid = Some(value);
         self
     }
 
-    pub fn start(&mut self, value: String) -> &mut Self {
+    pub fn start(mut self, value: String) -> Self {
         self.start = Some(value);
         self
     }
 
-    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
 
-    pub fn timestamp(&mut self, value: String) -> &mut Self {
+    pub fn timestamp(mut self, value: String) -> Self {
         self.timestamp = Some(value);
         self
     }
 
-    pub fn user(&mut self, value: String) -> &mut Self {
+    pub fn user(mut self, value: String) -> Self {
         self.user = Some(value);
         self
     }

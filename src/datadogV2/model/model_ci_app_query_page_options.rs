@@ -25,12 +25,12 @@ impl CIAppQueryPageOptions {
         }
     }
 
-    pub fn cursor(&mut self, value: String) -> &mut Self {
+    pub fn cursor(mut self, value: String) -> Self {
         self.cursor = Some(value);
         self
     }
 
-    pub fn limit(&mut self, value: i32) -> &mut Self {
+    pub fn limit(mut self, value: i32) -> Self {
         self.limit = Some(value);
         self
     }

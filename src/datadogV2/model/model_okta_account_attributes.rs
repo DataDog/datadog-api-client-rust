@@ -41,17 +41,17 @@ impl OktaAccountAttributes {
         }
     }
 
-    pub fn api_key(&mut self, value: String) -> &mut Self {
+    pub fn api_key(mut self, value: String) -> Self {
         self.api_key = Some(value);
         self
     }
 
-    pub fn client_id(&mut self, value: String) -> &mut Self {
+    pub fn client_id(mut self, value: String) -> Self {
         self.client_id = Some(value);
         self
     }
 
-    pub fn client_secret(&mut self, value: String) -> &mut Self {
+    pub fn client_secret(mut self, value: String) -> Self {
         self.client_secret = Some(value);
         self
     }

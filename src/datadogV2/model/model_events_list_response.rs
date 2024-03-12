@@ -29,17 +29,17 @@ impl EventsListResponse {
         }
     }
 
-    pub fn data(&mut self, value: Vec<crate::datadogV2::model::EventResponse>) -> &mut Self {
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::EventResponse>) -> Self {
         self.data = Some(value);
         self
     }
 
-    pub fn links(&mut self, value: crate::datadogV2::model::EventsListResponseLinks) -> &mut Self {
+    pub fn links(mut self, value: crate::datadogV2::model::EventsListResponseLinks) -> Self {
         self.links = Some(value);
         self
     }
 
-    pub fn meta(&mut self, value: crate::datadogV2::model::EventsResponseMetadata) -> &mut Self {
+    pub fn meta(mut self, value: crate::datadogV2::model::EventsResponseMetadata) -> Self {
         self.meta = Some(value);
         self
     }

@@ -19,10 +19,7 @@ impl SearchServiceLevelObjective {
         SearchServiceLevelObjective { data: None }
     }
 
-    pub fn data(
-        &mut self,
-        value: crate::datadogV1::model::SearchServiceLevelObjectiveData,
-    ) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV1::model::SearchServiceLevelObjectiveData) -> Self {
         self.data = Some(value);
         self
     }

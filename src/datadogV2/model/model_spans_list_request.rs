@@ -19,7 +19,7 @@ impl SpansListRequest {
         SpansListRequest { data: None }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::SpansListRequestData) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::SpansListRequestData) -> Self {
         self.data = Some(value);
         self
     }

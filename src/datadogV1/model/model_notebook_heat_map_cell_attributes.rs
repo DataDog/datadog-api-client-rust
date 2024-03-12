@@ -35,17 +35,17 @@ impl NotebookHeatMapCellAttributes {
         }
     }
 
-    pub fn graph_size(&mut self, value: crate::datadogV1::model::NotebookGraphSize) -> &mut Self {
+    pub fn graph_size(mut self, value: crate::datadogV1::model::NotebookGraphSize) -> Self {
         self.graph_size = Some(value);
         self
     }
 
-    pub fn split_by(&mut self, value: crate::datadogV1::model::NotebookSplitBy) -> &mut Self {
+    pub fn split_by(mut self, value: crate::datadogV1::model::NotebookSplitBy) -> Self {
         self.split_by = Some(value);
         self
     }
 
-    pub fn time(&mut self, value: Option<crate::datadogV1::model::NotebookCellTime>) -> &mut Self {
+    pub fn time(mut self, value: Option<crate::datadogV1::model::NotebookCellTime>) -> Self {
         self.time = Some(value);
         self
     }

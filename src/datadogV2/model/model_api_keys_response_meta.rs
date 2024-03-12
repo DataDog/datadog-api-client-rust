@@ -25,12 +25,12 @@ impl APIKeysResponseMeta {
         }
     }
 
-    pub fn max_allowed(&mut self, value: i64) -> &mut Self {
+    pub fn max_allowed(mut self, value: i64) -> Self {
         self.max_allowed = Some(value);
         self
     }
 
-    pub fn page(&mut self, value: crate::datadogV2::model::APIKeysResponseMetaPage) -> &mut Self {
+    pub fn page(mut self, value: crate::datadogV2::model::APIKeysResponseMetaPage) -> Self {
         self.page = Some(value);
         self
     }

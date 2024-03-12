@@ -29,17 +29,17 @@ impl MonitorOptionsSchedulingOptionsEvaluationWindow {
         }
     }
 
-    pub fn day_starts(&mut self, value: String) -> &mut Self {
+    pub fn day_starts(mut self, value: String) -> Self {
         self.day_starts = Some(value);
         self
     }
 
-    pub fn hour_starts(&mut self, value: i32) -> &mut Self {
+    pub fn hour_starts(mut self, value: i32) -> Self {
         self.hour_starts = Some(value);
         self
     }
 
-    pub fn month_starts(&mut self, value: i32) -> &mut Self {
+    pub fn month_starts(mut self, value: i32) -> Self {
         self.month_starts = Some(value);
         self
     }

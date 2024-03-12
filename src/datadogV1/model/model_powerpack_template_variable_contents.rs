@@ -29,7 +29,7 @@ impl PowerpackTemplateVariableContents {
         }
     }
 
-    pub fn prefix(&mut self, value: String) -> &mut Self {
+    pub fn prefix(mut self, value: String) -> Self {
         self.prefix = Some(value);
         self
     }

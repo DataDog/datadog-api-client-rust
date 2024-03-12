@@ -52,12 +52,12 @@ impl ReferenceTableLogsLookupProcessor {
         }
     }
 
-    pub fn is_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn is_enabled(mut self, value: bool) -> Self {
         self.is_enabled = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }

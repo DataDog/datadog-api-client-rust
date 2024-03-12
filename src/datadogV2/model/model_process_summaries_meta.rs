@@ -19,7 +19,7 @@ impl ProcessSummariesMeta {
         ProcessSummariesMeta { page: None }
     }
 
-    pub fn page(&mut self, value: crate::datadogV2::model::ProcessSummariesMetaPage) -> &mut Self {
+    pub fn page(mut self, value: crate::datadogV2::model::ProcessSummariesMetaPage) -> Self {
         self.page = Some(value);
         self
     }

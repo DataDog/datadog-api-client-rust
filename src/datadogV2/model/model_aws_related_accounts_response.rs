@@ -19,7 +19,7 @@ impl AWSRelatedAccountsResponse {
         AWSRelatedAccountsResponse { data: None }
     }
 
-    pub fn data(&mut self, value: Vec<crate::datadogV2::model::AWSRelatedAccount>) -> &mut Self {
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::AWSRelatedAccount>) -> Self {
         self.data = Some(value);
         self
     }

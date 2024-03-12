@@ -20,7 +20,7 @@ impl SyntheticsDeleteTestsPayload {
         SyntheticsDeleteTestsPayload { public_ids: None }
     }
 
-    pub fn public_ids(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn public_ids(mut self, value: Vec<String>) -> Self {
         self.public_ids = Some(value);
         self
     }

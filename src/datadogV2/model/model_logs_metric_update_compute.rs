@@ -22,7 +22,7 @@ impl LogsMetricUpdateCompute {
         }
     }
 
-    pub fn include_percentiles(&mut self, value: bool) -> &mut Self {
+    pub fn include_percentiles(mut self, value: bool) -> Self {
         self.include_percentiles = Some(value);
         self
     }

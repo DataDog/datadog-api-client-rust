@@ -65,68 +65,68 @@ impl SyntheticsSSLCertificate {
         }
     }
 
-    pub fn cipher(&mut self, value: String) -> &mut Self {
+    pub fn cipher(mut self, value: String) -> Self {
         self.cipher = Some(value);
         self
     }
 
-    pub fn exponent(&mut self, value: f64) -> &mut Self {
+    pub fn exponent(mut self, value: f64) -> Self {
         self.exponent = Some(value);
         self
     }
 
-    pub fn ext_key_usage(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn ext_key_usage(mut self, value: Vec<String>) -> Self {
         self.ext_key_usage = Some(value);
         self
     }
 
-    pub fn fingerprint(&mut self, value: String) -> &mut Self {
+    pub fn fingerprint(mut self, value: String) -> Self {
         self.fingerprint = Some(value);
         self
     }
 
-    pub fn fingerprint256(&mut self, value: String) -> &mut Self {
+    pub fn fingerprint256(mut self, value: String) -> Self {
         self.fingerprint256 = Some(value);
         self
     }
 
     pub fn issuer(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SyntheticsSSLCertificateIssuer,
-    ) -> &mut Self {
+    ) -> Self {
         self.issuer = Some(value);
         self
     }
 
-    pub fn modulus(&mut self, value: String) -> &mut Self {
+    pub fn modulus(mut self, value: String) -> Self {
         self.modulus = Some(value);
         self
     }
 
-    pub fn protocol(&mut self, value: String) -> &mut Self {
+    pub fn protocol(mut self, value: String) -> Self {
         self.protocol = Some(value);
         self
     }
 
-    pub fn serial_number(&mut self, value: String) -> &mut Self {
+    pub fn serial_number(mut self, value: String) -> Self {
         self.serial_number = Some(value);
         self
     }
 
     pub fn subject(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SyntheticsSSLCertificateSubject,
-    ) -> &mut Self {
+    ) -> Self {
         self.subject = Some(value);
         self
     }
 
-    pub fn valid_from(&mut self, value: String) -> &mut Self {
+    pub fn valid_from(mut self, value: String) -> Self {
         self.valid_from = Some(value);
         self
     }
 
-    pub fn valid_to(&mut self, value: String) -> &mut Self {
+    pub fn valid_to(mut self, value: String) -> Self {
         self.valid_to = Some(value);
         self
     }

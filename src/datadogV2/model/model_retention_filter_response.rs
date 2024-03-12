@@ -19,7 +19,7 @@ impl RetentionFilterResponse {
         RetentionFilterResponse { data: None }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::RetentionFilter) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::RetentionFilter) -> Self {
         self.data = Some(value);
         self
     }

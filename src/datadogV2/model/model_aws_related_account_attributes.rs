@@ -25,12 +25,12 @@ impl AWSRelatedAccountAttributes {
         }
     }
 
-    pub fn has_datadog_integration(&mut self, value: bool) -> &mut Self {
+    pub fn has_datadog_integration(mut self, value: bool) -> Self {
         self.has_datadog_integration = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }

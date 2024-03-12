@@ -19,10 +19,7 @@ impl SyntheticsListTestsResponse {
         SyntheticsListTestsResponse { tests: None }
     }
 
-    pub fn tests(
-        &mut self,
-        value: Vec<crate::datadogV1::model::SyntheticsTestDetails>,
-    ) -> &mut Self {
+    pub fn tests(mut self, value: Vec<crate::datadogV1::model::SyntheticsTestDetails>) -> Self {
         self.tests = Some(value);
         self
     }

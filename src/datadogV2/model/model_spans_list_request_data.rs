@@ -26,14 +26,14 @@ impl SpansListRequestData {
     }
 
     pub fn attributes(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::SpansListRequestAttributes,
-    ) -> &mut Self {
+    ) -> Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: crate::datadogV2::model::SpansListRequestType) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::SpansListRequestType) -> Self {
         self.type_ = Some(value);
         self
     }

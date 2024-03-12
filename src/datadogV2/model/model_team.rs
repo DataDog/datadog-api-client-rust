@@ -37,10 +37,7 @@ impl Team {
         }
     }
 
-    pub fn relationships(
-        &mut self,
-        value: crate::datadogV2::model::TeamRelationships,
-    ) -> &mut Self {
+    pub fn relationships(mut self, value: crate::datadogV2::model::TeamRelationships) -> Self {
         self.relationships = Some(value);
         self
     }

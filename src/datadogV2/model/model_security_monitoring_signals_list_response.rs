@@ -30,26 +30,23 @@ impl SecurityMonitoringSignalsListResponse {
         }
     }
 
-    pub fn data(
-        &mut self,
-        value: Vec<crate::datadogV2::model::SecurityMonitoringSignal>,
-    ) -> &mut Self {
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::SecurityMonitoringSignal>) -> Self {
         self.data = Some(value);
         self
     }
 
     pub fn links(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::SecurityMonitoringSignalsListResponseLinks,
-    ) -> &mut Self {
+    ) -> Self {
         self.links = Some(value);
         self
     }
 
     pub fn meta(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::SecurityMonitoringSignalsListResponseMeta,
-    ) -> &mut Self {
+    ) -> Self {
         self.meta = Some(value);
         self
     }

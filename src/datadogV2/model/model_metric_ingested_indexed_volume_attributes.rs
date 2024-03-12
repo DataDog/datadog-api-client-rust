@@ -25,12 +25,12 @@ impl MetricIngestedIndexedVolumeAttributes {
         }
     }
 
-    pub fn indexed_volume(&mut self, value: i64) -> &mut Self {
+    pub fn indexed_volume(mut self, value: i64) -> Self {
         self.indexed_volume = Some(value);
         self
     }
 
-    pub fn ingested_volume(&mut self, value: i64) -> &mut Self {
+    pub fn ingested_volume(mut self, value: i64) -> Self {
         self.ingested_volume = Some(value);
         self
     }

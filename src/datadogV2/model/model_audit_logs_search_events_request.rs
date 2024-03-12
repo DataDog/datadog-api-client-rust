@@ -34,22 +34,22 @@ impl AuditLogsSearchEventsRequest {
         }
     }
 
-    pub fn filter(&mut self, value: crate::datadogV2::model::AuditLogsQueryFilter) -> &mut Self {
+    pub fn filter(mut self, value: crate::datadogV2::model::AuditLogsQueryFilter) -> Self {
         self.filter = Some(value);
         self
     }
 
-    pub fn options(&mut self, value: crate::datadogV2::model::AuditLogsQueryOptions) -> &mut Self {
+    pub fn options(mut self, value: crate::datadogV2::model::AuditLogsQueryOptions) -> Self {
         self.options = Some(value);
         self
     }
 
-    pub fn page(&mut self, value: crate::datadogV2::model::AuditLogsQueryPageOptions) -> &mut Self {
+    pub fn page(mut self, value: crate::datadogV2::model::AuditLogsQueryPageOptions) -> Self {
         self.page = Some(value);
         self
     }
 
-    pub fn sort(&mut self, value: crate::datadogV2::model::AuditLogsSort) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV2::model::AuditLogsSort) -> Self {
         self.sort = Some(value);
         self
     }

@@ -30,7 +30,7 @@ impl LogsListRequestTime {
         }
     }
 
-    pub fn timezone(&mut self, value: String) -> &mut Self {
+    pub fn timezone(mut self, value: String) -> Self {
         self.timezone = Some(value);
         self
     }

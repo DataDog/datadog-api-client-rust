@@ -19,7 +19,7 @@ impl MetricMetadata {
         MetricMetadata { origin: None }
     }
 
-    pub fn origin(&mut self, value: crate::datadogV2::model::MetricOrigin) -> &mut Self {
+    pub fn origin(mut self, value: crate::datadogV2::model::MetricOrigin) -> Self {
         self.origin = Some(value);
         self
     }

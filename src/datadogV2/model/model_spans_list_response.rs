@@ -29,17 +29,17 @@ impl SpansListResponse {
         }
     }
 
-    pub fn data(&mut self, value: Vec<crate::datadogV2::model::Span>) -> &mut Self {
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::Span>) -> Self {
         self.data = Some(value);
         self
     }
 
-    pub fn links(&mut self, value: crate::datadogV2::model::SpansListResponseLinks) -> &mut Self {
+    pub fn links(mut self, value: crate::datadogV2::model::SpansListResponseLinks) -> Self {
         self.links = Some(value);
         self
     }
 
-    pub fn meta(&mut self, value: crate::datadogV2::model::SpansListResponseMetadata) -> &mut Self {
+    pub fn meta(mut self, value: crate::datadogV2::model::SpansListResponseMetadata) -> Self {
         self.meta = Some(value);
         self
     }

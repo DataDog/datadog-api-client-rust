@@ -20,9 +20,9 @@ impl CloudWorkloadSecurityAgentRuleResponse {
     }
 
     pub fn data(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleData,
-    ) -> &mut Self {
+    ) -> Self {
         self.data = Some(value);
         self
     }

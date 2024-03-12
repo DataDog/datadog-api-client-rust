@@ -25,15 +25,12 @@ impl SpansAggregateResponse {
         }
     }
 
-    pub fn data(&mut self, value: Vec<crate::datadogV2::model::SpansAggregateBucket>) -> &mut Self {
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::SpansAggregateBucket>) -> Self {
         self.data = Some(value);
         self
     }
 
-    pub fn meta(
-        &mut self,
-        value: crate::datadogV2::model::SpansAggregateResponseMetadata,
-    ) -> &mut Self {
+    pub fn meta(mut self, value: crate::datadogV2::model::SpansAggregateResponseMetadata) -> Self {
         self.meta = Some(value);
         self
     }

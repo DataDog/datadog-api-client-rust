@@ -40,20 +40,20 @@ impl PowerpackAttributes {
         }
     }
 
-    pub fn description(&mut self, value: String) -> &mut Self {
+    pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
 
-    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
 
     pub fn template_variables(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::PowerpackTemplateVariable>,
-    ) -> &mut Self {
+    ) -> Self {
         self.template_variables = Some(value);
         self
     }

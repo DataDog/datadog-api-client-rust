@@ -25,7 +25,7 @@ impl DashboardListItems {
         }
     }
 
-    pub fn total(&mut self, value: i64) -> &mut Self {
+    pub fn total(mut self, value: i64) -> Self {
         self.total = Some(value);
         self
     }

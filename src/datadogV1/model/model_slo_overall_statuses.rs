@@ -67,50 +67,50 @@ impl SLOOverallStatuses {
         }
     }
 
-    pub fn error(&mut self, value: Option<String>) -> &mut Self {
+    pub fn error(mut self, value: Option<String>) -> Self {
         self.error = Some(value);
         self
     }
 
-    pub fn error_budget_remaining(&mut self, value: Option<f64>) -> &mut Self {
+    pub fn error_budget_remaining(mut self, value: Option<f64>) -> Self {
         self.error_budget_remaining = Some(value);
         self
     }
 
-    pub fn indexed_at(&mut self, value: i64) -> &mut Self {
+    pub fn indexed_at(mut self, value: i64) -> Self {
         self.indexed_at = Some(value);
         self
     }
 
     pub fn raw_error_budget_remaining(
-        &mut self,
+        mut self,
         value: Option<crate::datadogV1::model::SLORawErrorBudgetRemaining>,
-    ) -> &mut Self {
+    ) -> Self {
         self.raw_error_budget_remaining = Some(value);
         self
     }
 
-    pub fn span_precision(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn span_precision(mut self, value: Option<i64>) -> Self {
         self.span_precision = Some(value);
         self
     }
 
-    pub fn state(&mut self, value: crate::datadogV1::model::SLOState) -> &mut Self {
+    pub fn state(mut self, value: crate::datadogV1::model::SLOState) -> Self {
         self.state = Some(value);
         self
     }
 
-    pub fn status(&mut self, value: Option<f64>) -> &mut Self {
+    pub fn status(mut self, value: Option<f64>) -> Self {
         self.status = Some(value);
         self
     }
 
-    pub fn target(&mut self, value: f64) -> &mut Self {
+    pub fn target(mut self, value: f64) -> Self {
         self.target = Some(value);
         self
     }
 
-    pub fn timeframe(&mut self, value: crate::datadogV1::model::SLOTimeframe) -> &mut Self {
+    pub fn timeframe(mut self, value: crate::datadogV1::model::SLOTimeframe) -> Self {
         self.timeframe = Some(value);
         self
     }

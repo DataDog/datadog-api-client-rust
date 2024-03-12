@@ -57,40 +57,37 @@ impl TreeMapWidgetDefinition {
     }
 
     #[allow(deprecated)]
-    pub fn color_by(&mut self, value: crate::datadogV1::model::TreeMapColorBy) -> &mut Self {
+    pub fn color_by(mut self, value: crate::datadogV1::model::TreeMapColorBy) -> Self {
         self.color_by = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn custom_links(
-        &mut self,
-        value: Vec<crate::datadogV1::model::WidgetCustomLink>,
-    ) -> &mut Self {
+    pub fn custom_links(mut self, value: Vec<crate::datadogV1::model::WidgetCustomLink>) -> Self {
         self.custom_links = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn group_by(&mut self, value: crate::datadogV1::model::TreeMapGroupBy) -> &mut Self {
+    pub fn group_by(mut self, value: crate::datadogV1::model::TreeMapGroupBy) -> Self {
         self.group_by = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn size_by(&mut self, value: crate::datadogV1::model::TreeMapSizeBy) -> &mut Self {
+    pub fn size_by(mut self, value: crate::datadogV1::model::TreeMapSizeBy) -> Self {
         self.size_by = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
+    pub fn time(mut self, value: crate::datadogV1::model::WidgetTime) -> Self {
         self.time = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn title(&mut self, value: String) -> &mut Self {
+    pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }

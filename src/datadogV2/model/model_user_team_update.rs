@@ -25,7 +25,7 @@ impl UserTeamUpdate {
         }
     }
 
-    pub fn attributes(&mut self, value: crate::datadogV2::model::UserTeamAttributes) -> &mut Self {
+    pub fn attributes(mut self, value: crate::datadogV2::model::UserTeamAttributes) -> Self {
         self.attributes = Some(value);
         self
     }

@@ -33,22 +33,22 @@ impl HostMuteResponse {
         }
     }
 
-    pub fn action(&mut self, value: String) -> &mut Self {
+    pub fn action(mut self, value: String) -> Self {
         self.action = Some(value);
         self
     }
 
-    pub fn end(&mut self, value: i64) -> &mut Self {
+    pub fn end(mut self, value: i64) -> Self {
         self.end = Some(value);
         self
     }
 
-    pub fn hostname(&mut self, value: String) -> &mut Self {
+    pub fn hostname(mut self, value: String) -> Self {
         self.hostname = Some(value);
         self
     }
 
-    pub fn message(&mut self, value: String) -> &mut Self {
+    pub fn message(mut self, value: String) -> Self {
         self.message = Some(value);
         self
     }

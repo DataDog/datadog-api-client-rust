@@ -26,17 +26,14 @@ impl TimeseriesResponse {
     }
 
     pub fn attributes(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::TimeseriesResponseAttributes,
-    ) -> &mut Self {
+    ) -> Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn type_(
-        &mut self,
-        value: crate::datadogV2::model::TimeseriesFormulaResponseType,
-    ) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::TimeseriesFormulaResponseType) -> Self {
         self.type_ = Some(value);
         self
     }

@@ -20,13 +20,13 @@ pub struct ListActiveMetricsOptionalParams {
 impl ListActiveMetricsOptionalParams {
     /// Hostname for filtering the list of metrics returned.
     /// If set, metrics retrieved are those with the corresponding hostname tag.
-    pub fn host(&mut self, value: String) -> &mut Self {
+    pub fn host(mut self, value: String) -> Self {
         self.host = Some(value);
         self
     }
     /// Filter metrics that have been submitted with the given tags. Supports boolean and wildcard expressions.
     /// Cannot be combined with other filters.
-    pub fn tag_filter(&mut self, value: String) -> &mut Self {
+    pub fn tag_filter(mut self, value: String) -> Self {
         self.tag_filter = Some(value);
         self
     }
@@ -43,9 +43,9 @@ pub struct SubmitDistributionPointsOptionalParams {
 impl SubmitDistributionPointsOptionalParams {
     /// HTTP header used to compress the media-type.
     pub fn content_encoding(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::DistributionPointsContentEncoding,
-    ) -> &mut Self {
+    ) -> Self {
         self.content_encoding = Some(value);
         self
     }
@@ -62,9 +62,9 @@ pub struct SubmitMetricsOptionalParams {
 impl SubmitMetricsOptionalParams {
     /// HTTP header used to compress the media-type.
     pub fn content_encoding(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::MetricContentEncoding,
-    ) -> &mut Self {
+    ) -> Self {
         self.content_encoding = Some(value);
         self
     }

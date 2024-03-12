@@ -15,10 +15,7 @@ pub struct MakeGCPSTSDelegateOptionalParams {
 
 impl MakeGCPSTSDelegateOptionalParams {
     /// Create a delegate service account within Datadog.
-    pub fn body(
-        &mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> &mut Self {
+    pub fn body(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.body = Some(value);
         self
     }

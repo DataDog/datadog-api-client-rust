@@ -19,7 +19,7 @@ impl RelationshipToOutcome {
         RelationshipToOutcome { data: None }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::RelationshipToOutcomeData) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::RelationshipToOutcomeData) -> Self {
         self.data = Some(value);
         self
     }

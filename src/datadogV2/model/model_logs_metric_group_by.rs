@@ -25,7 +25,7 @@ impl LogsMetricGroupBy {
         }
     }
 
-    pub fn tag_name(&mut self, value: String) -> &mut Self {
+    pub fn tag_name(mut self, value: String) -> Self {
         self.tag_name = Some(value);
         self
     }

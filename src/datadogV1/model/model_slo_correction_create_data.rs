@@ -26,9 +26,9 @@ impl SLOCorrectionCreateData {
     }
 
     pub fn attributes(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SLOCorrectionCreateRequestAttributes,
-    ) -> &mut Self {
+    ) -> Self {
         self.attributes = Some(value);
         self
     }

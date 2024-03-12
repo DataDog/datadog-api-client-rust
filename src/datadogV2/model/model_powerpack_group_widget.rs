@@ -31,15 +31,12 @@ impl PowerpackGroupWidget {
         }
     }
 
-    pub fn layout(
-        &mut self,
-        value: crate::datadogV2::model::PowerpackGroupWidgetLayout,
-    ) -> &mut Self {
+    pub fn layout(mut self, value: crate::datadogV2::model::PowerpackGroupWidgetLayout) -> Self {
         self.layout = Some(value);
         self
     }
 
-    pub fn live_span(&mut self, value: crate::datadogV2::model::WidgetLiveSpan) -> &mut Self {
+    pub fn live_span(mut self, value: crate::datadogV2::model::WidgetLiveSpan) -> Self {
         self.live_span = Some(value);
         self
     }

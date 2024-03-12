@@ -50,27 +50,27 @@ impl FormulaAndFunctionEventQueryDefinition {
     }
 
     pub fn group_by(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::FormulaAndFunctionEventQueryGroupBy>,
-    ) -> &mut Self {
+    ) -> Self {
         self.group_by = Some(value);
         self
     }
 
-    pub fn indexes(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn indexes(mut self, value: Vec<String>) -> Self {
         self.indexes = Some(value);
         self
     }
 
     pub fn search(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::FormulaAndFunctionEventQueryDefinitionSearch,
-    ) -> &mut Self {
+    ) -> Self {
         self.search = Some(value);
         self
     }
 
-    pub fn storage(&mut self, value: String) -> &mut Self {
+    pub fn storage(mut self, value: String) -> Self {
         self.storage = Some(value);
         self
     }

@@ -37,33 +37,30 @@ impl SensitiveDataScannerGroupAttributes {
         }
     }
 
-    pub fn description(&mut self, value: String) -> &mut Self {
+    pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
 
-    pub fn filter(
-        &mut self,
-        value: crate::datadogV2::model::SensitiveDataScannerFilter,
-    ) -> &mut Self {
+    pub fn filter(mut self, value: crate::datadogV2::model::SensitiveDataScannerFilter) -> Self {
         self.filter = Some(value);
         self
     }
 
-    pub fn is_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn is_enabled(mut self, value: bool) -> Self {
         self.is_enabled = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
     pub fn product_list(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::SensitiveDataScannerProduct>,
-    ) -> &mut Self {
+    ) -> Self {
         self.product_list = Some(value);
         self
     }

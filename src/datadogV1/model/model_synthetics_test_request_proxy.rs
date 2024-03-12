@@ -22,7 +22,7 @@ impl SyntheticsTestRequestProxy {
         SyntheticsTestRequestProxy { headers: None, url }
     }
 
-    pub fn headers(&mut self, value: std::collections::BTreeMap<String, String>) -> &mut Self {
+    pub fn headers(mut self, value: std::collections::BTreeMap<String, String>) -> Self {
         self.headers = Some(value);
         self
     }

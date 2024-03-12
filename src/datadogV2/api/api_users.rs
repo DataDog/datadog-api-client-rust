@@ -32,12 +32,12 @@ pub struct ListUsersOptionalParams {
 
 impl ListUsersOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Specific page number to return.
-    pub fn page_number(&mut self, value: i64) -> &mut Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
@@ -45,24 +45,24 @@ impl ListUsersOptionalParams {
     /// Sort order is descending if the field
     /// is prefixed by a negative sign, for example `sort=-name`. Options: `name`,
     /// `modified_at`, `user_count`.
-    pub fn sort(&mut self, value: String) -> &mut Self {
+    pub fn sort(mut self, value: String) -> Self {
         self.sort = Some(value);
         self
     }
     /// Direction of sort. Options: `asc`, `desc`.
-    pub fn sort_dir(&mut self, value: crate::datadogV2::model::QuerySortOrder) -> &mut Self {
+    pub fn sort_dir(mut self, value: crate::datadogV2::model::QuerySortOrder) -> Self {
         self.sort_dir = Some(value);
         self
     }
     /// Filter all users by the given string. Defaults to no filtering.
-    pub fn filter(&mut self, value: String) -> &mut Self {
+    pub fn filter(mut self, value: String) -> Self {
         self.filter = Some(value);
         self
     }
     /// Filter on status attribute.
     /// Comma separated list, with possible values `Active`, `Pending`, and `Disabled`.
     /// Defaults to no filtering.
-    pub fn filter_status(&mut self, value: String) -> &mut Self {
+    pub fn filter_status(mut self, value: String) -> Self {
         self.filter_status = Some(value);
         self
     }

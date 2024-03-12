@@ -19,10 +19,7 @@ impl FastlyAccountsResponse {
         FastlyAccountsResponse { data: None }
     }
 
-    pub fn data(
-        &mut self,
-        value: Vec<crate::datadogV2::model::FastlyAccountResponseData>,
-    ) -> &mut Self {
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::FastlyAccountResponseData>) -> Self {
         self.data = Some(value);
         self
     }

@@ -34,12 +34,12 @@ impl Widget {
         }
     }
 
-    pub fn id(&mut self, value: i64) -> &mut Self {
+    pub fn id(mut self, value: i64) -> Self {
         self.id = Some(value);
         self
     }
 
-    pub fn layout(&mut self, value: crate::datadogV1::model::WidgetLayout) -> &mut Self {
+    pub fn layout(mut self, value: crate::datadogV1::model::WidgetLayout) -> Self {
         self.layout = Some(value);
         self
     }

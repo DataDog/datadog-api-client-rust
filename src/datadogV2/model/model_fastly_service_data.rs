@@ -29,10 +29,7 @@ impl FastlyServiceData {
         }
     }
 
-    pub fn attributes(
-        &mut self,
-        value: crate::datadogV2::model::FastlyServiceAttributes,
-    ) -> &mut Self {
+    pub fn attributes(mut self, value: crate::datadogV2::model::FastlyServiceAttributes) -> Self {
         self.attributes = Some(value);
         self
     }

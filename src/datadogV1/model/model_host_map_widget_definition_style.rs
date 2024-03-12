@@ -33,22 +33,22 @@ impl HostMapWidgetDefinitionStyle {
         }
     }
 
-    pub fn fill_max(&mut self, value: String) -> &mut Self {
+    pub fn fill_max(mut self, value: String) -> Self {
         self.fill_max = Some(value);
         self
     }
 
-    pub fn fill_min(&mut self, value: String) -> &mut Self {
+    pub fn fill_min(mut self, value: String) -> Self {
         self.fill_min = Some(value);
         self
     }
 
-    pub fn palette(&mut self, value: String) -> &mut Self {
+    pub fn palette(mut self, value: String) -> Self {
         self.palette = Some(value);
         self
     }
 
-    pub fn palette_flip(&mut self, value: bool) -> &mut Self {
+    pub fn palette_flip(mut self, value: bool) -> Self {
         self.palette_flip = Some(value);
         self
     }

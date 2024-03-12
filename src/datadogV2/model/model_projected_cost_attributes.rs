@@ -41,35 +41,32 @@ impl ProjectedCostAttributes {
         }
     }
 
-    pub fn charges(
-        &mut self,
-        value: Vec<crate::datadogV2::model::ChargebackBreakdown>,
-    ) -> &mut Self {
+    pub fn charges(mut self, value: Vec<crate::datadogV2::model::ChargebackBreakdown>) -> Self {
         self.charges = Some(value);
         self
     }
 
-    pub fn date(&mut self, value: String) -> &mut Self {
+    pub fn date(mut self, value: String) -> Self {
         self.date = Some(value);
         self
     }
 
-    pub fn org_name(&mut self, value: String) -> &mut Self {
+    pub fn org_name(mut self, value: String) -> Self {
         self.org_name = Some(value);
         self
     }
 
-    pub fn projected_total_cost(&mut self, value: f64) -> &mut Self {
+    pub fn projected_total_cost(mut self, value: f64) -> Self {
         self.projected_total_cost = Some(value);
         self
     }
 
-    pub fn public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }
 
-    pub fn region(&mut self, value: String) -> &mut Self {
+    pub fn region(mut self, value: String) -> Self {
         self.region = Some(value);
         self
     }

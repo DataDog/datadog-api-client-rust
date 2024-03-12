@@ -17,15 +17,12 @@ pub struct SubmitLogOptionalParams {
 
 impl SubmitLogOptionalParams {
     /// HTTP header used to compress the media-type.
-    pub fn content_encoding(
-        &mut self,
-        value: crate::datadogV1::model::ContentEncoding,
-    ) -> &mut Self {
+    pub fn content_encoding(mut self, value: crate::datadogV1::model::ContentEncoding) -> Self {
         self.content_encoding = Some(value);
         self
     }
     /// Log tags can be passed as query parameters with `text/plain` content type.
-    pub fn ddtags(&mut self, value: String) -> &mut Self {
+    pub fn ddtags(mut self, value: String) -> Self {
         self.ddtags = Some(value);
         self
     }
