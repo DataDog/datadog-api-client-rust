@@ -26,15 +26,15 @@ impl AuthNMappingRelationships {
         }
     }
 
-    pub fn role(&mut self, value: crate::datadogV2::model::RelationshipToRole) -> &mut Self {
+    pub fn role(mut self, value: crate::datadogV2::model::RelationshipToRole) -> Self {
         self.role = Some(value);
         self
     }
 
     pub fn saml_assertion_attribute(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::RelationshipToSAMLAssertionAttribute,
-    ) -> &mut Self {
+    ) -> Self {
         self.saml_assertion_attribute = Some(value);
         self
     }

@@ -29,17 +29,17 @@ impl HostMetaInstallMethod {
         }
     }
 
-    pub fn installer_version(&mut self, value: String) -> &mut Self {
+    pub fn installer_version(mut self, value: String) -> Self {
         self.installer_version = Some(value);
         self
     }
 
-    pub fn tool(&mut self, value: String) -> &mut Self {
+    pub fn tool(mut self, value: String) -> Self {
         self.tool = Some(value);
         self
     }
 
-    pub fn tool_version(&mut self, value: String) -> &mut Self {
+    pub fn tool_version(mut self, value: String) -> Self {
         self.tool_version = Some(value);
         self
     }

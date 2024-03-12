@@ -19,7 +19,7 @@ impl PermissionsResponse {
         PermissionsResponse { data: None }
     }
 
-    pub fn data(&mut self, value: Vec<crate::datadogV2::model::Permission>) -> &mut Self {
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::Permission>) -> Self {
         self.data = Some(value);
         self
     }

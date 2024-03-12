@@ -29,17 +29,17 @@ impl ChargebackBreakdown {
         }
     }
 
-    pub fn charge_type(&mut self, value: String) -> &mut Self {
+    pub fn charge_type(mut self, value: String) -> Self {
         self.charge_type = Some(value);
         self
     }
 
-    pub fn cost(&mut self, value: f64) -> &mut Self {
+    pub fn cost(mut self, value: f64) -> Self {
         self.cost = Some(value);
         self
     }
 
-    pub fn product_name(&mut self, value: String) -> &mut Self {
+    pub fn product_name(mut self, value: String) -> Self {
         self.product_name = Some(value);
         self
     }

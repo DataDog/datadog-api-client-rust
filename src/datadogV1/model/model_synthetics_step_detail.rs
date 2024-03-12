@@ -87,101 +87,98 @@ impl SyntheticsStepDetail {
     }
 
     pub fn browser_errors(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::SyntheticsBrowserError>,
-    ) -> &mut Self {
+    ) -> Self {
         self.browser_errors = Some(value);
         self
     }
 
-    pub fn check_type(&mut self, value: crate::datadogV1::model::SyntheticsCheckType) -> &mut Self {
+    pub fn check_type(mut self, value: crate::datadogV1::model::SyntheticsCheckType) -> Self {
         self.check_type = Some(value);
         self
     }
 
-    pub fn description(&mut self, value: String) -> &mut Self {
+    pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
 
-    pub fn duration(&mut self, value: f64) -> &mut Self {
+    pub fn duration(mut self, value: f64) -> Self {
         self.duration = Some(value);
         self
     }
 
-    pub fn error(&mut self, value: String) -> &mut Self {
+    pub fn error(mut self, value: String) -> Self {
         self.error = Some(value);
         self
     }
 
-    pub fn playing_tab(
-        &mut self,
-        value: crate::datadogV1::model::SyntheticsPlayingTab,
-    ) -> &mut Self {
+    pub fn playing_tab(mut self, value: crate::datadogV1::model::SyntheticsPlayingTab) -> Self {
         self.playing_tab = Some(value);
         self
     }
 
-    pub fn screenshot_bucket_key(&mut self, value: bool) -> &mut Self {
+    pub fn screenshot_bucket_key(mut self, value: bool) -> Self {
         self.screenshot_bucket_key = Some(value);
         self
     }
 
-    pub fn skipped(&mut self, value: bool) -> &mut Self {
+    pub fn skipped(mut self, value: bool) -> Self {
         self.skipped = Some(value);
         self
     }
 
-    pub fn snapshot_bucket_key(&mut self, value: bool) -> &mut Self {
+    pub fn snapshot_bucket_key(mut self, value: bool) -> Self {
         self.snapshot_bucket_key = Some(value);
         self
     }
 
-    pub fn step_id(&mut self, value: i64) -> &mut Self {
+    pub fn step_id(mut self, value: i64) -> Self {
         self.step_id = Some(value);
         self
     }
 
     pub fn sub_test_step_details(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::SyntheticsStepDetail>,
-    ) -> &mut Self {
+    ) -> Self {
         self.sub_test_step_details = Some(value);
         self
     }
 
-    pub fn time_to_interactive(&mut self, value: f64) -> &mut Self {
+    pub fn time_to_interactive(mut self, value: f64) -> Self {
         self.time_to_interactive = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: crate::datadogV1::model::SyntheticsStepType) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV1::model::SyntheticsStepType) -> Self {
         self.type_ = Some(value);
         self
     }
 
-    pub fn url(&mut self, value: String) -> &mut Self {
+    pub fn url(mut self, value: String) -> Self {
         self.url = Some(value);
         self
     }
 
-    pub fn value(&mut self, value: serde_json::Value) -> &mut Self {
+    pub fn value(mut self, value: serde_json::Value) -> Self {
         self.value = Some(value);
         self
     }
 
     pub fn vitals_metrics(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::SyntheticsCoreWebVitals>,
-    ) -> &mut Self {
+    ) -> Self {
         self.vitals_metrics = Some(value);
         self
     }
 
     pub fn warnings(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::SyntheticsStepDetailWarning>,
-    ) -> &mut Self {
+    ) -> Self {
         self.warnings = Some(value);
         self
     }

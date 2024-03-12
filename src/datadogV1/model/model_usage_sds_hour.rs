@@ -69,42 +69,42 @@ impl UsageSDSHour {
         }
     }
 
-    pub fn apm_scanned_bytes(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn apm_scanned_bytes(mut self, value: Option<i64>) -> Self {
         self.apm_scanned_bytes = Some(value);
         self
     }
 
-    pub fn events_scanned_bytes(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn events_scanned_bytes(mut self, value: Option<i64>) -> Self {
         self.events_scanned_bytes = Some(value);
         self
     }
 
-    pub fn hour(&mut self, value: String) -> &mut Self {
+    pub fn hour(mut self, value: String) -> Self {
         self.hour = Some(value);
         self
     }
 
-    pub fn logs_scanned_bytes(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn logs_scanned_bytes(mut self, value: Option<i64>) -> Self {
         self.logs_scanned_bytes = Some(value);
         self
     }
 
-    pub fn org_name(&mut self, value: String) -> &mut Self {
+    pub fn org_name(mut self, value: String) -> Self {
         self.org_name = Some(value);
         self
     }
 
-    pub fn public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }
 
-    pub fn rum_scanned_bytes(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn rum_scanned_bytes(mut self, value: Option<i64>) -> Self {
         self.rum_scanned_bytes = Some(value);
         self
     }
 
-    pub fn total_scanned_bytes(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn total_scanned_bytes(mut self, value: Option<i64>) -> Self {
         self.total_scanned_bytes = Some(value);
         self
     }

@@ -25,12 +25,12 @@ impl WidgetFormulaStyle {
         }
     }
 
-    pub fn palette(&mut self, value: String) -> &mut Self {
+    pub fn palette(mut self, value: String) -> Self {
         self.palette = Some(value);
         self
     }
 
-    pub fn palette_index(&mut self, value: i64) -> &mut Self {
+    pub fn palette_index(mut self, value: i64) -> Self {
         self.palette_index = Some(value);
         self
     }

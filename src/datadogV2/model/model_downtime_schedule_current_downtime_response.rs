@@ -27,12 +27,12 @@ impl DowntimeScheduleCurrentDowntimeResponse {
         }
     }
 
-    pub fn end(&mut self, value: Option<String>) -> &mut Self {
+    pub fn end(mut self, value: Option<String>) -> Self {
         self.end = Some(value);
         self
     }
 
-    pub fn start(&mut self, value: String) -> &mut Self {
+    pub fn start(mut self, value: String) -> Self {
         self.start = Some(value);
         self
     }

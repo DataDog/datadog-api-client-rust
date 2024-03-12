@@ -25,15 +25,12 @@ impl IncidentTeamRelationships {
         }
     }
 
-    pub fn created_by(&mut self, value: crate::datadogV2::model::RelationshipToUser) -> &mut Self {
+    pub fn created_by(mut self, value: crate::datadogV2::model::RelationshipToUser) -> Self {
         self.created_by = Some(value);
         self
     }
 
-    pub fn last_modified_by(
-        &mut self,
-        value: crate::datadogV2::model::RelationshipToUser,
-    ) -> &mut Self {
+    pub fn last_modified_by(mut self, value: crate::datadogV2::model::RelationshipToUser) -> Self {
         self.last_modified_by = Some(value);
         self
     }

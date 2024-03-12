@@ -19,12 +19,12 @@ pub struct ListSLOCorrectionOptionalParams {
 
 impl ListSLOCorrectionOptionalParams {
     /// The specific offset to use as the beginning of the returned response.
-    pub fn offset(&mut self, value: i64) -> &mut Self {
+    pub fn offset(mut self, value: i64) -> Self {
         self.offset = Some(value);
         self
     }
     /// The number of SLO corrections to return in the response. Default is 25.
-    pub fn limit(&mut self, value: i64) -> &mut Self {
+    pub fn limit(mut self, value: i64) -> Self {
         self.limit = Some(value);
         self
     }

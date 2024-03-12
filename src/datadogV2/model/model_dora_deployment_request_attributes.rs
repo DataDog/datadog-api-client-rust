@@ -45,17 +45,17 @@ impl DORADeploymentRequestAttributes {
         }
     }
 
-    pub fn git(&mut self, value: crate::datadogV2::model::DORAGitInfo) -> &mut Self {
+    pub fn git(mut self, value: crate::datadogV2::model::DORAGitInfo) -> Self {
         self.git = Some(value);
         self
     }
 
-    pub fn id(&mut self, value: String) -> &mut Self {
+    pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
 
-    pub fn version(&mut self, value: String) -> &mut Self {
+    pub fn version(mut self, value: String) -> Self {
         self.version = Some(value);
         self
     }

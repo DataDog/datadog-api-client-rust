@@ -25,12 +25,12 @@ impl SecurityFilterResponse {
         }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::SecurityFilter) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::SecurityFilter) -> Self {
         self.data = Some(value);
         self
     }
 
-    pub fn meta(&mut self, value: crate::datadogV2::model::SecurityFilterMeta) -> &mut Self {
+    pub fn meta(mut self, value: crate::datadogV2::model::SecurityFilterMeta) -> Self {
         self.meta = Some(value);
         self
     }

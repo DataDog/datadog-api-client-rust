@@ -25,12 +25,12 @@ impl SearchSLOResponseDataAttributesFacetsObjectInt {
         }
     }
 
-    pub fn count(&mut self, value: i64) -> &mut Self {
+    pub fn count(mut self, value: i64) -> Self {
         self.count = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: f64) -> &mut Self {
+    pub fn name(mut self, value: f64) -> Self {
         self.name = Some(value);
         self
     }

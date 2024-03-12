@@ -32,14 +32,14 @@ impl IncidentAttachmentUpdateData {
     }
 
     pub fn attributes(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::IncidentAttachmentUpdateAttributes,
-    ) -> &mut Self {
+    ) -> Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn id(&mut self, value: String) -> &mut Self {
+    pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }

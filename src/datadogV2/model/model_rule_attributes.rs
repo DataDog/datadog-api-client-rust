@@ -56,55 +56,55 @@ impl RuleAttributes {
     }
 
     #[allow(deprecated)]
-    pub fn category(&mut self, value: String) -> &mut Self {
+    pub fn category(mut self, value: String) -> Self {
         self.category = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn created_at(&mut self, value: String) -> &mut Self {
+    pub fn created_at(mut self, value: String) -> Self {
         self.created_at = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn custom(&mut self, value: bool) -> &mut Self {
+    pub fn custom(mut self, value: bool) -> Self {
         self.custom = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn description(&mut self, value: String) -> &mut Self {
+    pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn enabled(&mut self, value: bool) -> &mut Self {
+    pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn modified_at(&mut self, value: String) -> &mut Self {
+    pub fn modified_at(mut self, value: String) -> Self {
         self.modified_at = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn owner(&mut self, value: String) -> &mut Self {
+    pub fn owner(mut self, value: String) -> Self {
         self.owner = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn scorecard_name(&mut self, value: String) -> &mut Self {
+    pub fn scorecard_name(mut self, value: String) -> Self {
         self.scorecard_name = Some(value);
         self
     }

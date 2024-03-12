@@ -19,7 +19,7 @@ impl HTTPLogErrors {
         HTTPLogErrors { errors: None }
     }
 
-    pub fn errors(&mut self, value: Vec<crate::datadogV2::model::HTTPLogError>) -> &mut Self {
+    pub fn errors(mut self, value: Vec<crate::datadogV2::model::HTTPLogError>) -> Self {
         self.errors = Some(value);
         self
     }

@@ -19,10 +19,7 @@ impl SensitiveDataScannerConfigurationRelationships {
         SensitiveDataScannerConfigurationRelationships { groups: None }
     }
 
-    pub fn groups(
-        &mut self,
-        value: crate::datadogV2::model::SensitiveDataScannerGroupList,
-    ) -> &mut Self {
+    pub fn groups(mut self, value: crate::datadogV2::model::SensitiveDataScannerGroupList) -> Self {
         self.groups = Some(value);
         self
     }

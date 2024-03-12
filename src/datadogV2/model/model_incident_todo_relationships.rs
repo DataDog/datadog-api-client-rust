@@ -25,18 +25,15 @@ impl IncidentTodoRelationships {
         }
     }
 
-    pub fn created_by_user(
-        &mut self,
-        value: crate::datadogV2::model::RelationshipToUser,
-    ) -> &mut Self {
+    pub fn created_by_user(mut self, value: crate::datadogV2::model::RelationshipToUser) -> Self {
         self.created_by_user = Some(value);
         self
     }
 
     pub fn last_modified_by_user(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::RelationshipToUser,
-    ) -> &mut Self {
+    ) -> Self {
         self.last_modified_by_user = Some(value);
         self
     }

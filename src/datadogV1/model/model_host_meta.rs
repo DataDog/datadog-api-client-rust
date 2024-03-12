@@ -77,80 +77,77 @@ impl HostMeta {
         }
     }
 
-    pub fn agent_checks(&mut self, value: Vec<Vec<serde_json::Value>>) -> &mut Self {
+    pub fn agent_checks(mut self, value: Vec<Vec<serde_json::Value>>) -> Self {
         self.agent_checks = Some(value);
         self
     }
 
-    pub fn agent_version(&mut self, value: String) -> &mut Self {
+    pub fn agent_version(mut self, value: String) -> Self {
         self.agent_version = Some(value);
         self
     }
 
-    pub fn cpu_cores(&mut self, value: i64) -> &mut Self {
+    pub fn cpu_cores(mut self, value: i64) -> Self {
         self.cpu_cores = Some(value);
         self
     }
 
-    pub fn fbsd_v(&mut self, value: Vec<serde_json::Value>) -> &mut Self {
+    pub fn fbsd_v(mut self, value: Vec<serde_json::Value>) -> Self {
         self.fbsd_v = Some(value);
         self
     }
 
-    pub fn gohai(&mut self, value: String) -> &mut Self {
+    pub fn gohai(mut self, value: String) -> Self {
         self.gohai = Some(value);
         self
     }
 
-    pub fn install_method(
-        &mut self,
-        value: crate::datadogV1::model::HostMetaInstallMethod,
-    ) -> &mut Self {
+    pub fn install_method(mut self, value: crate::datadogV1::model::HostMetaInstallMethod) -> Self {
         self.install_method = Some(value);
         self
     }
 
-    pub fn mac_v(&mut self, value: Vec<serde_json::Value>) -> &mut Self {
+    pub fn mac_v(mut self, value: Vec<serde_json::Value>) -> Self {
         self.mac_v = Some(value);
         self
     }
 
-    pub fn machine(&mut self, value: String) -> &mut Self {
+    pub fn machine(mut self, value: String) -> Self {
         self.machine = Some(value);
         self
     }
 
-    pub fn nix_v(&mut self, value: Vec<serde_json::Value>) -> &mut Self {
+    pub fn nix_v(mut self, value: Vec<serde_json::Value>) -> Self {
         self.nix_v = Some(value);
         self
     }
 
-    pub fn platform(&mut self, value: String) -> &mut Self {
+    pub fn platform(mut self, value: String) -> Self {
         self.platform = Some(value);
         self
     }
 
-    pub fn processor(&mut self, value: String) -> &mut Self {
+    pub fn processor(mut self, value: String) -> Self {
         self.processor = Some(value);
         self
     }
 
-    pub fn python_v(&mut self, value: String) -> &mut Self {
+    pub fn python_v(mut self, value: String) -> Self {
         self.python_v = Some(value);
         self
     }
 
-    pub fn socket_fqdn(&mut self, value: String) -> &mut Self {
+    pub fn socket_fqdn(mut self, value: String) -> Self {
         self.socket_fqdn = Some(value);
         self
     }
 
-    pub fn socket_hostname(&mut self, value: String) -> &mut Self {
+    pub fn socket_hostname(mut self, value: String) -> Self {
         self.socket_hostname = Some(value);
         self
     }
 
-    pub fn win_v(&mut self, value: Vec<serde_json::Value>) -> &mut Self {
+    pub fn win_v(mut self, value: Vec<serde_json::Value>) -> Self {
         self.win_v = Some(value);
         self
     }

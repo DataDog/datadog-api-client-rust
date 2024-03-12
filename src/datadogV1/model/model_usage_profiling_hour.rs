@@ -53,32 +53,32 @@ impl UsageProfilingHour {
         }
     }
 
-    pub fn aas_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn aas_count(mut self, value: Option<i64>) -> Self {
         self.aas_count = Some(value);
         self
     }
 
-    pub fn avg_container_agent_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn avg_container_agent_count(mut self, value: Option<i64>) -> Self {
         self.avg_container_agent_count = Some(value);
         self
     }
 
-    pub fn host_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn host_count(mut self, value: Option<i64>) -> Self {
         self.host_count = Some(value);
         self
     }
 
-    pub fn hour(&mut self, value: String) -> &mut Self {
+    pub fn hour(mut self, value: String) -> Self {
         self.hour = Some(value);
         self
     }
 
-    pub fn org_name(&mut self, value: String) -> &mut Self {
+    pub fn org_name(mut self, value: String) -> Self {
         self.org_name = Some(value);
         self
     }
 
-    pub fn public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }

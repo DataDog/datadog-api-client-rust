@@ -29,17 +29,17 @@ impl MonitorConfigPolicyTagPolicy {
         }
     }
 
-    pub fn tag_key(&mut self, value: String) -> &mut Self {
+    pub fn tag_key(mut self, value: String) -> Self {
         self.tag_key = Some(value);
         self
     }
 
-    pub fn tag_key_required(&mut self, value: bool) -> &mut Self {
+    pub fn tag_key_required(mut self, value: bool) -> Self {
         self.tag_key_required = Some(value);
         self
     }
 
-    pub fn valid_tag_values(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn valid_tag_values(mut self, value: Vec<String>) -> Self {
         self.valid_tag_values = Some(value);
         self
     }

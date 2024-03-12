@@ -19,7 +19,7 @@ impl RUMApplicationResponse {
         RUMApplicationResponse { data: None }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::RUMApplication) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::RUMApplication) -> Self {
         self.data = Some(value);
         self
     }

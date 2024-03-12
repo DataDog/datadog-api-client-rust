@@ -54,50 +54,50 @@ impl SensitiveDataScannerRuleAttributes {
         }
     }
 
-    pub fn description(&mut self, value: String) -> &mut Self {
+    pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
 
-    pub fn excluded_namespaces(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn excluded_namespaces(mut self, value: Vec<String>) -> Self {
         self.excluded_namespaces = Some(value);
         self
     }
 
-    pub fn is_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn is_enabled(mut self, value: bool) -> Self {
         self.is_enabled = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
-    pub fn namespaces(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn namespaces(mut self, value: Vec<String>) -> Self {
         self.namespaces = Some(value);
         self
     }
 
-    pub fn pattern(&mut self, value: String) -> &mut Self {
+    pub fn pattern(mut self, value: String) -> Self {
         self.pattern = Some(value);
         self
     }
 
-    pub fn priority(&mut self, value: i64) -> &mut Self {
+    pub fn priority(mut self, value: i64) -> Self {
         self.priority = Some(value);
         self
     }
 
-    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
 
     pub fn text_replacement(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::SensitiveDataScannerTextReplacement,
-    ) -> &mut Self {
+    ) -> Self {
         self.text_replacement = Some(value);
         self
     }

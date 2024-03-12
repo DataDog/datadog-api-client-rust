@@ -57,32 +57,32 @@ impl MonitorThresholds {
         }
     }
 
-    pub fn critical(&mut self, value: f64) -> &mut Self {
+    pub fn critical(mut self, value: f64) -> Self {
         self.critical = Some(value);
         self
     }
 
-    pub fn critical_recovery(&mut self, value: Option<f64>) -> &mut Self {
+    pub fn critical_recovery(mut self, value: Option<f64>) -> Self {
         self.critical_recovery = Some(value);
         self
     }
 
-    pub fn ok(&mut self, value: Option<f64>) -> &mut Self {
+    pub fn ok(mut self, value: Option<f64>) -> Self {
         self.ok = Some(value);
         self
     }
 
-    pub fn unknown(&mut self, value: Option<f64>) -> &mut Self {
+    pub fn unknown(mut self, value: Option<f64>) -> Self {
         self.unknown = Some(value);
         self
     }
 
-    pub fn warning(&mut self, value: Option<f64>) -> &mut Self {
+    pub fn warning(mut self, value: Option<f64>) -> Self {
         self.warning = Some(value);
         self
     }
 
-    pub fn warning_recovery(&mut self, value: Option<f64>) -> &mut Self {
+    pub fn warning_recovery(mut self, value: Option<f64>) -> Self {
         self.warning_recovery = Some(value);
         self
     }

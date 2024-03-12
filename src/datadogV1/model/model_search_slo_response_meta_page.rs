@@ -49,42 +49,42 @@ impl SearchSLOResponseMetaPage {
         }
     }
 
-    pub fn first_number(&mut self, value: i64) -> &mut Self {
+    pub fn first_number(mut self, value: i64) -> Self {
         self.first_number = Some(value);
         self
     }
 
-    pub fn last_number(&mut self, value: i64) -> &mut Self {
+    pub fn last_number(mut self, value: i64) -> Self {
         self.last_number = Some(value);
         self
     }
 
-    pub fn next_number(&mut self, value: i64) -> &mut Self {
+    pub fn next_number(mut self, value: i64) -> Self {
         self.next_number = Some(value);
         self
     }
 
-    pub fn number(&mut self, value: i64) -> &mut Self {
+    pub fn number(mut self, value: i64) -> Self {
         self.number = Some(value);
         self
     }
 
-    pub fn prev_number(&mut self, value: i64) -> &mut Self {
+    pub fn prev_number(mut self, value: i64) -> Self {
         self.prev_number = Some(value);
         self
     }
 
-    pub fn size(&mut self, value: i64) -> &mut Self {
+    pub fn size(mut self, value: i64) -> Self {
         self.size = Some(value);
         self
     }
 
-    pub fn total(&mut self, value: i64) -> &mut Self {
+    pub fn total(mut self, value: i64) -> Self {
         self.total = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: String) -> &mut Self {
+    pub fn type_(mut self, value: String) -> Self {
         self.type_ = Some(value);
         self
     }

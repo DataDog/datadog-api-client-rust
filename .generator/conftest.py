@@ -23,7 +23,7 @@ from generator.utils import (
     untitle_case,
 )
 
-from generator.formatter import format_parameters, format_data_with_schema, go_name
+from generator.formatter import format_parameters, format_data_with_schema, rust_name
 
 
 MODIFIED_FEATURES = {pathlib.Path(p).resolve() for p in os.getenv("BDD_MODIFIED_FEATURES", "").split(" ") if p}
@@ -68,12 +68,12 @@ JINJA_ENV.filters["tojson"] = json.dumps
 JINJA_ENV.filters["snake_case"] = snake_case
 JINJA_ENV.filters["camel_case"] = camel_case
 JINJA_ENV.filters["untitle_case"] = untitle_case
-JINJA_ENV.filters["go_name"] = go_name
+JINJA_ENV.filters["rust_name"] = rust_name
 JINJA_ENV.globals["format_data_with_schema"] = format_data_with_schema
 JINJA_ENV.globals["format_parameters"] = format_parameters
 JINJA_ENV.globals["given_variables"] = given_variables
 
-GO_EXAMPLE_J2 = JINJA_ENV.get_template("example.j2")
+RUST_EXAMPLE_J2 = JINJA_ENV.get_template("example.j2")
 
 
 def pytest_bdd_after_scenario(request, feature, scenario):
@@ -87,7 +87,7 @@ def pytest_bdd_after_scenario(request, feature, scenario):
 
     status_code = context["status_code"]
     if status_code >= 300:
-        warnings.warn(f"do not generate example for {version}:{operation_id}:{status_code}")
+        # warnings.warn(f"do not generate example for {version}:{operation_id}:{status_code}")
         return
 
     operation_spec = operation_specs[version][operation_id]
@@ -100,14 +100,14 @@ def pytest_bdd_after_scenario(request, feature, scenario):
     if scenario_name != scenario.name:
         unique_suffix = "_" + str(zlib.adler32(scenario.name.encode("utf-8")))
 
-    data = GO_EXAMPLE_J2.render(
+    data = RUST_EXAMPLE_J2.render(
         context=context,
         version=version,
         scenario=scenario,
         operation_spec=operation_spec.spec,
     )
 
-    output = ROOT_PATH / "examples" / version / group_name / f"{operation_id}{unique_suffix}.go"
+    output = ROOT_PATH / "examples" / f"{version}_{group_name}_{snake_case(operation_id)}{unique_suffix}.rs"
     output.parent.mkdir(parents=True, exist_ok=True)
 
     with output.open("w") as f:
@@ -141,16 +141,16 @@ def unique(request):
 
 
 TIME_FORMATTER = {
-    "now": "time.Now()",
-    "timestamp": "{sret}.Unix()",
+    "now": "Utc::now()",
+    "timestamp": "({sret}).timestamp()",
     "isoformat": "{sret}",  # .Format(time.RFC3339) we don't need to format it as time.Time{} is expected
     "units": {
-        "s": "{sret}.Add(time.Second*{num})",
-        "m": "{sret}.Add(time.Minute*{num})",
-        "h": "{sret}.Add(time.Hour*{num})",
-        "d": "{sret}.AddDate(0, 0, {num})",
-        "M": "{sret}.AddDate(0, {num}, 0)",
-        "y": "{sret}.AddDate({num}, 0, 0)",
+        "s": "{sret} + Duration::seconds({num})",
+        "m": "{sret} + Duration::minutes({num})",
+        "h": "{sret} + Duration::hours({num})",
+        "d": "{sret} + Duration::days({num})",
+        "M": "{sret} {sign} Months::new(1)",
+        "y": "{sret} {sign} Months::new(12)",
     },
 }
 
@@ -159,7 +159,6 @@ def relative_time(imports, calls, freezed_time, iso):
     time_re = re.compile(r"now( *([+-]) *(\d+)([smhdMy]))?")
 
     def func(arg):
-        imports["time"].add(None)
         sret = TIME_FORMATTER["now"]
         ret = freezed_time
         m = time_re.match(arg)
@@ -182,7 +181,7 @@ def relative_time(imports, calls, freezed_time, iso):
                     ret += relativedelta(years=num)
                 else:
                     raise ValueError(f"Unknown unit {unit}")
-                sret = TIME_FORMATTER["units"][unit].format(sret=sret, num=num)
+                sret = TIME_FORMATTER["units"][unit].format(sret=sret, num=num, sign="+" if num > 0 else "-")
 
             if iso:
                 return (
@@ -194,7 +193,7 @@ def relative_time(imports, calls, freezed_time, iso):
 
     def store_calls(arg):
         result, value = func(arg)
-        calls[result] = value
+        # calls[result] = value
         return result
 
     return store_calls

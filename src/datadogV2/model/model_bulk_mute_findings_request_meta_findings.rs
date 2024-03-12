@@ -19,7 +19,7 @@ impl BulkMuteFindingsRequestMetaFindings {
         BulkMuteFindingsRequestMetaFindings { finding_id: None }
     }
 
-    pub fn finding_id(&mut self, value: String) -> &mut Self {
+    pub fn finding_id(mut self, value: String) -> Self {
         self.finding_id = Some(value);
         self
     }

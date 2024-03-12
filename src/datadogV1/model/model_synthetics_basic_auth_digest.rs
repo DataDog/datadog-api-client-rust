@@ -29,10 +29,7 @@ impl SyntheticsBasicAuthDigest {
         }
     }
 
-    pub fn type_(
-        &mut self,
-        value: crate::datadogV1::model::SyntheticsBasicAuthDigestType,
-    ) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV1::model::SyntheticsBasicAuthDigestType) -> Self {
         self.type_ = Some(value);
         self
     }

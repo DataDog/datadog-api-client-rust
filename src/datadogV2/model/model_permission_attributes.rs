@@ -45,37 +45,37 @@ impl PermissionAttributes {
         }
     }
 
-    pub fn created(&mut self, value: String) -> &mut Self {
+    pub fn created(mut self, value: String) -> Self {
         self.created = Some(value);
         self
     }
 
-    pub fn description(&mut self, value: String) -> &mut Self {
+    pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
 
-    pub fn display_name(&mut self, value: String) -> &mut Self {
+    pub fn display_name(mut self, value: String) -> Self {
         self.display_name = Some(value);
         self
     }
 
-    pub fn display_type(&mut self, value: String) -> &mut Self {
+    pub fn display_type(mut self, value: String) -> Self {
         self.display_type = Some(value);
         self
     }
 
-    pub fn group_name(&mut self, value: String) -> &mut Self {
+    pub fn group_name(mut self, value: String) -> Self {
         self.group_name = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
-    pub fn restricted(&mut self, value: bool) -> &mut Self {
+    pub fn restricted(mut self, value: bool) -> Self {
         self.restricted = Some(value);
         self
     }

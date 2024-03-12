@@ -18,10 +18,7 @@ pub struct GetIncidentOptionalParams {
 
 impl GetIncidentOptionalParams {
     /// Specifies which types of related objects should be included in the response.
-    pub fn include(
-        &mut self,
-        value: Vec<crate::datadogV2::model::IncidentRelatedObject>,
-    ) -> &mut Self {
+    pub fn include(mut self, value: Vec<crate::datadogV2::model::IncidentRelatedObject>) -> Self {
         self.include = Some(value);
         self
     }
@@ -41,17 +38,17 @@ pub struct ListIncidentAttachmentsOptionalParams {
 impl ListIncidentAttachmentsOptionalParams {
     /// Specifies which types of related objects are included in the response.
     pub fn include(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::IncidentAttachmentRelatedObject>,
-    ) -> &mut Self {
+    ) -> Self {
         self.include = Some(value);
         self
     }
     /// Specifies which types of attachments are included in the response.
     pub fn filter_attachment_type(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::IncidentAttachmentAttachmentType>,
-    ) -> &mut Self {
+    ) -> Self {
         self.filter_attachment_type = Some(value);
         self
     }
@@ -71,20 +68,17 @@ pub struct ListIncidentsOptionalParams {
 
 impl ListIncidentsOptionalParams {
     /// Specifies which types of related objects should be included in the response.
-    pub fn include(
-        &mut self,
-        value: Vec<crate::datadogV2::model::IncidentRelatedObject>,
-    ) -> &mut Self {
+    pub fn include(mut self, value: Vec<crate::datadogV2::model::IncidentRelatedObject>) -> Self {
         self.include = Some(value);
         self
     }
     /// Size for a given page. The maximum allowed value is 100.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Specific offset to use as the beginning of the returned page.
-    pub fn page_offset(&mut self, value: i64) -> &mut Self {
+    pub fn page_offset(mut self, value: i64) -> Self {
         self.page_offset = Some(value);
         self
     }
@@ -106,22 +100,22 @@ pub struct SearchIncidentsOptionalParams {
 
 impl SearchIncidentsOptionalParams {
     /// Specifies which types of related objects should be included in the response.
-    pub fn include(&mut self, value: crate::datadogV2::model::IncidentRelatedObject) -> &mut Self {
+    pub fn include(mut self, value: crate::datadogV2::model::IncidentRelatedObject) -> Self {
         self.include = Some(value);
         self
     }
     /// Specifies the order of returned incidents.
-    pub fn sort(&mut self, value: crate::datadogV2::model::IncidentSearchSortOrder) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV2::model::IncidentSearchSortOrder) -> Self {
         self.sort = Some(value);
         self
     }
     /// Size for a given page. The maximum allowed value is 100.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Specific offset to use as the beginning of the returned page.
-    pub fn page_offset(&mut self, value: i64) -> &mut Self {
+    pub fn page_offset(mut self, value: i64) -> Self {
         self.page_offset = Some(value);
         self
     }
@@ -137,10 +131,7 @@ pub struct UpdateIncidentOptionalParams {
 
 impl UpdateIncidentOptionalParams {
     /// Specifies which types of related objects should be included in the response.
-    pub fn include(
-        &mut self,
-        value: Vec<crate::datadogV2::model::IncidentRelatedObject>,
-    ) -> &mut Self {
+    pub fn include(mut self, value: Vec<crate::datadogV2::model::IncidentRelatedObject>) -> Self {
         self.include = Some(value);
         self
     }
@@ -157,9 +148,9 @@ pub struct UpdateIncidentAttachmentsOptionalParams {
 impl UpdateIncidentAttachmentsOptionalParams {
     /// Specifies which types of related objects are included in the response.
     pub fn include(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::IncidentAttachmentRelatedObject>,
-    ) -> &mut Self {
+    ) -> Self {
         self.include = Some(value);
         self
     }

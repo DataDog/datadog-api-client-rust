@@ -37,27 +37,27 @@ impl AuthNMappingAttributes {
         }
     }
 
-    pub fn attribute_key(&mut self, value: String) -> &mut Self {
+    pub fn attribute_key(mut self, value: String) -> Self {
         self.attribute_key = Some(value);
         self
     }
 
-    pub fn attribute_value(&mut self, value: String) -> &mut Self {
+    pub fn attribute_value(mut self, value: String) -> Self {
         self.attribute_value = Some(value);
         self
     }
 
-    pub fn created_at(&mut self, value: String) -> &mut Self {
+    pub fn created_at(mut self, value: String) -> Self {
         self.created_at = Some(value);
         self
     }
 
-    pub fn modified_at(&mut self, value: String) -> &mut Self {
+    pub fn modified_at(mut self, value: String) -> Self {
         self.modified_at = Some(value);
         self
     }
 
-    pub fn saml_assertion_attribute_id(&mut self, value: String) -> &mut Self {
+    pub fn saml_assertion_attribute_id(mut self, value: String) -> Self {
         self.saml_assertion_attribute_id = Some(value);
         self
     }

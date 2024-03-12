@@ -19,7 +19,7 @@ impl FastlyServiceAttributes {
         FastlyServiceAttributes { tags: None }
     }
 
-    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }

@@ -25,12 +25,12 @@ impl APIKeyRelationships {
         }
     }
 
-    pub fn created_by(&mut self, value: crate::datadogV2::model::RelationshipToUser) -> &mut Self {
+    pub fn created_by(mut self, value: crate::datadogV2::model::RelationshipToUser) -> Self {
         self.created_by = Some(value);
         self
     }
 
-    pub fn modified_by(&mut self, value: crate::datadogV2::model::RelationshipToUser) -> &mut Self {
+    pub fn modified_by(mut self, value: crate::datadogV2::model::RelationshipToUser) -> Self {
         self.modified_by = Some(value);
         self
     }

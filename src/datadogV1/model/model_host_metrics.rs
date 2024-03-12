@@ -29,17 +29,17 @@ impl HostMetrics {
         }
     }
 
-    pub fn cpu(&mut self, value: f64) -> &mut Self {
+    pub fn cpu(mut self, value: f64) -> Self {
         self.cpu = Some(value);
         self
     }
 
-    pub fn iowait(&mut self, value: f64) -> &mut Self {
+    pub fn iowait(mut self, value: f64) -> Self {
         self.iowait = Some(value);
         self
     }
 
-    pub fn load(&mut self, value: f64) -> &mut Self {
+    pub fn load(mut self, value: f64) -> Self {
         self.load = Some(value);
         self
     }

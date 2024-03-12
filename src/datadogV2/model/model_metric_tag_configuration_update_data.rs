@@ -33,9 +33,9 @@ impl MetricTagConfigurationUpdateData {
     }
 
     pub fn attributes(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::MetricTagConfigurationUpdateAttributes,
-    ) -> &mut Self {
+    ) -> Self {
         self.attributes = Some(value);
         self
     }

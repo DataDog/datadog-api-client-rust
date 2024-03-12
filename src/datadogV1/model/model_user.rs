@@ -49,37 +49,37 @@ impl User {
         }
     }
 
-    pub fn access_role(&mut self, value: Option<crate::datadogV1::model::AccessRole>) -> &mut Self {
+    pub fn access_role(mut self, value: Option<crate::datadogV1::model::AccessRole>) -> Self {
         self.access_role = Some(value);
         self
     }
 
-    pub fn disabled(&mut self, value: bool) -> &mut Self {
+    pub fn disabled(mut self, value: bool) -> Self {
         self.disabled = Some(value);
         self
     }
 
-    pub fn email(&mut self, value: String) -> &mut Self {
+    pub fn email(mut self, value: String) -> Self {
         self.email = Some(value);
         self
     }
 
-    pub fn handle(&mut self, value: String) -> &mut Self {
+    pub fn handle(mut self, value: String) -> Self {
         self.handle = Some(value);
         self
     }
 
-    pub fn icon(&mut self, value: String) -> &mut Self {
+    pub fn icon(mut self, value: String) -> Self {
         self.icon = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
-    pub fn verified(&mut self, value: bool) -> &mut Self {
+    pub fn verified(mut self, value: bool) -> Self {
         self.verified = Some(value);
         self
     }

@@ -37,22 +37,22 @@ impl UsageIncidentManagementHour {
         }
     }
 
-    pub fn hour(&mut self, value: String) -> &mut Self {
+    pub fn hour(mut self, value: String) -> Self {
         self.hour = Some(value);
         self
     }
 
-    pub fn monthly_active_users(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn monthly_active_users(mut self, value: Option<i64>) -> Self {
         self.monthly_active_users = Some(value);
         self
     }
 
-    pub fn org_name(&mut self, value: String) -> &mut Self {
+    pub fn org_name(mut self, value: String) -> Self {
         self.org_name = Some(value);
         self
     }
 
-    pub fn public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }

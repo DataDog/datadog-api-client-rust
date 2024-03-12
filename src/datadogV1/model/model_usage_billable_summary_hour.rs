@@ -53,47 +53,47 @@ impl UsageBillableSummaryHour {
         }
     }
 
-    pub fn billing_plan(&mut self, value: String) -> &mut Self {
+    pub fn billing_plan(mut self, value: String) -> Self {
         self.billing_plan = Some(value);
         self
     }
 
-    pub fn end_date(&mut self, value: String) -> &mut Self {
+    pub fn end_date(mut self, value: String) -> Self {
         self.end_date = Some(value);
         self
     }
 
-    pub fn num_orgs(&mut self, value: i64) -> &mut Self {
+    pub fn num_orgs(mut self, value: i64) -> Self {
         self.num_orgs = Some(value);
         self
     }
 
-    pub fn org_name(&mut self, value: String) -> &mut Self {
+    pub fn org_name(mut self, value: String) -> Self {
         self.org_name = Some(value);
         self
     }
 
-    pub fn public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }
 
-    pub fn ratio_in_month(&mut self, value: f64) -> &mut Self {
+    pub fn ratio_in_month(mut self, value: f64) -> Self {
         self.ratio_in_month = Some(value);
         self
     }
 
-    pub fn region(&mut self, value: String) -> &mut Self {
+    pub fn region(mut self, value: String) -> Self {
         self.region = Some(value);
         self
     }
 
-    pub fn start_date(&mut self, value: String) -> &mut Self {
+    pub fn start_date(mut self, value: String) -> Self {
         self.start_date = Some(value);
         self
     }
 
-    pub fn usage(&mut self, value: crate::datadogV1::model::UsageBillableSummaryKeys) -> &mut Self {
+    pub fn usage(mut self, value: crate::datadogV1::model::UsageBillableSummaryKeys) -> Self {
         self.usage = Some(value);
         self
     }

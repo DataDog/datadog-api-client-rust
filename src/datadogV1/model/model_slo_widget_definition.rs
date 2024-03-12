@@ -64,50 +64,47 @@ impl SLOWidgetDefinition {
         }
     }
 
-    pub fn additional_query_filters(&mut self, value: String) -> &mut Self {
+    pub fn additional_query_filters(mut self, value: String) -> Self {
         self.additional_query_filters = Some(value);
         self
     }
 
-    pub fn global_time_target(&mut self, value: String) -> &mut Self {
+    pub fn global_time_target(mut self, value: String) -> Self {
         self.global_time_target = Some(value);
         self
     }
 
-    pub fn show_error_budget(&mut self, value: bool) -> &mut Self {
+    pub fn show_error_budget(mut self, value: bool) -> Self {
         self.show_error_budget = Some(value);
         self
     }
 
-    pub fn slo_id(&mut self, value: String) -> &mut Self {
+    pub fn slo_id(mut self, value: String) -> Self {
         self.slo_id = Some(value);
         self
     }
 
-    pub fn time_windows(
-        &mut self,
-        value: Vec<crate::datadogV1::model::WidgetTimeWindows>,
-    ) -> &mut Self {
+    pub fn time_windows(mut self, value: Vec<crate::datadogV1::model::WidgetTimeWindows>) -> Self {
         self.time_windows = Some(value);
         self
     }
 
-    pub fn title(&mut self, value: String) -> &mut Self {
+    pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
 
-    pub fn title_align(&mut self, value: crate::datadogV1::model::WidgetTextAlign) -> &mut Self {
+    pub fn title_align(mut self, value: crate::datadogV1::model::WidgetTextAlign) -> Self {
         self.title_align = Some(value);
         self
     }
 
-    pub fn title_size(&mut self, value: String) -> &mut Self {
+    pub fn title_size(mut self, value: String) -> Self {
         self.title_size = Some(value);
         self
     }
 
-    pub fn view_mode(&mut self, value: crate::datadogV1::model::WidgetViewMode) -> &mut Self {
+    pub fn view_mode(mut self, value: crate::datadogV1::model::WidgetViewMode) -> Self {
         self.view_mode = Some(value);
         self
     }

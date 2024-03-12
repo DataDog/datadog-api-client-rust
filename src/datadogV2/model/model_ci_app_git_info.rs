@@ -94,47 +94,47 @@ impl CIAppGitInfo {
         }
     }
 
-    pub fn author_name(&mut self, value: Option<String>) -> &mut Self {
+    pub fn author_name(mut self, value: Option<String>) -> Self {
         self.author_name = Some(value);
         self
     }
 
-    pub fn author_time(&mut self, value: Option<String>) -> &mut Self {
+    pub fn author_time(mut self, value: Option<String>) -> Self {
         self.author_time = Some(value);
         self
     }
 
-    pub fn branch(&mut self, value: Option<String>) -> &mut Self {
+    pub fn branch(mut self, value: Option<String>) -> Self {
         self.branch = Some(value);
         self
     }
 
-    pub fn commit_time(&mut self, value: Option<String>) -> &mut Self {
+    pub fn commit_time(mut self, value: Option<String>) -> Self {
         self.commit_time = Some(value);
         self
     }
 
-    pub fn committer_email(&mut self, value: Option<String>) -> &mut Self {
+    pub fn committer_email(mut self, value: Option<String>) -> Self {
         self.committer_email = Some(value);
         self
     }
 
-    pub fn committer_name(&mut self, value: Option<String>) -> &mut Self {
+    pub fn committer_name(mut self, value: Option<String>) -> Self {
         self.committer_name = Some(value);
         self
     }
 
-    pub fn default_branch(&mut self, value: Option<String>) -> &mut Self {
+    pub fn default_branch(mut self, value: Option<String>) -> Self {
         self.default_branch = Some(value);
         self
     }
 
-    pub fn message(&mut self, value: Option<String>) -> &mut Self {
+    pub fn message(mut self, value: Option<String>) -> Self {
         self.message = Some(value);
         self
     }
 
-    pub fn tag(&mut self, value: Option<String>) -> &mut Self {
+    pub fn tag(mut self, value: Option<String>) -> Self {
         self.tag = Some(value);
         self
     }

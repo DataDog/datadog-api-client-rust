@@ -19,7 +19,7 @@ impl AWSAccountListResponse {
         AWSAccountListResponse { accounts: None }
     }
 
-    pub fn accounts(&mut self, value: Vec<crate::datadogV1::model::AWSAccount>) -> &mut Self {
+    pub fn accounts(mut self, value: Vec<crate::datadogV1::model::AWSAccount>) -> Self {
         self.accounts = Some(value);
         self
     }

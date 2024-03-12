@@ -19,7 +19,7 @@ impl OrganizationResponse {
         OrganizationResponse { org: None }
     }
 
-    pub fn org(&mut self, value: crate::datadogV1::model::Organization) -> &mut Self {
+    pub fn org(mut self, value: crate::datadogV1::model::Organization) -> Self {
         self.org = Some(value);
         self
     }

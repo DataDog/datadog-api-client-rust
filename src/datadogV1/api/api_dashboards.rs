@@ -19,12 +19,12 @@ pub struct GetPublicDashboardInvitationsOptionalParams {
 
 impl GetPublicDashboardInvitationsOptionalParams {
     /// The number of records to return in a single request.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// The page to access (base 0).
-    pub fn page_number(&mut self, value: i64) -> &mut Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
@@ -49,23 +49,23 @@ pub struct ListDashboardsOptionalParams {
 impl ListDashboardsOptionalParams {
     /// When `true`, this query only returns shared custom created
     /// or cloned dashboards.
-    pub fn filter_shared(&mut self, value: bool) -> &mut Self {
+    pub fn filter_shared(mut self, value: bool) -> Self {
         self.filter_shared = Some(value);
         self
     }
     /// When `true`, this query returns only deleted custom-created
     /// or cloned dashboards. This parameter is incompatible with `filter[shared]`.
-    pub fn filter_deleted(&mut self, value: bool) -> &mut Self {
+    pub fn filter_deleted(mut self, value: bool) -> Self {
         self.filter_deleted = Some(value);
         self
     }
     /// The maximum number of dashboards returned in the list.
-    pub fn count(&mut self, value: i64) -> &mut Self {
+    pub fn count(mut self, value: i64) -> Self {
         self.count = Some(value);
         self
     }
     /// The specific offset to use as the beginning of the returned response.
-    pub fn start(&mut self, value: i64) -> &mut Self {
+    pub fn start(mut self, value: i64) -> Self {
         self.start = Some(value);
         self
     }

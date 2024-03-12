@@ -27,10 +27,7 @@ impl PowerpackInnerWidgets {
         }
     }
 
-    pub fn layout(
-        &mut self,
-        value: crate::datadogV2::model::PowerpackInnerWidgetLayout,
-    ) -> &mut Self {
+    pub fn layout(mut self, value: crate::datadogV2::model::PowerpackInnerWidgetLayout) -> Self {
         self.layout = Some(value);
         self
     }

@@ -24,27 +24,27 @@ pub struct EstimateMetricsOutputSeriesOptionalParams {
 
 impl EstimateMetricsOutputSeriesOptionalParams {
     /// Filtered tag keys that the metric is configured to query with.
-    pub fn filter_groups(&mut self, value: String) -> &mut Self {
+    pub fn filter_groups(mut self, value: String) -> Self {
         self.filter_groups = Some(value);
         self
     }
     /// The number of hours of look back (from now) to estimate cardinality with.
-    pub fn filter_hours_ago(&mut self, value: i32) -> &mut Self {
+    pub fn filter_hours_ago(mut self, value: i32) -> Self {
         self.filter_hours_ago = Some(value);
         self
     }
     /// The number of aggregations that a `count`, `rate`, or `gauge` metric is configured to use. Max number of aggregation combos is 9.
-    pub fn filter_num_aggregations(&mut self, value: i32) -> &mut Self {
+    pub fn filter_num_aggregations(mut self, value: i32) -> Self {
         self.filter_num_aggregations = Some(value);
         self
     }
     /// A boolean, for distribution metrics only, to estimate cardinality if the metric includes additional percentile aggregators.
-    pub fn filter_pct(&mut self, value: bool) -> &mut Self {
+    pub fn filter_pct(mut self, value: bool) -> Self {
         self.filter_pct = Some(value);
         self
     }
     /// A window, in hours, from the look back to estimate cardinality with.
-    pub fn filter_timespan_h(&mut self, value: i32) -> &mut Self {
+    pub fn filter_timespan_h(mut self, value: i32) -> Self {
         self.filter_timespan_h = Some(value);
         self
     }
@@ -62,7 +62,7 @@ pub struct ListActiveMetricConfigurationsOptionalParams {
 impl ListActiveMetricConfigurationsOptionalParams {
     /// The number of seconds of look back (from now).
     /// Default value is 604,800 (1 week), minimum value is 7200 (2 hours), maximum value is 2,630,000 (1 month).
-    pub fn window_seconds(&mut self, value: i64) -> &mut Self {
+    pub fn window_seconds(mut self, value: i64) -> Self {
         self.window_seconds = Some(value);
         self
     }
@@ -94,44 +94,44 @@ pub struct ListTagConfigurationsOptionalParams {
 
 impl ListTagConfigurationsOptionalParams {
     /// Filter custom metrics that have configured tags.
-    pub fn filter_configured(&mut self, value: bool) -> &mut Self {
+    pub fn filter_configured(mut self, value: bool) -> Self {
         self.filter_configured = Some(value);
         self
     }
     /// Filter tag configurations by configured tags.
-    pub fn filter_tags_configured(&mut self, value: String) -> &mut Self {
+    pub fn filter_tags_configured(mut self, value: String) -> Self {
         self.filter_tags_configured = Some(value);
         self
     }
     /// Filter metrics by metric type.
     pub fn filter_metric_type(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::MetricTagConfigurationMetricTypes,
-    ) -> &mut Self {
+    ) -> Self {
         self.filter_metric_type = Some(value);
         self
     }
     /// Filter distributions with additional percentile
     /// aggregations enabled or disabled.
-    pub fn filter_include_percentiles(&mut self, value: bool) -> &mut Self {
+    pub fn filter_include_percentiles(mut self, value: bool) -> Self {
         self.filter_include_percentiles = Some(value);
         self
     }
     /// (Beta) Filter custom metrics that have or have not been queried in the specified window[seconds].
     /// If no window is provided or the window is less than 2 hours, a default of 2 hours will be applied.
-    pub fn filter_queried(&mut self, value: bool) -> &mut Self {
+    pub fn filter_queried(mut self, value: bool) -> Self {
         self.filter_queried = Some(value);
         self
     }
     /// Filter metrics that have been submitted with the given tags. Supports boolean and wildcard expressions.
     /// Can only be combined with the filter[queried] filter.
-    pub fn filter_tags(&mut self, value: String) -> &mut Self {
+    pub fn filter_tags(mut self, value: String) -> Self {
         self.filter_tags = Some(value);
         self
     }
     /// The number of seconds of look back (from now) to apply to a filter[tag] or filter[queried] query.
     /// Default value is 3600 (1 hour), maximum value is 2,592,000 (30 days).
-    pub fn window_seconds(&mut self, value: i64) -> &mut Self {
+    pub fn window_seconds(mut self, value: i64) -> Self {
         self.window_seconds = Some(value);
         self
     }
@@ -148,9 +148,9 @@ pub struct SubmitMetricsOptionalParams {
 impl SubmitMetricsOptionalParams {
     /// HTTP header used to compress the media-type.
     pub fn content_encoding(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::MetricContentEncoding,
-    ) -> &mut Self {
+    ) -> Self {
         self.content_encoding = Some(value);
         self
     }

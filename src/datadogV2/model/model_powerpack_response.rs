@@ -25,12 +25,12 @@ impl PowerpackResponse {
         }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::PowerpackData) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::PowerpackData) -> Self {
         self.data = Some(value);
         self
     }
 
-    pub fn included(&mut self, value: Vec<crate::datadogV2::model::User>) -> &mut Self {
+    pub fn included(mut self, value: Vec<crate::datadogV2::model::User>) -> Self {
         self.included = Some(value);
         self
     }

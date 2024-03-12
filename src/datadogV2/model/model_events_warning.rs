@@ -29,17 +29,17 @@ impl EventsWarning {
         }
     }
 
-    pub fn code(&mut self, value: String) -> &mut Self {
+    pub fn code(mut self, value: String) -> Self {
         self.code = Some(value);
         self
     }
 
-    pub fn detail(&mut self, value: String) -> &mut Self {
+    pub fn detail(mut self, value: String) -> Self {
         self.detail = Some(value);
         self
     }
 
-    pub fn title(&mut self, value: String) -> &mut Self {
+    pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }

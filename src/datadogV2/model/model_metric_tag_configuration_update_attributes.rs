@@ -52,24 +52,24 @@ impl MetricTagConfigurationUpdateAttributes {
     }
 
     pub fn aggregations(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::MetricCustomAggregation>,
-    ) -> &mut Self {
+    ) -> Self {
         self.aggregations = Some(value);
         self
     }
 
-    pub fn exclude_tags_mode(&mut self, value: bool) -> &mut Self {
+    pub fn exclude_tags_mode(mut self, value: bool) -> Self {
         self.exclude_tags_mode = Some(value);
         self
     }
 
-    pub fn include_percentiles(&mut self, value: bool) -> &mut Self {
+    pub fn include_percentiles(mut self, value: bool) -> Self {
         self.include_percentiles = Some(value);
         self
     }
 
-    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }

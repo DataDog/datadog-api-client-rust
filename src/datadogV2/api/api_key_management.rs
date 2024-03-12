@@ -15,7 +15,7 @@ pub struct GetAPIKeyOptionalParams {
 
 impl GetAPIKeyOptionalParams {
     /// Comma separated list of resource paths for related resources to include in the response. Supported resource paths are `created_by` and `modified_by`.
-    pub fn include(&mut self, value: String) -> &mut Self {
+    pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
         self
     }
@@ -31,7 +31,7 @@ pub struct GetApplicationKeyOptionalParams {
 
 impl GetApplicationKeyOptionalParams {
     /// Resource path for related resources to include in the response. Only `owned_by` is supported.
-    pub fn include(&mut self, value: String) -> &mut Self {
+    pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
         self
     }
@@ -69,59 +69,59 @@ pub struct ListAPIKeysOptionalParams {
 
 impl ListAPIKeysOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Specific page number to return.
-    pub fn page_number(&mut self, value: i64) -> &mut Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
     /// API key attribute used to sort results. Sort order is ascending
     /// by default. In order to specify a descending sort, prefix the
     /// attribute with a minus sign.
-    pub fn sort(&mut self, value: crate::datadogV2::model::APIKeysSort) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV2::model::APIKeysSort) -> Self {
         self.sort = Some(value);
         self
     }
     /// Filter API keys by the specified string.
-    pub fn filter(&mut self, value: String) -> &mut Self {
+    pub fn filter(mut self, value: String) -> Self {
         self.filter = Some(value);
         self
     }
     /// Only include API keys created on or after the specified date.
-    pub fn filter_created_at_start(&mut self, value: String) -> &mut Self {
+    pub fn filter_created_at_start(mut self, value: String) -> Self {
         self.filter_created_at_start = Some(value);
         self
     }
     /// Only include API keys created on or before the specified date.
-    pub fn filter_created_at_end(&mut self, value: String) -> &mut Self {
+    pub fn filter_created_at_end(mut self, value: String) -> Self {
         self.filter_created_at_end = Some(value);
         self
     }
     /// Only include API keys modified on or after the specified date.
-    pub fn filter_modified_at_start(&mut self, value: String) -> &mut Self {
+    pub fn filter_modified_at_start(mut self, value: String) -> Self {
         self.filter_modified_at_start = Some(value);
         self
     }
     /// Only include API keys modified on or before the specified date.
-    pub fn filter_modified_at_end(&mut self, value: String) -> &mut Self {
+    pub fn filter_modified_at_end(mut self, value: String) -> Self {
         self.filter_modified_at_end = Some(value);
         self
     }
     /// Comma separated list of resource paths for related resources to include in the response. Supported resource paths are `created_by` and `modified_by`.
-    pub fn include(&mut self, value: String) -> &mut Self {
+    pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
         self
     }
     /// Filter API keys by remote config read enabled status.
-    pub fn filter_remote_config_read_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn filter_remote_config_read_enabled(mut self, value: bool) -> Self {
         self.filter_remote_config_read_enabled = Some(value);
         self
     }
     /// Filter API keys by category.
-    pub fn filter_category(&mut self, value: String) -> &mut Self {
+    pub fn filter_category(mut self, value: String) -> Self {
         self.filter_category = Some(value);
         self
     }
@@ -151,39 +151,39 @@ pub struct ListApplicationKeysOptionalParams {
 
 impl ListApplicationKeysOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Specific page number to return.
-    pub fn page_number(&mut self, value: i64) -> &mut Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
     /// Application key attribute used to sort results. Sort order is ascending
     /// by default. In order to specify a descending sort, prefix the
     /// attribute with a minus sign.
-    pub fn sort(&mut self, value: crate::datadogV2::model::ApplicationKeysSort) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV2::model::ApplicationKeysSort) -> Self {
         self.sort = Some(value);
         self
     }
     /// Filter application keys by the specified string.
-    pub fn filter(&mut self, value: String) -> &mut Self {
+    pub fn filter(mut self, value: String) -> Self {
         self.filter = Some(value);
         self
     }
     /// Only include application keys created on or after the specified date.
-    pub fn filter_created_at_start(&mut self, value: String) -> &mut Self {
+    pub fn filter_created_at_start(mut self, value: String) -> Self {
         self.filter_created_at_start = Some(value);
         self
     }
     /// Only include application keys created on or before the specified date.
-    pub fn filter_created_at_end(&mut self, value: String) -> &mut Self {
+    pub fn filter_created_at_end(mut self, value: String) -> Self {
         self.filter_created_at_end = Some(value);
         self
     }
     /// Resource path for related resources to include in the response. Only `owned_by` is supported.
-    pub fn include(&mut self, value: String) -> &mut Self {
+    pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
         self
     }
@@ -213,39 +213,39 @@ pub struct ListCurrentUserApplicationKeysOptionalParams {
 
 impl ListCurrentUserApplicationKeysOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Specific page number to return.
-    pub fn page_number(&mut self, value: i64) -> &mut Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
     /// Application key attribute used to sort results. Sort order is ascending
     /// by default. In order to specify a descending sort, prefix the
     /// attribute with a minus sign.
-    pub fn sort(&mut self, value: crate::datadogV2::model::ApplicationKeysSort) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV2::model::ApplicationKeysSort) -> Self {
         self.sort = Some(value);
         self
     }
     /// Filter application keys by the specified string.
-    pub fn filter(&mut self, value: String) -> &mut Self {
+    pub fn filter(mut self, value: String) -> Self {
         self.filter = Some(value);
         self
     }
     /// Only include application keys created on or after the specified date.
-    pub fn filter_created_at_start(&mut self, value: String) -> &mut Self {
+    pub fn filter_created_at_start(mut self, value: String) -> Self {
         self.filter_created_at_start = Some(value);
         self
     }
     /// Only include application keys created on or before the specified date.
-    pub fn filter_created_at_end(&mut self, value: String) -> &mut Self {
+    pub fn filter_created_at_end(mut self, value: String) -> Self {
         self.filter_created_at_end = Some(value);
         self
     }
     /// Resource path for related resources to include in the response. Only `owned_by` is supported.
-    pub fn include(&mut self, value: String) -> &mut Self {
+    pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
         self
     }

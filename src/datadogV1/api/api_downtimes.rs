@@ -17,12 +17,12 @@ pub struct ListDowntimesOptionalParams {
 
 impl ListDowntimesOptionalParams {
     /// Only return downtimes that are active when the request is made.
-    pub fn current_only(&mut self, value: bool) -> &mut Self {
+    pub fn current_only(mut self, value: bool) -> Self {
         self.current_only = Some(value);
         self
     }
     /// Return creator information.
-    pub fn with_creator(&mut self, value: bool) -> &mut Self {
+    pub fn with_creator(mut self, value: bool) -> Self {
         self.with_creator = Some(value);
         self
     }

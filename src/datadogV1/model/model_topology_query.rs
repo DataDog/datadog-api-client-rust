@@ -29,20 +29,17 @@ impl TopologyQuery {
         }
     }
 
-    pub fn data_source(
-        &mut self,
-        value: crate::datadogV1::model::TopologyQueryDataSource,
-    ) -> &mut Self {
+    pub fn data_source(mut self, value: crate::datadogV1::model::TopologyQueryDataSource) -> Self {
         self.data_source = Some(value);
         self
     }
 
-    pub fn filters(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn filters(mut self, value: Vec<String>) -> Self {
         self.filters = Some(value);
         self
     }
 
-    pub fn service(&mut self, value: String) -> &mut Self {
+    pub fn service(mut self, value: String) -> Self {
         self.service = Some(value);
         self
     }

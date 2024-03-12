@@ -30,20 +30,17 @@ impl AWSEventBridgeAccountConfiguration {
         }
     }
 
-    pub fn account_id(&mut self, value: String) -> &mut Self {
+    pub fn account_id(mut self, value: String) -> Self {
         self.account_id = Some(value);
         self
     }
 
-    pub fn event_hubs(
-        &mut self,
-        value: Vec<crate::datadogV1::model::AWSEventBridgeSource>,
-    ) -> &mut Self {
+    pub fn event_hubs(mut self, value: Vec<crate::datadogV1::model::AWSEventBridgeSource>) -> Self {
         self.event_hubs = Some(value);
         self
     }
 
-    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }

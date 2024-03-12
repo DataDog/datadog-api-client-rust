@@ -31,15 +31,15 @@ impl SecurityMonitoringSignalStateUpdateData {
         }
     }
 
-    pub fn id(&mut self, value: serde_json::Value) -> &mut Self {
+    pub fn id(mut self, value: serde_json::Value) -> Self {
         self.id = Some(value);
         self
     }
 
     pub fn type_(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::SecurityMonitoringSignalMetadataType,
-    ) -> &mut Self {
+    ) -> Self {
         self.type_ = Some(value);
         self
     }

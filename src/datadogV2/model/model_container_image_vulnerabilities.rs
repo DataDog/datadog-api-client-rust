@@ -45,37 +45,37 @@ impl ContainerImageVulnerabilities {
         }
     }
 
-    pub fn asset_id(&mut self, value: String) -> &mut Self {
+    pub fn asset_id(mut self, value: String) -> Self {
         self.asset_id = Some(value);
         self
     }
 
-    pub fn critical(&mut self, value: i64) -> &mut Self {
+    pub fn critical(mut self, value: i64) -> Self {
         self.critical = Some(value);
         self
     }
 
-    pub fn high(&mut self, value: i64) -> &mut Self {
+    pub fn high(mut self, value: i64) -> Self {
         self.high = Some(value);
         self
     }
 
-    pub fn low(&mut self, value: i64) -> &mut Self {
+    pub fn low(mut self, value: i64) -> Self {
         self.low = Some(value);
         self
     }
 
-    pub fn medium(&mut self, value: i64) -> &mut Self {
+    pub fn medium(mut self, value: i64) -> Self {
         self.medium = Some(value);
         self
     }
 
-    pub fn none(&mut self, value: i64) -> &mut Self {
+    pub fn none(mut self, value: i64) -> Self {
         self.none = Some(value);
         self
     }
 
-    pub fn unknown(&mut self, value: i64) -> &mut Self {
+    pub fn unknown(mut self, value: i64) -> Self {
         self.unknown = Some(value);
         self
     }

@@ -19,7 +19,7 @@ impl ApiKeyResponse {
         ApiKeyResponse { api_key: None }
     }
 
-    pub fn api_key(&mut self, value: crate::datadogV1::model::ApiKey) -> &mut Self {
+    pub fn api_key(mut self, value: crate::datadogV1::model::ApiKey) -> Self {
         self.api_key = Some(value);
         self
     }

@@ -31,12 +31,12 @@ impl SunburstWidgetLegendInlineAutomatic {
         }
     }
 
-    pub fn hide_percent(&mut self, value: bool) -> &mut Self {
+    pub fn hide_percent(mut self, value: bool) -> Self {
         self.hide_percent = Some(value);
         self
     }
 
-    pub fn hide_value(&mut self, value: bool) -> &mut Self {
+    pub fn hide_value(mut self, value: bool) -> Self {
         self.hide_value = Some(value);
         self
     }

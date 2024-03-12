@@ -27,7 +27,7 @@ impl ListStreamComputeItems {
         }
     }
 
-    pub fn facet(&mut self, value: String) -> &mut Self {
+    pub fn facet(mut self, value: String) -> Self {
         self.facet = Some(value);
         self
     }

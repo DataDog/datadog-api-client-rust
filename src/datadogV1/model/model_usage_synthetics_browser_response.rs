@@ -20,9 +20,9 @@ impl UsageSyntheticsBrowserResponse {
     }
 
     pub fn usage(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::UsageSyntheticsBrowserHour>,
-    ) -> &mut Self {
+    ) -> Self {
         self.usage = Some(value);
         self
     }

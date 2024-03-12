@@ -50,39 +50,39 @@ impl LogAttributes {
     }
 
     pub fn attributes(
-        &mut self,
+        mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> &mut Self {
+    ) -> Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn host(&mut self, value: String) -> &mut Self {
+    pub fn host(mut self, value: String) -> Self {
         self.host = Some(value);
         self
     }
 
-    pub fn message(&mut self, value: String) -> &mut Self {
+    pub fn message(mut self, value: String) -> Self {
         self.message = Some(value);
         self
     }
 
-    pub fn service(&mut self, value: String) -> &mut Self {
+    pub fn service(mut self, value: String) -> Self {
         self.service = Some(value);
         self
     }
 
-    pub fn status(&mut self, value: String) -> &mut Self {
+    pub fn status(mut self, value: String) -> Self {
         self.status = Some(value);
         self
     }
 
-    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
 
-    pub fn timestamp(&mut self, value: String) -> &mut Self {
+    pub fn timestamp(mut self, value: String) -> Self {
         self.timestamp = Some(value);
         self
     }

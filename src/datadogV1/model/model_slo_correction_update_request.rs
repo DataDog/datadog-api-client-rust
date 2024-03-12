@@ -19,7 +19,7 @@ impl SLOCorrectionUpdateRequest {
         SLOCorrectionUpdateRequest { data: None }
     }
 
-    pub fn data(&mut self, value: crate::datadogV1::model::SLOCorrectionUpdateData) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV1::model::SLOCorrectionUpdateData) -> Self {
         self.data = Some(value);
         self
     }

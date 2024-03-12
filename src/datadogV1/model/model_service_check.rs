@@ -46,12 +46,12 @@ impl ServiceCheck {
         }
     }
 
-    pub fn message(&mut self, value: String) -> &mut Self {
+    pub fn message(mut self, value: String) -> Self {
         self.message = Some(value);
         self
     }
 
-    pub fn timestamp(&mut self, value: i64) -> &mut Self {
+    pub fn timestamp(mut self, value: i64) -> Self {
         self.timestamp = Some(value);
         self
     }

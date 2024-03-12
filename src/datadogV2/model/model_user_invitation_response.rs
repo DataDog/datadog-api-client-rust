@@ -19,10 +19,7 @@ impl UserInvitationResponse {
         UserInvitationResponse { data: None }
     }
 
-    pub fn data(
-        &mut self,
-        value: crate::datadogV2::model::UserInvitationResponseData,
-    ) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::UserInvitationResponseData) -> Self {
         self.data = Some(value);
         self
     }

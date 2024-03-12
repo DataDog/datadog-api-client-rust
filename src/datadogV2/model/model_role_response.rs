@@ -19,7 +19,7 @@ impl RoleResponse {
         RoleResponse { data: None }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::Role) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::Role) -> Self {
         self.data = Some(value);
         self
     }

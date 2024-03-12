@@ -26,14 +26,14 @@ impl FastlyAccountUpdateRequestData {
     }
 
     pub fn attributes(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::FastlyAccountUpdateRequestAttributes,
-    ) -> &mut Self {
+    ) -> Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: crate::datadogV2::model::FastlyAccountType) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::FastlyAccountType) -> Self {
         self.type_ = Some(value);
         self
     }

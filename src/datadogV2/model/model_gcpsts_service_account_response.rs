@@ -19,7 +19,7 @@ impl GCPSTSServiceAccountResponse {
         GCPSTSServiceAccountResponse { data: None }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::GCPSTSServiceAccount) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::GCPSTSServiceAccount) -> Self {
         self.data = Some(value);
         self
     }

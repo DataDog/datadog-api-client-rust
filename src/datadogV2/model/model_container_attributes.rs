@@ -65,52 +65,52 @@ impl ContainerAttributes {
         }
     }
 
-    pub fn container_id(&mut self, value: String) -> &mut Self {
+    pub fn container_id(mut self, value: String) -> Self {
         self.container_id = Some(value);
         self
     }
 
-    pub fn created_at(&mut self, value: String) -> &mut Self {
+    pub fn created_at(mut self, value: String) -> Self {
         self.created_at = Some(value);
         self
     }
 
-    pub fn host(&mut self, value: String) -> &mut Self {
+    pub fn host(mut self, value: String) -> Self {
         self.host = Some(value);
         self
     }
 
-    pub fn image_digest(&mut self, value: Option<String>) -> &mut Self {
+    pub fn image_digest(mut self, value: Option<String>) -> Self {
         self.image_digest = Some(value);
         self
     }
 
-    pub fn image_name(&mut self, value: String) -> &mut Self {
+    pub fn image_name(mut self, value: String) -> Self {
         self.image_name = Some(value);
         self
     }
 
-    pub fn image_tags(&mut self, value: Option<Vec<String>>) -> &mut Self {
+    pub fn image_tags(mut self, value: Option<Vec<String>>) -> Self {
         self.image_tags = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
-    pub fn started_at(&mut self, value: String) -> &mut Self {
+    pub fn started_at(mut self, value: String) -> Self {
         self.started_at = Some(value);
         self
     }
 
-    pub fn state(&mut self, value: String) -> &mut Self {
+    pub fn state(mut self, value: String) -> Self {
         self.state = Some(value);
         self
     }
 
-    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }

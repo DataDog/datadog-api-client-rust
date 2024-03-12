@@ -25,12 +25,12 @@ impl Log {
         }
     }
 
-    pub fn content(&mut self, value: crate::datadogV1::model::LogContent) -> &mut Self {
+    pub fn content(mut self, value: crate::datadogV1::model::LogContent) -> Self {
         self.content = Some(value);
         self
     }
 
-    pub fn id(&mut self, value: String) -> &mut Self {
+    pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }

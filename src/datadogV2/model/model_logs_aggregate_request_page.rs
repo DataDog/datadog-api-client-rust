@@ -19,7 +19,7 @@ impl LogsAggregateRequestPage {
         LogsAggregateRequestPage { cursor: None }
     }
 
-    pub fn cursor(&mut self, value: String) -> &mut Self {
+    pub fn cursor(mut self, value: String) -> Self {
         self.cursor = Some(value);
         self
     }

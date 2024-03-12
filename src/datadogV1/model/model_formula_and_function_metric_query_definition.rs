@@ -38,9 +38,9 @@ impl FormulaAndFunctionMetricQueryDefinition {
     }
 
     pub fn aggregator(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::FormulaAndFunctionMetricAggregation,
-    ) -> &mut Self {
+    ) -> Self {
         self.aggregator = Some(value);
         self
     }

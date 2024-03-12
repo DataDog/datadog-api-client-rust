@@ -61,37 +61,37 @@ impl CheckStatusWidgetDefinition {
         }
     }
 
-    pub fn group(&mut self, value: String) -> &mut Self {
+    pub fn group(mut self, value: String) -> Self {
         self.group = Some(value);
         self
     }
 
-    pub fn group_by(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn group_by(mut self, value: Vec<String>) -> Self {
         self.group_by = Some(value);
         self
     }
 
-    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
 
-    pub fn time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
+    pub fn time(mut self, value: crate::datadogV1::model::WidgetTime) -> Self {
         self.time = Some(value);
         self
     }
 
-    pub fn title(&mut self, value: String) -> &mut Self {
+    pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
 
-    pub fn title_align(&mut self, value: crate::datadogV1::model::WidgetTextAlign) -> &mut Self {
+    pub fn title_align(mut self, value: crate::datadogV1::model::WidgetTextAlign) -> Self {
         self.title_align = Some(value);
         self
     }
 
-    pub fn title_size(&mut self, value: String) -> &mut Self {
+    pub fn title_size(mut self, value: String) -> Self {
         self.title_size = Some(value);
         self
     }

@@ -20,9 +20,9 @@ impl SyntheticsListGlobalVariablesResponse {
     }
 
     pub fn variables(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::SyntheticsGlobalVariable>,
-    ) -> &mut Self {
+    ) -> Self {
         self.variables = Some(value);
         self
     }

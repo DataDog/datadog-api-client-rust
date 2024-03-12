@@ -19,7 +19,7 @@ impl RuleOutcomeRelationships {
         RuleOutcomeRelationships { rule: None }
     }
 
-    pub fn rule(&mut self, value: crate::datadogV2::model::RelationshipToOutcome) -> &mut Self {
+    pub fn rule(mut self, value: crate::datadogV2::model::RelationshipToOutcome) -> Self {
         self.rule = Some(value);
         self
     }

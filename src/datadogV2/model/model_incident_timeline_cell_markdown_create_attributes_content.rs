@@ -19,7 +19,7 @@ impl IncidentTimelineCellMarkdownCreateAttributesContent {
         IncidentTimelineCellMarkdownCreateAttributesContent { content: None }
     }
 
-    pub fn content(&mut self, value: String) -> &mut Self {
+    pub fn content(mut self, value: String) -> Self {
         self.content = Some(value);
         self
     }

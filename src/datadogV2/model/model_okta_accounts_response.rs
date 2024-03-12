@@ -19,10 +19,7 @@ impl OktaAccountsResponse {
         OktaAccountsResponse { data: None }
     }
 
-    pub fn data(
-        &mut self,
-        value: Vec<crate::datadogV2::model::OktaAccountResponseData>,
-    ) -> &mut Self {
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::OktaAccountResponseData>) -> Self {
         self.data = Some(value);
         self
     }

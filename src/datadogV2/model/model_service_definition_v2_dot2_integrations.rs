@@ -26,17 +26,17 @@ impl ServiceDefinitionV2Dot2Integrations {
     }
 
     pub fn opsgenie(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::ServiceDefinitionV2Dot2Opsgenie,
-    ) -> &mut Self {
+    ) -> Self {
         self.opsgenie = Some(value);
         self
     }
 
     pub fn pagerduty(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::ServiceDefinitionV2Dot2Pagerduty,
-    ) -> &mut Self {
+    ) -> Self {
         self.pagerduty = Some(value);
         self
     }

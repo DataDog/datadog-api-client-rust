@@ -29,17 +29,17 @@ impl IncidentResponseMetaPagination {
         }
     }
 
-    pub fn next_offset(&mut self, value: i64) -> &mut Self {
+    pub fn next_offset(mut self, value: i64) -> Self {
         self.next_offset = Some(value);
         self
     }
 
-    pub fn offset(&mut self, value: i64) -> &mut Self {
+    pub fn offset(mut self, value: i64) -> Self {
         self.offset = Some(value);
         self
     }
 
-    pub fn size(&mut self, value: i64) -> &mut Self {
+    pub fn size(mut self, value: i64) -> Self {
         self.size = Some(value);
         self
     }

@@ -47,7 +47,7 @@ impl {{operation.operationId}}OptionalParams {
     {%- if get_deprecated(model) %}
     #[allow(deprecated)]
     {%- endif %}
-    pub fn {{name|variable_name}}(&mut self, value: {{get_type_for_parameter(parameter, version, render_option=false)}}) -> &mut Self {
+    pub fn {{name|variable_name}}(mut self, value: {{get_type_for_parameter(parameter, version, render_option=false)}}) -> Self {
         self.{{name|variable_name}} = Some(value);
         self
     }

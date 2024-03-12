@@ -19,7 +19,7 @@ impl UserListResponse {
         UserListResponse { users: None }
     }
 
-    pub fn users(&mut self, value: Vec<crate::datadogV1::model::User>) -> &mut Self {
+    pub fn users(mut self, value: Vec<crate::datadogV1::model::User>) -> Self {
         self.users = Some(value);
         self
     }
