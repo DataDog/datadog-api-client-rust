@@ -40,7 +40,6 @@ def cli(specs, output):
     env.filters["parameter_schema"] = openapi.parameter_schema
     env.filters["parameters"] = openapi.parameters
     env.filters["form_parameter"] = openapi.form_parameter
-    env.filters["response_type"] = openapi.get_type_for_response
     env.filters["return_type"] = openapi.return_type
     env.filters["simple_type"] = formatter.simple_type
     env.filters["snake_case"] = formatter.snake_case
@@ -61,7 +60,9 @@ def cli(specs, output):
     env.globals["get_deprecated"] = openapi.get_deprecated
     env.globals["get_container"] = openapi.get_container
     env.globals["get_container_type"] = openapi.get_container_type
+    env.globals["get_accessors"] = openapi.get_accessors
     env.globals["get_type_at_path"] = openapi.get_type_at_path
+    env.globals["get_schema_for_attribute"] = openapi.get_schema_for_attribute
     env.globals["common_package_name"] = COMMON_PACKAGE_NAME
     env.globals["module"] = MODULE
 

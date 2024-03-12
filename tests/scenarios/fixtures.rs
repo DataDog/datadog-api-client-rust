@@ -470,10 +470,24 @@ fn request_sent(world: &mut DatadogWorld) {
     }
 }
 
-// #[when(regex = r"^the request with pagination is sent$")]
-// fn request_with_pagination_sent(_world: &mut DatadogWorld) {
+#[when(regex = r"^the request with pagination is sent$")]
+fn request_with_pagination_sent(world: &mut DatadogWorld) {
+    world
+        .function_mappings
+        .get(&format!(
+            "v{}.{}WithPagination",
+            world.api_version, &world.operation_id
+        ))
+        .expect(&format!(
+            "{:?} request operation id not found",
+            world.operation_id
+        ))(world, &world.parameters.clone());
+}
 
-// }
+#[then(expr = "the response has {int} items")]
+fn response_has_items(world: &mut DatadogWorld, size: usize) {
+    assert!(world.response.object.as_array().unwrap().len() == size);
+}
 
 #[then(expr = "the response status is {int} {}")]
 fn response_status_is(world: &mut DatadogWorld, status_code: u16, _status_message: String) {
@@ -497,6 +511,13 @@ fn response_has_field(world: &mut DatadogWorld, path: String, field_path: String
     let found = lookup(&path, &world.response.object).expect("value not found in response");
     let field = lookup(&field_path, &found);
     assert!(field.is_some());
+}
+
+#[then(expr = "the response {string} does not have field {string}")]
+fn response_does_not_have_field(world: &mut DatadogWorld, path: String, field_path: String) {
+    let found = lookup(&path, &world.response.object).expect("value not found in response");
+    let field = lookup(&field_path, &found);
+    assert!(field.is_none());
 }
 
 #[then(expr = "the response {string} has item with field {string} with value {}")]

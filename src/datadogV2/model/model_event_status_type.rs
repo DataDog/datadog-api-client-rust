@@ -2,26 +2,18 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum EventStatusType {
-    #[serde(rename = "failure")]
     FAILURE,
-    #[serde(rename = "error")]
     ERROR,
-    #[serde(rename = "warning")]
     WARNING,
-    #[serde(rename = "info")]
     INFO,
-    #[serde(rename = "success")]
     SUCCESS,
-    #[serde(rename = "user_update")]
     USER_UPDATE,
-    #[serde(rename = "recommendation")]
     RECOMMENDATION,
-    #[serde(rename = "snapshot")]
     SNAPSHOT,
 }
 
@@ -37,5 +29,41 @@ impl ToString for EventStatusType {
             Self::RECOMMENDATION => String::from("recommendation"),
             Self::SNAPSHOT => String::from("snapshot"),
         }
+    }
+}
+
+impl Serialize for EventStatusType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for EventStatusType {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "failure" => Self::FAILURE,
+            "error" => Self::ERROR,
+            "warning" => Self::WARNING,
+            "info" => Self::INFO,
+            "success" => Self::SUCCESS,
+            "user_update" => Self::USER_UPDATE,
+            "recommendation" => Self::RECOMMENDATION,
+            "snapshot" => Self::SNAPSHOT,
+            _ => {
+                return Err(serde::de::Error::custom(format!(
+                    "Invalid value for SyntheticsDeviceID: {}",
+                    s
+                )))
+            }
+        })
     }
 }

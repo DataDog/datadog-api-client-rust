@@ -2,18 +2,14 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum MetricCustomSpaceAggregation {
-    #[serde(rename = "avg")]
     AVG,
-    #[serde(rename = "max")]
     MAX,
-    #[serde(rename = "min")]
     MIN,
-    #[serde(rename = "sum")]
     SUM,
 }
 
@@ -25,5 +21,37 @@ impl ToString for MetricCustomSpaceAggregation {
             Self::MIN => String::from("min"),
             Self::SUM => String::from("sum"),
         }
+    }
+}
+
+impl Serialize for MetricCustomSpaceAggregation {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for MetricCustomSpaceAggregation {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "avg" => Self::AVG,
+            "max" => Self::MAX,
+            "min" => Self::MIN,
+            "sum" => Self::SUM,
+            _ => {
+                return Err(serde::de::Error::custom(format!(
+                    "Invalid value for SyntheticsDeviceID: {}",
+                    s
+                )))
+            }
+        })
     }
 }

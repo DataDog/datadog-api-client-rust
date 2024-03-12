@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use log::warn;
 use reqwest;
 use serde::{Deserialize, Serialize};
@@ -1495,6 +1497,38 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    pub fn list_findings_with_pagination(
+        &self,
+        mut params: ListFindingsOptionalParams,
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::Finding, Error<ListFindingsError>>> + '_
+    {
+        try_stream! {
+            let mut page_size: i64 = 100;
+            if params.page_limit.is_none() {
+                params.page_limit = Some(page_size);
+            } else {
+                page_size = params.page_limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_findings(params.clone()).await?;
+
+                let r = resp.data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                let Some(page) = resp.meta.page else { break };
+                let Some(cursor) = page.cursor else { break };
+
+                params.page_cursor = Some(cursor);
+            }
+        }
+    }
+
     /// Get a list of CSPM findings.
     ///
     /// ### Filtering
@@ -1877,6 +1911,44 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    pub fn list_security_monitoring_signals_with_pagination(
+        &self,
+        mut params: ListSecurityMonitoringSignalsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::SecurityMonitoringSignal,
+            Error<ListSecurityMonitoringSignalsError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i32 = 10;
+            if params.page_limit.is_none() {
+                params.page_limit = Some(page_size);
+            } else {
+                page_size = params.page_limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_security_monitoring_signals(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                let Some(meta) = resp.meta else { break };
+                let Some(page) = meta.page else { break };
+                let Some(after) = page.after else { break };
+
+                params.page_cursor = Some(after);
+            }
+        }
+    }
+
     /// The list endpoint returns security signals that match a search query.
     /// Both this endpoint and the POST endpoint can be used interchangeably when listing
     /// security signals.
@@ -2100,6 +2172,50 @@ impl SecurityMonitoringAPI {
                 }
             }
             Err(err) => Err(err),
+        }
+    }
+
+    pub fn search_security_monitoring_signals_with_pagination(
+        &self,
+        mut params: SearchSecurityMonitoringSignalsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::SecurityMonitoringSignal,
+            Error<SearchSecurityMonitoringSignalsError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i32 = 10;
+            if params.body.is_none() {
+                params.body = Some(crate::datadogV2::model::SecurityMonitoringSignalListRequest::new());
+            }
+            if params.body.as_ref().unwrap().page.is_none() {
+                params.body.as_mut().unwrap().page = Some(crate::datadogV2::model::SecurityMonitoringSignalListRequestPage::new());
+            }
+            if params.body.as_ref().unwrap().page.as_ref().unwrap().limit.is_none() {
+                params.body.as_mut().unwrap().page.as_mut().unwrap().limit = Some(page_size);
+            } else {
+                page_size = params.body.as_ref().unwrap().page.as_ref().unwrap().limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.search_security_monitoring_signals(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                let Some(meta) = resp.meta else { break };
+                let Some(page) = meta.page else { break };
+                let Some(after) = page.after else { break };
+
+                params.body.as_mut().unwrap().page.as_mut().unwrap().cursor = Some(after);
+            }
         }
     }
 

@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -967,6 +969,41 @@ impl ServiceLevelObjectivesAPI {
                 }
             }
             Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_slos_with_pagination(
+        &self,
+        mut params: ListSLOsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<crate::datadogV1::model::ServiceLevelObjective, Error<ListSLOsError>>,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 1000;
+            if params.limit.is_none() {
+                params.limit = Some(page_size);
+            } else {
+                page_size = params.limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_slos(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                if params.offset.is_none() {
+                    params.offset = Some(page_size.clone());
+                } else {
+                    params.offset = Some(params.offset.unwrap() + page_size.clone());
+                }
+            }
         }
     }
 
