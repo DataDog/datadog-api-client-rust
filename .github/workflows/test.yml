@@ -71,7 +71,7 @@ jobs:
   test:
     strategy:
       matrix:
-        rust-version: ["1.76.0"]
+        rust-version: ["stable"]
         platform: [ubuntu-latest]
     runs-on: ${{ matrix.platform }}
     if: (github.event.pull_request.draft == false && !contains(github.event.pull_request.labels.*.name, 'ci/skip') && !contains(github.event.pull_request.head.ref, 'datadog-api-spec/test/')) || github.event_name == 'schedule'
@@ -94,7 +94,7 @@ jobs:
       - name: Install Rust
         uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: ${{ matrix.rust-version }}
+          toolchain: stable
       - name: Check examples
         run: cargo check --examples
         shell: bash
@@ -104,7 +104,7 @@ jobs:
     if: always() && github.event_name == 'pull_request' && contains(github.event.pull_request.head.ref, 'datadog-api-spec/generated/')
     needs:
       - test
-      # - examples
+      - examples
     steps:
       - name: Get GitHub App token
         if: github.event_name == 'pull_request'
