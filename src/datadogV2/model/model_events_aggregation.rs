@@ -2,32 +2,21 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum EventsAggregation {
-    #[serde(rename = "count")]
     COUNT,
-    #[serde(rename = "cardinality")]
     CARDINALITY,
-    #[serde(rename = "pc75")]
     PC75,
-    #[serde(rename = "pc90")]
     PC90,
-    #[serde(rename = "pc95")]
     PC95,
-    #[serde(rename = "pc98")]
     PC98,
-    #[serde(rename = "pc99")]
     PC99,
-    #[serde(rename = "sum")]
     SUM,
-    #[serde(rename = "min")]
     MIN,
-    #[serde(rename = "max")]
     MAX,
-    #[serde(rename = "avg")]
     AVG,
 }
 
@@ -46,5 +35,44 @@ impl ToString for EventsAggregation {
             Self::MAX => String::from("max"),
             Self::AVG => String::from("avg"),
         }
+    }
+}
+
+impl Serialize for EventsAggregation {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for EventsAggregation {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "count" => Self::COUNT,
+            "cardinality" => Self::CARDINALITY,
+            "pc75" => Self::PC75,
+            "pc90" => Self::PC90,
+            "pc95" => Self::PC95,
+            "pc98" => Self::PC98,
+            "pc99" => Self::PC99,
+            "sum" => Self::SUM,
+            "min" => Self::MIN,
+            "max" => Self::MAX,
+            "avg" => Self::AVG,
+            _ => {
+                return Err(serde::de::Error::custom(format!(
+                    "Invalid value for SyntheticsDeviceID: {}",
+                    s
+                )))
+            }
+        })
     }
 }

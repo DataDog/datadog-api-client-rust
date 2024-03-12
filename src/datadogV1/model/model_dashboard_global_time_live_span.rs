@@ -2,26 +2,18 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum DashboardGlobalTimeLiveSpan {
-    #[serde(rename = "15m")]
     PAST_FIFTEEN_MINUTES,
-    #[serde(rename = "1h")]
     PAST_ONE_HOUR,
-    #[serde(rename = "4h")]
     PAST_FOUR_HOURS,
-    #[serde(rename = "1d")]
     PAST_ONE_DAY,
-    #[serde(rename = "2d")]
     PAST_TWO_DAYS,
-    #[serde(rename = "1w")]
     PAST_ONE_WEEK,
-    #[serde(rename = "1mo")]
     PAST_ONE_MONTH,
-    #[serde(rename = "3mo")]
     PAST_THREE_MONTHS,
 }
 
@@ -37,5 +29,41 @@ impl ToString for DashboardGlobalTimeLiveSpan {
             Self::PAST_ONE_MONTH => String::from("1mo"),
             Self::PAST_THREE_MONTHS => String::from("3mo"),
         }
+    }
+}
+
+impl Serialize for DashboardGlobalTimeLiveSpan {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for DashboardGlobalTimeLiveSpan {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "15m" => Self::PAST_FIFTEEN_MINUTES,
+            "1h" => Self::PAST_ONE_HOUR,
+            "4h" => Self::PAST_FOUR_HOURS,
+            "1d" => Self::PAST_ONE_DAY,
+            "2d" => Self::PAST_TWO_DAYS,
+            "1w" => Self::PAST_ONE_WEEK,
+            "1mo" => Self::PAST_ONE_MONTH,
+            "3mo" => Self::PAST_THREE_MONTHS,
+            _ => {
+                return Err(serde::de::Error::custom(format!(
+                    "Invalid value for SyntheticsDeviceID: {}",
+                    s
+                )))
+            }
+        })
     }
 }
