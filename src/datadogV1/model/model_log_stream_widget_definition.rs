@@ -298,6 +298,7 @@ impl<'de> Deserialize<'de> for LogStreamWidgetDefinition {
                 }
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
+                #[allow(deprecated)]
                 let content = LogStreamWidgetDefinition {
                     columns,
                     indexes,

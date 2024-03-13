@@ -665,10 +665,10 @@ fn relative_time_helper(v: &String, ts: i64) -> DateTime<chrono::Utc> {
         )
         .unwrap();
         match caps.get(3).unwrap().as_str() {
-            "s" => time.add(Duration::seconds(diff)),
-            "m" => time.add(Duration::minutes(diff)),
-            "h" => time.add(Duration::hours(diff)),
-            "d" => time.add(Duration::days(diff)),
+            "s" => time.add(Duration::try_seconds(diff).unwrap()),
+            "m" => time.add(Duration::try_minutes(diff).unwrap()),
+            "h" => time.add(Duration::try_hours(diff).unwrap()),
+            "d" => time.add(Duration::try_days(diff).unwrap()),
             "M" => {
                 if diff > 0 {
                     time.checked_add_months(Months::new(diff as u32)).unwrap()

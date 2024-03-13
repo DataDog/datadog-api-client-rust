@@ -364,6 +364,7 @@ impl<'de> Deserialize<'de> for Dashboard {
                 let title = title.ok_or_else(|| M::Error::missing_field("title"))?;
                 let widgets = widgets.ok_or_else(|| M::Error::missing_field("widgets"))?;
 
+                #[allow(deprecated)]
                 let content = Dashboard {
                     author_handle,
                     author_name,

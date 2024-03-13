@@ -256,6 +256,7 @@ impl<'de> Deserialize<'de> for AzureUCConfig {
                 let storage_container = storage_container
                     .ok_or_else(|| M::Error::missing_field("storage_container"))?;
 
+                #[allow(deprecated)]
                 let content = AzureUCConfig {
                     account_id,
                     client_id,

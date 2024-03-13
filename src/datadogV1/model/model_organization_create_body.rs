@@ -100,6 +100,7 @@ impl<'de> Deserialize<'de> for OrganizationCreateBody {
                 }
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
+                #[allow(deprecated)]
                 let content = OrganizationCreateBody {
                     billing,
                     name,
