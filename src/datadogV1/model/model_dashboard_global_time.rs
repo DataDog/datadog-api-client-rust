@@ -28,9 +28,9 @@ impl DashboardGlobalTime {
     }
 
     pub fn live_span(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::DashboardGlobalTimeLiveSpan,
-    ) -> &mut Self {
+    ) -> Self {
         self.live_span = Some(value);
         self
     }

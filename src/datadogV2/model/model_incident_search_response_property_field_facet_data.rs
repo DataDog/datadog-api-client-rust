@@ -40,9 +40,9 @@ impl IncidentSearchResponsePropertyFieldFacetData {
     }
 
     pub fn aggregates(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::IncidentSearchResponseNumericFacetDataAggregates,
-    ) -> &mut Self {
+    ) -> Self {
         self.aggregates = Some(value);
         self
     }

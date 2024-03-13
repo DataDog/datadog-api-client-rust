@@ -31,15 +31,12 @@ impl SyntheticsApiTestResultFailure {
         }
     }
 
-    pub fn code(
-        &mut self,
-        value: crate::datadogV1::model::SyntheticsApiTestFailureCode,
-    ) -> &mut Self {
+    pub fn code(mut self, value: crate::datadogV1::model::SyntheticsApiTestFailureCode) -> Self {
         self.code = Some(value);
         self
     }
 
-    pub fn message(&mut self, value: String) -> &mut Self {
+    pub fn message(mut self, value: String) -> Self {
         self.message = Some(value);
         self
     }

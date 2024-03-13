@@ -121,97 +121,97 @@ impl EventAttributes {
         }
     }
 
-    pub fn aggregation_key(&mut self, value: String) -> &mut Self {
+    pub fn aggregation_key(mut self, value: String) -> Self {
         self.aggregation_key = Some(value);
         self
     }
 
-    pub fn date_happened(&mut self, value: i64) -> &mut Self {
+    pub fn date_happened(mut self, value: i64) -> Self {
         self.date_happened = Some(value);
         self
     }
 
-    pub fn device_name(&mut self, value: String) -> &mut Self {
+    pub fn device_name(mut self, value: String) -> Self {
         self.device_name = Some(value);
         self
     }
 
-    pub fn duration(&mut self, value: i64) -> &mut Self {
+    pub fn duration(mut self, value: i64) -> Self {
         self.duration = Some(value);
         self
     }
 
-    pub fn event_object(&mut self, value: String) -> &mut Self {
+    pub fn event_object(mut self, value: String) -> Self {
         self.event_object = Some(value);
         self
     }
 
-    pub fn evt(&mut self, value: crate::datadogV2::model::Event) -> &mut Self {
+    pub fn evt(mut self, value: crate::datadogV2::model::Event) -> Self {
         self.evt = Some(value);
         self
     }
 
-    pub fn hostname(&mut self, value: String) -> &mut Self {
+    pub fn hostname(mut self, value: String) -> Self {
         self.hostname = Some(value);
         self
     }
 
-    pub fn monitor(&mut self, value: Option<crate::datadogV2::model::MonitorType>) -> &mut Self {
+    pub fn monitor(mut self, value: Option<crate::datadogV2::model::MonitorType>) -> Self {
         self.monitor = Some(value);
         self
     }
 
-    pub fn monitor_groups(&mut self, value: Option<Vec<String>>) -> &mut Self {
+    pub fn monitor_groups(mut self, value: Option<Vec<String>>) -> Self {
         self.monitor_groups = Some(value);
         self
     }
 
-    pub fn monitor_id(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn monitor_id(mut self, value: Option<i64>) -> Self {
         self.monitor_id = Some(value);
         self
     }
 
-    pub fn priority(&mut self, value: Option<crate::datadogV2::model::EventPriority>) -> &mut Self {
+    pub fn priority(mut self, value: Option<crate::datadogV2::model::EventPriority>) -> Self {
         self.priority = Some(value);
         self
     }
 
-    pub fn related_event_id(&mut self, value: i64) -> &mut Self {
+    pub fn related_event_id(mut self, value: i64) -> Self {
         self.related_event_id = Some(value);
         self
     }
 
-    pub fn service(&mut self, value: String) -> &mut Self {
+    pub fn service(mut self, value: String) -> Self {
         self.service = Some(value);
         self
     }
 
-    pub fn source_type_name(&mut self, value: String) -> &mut Self {
+    pub fn source_type_name(mut self, value: String) -> Self {
         self.source_type_name = Some(value);
         self
     }
 
-    pub fn sourcecategory(&mut self, value: String) -> &mut Self {
+    pub fn sourcecategory(mut self, value: String) -> Self {
         self.sourcecategory = Some(value);
         self
     }
 
-    pub fn status(&mut self, value: crate::datadogV2::model::EventStatusType) -> &mut Self {
+    pub fn status(mut self, value: crate::datadogV2::model::EventStatusType) -> Self {
         self.status = Some(value);
         self
     }
 
-    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
 
-    pub fn timestamp(&mut self, value: i64) -> &mut Self {
+    pub fn timestamp(mut self, value: i64) -> Self {
         self.timestamp = Some(value);
         self
     }
 
-    pub fn title(&mut self, value: String) -> &mut Self {
+    pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }

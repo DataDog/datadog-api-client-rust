@@ -32,37 +32,37 @@ pub struct ListProcessesOptionalParams {
 
 impl ListProcessesOptionalParams {
     /// String to search processes by.
-    pub fn search(&mut self, value: String) -> &mut Self {
+    pub fn search(mut self, value: String) -> Self {
         self.search = Some(value);
         self
     }
     /// Comma-separated list of tags to filter processes by.
-    pub fn tags(&mut self, value: String) -> &mut Self {
+    pub fn tags(mut self, value: String) -> Self {
         self.tags = Some(value);
         self
     }
     /// Unix timestamp (number of seconds since epoch) of the start of the query window.
     /// If not provided, the start of the query window will be 15 minutes before the `to` timestamp. If neither
     /// `from` nor `to` are provided, the query window will be `[now - 15m, now]`.
-    pub fn from(&mut self, value: i64) -> &mut Self {
+    pub fn from(mut self, value: i64) -> Self {
         self.from = Some(value);
         self
     }
     /// Unix timestamp (number of seconds since epoch) of the end of the query window.
     /// If not provided, the end of the query window will be 15 minutes after the `from` timestamp. If neither
     /// `from` nor `to` are provided, the query window will be `[now - 15m, now]`.
-    pub fn to(&mut self, value: i64) -> &mut Self {
+    pub fn to(mut self, value: i64) -> Self {
         self.to = Some(value);
         self
     }
     /// Maximum number of results returned.
-    pub fn page_limit(&mut self, value: i32) -> &mut Self {
+    pub fn page_limit(mut self, value: i32) -> Self {
         self.page_limit = Some(value);
         self
     }
     /// String to query the next page of results.
     /// This key is provided with each valid response from the API in `meta.page.after`.
-    pub fn page_cursor(&mut self, value: String) -> &mut Self {
+    pub fn page_cursor(mut self, value: String) -> Self {
         self.page_cursor = Some(value);
         self
     }

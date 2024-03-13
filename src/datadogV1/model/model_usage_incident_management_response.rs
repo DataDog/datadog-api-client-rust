@@ -28,9 +28,9 @@ impl UsageIncidentManagementResponse {
     }
 
     pub fn usage(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::UsageIncidentManagementHour>,
-    ) -> &mut Self {
+    ) -> Self {
         self.usage = Some(value);
         self
     }

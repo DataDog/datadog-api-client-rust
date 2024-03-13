@@ -77,76 +77,67 @@ impl SyntheticsTestDetails {
         }
     }
 
-    pub fn config(&mut self, value: crate::datadogV1::model::SyntheticsTestConfig) -> &mut Self {
+    pub fn config(mut self, value: crate::datadogV1::model::SyntheticsTestConfig) -> Self {
         self.config = Some(value);
         self
     }
 
-    pub fn creator(&mut self, value: crate::datadogV1::model::Creator) -> &mut Self {
+    pub fn creator(mut self, value: crate::datadogV1::model::Creator) -> Self {
         self.creator = Some(value);
         self
     }
 
-    pub fn locations(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn locations(mut self, value: Vec<String>) -> Self {
         self.locations = Some(value);
         self
     }
 
-    pub fn message(&mut self, value: String) -> &mut Self {
+    pub fn message(mut self, value: String) -> Self {
         self.message = Some(value);
         self
     }
 
-    pub fn monitor_id(&mut self, value: i64) -> &mut Self {
+    pub fn monitor_id(mut self, value: i64) -> Self {
         self.monitor_id = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
-    pub fn options(&mut self, value: crate::datadogV1::model::SyntheticsTestOptions) -> &mut Self {
+    pub fn options(mut self, value: crate::datadogV1::model::SyntheticsTestOptions) -> Self {
         self.options = Some(value);
         self
     }
 
-    pub fn public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }
 
-    pub fn status(
-        &mut self,
-        value: crate::datadogV1::model::SyntheticsTestPauseStatus,
-    ) -> &mut Self {
+    pub fn status(mut self, value: crate::datadogV1::model::SyntheticsTestPauseStatus) -> Self {
         self.status = Some(value);
         self
     }
 
-    pub fn steps(&mut self, value: Vec<crate::datadogV1::model::SyntheticsStep>) -> &mut Self {
+    pub fn steps(mut self, value: Vec<crate::datadogV1::model::SyntheticsStep>) -> Self {
         self.steps = Some(value);
         self
     }
 
-    pub fn subtype(
-        &mut self,
-        value: crate::datadogV1::model::SyntheticsTestDetailsSubType,
-    ) -> &mut Self {
+    pub fn subtype(mut self, value: crate::datadogV1::model::SyntheticsTestDetailsSubType) -> Self {
         self.subtype = Some(value);
         self
     }
 
-    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
 
-    pub fn type_(
-        &mut self,
-        value: crate::datadogV1::model::SyntheticsTestDetailsType,
-    ) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV1::model::SyntheticsTestDetailsType) -> Self {
         self.type_ = Some(value);
         self
     }

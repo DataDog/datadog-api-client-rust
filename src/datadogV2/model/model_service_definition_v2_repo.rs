@@ -35,7 +35,7 @@ impl ServiceDefinitionV2Repo {
         }
     }
 
-    pub fn provider(&mut self, value: String) -> &mut Self {
+    pub fn provider(mut self, value: String) -> Self {
         self.provider = Some(value);
         self
     }

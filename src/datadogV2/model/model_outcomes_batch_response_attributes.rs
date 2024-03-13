@@ -43,27 +43,27 @@ impl OutcomesBatchResponseAttributes {
         }
     }
 
-    pub fn created_at(&mut self, value: String) -> &mut Self {
+    pub fn created_at(mut self, value: String) -> Self {
         self.created_at = Some(value);
         self
     }
 
-    pub fn modified_at(&mut self, value: String) -> &mut Self {
+    pub fn modified_at(mut self, value: String) -> Self {
         self.modified_at = Some(value);
         self
     }
 
-    pub fn remarks(&mut self, value: String) -> &mut Self {
+    pub fn remarks(mut self, value: String) -> Self {
         self.remarks = Some(value);
         self
     }
 
-    pub fn service_name(&mut self, value: String) -> &mut Self {
+    pub fn service_name(mut self, value: String) -> Self {
         self.service_name = Some(value);
         self
     }
 
-    pub fn state(&mut self, value: crate::datadogV2::model::State) -> &mut Self {
+    pub fn state(mut self, value: crate::datadogV2::model::State) -> Self {
         self.state = Some(value);
         self
     }

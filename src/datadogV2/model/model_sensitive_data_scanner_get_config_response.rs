@@ -36,22 +36,22 @@ impl SensitiveDataScannerGetConfigResponse {
     }
 
     pub fn data(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::SensitiveDataScannerGetConfigResponseData,
-    ) -> &mut Self {
+    ) -> Self {
         self.data = Some(value);
         self
     }
 
     pub fn included(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::SensitiveDataScannerGetConfigIncludedItem>,
-    ) -> &mut Self {
+    ) -> Self {
         self.included = Some(value);
         self
     }
 
-    pub fn meta(&mut self, value: crate::datadogV2::model::SensitiveDataScannerMeta) -> &mut Self {
+    pub fn meta(mut self, value: crate::datadogV2::model::SensitiveDataScannerMeta) -> Self {
         self.meta = Some(value);
         self
     }

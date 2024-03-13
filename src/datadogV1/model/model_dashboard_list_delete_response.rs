@@ -27,7 +27,7 @@ impl DashboardListDeleteResponse {
         }
     }
 
-    pub fn deleted_dashboard_list_id(&mut self, value: i64) -> &mut Self {
+    pub fn deleted_dashboard_list_id(mut self, value: i64) -> Self {
         self.deleted_dashboard_list_id = Some(value);
         self
     }

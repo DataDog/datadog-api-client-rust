@@ -36,22 +36,19 @@ impl DowntimeMonitorIncludedItem {
     }
 
     pub fn attributes(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::DowntimeMonitorIncludedAttributes,
-    ) -> &mut Self {
+    ) -> Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn id(&mut self, value: i64) -> &mut Self {
+    pub fn id(mut self, value: i64) -> Self {
         self.id = Some(value);
         self
     }
 
-    pub fn type_(
-        &mut self,
-        value: crate::datadogV2::model::DowntimeIncludedMonitorType,
-    ) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::DowntimeIncludedMonitorType) -> Self {
         self.type_ = Some(value);
         self
     }

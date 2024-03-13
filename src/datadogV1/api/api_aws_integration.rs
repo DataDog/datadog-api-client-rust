@@ -19,17 +19,17 @@ pub struct ListAWSAccountsOptionalParams {
 
 impl ListAWSAccountsOptionalParams {
     /// Only return AWS accounts that matches this `account_id`.
-    pub fn account_id(&mut self, value: String) -> &mut Self {
+    pub fn account_id(mut self, value: String) -> Self {
         self.account_id = Some(value);
         self
     }
     /// Only return AWS accounts that matches this role_name.
-    pub fn role_name(&mut self, value: String) -> &mut Self {
+    pub fn role_name(mut self, value: String) -> Self {
         self.role_name = Some(value);
         self
     }
     /// Only return AWS accounts that matches this `access_key_id`.
-    pub fn access_key_id(&mut self, value: String) -> &mut Self {
+    pub fn access_key_id(mut self, value: String) -> Self {
         self.access_key_id = Some(value);
         self
     }
@@ -51,19 +51,19 @@ pub struct UpdateAWSAccountOptionalParams {
 
 impl UpdateAWSAccountOptionalParams {
     /// Only return AWS accounts that matches this `account_id`.
-    pub fn account_id(&mut self, value: String) -> &mut Self {
+    pub fn account_id(mut self, value: String) -> Self {
         self.account_id = Some(value);
         self
     }
     /// Only return AWS accounts that match this `role_name`.
     /// Required if `account_id` is specified.
-    pub fn role_name(&mut self, value: String) -> &mut Self {
+    pub fn role_name(mut self, value: String) -> Self {
         self.role_name = Some(value);
         self
     }
     /// Only return AWS accounts that matches this `access_key_id`.
     /// Required if none of the other two options are specified.
-    pub fn access_key_id(&mut self, value: String) -> &mut Self {
+    pub fn access_key_id(mut self, value: String) -> Self {
         self.access_key_id = Some(value);
         self
     }

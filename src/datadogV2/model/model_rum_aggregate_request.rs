@@ -44,27 +44,27 @@ impl RUMAggregateRequest {
         }
     }
 
-    pub fn compute(&mut self, value: Vec<crate::datadogV2::model::RUMCompute>) -> &mut Self {
+    pub fn compute(mut self, value: Vec<crate::datadogV2::model::RUMCompute>) -> Self {
         self.compute = Some(value);
         self
     }
 
-    pub fn filter(&mut self, value: crate::datadogV2::model::RUMQueryFilter) -> &mut Self {
+    pub fn filter(mut self, value: crate::datadogV2::model::RUMQueryFilter) -> Self {
         self.filter = Some(value);
         self
     }
 
-    pub fn group_by(&mut self, value: Vec<crate::datadogV2::model::RUMGroupBy>) -> &mut Self {
+    pub fn group_by(mut self, value: Vec<crate::datadogV2::model::RUMGroupBy>) -> Self {
         self.group_by = Some(value);
         self
     }
 
-    pub fn options(&mut self, value: crate::datadogV2::model::RUMQueryOptions) -> &mut Self {
+    pub fn options(mut self, value: crate::datadogV2::model::RUMQueryOptions) -> Self {
         self.options = Some(value);
         self
     }
 
-    pub fn page(&mut self, value: crate::datadogV2::model::RUMQueryPageOptions) -> &mut Self {
+    pub fn page(mut self, value: crate::datadogV2::model::RUMQueryPageOptions) -> Self {
         self.page = Some(value);
         self
     }

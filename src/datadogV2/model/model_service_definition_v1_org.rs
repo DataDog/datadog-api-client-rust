@@ -31,12 +31,12 @@ impl ServiceDefinitionV1Org {
         }
     }
 
-    pub fn application(&mut self, value: String) -> &mut Self {
+    pub fn application(mut self, value: String) -> Self {
         self.application = Some(value);
         self
     }
 
-    pub fn team(&mut self, value: String) -> &mut Self {
+    pub fn team(mut self, value: String) -> Self {
         self.team = Some(value);
         self
     }

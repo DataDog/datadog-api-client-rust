@@ -36,25 +36,22 @@ impl MonitorGroupSearchResponse {
     }
 
     pub fn counts(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::MonitorGroupSearchResponseCounts,
-    ) -> &mut Self {
+    ) -> Self {
         self.counts = Some(value);
         self
     }
 
-    pub fn groups(
-        &mut self,
-        value: Vec<crate::datadogV1::model::MonitorGroupSearchResult>,
-    ) -> &mut Self {
+    pub fn groups(mut self, value: Vec<crate::datadogV1::model::MonitorGroupSearchResult>) -> Self {
         self.groups = Some(value);
         self
     }
 
     pub fn metadata(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::MonitorSearchResponseMetadata,
-    ) -> &mut Self {
+    ) -> Self {
         self.metadata = Some(value);
         self
     }

@@ -31,7 +31,7 @@ impl SignalAssigneeUpdateRequest {
         }
     }
 
-    pub fn version(&mut self, value: i64) -> &mut Self {
+    pub fn version(mut self, value: i64) -> Self {
         self.version = Some(value);
         self
     }

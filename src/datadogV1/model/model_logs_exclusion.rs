@@ -35,12 +35,12 @@ impl LogsExclusion {
         }
     }
 
-    pub fn filter(&mut self, value: crate::datadogV1::model::LogsExclusionFilter) -> &mut Self {
+    pub fn filter(mut self, value: crate::datadogV1::model::LogsExclusionFilter) -> Self {
         self.filter = Some(value);
         self
     }
 
-    pub fn is_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn is_enabled(mut self, value: bool) -> Self {
         self.is_enabled = Some(value);
         self
     }

@@ -27,7 +27,7 @@ impl ListRulesResponseLinks {
         }
     }
 
-    pub fn next(&mut self, value: String) -> &mut Self {
+    pub fn next(mut self, value: String) -> Self {
         self.next = Some(value);
         self
     }

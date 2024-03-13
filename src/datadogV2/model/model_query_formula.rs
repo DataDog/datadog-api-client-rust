@@ -32,7 +32,7 @@ impl QueryFormula {
         }
     }
 
-    pub fn limit(&mut self, value: crate::datadogV2::model::FormulaLimit) -> &mut Self {
+    pub fn limit(mut self, value: crate::datadogV2::model::FormulaLimit) -> Self {
         self.limit = Some(value);
         self
     }

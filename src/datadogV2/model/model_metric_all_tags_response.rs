@@ -27,7 +27,7 @@ impl MetricAllTagsResponse {
         }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::MetricAllTags) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::MetricAllTags) -> Self {
         self.data = Some(value);
         self
     }

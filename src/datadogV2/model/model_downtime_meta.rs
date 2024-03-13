@@ -27,7 +27,7 @@ impl DowntimeMeta {
         }
     }
 
-    pub fn page(&mut self, value: crate::datadogV2::model::DowntimeMetaPage) -> &mut Self {
+    pub fn page(mut self, value: crate::datadogV2::model::DowntimeMetaPage) -> Self {
         self.page = Some(value);
         self
     }

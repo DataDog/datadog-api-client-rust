@@ -32,9 +32,9 @@ impl ServiceDefinitionV2Dot1Opsgenie {
     }
 
     pub fn region(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::ServiceDefinitionV2Dot1OpsgenieRegion,
-    ) -> &mut Self {
+    ) -> Self {
         self.region = Some(value);
         self
     }

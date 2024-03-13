@@ -47,22 +47,22 @@ impl LogsPipelineProcessor {
         }
     }
 
-    pub fn filter(&mut self, value: crate::datadogV1::model::LogsFilter) -> &mut Self {
+    pub fn filter(mut self, value: crate::datadogV1::model::LogsFilter) -> Self {
         self.filter = Some(value);
         self
     }
 
-    pub fn is_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn is_enabled(mut self, value: bool) -> Self {
         self.is_enabled = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
-    pub fn processors(&mut self, value: Vec<crate::datadogV1::model::LogsProcessor>) -> &mut Self {
+    pub fn processors(mut self, value: Vec<crate::datadogV1::model::LogsProcessor>) -> Self {
         self.processors = Some(value);
         self
     }

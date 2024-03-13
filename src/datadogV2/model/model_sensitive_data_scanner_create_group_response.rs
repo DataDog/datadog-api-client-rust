@@ -32,17 +32,17 @@ impl SensitiveDataScannerCreateGroupResponse {
     }
 
     pub fn data(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::SensitiveDataScannerGroupResponse,
-    ) -> &mut Self {
+    ) -> Self {
         self.data = Some(value);
         self
     }
 
     pub fn meta(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly,
-    ) -> &mut Self {
+    ) -> Self {
         self.meta = Some(value);
         self
     }

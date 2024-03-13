@@ -32,17 +32,14 @@ impl SpansAggregateData {
     }
 
     pub fn attributes(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::SpansAggregateRequestAttributes,
-    ) -> &mut Self {
+    ) -> Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn type_(
-        &mut self,
-        value: crate::datadogV2::model::SpansAggregateRequestType,
-    ) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::SpansAggregateRequestType) -> Self {
         self.type_ = Some(value);
         self
     }

@@ -63,11 +63,18 @@ impl {{ name }} {
     {%- if get_deprecated(model) %}
     #[allow(deprecated)]
     {%- endif %}
-    pub fn {{attr|variable_name}}(&mut self, value: {{dataType}}) -> &mut Self {
+    pub fn {{attr|variable_name}}(mut self, value: {{dataType}}) -> Self {
         self.{{attr|variable_name}} = Some(value);
         self
     }
     {% endfor %}
+    {%- if model.additionalProperties is defined and model.additionalProperties != false %}
+    {%- set dataType = get_type(model.additionalProperties, alternative_name=None, render_nullable=false, render_option=false, render_box=false, version=version) %}
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, {{ dataType }}>) -> Self {
+        self.additional_properties = value;
+        self
+    }
+    {%- endif %}
 }
 
 {% if not model.required %}

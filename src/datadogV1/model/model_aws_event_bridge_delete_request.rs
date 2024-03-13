@@ -35,17 +35,17 @@ impl AWSEventBridgeDeleteRequest {
         }
     }
 
-    pub fn account_id(&mut self, value: String) -> &mut Self {
+    pub fn account_id(mut self, value: String) -> Self {
         self.account_id = Some(value);
         self
     }
 
-    pub fn event_generator_name(&mut self, value: String) -> &mut Self {
+    pub fn event_generator_name(mut self, value: String) -> Self {
         self.event_generator_name = Some(value);
         self
     }
 
-    pub fn region(&mut self, value: String) -> &mut Self {
+    pub fn region(mut self, value: String) -> Self {
         self.region = Some(value);
         self
     }

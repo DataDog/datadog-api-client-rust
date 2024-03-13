@@ -27,7 +27,7 @@ impl AWSAccountCreateResponse {
         }
     }
 
-    pub fn external_id(&mut self, value: String) -> &mut Self {
+    pub fn external_id(mut self, value: String) -> Self {
         self.external_id = Some(value);
         self
     }

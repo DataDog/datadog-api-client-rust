@@ -39,20 +39,17 @@ impl OpsgenieServiceResponseAttributes {
         }
     }
 
-    pub fn custom_url(&mut self, value: Option<String>) -> &mut Self {
+    pub fn custom_url(mut self, value: Option<String>) -> Self {
         self.custom_url = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
-    pub fn region(
-        &mut self,
-        value: crate::datadogV2::model::OpsgenieServiceRegionType,
-    ) -> &mut Self {
+    pub fn region(mut self, value: crate::datadogV2::model::OpsgenieServiceRegionType) -> Self {
         self.region = Some(value);
         self
     }

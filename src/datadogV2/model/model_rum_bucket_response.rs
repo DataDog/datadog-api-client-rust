@@ -33,15 +33,15 @@ impl RUMBucketResponse {
         }
     }
 
-    pub fn by(&mut self, value: std::collections::BTreeMap<String, String>) -> &mut Self {
+    pub fn by(mut self, value: std::collections::BTreeMap<String, String>) -> Self {
         self.by = Some(value);
         self
     }
 
     pub fn computes(
-        &mut self,
+        mut self,
         value: std::collections::BTreeMap<String, crate::datadogV2::model::RUMAggregateBucketValue>,
-    ) -> &mut Self {
+    ) -> Self {
         self.computes = Some(value);
         self
     }

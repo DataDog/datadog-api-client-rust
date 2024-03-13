@@ -31,18 +31,12 @@ impl MonitorConfigPolicyAttributeResponse {
         }
     }
 
-    pub fn policy(
-        &mut self,
-        value: crate::datadogV2::model::MonitorConfigPolicyPolicy,
-    ) -> &mut Self {
+    pub fn policy(mut self, value: crate::datadogV2::model::MonitorConfigPolicyPolicy) -> Self {
         self.policy = Some(value);
         self
     }
 
-    pub fn policy_type(
-        &mut self,
-        value: crate::datadogV2::model::MonitorConfigPolicyType,
-    ) -> &mut Self {
+    pub fn policy_type(mut self, value: crate::datadogV2::model::MonitorConfigPolicyType) -> Self {
         self.policy_type = Some(value);
         self
     }

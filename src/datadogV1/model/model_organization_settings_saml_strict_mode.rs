@@ -28,7 +28,7 @@ impl OrganizationSettingsSamlStrictMode {
         }
     }
 
-    pub fn enabled(&mut self, value: bool) -> &mut Self {
+    pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }

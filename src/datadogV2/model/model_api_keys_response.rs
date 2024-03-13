@@ -35,20 +35,20 @@ impl APIKeysResponse {
         }
     }
 
-    pub fn data(&mut self, value: Vec<crate::datadogV2::model::PartialAPIKey>) -> &mut Self {
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::PartialAPIKey>) -> Self {
         self.data = Some(value);
         self
     }
 
     pub fn included(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::APIKeyResponseIncludedItem>,
-    ) -> &mut Self {
+    ) -> Self {
         self.included = Some(value);
         self
     }
 
-    pub fn meta(&mut self, value: crate::datadogV2::model::APIKeysResponseMeta) -> &mut Self {
+    pub fn meta(mut self, value: crate::datadogV2::model::APIKeysResponseMeta) -> Self {
         self.meta = Some(value);
         self
     }

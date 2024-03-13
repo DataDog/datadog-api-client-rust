@@ -99,57 +99,57 @@ impl UsageLogsHour {
         }
     }
 
-    pub fn billable_ingested_bytes(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn billable_ingested_bytes(mut self, value: Option<i64>) -> Self {
         self.billable_ingested_bytes = Some(value);
         self
     }
 
-    pub fn hour(&mut self, value: String) -> &mut Self {
+    pub fn hour(mut self, value: String) -> Self {
         self.hour = Some(value);
         self
     }
 
-    pub fn indexed_events_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn indexed_events_count(mut self, value: Option<i64>) -> Self {
         self.indexed_events_count = Some(value);
         self
     }
 
-    pub fn ingested_events_bytes(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn ingested_events_bytes(mut self, value: Option<i64>) -> Self {
         self.ingested_events_bytes = Some(value);
         self
     }
 
-    pub fn logs_forwarding_events_bytes(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn logs_forwarding_events_bytes(mut self, value: Option<i64>) -> Self {
         self.logs_forwarding_events_bytes = Some(value);
         self
     }
 
-    pub fn logs_live_indexed_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn logs_live_indexed_count(mut self, value: Option<i64>) -> Self {
         self.logs_live_indexed_count = Some(value);
         self
     }
 
-    pub fn logs_live_ingested_bytes(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn logs_live_ingested_bytes(mut self, value: Option<i64>) -> Self {
         self.logs_live_ingested_bytes = Some(value);
         self
     }
 
-    pub fn logs_rehydrated_indexed_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn logs_rehydrated_indexed_count(mut self, value: Option<i64>) -> Self {
         self.logs_rehydrated_indexed_count = Some(value);
         self
     }
 
-    pub fn logs_rehydrated_ingested_bytes(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn logs_rehydrated_ingested_bytes(mut self, value: Option<i64>) -> Self {
         self.logs_rehydrated_ingested_bytes = Some(value);
         self
     }
 
-    pub fn org_name(&mut self, value: String) -> &mut Self {
+    pub fn org_name(mut self, value: String) -> Self {
         self.org_name = Some(value);
         self
     }
 
-    pub fn public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }

@@ -31,15 +31,15 @@ impl SyntheticsGetBrowserTestLatestResultsResponse {
         }
     }
 
-    pub fn last_timestamp_fetched(&mut self, value: i64) -> &mut Self {
+    pub fn last_timestamp_fetched(mut self, value: i64) -> Self {
         self.last_timestamp_fetched = Some(value);
         self
     }
 
     pub fn results(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::SyntheticsBrowserTestResultShort>,
-    ) -> &mut Self {
+    ) -> Self {
         self.results = Some(value);
         self
     }

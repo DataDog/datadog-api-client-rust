@@ -32,12 +32,12 @@ impl SyntheticsDeletedTest {
         }
     }
 
-    pub fn deleted_at(&mut self, value: String) -> &mut Self {
+    pub fn deleted_at(mut self, value: String) -> Self {
         self.deleted_at = Some(value);
         self
     }
 
-    pub fn public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }

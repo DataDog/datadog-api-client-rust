@@ -46,33 +46,30 @@ impl SyntheticsBrowserTestResultShort {
         }
     }
 
-    pub fn check_time(&mut self, value: f64) -> &mut Self {
+    pub fn check_time(mut self, value: f64) -> Self {
         self.check_time = Some(value);
         self
     }
 
-    pub fn probe_dc(&mut self, value: String) -> &mut Self {
+    pub fn probe_dc(mut self, value: String) -> Self {
         self.probe_dc = Some(value);
         self
     }
 
     pub fn result(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SyntheticsBrowserTestResultShortResult,
-    ) -> &mut Self {
+    ) -> Self {
         self.result = Some(value);
         self
     }
 
-    pub fn result_id(&mut self, value: String) -> &mut Self {
+    pub fn result_id(mut self, value: String) -> Self {
         self.result_id = Some(value);
         self
     }
 
-    pub fn status(
-        &mut self,
-        value: crate::datadogV1::model::SyntheticsTestMonitorStatus,
-    ) -> &mut Self {
+    pub fn status(mut self, value: crate::datadogV1::model::SyntheticsTestMonitorStatus) -> Self {
         self.status = Some(value);
         self
     }

@@ -47,22 +47,22 @@ impl SyntheticsBrowserTestConfig {
     }
 
     pub fn config_variables(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::SyntheticsConfigVariable>,
-    ) -> &mut Self {
+    ) -> Self {
         self.config_variables = Some(value);
         self
     }
 
-    pub fn set_cookie(&mut self, value: String) -> &mut Self {
+    pub fn set_cookie(mut self, value: String) -> Self {
         self.set_cookie = Some(value);
         self
     }
 
     pub fn variables(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::SyntheticsBrowserVariable>,
-    ) -> &mut Self {
+    ) -> Self {
         self.variables = Some(value);
         self
     }

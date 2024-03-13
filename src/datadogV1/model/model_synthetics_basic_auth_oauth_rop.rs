@@ -69,35 +69,35 @@ impl SyntheticsBasicAuthOauthROP {
         }
     }
 
-    pub fn audience(&mut self, value: String) -> &mut Self {
+    pub fn audience(mut self, value: String) -> Self {
         self.audience = Some(value);
         self
     }
 
-    pub fn client_id(&mut self, value: String) -> &mut Self {
+    pub fn client_id(mut self, value: String) -> Self {
         self.client_id = Some(value);
         self
     }
 
-    pub fn client_secret(&mut self, value: String) -> &mut Self {
+    pub fn client_secret(mut self, value: String) -> Self {
         self.client_secret = Some(value);
         self
     }
 
-    pub fn resource(&mut self, value: String) -> &mut Self {
+    pub fn resource(mut self, value: String) -> Self {
         self.resource = Some(value);
         self
     }
 
-    pub fn scope(&mut self, value: String) -> &mut Self {
+    pub fn scope(mut self, value: String) -> Self {
         self.scope = Some(value);
         self
     }
 
     pub fn type_(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SyntheticsBasicAuthOauthROPType,
-    ) -> &mut Self {
+    ) -> Self {
         self.type_ = Some(value);
         self
     }

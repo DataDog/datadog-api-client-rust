@@ -43,27 +43,27 @@ impl ContainerImagesResponseLinks {
         }
     }
 
-    pub fn first(&mut self, value: String) -> &mut Self {
+    pub fn first(mut self, value: String) -> Self {
         self.first = Some(value);
         self
     }
 
-    pub fn last(&mut self, value: Option<String>) -> &mut Self {
+    pub fn last(mut self, value: Option<String>) -> Self {
         self.last = Some(value);
         self
     }
 
-    pub fn next(&mut self, value: Option<String>) -> &mut Self {
+    pub fn next(mut self, value: Option<String>) -> Self {
         self.next = Some(value);
         self
     }
 
-    pub fn prev(&mut self, value: Option<String>) -> &mut Self {
+    pub fn prev(mut self, value: Option<String>) -> Self {
         self.prev = Some(value);
         self
     }
 
-    pub fn self_(&mut self, value: String) -> &mut Self {
+    pub fn self_(mut self, value: String) -> Self {
         self.self_ = Some(value);
         self
     }

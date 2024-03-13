@@ -74,64 +74,64 @@ impl ServiceDefinitionV2Dot1 {
         }
     }
 
-    pub fn application(&mut self, value: String) -> &mut Self {
+    pub fn application(mut self, value: String) -> Self {
         self.application = Some(value);
         self
     }
 
     pub fn contacts(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::ServiceDefinitionV2Dot1Contact>,
-    ) -> &mut Self {
+    ) -> Self {
         self.contacts = Some(value);
         self
     }
 
-    pub fn description(&mut self, value: String) -> &mut Self {
+    pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
 
     pub fn extensions(
-        &mut self,
+        mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> &mut Self {
+    ) -> Self {
         self.extensions = Some(value);
         self
     }
 
     pub fn integrations(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::ServiceDefinitionV2Dot1Integrations,
-    ) -> &mut Self {
+    ) -> Self {
         self.integrations = Some(value);
         self
     }
 
-    pub fn lifecycle(&mut self, value: String) -> &mut Self {
+    pub fn lifecycle(mut self, value: String) -> Self {
         self.lifecycle = Some(value);
         self
     }
 
     pub fn links(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::ServiceDefinitionV2Dot1Link>,
-    ) -> &mut Self {
+    ) -> Self {
         self.links = Some(value);
         self
     }
 
-    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
 
-    pub fn team(&mut self, value: String) -> &mut Self {
+    pub fn team(mut self, value: String) -> Self {
         self.team = Some(value);
         self
     }
 
-    pub fn tier(&mut self, value: String) -> &mut Self {
+    pub fn tier(mut self, value: String) -> Self {
         self.tier = Some(value);
         self
     }

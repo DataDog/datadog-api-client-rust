@@ -39,25 +39,22 @@ impl RUMAggregateSort {
         }
     }
 
-    pub fn aggregation(
-        &mut self,
-        value: crate::datadogV2::model::RUMAggregationFunction,
-    ) -> &mut Self {
+    pub fn aggregation(mut self, value: crate::datadogV2::model::RUMAggregationFunction) -> Self {
         self.aggregation = Some(value);
         self
     }
 
-    pub fn metric(&mut self, value: String) -> &mut Self {
+    pub fn metric(mut self, value: String) -> Self {
         self.metric = Some(value);
         self
     }
 
-    pub fn order(&mut self, value: crate::datadogV2::model::RUMSortOrder) -> &mut Self {
+    pub fn order(mut self, value: crate::datadogV2::model::RUMSortOrder) -> Self {
         self.order = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: crate::datadogV2::model::RUMAggregateSortType) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::RUMAggregateSortType) -> Self {
         self.type_ = Some(value);
         self
     }

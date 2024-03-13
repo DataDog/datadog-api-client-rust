@@ -32,9 +32,9 @@ impl IncidentTeamResponse {
     }
 
     pub fn included(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::IncidentTeamIncludedItems>,
-    ) -> &mut Self {
+    ) -> Self {
         self.included = Some(value);
         self
     }

@@ -27,7 +27,7 @@ impl IdPMetadataFormData {
         }
     }
 
-    pub fn idp_file(&mut self, value: Vec<u8>) -> &mut Self {
+    pub fn idp_file(mut self, value: Vec<u8>) -> Self {
         self.idp_file = Some(value);
         self
     }

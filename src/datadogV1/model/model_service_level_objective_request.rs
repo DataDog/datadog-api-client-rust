@@ -93,45 +93,42 @@ impl ServiceLevelObjectiveRequest {
         }
     }
 
-    pub fn description(&mut self, value: Option<String>) -> &mut Self {
+    pub fn description(mut self, value: Option<String>) -> Self {
         self.description = Some(value);
         self
     }
 
-    pub fn groups(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn groups(mut self, value: Vec<String>) -> Self {
         self.groups = Some(value);
         self
     }
 
-    pub fn monitor_ids(&mut self, value: Vec<i64>) -> &mut Self {
+    pub fn monitor_ids(mut self, value: Vec<i64>) -> Self {
         self.monitor_ids = Some(value);
         self
     }
 
-    pub fn query(
-        &mut self,
-        value: crate::datadogV1::model::ServiceLevelObjectiveQuery,
-    ) -> &mut Self {
+    pub fn query(mut self, value: crate::datadogV1::model::ServiceLevelObjectiveQuery) -> Self {
         self.query = Some(value);
         self
     }
 
-    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
 
-    pub fn target_threshold(&mut self, value: f64) -> &mut Self {
+    pub fn target_threshold(mut self, value: f64) -> Self {
         self.target_threshold = Some(value);
         self
     }
 
-    pub fn timeframe(&mut self, value: crate::datadogV1::model::SLOTimeframe) -> &mut Self {
+    pub fn timeframe(mut self, value: crate::datadogV1::model::SLOTimeframe) -> Self {
         self.timeframe = Some(value);
         self
     }
 
-    pub fn warning_threshold(&mut self, value: f64) -> &mut Self {
+    pub fn warning_threshold(mut self, value: f64) -> Self {
         self.warning_threshold = Some(value);
         self
     }

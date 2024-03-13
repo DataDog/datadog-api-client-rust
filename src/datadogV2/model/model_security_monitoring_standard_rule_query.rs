@@ -60,51 +60,51 @@ impl SecurityMonitoringStandardRuleQuery {
 
     #[allow(deprecated)]
     pub fn aggregation(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::SecurityMonitoringRuleQueryAggregation,
-    ) -> &mut Self {
+    ) -> Self {
         self.aggregation = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn distinct_fields(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn distinct_fields(mut self, value: Vec<String>) -> Self {
         self.distinct_fields = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn group_by_fields(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn group_by_fields(mut self, value: Vec<String>) -> Self {
         self.group_by_fields = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn has_optional_group_by_fields(&mut self, value: bool) -> &mut Self {
+    pub fn has_optional_group_by_fields(mut self, value: bool) -> Self {
         self.has_optional_group_by_fields = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn metric(&mut self, value: String) -> &mut Self {
+    pub fn metric(mut self, value: String) -> Self {
         self.metric = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn metrics(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn metrics(mut self, value: Vec<String>) -> Self {
         self.metrics = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn query(&mut self, value: String) -> &mut Self {
+    pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }

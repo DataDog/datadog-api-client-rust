@@ -35,20 +35,20 @@ impl CIAppTestEventsResponse {
         }
     }
 
-    pub fn data(&mut self, value: Vec<crate::datadogV2::model::CIAppTestEvent>) -> &mut Self {
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::CIAppTestEvent>) -> Self {
         self.data = Some(value);
         self
     }
 
-    pub fn links(&mut self, value: crate::datadogV2::model::CIAppResponseLinks) -> &mut Self {
+    pub fn links(mut self, value: crate::datadogV2::model::CIAppResponseLinks) -> Self {
         self.links = Some(value);
         self
     }
 
     pub fn meta(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::CIAppResponseMetadataWithPagination,
-    ) -> &mut Self {
+    ) -> Self {
         self.meta = Some(value);
         self
     }

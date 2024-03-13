@@ -35,17 +35,17 @@ impl RUMEventsResponse {
         }
     }
 
-    pub fn data(&mut self, value: Vec<crate::datadogV2::model::RUMEvent>) -> &mut Self {
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::RUMEvent>) -> Self {
         self.data = Some(value);
         self
     }
 
-    pub fn links(&mut self, value: crate::datadogV2::model::RUMResponseLinks) -> &mut Self {
+    pub fn links(mut self, value: crate::datadogV2::model::RUMResponseLinks) -> Self {
         self.links = Some(value);
         self
     }
 
-    pub fn meta(&mut self, value: crate::datadogV2::model::RUMResponseMetadata) -> &mut Self {
+    pub fn meta(mut self, value: crate::datadogV2::model::RUMResponseMetadata) -> Self {
         self.meta = Some(value);
         self
     }

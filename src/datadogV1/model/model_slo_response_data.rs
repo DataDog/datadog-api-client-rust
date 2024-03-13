@@ -124,90 +124,87 @@ impl SLOResponseData {
         }
     }
 
-    pub fn configured_alert_ids(&mut self, value: Vec<i64>) -> &mut Self {
+    pub fn configured_alert_ids(mut self, value: Vec<i64>) -> Self {
         self.configured_alert_ids = Some(value);
         self
     }
 
-    pub fn created_at(&mut self, value: i64) -> &mut Self {
+    pub fn created_at(mut self, value: i64) -> Self {
         self.created_at = Some(value);
         self
     }
 
-    pub fn creator(&mut self, value: crate::datadogV1::model::Creator) -> &mut Self {
+    pub fn creator(mut self, value: crate::datadogV1::model::Creator) -> Self {
         self.creator = Some(value);
         self
     }
 
-    pub fn description(&mut self, value: Option<String>) -> &mut Self {
+    pub fn description(mut self, value: Option<String>) -> Self {
         self.description = Some(value);
         self
     }
 
-    pub fn groups(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn groups(mut self, value: Vec<String>) -> Self {
         self.groups = Some(value);
         self
     }
 
-    pub fn id(&mut self, value: String) -> &mut Self {
+    pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
 
-    pub fn modified_at(&mut self, value: i64) -> &mut Self {
+    pub fn modified_at(mut self, value: i64) -> Self {
         self.modified_at = Some(value);
         self
     }
 
-    pub fn monitor_ids(&mut self, value: Vec<i64>) -> &mut Self {
+    pub fn monitor_ids(mut self, value: Vec<i64>) -> Self {
         self.monitor_ids = Some(value);
         self
     }
 
-    pub fn monitor_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn monitor_tags(mut self, value: Vec<String>) -> Self {
         self.monitor_tags = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
-    pub fn query(
-        &mut self,
-        value: crate::datadogV1::model::ServiceLevelObjectiveQuery,
-    ) -> &mut Self {
+    pub fn query(mut self, value: crate::datadogV1::model::ServiceLevelObjectiveQuery) -> Self {
         self.query = Some(value);
         self
     }
 
-    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
 
-    pub fn target_threshold(&mut self, value: f64) -> &mut Self {
+    pub fn target_threshold(mut self, value: f64) -> Self {
         self.target_threshold = Some(value);
         self
     }
 
-    pub fn thresholds(&mut self, value: Vec<crate::datadogV1::model::SLOThreshold>) -> &mut Self {
+    pub fn thresholds(mut self, value: Vec<crate::datadogV1::model::SLOThreshold>) -> Self {
         self.thresholds = Some(value);
         self
     }
 
-    pub fn timeframe(&mut self, value: crate::datadogV1::model::SLOTimeframe) -> &mut Self {
+    pub fn timeframe(mut self, value: crate::datadogV1::model::SLOTimeframe) -> Self {
         self.timeframe = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: crate::datadogV1::model::SLOType) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV1::model::SLOType) -> Self {
         self.type_ = Some(value);
         self
     }
 
-    pub fn warning_threshold(&mut self, value: f64) -> &mut Self {
+    pub fn warning_threshold(mut self, value: f64) -> Self {
         self.warning_threshold = Some(value);
         self
     }

@@ -78,70 +78,67 @@ impl MetricsQueryMetadata {
         }
     }
 
-    pub fn aggr(&mut self, value: Option<String>) -> &mut Self {
+    pub fn aggr(mut self, value: Option<String>) -> Self {
         self.aggr = Some(value);
         self
     }
 
-    pub fn display_name(&mut self, value: String) -> &mut Self {
+    pub fn display_name(mut self, value: String) -> Self {
         self.display_name = Some(value);
         self
     }
 
-    pub fn end(&mut self, value: i64) -> &mut Self {
+    pub fn end(mut self, value: i64) -> Self {
         self.end = Some(value);
         self
     }
 
-    pub fn expression(&mut self, value: String) -> &mut Self {
+    pub fn expression(mut self, value: String) -> Self {
         self.expression = Some(value);
         self
     }
 
-    pub fn interval(&mut self, value: i64) -> &mut Self {
+    pub fn interval(mut self, value: i64) -> Self {
         self.interval = Some(value);
         self
     }
 
-    pub fn length(&mut self, value: i64) -> &mut Self {
+    pub fn length(mut self, value: i64) -> Self {
         self.length = Some(value);
         self
     }
 
-    pub fn metric(&mut self, value: String) -> &mut Self {
+    pub fn metric(mut self, value: String) -> Self {
         self.metric = Some(value);
         self
     }
 
-    pub fn pointlist(&mut self, value: Vec<Vec<Option<f64>>>) -> &mut Self {
+    pub fn pointlist(mut self, value: Vec<Vec<Option<f64>>>) -> Self {
         self.pointlist = Some(value);
         self
     }
 
-    pub fn query_index(&mut self, value: i64) -> &mut Self {
+    pub fn query_index(mut self, value: i64) -> Self {
         self.query_index = Some(value);
         self
     }
 
-    pub fn scope(&mut self, value: String) -> &mut Self {
+    pub fn scope(mut self, value: String) -> Self {
         self.scope = Some(value);
         self
     }
 
-    pub fn start(&mut self, value: i64) -> &mut Self {
+    pub fn start(mut self, value: i64) -> Self {
         self.start = Some(value);
         self
     }
 
-    pub fn tag_set(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tag_set(mut self, value: Vec<String>) -> Self {
         self.tag_set = Some(value);
         self
     }
 
-    pub fn unit(
-        &mut self,
-        value: Vec<Option<crate::datadogV1::model::MetricsQueryUnit>>,
-    ) -> &mut Self {
+    pub fn unit(mut self, value: Vec<Option<crate::datadogV1::model::MetricsQueryUnit>>) -> Self {
         self.unit = Some(value);
         self
     }

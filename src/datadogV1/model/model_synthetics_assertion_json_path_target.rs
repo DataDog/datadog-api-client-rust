@@ -42,15 +42,15 @@ impl SyntheticsAssertionJSONPathTarget {
         }
     }
 
-    pub fn property(&mut self, value: String) -> &mut Self {
+    pub fn property(mut self, value: String) -> Self {
         self.property = Some(value);
         self
     }
 
     pub fn target(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SyntheticsAssertionJSONPathTargetTarget,
-    ) -> &mut Self {
+    ) -> Self {
         self.target = Some(value);
         self
     }

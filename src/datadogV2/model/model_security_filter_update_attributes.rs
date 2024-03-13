@@ -48,37 +48,37 @@ impl SecurityFilterUpdateAttributes {
     }
 
     pub fn exclusion_filters(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::SecurityFilterExclusionFilter>,
-    ) -> &mut Self {
+    ) -> Self {
         self.exclusion_filters = Some(value);
         self
     }
 
     pub fn filtered_data_type(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::SecurityFilterFilteredDataType,
-    ) -> &mut Self {
+    ) -> Self {
         self.filtered_data_type = Some(value);
         self
     }
 
-    pub fn is_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn is_enabled(mut self, value: bool) -> Self {
         self.is_enabled = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
-    pub fn query(&mut self, value: String) -> &mut Self {
+    pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }
 
-    pub fn version(&mut self, value: i32) -> &mut Self {
+    pub fn version(mut self, value: i32) -> Self {
         self.version = Some(value);
         self
     }

@@ -35,17 +35,17 @@ impl SearchSLOResponse {
         }
     }
 
-    pub fn data(&mut self, value: crate::datadogV1::model::SearchSLOResponseData) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV1::model::SearchSLOResponseData) -> Self {
         self.data = Some(value);
         self
     }
 
-    pub fn links(&mut self, value: crate::datadogV1::model::SearchSLOResponseLinks) -> &mut Self {
+    pub fn links(mut self, value: crate::datadogV1::model::SearchSLOResponseLinks) -> Self {
         self.links = Some(value);
         self
     }
 
-    pub fn meta(&mut self, value: crate::datadogV1::model::SearchSLOResponseMeta) -> &mut Self {
+    pub fn meta(mut self, value: crate::datadogV1::model::SearchSLOResponseMeta) -> Self {
         self.meta = Some(value);
         self
     }

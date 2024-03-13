@@ -41,17 +41,17 @@ impl DowntimeScheduleRecurrenceResponse {
         }
     }
 
-    pub fn duration(&mut self, value: String) -> &mut Self {
+    pub fn duration(mut self, value: String) -> Self {
         self.duration = Some(value);
         self
     }
 
-    pub fn rrule(&mut self, value: String) -> &mut Self {
+    pub fn rrule(mut self, value: String) -> Self {
         self.rrule = Some(value);
         self
     }
 
-    pub fn start(&mut self, value: String) -> &mut Self {
+    pub fn start(mut self, value: String) -> Self {
         self.start = Some(value);
         self
     }

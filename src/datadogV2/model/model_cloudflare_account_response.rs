@@ -27,10 +27,7 @@ impl CloudflareAccountResponse {
         }
     }
 
-    pub fn data(
-        &mut self,
-        value: crate::datadogV2::model::CloudflareAccountResponseData,
-    ) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::CloudflareAccountResponseData) -> Self {
         self.data = Some(value);
         self
     }

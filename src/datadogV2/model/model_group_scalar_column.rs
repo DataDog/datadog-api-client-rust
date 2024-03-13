@@ -35,17 +35,17 @@ impl GroupScalarColumn {
         }
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: crate::datadogV2::model::ScalarColumnTypeGroup) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::ScalarColumnTypeGroup) -> Self {
         self.type_ = Some(value);
         self
     }
 
-    pub fn values(&mut self, value: Vec<Vec<String>>) -> &mut Self {
+    pub fn values(mut self, value: Vec<Vec<String>>) -> Self {
         self.values = Some(value);
         self
     }

@@ -51,32 +51,32 @@ impl SLOHistoryMetricsSeriesMetadataUnit {
         }
     }
 
-    pub fn family(&mut self, value: String) -> &mut Self {
+    pub fn family(mut self, value: String) -> Self {
         self.family = Some(value);
         self
     }
 
-    pub fn id(&mut self, value: i64) -> &mut Self {
+    pub fn id(mut self, value: i64) -> Self {
         self.id = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
-    pub fn plural(&mut self, value: Option<String>) -> &mut Self {
+    pub fn plural(mut self, value: Option<String>) -> Self {
         self.plural = Some(value);
         self
     }
 
-    pub fn scale_factor(&mut self, value: f64) -> &mut Self {
+    pub fn scale_factor(mut self, value: f64) -> Self {
         self.scale_factor = Some(value);
         self
     }
 
-    pub fn short_name(&mut self, value: Option<String>) -> &mut Self {
+    pub fn short_name(mut self, value: Option<String>) -> Self {
         self.short_name = Some(value);
         self
     }

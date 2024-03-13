@@ -43,17 +43,17 @@ impl UsageTopAvgMetricsPagination {
         }
     }
 
-    pub fn limit(&mut self, value: i64) -> &mut Self {
+    pub fn limit(mut self, value: i64) -> Self {
         self.limit = Some(value);
         self
     }
 
-    pub fn next_record_id(&mut self, value: Option<String>) -> &mut Self {
+    pub fn next_record_id(mut self, value: Option<String>) -> Self {
         self.next_record_id = Some(value);
         self
     }
 
-    pub fn total_number_of_records(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn total_number_of_records(mut self, value: Option<i64>) -> Self {
         self.total_number_of_records = Some(value);
         self
     }

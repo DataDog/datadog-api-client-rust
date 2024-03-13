@@ -64,65 +64,65 @@ impl SearchSLOResponseDataAttributesFacets {
     }
 
     pub fn all_tags(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectString>,
-    ) -> &mut Self {
+    ) -> Self {
         self.all_tags = Some(value);
         self
     }
 
     pub fn creator_name(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectString>,
-    ) -> &mut Self {
+    ) -> Self {
         self.creator_name = Some(value);
         self
     }
 
     pub fn env_tags(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectString>,
-    ) -> &mut Self {
+    ) -> Self {
         self.env_tags = Some(value);
         self
     }
 
     pub fn service_tags(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectString>,
-    ) -> &mut Self {
+    ) -> Self {
         self.service_tags = Some(value);
         self
     }
 
     pub fn slo_type(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectInt>,
-    ) -> &mut Self {
+    ) -> Self {
         self.slo_type = Some(value);
         self
     }
 
     pub fn target(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectInt>,
-    ) -> &mut Self {
+    ) -> Self {
         self.target = Some(value);
         self
     }
 
     pub fn team_tags(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectString>,
-    ) -> &mut Self {
+    ) -> Self {
         self.team_tags = Some(value);
         self
     }
 
     pub fn timeframe(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectString>,
-    ) -> &mut Self {
+    ) -> Self {
         self.timeframe = Some(value);
         self
     }

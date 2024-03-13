@@ -37,17 +37,17 @@ impl GraphSnapshot {
         }
     }
 
-    pub fn graph_def(&mut self, value: String) -> &mut Self {
+    pub fn graph_def(mut self, value: String) -> Self {
         self.graph_def = Some(value);
         self
     }
 
-    pub fn metric_query(&mut self, value: String) -> &mut Self {
+    pub fn metric_query(mut self, value: String) -> Self {
         self.metric_query = Some(value);
         self
     }
 
-    pub fn snapshot_url(&mut self, value: String) -> &mut Self {
+    pub fn snapshot_url(mut self, value: String) -> Self {
         self.snapshot_url = Some(value);
         self
     }

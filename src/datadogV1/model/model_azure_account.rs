@@ -79,67 +79,67 @@ impl AzureAccount {
         }
     }
 
-    pub fn app_service_plan_filters(&mut self, value: String) -> &mut Self {
+    pub fn app_service_plan_filters(mut self, value: String) -> Self {
         self.app_service_plan_filters = Some(value);
         self
     }
 
-    pub fn automute(&mut self, value: bool) -> &mut Self {
+    pub fn automute(mut self, value: bool) -> Self {
         self.automute = Some(value);
         self
     }
 
-    pub fn client_id(&mut self, value: String) -> &mut Self {
+    pub fn client_id(mut self, value: String) -> Self {
         self.client_id = Some(value);
         self
     }
 
-    pub fn client_secret(&mut self, value: String) -> &mut Self {
+    pub fn client_secret(mut self, value: String) -> Self {
         self.client_secret = Some(value);
         self
     }
 
-    pub fn container_app_filters(&mut self, value: String) -> &mut Self {
+    pub fn container_app_filters(mut self, value: String) -> Self {
         self.container_app_filters = Some(value);
         self
     }
 
-    pub fn cspm_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn cspm_enabled(mut self, value: bool) -> Self {
         self.cspm_enabled = Some(value);
         self
     }
 
-    pub fn custom_metrics_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn custom_metrics_enabled(mut self, value: bool) -> Self {
         self.custom_metrics_enabled = Some(value);
         self
     }
 
-    pub fn errors(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn errors(mut self, value: Vec<String>) -> Self {
         self.errors = Some(value);
         self
     }
 
-    pub fn host_filters(&mut self, value: String) -> &mut Self {
+    pub fn host_filters(mut self, value: String) -> Self {
         self.host_filters = Some(value);
         self
     }
 
-    pub fn new_client_id(&mut self, value: String) -> &mut Self {
+    pub fn new_client_id(mut self, value: String) -> Self {
         self.new_client_id = Some(value);
         self
     }
 
-    pub fn new_tenant_name(&mut self, value: String) -> &mut Self {
+    pub fn new_tenant_name(mut self, value: String) -> Self {
         self.new_tenant_name = Some(value);
         self
     }
 
-    pub fn resource_collection_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn resource_collection_enabled(mut self, value: bool) -> Self {
         self.resource_collection_enabled = Some(value);
         self
     }
 
-    pub fn tenant_name(&mut self, value: String) -> &mut Self {
+    pub fn tenant_name(mut self, value: String) -> Self {
         self.tenant_name = Some(value);
         self
     }

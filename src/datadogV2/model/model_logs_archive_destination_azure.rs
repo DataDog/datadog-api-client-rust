@@ -52,12 +52,12 @@ impl LogsArchiveDestinationAzure {
         }
     }
 
-    pub fn path(&mut self, value: String) -> &mut Self {
+    pub fn path(mut self, value: String) -> Self {
         self.path = Some(value);
         self
     }
 
-    pub fn region(&mut self, value: String) -> &mut Self {
+    pub fn region(mut self, value: String) -> Self {
         self.region = Some(value);
         self
     }

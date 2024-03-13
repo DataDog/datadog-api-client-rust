@@ -31,15 +31,12 @@ impl UsageCustomReportsResponse {
         }
     }
 
-    pub fn data(
-        &mut self,
-        value: Vec<crate::datadogV1::model::UsageCustomReportsData>,
-    ) -> &mut Self {
+    pub fn data(mut self, value: Vec<crate::datadogV1::model::UsageCustomReportsData>) -> Self {
         self.data = Some(value);
         self
     }
 
-    pub fn meta(&mut self, value: crate::datadogV1::model::UsageCustomReportsMeta) -> &mut Self {
+    pub fn meta(mut self, value: crate::datadogV1::model::UsageCustomReportsMeta) -> Self {
         self.meta = Some(value);
         self
     }

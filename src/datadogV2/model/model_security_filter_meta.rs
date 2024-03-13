@@ -27,7 +27,7 @@ impl SecurityFilterMeta {
         }
     }
 
-    pub fn warning(&mut self, value: String) -> &mut Self {
+    pub fn warning(mut self, value: String) -> Self {
         self.warning = Some(value);
         self
     }

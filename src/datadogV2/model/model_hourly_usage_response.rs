@@ -31,12 +31,12 @@ impl HourlyUsageResponse {
         }
     }
 
-    pub fn data(&mut self, value: Vec<crate::datadogV2::model::HourlyUsage>) -> &mut Self {
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::HourlyUsage>) -> Self {
         self.data = Some(value);
         self
     }
 
-    pub fn meta(&mut self, value: crate::datadogV2::model::HourlyUsageMetadata) -> &mut Self {
+    pub fn meta(mut self, value: crate::datadogV2::model::HourlyUsageMetadata) -> Self {
         self.meta = Some(value);
         self
     }

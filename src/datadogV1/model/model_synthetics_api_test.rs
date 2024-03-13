@@ -76,33 +76,27 @@ impl SyntheticsAPITest {
         }
     }
 
-    pub fn monitor_id(&mut self, value: i64) -> &mut Self {
+    pub fn monitor_id(mut self, value: i64) -> Self {
         self.monitor_id = Some(value);
         self
     }
 
-    pub fn public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }
 
-    pub fn status(
-        &mut self,
-        value: crate::datadogV1::model::SyntheticsTestPauseStatus,
-    ) -> &mut Self {
+    pub fn status(mut self, value: crate::datadogV1::model::SyntheticsTestPauseStatus) -> Self {
         self.status = Some(value);
         self
     }
 
-    pub fn subtype(
-        &mut self,
-        value: crate::datadogV1::model::SyntheticsTestDetailsSubType,
-    ) -> &mut Self {
+    pub fn subtype(mut self, value: crate::datadogV1::model::SyntheticsTestDetailsSubType) -> Self {
         self.subtype = Some(value);
         self
     }
 
-    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }

@@ -39,22 +39,22 @@ impl CIAppHostInfo {
         }
     }
 
-    pub fn hostname(&mut self, value: String) -> &mut Self {
+    pub fn hostname(mut self, value: String) -> Self {
         self.hostname = Some(value);
         self
     }
 
-    pub fn labels(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn labels(mut self, value: Vec<String>) -> Self {
         self.labels = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
-    pub fn workspace(&mut self, value: String) -> &mut Self {
+    pub fn workspace(mut self, value: String) -> Self {
         self.workspace = Some(value);
         self
     }

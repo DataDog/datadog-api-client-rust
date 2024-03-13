@@ -82,70 +82,70 @@ impl MonitorSearchResult {
         }
     }
 
-    pub fn classification(&mut self, value: String) -> &mut Self {
+    pub fn classification(mut self, value: String) -> Self {
         self.classification = Some(value);
         self
     }
 
-    pub fn creator(&mut self, value: crate::datadogV1::model::Creator) -> &mut Self {
+    pub fn creator(mut self, value: crate::datadogV1::model::Creator) -> Self {
         self.creator = Some(value);
         self
     }
 
-    pub fn id(&mut self, value: i64) -> &mut Self {
+    pub fn id(mut self, value: i64) -> Self {
         self.id = Some(value);
         self
     }
 
-    pub fn last_triggered_ts(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn last_triggered_ts(mut self, value: Option<i64>) -> Self {
         self.last_triggered_ts = Some(value);
         self
     }
 
-    pub fn metrics(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn metrics(mut self, value: Vec<String>) -> Self {
         self.metrics = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
     pub fn notifications(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::MonitorSearchResultNotification>,
-    ) -> &mut Self {
+    ) -> Self {
         self.notifications = Some(value);
         self
     }
 
-    pub fn org_id(&mut self, value: i64) -> &mut Self {
+    pub fn org_id(mut self, value: i64) -> Self {
         self.org_id = Some(value);
         self
     }
 
-    pub fn query(&mut self, value: String) -> &mut Self {
+    pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }
 
-    pub fn scopes(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn scopes(mut self, value: Vec<String>) -> Self {
         self.scopes = Some(value);
         self
     }
 
-    pub fn status(&mut self, value: crate::datadogV1::model::MonitorOverallStates) -> &mut Self {
+    pub fn status(mut self, value: crate::datadogV1::model::MonitorOverallStates) -> Self {
         self.status = Some(value);
         self
     }
 
-    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: crate::datadogV1::model::MonitorType) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV1::model::MonitorType) -> Self {
         self.type_ = Some(value);
         self
     }

@@ -35,17 +35,17 @@ impl UserUpdateAttributes {
         }
     }
 
-    pub fn disabled(&mut self, value: bool) -> &mut Self {
+    pub fn disabled(mut self, value: bool) -> Self {
         self.disabled = Some(value);
         self
     }
 
-    pub fn email(&mut self, value: String) -> &mut Self {
+    pub fn email(mut self, value: String) -> Self {
         self.email = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }

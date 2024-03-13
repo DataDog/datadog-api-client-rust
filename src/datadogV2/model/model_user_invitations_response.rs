@@ -27,10 +27,7 @@ impl UserInvitationsResponse {
         }
     }
 
-    pub fn data(
-        &mut self,
-        value: Vec<crate::datadogV2::model::UserInvitationResponseData>,
-    ) -> &mut Self {
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::UserInvitationResponseData>) -> Self {
         self.data = Some(value);
         self
     }

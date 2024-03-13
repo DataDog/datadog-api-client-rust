@@ -58,44 +58,41 @@ impl ServiceDefinitionV1 {
         }
     }
 
-    pub fn contact(
-        &mut self,
-        value: crate::datadogV2::model::ServiceDefinitionV1Contact,
-    ) -> &mut Self {
+    pub fn contact(mut self, value: crate::datadogV2::model::ServiceDefinitionV1Contact) -> Self {
         self.contact = Some(value);
         self
     }
 
     pub fn extensions(
-        &mut self,
+        mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> &mut Self {
+    ) -> Self {
         self.extensions = Some(value);
         self
     }
 
     pub fn external_resources(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::ServiceDefinitionV1Resource>,
-    ) -> &mut Self {
+    ) -> Self {
         self.external_resources = Some(value);
         self
     }
 
     pub fn integrations(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::ServiceDefinitionV1Integrations,
-    ) -> &mut Self {
+    ) -> Self {
         self.integrations = Some(value);
         self
     }
 
-    pub fn org(&mut self, value: crate::datadogV2::model::ServiceDefinitionV1Org) -> &mut Self {
+    pub fn org(mut self, value: crate::datadogV2::model::ServiceDefinitionV1Org) -> Self {
         self.org = Some(value);
         self
     }
 
-    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }

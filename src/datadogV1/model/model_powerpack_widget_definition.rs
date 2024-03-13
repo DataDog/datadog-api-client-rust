@@ -54,30 +54,30 @@ impl PowerpackWidgetDefinition {
         }
     }
 
-    pub fn background_color(&mut self, value: String) -> &mut Self {
+    pub fn background_color(mut self, value: String) -> Self {
         self.background_color = Some(value);
         self
     }
 
-    pub fn banner_img(&mut self, value: String) -> &mut Self {
+    pub fn banner_img(mut self, value: String) -> Self {
         self.banner_img = Some(value);
         self
     }
 
-    pub fn show_title(&mut self, value: bool) -> &mut Self {
+    pub fn show_title(mut self, value: bool) -> Self {
         self.show_title = Some(value);
         self
     }
 
     pub fn template_variables(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::PowerpackTemplateVariables,
-    ) -> &mut Self {
+    ) -> Self {
         self.template_variables = Some(value);
         self
     }
 
-    pub fn title(&mut self, value: String) -> &mut Self {
+    pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }

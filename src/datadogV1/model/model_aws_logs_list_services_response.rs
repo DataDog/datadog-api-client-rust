@@ -31,12 +31,12 @@ impl AWSLogsListServicesResponse {
         }
     }
 
-    pub fn id(&mut self, value: String) -> &mut Self {
+    pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
 
-    pub fn label(&mut self, value: String) -> &mut Self {
+    pub fn label(mut self, value: String) -> Self {
         self.label = Some(value);
         self
     }

@@ -56,17 +56,17 @@ impl LogsArchiveCreateRequestAttributes {
         }
     }
 
-    pub fn include_tags(&mut self, value: bool) -> &mut Self {
+    pub fn include_tags(mut self, value: bool) -> Self {
         self.include_tags = Some(value);
         self
     }
 
-    pub fn rehydration_max_scan_size_in_gb(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn rehydration_max_scan_size_in_gb(mut self, value: Option<i64>) -> Self {
         self.rehydration_max_scan_size_in_gb = Some(value);
         self
     }
 
-    pub fn rehydration_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn rehydration_tags(mut self, value: Vec<String>) -> Self {
         self.rehydration_tags = Some(value);
         self
     }

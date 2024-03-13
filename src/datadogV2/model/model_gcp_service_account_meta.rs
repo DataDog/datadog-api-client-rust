@@ -27,7 +27,7 @@ impl GCPServiceAccountMeta {
         }
     }
 
-    pub fn accessible_projects(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn accessible_projects(mut self, value: Vec<String>) -> Self {
         self.accessible_projects = Some(value);
         self
     }

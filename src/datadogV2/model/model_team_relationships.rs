@@ -31,18 +31,15 @@ impl TeamRelationships {
         }
     }
 
-    pub fn team_links(
-        &mut self,
-        value: crate::datadogV2::model::RelationshipToTeamLinks,
-    ) -> &mut Self {
+    pub fn team_links(mut self, value: crate::datadogV2::model::RelationshipToTeamLinks) -> Self {
         self.team_links = Some(value);
         self
     }
 
     pub fn user_team_permissions(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::RelationshipToUserTeamPermission,
-    ) -> &mut Self {
+    ) -> Self {
         self.user_team_permissions = Some(value);
         self
     }

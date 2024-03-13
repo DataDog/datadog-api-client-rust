@@ -32,17 +32,17 @@ impl SyntheticsCIBatchMetadataCI {
     }
 
     pub fn pipeline(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SyntheticsCIBatchMetadataPipeline,
-    ) -> &mut Self {
+    ) -> Self {
         self.pipeline = Some(value);
         self
     }
 
     pub fn provider(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SyntheticsCIBatchMetadataProvider,
-    ) -> &mut Self {
+    ) -> Self {
         self.provider = Some(value);
         self
     }

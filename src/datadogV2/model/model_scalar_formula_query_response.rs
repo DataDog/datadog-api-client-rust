@@ -31,12 +31,12 @@ impl ScalarFormulaQueryResponse {
         }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::ScalarResponse) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::ScalarResponse) -> Self {
         self.data = Some(value);
         self
     }
 
-    pub fn errors(&mut self, value: String) -> &mut Self {
+    pub fn errors(mut self, value: String) -> Self {
         self.errors = Some(value);
         self
     }

@@ -35,15 +35,12 @@ impl LogQueryDefinitionGroupBy {
         }
     }
 
-    pub fn limit(&mut self, value: i64) -> &mut Self {
+    pub fn limit(mut self, value: i64) -> Self {
         self.limit = Some(value);
         self
     }
 
-    pub fn sort(
-        &mut self,
-        value: crate::datadogV1::model::LogQueryDefinitionGroupBySort,
-    ) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV1::model::LogQueryDefinitionGroupBySort) -> Self {
         self.sort = Some(value);
         self
     }

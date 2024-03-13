@@ -28,9 +28,9 @@ impl IncidentAttachmentRelationships {
     }
 
     pub fn last_modified_by_user(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::RelationshipToUser,
-    ) -> &mut Self {
+    ) -> Self {
         self.last_modified_by_user = Some(value);
         self
     }

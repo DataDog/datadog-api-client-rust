@@ -27,7 +27,7 @@ impl ApplicationKeyRelationships {
         }
     }
 
-    pub fn owned_by(&mut self, value: crate::datadogV2::model::RelationshipToUser) -> &mut Self {
+    pub fn owned_by(mut self, value: crate::datadogV2::model::RelationshipToUser) -> Self {
         self.owned_by = Some(value);
         self
     }

@@ -31,12 +31,12 @@ impl SyntheticsGlobalVariableTOTPParameters {
         }
     }
 
-    pub fn digits(&mut self, value: i32) -> &mut Self {
+    pub fn digits(mut self, value: i32) -> Self {
         self.digits = Some(value);
         self
     }
 
-    pub fn refresh_interval(&mut self, value: i32) -> &mut Self {
+    pub fn refresh_interval(mut self, value: i32) -> Self {
         self.refresh_interval = Some(value);
         self
     }

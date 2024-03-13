@@ -35,23 +35,20 @@ impl LogsByRetention {
         }
     }
 
-    pub fn orgs(&mut self, value: crate::datadogV1::model::LogsByRetentionOrgs) -> &mut Self {
+    pub fn orgs(mut self, value: crate::datadogV1::model::LogsByRetentionOrgs) -> Self {
         self.orgs = Some(value);
         self
     }
 
-    pub fn usage(
-        &mut self,
-        value: Vec<crate::datadogV1::model::LogsRetentionAggSumUsage>,
-    ) -> &mut Self {
+    pub fn usage(mut self, value: Vec<crate::datadogV1::model::LogsRetentionAggSumUsage>) -> Self {
         self.usage = Some(value);
         self
     }
 
     pub fn usage_by_month(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::LogsByRetentionMonthlyUsage,
-    ) -> &mut Self {
+    ) -> Self {
         self.usage_by_month = Some(value);
         self
     }

@@ -39,22 +39,22 @@ impl ApiKey {
         }
     }
 
-    pub fn created(&mut self, value: String) -> &mut Self {
+    pub fn created(mut self, value: String) -> Self {
         self.created = Some(value);
         self
     }
 
-    pub fn created_by(&mut self, value: String) -> &mut Self {
+    pub fn created_by(mut self, value: String) -> Self {
         self.created_by = Some(value);
         self
     }
 
-    pub fn key(&mut self, value: String) -> &mut Self {
+    pub fn key(mut self, value: String) -> Self {
         self.key = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }

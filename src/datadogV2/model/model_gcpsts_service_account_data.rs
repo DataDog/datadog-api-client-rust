@@ -32,14 +32,14 @@ impl GCPSTSServiceAccountData {
     }
 
     pub fn attributes(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::GCPSTSServiceAccountAttributes,
-    ) -> &mut Self {
+    ) -> Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: crate::datadogV2::model::GCPServiceAccountType) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::GCPServiceAccountType) -> Self {
         self.type_ = Some(value);
         self
     }

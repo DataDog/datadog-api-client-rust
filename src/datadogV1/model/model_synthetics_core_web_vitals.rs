@@ -35,17 +35,17 @@ impl SyntheticsCoreWebVitals {
         }
     }
 
-    pub fn cls(&mut self, value: f64) -> &mut Self {
+    pub fn cls(mut self, value: f64) -> Self {
         self.cls = Some(value);
         self
     }
 
-    pub fn lcp(&mut self, value: f64) -> &mut Self {
+    pub fn lcp(mut self, value: f64) -> Self {
         self.lcp = Some(value);
         self
     }
 
-    pub fn url(&mut self, value: String) -> &mut Self {
+    pub fn url(mut self, value: String) -> Self {
         self.url = Some(value);
         self
     }

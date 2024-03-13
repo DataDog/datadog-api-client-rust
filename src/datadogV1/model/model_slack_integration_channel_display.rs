@@ -39,22 +39,22 @@ impl SlackIntegrationChannelDisplay {
         }
     }
 
-    pub fn message(&mut self, value: bool) -> &mut Self {
+    pub fn message(mut self, value: bool) -> Self {
         self.message = Some(value);
         self
     }
 
-    pub fn notified(&mut self, value: bool) -> &mut Self {
+    pub fn notified(mut self, value: bool) -> Self {
         self.notified = Some(value);
         self
     }
 
-    pub fn snapshot(&mut self, value: bool) -> &mut Self {
+    pub fn snapshot(mut self, value: bool) -> Self {
         self.snapshot = Some(value);
         self
     }
 
-    pub fn tags(&mut self, value: bool) -> &mut Self {
+    pub fn tags(mut self, value: bool) -> Self {
         self.tags = Some(value);
         self
     }

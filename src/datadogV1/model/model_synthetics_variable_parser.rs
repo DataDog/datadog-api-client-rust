@@ -33,7 +33,7 @@ impl SyntheticsVariableParser {
         }
     }
 
-    pub fn value(&mut self, value: String) -> &mut Self {
+    pub fn value(mut self, value: String) -> Self {
         self.value = Some(value);
         self
     }

@@ -87,56 +87,53 @@ impl SharedDashboard {
         }
     }
 
-    pub fn author(&mut self, value: crate::datadogV1::model::SharedDashboardAuthor) -> &mut Self {
+    pub fn author(mut self, value: crate::datadogV1::model::SharedDashboardAuthor) -> Self {
         self.author = Some(value);
         self
     }
 
-    pub fn created_at(&mut self, value: String) -> &mut Self {
+    pub fn created_at(mut self, value: String) -> Self {
         self.created_at = Some(value);
         self
     }
 
-    pub fn global_time(
-        &mut self,
-        value: crate::datadogV1::model::DashboardGlobalTime,
-    ) -> &mut Self {
+    pub fn global_time(mut self, value: crate::datadogV1::model::DashboardGlobalTime) -> Self {
         self.global_time = Some(value);
         self
     }
 
-    pub fn global_time_selectable_enabled(&mut self, value: Option<bool>) -> &mut Self {
+    pub fn global_time_selectable_enabled(mut self, value: Option<bool>) -> Self {
         self.global_time_selectable_enabled = Some(value);
         self
     }
 
-    pub fn public_url(&mut self, value: String) -> &mut Self {
+    pub fn public_url(mut self, value: String) -> Self {
         self.public_url = Some(value);
         self
     }
 
     pub fn selectable_template_vars(
-        &mut self,
+        mut self,
         value: Option<Vec<crate::datadogV1::model::SelectableTemplateVariableItems>>,
-    ) -> &mut Self {
+    ) -> Self {
         self.selectable_template_vars = Some(value);
         self
     }
 
-    pub fn share_list(&mut self, value: Option<Vec<String>>) -> &mut Self {
+    pub fn share_list(mut self, value: Option<Vec<String>>) -> Self {
         self.share_list = Some(value);
         self
     }
 
     pub fn share_type(
-        &mut self,
+        mut self,
         value: Option<crate::datadogV1::model::DashboardShareType>,
-    ) -> &mut Self {
+    ) -> Self {
         self.share_type = Some(value);
         self
     }
 
-    pub fn token(&mut self, value: String) -> &mut Self {
+    pub fn token(mut self, value: String) -> Self {
         self.token = Some(value);
         self
     }

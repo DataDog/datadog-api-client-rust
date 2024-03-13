@@ -31,12 +31,12 @@ impl CIAppAggregateBucketValueTimeseriesPoint {
         }
     }
 
-    pub fn time(&mut self, value: String) -> &mut Self {
+    pub fn time(mut self, value: String) -> Self {
         self.time = Some(value);
         self
     }
 
-    pub fn value(&mut self, value: f64) -> &mut Self {
+    pub fn value(mut self, value: f64) -> Self {
         self.value = Some(value);
         self
     }

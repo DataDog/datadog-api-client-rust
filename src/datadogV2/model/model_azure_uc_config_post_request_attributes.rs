@@ -53,7 +53,7 @@ impl AzureUCConfigPostRequestAttributes {
         }
     }
 
-    pub fn is_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn is_enabled(mut self, value: bool) -> Self {
         self.is_enabled = Some(value);
         self
     }

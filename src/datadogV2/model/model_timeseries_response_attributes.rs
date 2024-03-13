@@ -35,20 +35,17 @@ impl TimeseriesResponseAttributes {
         }
     }
 
-    pub fn series(
-        &mut self,
-        value: Vec<crate::datadogV2::model::TimeseriesResponseSeries>,
-    ) -> &mut Self {
+    pub fn series(mut self, value: Vec<crate::datadogV2::model::TimeseriesResponseSeries>) -> Self {
         self.series = Some(value);
         self
     }
 
-    pub fn times(&mut self, value: Vec<i64>) -> &mut Self {
+    pub fn times(mut self, value: Vec<i64>) -> Self {
         self.times = Some(value);
         self
     }
 
-    pub fn values(&mut self, value: Vec<Vec<Option<f64>>>) -> &mut Self {
+    pub fn values(mut self, value: Vec<Vec<Option<f64>>>) -> Self {
         self.values = Some(value);
         self
     }

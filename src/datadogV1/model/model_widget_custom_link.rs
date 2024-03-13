@@ -39,22 +39,22 @@ impl WidgetCustomLink {
         }
     }
 
-    pub fn is_hidden(&mut self, value: bool) -> &mut Self {
+    pub fn is_hidden(mut self, value: bool) -> Self {
         self.is_hidden = Some(value);
         self
     }
 
-    pub fn label(&mut self, value: String) -> &mut Self {
+    pub fn label(mut self, value: String) -> Self {
         self.label = Some(value);
         self
     }
 
-    pub fn link(&mut self, value: String) -> &mut Self {
+    pub fn link(mut self, value: String) -> Self {
         self.link = Some(value);
         self
     }
 
-    pub fn override_label(&mut self, value: String) -> &mut Self {
+    pub fn override_label(mut self, value: String) -> Self {
         self.override_label = Some(value);
         self
     }

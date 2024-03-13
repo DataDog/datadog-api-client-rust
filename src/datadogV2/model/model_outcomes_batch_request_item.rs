@@ -43,7 +43,7 @@ impl OutcomesBatchRequestItem {
         }
     }
 
-    pub fn remarks(&mut self, value: String) -> &mut Self {
+    pub fn remarks(mut self, value: String) -> Self {
         self.remarks = Some(value);
         self
     }

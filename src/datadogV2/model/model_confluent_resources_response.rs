@@ -28,9 +28,9 @@ impl ConfluentResourcesResponse {
     }
 
     pub fn data(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::ConfluentResourceResponseData>,
-    ) -> &mut Self {
+    ) -> Self {
         self.data = Some(value);
         self
     }

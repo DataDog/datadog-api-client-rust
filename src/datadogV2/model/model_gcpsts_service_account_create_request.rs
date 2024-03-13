@@ -27,7 +27,7 @@ impl GCPSTSServiceAccountCreateRequest {
         }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::GCPSTSServiceAccountData) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::GCPSTSServiceAccountData) -> Self {
         self.data = Some(value);
         self
     }

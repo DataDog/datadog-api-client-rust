@@ -32,17 +32,17 @@ impl MonthlyUsageAttributionResponse {
     }
 
     pub fn metadata(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::MonthlyUsageAttributionMetadata,
-    ) -> &mut Self {
+    ) -> Self {
         self.metadata = Some(value);
         self
     }
 
     pub fn usage(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::MonthlyUsageAttributionBody>,
-    ) -> &mut Self {
+    ) -> Self {
         self.usage = Some(value);
         self
     }

@@ -47,32 +47,32 @@ impl UsageTimeseriesHour {
         }
     }
 
-    pub fn hour(&mut self, value: String) -> &mut Self {
+    pub fn hour(mut self, value: String) -> Self {
         self.hour = Some(value);
         self
     }
 
-    pub fn num_custom_input_timeseries(&mut self, value: i64) -> &mut Self {
+    pub fn num_custom_input_timeseries(mut self, value: i64) -> Self {
         self.num_custom_input_timeseries = Some(value);
         self
     }
 
-    pub fn num_custom_output_timeseries(&mut self, value: i64) -> &mut Self {
+    pub fn num_custom_output_timeseries(mut self, value: i64) -> Self {
         self.num_custom_output_timeseries = Some(value);
         self
     }
 
-    pub fn num_custom_timeseries(&mut self, value: i64) -> &mut Self {
+    pub fn num_custom_timeseries(mut self, value: i64) -> Self {
         self.num_custom_timeseries = Some(value);
         self
     }
 
-    pub fn org_name(&mut self, value: String) -> &mut Self {
+    pub fn org_name(mut self, value: String) -> Self {
         self.org_name = Some(value);
         self
     }
 
-    pub fn public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }

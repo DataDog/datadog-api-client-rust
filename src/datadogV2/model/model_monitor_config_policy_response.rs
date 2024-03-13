@@ -27,10 +27,7 @@ impl MonitorConfigPolicyResponse {
         }
     }
 
-    pub fn data(
-        &mut self,
-        value: crate::datadogV2::model::MonitorConfigPolicyResponseData,
-    ) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::MonitorConfigPolicyResponseData) -> Self {
         self.data = Some(value);
         self
     }

@@ -28,9 +28,9 @@ impl BulkMuteFindingsRequestMeta {
     }
 
     pub fn findings(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::BulkMuteFindingsRequestMetaFindings>,
-    ) -> &mut Self {
+    ) -> Self {
         self.findings = Some(value);
         self
     }

@@ -37,15 +37,12 @@ impl SpansMetricCreateAttributes {
         }
     }
 
-    pub fn filter(&mut self, value: crate::datadogV2::model::SpansMetricFilter) -> &mut Self {
+    pub fn filter(mut self, value: crate::datadogV2::model::SpansMetricFilter) -> Self {
         self.filter = Some(value);
         self
     }
 
-    pub fn group_by(
-        &mut self,
-        value: Vec<crate::datadogV2::model::SpansMetricGroupBy>,
-    ) -> &mut Self {
+    pub fn group_by(mut self, value: Vec<crate::datadogV2::model::SpansMetricGroupBy>) -> Self {
         self.group_by = Some(value);
         self
     }

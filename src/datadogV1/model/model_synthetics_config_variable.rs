@@ -50,22 +50,22 @@ impl SyntheticsConfigVariable {
         }
     }
 
-    pub fn example(&mut self, value: String) -> &mut Self {
+    pub fn example(mut self, value: String) -> Self {
         self.example = Some(value);
         self
     }
 
-    pub fn id(&mut self, value: String) -> &mut Self {
+    pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
 
-    pub fn pattern(&mut self, value: String) -> &mut Self {
+    pub fn pattern(mut self, value: String) -> Self {
         self.pattern = Some(value);
         self
     }
 
-    pub fn secure(&mut self, value: bool) -> &mut Self {
+    pub fn secure(mut self, value: bool) -> Self {
         self.secure = Some(value);
         self
     }

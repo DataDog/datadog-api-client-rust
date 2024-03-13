@@ -35,17 +35,17 @@ impl AWSAccountDeleteRequest {
         }
     }
 
-    pub fn access_key_id(&mut self, value: String) -> &mut Self {
+    pub fn access_key_id(mut self, value: String) -> Self {
         self.access_key_id = Some(value);
         self
     }
 
-    pub fn account_id(&mut self, value: String) -> &mut Self {
+    pub fn account_id(mut self, value: String) -> Self {
         self.account_id = Some(value);
         self
     }
 
-    pub fn role_name(&mut self, value: String) -> &mut Self {
+    pub fn role_name(mut self, value: String) -> Self {
         self.role_name = Some(value);
         self
     }

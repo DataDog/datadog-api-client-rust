@@ -27,7 +27,7 @@ impl ContainerMeta {
         }
     }
 
-    pub fn pagination(&mut self, value: crate::datadogV2::model::ContainerMetaPage) -> &mut Self {
+    pub fn pagination(mut self, value: crate::datadogV2::model::ContainerMetaPage) -> Self {
         self.pagination = Some(value);
         self
     }

@@ -31,12 +31,12 @@ impl IPPrefixesAPI {
         }
     }
 
-    pub fn prefixes_ipv4(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn prefixes_ipv4(mut self, value: Vec<String>) -> Self {
         self.prefixes_ipv4 = Some(value);
         self
     }
 
-    pub fn prefixes_ipv6(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn prefixes_ipv6(mut self, value: Vec<String>) -> Self {
         self.prefixes_ipv6 = Some(value);
         self
     }

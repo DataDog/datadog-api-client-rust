@@ -31,12 +31,12 @@ impl SyntheticsCIBatchMetadataGit {
         }
     }
 
-    pub fn branch(&mut self, value: String) -> &mut Self {
+    pub fn branch(mut self, value: String) -> Self {
         self.branch = Some(value);
         self
     }
 
-    pub fn commit_sha(&mut self, value: String) -> &mut Self {
+    pub fn commit_sha(mut self, value: String) -> Self {
         self.commit_sha = Some(value);
         self
     }

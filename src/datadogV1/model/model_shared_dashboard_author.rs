@@ -31,12 +31,12 @@ impl SharedDashboardAuthor {
         }
     }
 
-    pub fn handle(&mut self, value: String) -> &mut Self {
+    pub fn handle(mut self, value: String) -> Self {
         self.handle = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: Option<String>) -> &mut Self {
+    pub fn name(mut self, value: Option<String>) -> Self {
         self.name = Some(value);
         self
     }

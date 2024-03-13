@@ -51,37 +51,37 @@ impl GCPSTSServiceAccountAttributes {
         }
     }
 
-    pub fn account_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn account_tags(mut self, value: Vec<String>) -> Self {
         self.account_tags = Some(value);
         self
     }
 
-    pub fn automute(&mut self, value: bool) -> &mut Self {
+    pub fn automute(mut self, value: bool) -> Self {
         self.automute = Some(value);
         self
     }
 
-    pub fn client_email(&mut self, value: String) -> &mut Self {
+    pub fn client_email(mut self, value: String) -> Self {
         self.client_email = Some(value);
         self
     }
 
-    pub fn host_filters(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn host_filters(mut self, value: Vec<String>) -> Self {
         self.host_filters = Some(value);
         self
     }
 
-    pub fn is_cspm_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn is_cspm_enabled(mut self, value: bool) -> Self {
         self.is_cspm_enabled = Some(value);
         self
     }
 
-    pub fn is_security_command_center_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn is_security_command_center_enabled(mut self, value: bool) -> Self {
         self.is_security_command_center_enabled = Some(value);
         self
     }
 
-    pub fn resource_collection_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn resource_collection_enabled(mut self, value: bool) -> Self {
         self.resource_collection_enabled = Some(value);
         self
     }

@@ -27,7 +27,7 @@ impl AWSTagFilterListResponse {
         }
     }
 
-    pub fn filters(&mut self, value: Vec<crate::datadogV1::model::AWSTagFilter>) -> &mut Self {
+    pub fn filters(mut self, value: Vec<crate::datadogV1::model::AWSTagFilter>) -> Self {
         self.filters = Some(value);
         self
     }

@@ -50,22 +50,22 @@ impl EventsScalarQuery {
         }
     }
 
-    pub fn group_by(&mut self, value: Vec<crate::datadogV2::model::EventsGroupBy>) -> &mut Self {
+    pub fn group_by(mut self, value: Vec<crate::datadogV2::model::EventsGroupBy>) -> Self {
         self.group_by = Some(value);
         self
     }
 
-    pub fn indexes(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn indexes(mut self, value: Vec<String>) -> Self {
         self.indexes = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
-    pub fn search(&mut self, value: crate::datadogV2::model::EventsSearch) -> &mut Self {
+    pub fn search(mut self, value: crate::datadogV2::model::EventsSearch) -> Self {
         self.search = Some(value);
         self
     }

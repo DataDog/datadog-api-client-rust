@@ -43,17 +43,17 @@ impl JiraIntegrationMetadataIssuesItem {
         }
     }
 
-    pub fn issue_key(&mut self, value: String) -> &mut Self {
+    pub fn issue_key(mut self, value: String) -> Self {
         self.issue_key = Some(value);
         self
     }
 
-    pub fn issuetype_id(&mut self, value: String) -> &mut Self {
+    pub fn issuetype_id(mut self, value: String) -> Self {
         self.issuetype_id = Some(value);
         self
     }
 
-    pub fn redirect_url(&mut self, value: String) -> &mut Self {
+    pub fn redirect_url(mut self, value: String) -> Self {
         self.redirect_url = Some(value);
         self
     }

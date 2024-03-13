@@ -27,7 +27,7 @@ impl SensitiveDataScannerGroupData {
         }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::SensitiveDataScannerGroup) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::SensitiveDataScannerGroup) -> Self {
         self.data = Some(value);
         self
     }

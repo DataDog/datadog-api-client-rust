@@ -32,17 +32,14 @@ impl IncidentSearchResponseData {
     }
 
     pub fn attributes(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::IncidentSearchResponseAttributes,
-    ) -> &mut Self {
+    ) -> Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn type_(
-        &mut self,
-        value: crate::datadogV2::model::IncidentSearchResultsType,
-    ) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::IncidentSearchResultsType) -> Self {
         self.type_ = Some(value);
         self
     }

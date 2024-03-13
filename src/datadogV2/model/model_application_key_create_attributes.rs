@@ -31,7 +31,7 @@ impl ApplicationKeyCreateAttributes {
         }
     }
 
-    pub fn scopes(&mut self, value: Option<Vec<String>>) -> &mut Self {
+    pub fn scopes(mut self, value: Option<Vec<String>>) -> Self {
         self.scopes = Some(value);
         self
     }

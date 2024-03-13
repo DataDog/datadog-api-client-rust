@@ -29,7 +29,7 @@ impl SyntheticsTestOptionsMonitorOptions {
         }
     }
 
-    pub fn renotify_interval(&mut self, value: i64) -> &mut Self {
+    pub fn renotify_interval(mut self, value: i64) -> Self {
         self.renotify_interval = Some(value);
         self
     }

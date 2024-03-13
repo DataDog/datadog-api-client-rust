@@ -67,57 +67,57 @@ impl MonitorType {
         }
     }
 
-    pub fn created_at(&mut self, value: i64) -> &mut Self {
+    pub fn created_at(mut self, value: i64) -> Self {
         self.created_at = Some(value);
         self
     }
 
-    pub fn group_status(&mut self, value: i32) -> &mut Self {
+    pub fn group_status(mut self, value: i32) -> Self {
         self.group_status = Some(value);
         self
     }
 
-    pub fn groups(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn groups(mut self, value: Vec<String>) -> Self {
         self.groups = Some(value);
         self
     }
 
-    pub fn id(&mut self, value: i64) -> &mut Self {
+    pub fn id(mut self, value: i64) -> Self {
         self.id = Some(value);
         self
     }
 
-    pub fn message(&mut self, value: String) -> &mut Self {
+    pub fn message(mut self, value: String) -> Self {
         self.message = Some(value);
         self
     }
 
-    pub fn modified(&mut self, value: i64) -> &mut Self {
+    pub fn modified(mut self, value: i64) -> Self {
         self.modified = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
-    pub fn query(&mut self, value: String) -> &mut Self {
+    pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }
 
-    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
 
-    pub fn templated_name(&mut self, value: String) -> &mut Self {
+    pub fn templated_name(mut self, value: String) -> Self {
         self.templated_name = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: String) -> &mut Self {
+    pub fn type_(mut self, value: String) -> Self {
         self.type_ = Some(value);
         self
     }

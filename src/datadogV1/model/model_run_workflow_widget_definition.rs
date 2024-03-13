@@ -58,38 +58,32 @@ impl RunWorkflowWidgetDefinition {
         }
     }
 
-    pub fn custom_links(
-        &mut self,
-        value: Vec<crate::datadogV1::model::WidgetCustomLink>,
-    ) -> &mut Self {
+    pub fn custom_links(mut self, value: Vec<crate::datadogV1::model::WidgetCustomLink>) -> Self {
         self.custom_links = Some(value);
         self
     }
 
-    pub fn inputs(
-        &mut self,
-        value: Vec<crate::datadogV1::model::RunWorkflowWidgetInput>,
-    ) -> &mut Self {
+    pub fn inputs(mut self, value: Vec<crate::datadogV1::model::RunWorkflowWidgetInput>) -> Self {
         self.inputs = Some(value);
         self
     }
 
-    pub fn time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
+    pub fn time(mut self, value: crate::datadogV1::model::WidgetTime) -> Self {
         self.time = Some(value);
         self
     }
 
-    pub fn title(&mut self, value: String) -> &mut Self {
+    pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
 
-    pub fn title_align(&mut self, value: crate::datadogV1::model::WidgetTextAlign) -> &mut Self {
+    pub fn title_align(mut self, value: crate::datadogV1::model::WidgetTextAlign) -> Self {
         self.title_align = Some(value);
         self
     }
 
-    pub fn title_size(&mut self, value: String) -> &mut Self {
+    pub fn title_size(mut self, value: String) -> Self {
         self.title_size = Some(value);
         self
     }

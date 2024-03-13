@@ -17,7 +17,7 @@ pub struct CreateHostTagsOptionalParams {
 impl CreateHostTagsOptionalParams {
     /// The source of the tags.
     /// [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>).
-    pub fn source(&mut self, value: String) -> &mut Self {
+    pub fn source(mut self, value: String) -> Self {
         self.source = Some(value);
         self
     }
@@ -35,7 +35,7 @@ pub struct DeleteHostTagsOptionalParams {
 impl DeleteHostTagsOptionalParams {
     /// The source of the tags (for example chef, puppet).
     /// [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>).
-    pub fn source(&mut self, value: String) -> &mut Self {
+    pub fn source(mut self, value: String) -> Self {
         self.source = Some(value);
         self
     }
@@ -51,7 +51,7 @@ pub struct GetHostTagsOptionalParams {
 
 impl GetHostTagsOptionalParams {
     /// Source to filter.
-    pub fn source(&mut self, value: String) -> &mut Self {
+    pub fn source(mut self, value: String) -> Self {
         self.source = Some(value);
         self
     }
@@ -67,7 +67,7 @@ pub struct ListHostTagsOptionalParams {
 
 impl ListHostTagsOptionalParams {
     /// When specified, filters host list to those tags with the specified source.
-    pub fn source(&mut self, value: String) -> &mut Self {
+    pub fn source(mut self, value: String) -> Self {
         self.source = Some(value);
         self
     }
@@ -85,7 +85,7 @@ pub struct UpdateHostTagsOptionalParams {
 impl UpdateHostTagsOptionalParams {
     /// The source of the tags (for example chef, puppet).
     /// [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>)
-    pub fn source(&mut self, value: String) -> &mut Self {
+    pub fn source(mut self, value: String) -> Self {
         self.source = Some(value);
         self
     }

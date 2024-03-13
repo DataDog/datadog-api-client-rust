@@ -31,12 +31,12 @@ impl SyntheticsPrivateLocationSecretsAuthentication {
         }
     }
 
-    pub fn id(&mut self, value: String) -> &mut Self {
+    pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
 
-    pub fn key(&mut self, value: String) -> &mut Self {
+    pub fn key(mut self, value: String) -> Self {
         self.key = Some(value);
         self
     }

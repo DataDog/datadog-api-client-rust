@@ -87,67 +87,67 @@ impl Event {
         }
     }
 
-    pub fn alert_type(&mut self, value: crate::datadogV1::model::EventAlertType) -> &mut Self {
+    pub fn alert_type(mut self, value: crate::datadogV1::model::EventAlertType) -> Self {
         self.alert_type = Some(value);
         self
     }
 
-    pub fn date_happened(&mut self, value: i64) -> &mut Self {
+    pub fn date_happened(mut self, value: i64) -> Self {
         self.date_happened = Some(value);
         self
     }
 
-    pub fn device_name(&mut self, value: String) -> &mut Self {
+    pub fn device_name(mut self, value: String) -> Self {
         self.device_name = Some(value);
         self
     }
 
-    pub fn host(&mut self, value: String) -> &mut Self {
+    pub fn host(mut self, value: String) -> Self {
         self.host = Some(value);
         self
     }
 
-    pub fn id(&mut self, value: i64) -> &mut Self {
+    pub fn id(mut self, value: i64) -> Self {
         self.id = Some(value);
         self
     }
 
-    pub fn id_str(&mut self, value: String) -> &mut Self {
+    pub fn id_str(mut self, value: String) -> Self {
         self.id_str = Some(value);
         self
     }
 
-    pub fn payload(&mut self, value: String) -> &mut Self {
+    pub fn payload(mut self, value: String) -> Self {
         self.payload = Some(value);
         self
     }
 
-    pub fn priority(&mut self, value: Option<crate::datadogV1::model::EventPriority>) -> &mut Self {
+    pub fn priority(mut self, value: Option<crate::datadogV1::model::EventPriority>) -> Self {
         self.priority = Some(value);
         self
     }
 
-    pub fn source_type_name(&mut self, value: String) -> &mut Self {
+    pub fn source_type_name(mut self, value: String) -> Self {
         self.source_type_name = Some(value);
         self
     }
 
-    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
 
-    pub fn text(&mut self, value: String) -> &mut Self {
+    pub fn text(mut self, value: String) -> Self {
         self.text = Some(value);
         self
     }
 
-    pub fn title(&mut self, value: String) -> &mut Self {
+    pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
 
-    pub fn url(&mut self, value: String) -> &mut Self {
+    pub fn url(mut self, value: String) -> Self {
         self.url = Some(value);
         self
     }

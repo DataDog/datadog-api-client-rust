@@ -28,9 +28,9 @@ impl PowerpacksResponseMeta {
     }
 
     pub fn pagination(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::PowerpacksResponseMetaPagination,
-    ) -> &mut Self {
+    ) -> Self {
         self.pagination = Some(value);
         self
     }

@@ -27,10 +27,7 @@ impl HourlyUsageMetadata {
         }
     }
 
-    pub fn pagination(
-        &mut self,
-        value: crate::datadogV2::model::HourlyUsagePagination,
-    ) -> &mut Self {
+    pub fn pagination(mut self, value: crate::datadogV2::model::HourlyUsagePagination) -> Self {
         self.pagination = Some(value);
         self
     }

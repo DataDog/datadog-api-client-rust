@@ -31,12 +31,12 @@ impl AWSLogsAsyncResponse {
         }
     }
 
-    pub fn errors(&mut self, value: Vec<crate::datadogV1::model::AWSLogsAsyncError>) -> &mut Self {
+    pub fn errors(mut self, value: Vec<crate::datadogV1::model::AWSLogsAsyncError>) -> Self {
         self.errors = Some(value);
         self
     }
 
-    pub fn status(&mut self, value: String) -> &mut Self {
+    pub fn status(mut self, value: String) -> Self {
         self.status = Some(value);
         self
     }

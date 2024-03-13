@@ -27,7 +27,7 @@ impl SensitiveDataScannerReorderGroupsResponse {
         }
     }
 
-    pub fn meta(&mut self, value: crate::datadogV2::model::SensitiveDataScannerMeta) -> &mut Self {
+    pub fn meta(mut self, value: crate::datadogV2::model::SensitiveDataScannerMeta) -> Self {
         self.meta = Some(value);
         self
     }

@@ -31,15 +31,12 @@ impl ListRulesResponse {
         }
     }
 
-    pub fn data(
-        &mut self,
-        value: Vec<crate::datadogV2::model::ListRulesResponseDataItem>,
-    ) -> &mut Self {
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::ListRulesResponseDataItem>) -> Self {
         self.data = Some(value);
         self
     }
 
-    pub fn links(&mut self, value: crate::datadogV2::model::ListRulesResponseLinks) -> &mut Self {
+    pub fn links(mut self, value: crate::datadogV2::model::ListRulesResponseLinks) -> Self {
         self.links = Some(value);
         self
     }

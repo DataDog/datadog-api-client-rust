@@ -27,10 +27,7 @@ impl ConfluentAccountResponse {
         }
     }
 
-    pub fn data(
-        &mut self,
-        value: crate::datadogV2::model::ConfluentAccountResponseData,
-    ) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::ConfluentAccountResponseData) -> Self {
         self.data = Some(value);
         self
     }

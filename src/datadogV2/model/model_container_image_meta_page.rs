@@ -51,35 +51,32 @@ impl ContainerImageMetaPage {
         }
     }
 
-    pub fn cursor(&mut self, value: String) -> &mut Self {
+    pub fn cursor(mut self, value: String) -> Self {
         self.cursor = Some(value);
         self
     }
 
-    pub fn limit(&mut self, value: i32) -> &mut Self {
+    pub fn limit(mut self, value: i32) -> Self {
         self.limit = Some(value);
         self
     }
 
-    pub fn next_cursor(&mut self, value: String) -> &mut Self {
+    pub fn next_cursor(mut self, value: String) -> Self {
         self.next_cursor = Some(value);
         self
     }
 
-    pub fn prev_cursor(&mut self, value: Option<String>) -> &mut Self {
+    pub fn prev_cursor(mut self, value: Option<String>) -> Self {
         self.prev_cursor = Some(value);
         self
     }
 
-    pub fn total(&mut self, value: i64) -> &mut Self {
+    pub fn total(mut self, value: i64) -> Self {
         self.total = Some(value);
         self
     }
 
-    pub fn type_(
-        &mut self,
-        value: crate::datadogV2::model::ContainerImageMetaPageType,
-    ) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::ContainerImageMetaPageType) -> Self {
         self.type_ = Some(value);
         self
     }

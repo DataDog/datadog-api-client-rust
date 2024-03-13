@@ -28,9 +28,9 @@ impl RoleResponseRelationships {
     }
 
     pub fn permissions(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::RelationshipToPermissions,
-    ) -> &mut Self {
+    ) -> Self {
         self.permissions = Some(value);
         self
     }

@@ -31,12 +31,12 @@ impl CreateRuleRequestData {
         }
     }
 
-    pub fn attributes(&mut self, value: crate::datadogV2::model::RuleAttributes) -> &mut Self {
+    pub fn attributes(mut self, value: crate::datadogV2::model::RuleAttributes) -> Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: crate::datadogV2::model::RuleType) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::RuleType) -> Self {
         self.type_ = Some(value);
         self
     }

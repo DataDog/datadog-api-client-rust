@@ -39,17 +39,17 @@ impl EventsGroupBySort {
         }
     }
 
-    pub fn metric(&mut self, value: String) -> &mut Self {
+    pub fn metric(mut self, value: String) -> Self {
         self.metric = Some(value);
         self
     }
 
-    pub fn order(&mut self, value: crate::datadogV2::model::QuerySortOrder) -> &mut Self {
+    pub fn order(mut self, value: crate::datadogV2::model::QuerySortOrder) -> Self {
         self.order = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: crate::datadogV2::model::EventsSortType) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::EventsSortType) -> Self {
         self.type_ = Some(value);
         self
     }

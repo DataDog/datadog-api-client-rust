@@ -28,9 +28,9 @@ impl MonitorOptionsCustomSchedule {
     }
 
     pub fn recurrences(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::MonitorOptionsCustomScheduleRecurrence>,
-    ) -> &mut Self {
+    ) -> Self {
         self.recurrences = Some(value);
         self
     }

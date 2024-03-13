@@ -29,6 +29,14 @@ impl DowntimeMonitorIdentifierId {
             _unparsed: false,
         }
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl<'de> Deserialize<'de> for DowntimeMonitorIdentifierId {

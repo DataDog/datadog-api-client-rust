@@ -43,7 +43,7 @@ impl MetricsScalarQuery {
         }
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }

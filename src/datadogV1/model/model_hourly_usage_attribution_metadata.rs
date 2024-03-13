@@ -28,9 +28,9 @@ impl HourlyUsageAttributionMetadata {
     }
 
     pub fn pagination(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::HourlyUsageAttributionPagination,
-    ) -> &mut Self {
+    ) -> Self {
         self.pagination = Some(value);
         self
     }

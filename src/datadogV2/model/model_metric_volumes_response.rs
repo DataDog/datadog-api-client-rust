@@ -27,7 +27,7 @@ impl MetricVolumesResponse {
         }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::MetricVolumes) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::MetricVolumes) -> Self {
         self.data = Some(value);
         self
     }

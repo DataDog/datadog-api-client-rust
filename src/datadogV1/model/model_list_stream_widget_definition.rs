@@ -60,32 +60,32 @@ impl ListStreamWidgetDefinition {
         }
     }
 
-    pub fn legend_size(&mut self, value: String) -> &mut Self {
+    pub fn legend_size(mut self, value: String) -> Self {
         self.legend_size = Some(value);
         self
     }
 
-    pub fn show_legend(&mut self, value: bool) -> &mut Self {
+    pub fn show_legend(mut self, value: bool) -> Self {
         self.show_legend = Some(value);
         self
     }
 
-    pub fn time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
+    pub fn time(mut self, value: crate::datadogV1::model::WidgetTime) -> Self {
         self.time = Some(value);
         self
     }
 
-    pub fn title(&mut self, value: String) -> &mut Self {
+    pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
 
-    pub fn title_align(&mut self, value: crate::datadogV1::model::WidgetTextAlign) -> &mut Self {
+    pub fn title_align(mut self, value: crate::datadogV1::model::WidgetTextAlign) -> Self {
         self.title_align = Some(value);
         self
     }
 
-    pub fn title_size(&mut self, value: String) -> &mut Self {
+    pub fn title_size(mut self, value: String) -> Self {
         self.title_size = Some(value);
         self
     }

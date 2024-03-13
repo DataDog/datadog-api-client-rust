@@ -27,7 +27,7 @@ impl TagToHosts {
         }
     }
 
-    pub fn tags(&mut self, value: std::collections::BTreeMap<String, Vec<String>>) -> &mut Self {
+    pub fn tags(mut self, value: std::collections::BTreeMap<String, Vec<String>>) -> Self {
         self.tags = Some(value);
         self
     }

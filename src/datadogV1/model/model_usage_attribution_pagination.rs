@@ -43,27 +43,27 @@ impl UsageAttributionPagination {
         }
     }
 
-    pub fn limit(&mut self, value: i64) -> &mut Self {
+    pub fn limit(mut self, value: i64) -> Self {
         self.limit = Some(value);
         self
     }
 
-    pub fn offset(&mut self, value: i64) -> &mut Self {
+    pub fn offset(mut self, value: i64) -> Self {
         self.offset = Some(value);
         self
     }
 
-    pub fn sort_direction(&mut self, value: String) -> &mut Self {
+    pub fn sort_direction(mut self, value: String) -> Self {
         self.sort_direction = Some(value);
         self
     }
 
-    pub fn sort_name(&mut self, value: String) -> &mut Self {
+    pub fn sort_name(mut self, value: String) -> Self {
         self.sort_name = Some(value);
         self
     }
 
-    pub fn total_number_of_records(&mut self, value: i64) -> &mut Self {
+    pub fn total_number_of_records(mut self, value: i64) -> Self {
         self.total_number_of_records = Some(value);
         self
     }

@@ -32,12 +32,12 @@ impl ProcessSummariesMetaPage {
         }
     }
 
-    pub fn after(&mut self, value: String) -> &mut Self {
+    pub fn after(mut self, value: String) -> Self {
         self.after = Some(value);
         self
     }
 
-    pub fn size(&mut self, value: i32) -> &mut Self {
+    pub fn size(mut self, value: i32) -> Self {
         self.size = Some(value);
         self
     }

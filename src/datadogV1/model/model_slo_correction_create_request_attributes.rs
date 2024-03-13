@@ -60,27 +60,27 @@ impl SLOCorrectionCreateRequestAttributes {
         }
     }
 
-    pub fn description(&mut self, value: String) -> &mut Self {
+    pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
 
-    pub fn duration(&mut self, value: i64) -> &mut Self {
+    pub fn duration(mut self, value: i64) -> Self {
         self.duration = Some(value);
         self
     }
 
-    pub fn end(&mut self, value: i64) -> &mut Self {
+    pub fn end(mut self, value: i64) -> Self {
         self.end = Some(value);
         self
     }
 
-    pub fn rrule(&mut self, value: String) -> &mut Self {
+    pub fn rrule(mut self, value: String) -> Self {
         self.rrule = Some(value);
         self
     }
 
-    pub fn timezone(&mut self, value: String) -> &mut Self {
+    pub fn timezone(mut self, value: String) -> Self {
         self.timezone = Some(value);
         self
     }

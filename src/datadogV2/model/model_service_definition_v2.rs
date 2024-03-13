@@ -71,64 +71,55 @@ impl ServiceDefinitionV2 {
     }
 
     pub fn contacts(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::ServiceDefinitionV2Contact>,
-    ) -> &mut Self {
+    ) -> Self {
         self.contacts = Some(value);
         self
     }
 
-    pub fn dd_team(&mut self, value: String) -> &mut Self {
+    pub fn dd_team(mut self, value: String) -> Self {
         self.dd_team = Some(value);
         self
     }
 
-    pub fn docs(
-        &mut self,
-        value: Vec<crate::datadogV2::model::ServiceDefinitionV2Doc>,
-    ) -> &mut Self {
+    pub fn docs(mut self, value: Vec<crate::datadogV2::model::ServiceDefinitionV2Doc>) -> Self {
         self.docs = Some(value);
         self
     }
 
     pub fn extensions(
-        &mut self,
+        mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> &mut Self {
+    ) -> Self {
         self.extensions = Some(value);
         self
     }
 
     pub fn integrations(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::ServiceDefinitionV2Integrations,
-    ) -> &mut Self {
+    ) -> Self {
         self.integrations = Some(value);
         self
     }
 
-    pub fn links(
-        &mut self,
-        value: Vec<crate::datadogV2::model::ServiceDefinitionV2Link>,
-    ) -> &mut Self {
+    pub fn links(mut self, value: Vec<crate::datadogV2::model::ServiceDefinitionV2Link>) -> Self {
         self.links = Some(value);
         self
     }
 
-    pub fn repos(
-        &mut self,
-        value: Vec<crate::datadogV2::model::ServiceDefinitionV2Repo>,
-    ) -> &mut Self {
+    pub fn repos(mut self, value: Vec<crate::datadogV2::model::ServiceDefinitionV2Repo>) -> Self {
         self.repos = Some(value);
         self
     }
 
-    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
 
-    pub fn team(&mut self, value: String) -> &mut Self {
+    pub fn team(mut self, value: String) -> Self {
         self.team = Some(value);
         self
     }

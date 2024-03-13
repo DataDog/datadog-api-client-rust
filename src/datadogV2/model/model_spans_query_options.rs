@@ -32,12 +32,12 @@ impl SpansQueryOptions {
         }
     }
 
-    pub fn time_offset(&mut self, value: i64) -> &mut Self {
+    pub fn time_offset(mut self, value: i64) -> Self {
         self.time_offset = Some(value);
         self
     }
 
-    pub fn timezone(&mut self, value: String) -> &mut Self {
+    pub fn timezone(mut self, value: String) -> Self {
         self.timezone = Some(value);
         self
     }

@@ -36,26 +36,23 @@ impl SyntheticsPrivateLocationCreationResponse {
         }
     }
 
-    pub fn config(
-        &mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> &mut Self {
+    pub fn config(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.config = Some(value);
         self
     }
 
     pub fn private_location(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SyntheticsPrivateLocation,
-    ) -> &mut Self {
+    ) -> Self {
         self.private_location = Some(value);
         self
     }
 
     pub fn result_encryption(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SyntheticsPrivateLocationCreationResponseResultEncryption,
-    ) -> &mut Self {
+    ) -> Self {
         self.result_encryption = Some(value);
         self
     }

@@ -27,7 +27,7 @@ impl CostByOrgResponse {
         }
     }
 
-    pub fn data(&mut self, value: Vec<crate::datadogV2::model::CostByOrg>) -> &mut Self {
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::CostByOrg>) -> Self {
         self.data = Some(value);
         self
     }

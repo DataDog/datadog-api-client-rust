@@ -87,74 +87,71 @@ impl DowntimeResponseAttributes {
         }
     }
 
-    pub fn canceled(&mut self, value: Option<String>) -> &mut Self {
+    pub fn canceled(mut self, value: Option<String>) -> Self {
         self.canceled = Some(value);
         self
     }
 
-    pub fn created(&mut self, value: String) -> &mut Self {
+    pub fn created(mut self, value: String) -> Self {
         self.created = Some(value);
         self
     }
 
-    pub fn display_timezone(&mut self, value: Option<String>) -> &mut Self {
+    pub fn display_timezone(mut self, value: Option<String>) -> Self {
         self.display_timezone = Some(value);
         self
     }
 
-    pub fn message(&mut self, value: Option<String>) -> &mut Self {
+    pub fn message(mut self, value: Option<String>) -> Self {
         self.message = Some(value);
         self
     }
 
-    pub fn modified(&mut self, value: String) -> &mut Self {
+    pub fn modified(mut self, value: String) -> Self {
         self.modified = Some(value);
         self
     }
 
     pub fn monitor_identifier(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::DowntimeMonitorIdentifier,
-    ) -> &mut Self {
+    ) -> Self {
         self.monitor_identifier = Some(value);
         self
     }
 
-    pub fn mute_first_recovery_notification(&mut self, value: bool) -> &mut Self {
+    pub fn mute_first_recovery_notification(mut self, value: bool) -> Self {
         self.mute_first_recovery_notification = Some(value);
         self
     }
 
     pub fn notify_end_states(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::DowntimeNotifyEndStateTypes>,
-    ) -> &mut Self {
+    ) -> Self {
         self.notify_end_states = Some(value);
         self
     }
 
     pub fn notify_end_types(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::DowntimeNotifyEndStateActions>,
-    ) -> &mut Self {
+    ) -> Self {
         self.notify_end_types = Some(value);
         self
     }
 
-    pub fn schedule(
-        &mut self,
-        value: crate::datadogV2::model::DowntimeScheduleResponse,
-    ) -> &mut Self {
+    pub fn schedule(mut self, value: crate::datadogV2::model::DowntimeScheduleResponse) -> Self {
         self.schedule = Some(value);
         self
     }
 
-    pub fn scope(&mut self, value: String) -> &mut Self {
+    pub fn scope(mut self, value: String) -> Self {
         self.scope = Some(value);
         self
     }
 
-    pub fn status(&mut self, value: crate::datadogV2::model::DowntimeStatus) -> &mut Self {
+    pub fn status(mut self, value: crate::datadogV2::model::DowntimeStatus) -> Self {
         self.status = Some(value);
         self
     }

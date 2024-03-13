@@ -27,7 +27,7 @@ impl IntakePayloadAccepted {
         }
     }
 
-    pub fn status(&mut self, value: String) -> &mut Self {
+    pub fn status(mut self, value: String) -> Self {
         self.status = Some(value);
         self
     }

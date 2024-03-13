@@ -28,9 +28,9 @@ impl ContainerGroupRelationships {
     }
 
     pub fn containers(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::ContainerGroupRelationshipsLink,
-    ) -> &mut Self {
+    ) -> Self {
         self.containers = Some(value);
         self
     }

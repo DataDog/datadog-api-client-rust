@@ -39,12 +39,12 @@ impl TeamLinkAttributes {
         }
     }
 
-    pub fn position(&mut self, value: i32) -> &mut Self {
+    pub fn position(mut self, value: i32) -> Self {
         self.position = Some(value);
         self
     }
 
-    pub fn team_id(&mut self, value: String) -> &mut Self {
+    pub fn team_id(mut self, value: String) -> Self {
         self.team_id = Some(value);
         self
     }

@@ -28,9 +28,9 @@ impl DowntimeRelationshipsCreatedBy {
     }
 
     pub fn data(
-        &mut self,
+        mut self,
         value: Option<crate::datadogV2::model::DowntimeRelationshipsCreatedByData>,
-    ) -> &mut Self {
+    ) -> Self {
         self.data = Some(value);
         self
     }

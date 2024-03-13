@@ -42,17 +42,17 @@ impl SecurityMonitoringRuleCaseCreate {
         }
     }
 
-    pub fn condition(&mut self, value: String) -> &mut Self {
+    pub fn condition(mut self, value: String) -> Self {
         self.condition = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
-    pub fn notifications(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn notifications(mut self, value: Vec<String>) -> Self {
         self.notifications = Some(value);
         self
     }

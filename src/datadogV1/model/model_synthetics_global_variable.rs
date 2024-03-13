@@ -62,27 +62,27 @@ impl SyntheticsGlobalVariable {
     }
 
     pub fn attributes(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SyntheticsGlobalVariableAttributes,
-    ) -> &mut Self {
+    ) -> Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn id(&mut self, value: String) -> &mut Self {
+    pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
 
     pub fn parse_test_options(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SyntheticsGlobalVariableParseTestOptions,
-    ) -> &mut Self {
+    ) -> Self {
         self.parse_test_options = Some(value);
         self
     }
 
-    pub fn parse_test_public_id(&mut self, value: String) -> &mut Self {
+    pub fn parse_test_public_id(mut self, value: String) -> Self {
         self.parse_test_public_id = Some(value);
         self
     }

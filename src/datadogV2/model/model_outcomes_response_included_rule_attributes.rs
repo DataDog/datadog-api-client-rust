@@ -31,12 +31,12 @@ impl OutcomesResponseIncludedRuleAttributes {
         }
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
-    pub fn scorecard_name(&mut self, value: String) -> &mut Self {
+    pub fn scorecard_name(mut self, value: String) -> Self {
         self.scorecard_name = Some(value);
         self
     }

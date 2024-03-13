@@ -27,7 +27,7 @@ impl UserResponse {
         }
     }
 
-    pub fn user(&mut self, value: crate::datadogV1::model::User) -> &mut Self {
+    pub fn user(mut self, value: crate::datadogV1::model::User) -> Self {
         self.user = Some(value);
         self
     }

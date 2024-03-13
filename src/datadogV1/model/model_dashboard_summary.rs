@@ -28,9 +28,9 @@ impl DashboardSummary {
     }
 
     pub fn dashboards(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::DashboardSummaryDefinition>,
-    ) -> &mut Self {
+    ) -> Self {
         self.dashboards = Some(value);
         self
     }

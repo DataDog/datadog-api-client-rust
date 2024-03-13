@@ -40,22 +40,22 @@ impl IncidentServiceUpdateData {
     }
 
     pub fn attributes(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::IncidentServiceUpdateAttributes,
-    ) -> &mut Self {
+    ) -> Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn id(&mut self, value: String) -> &mut Self {
+    pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
 
     pub fn relationships(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::IncidentServiceRelationships,
-    ) -> &mut Self {
+    ) -> Self {
         self.relationships = Some(value);
         self
     }

@@ -23,24 +23,24 @@ pub struct ListRoleUsersOptionalParams {
 
 impl ListRoleUsersOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Specific page number to return.
-    pub fn page_number(&mut self, value: i64) -> &mut Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
     /// User attribute to order results by. Sort order is **ascending** by default.
     /// Sort order is **descending** if the field is prefixed by a negative sign,
     /// for example `sort=-name`. Options: `name`, `email`, `status`.
-    pub fn sort(&mut self, value: String) -> &mut Self {
+    pub fn sort(mut self, value: String) -> Self {
         self.sort = Some(value);
         self
     }
     /// Filter all users by the given string. Defaults to no filtering.
-    pub fn filter(&mut self, value: String) -> &mut Self {
+    pub fn filter(mut self, value: String) -> Self {
         self.filter = Some(value);
         self
     }
@@ -66,29 +66,29 @@ pub struct ListRolesOptionalParams {
 
 impl ListRolesOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Specific page number to return.
-    pub fn page_number(&mut self, value: i64) -> &mut Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
     /// Sort roles depending on the given field. Sort order is **ascending** by default.
     /// Sort order is **descending** if the field is prefixed by a negative sign, for example:
     /// `sort=-name`.
-    pub fn sort(&mut self, value: crate::datadogV2::model::RolesSort) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV2::model::RolesSort) -> Self {
         self.sort = Some(value);
         self
     }
     /// Filter all roles by the given string.
-    pub fn filter(&mut self, value: String) -> &mut Self {
+    pub fn filter(mut self, value: String) -> Self {
         self.filter = Some(value);
         self
     }
     /// Filter all roles by the given list of role IDs.
-    pub fn filter_id(&mut self, value: String) -> &mut Self {
+    pub fn filter_id(mut self, value: String) -> Self {
         self.filter_id = Some(value);
         self
     }

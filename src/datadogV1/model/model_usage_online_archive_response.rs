@@ -27,10 +27,7 @@ impl UsageOnlineArchiveResponse {
         }
     }
 
-    pub fn usage(
-        &mut self,
-        value: Vec<crate::datadogV1::model::UsageOnlineArchiveHour>,
-    ) -> &mut Self {
+    pub fn usage(mut self, value: Vec<crate::datadogV1::model::UsageOnlineArchiveHour>) -> Self {
         self.usage = Some(value);
         self
     }

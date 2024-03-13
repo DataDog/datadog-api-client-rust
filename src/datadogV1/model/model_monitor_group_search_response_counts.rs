@@ -31,18 +31,12 @@ impl MonitorGroupSearchResponseCounts {
         }
     }
 
-    pub fn status(
-        &mut self,
-        value: Vec<crate::datadogV1::model::MonitorSearchCountItem>,
-    ) -> &mut Self {
+    pub fn status(mut self, value: Vec<crate::datadogV1::model::MonitorSearchCountItem>) -> Self {
         self.status = Some(value);
         self
     }
 
-    pub fn type_(
-        &mut self,
-        value: Vec<crate::datadogV1::model::MonitorSearchCountItem>,
-    ) -> &mut Self {
+    pub fn type_(mut self, value: Vec<crate::datadogV1::model::MonitorSearchCountItem>) -> Self {
         self.type_ = Some(value);
         self
     }

@@ -21,17 +21,17 @@ pub struct GetAPITestLatestResultsOptionalParams {
 
 impl GetAPITestLatestResultsOptionalParams {
     /// Timestamp in milliseconds from which to start querying results.
-    pub fn from_ts(&mut self, value: i64) -> &mut Self {
+    pub fn from_ts(mut self, value: i64) -> Self {
         self.from_ts = Some(value);
         self
     }
     /// Timestamp in milliseconds up to which to query results.
-    pub fn to_ts(&mut self, value: i64) -> &mut Self {
+    pub fn to_ts(mut self, value: i64) -> Self {
         self.to_ts = Some(value);
         self
     }
     /// Locations for which to query results.
-    pub fn probe_dc(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn probe_dc(mut self, value: Vec<String>) -> Self {
         self.probe_dc = Some(value);
         self
     }
@@ -51,17 +51,17 @@ pub struct GetBrowserTestLatestResultsOptionalParams {
 
 impl GetBrowserTestLatestResultsOptionalParams {
     /// Timestamp in milliseconds from which to start querying results.
-    pub fn from_ts(&mut self, value: i64) -> &mut Self {
+    pub fn from_ts(mut self, value: i64) -> Self {
         self.from_ts = Some(value);
         self
     }
     /// Timestamp in milliseconds up to which to query results.
-    pub fn to_ts(&mut self, value: i64) -> &mut Self {
+    pub fn to_ts(mut self, value: i64) -> Self {
         self.to_ts = Some(value);
         self
     }
     /// Locations for which to query results.
-    pub fn probe_dc(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn probe_dc(mut self, value: Vec<String>) -> Self {
         self.probe_dc = Some(value);
         self
     }
@@ -79,12 +79,12 @@ pub struct ListTestsOptionalParams {
 
 impl ListTestsOptionalParams {
     /// Used for pagination. The number of tests returned in the page.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Used for pagination. Which page you want to retrieve. Starts at zero.
-    pub fn page_number(&mut self, value: i64) -> &mut Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }

@@ -51,37 +51,37 @@ impl MetricMetadata {
         }
     }
 
-    pub fn description(&mut self, value: String) -> &mut Self {
+    pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
 
-    pub fn integration(&mut self, value: String) -> &mut Self {
+    pub fn integration(mut self, value: String) -> Self {
         self.integration = Some(value);
         self
     }
 
-    pub fn per_unit(&mut self, value: String) -> &mut Self {
+    pub fn per_unit(mut self, value: String) -> Self {
         self.per_unit = Some(value);
         self
     }
 
-    pub fn short_name(&mut self, value: String) -> &mut Self {
+    pub fn short_name(mut self, value: String) -> Self {
         self.short_name = Some(value);
         self
     }
 
-    pub fn statsd_interval(&mut self, value: i64) -> &mut Self {
+    pub fn statsd_interval(mut self, value: i64) -> Self {
         self.statsd_interval = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: String) -> &mut Self {
+    pub fn type_(mut self, value: String) -> Self {
         self.type_ = Some(value);
         self
     }
 
-    pub fn unit(&mut self, value: String) -> &mut Self {
+    pub fn unit(mut self, value: String) -> Self {
         self.unit = Some(value);
         self
     }

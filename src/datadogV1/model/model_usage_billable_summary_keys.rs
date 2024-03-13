@@ -381,705 +381,693 @@ impl UsageBillableSummaryKeys {
     }
 
     pub fn apm_fargate_average(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.apm_fargate_average = Some(value);
         self
     }
 
     pub fn apm_fargate_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.apm_fargate_sum = Some(value);
         self
     }
 
     pub fn apm_host_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.apm_host_sum = Some(value);
         self
     }
 
     pub fn apm_host_top99p(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.apm_host_top99p = Some(value);
         self
     }
 
     pub fn apm_profiler_host_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.apm_profiler_host_sum = Some(value);
         self
     }
 
     pub fn apm_profiler_host_top99p(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.apm_profiler_host_top99p = Some(value);
         self
     }
 
     pub fn apm_trace_search_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.apm_trace_search_sum = Some(value);
         self
     }
 
     pub fn application_security_fargate_average(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.application_security_fargate_average = Some(value);
         self
     }
 
     pub fn application_security_host_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.application_security_host_sum = Some(value);
         self
     }
 
     pub fn application_security_host_top99p(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.application_security_host_top99p = Some(value);
         self
     }
 
     pub fn ci_pipeline_indexed_spans_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.ci_pipeline_indexed_spans_sum = Some(value);
         self
     }
 
     pub fn ci_pipeline_maximum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.ci_pipeline_maximum = Some(value);
         self
     }
 
     pub fn ci_pipeline_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.ci_pipeline_sum = Some(value);
         self
     }
 
     pub fn ci_test_indexed_spans_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.ci_test_indexed_spans_sum = Some(value);
         self
     }
 
     pub fn ci_testing_maximum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.ci_testing_maximum = Some(value);
         self
     }
 
     pub fn ci_testing_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.ci_testing_sum = Some(value);
         self
     }
 
     pub fn cloud_cost_management_average(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.cloud_cost_management_average = Some(value);
         self
     }
 
     pub fn cloud_cost_management_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.cloud_cost_management_sum = Some(value);
         self
     }
 
     pub fn cspm_container_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.cspm_container_sum = Some(value);
         self
     }
 
     pub fn cspm_host_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.cspm_host_sum = Some(value);
         self
     }
 
     pub fn cspm_host_top99p(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.cspm_host_top99p = Some(value);
         self
     }
 
     pub fn custom_event_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.custom_event_sum = Some(value);
         self
     }
 
     pub fn cws_container_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.cws_container_sum = Some(value);
         self
     }
 
     pub fn cws_host_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.cws_host_sum = Some(value);
         self
     }
 
     pub fn cws_host_top99p(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.cws_host_top99p = Some(value);
         self
     }
 
     pub fn dbm_host_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.dbm_host_sum = Some(value);
         self
     }
 
     pub fn dbm_host_top99p(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.dbm_host_top99p = Some(value);
         self
     }
 
     pub fn dbm_normalized_queries_average(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.dbm_normalized_queries_average = Some(value);
         self
     }
 
     pub fn dbm_normalized_queries_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.dbm_normalized_queries_sum = Some(value);
         self
     }
 
     pub fn fargate_container_apm_and_profiler_average(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.fargate_container_apm_and_profiler_average = Some(value);
         self
     }
 
     pub fn fargate_container_apm_and_profiler_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.fargate_container_apm_and_profiler_sum = Some(value);
         self
     }
 
     pub fn fargate_container_average(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.fargate_container_average = Some(value);
         self
     }
 
     pub fn fargate_container_profiler_average(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.fargate_container_profiler_average = Some(value);
         self
     }
 
     pub fn fargate_container_profiler_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.fargate_container_profiler_sum = Some(value);
         self
     }
 
     pub fn fargate_container_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.fargate_container_sum = Some(value);
         self
     }
 
     pub fn incident_management_maximum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.incident_management_maximum = Some(value);
         self
     }
 
     pub fn incident_management_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.incident_management_sum = Some(value);
         self
     }
 
     pub fn infra_and_apm_host_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.infra_and_apm_host_sum = Some(value);
         self
     }
 
     pub fn infra_and_apm_host_top99p(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.infra_and_apm_host_top99p = Some(value);
         self
     }
 
     pub fn infra_container_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.infra_container_sum = Some(value);
         self
     }
 
     pub fn infra_host_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.infra_host_sum = Some(value);
         self
     }
 
     pub fn infra_host_top99p(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.infra_host_top99p = Some(value);
         self
     }
 
     pub fn ingested_spans_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.ingested_spans_sum = Some(value);
         self
     }
 
     pub fn ingested_timeseries_average(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.ingested_timeseries_average = Some(value);
         self
     }
 
     pub fn ingested_timeseries_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.ingested_timeseries_sum = Some(value);
         self
     }
 
-    pub fn iot_sum(
-        &mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    pub fn iot_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.iot_sum = Some(value);
         self
     }
 
-    pub fn iot_top99p(
-        &mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    pub fn iot_top99p(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.iot_top99p = Some(value);
         self
     }
 
     pub fn lambda_function_average(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.lambda_function_average = Some(value);
         self
     }
 
     pub fn lambda_function_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.lambda_function_sum = Some(value);
         self
     }
 
     pub fn logs_forwarding_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.logs_forwarding_sum = Some(value);
         self
     }
 
     pub fn logs_indexed_15day_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.logs_indexed_15day_sum = Some(value);
         self
     }
 
     pub fn logs_indexed_180day_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.logs_indexed_180day_sum = Some(value);
         self
     }
 
     pub fn logs_indexed_30day_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.logs_indexed_30day_sum = Some(value);
         self
     }
 
     pub fn logs_indexed_360day_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.logs_indexed_360day_sum = Some(value);
         self
     }
 
     pub fn logs_indexed_3day_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.logs_indexed_3day_sum = Some(value);
         self
     }
 
     pub fn logs_indexed_45day_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.logs_indexed_45day_sum = Some(value);
         self
     }
 
     pub fn logs_indexed_60day_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.logs_indexed_60day_sum = Some(value);
         self
     }
 
     pub fn logs_indexed_7day_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.logs_indexed_7day_sum = Some(value);
         self
     }
 
     pub fn logs_indexed_90day_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.logs_indexed_90day_sum = Some(value);
         self
     }
 
     pub fn logs_indexed_custom_retention_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.logs_indexed_custom_retention_sum = Some(value);
         self
     }
 
     pub fn logs_indexed_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.logs_indexed_sum = Some(value);
         self
     }
 
     pub fn logs_ingested_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.logs_ingested_sum = Some(value);
         self
     }
 
     pub fn network_device_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.network_device_sum = Some(value);
         self
     }
 
     pub fn network_device_top99p(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.network_device_top99p = Some(value);
         self
     }
 
     pub fn npm_flow_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.npm_flow_sum = Some(value);
         self
     }
 
     pub fn npm_host_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.npm_host_sum = Some(value);
         self
     }
 
     pub fn npm_host_top99p(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.npm_host_top99p = Some(value);
         self
     }
 
     pub fn observability_pipeline_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.observability_pipeline_sum = Some(value);
         self
     }
 
     pub fn online_archive_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.online_archive_sum = Some(value);
         self
     }
 
     pub fn prof_container_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.prof_container_sum = Some(value);
         self
     }
 
     pub fn prof_host_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.prof_host_sum = Some(value);
         self
     }
 
     pub fn prof_host_top99p(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.prof_host_top99p = Some(value);
         self
     }
 
     pub fn rum_lite_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.rum_lite_sum = Some(value);
         self
     }
 
     pub fn rum_replay_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.rum_replay_sum = Some(value);
         self
     }
 
-    pub fn rum_sum(
-        &mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    pub fn rum_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.rum_sum = Some(value);
         self
     }
 
     pub fn rum_units_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.rum_units_sum = Some(value);
         self
     }
 
     pub fn sensitive_data_scanner_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.sensitive_data_scanner_sum = Some(value);
         self
     }
 
     pub fn serverless_apm_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.serverless_apm_sum = Some(value);
         self
     }
 
     pub fn serverless_infra_average(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.serverless_infra_average = Some(value);
         self
     }
 
     pub fn serverless_infra_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.serverless_infra_sum = Some(value);
         self
     }
 
     pub fn serverless_invocation_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.serverless_invocation_sum = Some(value);
         self
     }
 
-    pub fn siem_sum(
-        &mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    pub fn siem_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.siem_sum = Some(value);
         self
     }
 
     pub fn standard_timeseries_average(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.standard_timeseries_average = Some(value);
         self
     }
 
     pub fn synthetics_api_tests_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.synthetics_api_tests_sum = Some(value);
         self
     }
 
     pub fn synthetics_app_testing_maximum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.synthetics_app_testing_maximum = Some(value);
         self
     }
 
     pub fn synthetics_browser_checks_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.synthetics_browser_checks_sum = Some(value);
         self
     }
 
     pub fn timeseries_average(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.timeseries_average = Some(value);
         self
     }
 
     pub fn timeseries_sum(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> &mut Self {
+    ) -> Self {
         self.timeseries_sum = Some(value);
         self
     }

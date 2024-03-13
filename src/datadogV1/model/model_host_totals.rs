@@ -31,12 +31,12 @@ impl HostTotals {
         }
     }
 
-    pub fn total_active(&mut self, value: i64) -> &mut Self {
+    pub fn total_active(mut self, value: i64) -> Self {
         self.total_active = Some(value);
         self
     }
 
-    pub fn total_up(&mut self, value: i64) -> &mut Self {
+    pub fn total_up(mut self, value: i64) -> Self {
         self.total_up = Some(value);
         self
     }

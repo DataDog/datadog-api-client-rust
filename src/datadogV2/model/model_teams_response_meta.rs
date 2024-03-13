@@ -28,9 +28,9 @@ impl TeamsResponseMeta {
     }
 
     pub fn pagination(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::TeamsResponseMetaPagination,
-    ) -> &mut Self {
+    ) -> Self {
         self.pagination = Some(value);
         self
     }

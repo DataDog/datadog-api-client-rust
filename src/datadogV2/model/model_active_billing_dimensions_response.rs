@@ -27,10 +27,7 @@ impl ActiveBillingDimensionsResponse {
         }
     }
 
-    pub fn data(
-        &mut self,
-        value: crate::datadogV2::model::ActiveBillingDimensionsBody,
-    ) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::ActiveBillingDimensionsBody) -> Self {
         self.data = Some(value);
         self
     }

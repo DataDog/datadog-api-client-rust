@@ -46,17 +46,17 @@ impl DistributionPointsSeries {
         }
     }
 
-    pub fn host(&mut self, value: String) -> &mut Self {
+    pub fn host(mut self, value: String) -> Self {
         self.host = Some(value);
         self
     }
 
-    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: crate::datadogV1::model::DistributionPointsType) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV1::model::DistributionPointsType) -> Self {
         self.type_ = Some(value);
         self
     }

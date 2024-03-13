@@ -41,9 +41,9 @@ impl SLOHistoryMetricsSeries {
     }
 
     pub fn metadata(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SLOHistoryMetricsSeriesMetadata,
-    ) -> &mut Self {
+    ) -> Self {
         self.metadata = Some(value);
         self
     }

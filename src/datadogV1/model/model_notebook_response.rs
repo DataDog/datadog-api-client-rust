@@ -27,7 +27,7 @@ impl NotebookResponse {
         }
     }
 
-    pub fn data(&mut self, value: crate::datadogV1::model::NotebookResponseData) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV1::model::NotebookResponseData) -> Self {
         self.data = Some(value);
         self
     }

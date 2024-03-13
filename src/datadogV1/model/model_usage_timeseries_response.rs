@@ -27,7 +27,7 @@ impl UsageTimeseriesResponse {
         }
     }
 
-    pub fn usage(&mut self, value: Vec<crate::datadogV1::model::UsageTimeseriesHour>) -> &mut Self {
+    pub fn usage(mut self, value: Vec<crate::datadogV1::model::UsageTimeseriesHour>) -> Self {
         self.usage = Some(value);
         self
     }

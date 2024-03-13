@@ -72,68 +72,68 @@ impl SyntheticsBrowserTestResultData {
         }
     }
 
-    pub fn browser_type(&mut self, value: String) -> &mut Self {
+    pub fn browser_type(mut self, value: String) -> Self {
         self.browser_type = Some(value);
         self
     }
 
-    pub fn browser_version(&mut self, value: String) -> &mut Self {
+    pub fn browser_version(mut self, value: String) -> Self {
         self.browser_version = Some(value);
         self
     }
 
-    pub fn device(&mut self, value: crate::datadogV1::model::SyntheticsDevice) -> &mut Self {
+    pub fn device(mut self, value: crate::datadogV1::model::SyntheticsDevice) -> Self {
         self.device = Some(value);
         self
     }
 
-    pub fn duration(&mut self, value: f64) -> &mut Self {
+    pub fn duration(mut self, value: f64) -> Self {
         self.duration = Some(value);
         self
     }
 
-    pub fn error(&mut self, value: String) -> &mut Self {
+    pub fn error(mut self, value: String) -> Self {
         self.error = Some(value);
         self
     }
 
     pub fn failure(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SyntheticsBrowserTestResultFailure,
-    ) -> &mut Self {
+    ) -> Self {
         self.failure = Some(value);
         self
     }
 
-    pub fn passed(&mut self, value: bool) -> &mut Self {
+    pub fn passed(mut self, value: bool) -> Self {
         self.passed = Some(value);
         self
     }
 
-    pub fn received_email_count(&mut self, value: i64) -> &mut Self {
+    pub fn received_email_count(mut self, value: i64) -> Self {
         self.received_email_count = Some(value);
         self
     }
 
-    pub fn start_url(&mut self, value: String) -> &mut Self {
+    pub fn start_url(mut self, value: String) -> Self {
         self.start_url = Some(value);
         self
     }
 
     pub fn step_details(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::SyntheticsStepDetail>,
-    ) -> &mut Self {
+    ) -> Self {
         self.step_details = Some(value);
         self
     }
 
-    pub fn thumbnails_bucket_key(&mut self, value: bool) -> &mut Self {
+    pub fn thumbnails_bucket_key(mut self, value: bool) -> Self {
         self.thumbnails_bucket_key = Some(value);
         self
     }
 
-    pub fn time_to_interactive(&mut self, value: f64) -> &mut Self {
+    pub fn time_to_interactive(mut self, value: f64) -> Self {
         self.time_to_interactive = Some(value);
         self
     }

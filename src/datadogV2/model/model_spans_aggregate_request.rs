@@ -27,7 +27,7 @@ impl SpansAggregateRequest {
         }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::SpansAggregateData) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::SpansAggregateData) -> Self {
         self.data = Some(value);
         self
     }

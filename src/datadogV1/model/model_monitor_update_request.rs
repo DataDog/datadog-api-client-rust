@@ -95,85 +95,82 @@ impl MonitorUpdateRequest {
         }
     }
 
-    pub fn created(&mut self, value: String) -> &mut Self {
+    pub fn created(mut self, value: String) -> Self {
         self.created = Some(value);
         self
     }
 
-    pub fn creator(&mut self, value: crate::datadogV1::model::Creator) -> &mut Self {
+    pub fn creator(mut self, value: crate::datadogV1::model::Creator) -> Self {
         self.creator = Some(value);
         self
     }
 
-    pub fn deleted(&mut self, value: Option<String>) -> &mut Self {
+    pub fn deleted(mut self, value: Option<String>) -> Self {
         self.deleted = Some(value);
         self
     }
 
-    pub fn id(&mut self, value: i64) -> &mut Self {
+    pub fn id(mut self, value: i64) -> Self {
         self.id = Some(value);
         self
     }
 
-    pub fn message(&mut self, value: String) -> &mut Self {
+    pub fn message(mut self, value: String) -> Self {
         self.message = Some(value);
         self
     }
 
-    pub fn modified(&mut self, value: String) -> &mut Self {
+    pub fn modified(mut self, value: String) -> Self {
         self.modified = Some(value);
         self
     }
 
-    pub fn multi(&mut self, value: bool) -> &mut Self {
+    pub fn multi(mut self, value: bool) -> Self {
         self.multi = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
-    pub fn options(&mut self, value: crate::datadogV1::model::MonitorOptions) -> &mut Self {
+    pub fn options(mut self, value: crate::datadogV1::model::MonitorOptions) -> Self {
         self.options = Some(value);
         self
     }
 
-    pub fn overall_state(
-        &mut self,
-        value: crate::datadogV1::model::MonitorOverallStates,
-    ) -> &mut Self {
+    pub fn overall_state(mut self, value: crate::datadogV1::model::MonitorOverallStates) -> Self {
         self.overall_state = Some(value);
         self
     }
 
-    pub fn priority(&mut self, value: i64) -> &mut Self {
+    pub fn priority(mut self, value: i64) -> Self {
         self.priority = Some(value);
         self
     }
 
-    pub fn query(&mut self, value: String) -> &mut Self {
+    pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }
 
-    pub fn restricted_roles(&mut self, value: Option<Vec<String>>) -> &mut Self {
+    pub fn restricted_roles(mut self, value: Option<Vec<String>>) -> Self {
         self.restricted_roles = Some(value);
         self
     }
 
-    pub fn state(&mut self, value: crate::datadogV1::model::MonitorState) -> &mut Self {
+    pub fn state(mut self, value: crate::datadogV1::model::MonitorState) -> Self {
         self.state = Some(value);
         self
     }
 
-    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: crate::datadogV1::model::MonitorType) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV1::model::MonitorType) -> Self {
         self.type_ = Some(value);
         self
     }

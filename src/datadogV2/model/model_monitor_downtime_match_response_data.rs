@@ -36,22 +36,22 @@ impl MonitorDowntimeMatchResponseData {
     }
 
     pub fn attributes(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::MonitorDowntimeMatchResponseAttributes,
-    ) -> &mut Self {
+    ) -> Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn id(&mut self, value: Option<String>) -> &mut Self {
+    pub fn id(mut self, value: Option<String>) -> Self {
         self.id = Some(value);
         self
     }
 
     pub fn type_(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::MonitorDowntimeMatchResourceType,
-    ) -> &mut Self {
+    ) -> Self {
         self.type_ = Some(value);
         self
     }

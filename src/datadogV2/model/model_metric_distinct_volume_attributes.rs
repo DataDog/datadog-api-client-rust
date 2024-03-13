@@ -27,7 +27,7 @@ impl MetricDistinctVolumeAttributes {
         }
     }
 
-    pub fn distinct_volume(&mut self, value: i64) -> &mut Self {
+    pub fn distinct_volume(mut self, value: i64) -> Self {
         self.distinct_volume = Some(value);
         self
     }

@@ -27,32 +27,32 @@ pub struct ListAuditLogsOptionalParams {
 
 impl ListAuditLogsOptionalParams {
     /// Search query following Audit Logs syntax.
-    pub fn filter_query(&mut self, value: String) -> &mut Self {
+    pub fn filter_query(mut self, value: String) -> Self {
         self.filter_query = Some(value);
         self
     }
     /// Minimum timestamp for requested events.
-    pub fn filter_from(&mut self, value: String) -> &mut Self {
+    pub fn filter_from(mut self, value: String) -> Self {
         self.filter_from = Some(value);
         self
     }
     /// Maximum timestamp for requested events.
-    pub fn filter_to(&mut self, value: String) -> &mut Self {
+    pub fn filter_to(mut self, value: String) -> Self {
         self.filter_to = Some(value);
         self
     }
     /// Order of events in results.
-    pub fn sort(&mut self, value: crate::datadogV2::model::AuditLogsSort) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV2::model::AuditLogsSort) -> Self {
         self.sort = Some(value);
         self
     }
     /// List following results with a cursor provided in the previous query.
-    pub fn page_cursor(&mut self, value: String) -> &mut Self {
+    pub fn page_cursor(mut self, value: String) -> Self {
         self.page_cursor = Some(value);
         self
     }
     /// Maximum number of events in the response.
-    pub fn page_limit(&mut self, value: i32) -> &mut Self {
+    pub fn page_limit(mut self, value: i32) -> Self {
         self.page_limit = Some(value);
         self
     }
@@ -66,10 +66,7 @@ pub struct SearchAuditLogsOptionalParams {
 }
 
 impl SearchAuditLogsOptionalParams {
-    pub fn body(
-        &mut self,
-        value: crate::datadogV2::model::AuditLogsSearchEventsRequest,
-    ) -> &mut Self {
+    pub fn body(mut self, value: crate::datadogV2::model::AuditLogsSearchEventsRequest) -> Self {
         self.body = Some(value);
         self
     }

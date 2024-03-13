@@ -27,7 +27,7 @@ impl WidgetStyle {
         }
     }
 
-    pub fn palette(&mut self, value: String) -> &mut Self {
+    pub fn palette(mut self, value: String) -> Self {
         self.palette = Some(value);
         self
     }

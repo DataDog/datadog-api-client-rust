@@ -27,10 +27,7 @@ impl UsageIngestedSpansResponse {
         }
     }
 
-    pub fn usage(
-        &mut self,
-        value: Vec<crate::datadogV1::model::UsageIngestedSpansHour>,
-    ) -> &mut Self {
+    pub fn usage(mut self, value: Vec<crate::datadogV1::model::UsageIngestedSpansHour>) -> Self {
         self.usage = Some(value);
         self
     }

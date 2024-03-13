@@ -36,19 +36,19 @@ impl OutcomesResponseIncludedItem {
     }
 
     pub fn attributes(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::OutcomesResponseIncludedRuleAttributes,
-    ) -> &mut Self {
+    ) -> Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn id(&mut self, value: String) -> &mut Self {
+    pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: crate::datadogV2::model::RuleType) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::RuleType) -> Self {
         self.type_ = Some(value);
         self
     }

@@ -43,21 +43,26 @@ impl CloudConfigurationComplianceRuleOptions {
         }
     }
 
-    pub fn complex_rule(&mut self, value: bool) -> &mut Self {
+    pub fn complex_rule(mut self, value: bool) -> Self {
         self.complex_rule = Some(value);
         self
     }
 
-    pub fn rego_rule(
-        &mut self,
-        value: crate::datadogV2::model::CloudConfigurationRegoRule,
-    ) -> &mut Self {
+    pub fn rego_rule(mut self, value: crate::datadogV2::model::CloudConfigurationRegoRule) -> Self {
         self.rego_rule = Some(value);
         self
     }
 
-    pub fn resource_type(&mut self, value: String) -> &mut Self {
+    pub fn resource_type(mut self, value: String) -> Self {
         self.resource_type = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }

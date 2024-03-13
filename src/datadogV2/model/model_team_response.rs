@@ -27,7 +27,7 @@ impl TeamResponse {
         }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::Team) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::Team) -> Self {
         self.data = Some(value);
         self
     }

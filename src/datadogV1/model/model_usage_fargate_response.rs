@@ -27,7 +27,7 @@ impl UsageFargateResponse {
         }
     }
 
-    pub fn usage(&mut self, value: Vec<crate::datadogV1::model::UsageFargateHour>) -> &mut Self {
+    pub fn usage(mut self, value: Vec<crate::datadogV1::model::UsageFargateHour>) -> Self {
         self.usage = Some(value);
         self
     }

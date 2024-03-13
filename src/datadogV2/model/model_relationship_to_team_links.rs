@@ -31,15 +31,12 @@ impl RelationshipToTeamLinks {
         }
     }
 
-    pub fn data(
-        &mut self,
-        value: Vec<crate::datadogV2::model::RelationshipToTeamLinkData>,
-    ) -> &mut Self {
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::RelationshipToTeamLinkData>) -> Self {
         self.data = Some(value);
         self
     }
 
-    pub fn links(&mut self, value: crate::datadogV2::model::TeamRelationshipsLinks) -> &mut Self {
+    pub fn links(mut self, value: crate::datadogV2::model::TeamRelationshipsLinks) -> Self {
         self.links = Some(value);
         self
     }

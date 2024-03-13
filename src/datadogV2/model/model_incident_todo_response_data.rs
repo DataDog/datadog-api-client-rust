@@ -42,18 +42,15 @@ impl IncidentTodoResponseData {
         }
     }
 
-    pub fn attributes(
-        &mut self,
-        value: crate::datadogV2::model::IncidentTodoAttributes,
-    ) -> &mut Self {
+    pub fn attributes(mut self, value: crate::datadogV2::model::IncidentTodoAttributes) -> Self {
         self.attributes = Some(value);
         self
     }
 
     pub fn relationships(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::IncidentTodoRelationships,
-    ) -> &mut Self {
+    ) -> Self {
         self.relationships = Some(value);
         self
     }

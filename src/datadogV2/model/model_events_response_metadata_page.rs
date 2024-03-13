@@ -28,7 +28,7 @@ impl EventsResponseMetadataPage {
         }
     }
 
-    pub fn after(&mut self, value: String) -> &mut Self {
+    pub fn after(mut self, value: String) -> Self {
         self.after = Some(value);
         self
     }

@@ -27,7 +27,7 @@ impl SLOCorrectionCreateRequest {
         }
     }
 
-    pub fn data(&mut self, value: crate::datadogV1::model::SLOCorrectionCreateData) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV1::model::SLOCorrectionCreateData) -> Self {
         self.data = Some(value);
         self
     }

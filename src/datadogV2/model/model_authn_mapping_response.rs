@@ -31,15 +31,12 @@ impl AuthNMappingResponse {
         }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::AuthNMapping) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::AuthNMapping) -> Self {
         self.data = Some(value);
         self
     }
 
-    pub fn included(
-        &mut self,
-        value: Vec<crate::datadogV2::model::AuthNMappingIncluded>,
-    ) -> &mut Self {
+    pub fn included(mut self, value: Vec<crate::datadogV2::model::AuthNMappingIncluded>) -> Self {
         self.included = Some(value);
         self
     }

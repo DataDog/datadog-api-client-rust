@@ -27,7 +27,7 @@ impl UsageObservabilityPipelinesResponse {
         }
     }
 
-    pub fn data(&mut self, value: Vec<crate::datadogV2::model::UsageDataObject>) -> &mut Self {
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::UsageDataObject>) -> Self {
         self.data = Some(value);
         self
     }

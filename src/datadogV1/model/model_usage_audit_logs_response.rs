@@ -27,7 +27,7 @@ impl UsageAuditLogsResponse {
         }
     }
 
-    pub fn usage(&mut self, value: Vec<crate::datadogV1::model::UsageAuditLogsHour>) -> &mut Self {
+    pub fn usage(mut self, value: Vec<crate::datadogV1::model::UsageAuditLogsHour>) -> Self {
         self.usage = Some(value);
         self
     }

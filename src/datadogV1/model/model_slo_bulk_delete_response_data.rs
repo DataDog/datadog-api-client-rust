@@ -34,12 +34,12 @@ impl SLOBulkDeleteResponseData {
         }
     }
 
-    pub fn deleted(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn deleted(mut self, value: Vec<String>) -> Self {
         self.deleted = Some(value);
         self
     }
 
-    pub fn updated(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn updated(mut self, value: Vec<String>) -> Self {
         self.updated = Some(value);
         self
     }

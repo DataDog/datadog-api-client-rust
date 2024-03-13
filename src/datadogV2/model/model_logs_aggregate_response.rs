@@ -31,12 +31,12 @@ impl LogsAggregateResponse {
         }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::LogsAggregateResponseData) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::LogsAggregateResponseData) -> Self {
         self.data = Some(value);
         self
     }
 
-    pub fn meta(&mut self, value: crate::datadogV2::model::LogsResponseMetadata) -> &mut Self {
+    pub fn meta(mut self, value: crate::datadogV2::model::LogsResponseMetadata) -> Self {
         self.meta = Some(value);
         self
     }

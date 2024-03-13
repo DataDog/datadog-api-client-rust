@@ -38,14 +38,14 @@ impl IncidentTodoListResponse {
     }
 
     pub fn included(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::IncidentTodoResponseIncludedItem>,
-    ) -> &mut Self {
+    ) -> Self {
         self.included = Some(value);
         self
     }
 
-    pub fn meta(&mut self, value: crate::datadogV2::model::IncidentResponseMeta) -> &mut Self {
+    pub fn meta(mut self, value: crate::datadogV2::model::IncidentResponseMeta) -> Self {
         self.meta = Some(value);
         self
     }

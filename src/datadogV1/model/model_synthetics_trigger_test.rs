@@ -31,10 +31,7 @@ impl SyntheticsTriggerTest {
         }
     }
 
-    pub fn metadata(
-        &mut self,
-        value: crate::datadogV1::model::SyntheticsCIBatchMetadata,
-    ) -> &mut Self {
+    pub fn metadata(mut self, value: crate::datadogV1::model::SyntheticsCIBatchMetadata) -> Self {
         self.metadata = Some(value);
         self
     }

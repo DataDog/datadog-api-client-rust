@@ -27,7 +27,7 @@ impl SyntheticsPrivateLocationMetadata {
         }
     }
 
-    pub fn restricted_roles(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn restricted_roles(mut self, value: Vec<String>) -> Self {
         self.restricted_roles = Some(value);
         self
     }

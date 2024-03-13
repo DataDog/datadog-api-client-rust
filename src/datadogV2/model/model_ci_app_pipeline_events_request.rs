@@ -40,25 +40,22 @@ impl CIAppPipelineEventsRequest {
         }
     }
 
-    pub fn filter(
-        &mut self,
-        value: crate::datadogV2::model::CIAppPipelinesQueryFilter,
-    ) -> &mut Self {
+    pub fn filter(mut self, value: crate::datadogV2::model::CIAppPipelinesQueryFilter) -> Self {
         self.filter = Some(value);
         self
     }
 
-    pub fn options(&mut self, value: crate::datadogV2::model::CIAppQueryOptions) -> &mut Self {
+    pub fn options(mut self, value: crate::datadogV2::model::CIAppQueryOptions) -> Self {
         self.options = Some(value);
         self
     }
 
-    pub fn page(&mut self, value: crate::datadogV2::model::CIAppQueryPageOptions) -> &mut Self {
+    pub fn page(mut self, value: crate::datadogV2::model::CIAppQueryPageOptions) -> Self {
         self.page = Some(value);
         self
     }
 
-    pub fn sort(&mut self, value: crate::datadogV2::model::CIAppSort) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV2::model::CIAppSort) -> Self {
         self.sort = Some(value);
         self
     }

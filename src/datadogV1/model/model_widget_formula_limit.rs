@@ -31,12 +31,12 @@ impl WidgetFormulaLimit {
         }
     }
 
-    pub fn count(&mut self, value: i64) -> &mut Self {
+    pub fn count(mut self, value: i64) -> Self {
         self.count = Some(value);
         self
     }
 
-    pub fn order(&mut self, value: crate::datadogV1::model::QuerySortOrder) -> &mut Self {
+    pub fn order(mut self, value: crate::datadogV1::model::QuerySortOrder) -> Self {
         self.order = Some(value);
         self
     }

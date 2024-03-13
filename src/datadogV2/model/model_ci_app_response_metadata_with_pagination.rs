@@ -44,27 +44,27 @@ impl CIAppResponseMetadataWithPagination {
         }
     }
 
-    pub fn elapsed(&mut self, value: i64) -> &mut Self {
+    pub fn elapsed(mut self, value: i64) -> Self {
         self.elapsed = Some(value);
         self
     }
 
-    pub fn page(&mut self, value: crate::datadogV2::model::CIAppResponsePage) -> &mut Self {
+    pub fn page(mut self, value: crate::datadogV2::model::CIAppResponsePage) -> Self {
         self.page = Some(value);
         self
     }
 
-    pub fn request_id(&mut self, value: String) -> &mut Self {
+    pub fn request_id(mut self, value: String) -> Self {
         self.request_id = Some(value);
         self
     }
 
-    pub fn status(&mut self, value: crate::datadogV2::model::CIAppResponseStatus) -> &mut Self {
+    pub fn status(mut self, value: crate::datadogV2::model::CIAppResponseStatus) -> Self {
         self.status = Some(value);
         self
     }
 
-    pub fn warnings(&mut self, value: Vec<crate::datadogV2::model::CIAppWarning>) -> &mut Self {
+    pub fn warnings(mut self, value: Vec<crate::datadogV2::model::CIAppWarning>) -> Self {
         self.warnings = Some(value);
         self
     }

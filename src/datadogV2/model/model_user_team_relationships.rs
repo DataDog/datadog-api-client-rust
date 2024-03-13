@@ -31,18 +31,12 @@ impl UserTeamRelationships {
         }
     }
 
-    pub fn team(
-        &mut self,
-        value: crate::datadogV2::model::RelationshipToUserTeamTeam,
-    ) -> &mut Self {
+    pub fn team(mut self, value: crate::datadogV2::model::RelationshipToUserTeamTeam) -> Self {
         self.team = Some(value);
         self
     }
 
-    pub fn user(
-        &mut self,
-        value: crate::datadogV2::model::RelationshipToUserTeamUser,
-    ) -> &mut Self {
+    pub fn user(mut self, value: crate::datadogV2::model::RelationshipToUserTeamUser) -> Self {
         self.user = Some(value);
         self
     }

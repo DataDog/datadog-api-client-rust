@@ -31,12 +31,12 @@ impl HostMapWidgetDefinitionRequests {
         }
     }
 
-    pub fn fill(&mut self, value: crate::datadogV1::model::HostMapRequest) -> &mut Self {
+    pub fn fill(mut self, value: crate::datadogV1::model::HostMapRequest) -> Self {
         self.fill = Some(value);
         self
     }
 
-    pub fn size(&mut self, value: crate::datadogV1::model::HostMapRequest) -> &mut Self {
+    pub fn size(mut self, value: crate::datadogV1::model::HostMapRequest) -> Self {
         self.size = Some(value);
         self
     }

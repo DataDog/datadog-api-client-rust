@@ -27,7 +27,7 @@ impl TeamCreateRelationships {
         }
     }
 
-    pub fn users(&mut self, value: crate::datadogV2::model::RelationshipToUsers) -> &mut Self {
+    pub fn users(mut self, value: crate::datadogV2::model::RelationshipToUsers) -> Self {
         self.users = Some(value);
         self
     }

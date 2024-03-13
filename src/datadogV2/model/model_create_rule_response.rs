@@ -27,7 +27,7 @@ impl CreateRuleResponse {
         }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::CreateRuleResponseData) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::CreateRuleResponseData) -> Self {
         self.data = Some(value);
         self
     }

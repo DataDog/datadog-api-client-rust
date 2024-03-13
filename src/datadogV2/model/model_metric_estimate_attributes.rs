@@ -35,20 +35,17 @@ impl MetricEstimateAttributes {
         }
     }
 
-    pub fn estimate_type(
-        &mut self,
-        value: crate::datadogV2::model::MetricEstimateType,
-    ) -> &mut Self {
+    pub fn estimate_type(mut self, value: crate::datadogV2::model::MetricEstimateType) -> Self {
         self.estimate_type = Some(value);
         self
     }
 
-    pub fn estimated_at(&mut self, value: String) -> &mut Self {
+    pub fn estimated_at(mut self, value: String) -> Self {
         self.estimated_at = Some(value);
         self
     }
 
-    pub fn estimated_output_series(&mut self, value: i64) -> &mut Self {
+    pub fn estimated_output_series(mut self, value: i64) -> Self {
         self.estimated_output_series = Some(value);
         self
     }

@@ -106,122 +106,119 @@ impl SecurityMonitoringStandardRuleResponse {
     }
 
     pub fn cases(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::SecurityMonitoringRuleCase>,
-    ) -> &mut Self {
+    ) -> Self {
         self.cases = Some(value);
         self
     }
 
     pub fn compliance_signal_options(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::CloudConfigurationRuleComplianceSignalOptions,
-    ) -> &mut Self {
+    ) -> Self {
         self.compliance_signal_options = Some(value);
         self
     }
 
-    pub fn created_at(&mut self, value: i64) -> &mut Self {
+    pub fn created_at(mut self, value: i64) -> Self {
         self.created_at = Some(value);
         self
     }
 
-    pub fn creation_author_id(&mut self, value: i64) -> &mut Self {
+    pub fn creation_author_id(mut self, value: i64) -> Self {
         self.creation_author_id = Some(value);
         self
     }
 
-    pub fn deprecation_date(&mut self, value: i64) -> &mut Self {
+    pub fn deprecation_date(mut self, value: i64) -> Self {
         self.deprecation_date = Some(value);
         self
     }
 
     pub fn filters(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::SecurityMonitoringFilter>,
-    ) -> &mut Self {
+    ) -> Self {
         self.filters = Some(value);
         self
     }
 
-    pub fn has_extended_title(&mut self, value: bool) -> &mut Self {
+    pub fn has_extended_title(mut self, value: bool) -> Self {
         self.has_extended_title = Some(value);
         self
     }
 
-    pub fn id(&mut self, value: String) -> &mut Self {
+    pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
 
-    pub fn is_default(&mut self, value: bool) -> &mut Self {
+    pub fn is_default(mut self, value: bool) -> Self {
         self.is_default = Some(value);
         self
     }
 
-    pub fn is_deleted(&mut self, value: bool) -> &mut Self {
+    pub fn is_deleted(mut self, value: bool) -> Self {
         self.is_deleted = Some(value);
         self
     }
 
-    pub fn is_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn is_enabled(mut self, value: bool) -> Self {
         self.is_enabled = Some(value);
         self
     }
 
-    pub fn message(&mut self, value: String) -> &mut Self {
+    pub fn message(mut self, value: String) -> Self {
         self.message = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
     pub fn options(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::SecurityMonitoringRuleOptions,
-    ) -> &mut Self {
+    ) -> Self {
         self.options = Some(value);
         self
     }
 
     pub fn queries(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::SecurityMonitoringStandardRuleQuery>,
-    ) -> &mut Self {
+    ) -> Self {
         self.queries = Some(value);
         self
     }
 
-    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
 
     pub fn third_party_cases(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRuleCase>,
-    ) -> &mut Self {
+    ) -> Self {
         self.third_party_cases = Some(value);
         self
     }
 
-    pub fn type_(
-        &mut self,
-        value: crate::datadogV2::model::SecurityMonitoringRuleTypeRead,
-    ) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::SecurityMonitoringRuleTypeRead) -> Self {
         self.type_ = Some(value);
         self
     }
 
-    pub fn update_author_id(&mut self, value: i64) -> &mut Self {
+    pub fn update_author_id(mut self, value: i64) -> Self {
         self.update_author_id = Some(value);
         self
     }
 
-    pub fn version(&mut self, value: i64) -> &mut Self {
+    pub fn version(mut self, value: i64) -> Self {
         self.version = Some(value);
         self
     }

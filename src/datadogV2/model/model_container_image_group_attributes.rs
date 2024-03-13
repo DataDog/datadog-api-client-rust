@@ -35,20 +35,17 @@ impl ContainerImageGroupAttributes {
         }
     }
 
-    pub fn count(&mut self, value: i64) -> &mut Self {
+    pub fn count(mut self, value: i64) -> Self {
         self.count = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
-    pub fn tags(
-        &mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> &mut Self {
+    pub fn tags(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.tags = Some(value);
         self
     }

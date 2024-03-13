@@ -27,7 +27,7 @@ impl AWSLogsLambda {
         }
     }
 
-    pub fn arn(&mut self, value: String) -> &mut Self {
+    pub fn arn(mut self, value: String) -> Self {
         self.arn = Some(value);
         self
     }

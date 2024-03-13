@@ -63,50 +63,47 @@ impl DashboardSummaryDefinition {
         }
     }
 
-    pub fn author_handle(&mut self, value: String) -> &mut Self {
+    pub fn author_handle(mut self, value: String) -> Self {
         self.author_handle = Some(value);
         self
     }
 
-    pub fn created_at(&mut self, value: String) -> &mut Self {
+    pub fn created_at(mut self, value: String) -> Self {
         self.created_at = Some(value);
         self
     }
 
-    pub fn description(&mut self, value: Option<String>) -> &mut Self {
+    pub fn description(mut self, value: Option<String>) -> Self {
         self.description = Some(value);
         self
     }
 
-    pub fn id(&mut self, value: String) -> &mut Self {
+    pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
 
-    pub fn is_read_only(&mut self, value: bool) -> &mut Self {
+    pub fn is_read_only(mut self, value: bool) -> Self {
         self.is_read_only = Some(value);
         self
     }
 
-    pub fn layout_type(
-        &mut self,
-        value: crate::datadogV1::model::DashboardLayoutType,
-    ) -> &mut Self {
+    pub fn layout_type(mut self, value: crate::datadogV1::model::DashboardLayoutType) -> Self {
         self.layout_type = Some(value);
         self
     }
 
-    pub fn modified_at(&mut self, value: String) -> &mut Self {
+    pub fn modified_at(mut self, value: String) -> Self {
         self.modified_at = Some(value);
         self
     }
 
-    pub fn title(&mut self, value: String) -> &mut Self {
+    pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
 
-    pub fn url(&mut self, value: String) -> &mut Self {
+    pub fn url(mut self, value: String) -> Self {
         self.url = Some(value);
         self
     }

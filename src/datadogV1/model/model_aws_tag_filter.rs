@@ -31,12 +31,12 @@ impl AWSTagFilter {
         }
     }
 
-    pub fn namespace(&mut self, value: crate::datadogV1::model::AWSNamespace) -> &mut Self {
+    pub fn namespace(mut self, value: crate::datadogV1::model::AWSNamespace) -> Self {
         self.namespace = Some(value);
         self
     }
 
-    pub fn tag_filter_str(&mut self, value: String) -> &mut Self {
+    pub fn tag_filter_str(mut self, value: String) -> Self {
         self.tag_filter_str = Some(value);
         self
     }

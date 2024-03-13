@@ -27,7 +27,7 @@ impl SyntheticsCIBatchMetadataPipeline {
         }
     }
 
-    pub fn url(&mut self, value: String) -> &mut Self {
+    pub fn url(mut self, value: String) -> Self {
         self.url = Some(value);
         self
     }

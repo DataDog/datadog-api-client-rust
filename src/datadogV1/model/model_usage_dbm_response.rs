@@ -27,7 +27,7 @@ impl UsageDBMResponse {
         }
     }
 
-    pub fn usage(&mut self, value: Vec<crate::datadogV1::model::UsageDBMHour>) -> &mut Self {
+    pub fn usage(mut self, value: Vec<crate::datadogV1::model::UsageDBMHour>) -> Self {
         self.usage = Some(value);
         self
     }

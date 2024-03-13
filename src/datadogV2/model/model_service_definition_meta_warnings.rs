@@ -35,17 +35,17 @@ impl ServiceDefinitionMetaWarnings {
         }
     }
 
-    pub fn instance_location(&mut self, value: String) -> &mut Self {
+    pub fn instance_location(mut self, value: String) -> Self {
         self.instance_location = Some(value);
         self
     }
 
-    pub fn keyword_location(&mut self, value: String) -> &mut Self {
+    pub fn keyword_location(mut self, value: String) -> Self {
         self.keyword_location = Some(value);
         self
     }
 
-    pub fn message(&mut self, value: String) -> &mut Self {
+    pub fn message(mut self, value: String) -> Self {
         self.message = Some(value);
         self
     }

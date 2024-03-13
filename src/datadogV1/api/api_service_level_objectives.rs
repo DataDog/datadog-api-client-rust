@@ -17,7 +17,7 @@ pub struct DeleteSLOOptionalParams {
 
 impl DeleteSLOOptionalParams {
     /// Delete the monitor even if it's referenced by other resources (for example SLO, composite monitor).
-    pub fn force(&mut self, value: String) -> &mut Self {
+    pub fn force(mut self, value: String) -> Self {
         self.force = Some(value);
         self
     }
@@ -33,7 +33,7 @@ pub struct GetSLOOptionalParams {
 
 impl GetSLOOptionalParams {
     /// Get the IDs of SLO monitors that reference this SLO.
-    pub fn with_configured_alert_ids(&mut self, value: bool) -> &mut Self {
+    pub fn with_configured_alert_ids(mut self, value: bool) -> Self {
         self.with_configured_alert_ids = Some(value);
         self
     }
@@ -52,13 +52,13 @@ pub struct GetSLOHistoryOptionalParams {
 
 impl GetSLOHistoryOptionalParams {
     /// The SLO target. If `target` is passed in, the response will include the remaining error budget and a timeframe value of `custom`.
-    pub fn target(&mut self, value: f64) -> &mut Self {
+    pub fn target(mut self, value: f64) -> Self {
         self.target = Some(value);
         self
     }
     /// Defaults to `true`. If any SLO corrections are applied and this parameter is set to `false`,
     /// then the corrections will not be applied and the SLI values will not be affected.
-    pub fn apply_correction(&mut self, value: bool) -> &mut Self {
+    pub fn apply_correction(mut self, value: bool) -> Self {
         self.apply_correction = Some(value);
         self
     }
@@ -84,32 +84,32 @@ pub struct ListSLOsOptionalParams {
 
 impl ListSLOsOptionalParams {
     /// A comma separated list of the IDs of the service level objectives objects.
-    pub fn ids(&mut self, value: String) -> &mut Self {
+    pub fn ids(mut self, value: String) -> Self {
         self.ids = Some(value);
         self
     }
     /// The query string to filter results based on SLO names.
-    pub fn query(&mut self, value: String) -> &mut Self {
+    pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }
     /// The query string to filter results based on a single SLO tag.
-    pub fn tags_query(&mut self, value: String) -> &mut Self {
+    pub fn tags_query(mut self, value: String) -> Self {
         self.tags_query = Some(value);
         self
     }
     /// The query string to filter results based on SLO numerator and denominator.
-    pub fn metrics_query(&mut self, value: String) -> &mut Self {
+    pub fn metrics_query(mut self, value: String) -> Self {
         self.metrics_query = Some(value);
         self
     }
     /// The number of SLOs to return in the response.
-    pub fn limit(&mut self, value: i64) -> &mut Self {
+    pub fn limit(mut self, value: i64) -> Self {
         self.limit = Some(value);
         self
     }
     /// The specific offset to use as the beginning of the returned response.
-    pub fn offset(&mut self, value: i64) -> &mut Self {
+    pub fn offset(mut self, value: i64) -> Self {
         self.offset = Some(value);
         self
     }
@@ -135,22 +135,22 @@ impl SearchSLOOptionalParams {
     /// The query string to filter results based on SLO names.
     /// Some examples of queries include `service:<service-name>`
     /// and `<slo-name>`.
-    pub fn query(&mut self, value: String) -> &mut Self {
+    pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }
     /// The number of files to return in the response `[default=10]`.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// The identifier of the first page to return. This parameter is used for the pagination feature `[default=0]`.
-    pub fn page_number(&mut self, value: i64) -> &mut Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
     /// Whether or not to return facet information in the response `[default=false]`.
-    pub fn include_facets(&mut self, value: bool) -> &mut Self {
+    pub fn include_facets(mut self, value: bool) -> Self {
         self.include_facets = Some(value);
         self
     }

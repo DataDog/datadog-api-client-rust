@@ -32,12 +32,12 @@ impl FormulaLimit {
         }
     }
 
-    pub fn count(&mut self, value: i32) -> &mut Self {
+    pub fn count(mut self, value: i32) -> Self {
         self.count = Some(value);
         self
     }
 
-    pub fn order(&mut self, value: crate::datadogV2::model::QuerySortOrder) -> &mut Self {
+    pub fn order(mut self, value: crate::datadogV2::model::QuerySortOrder) -> Self {
         self.order = Some(value);
         self
     }

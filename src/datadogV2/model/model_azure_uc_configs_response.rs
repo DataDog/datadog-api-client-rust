@@ -27,7 +27,7 @@ impl AzureUCConfigsResponse {
         }
     }
 
-    pub fn data(&mut self, value: Vec<crate::datadogV2::model::AzureUCConfigPair>) -> &mut Self {
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::AzureUCConfigPair>) -> Self {
         self.data = Some(value);
         self
     }

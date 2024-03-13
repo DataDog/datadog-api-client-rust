@@ -43,27 +43,27 @@ impl IncidentSearchResponseUserFacetData {
         }
     }
 
-    pub fn count(&mut self, value: i32) -> &mut Self {
+    pub fn count(mut self, value: i32) -> Self {
         self.count = Some(value);
         self
     }
 
-    pub fn email(&mut self, value: String) -> &mut Self {
+    pub fn email(mut self, value: String) -> Self {
         self.email = Some(value);
         self
     }
 
-    pub fn handle(&mut self, value: String) -> &mut Self {
+    pub fn handle(mut self, value: String) -> Self {
         self.handle = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
-    pub fn uuid(&mut self, value: String) -> &mut Self {
+    pub fn uuid(mut self, value: String) -> Self {
         self.uuid = Some(value);
         self
     }

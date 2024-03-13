@@ -27,7 +27,7 @@ impl PowerpackRelationships {
         }
     }
 
-    pub fn author(&mut self, value: crate::datadogV2::model::RelationshipToUser) -> &mut Self {
+    pub fn author(mut self, value: crate::datadogV2::model::RelationshipToUser) -> Self {
         self.author = Some(value);
         self
     }

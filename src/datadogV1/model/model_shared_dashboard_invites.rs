@@ -33,10 +33,7 @@ impl SharedDashboardInvites {
         }
     }
 
-    pub fn meta(
-        &mut self,
-        value: crate::datadogV1::model::SharedDashboardInvitesMeta,
-    ) -> &mut Self {
+    pub fn meta(mut self, value: crate::datadogV1::model::SharedDashboardInvitesMeta) -> Self {
         self.meta = Some(value);
         self
     }

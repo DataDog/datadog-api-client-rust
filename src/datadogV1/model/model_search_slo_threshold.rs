@@ -63,17 +63,17 @@ impl SearchSLOThreshold {
         }
     }
 
-    pub fn target_display(&mut self, value: String) -> &mut Self {
+    pub fn target_display(mut self, value: String) -> Self {
         self.target_display = Some(value);
         self
     }
 
-    pub fn warning(&mut self, value: Option<f64>) -> &mut Self {
+    pub fn warning(mut self, value: Option<f64>) -> Self {
         self.warning = Some(value);
         self
     }
 
-    pub fn warning_display(&mut self, value: Option<String>) -> &mut Self {
+    pub fn warning_display(mut self, value: Option<String>) -> Self {
         self.warning_display = Some(value);
         self
     }

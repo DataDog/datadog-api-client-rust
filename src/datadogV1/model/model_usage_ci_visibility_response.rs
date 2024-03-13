@@ -27,10 +27,7 @@ impl UsageCIVisibilityResponse {
         }
     }
 
-    pub fn usage(
-        &mut self,
-        value: Vec<crate::datadogV1::model::UsageCIVisibilityHour>,
-    ) -> &mut Self {
+    pub fn usage(mut self, value: Vec<crate::datadogV1::model::UsageCIVisibilityHour>) -> Self {
         self.usage = Some(value);
         self
     }

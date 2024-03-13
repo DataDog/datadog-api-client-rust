@@ -39,22 +39,22 @@ impl MonitorSearchResponseMetadata {
         }
     }
 
-    pub fn page(&mut self, value: i64) -> &mut Self {
+    pub fn page(mut self, value: i64) -> Self {
         self.page = Some(value);
         self
     }
 
-    pub fn page_count(&mut self, value: i64) -> &mut Self {
+    pub fn page_count(mut self, value: i64) -> Self {
         self.page_count = Some(value);
         self
     }
 
-    pub fn per_page(&mut self, value: i64) -> &mut Self {
+    pub fn per_page(mut self, value: i64) -> Self {
         self.per_page = Some(value);
         self
     }
 
-    pub fn total_count(&mut self, value: i64) -> &mut Self {
+    pub fn total_count(mut self, value: i64) -> Self {
         self.total_count = Some(value);
         self
     }

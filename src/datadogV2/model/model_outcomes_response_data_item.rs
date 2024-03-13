@@ -40,27 +40,27 @@ impl OutcomesResponseDataItem {
     }
 
     pub fn attributes(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::OutcomesBatchResponseAttributes,
-    ) -> &mut Self {
+    ) -> Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn id(&mut self, value: String) -> &mut Self {
+    pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
 
     pub fn relationships(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::RuleOutcomeRelationships,
-    ) -> &mut Self {
+    ) -> Self {
         self.relationships = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: crate::datadogV2::model::OutcomeType) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::OutcomeType) -> Self {
         self.type_ = Some(value);
         self
     }

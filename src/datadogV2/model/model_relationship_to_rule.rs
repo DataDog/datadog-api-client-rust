@@ -27,10 +27,7 @@ impl RelationshipToRule {
         }
     }
 
-    pub fn scorecard(
-        &mut self,
-        value: crate::datadogV2::model::RelationshipToRuleData,
-    ) -> &mut Self {
+    pub fn scorecard(mut self, value: crate::datadogV2::model::RelationshipToRuleData) -> Self {
         self.scorecard = Some(value);
         self
     }

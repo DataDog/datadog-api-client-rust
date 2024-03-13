@@ -75,88 +75,79 @@ impl DistributionWidgetRequest {
         }
     }
 
-    pub fn apm_query(&mut self, value: crate::datadogV1::model::LogQueryDefinition) -> &mut Self {
+    pub fn apm_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.apm_query = Some(value);
         self
     }
 
     pub fn apm_stats_query(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::ApmStatsQueryDefinition,
-    ) -> &mut Self {
+    ) -> Self {
         self.apm_stats_query = Some(value);
         self
     }
 
-    pub fn event_query(&mut self, value: crate::datadogV1::model::LogQueryDefinition) -> &mut Self {
+    pub fn event_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.event_query = Some(value);
         self
     }
 
-    pub fn log_query(&mut self, value: crate::datadogV1::model::LogQueryDefinition) -> &mut Self {
+    pub fn log_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.log_query = Some(value);
         self
     }
 
-    pub fn network_query(
-        &mut self,
-        value: crate::datadogV1::model::LogQueryDefinition,
-    ) -> &mut Self {
+    pub fn network_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.network_query = Some(value);
         self
     }
 
-    pub fn process_query(
-        &mut self,
-        value: crate::datadogV1::model::ProcessQueryDefinition,
-    ) -> &mut Self {
+    pub fn process_query(mut self, value: crate::datadogV1::model::ProcessQueryDefinition) -> Self {
         self.process_query = Some(value);
         self
     }
 
     pub fn profile_metrics_query(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::LogQueryDefinition,
-    ) -> &mut Self {
+    ) -> Self {
         self.profile_metrics_query = Some(value);
         self
     }
 
-    pub fn q(&mut self, value: String) -> &mut Self {
+    pub fn q(mut self, value: String) -> Self {
         self.q = Some(value);
         self
     }
 
     pub fn query(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::DistributionWidgetHistogramRequestQuery,
-    ) -> &mut Self {
+    ) -> Self {
         self.query = Some(value);
         self
     }
 
     pub fn request_type(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::DistributionWidgetHistogramRequestType,
-    ) -> &mut Self {
+    ) -> Self {
         self.request_type = Some(value);
         self
     }
 
-    pub fn rum_query(&mut self, value: crate::datadogV1::model::LogQueryDefinition) -> &mut Self {
+    pub fn rum_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.rum_query = Some(value);
         self
     }
 
-    pub fn security_query(
-        &mut self,
-        value: crate::datadogV1::model::LogQueryDefinition,
-    ) -> &mut Self {
+    pub fn security_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.security_query = Some(value);
         self
     }
 
-    pub fn style(&mut self, value: crate::datadogV1::model::WidgetStyle) -> &mut Self {
+    pub fn style(mut self, value: crate::datadogV1::model::WidgetStyle) -> Self {
         self.style = Some(value);
         self
     }

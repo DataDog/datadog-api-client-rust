@@ -32,12 +32,12 @@ impl SyntheticsAPITestResultShortResult {
         }
     }
 
-    pub fn passed(&mut self, value: bool) -> &mut Self {
+    pub fn passed(mut self, value: bool) -> Self {
         self.passed = Some(value);
         self
     }
 
-    pub fn timings(&mut self, value: crate::datadogV1::model::SyntheticsTiming) -> &mut Self {
+    pub fn timings(mut self, value: crate::datadogV1::model::SyntheticsTiming) -> Self {
         self.timings = Some(value);
         self
     }

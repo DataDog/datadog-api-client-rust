@@ -27,7 +27,7 @@ impl OrganizationListResponse {
         }
     }
 
-    pub fn orgs(&mut self, value: Vec<crate::datadogV1::model::Organization>) -> &mut Self {
+    pub fn orgs(mut self, value: Vec<crate::datadogV1::model::Organization>) -> Self {
         self.orgs = Some(value);
         self
     }

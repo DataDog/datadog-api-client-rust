@@ -32,12 +32,12 @@ impl MetricPoint {
         }
     }
 
-    pub fn timestamp(&mut self, value: i64) -> &mut Self {
+    pub fn timestamp(mut self, value: i64) -> Self {
         self.timestamp = Some(value);
         self
     }
 
-    pub fn value(&mut self, value: f64) -> &mut Self {
+    pub fn value(mut self, value: f64) -> Self {
         self.value = Some(value);
         self
     }

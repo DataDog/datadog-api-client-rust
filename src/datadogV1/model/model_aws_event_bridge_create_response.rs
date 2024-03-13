@@ -39,25 +39,22 @@ impl AWSEventBridgeCreateResponse {
         }
     }
 
-    pub fn event_source_name(&mut self, value: String) -> &mut Self {
+    pub fn event_source_name(mut self, value: String) -> Self {
         self.event_source_name = Some(value);
         self
     }
 
-    pub fn has_bus(&mut self, value: bool) -> &mut Self {
+    pub fn has_bus(mut self, value: bool) -> Self {
         self.has_bus = Some(value);
         self
     }
 
-    pub fn region(&mut self, value: String) -> &mut Self {
+    pub fn region(mut self, value: String) -> Self {
         self.region = Some(value);
         self
     }
 
-    pub fn status(
-        &mut self,
-        value: crate::datadogV1::model::AWSEventBridgeCreateStatus,
-    ) -> &mut Self {
+    pub fn status(mut self, value: crate::datadogV1::model::AWSEventBridgeCreateStatus) -> Self {
         self.status = Some(value);
         self
     }

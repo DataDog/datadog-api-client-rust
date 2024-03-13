@@ -36,25 +36,22 @@ impl SecurityMonitoringSignalListRequest {
     }
 
     pub fn filter(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::SecurityMonitoringSignalListRequestFilter,
-    ) -> &mut Self {
+    ) -> Self {
         self.filter = Some(value);
         self
     }
 
     pub fn page(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::SecurityMonitoringSignalListRequestPage,
-    ) -> &mut Self {
+    ) -> Self {
         self.page = Some(value);
         self
     }
 
-    pub fn sort(
-        &mut self,
-        value: crate::datadogV2::model::SecurityMonitoringSignalsSort,
-    ) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV2::model::SecurityMonitoringSignalsSort) -> Self {
         self.sort = Some(value);
         self
     }

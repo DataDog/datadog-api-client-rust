@@ -55,40 +55,40 @@ impl UsageAttributionBody {
         }
     }
 
-    pub fn month(&mut self, value: String) -> &mut Self {
+    pub fn month(mut self, value: String) -> Self {
         self.month = Some(value);
         self
     }
 
-    pub fn org_name(&mut self, value: String) -> &mut Self {
+    pub fn org_name(mut self, value: String) -> Self {
         self.org_name = Some(value);
         self
     }
 
-    pub fn public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }
 
-    pub fn tag_config_source(&mut self, value: String) -> &mut Self {
+    pub fn tag_config_source(mut self, value: String) -> Self {
         self.tag_config_source = Some(value);
         self
     }
 
     pub fn tags(
-        &mut self,
+        mut self,
         value: Option<std::collections::BTreeMap<String, Option<Vec<String>>>>,
-    ) -> &mut Self {
+    ) -> Self {
         self.tags = Some(value);
         self
     }
 
-    pub fn updated_at(&mut self, value: String) -> &mut Self {
+    pub fn updated_at(mut self, value: String) -> Self {
         self.updated_at = Some(value);
         self
     }
 
-    pub fn values(&mut self, value: crate::datadogV1::model::UsageAttributionValues) -> &mut Self {
+    pub fn values(mut self, value: crate::datadogV1::model::UsageAttributionValues) -> Self {
         self.values = Some(value);
         self
     }

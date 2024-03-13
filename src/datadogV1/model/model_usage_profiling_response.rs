@@ -27,7 +27,7 @@ impl UsageProfilingResponse {
         }
     }
 
-    pub fn usage(&mut self, value: Vec<crate::datadogV1::model::UsageProfilingHour>) -> &mut Self {
+    pub fn usage(mut self, value: Vec<crate::datadogV1::model::UsageProfilingHour>) -> Self {
         self.usage = Some(value);
         self
     }

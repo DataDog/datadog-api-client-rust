@@ -31,12 +31,12 @@ impl ActiveBillingDimensionsAttributes {
         }
     }
 
-    pub fn month(&mut self, value: String) -> &mut Self {
+    pub fn month(mut self, value: String) -> Self {
         self.month = Some(value);
         self
     }
 
-    pub fn values(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn values(mut self, value: Vec<String>) -> Self {
         self.values = Some(value);
         self
     }

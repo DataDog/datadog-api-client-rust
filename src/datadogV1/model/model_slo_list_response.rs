@@ -36,23 +36,17 @@ impl SLOListResponse {
         }
     }
 
-    pub fn data(
-        &mut self,
-        value: Vec<crate::datadogV1::model::ServiceLevelObjective>,
-    ) -> &mut Self {
+    pub fn data(mut self, value: Vec<crate::datadogV1::model::ServiceLevelObjective>) -> Self {
         self.data = Some(value);
         self
     }
 
-    pub fn errors(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn errors(mut self, value: Vec<String>) -> Self {
         self.errors = Some(value);
         self
     }
 
-    pub fn metadata(
-        &mut self,
-        value: crate::datadogV1::model::SLOListResponseMetadata,
-    ) -> &mut Self {
+    pub fn metadata(mut self, value: crate::datadogV1::model::SLOListResponseMetadata) -> Self {
         self.metadata = Some(value);
         self
     }

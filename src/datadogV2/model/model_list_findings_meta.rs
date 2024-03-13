@@ -31,12 +31,12 @@ impl ListFindingsMeta {
         }
     }
 
-    pub fn page(&mut self, value: crate::datadogV2::model::ListFindingsPage) -> &mut Self {
+    pub fn page(mut self, value: crate::datadogV2::model::ListFindingsPage) -> Self {
         self.page = Some(value);
         self
     }
 
-    pub fn snapshot_timestamp(&mut self, value: i64) -> &mut Self {
+    pub fn snapshot_timestamp(mut self, value: i64) -> Self {
         self.snapshot_timestamp = Some(value);
         self
     }

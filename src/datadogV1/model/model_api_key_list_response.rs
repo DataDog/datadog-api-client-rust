@@ -27,7 +27,7 @@ impl ApiKeyListResponse {
         }
     }
 
-    pub fn api_keys(&mut self, value: Vec<crate::datadogV1::model::ApiKey>) -> &mut Self {
+    pub fn api_keys(mut self, value: Vec<crate::datadogV1::model::ApiKey>) -> Self {
         self.api_keys = Some(value);
         self
     }

@@ -55,42 +55,42 @@ impl TeamsResponseMetaPagination {
         }
     }
 
-    pub fn first_offset(&mut self, value: i64) -> &mut Self {
+    pub fn first_offset(mut self, value: i64) -> Self {
         self.first_offset = Some(value);
         self
     }
 
-    pub fn last_offset(&mut self, value: i64) -> &mut Self {
+    pub fn last_offset(mut self, value: i64) -> Self {
         self.last_offset = Some(value);
         self
     }
 
-    pub fn limit(&mut self, value: i64) -> &mut Self {
+    pub fn limit(mut self, value: i64) -> Self {
         self.limit = Some(value);
         self
     }
 
-    pub fn next_offset(&mut self, value: i64) -> &mut Self {
+    pub fn next_offset(mut self, value: i64) -> Self {
         self.next_offset = Some(value);
         self
     }
 
-    pub fn offset(&mut self, value: i64) -> &mut Self {
+    pub fn offset(mut self, value: i64) -> Self {
         self.offset = Some(value);
         self
     }
 
-    pub fn prev_offset(&mut self, value: i64) -> &mut Self {
+    pub fn prev_offset(mut self, value: i64) -> Self {
         self.prev_offset = Some(value);
         self
     }
 
-    pub fn total(&mut self, value: i64) -> &mut Self {
+    pub fn total(mut self, value: i64) -> Self {
         self.total = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: String) -> &mut Self {
+    pub fn type_(mut self, value: String) -> Self {
         self.type_ = Some(value);
         self
     }

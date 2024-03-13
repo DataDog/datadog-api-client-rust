@@ -27,7 +27,7 @@ impl RelationshipToRole {
         }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::RelationshipToRoleData) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::RelationshipToRoleData) -> Self {
         self.data = Some(value);
         self
     }

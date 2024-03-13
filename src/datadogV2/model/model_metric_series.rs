@@ -60,37 +60,37 @@ impl MetricSeries {
         }
     }
 
-    pub fn interval(&mut self, value: i64) -> &mut Self {
+    pub fn interval(mut self, value: i64) -> Self {
         self.interval = Some(value);
         self
     }
 
-    pub fn metadata(&mut self, value: crate::datadogV2::model::MetricMetadata) -> &mut Self {
+    pub fn metadata(mut self, value: crate::datadogV2::model::MetricMetadata) -> Self {
         self.metadata = Some(value);
         self
     }
 
-    pub fn resources(&mut self, value: Vec<crate::datadogV2::model::MetricResource>) -> &mut Self {
+    pub fn resources(mut self, value: Vec<crate::datadogV2::model::MetricResource>) -> Self {
         self.resources = Some(value);
         self
     }
 
-    pub fn source_type_name(&mut self, value: String) -> &mut Self {
+    pub fn source_type_name(mut self, value: String) -> Self {
         self.source_type_name = Some(value);
         self
     }
 
-    pub fn tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: crate::datadogV2::model::MetricIntakeType) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::MetricIntakeType) -> Self {
         self.type_ = Some(value);
         self
     }
 
-    pub fn unit(&mut self, value: String) -> &mut Self {
+    pub fn unit(mut self, value: String) -> Self {
         self.unit = Some(value);
         self
     }

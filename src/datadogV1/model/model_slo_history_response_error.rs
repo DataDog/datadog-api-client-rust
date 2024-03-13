@@ -27,7 +27,7 @@ impl SLOHistoryResponseError {
         }
     }
 
-    pub fn error(&mut self, value: String) -> &mut Self {
+    pub fn error(mut self, value: String) -> Self {
         self.error = Some(value);
         self
     }

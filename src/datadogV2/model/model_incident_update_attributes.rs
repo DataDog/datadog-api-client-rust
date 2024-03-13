@@ -69,48 +69,48 @@ impl IncidentUpdateAttributes {
         }
     }
 
-    pub fn customer_impact_end(&mut self, value: Option<String>) -> &mut Self {
+    pub fn customer_impact_end(mut self, value: Option<String>) -> Self {
         self.customer_impact_end = Some(value);
         self
     }
 
-    pub fn customer_impact_scope(&mut self, value: String) -> &mut Self {
+    pub fn customer_impact_scope(mut self, value: String) -> Self {
         self.customer_impact_scope = Some(value);
         self
     }
 
-    pub fn customer_impact_start(&mut self, value: Option<String>) -> &mut Self {
+    pub fn customer_impact_start(mut self, value: Option<String>) -> Self {
         self.customer_impact_start = Some(value);
         self
     }
 
-    pub fn customer_impacted(&mut self, value: bool) -> &mut Self {
+    pub fn customer_impacted(mut self, value: bool) -> Self {
         self.customer_impacted = Some(value);
         self
     }
 
-    pub fn detected(&mut self, value: Option<String>) -> &mut Self {
+    pub fn detected(mut self, value: Option<String>) -> Self {
         self.detected = Some(value);
         self
     }
 
     pub fn fields(
-        &mut self,
+        mut self,
         value: std::collections::BTreeMap<String, crate::datadogV2::model::IncidentFieldAttributes>,
-    ) -> &mut Self {
+    ) -> Self {
         self.fields = Some(value);
         self
     }
 
     pub fn notification_handles(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::IncidentNotificationHandle>,
-    ) -> &mut Self {
+    ) -> Self {
         self.notification_handles = Some(value);
         self
     }
 
-    pub fn title(&mut self, value: String) -> &mut Self {
+    pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }

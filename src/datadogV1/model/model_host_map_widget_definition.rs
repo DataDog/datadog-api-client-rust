@@ -78,63 +78,57 @@ impl HostMapWidgetDefinition {
         }
     }
 
-    pub fn custom_links(
-        &mut self,
-        value: Vec<crate::datadogV1::model::WidgetCustomLink>,
-    ) -> &mut Self {
+    pub fn custom_links(mut self, value: Vec<crate::datadogV1::model::WidgetCustomLink>) -> Self {
         self.custom_links = Some(value);
         self
     }
 
-    pub fn group(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn group(mut self, value: Vec<String>) -> Self {
         self.group = Some(value);
         self
     }
 
-    pub fn no_group_hosts(&mut self, value: bool) -> &mut Self {
+    pub fn no_group_hosts(mut self, value: bool) -> Self {
         self.no_group_hosts = Some(value);
         self
     }
 
-    pub fn no_metric_hosts(&mut self, value: bool) -> &mut Self {
+    pub fn no_metric_hosts(mut self, value: bool) -> Self {
         self.no_metric_hosts = Some(value);
         self
     }
 
-    pub fn node_type(&mut self, value: crate::datadogV1::model::WidgetNodeType) -> &mut Self {
+    pub fn node_type(mut self, value: crate::datadogV1::model::WidgetNodeType) -> Self {
         self.node_type = Some(value);
         self
     }
 
-    pub fn notes(&mut self, value: String) -> &mut Self {
+    pub fn notes(mut self, value: String) -> Self {
         self.notes = Some(value);
         self
     }
 
-    pub fn scope(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn scope(mut self, value: Vec<String>) -> Self {
         self.scope = Some(value);
         self
     }
 
-    pub fn style(
-        &mut self,
-        value: crate::datadogV1::model::HostMapWidgetDefinitionStyle,
-    ) -> &mut Self {
+    pub fn style(mut self, value: crate::datadogV1::model::HostMapWidgetDefinitionStyle) -> Self {
         self.style = Some(value);
         self
     }
 
-    pub fn title(&mut self, value: String) -> &mut Self {
+    pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
 
-    pub fn title_align(&mut self, value: crate::datadogV1::model::WidgetTextAlign) -> &mut Self {
+    pub fn title_align(mut self, value: crate::datadogV1::model::WidgetTextAlign) -> Self {
         self.title_align = Some(value);
         self
     }
 
-    pub fn title_size(&mut self, value: String) -> &mut Self {
+    pub fn title_size(mut self, value: String) -> Self {
         self.title_size = Some(value);
         self
     }

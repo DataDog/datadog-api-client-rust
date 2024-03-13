@@ -27,7 +27,7 @@ impl FastlyServiceResponse {
         }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::FastlyServiceData) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::FastlyServiceData) -> Self {
         self.data = Some(value);
         self
     }

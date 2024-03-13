@@ -35,26 +35,20 @@ impl MonitorSearchResponse {
         }
     }
 
-    pub fn counts(
-        &mut self,
-        value: crate::datadogV1::model::MonitorSearchResponseCounts,
-    ) -> &mut Self {
+    pub fn counts(mut self, value: crate::datadogV1::model::MonitorSearchResponseCounts) -> Self {
         self.counts = Some(value);
         self
     }
 
     pub fn metadata(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::MonitorSearchResponseMetadata,
-    ) -> &mut Self {
+    ) -> Self {
         self.metadata = Some(value);
         self
     }
 
-    pub fn monitors(
-        &mut self,
-        value: Vec<crate::datadogV1::model::MonitorSearchResult>,
-    ) -> &mut Self {
+    pub fn monitors(mut self, value: Vec<crate::datadogV1::model::MonitorSearchResult>) -> Self {
         self.monitors = Some(value);
         self
     }

@@ -27,10 +27,7 @@ impl UsageBillableSummaryResponse {
         }
     }
 
-    pub fn usage(
-        &mut self,
-        value: Vec<crate::datadogV1::model::UsageBillableSummaryHour>,
-    ) -> &mut Self {
+    pub fn usage(mut self, value: Vec<crate::datadogV1::model::UsageBillableSummaryHour>) -> Self {
         self.usage = Some(value);
         self
     }

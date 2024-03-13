@@ -27,7 +27,7 @@ impl OrgDowngradedResponse {
         }
     }
 
-    pub fn message(&mut self, value: String) -> &mut Self {
+    pub fn message(mut self, value: String) -> Self {
         self.message = Some(value);
         self
     }

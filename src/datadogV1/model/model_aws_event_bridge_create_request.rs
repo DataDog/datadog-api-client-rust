@@ -41,22 +41,22 @@ impl AWSEventBridgeCreateRequest {
         }
     }
 
-    pub fn account_id(&mut self, value: String) -> &mut Self {
+    pub fn account_id(mut self, value: String) -> Self {
         self.account_id = Some(value);
         self
     }
 
-    pub fn create_event_bus(&mut self, value: bool) -> &mut Self {
+    pub fn create_event_bus(mut self, value: bool) -> Self {
         self.create_event_bus = Some(value);
         self
     }
 
-    pub fn event_generator_name(&mut self, value: String) -> &mut Self {
+    pub fn event_generator_name(mut self, value: String) -> Self {
         self.event_generator_name = Some(value);
         self
     }
 
-    pub fn region(&mut self, value: String) -> &mut Self {
+    pub fn region(mut self, value: String) -> Self {
         self.region = Some(value);
         self
     }

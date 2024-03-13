@@ -35,20 +35,20 @@ impl ListDowntimesResponse {
         }
     }
 
-    pub fn data(&mut self, value: Vec<crate::datadogV2::model::DowntimeResponseData>) -> &mut Self {
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::DowntimeResponseData>) -> Self {
         self.data = Some(value);
         self
     }
 
     pub fn included(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::DowntimeResponseIncludedItem>,
-    ) -> &mut Self {
+    ) -> Self {
         self.included = Some(value);
         self
     }
 
-    pub fn meta(&mut self, value: crate::datadogV2::model::DowntimeMeta) -> &mut Self {
+    pub fn meta(mut self, value: crate::datadogV2::model::DowntimeMeta) -> Self {
         self.meta = Some(value);
         self
     }

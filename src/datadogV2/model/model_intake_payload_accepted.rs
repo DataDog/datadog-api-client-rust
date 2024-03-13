@@ -27,7 +27,7 @@ impl IntakePayloadAccepted {
         }
     }
 
-    pub fn errors(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn errors(mut self, value: Vec<String>) -> Self {
         self.errors = Some(value);
         self
     }

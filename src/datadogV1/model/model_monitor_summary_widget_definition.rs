@@ -87,78 +87,78 @@ impl MonitorSummaryWidgetDefinition {
 
     #[allow(deprecated)]
     pub fn color_preference(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::WidgetColorPreference,
-    ) -> &mut Self {
+    ) -> Self {
         self.color_preference = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn count(&mut self, value: i64) -> &mut Self {
+    pub fn count(mut self, value: i64) -> Self {
         self.count = Some(value);
         self
     }
 
     #[allow(deprecated)]
     pub fn display_format(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::WidgetMonitorSummaryDisplayFormat,
-    ) -> &mut Self {
+    ) -> Self {
         self.display_format = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn hide_zero_counts(&mut self, value: bool) -> &mut Self {
+    pub fn hide_zero_counts(mut self, value: bool) -> Self {
         self.hide_zero_counts = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn show_last_triggered(&mut self, value: bool) -> &mut Self {
+    pub fn show_last_triggered(mut self, value: bool) -> Self {
         self.show_last_triggered = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn show_priority(&mut self, value: bool) -> &mut Self {
+    pub fn show_priority(mut self, value: bool) -> Self {
         self.show_priority = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn sort(&mut self, value: crate::datadogV1::model::WidgetMonitorSummarySort) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV1::model::WidgetMonitorSummarySort) -> Self {
         self.sort = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn start(&mut self, value: i64) -> &mut Self {
+    pub fn start(mut self, value: i64) -> Self {
         self.start = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn summary_type(&mut self, value: crate::datadogV1::model::WidgetSummaryType) -> &mut Self {
+    pub fn summary_type(mut self, value: crate::datadogV1::model::WidgetSummaryType) -> Self {
         self.summary_type = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn title(&mut self, value: String) -> &mut Self {
+    pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn title_align(&mut self, value: crate::datadogV1::model::WidgetTextAlign) -> &mut Self {
+    pub fn title_align(mut self, value: crate::datadogV1::model::WidgetTextAlign) -> Self {
         self.title_align = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn title_size(&mut self, value: String) -> &mut Self {
+    pub fn title_size(mut self, value: String) -> Self {
         self.title_size = Some(value);
         self
     }

@@ -31,18 +31,12 @@ impl UsageTopAvgMetricsResponse {
         }
     }
 
-    pub fn metadata(
-        &mut self,
-        value: crate::datadogV1::model::UsageTopAvgMetricsMetadata,
-    ) -> &mut Self {
+    pub fn metadata(mut self, value: crate::datadogV1::model::UsageTopAvgMetricsMetadata) -> Self {
         self.metadata = Some(value);
         self
     }
 
-    pub fn usage(
-        &mut self,
-        value: Vec<crate::datadogV1::model::UsageTopAvgMetricsHour>,
-    ) -> &mut Self {
+    pub fn usage(mut self, value: Vec<crate::datadogV1::model::UsageTopAvgMetricsHour>) -> Self {
         self.usage = Some(value);
         self
     }

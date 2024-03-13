@@ -88,65 +88,65 @@ impl SLOCorrectionResponseAttributes {
         }
     }
 
-    pub fn category(&mut self, value: crate::datadogV1::model::SLOCorrectionCategory) -> &mut Self {
+    pub fn category(mut self, value: crate::datadogV1::model::SLOCorrectionCategory) -> Self {
         self.category = Some(value);
         self
     }
 
-    pub fn created_at(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn created_at(mut self, value: Option<i64>) -> Self {
         self.created_at = Some(value);
         self
     }
 
-    pub fn creator(&mut self, value: crate::datadogV1::model::Creator) -> &mut Self {
+    pub fn creator(mut self, value: crate::datadogV1::model::Creator) -> Self {
         self.creator = Some(value);
         self
     }
 
-    pub fn description(&mut self, value: String) -> &mut Self {
+    pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
 
-    pub fn duration(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn duration(mut self, value: Option<i64>) -> Self {
         self.duration = Some(value);
         self
     }
 
-    pub fn end(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn end(mut self, value: Option<i64>) -> Self {
         self.end = Some(value);
         self
     }
 
-    pub fn modified_at(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn modified_at(mut self, value: Option<i64>) -> Self {
         self.modified_at = Some(value);
         self
     }
 
     pub fn modifier(
-        &mut self,
+        mut self,
         value: Option<crate::datadogV1::model::SLOCorrectionResponseAttributesModifier>,
-    ) -> &mut Self {
+    ) -> Self {
         self.modifier = Some(value);
         self
     }
 
-    pub fn rrule(&mut self, value: Option<String>) -> &mut Self {
+    pub fn rrule(mut self, value: Option<String>) -> Self {
         self.rrule = Some(value);
         self
     }
 
-    pub fn slo_id(&mut self, value: String) -> &mut Self {
+    pub fn slo_id(mut self, value: String) -> Self {
         self.slo_id = Some(value);
         self
     }
 
-    pub fn start(&mut self, value: i64) -> &mut Self {
+    pub fn start(mut self, value: i64) -> Self {
         self.start = Some(value);
         self
     }
 
-    pub fn timezone(&mut self, value: String) -> &mut Self {
+    pub fn timezone(mut self, value: String) -> Self {
         self.timezone = Some(value);
         self
     }

@@ -33,17 +33,17 @@ impl MonitorOptionsSchedulingOptions {
     }
 
     pub fn custom_schedule(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::MonitorOptionsCustomSchedule,
-    ) -> &mut Self {
+    ) -> Self {
         self.custom_schedule = Some(value);
         self
     }
 
     pub fn evaluation_window(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::MonitorOptionsSchedulingOptionsEvaluationWindow,
-    ) -> &mut Self {
+    ) -> Self {
         self.evaluation_window = Some(value);
         self
     }

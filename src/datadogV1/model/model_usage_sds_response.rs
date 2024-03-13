@@ -27,7 +27,7 @@ impl UsageSDSResponse {
         }
     }
 
-    pub fn usage(&mut self, value: Vec<crate::datadogV1::model::UsageSDSHour>) -> &mut Self {
+    pub fn usage(mut self, value: Vec<crate::datadogV1::model::UsageSDSHour>) -> Self {
         self.usage = Some(value);
         self
     }

@@ -42,17 +42,17 @@ impl SearchSLOQuery {
         }
     }
 
-    pub fn denominator(&mut self, value: String) -> &mut Self {
+    pub fn denominator(mut self, value: String) -> Self {
         self.denominator = Some(value);
         self
     }
 
-    pub fn metrics(&mut self, value: Option<Vec<String>>) -> &mut Self {
+    pub fn metrics(mut self, value: Option<Vec<String>>) -> Self {
         self.metrics = Some(value);
         self
     }
 
-    pub fn numerator(&mut self, value: String) -> &mut Self {
+    pub fn numerator(mut self, value: String) -> Self {
         self.numerator = Some(value);
         self
     }

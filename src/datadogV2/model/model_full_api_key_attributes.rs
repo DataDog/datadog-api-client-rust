@@ -51,37 +51,37 @@ impl FullAPIKeyAttributes {
         }
     }
 
-    pub fn category(&mut self, value: String) -> &mut Self {
+    pub fn category(mut self, value: String) -> Self {
         self.category = Some(value);
         self
     }
 
-    pub fn created_at(&mut self, value: String) -> &mut Self {
+    pub fn created_at(mut self, value: String) -> Self {
         self.created_at = Some(value);
         self
     }
 
-    pub fn key(&mut self, value: String) -> &mut Self {
+    pub fn key(mut self, value: String) -> Self {
         self.key = Some(value);
         self
     }
 
-    pub fn last4(&mut self, value: String) -> &mut Self {
+    pub fn last4(mut self, value: String) -> Self {
         self.last4 = Some(value);
         self
     }
 
-    pub fn modified_at(&mut self, value: String) -> &mut Self {
+    pub fn modified_at(mut self, value: String) -> Self {
         self.modified_at = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
-    pub fn remote_config_read_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn remote_config_read_enabled(mut self, value: bool) -> Self {
         self.remote_config_read_enabled = Some(value);
         self
     }

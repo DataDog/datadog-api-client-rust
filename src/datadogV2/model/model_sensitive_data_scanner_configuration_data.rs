@@ -28,9 +28,9 @@ impl SensitiveDataScannerConfigurationData {
     }
 
     pub fn data(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::SensitiveDataScannerConfiguration,
-    ) -> &mut Self {
+    ) -> Self {
         self.data = Some(value);
         self
     }

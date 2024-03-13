@@ -35,17 +35,17 @@ impl HTTPLogError {
         }
     }
 
-    pub fn detail(&mut self, value: String) -> &mut Self {
+    pub fn detail(mut self, value: String) -> Self {
         self.detail = Some(value);
         self
     }
 
-    pub fn status(&mut self, value: String) -> &mut Self {
+    pub fn status(mut self, value: String) -> Self {
         self.status = Some(value);
         self
     }
 
-    pub fn title(&mut self, value: String) -> &mut Self {
+    pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }

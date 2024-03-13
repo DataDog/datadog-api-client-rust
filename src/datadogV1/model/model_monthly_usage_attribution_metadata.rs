@@ -32,17 +32,17 @@ impl MonthlyUsageAttributionMetadata {
     }
 
     pub fn aggregates(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::UsageAttributionAggregatesBody>,
-    ) -> &mut Self {
+    ) -> Self {
         self.aggregates = Some(value);
         self
     }
 
     pub fn pagination(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::MonthlyUsageAttributionPagination,
-    ) -> &mut Self {
+    ) -> Self {
         self.pagination = Some(value);
         self
     }

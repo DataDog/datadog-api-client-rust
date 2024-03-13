@@ -31,12 +31,12 @@ impl EventResponse {
         }
     }
 
-    pub fn event(&mut self, value: crate::datadogV1::model::Event) -> &mut Self {
+    pub fn event(mut self, value: crate::datadogV1::model::Event) -> Self {
         self.event = Some(value);
         self
     }
 
-    pub fn status(&mut self, value: String) -> &mut Self {
+    pub fn status(mut self, value: String) -> Self {
         self.status = Some(value);
         self
     }

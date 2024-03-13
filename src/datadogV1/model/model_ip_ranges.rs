@@ -76,79 +76,73 @@ impl IPRanges {
         }
     }
 
-    pub fn agents(&mut self, value: crate::datadogV1::model::IPPrefixesAgents) -> &mut Self {
+    pub fn agents(mut self, value: crate::datadogV1::model::IPPrefixesAgents) -> Self {
         self.agents = Some(value);
         self
     }
 
-    pub fn api(&mut self, value: crate::datadogV1::model::IPPrefixesAPI) -> &mut Self {
+    pub fn api(mut self, value: crate::datadogV1::model::IPPrefixesAPI) -> Self {
         self.api = Some(value);
         self
     }
 
-    pub fn apm(&mut self, value: crate::datadogV1::model::IPPrefixesAPM) -> &mut Self {
+    pub fn apm(mut self, value: crate::datadogV1::model::IPPrefixesAPM) -> Self {
         self.apm = Some(value);
         self
     }
 
-    pub fn global(&mut self, value: crate::datadogV1::model::IPPrefixesGlobal) -> &mut Self {
+    pub fn global(mut self, value: crate::datadogV1::model::IPPrefixesGlobal) -> Self {
         self.global = Some(value);
         self
     }
 
-    pub fn logs(&mut self, value: crate::datadogV1::model::IPPrefixesLogs) -> &mut Self {
+    pub fn logs(mut self, value: crate::datadogV1::model::IPPrefixesLogs) -> Self {
         self.logs = Some(value);
         self
     }
 
-    pub fn modified(&mut self, value: String) -> &mut Self {
+    pub fn modified(mut self, value: String) -> Self {
         self.modified = Some(value);
         self
     }
 
-    pub fn orchestrator(
-        &mut self,
-        value: crate::datadogV1::model::IPPrefixesOrchestrator,
-    ) -> &mut Self {
+    pub fn orchestrator(mut self, value: crate::datadogV1::model::IPPrefixesOrchestrator) -> Self {
         self.orchestrator = Some(value);
         self
     }
 
-    pub fn process(&mut self, value: crate::datadogV1::model::IPPrefixesProcess) -> &mut Self {
+    pub fn process(mut self, value: crate::datadogV1::model::IPPrefixesProcess) -> Self {
         self.process = Some(value);
         self
     }
 
     pub fn remote_configuration(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::IPPrefixesRemoteConfiguration,
-    ) -> &mut Self {
+    ) -> Self {
         self.remote_configuration = Some(value);
         self
     }
 
-    pub fn synthetics(
-        &mut self,
-        value: crate::datadogV1::model::IPPrefixesSynthetics,
-    ) -> &mut Self {
+    pub fn synthetics(mut self, value: crate::datadogV1::model::IPPrefixesSynthetics) -> Self {
         self.synthetics = Some(value);
         self
     }
 
     pub fn synthetics_private_locations(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::IPPrefixesSyntheticsPrivateLocations,
-    ) -> &mut Self {
+    ) -> Self {
         self.synthetics_private_locations = Some(value);
         self
     }
 
-    pub fn version(&mut self, value: i64) -> &mut Self {
+    pub fn version(mut self, value: i64) -> Self {
         self.version = Some(value);
         self
     }
 
-    pub fn webhooks(&mut self, value: crate::datadogV1::model::IPPrefixesWebhooks) -> &mut Self {
+    pub fn webhooks(mut self, value: crate::datadogV1::model::IPPrefixesWebhooks) -> Self {
         self.webhooks = Some(value);
         self
     }

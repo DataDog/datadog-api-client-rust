@@ -35,17 +35,17 @@ impl ApplicationKey {
         }
     }
 
-    pub fn hash(&mut self, value: String) -> &mut Self {
+    pub fn hash(mut self, value: String) -> Self {
         self.hash = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
-    pub fn owner(&mut self, value: String) -> &mut Self {
+    pub fn owner(mut self, value: String) -> Self {
         self.owner = Some(value);
         self
     }

@@ -35,17 +35,17 @@ impl SLOCreator {
         }
     }
 
-    pub fn email(&mut self, value: String) -> &mut Self {
+    pub fn email(mut self, value: String) -> Self {
         self.email = Some(value);
         self
     }
 
-    pub fn id(&mut self, value: i64) -> &mut Self {
+    pub fn id(mut self, value: i64) -> Self {
         self.id = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: Option<String>) -> &mut Self {
+    pub fn name(mut self, value: Option<String>) -> Self {
         self.name = Some(value);
         self
     }

@@ -41,14 +41,14 @@ impl DowntimeScheduleRecurrencesResponse {
     }
 
     pub fn current_downtime(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::DowntimeScheduleCurrentDowntimeResponse,
-    ) -> &mut Self {
+    ) -> Self {
         self.current_downtime = Some(value);
         self
     }
 
-    pub fn timezone(&mut self, value: String) -> &mut Self {
+    pub fn timezone(mut self, value: String) -> Self {
         self.timezone = Some(value);
         self
     }

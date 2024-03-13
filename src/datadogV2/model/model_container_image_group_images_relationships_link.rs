@@ -31,15 +31,15 @@ impl ContainerImageGroupImagesRelationshipsLink {
         }
     }
 
-    pub fn data(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn data(mut self, value: Vec<String>) -> Self {
         self.data = Some(value);
         self
     }
 
     pub fn links(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::ContainerImageGroupRelationshipsLinks,
-    ) -> &mut Self {
+    ) -> Self {
         self.links = Some(value);
         self
     }

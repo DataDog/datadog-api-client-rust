@@ -60,47 +60,47 @@ impl SyntheticsTiming {
         }
     }
 
-    pub fn dns(&mut self, value: f64) -> &mut Self {
+    pub fn dns(mut self, value: f64) -> Self {
         self.dns = Some(value);
         self
     }
 
-    pub fn download(&mut self, value: f64) -> &mut Self {
+    pub fn download(mut self, value: f64) -> Self {
         self.download = Some(value);
         self
     }
 
-    pub fn first_byte(&mut self, value: f64) -> &mut Self {
+    pub fn first_byte(mut self, value: f64) -> Self {
         self.first_byte = Some(value);
         self
     }
 
-    pub fn handshake(&mut self, value: f64) -> &mut Self {
+    pub fn handshake(mut self, value: f64) -> Self {
         self.handshake = Some(value);
         self
     }
 
-    pub fn redirect(&mut self, value: f64) -> &mut Self {
+    pub fn redirect(mut self, value: f64) -> Self {
         self.redirect = Some(value);
         self
     }
 
-    pub fn ssl(&mut self, value: f64) -> &mut Self {
+    pub fn ssl(mut self, value: f64) -> Self {
         self.ssl = Some(value);
         self
     }
 
-    pub fn tcp(&mut self, value: f64) -> &mut Self {
+    pub fn tcp(mut self, value: f64) -> Self {
         self.tcp = Some(value);
         self
     }
 
-    pub fn total(&mut self, value: f64) -> &mut Self {
+    pub fn total(mut self, value: f64) -> Self {
         self.total = Some(value);
         self
     }
 
-    pub fn wait(&mut self, value: f64) -> &mut Self {
+    pub fn wait(mut self, value: f64) -> Self {
         self.wait = Some(value);
         self
     }

@@ -27,10 +27,7 @@ impl TeamUpdateRelationships {
         }
     }
 
-    pub fn team_links(
-        &mut self,
-        value: crate::datadogV2::model::RelationshipToTeamLinks,
-    ) -> &mut Self {
+    pub fn team_links(mut self, value: crate::datadogV2::model::RelationshipToTeamLinks) -> Self {
         self.team_links = Some(value);
         self
     }

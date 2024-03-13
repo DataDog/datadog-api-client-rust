@@ -31,12 +31,12 @@ impl MetricsListResponse {
         }
     }
 
-    pub fn from(&mut self, value: String) -> &mut Self {
+    pub fn from(mut self, value: String) -> Self {
         self.from = Some(value);
         self
     }
 
-    pub fn metrics(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn metrics(mut self, value: Vec<String>) -> Self {
         self.metrics = Some(value);
         self
     }

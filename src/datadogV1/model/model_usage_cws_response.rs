@@ -27,7 +27,7 @@ impl UsageCWSResponse {
         }
     }
 
-    pub fn usage(&mut self, value: Vec<crate::datadogV1::model::UsageCWSHour>) -> &mut Self {
+    pub fn usage(mut self, value: Vec<crate::datadogV1::model::UsageCWSHour>) -> Self {
         self.usage = Some(value);
         self
     }

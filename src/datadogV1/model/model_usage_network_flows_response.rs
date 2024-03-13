@@ -27,10 +27,7 @@ impl UsageNetworkFlowsResponse {
         }
     }
 
-    pub fn usage(
-        &mut self,
-        value: Vec<crate::datadogV1::model::UsageNetworkFlowsHour>,
-    ) -> &mut Self {
+    pub fn usage(mut self, value: Vec<crate::datadogV1::model::UsageNetworkFlowsHour>) -> Self {
         self.usage = Some(value);
         self
     }

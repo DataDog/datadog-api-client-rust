@@ -27,10 +27,7 @@ impl SyntheticsLocations {
         }
     }
 
-    pub fn locations(
-        &mut self,
-        value: Vec<crate::datadogV1::model::SyntheticsLocation>,
-    ) -> &mut Self {
+    pub fn locations(mut self, value: Vec<crate::datadogV1::model::SyntheticsLocation>) -> Self {
         self.locations = Some(value);
         self
     }

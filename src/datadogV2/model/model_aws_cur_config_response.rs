@@ -27,7 +27,7 @@ impl AwsCURConfigResponse {
         }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::AwsCURConfig) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::AwsCURConfig) -> Self {
         self.data = Some(value);
         self
     }

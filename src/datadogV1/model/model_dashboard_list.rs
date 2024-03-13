@@ -55,37 +55,37 @@ impl DashboardList {
         }
     }
 
-    pub fn author(&mut self, value: crate::datadogV1::model::Creator) -> &mut Self {
+    pub fn author(mut self, value: crate::datadogV1::model::Creator) -> Self {
         self.author = Some(value);
         self
     }
 
-    pub fn created(&mut self, value: String) -> &mut Self {
+    pub fn created(mut self, value: String) -> Self {
         self.created = Some(value);
         self
     }
 
-    pub fn dashboard_count(&mut self, value: i64) -> &mut Self {
+    pub fn dashboard_count(mut self, value: i64) -> Self {
         self.dashboard_count = Some(value);
         self
     }
 
-    pub fn id(&mut self, value: i64) -> &mut Self {
+    pub fn id(mut self, value: i64) -> Self {
         self.id = Some(value);
         self
     }
 
-    pub fn is_favorite(&mut self, value: bool) -> &mut Self {
+    pub fn is_favorite(mut self, value: bool) -> Self {
         self.is_favorite = Some(value);
         self
     }
 
-    pub fn modified(&mut self, value: String) -> &mut Self {
+    pub fn modified(mut self, value: String) -> Self {
         self.modified = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: String) -> &mut Self {
+    pub fn type_(mut self, value: String) -> Self {
         self.type_ = Some(value);
         self
     }

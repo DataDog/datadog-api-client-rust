@@ -39,9 +39,9 @@ impl SensitiveDataScannerGroupCreate {
     }
 
     pub fn relationships(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::SensitiveDataScannerGroupRelationships,
-    ) -> &mut Self {
+    ) -> Self {
         self.relationships = Some(value);
         self
     }

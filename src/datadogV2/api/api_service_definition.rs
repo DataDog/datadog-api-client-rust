@@ -18,9 +18,9 @@ pub struct GetServiceDefinitionOptionalParams {
 impl GetServiceDefinitionOptionalParams {
     /// The schema version desired in the response.
     pub fn schema_version(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::ServiceDefinitionSchemaVersions,
-    ) -> &mut Self {
+    ) -> Self {
         self.schema_version = Some(value);
         self
     }
@@ -40,20 +40,20 @@ pub struct ListServiceDefinitionsOptionalParams {
 
 impl ListServiceDefinitionsOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Specific page number to return.
-    pub fn page_number(&mut self, value: i64) -> &mut Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
     /// The schema version desired in the response.
     pub fn schema_version(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::ServiceDefinitionSchemaVersions,
-    ) -> &mut Self {
+    ) -> Self {
         self.schema_version = Some(value);
         self
     }

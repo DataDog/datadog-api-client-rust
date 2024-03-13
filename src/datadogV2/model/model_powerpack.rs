@@ -27,7 +27,7 @@ impl Powerpack {
         }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::PowerpackData) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::PowerpackData) -> Self {
         self.data = Some(value);
         self
     }

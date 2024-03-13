@@ -27,10 +27,7 @@ impl SyntheticsBatchDetails {
         }
     }
 
-    pub fn data(
-        &mut self,
-        value: crate::datadogV1::model::SyntheticsBatchDetailsData,
-    ) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV1::model::SyntheticsBatchDetailsData) -> Self {
         self.data = Some(value);
         self
     }

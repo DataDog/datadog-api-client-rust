@@ -32,14 +32,14 @@ impl SyntheticsBrowserTestResultFailure {
     }
 
     pub fn code(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SyntheticsBrowserTestFailureCode,
-    ) -> &mut Self {
+    ) -> Self {
         self.code = Some(value);
         self
     }
 
-    pub fn message(&mut self, value: String) -> &mut Self {
+    pub fn message(mut self, value: String) -> Self {
         self.message = Some(value);
         self
     }

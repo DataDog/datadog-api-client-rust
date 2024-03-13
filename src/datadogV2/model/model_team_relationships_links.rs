@@ -27,7 +27,7 @@ impl TeamRelationshipsLinks {
         }
     }
 
-    pub fn related(&mut self, value: String) -> &mut Self {
+    pub fn related(mut self, value: String) -> Self {
         self.related = Some(value);
         self
     }

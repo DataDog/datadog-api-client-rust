@@ -36,25 +36,25 @@ impl ScatterplotTableRequest {
     }
 
     pub fn formulas(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::ScatterplotWidgetFormula>,
-    ) -> &mut Self {
+    ) -> Self {
         self.formulas = Some(value);
         self
     }
 
     pub fn queries(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::FormulaAndFunctionQueryDefinition>,
-    ) -> &mut Self {
+    ) -> Self {
         self.queries = Some(value);
         self
     }
 
     pub fn response_format(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::FormulaAndFunctionResponseFormat,
-    ) -> &mut Self {
+    ) -> Self {
         self.response_format = Some(value);
         self
     }

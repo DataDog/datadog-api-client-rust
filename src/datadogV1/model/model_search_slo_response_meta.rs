@@ -27,10 +27,7 @@ impl SearchSLOResponseMeta {
         }
     }
 
-    pub fn pagination(
-        &mut self,
-        value: crate::datadogV1::model::SearchSLOResponseMetaPage,
-    ) -> &mut Self {
+    pub fn pagination(mut self, value: crate::datadogV1::model::SearchSLOResponseMetaPage) -> Self {
         self.pagination = Some(value);
         self
     }

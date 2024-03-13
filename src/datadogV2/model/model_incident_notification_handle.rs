@@ -31,12 +31,12 @@ impl IncidentNotificationHandle {
         }
     }
 
-    pub fn display_name(&mut self, value: String) -> &mut Self {
+    pub fn display_name(mut self, value: String) -> Self {
         self.display_name = Some(value);
         self
     }
 
-    pub fn handle(&mut self, value: String) -> &mut Self {
+    pub fn handle(mut self, value: String) -> Self {
         self.handle = Some(value);
         self
     }

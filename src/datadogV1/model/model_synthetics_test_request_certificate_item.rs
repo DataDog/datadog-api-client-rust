@@ -35,17 +35,17 @@ impl SyntheticsTestRequestCertificateItem {
         }
     }
 
-    pub fn content(&mut self, value: String) -> &mut Self {
+    pub fn content(mut self, value: String) -> Self {
         self.content = Some(value);
         self
     }
 
-    pub fn filename(&mut self, value: String) -> &mut Self {
+    pub fn filename(mut self, value: String) -> Self {
         self.filename = Some(value);
         self
     }
 
-    pub fn updated_at(&mut self, value: String) -> &mut Self {
+    pub fn updated_at(mut self, value: String) -> Self {
         self.updated_at = Some(value);
         self
     }

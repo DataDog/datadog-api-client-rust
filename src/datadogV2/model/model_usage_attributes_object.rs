@@ -47,35 +47,35 @@ impl UsageAttributesObject {
         }
     }
 
-    pub fn org_name(&mut self, value: String) -> &mut Self {
+    pub fn org_name(mut self, value: String) -> Self {
         self.org_name = Some(value);
         self
     }
 
-    pub fn product_family(&mut self, value: String) -> &mut Self {
+    pub fn product_family(mut self, value: String) -> Self {
         self.product_family = Some(value);
         self
     }
 
-    pub fn public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }
 
-    pub fn region(&mut self, value: String) -> &mut Self {
+    pub fn region(mut self, value: String) -> Self {
         self.region = Some(value);
         self
     }
 
     pub fn timeseries(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::UsageTimeSeriesObject>,
-    ) -> &mut Self {
+    ) -> Self {
         self.timeseries = Some(value);
         self
     }
 
-    pub fn usage_type(&mut self, value: crate::datadogV2::model::HourlyUsageType) -> &mut Self {
+    pub fn usage_type(mut self, value: crate::datadogV2::model::HourlyUsageType) -> Self {
         self.usage_type = Some(value);
         self
     }

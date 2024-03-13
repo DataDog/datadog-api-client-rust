@@ -51,37 +51,37 @@ impl UsageBillableSummaryBody {
         }
     }
 
-    pub fn account_billable_usage(&mut self, value: i64) -> &mut Self {
+    pub fn account_billable_usage(mut self, value: i64) -> Self {
         self.account_billable_usage = Some(value);
         self
     }
 
-    pub fn elapsed_usage_hours(&mut self, value: i64) -> &mut Self {
+    pub fn elapsed_usage_hours(mut self, value: i64) -> Self {
         self.elapsed_usage_hours = Some(value);
         self
     }
 
-    pub fn first_billable_usage_hour(&mut self, value: String) -> &mut Self {
+    pub fn first_billable_usage_hour(mut self, value: String) -> Self {
         self.first_billable_usage_hour = Some(value);
         self
     }
 
-    pub fn last_billable_usage_hour(&mut self, value: String) -> &mut Self {
+    pub fn last_billable_usage_hour(mut self, value: String) -> Self {
         self.last_billable_usage_hour = Some(value);
         self
     }
 
-    pub fn org_billable_usage(&mut self, value: i64) -> &mut Self {
+    pub fn org_billable_usage(mut self, value: i64) -> Self {
         self.org_billable_usage = Some(value);
         self
     }
 
-    pub fn percentage_in_account(&mut self, value: f64) -> &mut Self {
+    pub fn percentage_in_account(mut self, value: f64) -> Self {
         self.percentage_in_account = Some(value);
         self
     }
 
-    pub fn usage_unit(&mut self, value: String) -> &mut Self {
+    pub fn usage_unit(mut self, value: String) -> Self {
         self.usage_unit = Some(value);
         self
     }

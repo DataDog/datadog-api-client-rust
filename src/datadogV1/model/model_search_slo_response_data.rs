@@ -32,14 +32,14 @@ impl SearchSLOResponseData {
     }
 
     pub fn attributes(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SearchSLOResponseDataAttributes,
-    ) -> &mut Self {
+    ) -> Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: String) -> &mut Self {
+    pub fn type_(mut self, value: String) -> Self {
         self.type_ = Some(value);
         self
     }

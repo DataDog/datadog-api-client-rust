@@ -31,12 +31,12 @@ impl AWSLogsAsyncError {
         }
     }
 
-    pub fn code(&mut self, value: String) -> &mut Self {
+    pub fn code(mut self, value: String) -> Self {
         self.code = Some(value);
         self
     }
 
-    pub fn message(&mut self, value: String) -> &mut Self {
+    pub fn message(mut self, value: String) -> Self {
         self.message = Some(value);
         self
     }

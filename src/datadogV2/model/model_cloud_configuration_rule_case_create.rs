@@ -33,7 +33,7 @@ impl CloudConfigurationRuleCaseCreate {
         }
     }
 
-    pub fn notifications(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn notifications(mut self, value: Vec<String>) -> Self {
         self.notifications = Some(value);
         self
     }

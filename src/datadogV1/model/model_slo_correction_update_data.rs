@@ -32,14 +32,14 @@ impl SLOCorrectionUpdateData {
     }
 
     pub fn attributes(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::SLOCorrectionUpdateRequestAttributes,
-    ) -> &mut Self {
+    ) -> Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: crate::datadogV1::model::SLOCorrectionType) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV1::model::SLOCorrectionType) -> Self {
         self.type_ = Some(value);
         self
     }

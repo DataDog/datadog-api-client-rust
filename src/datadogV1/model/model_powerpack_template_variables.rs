@@ -34,17 +34,17 @@ impl PowerpackTemplateVariables {
     }
 
     pub fn controlled_by_powerpack(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::PowerpackTemplateVariableContents>,
-    ) -> &mut Self {
+    ) -> Self {
         self.controlled_by_powerpack = Some(value);
         self
     }
 
     pub fn controlled_externally(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::PowerpackTemplateVariableContents>,
-    ) -> &mut Self {
+    ) -> Self {
         self.controlled_externally = Some(value);
         self
     }

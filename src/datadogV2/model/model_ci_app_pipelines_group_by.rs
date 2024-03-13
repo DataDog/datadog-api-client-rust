@@ -48,30 +48,27 @@ impl CIAppPipelinesGroupBy {
         }
     }
 
-    pub fn histogram(
-        &mut self,
-        value: crate::datadogV2::model::CIAppGroupByHistogram,
-    ) -> &mut Self {
+    pub fn histogram(mut self, value: crate::datadogV2::model::CIAppGroupByHistogram) -> Self {
         self.histogram = Some(value);
         self
     }
 
-    pub fn limit(&mut self, value: i64) -> &mut Self {
+    pub fn limit(mut self, value: i64) -> Self {
         self.limit = Some(value);
         self
     }
 
-    pub fn missing(&mut self, value: crate::datadogV2::model::CIAppGroupByMissing) -> &mut Self {
+    pub fn missing(mut self, value: crate::datadogV2::model::CIAppGroupByMissing) -> Self {
         self.missing = Some(value);
         self
     }
 
-    pub fn sort(&mut self, value: crate::datadogV2::model::CIAppAggregateSort) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV2::model::CIAppAggregateSort) -> Self {
         self.sort = Some(value);
         self
     }
 
-    pub fn total(&mut self, value: crate::datadogV2::model::CIAppGroupByTotal) -> &mut Self {
+    pub fn total(mut self, value: crate::datadogV2::model::CIAppGroupByTotal) -> Self {
         self.total = Some(value);
         self
     }

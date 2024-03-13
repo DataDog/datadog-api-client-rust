@@ -31,12 +31,12 @@ impl HourlyUsageMeasurement {
         }
     }
 
-    pub fn usage_type(&mut self, value: String) -> &mut Self {
+    pub fn usage_type(mut self, value: String) -> Self {
         self.usage_type = Some(value);
         self
     }
 
-    pub fn value(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn value(mut self, value: Option<i64>) -> Self {
         self.value = Some(value);
         self
     }
