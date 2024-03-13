@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -13,7 +15,7 @@ pub struct ListLogsOptionalParams {
 }
 
 impl ListLogsOptionalParams {
-    pub fn body(&mut self, value: crate::datadogV2::model::LogsListRequest) -> &mut Self {
+    pub fn body(mut self, value: crate::datadogV2::model::LogsListRequest) -> Self {
         self.body = Some(value);
         self
     }
@@ -44,46 +46,43 @@ pub struct ListLogsGetOptionalParams {
 
 impl ListLogsGetOptionalParams {
     /// Search query following logs syntax.
-    pub fn filter_query(&mut self, value: String) -> &mut Self {
+    pub fn filter_query(mut self, value: String) -> Self {
         self.filter_query = Some(value);
         self
     }
     /// For customers with multiple indexes, the indexes to search.
     /// Defaults to '*' which means all indexes
-    pub fn filter_indexes(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn filter_indexes(mut self, value: Vec<String>) -> Self {
         self.filter_indexes = Some(value);
         self
     }
     /// Minimum timestamp for requested logs.
-    pub fn filter_from(&mut self, value: String) -> &mut Self {
+    pub fn filter_from(mut self, value: String) -> Self {
         self.filter_from = Some(value);
         self
     }
     /// Maximum timestamp for requested logs.
-    pub fn filter_to(&mut self, value: String) -> &mut Self {
+    pub fn filter_to(mut self, value: String) -> Self {
         self.filter_to = Some(value);
         self
     }
     /// Specifies the storage type to be used
-    pub fn filter_storage_tier(
-        &mut self,
-        value: crate::datadogV2::model::LogsStorageTier,
-    ) -> &mut Self {
+    pub fn filter_storage_tier(mut self, value: crate::datadogV2::model::LogsStorageTier) -> Self {
         self.filter_storage_tier = Some(value);
         self
     }
     /// Order of logs in results.
-    pub fn sort(&mut self, value: crate::datadogV2::model::LogsSort) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV2::model::LogsSort) -> Self {
         self.sort = Some(value);
         self
     }
     /// List following results with a cursor provided in the previous query.
-    pub fn page_cursor(&mut self, value: String) -> &mut Self {
+    pub fn page_cursor(mut self, value: String) -> Self {
         self.page_cursor = Some(value);
         self
     }
     /// Maximum number of logs in the response.
-    pub fn page_limit(&mut self, value: i32) -> &mut Self {
+    pub fn page_limit(mut self, value: i32) -> Self {
         self.page_limit = Some(value);
         self
     }
@@ -101,15 +100,12 @@ pub struct SubmitLogOptionalParams {
 
 impl SubmitLogOptionalParams {
     /// HTTP header used to compress the media-type.
-    pub fn content_encoding(
-        &mut self,
-        value: crate::datadogV2::model::ContentEncoding,
-    ) -> &mut Self {
+    pub fn content_encoding(mut self, value: crate::datadogV2::model::ContentEncoding) -> Self {
         self.content_encoding = Some(value);
         self
     }
     /// Log tags can be passed as query parameters with `text/plain` content type.
-    pub fn ddtags(&mut self, value: String) -> &mut Self {
+    pub fn ddtags(mut self, value: String) -> Self {
         self.ddtags = Some(value);
         self
     }
@@ -301,6 +297,45 @@ impl LogsAPI {
         }
     }
 
+    pub fn list_logs_with_pagination(
+        &self,
+        mut params: ListLogsOptionalParams,
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::Log, Error<ListLogsError>>> + '_ {
+        try_stream! {
+            let mut page_size: i32 = 10;
+            if params.body.is_none() {
+                params.body = Some(crate::datadogV2::model::LogsListRequest::new());
+            }
+            if params.body.as_ref().unwrap().page.is_none() {
+                params.body.as_mut().unwrap().page = Some(crate::datadogV2::model::LogsListRequestPage::new());
+            }
+            if params.body.as_ref().unwrap().page.as_ref().unwrap().limit.is_none() {
+                params.body.as_mut().unwrap().page.as_mut().unwrap().limit = Some(page_size);
+            } else {
+                page_size = params.body.as_ref().unwrap().page.as_ref().unwrap().limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_logs(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                let Some(meta) = resp.meta else { break };
+                let Some(page) = meta.page else { break };
+                let Some(after) = page.after else { break };
+
+                params.body.as_mut().unwrap().page.as_mut().unwrap().cursor = Some(after);
+            }
+        }
+    }
+
     /// List endpoint returns logs that match a log search query.
     /// [Results are paginated][1].
     ///
@@ -408,6 +443,40 @@ impl LogsAPI {
                 }
             }
             Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_logs_get_with_pagination(
+        &self,
+        mut params: ListLogsGetOptionalParams,
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::Log, Error<ListLogsGetError>>> + '_
+    {
+        try_stream! {
+            let mut page_size: i32 = 10;
+            if params.page_limit.is_none() {
+                params.page_limit = Some(page_size);
+            } else {
+                page_size = params.page_limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_logs_get(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                let Some(meta) = resp.meta else { break };
+                let Some(page) = meta.page else { break };
+                let Some(after) = page.after else { break };
+
+                params.page_cursor = Some(after);
+            }
         }
     }
 

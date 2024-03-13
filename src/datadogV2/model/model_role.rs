@@ -33,20 +33,20 @@ impl Role {
         }
     }
 
-    pub fn attributes(&mut self, value: crate::datadogV2::model::RoleAttributes) -> &mut Self {
+    pub fn attributes(mut self, value: crate::datadogV2::model::RoleAttributes) -> Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn id(&mut self, value: String) -> &mut Self {
+    pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
 
     pub fn relationships(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::RoleResponseRelationships,
-    ) -> &mut Self {
+    ) -> Self {
         self.relationships = Some(value);
         self
     }

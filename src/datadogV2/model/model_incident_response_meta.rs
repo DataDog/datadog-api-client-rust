@@ -20,9 +20,9 @@ impl IncidentResponseMeta {
     }
 
     pub fn pagination(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::IncidentResponseMetaPagination,
-    ) -> &mut Self {
+    ) -> Self {
         self.pagination = Some(value);
         self
     }

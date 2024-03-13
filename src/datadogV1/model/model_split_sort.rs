@@ -25,7 +25,7 @@ impl SplitSort {
         }
     }
 
-    pub fn compute(&mut self, value: crate::datadogV1::model::SplitConfigSortCompute) -> &mut Self {
+    pub fn compute(mut self, value: crate::datadogV1::model::SplitConfigSortCompute) -> Self {
         self.compute = Some(value);
         self
     }

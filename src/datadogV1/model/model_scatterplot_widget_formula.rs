@@ -32,7 +32,7 @@ impl ScatterplotWidgetFormula {
         }
     }
 
-    pub fn alias(&mut self, value: String) -> &mut Self {
+    pub fn alias(mut self, value: String) -> Self {
         self.alias = Some(value);
         self
     }

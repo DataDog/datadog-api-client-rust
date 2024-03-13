@@ -21,10 +21,7 @@ impl ApplicationKeyListResponse {
         }
     }
 
-    pub fn application_keys(
-        &mut self,
-        value: Vec<crate::datadogV1::model::ApplicationKey>,
-    ) -> &mut Self {
+    pub fn application_keys(mut self, value: Vec<crate::datadogV1::model::ApplicationKey>) -> Self {
         self.application_keys = Some(value);
         self
     }

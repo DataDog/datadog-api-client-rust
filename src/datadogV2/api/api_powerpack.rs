@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -17,12 +19,12 @@ pub struct ListPowerpacksOptionalParams {
 
 impl ListPowerpacksOptionalParams {
     /// Maximum number of powerpacks in the response.
-    pub fn page_limit(&mut self, value: i64) -> &mut Self {
+    pub fn page_limit(mut self, value: i64) -> Self {
         self.page_limit = Some(value);
         self
     }
     /// Specific offset to use as the beginning of the returned page.
-    pub fn page_offset(&mut self, value: i64) -> &mut Self {
+    pub fn page_offset(mut self, value: i64) -> Self {
         self.page_offset = Some(value);
         self
     }
@@ -348,6 +350,40 @@ impl PowerpackAPI {
                 }
             }
             Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_powerpacks_with_pagination(
+        &self,
+        mut params: ListPowerpacksOptionalParams,
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::PowerpackData, Error<ListPowerpacksError>>>
+           + '_ {
+        try_stream! {
+            let mut page_size: i64 = 25;
+            if params.page_limit.is_none() {
+                params.page_limit = Some(page_size);
+            } else {
+                page_size = params.page_limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_powerpacks(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                if params.page_offset.is_none() {
+                    params.page_offset = Some(page_size.clone());
+                } else {
+                    params.page_offset = Some(params.page_offset.unwrap() + page_size.clone());
+                }
+            }
         }
     }
 

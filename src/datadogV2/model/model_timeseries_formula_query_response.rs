@@ -25,12 +25,12 @@ impl TimeseriesFormulaQueryResponse {
         }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::TimeseriesResponse) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::TimeseriesResponse) -> Self {
         self.data = Some(value);
         self
     }
 
-    pub fn errors(&mut self, value: String) -> &mut Self {
+    pub fn errors(mut self, value: String) -> Self {
         self.errors = Some(value);
         self
     }

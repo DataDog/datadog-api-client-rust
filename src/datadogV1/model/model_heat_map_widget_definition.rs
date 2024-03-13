@@ -64,50 +64,47 @@ impl HeatMapWidgetDefinition {
         }
     }
 
-    pub fn custom_links(
-        &mut self,
-        value: Vec<crate::datadogV1::model::WidgetCustomLink>,
-    ) -> &mut Self {
+    pub fn custom_links(mut self, value: Vec<crate::datadogV1::model::WidgetCustomLink>) -> Self {
         self.custom_links = Some(value);
         self
     }
 
-    pub fn events(&mut self, value: Vec<crate::datadogV1::model::WidgetEvent>) -> &mut Self {
+    pub fn events(mut self, value: Vec<crate::datadogV1::model::WidgetEvent>) -> Self {
         self.events = Some(value);
         self
     }
 
-    pub fn legend_size(&mut self, value: String) -> &mut Self {
+    pub fn legend_size(mut self, value: String) -> Self {
         self.legend_size = Some(value);
         self
     }
 
-    pub fn show_legend(&mut self, value: bool) -> &mut Self {
+    pub fn show_legend(mut self, value: bool) -> Self {
         self.show_legend = Some(value);
         self
     }
 
-    pub fn time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
+    pub fn time(mut self, value: crate::datadogV1::model::WidgetTime) -> Self {
         self.time = Some(value);
         self
     }
 
-    pub fn title(&mut self, value: String) -> &mut Self {
+    pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
 
-    pub fn title_align(&mut self, value: crate::datadogV1::model::WidgetTextAlign) -> &mut Self {
+    pub fn title_align(mut self, value: crate::datadogV1::model::WidgetTextAlign) -> Self {
         self.title_align = Some(value);
         self
     }
 
-    pub fn title_size(&mut self, value: String) -> &mut Self {
+    pub fn title_size(mut self, value: String) -> Self {
         self.title_size = Some(value);
         self
     }
 
-    pub fn yaxis(&mut self, value: crate::datadogV1::model::WidgetAxis) -> &mut Self {
+    pub fn yaxis(mut self, value: crate::datadogV1::model::WidgetAxis) -> Self {
         self.yaxis = Some(value);
         self
     }

@@ -2,12 +2,11 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum IPAllowlistEntryType {
-    #[serde(rename = "ip_allowlist_entry")]
     IP_ALLOWLIST_ENTRY,
 }
 
@@ -16,5 +15,34 @@ impl ToString for IPAllowlistEntryType {
         match self {
             Self::IP_ALLOWLIST_ENTRY => String::from("ip_allowlist_entry"),
         }
+    }
+}
+
+impl Serialize for IPAllowlistEntryType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for IPAllowlistEntryType {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "ip_allowlist_entry" => Self::IP_ALLOWLIST_ENTRY,
+            _ => {
+                return Err(serde::de::Error::custom(format!(
+                    "Invalid value for SyntheticsDeviceID: {}",
+                    s
+                )))
+            }
+        })
     }
 }

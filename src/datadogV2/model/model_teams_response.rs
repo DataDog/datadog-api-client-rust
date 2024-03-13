@@ -33,22 +33,22 @@ impl TeamsResponse {
         }
     }
 
-    pub fn data(&mut self, value: Vec<crate::datadogV2::model::Team>) -> &mut Self {
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::Team>) -> Self {
         self.data = Some(value);
         self
     }
 
-    pub fn included(&mut self, value: Vec<crate::datadogV2::model::TeamIncluded>) -> &mut Self {
+    pub fn included(mut self, value: Vec<crate::datadogV2::model::TeamIncluded>) -> Self {
         self.included = Some(value);
         self
     }
 
-    pub fn links(&mut self, value: crate::datadogV2::model::TeamsResponseLinks) -> &mut Self {
+    pub fn links(mut self, value: crate::datadogV2::model::TeamsResponseLinks) -> Self {
         self.links = Some(value);
         self
     }
 
-    pub fn meta(&mut self, value: crate::datadogV2::model::TeamsResponseMeta) -> &mut Self {
+    pub fn meta(mut self, value: crate::datadogV2::model::TeamsResponseMeta) -> Self {
         self.meta = Some(value);
         self
     }

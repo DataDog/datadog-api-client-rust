@@ -25,12 +25,12 @@ impl SecurityMonitoringThirdPartyRootQuery {
         }
     }
 
-    pub fn group_by_fields(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn group_by_fields(mut self, value: Vec<String>) -> Self {
         self.group_by_fields = Some(value);
         self
     }
 
-    pub fn query(&mut self, value: String) -> &mut Self {
+    pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }

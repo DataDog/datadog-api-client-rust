@@ -19,10 +19,7 @@ impl TeamPermissionSettingsResponse {
         TeamPermissionSettingsResponse { data: None }
     }
 
-    pub fn data(
-        &mut self,
-        value: Vec<crate::datadogV2::model::TeamPermissionSetting>,
-    ) -> &mut Self {
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::TeamPermissionSetting>) -> Self {
         self.data = Some(value);
         self
     }

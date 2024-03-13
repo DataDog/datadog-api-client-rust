@@ -20,9 +20,9 @@ impl SecurityMonitoringSignalsListResponseMeta {
     }
 
     pub fn page(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::SecurityMonitoringSignalsListResponseMetaPage,
-    ) -> &mut Self {
+    ) -> Self {
         self.page = Some(value);
         self
     }

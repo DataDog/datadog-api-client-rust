@@ -49,28 +49,28 @@ impl FormulaAndFunctionSLOQueryDefinition {
         }
     }
 
-    pub fn additional_query_filters(&mut self, value: String) -> &mut Self {
+    pub fn additional_query_filters(mut self, value: String) -> Self {
         self.additional_query_filters = Some(value);
         self
     }
 
     pub fn group_mode(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::FormulaAndFunctionSLOGroupMode,
-    ) -> &mut Self {
+    ) -> Self {
         self.group_mode = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
     pub fn slo_query_type(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::FormulaAndFunctionSLOQueryType,
-    ) -> &mut Self {
+    ) -> Self {
         self.slo_query_type = Some(value);
         self
     }

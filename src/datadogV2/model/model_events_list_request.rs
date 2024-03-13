@@ -34,22 +34,22 @@ impl EventsListRequest {
         }
     }
 
-    pub fn filter(&mut self, value: crate::datadogV2::model::EventsQueryFilter) -> &mut Self {
+    pub fn filter(mut self, value: crate::datadogV2::model::EventsQueryFilter) -> Self {
         self.filter = Some(value);
         self
     }
 
-    pub fn options(&mut self, value: crate::datadogV2::model::EventsQueryOptions) -> &mut Self {
+    pub fn options(mut self, value: crate::datadogV2::model::EventsQueryOptions) -> Self {
         self.options = Some(value);
         self
     }
 
-    pub fn page(&mut self, value: crate::datadogV2::model::EventsRequestPage) -> &mut Self {
+    pub fn page(mut self, value: crate::datadogV2::model::EventsRequestPage) -> Self {
         self.page = Some(value);
         self
     }
 
-    pub fn sort(&mut self, value: crate::datadogV2::model::EventsSort) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV2::model::EventsSort) -> Self {
         self.sort = Some(value);
         self
     }

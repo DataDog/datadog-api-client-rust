@@ -19,10 +19,7 @@ impl AWSEventBridgeDeleteResponse {
         AWSEventBridgeDeleteResponse { status: None }
     }
 
-    pub fn status(
-        &mut self,
-        value: crate::datadogV1::model::AWSEventBridgeDeleteStatus,
-    ) -> &mut Self {
+    pub fn status(mut self, value: crate::datadogV1::model::AWSEventBridgeDeleteStatus) -> Self {
         self.status = Some(value);
         self
     }

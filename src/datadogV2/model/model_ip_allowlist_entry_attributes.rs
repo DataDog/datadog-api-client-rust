@@ -33,22 +33,22 @@ impl IPAllowlistEntryAttributes {
         }
     }
 
-    pub fn cidr_block(&mut self, value: String) -> &mut Self {
+    pub fn cidr_block(mut self, value: String) -> Self {
         self.cidr_block = Some(value);
         self
     }
 
-    pub fn created_at(&mut self, value: String) -> &mut Self {
+    pub fn created_at(mut self, value: String) -> Self {
         self.created_at = Some(value);
         self
     }
 
-    pub fn modified_at(&mut self, value: String) -> &mut Self {
+    pub fn modified_at(mut self, value: String) -> Self {
         self.modified_at = Some(value);
         self
     }
 
-    pub fn note(&mut self, value: String) -> &mut Self {
+    pub fn note(mut self, value: String) -> Self {
         self.note = Some(value);
         self
     }

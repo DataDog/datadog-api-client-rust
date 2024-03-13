@@ -25,12 +25,12 @@ impl MonitorSearchCountItem {
         }
     }
 
-    pub fn count(&mut self, value: i64) -> &mut Self {
+    pub fn count(mut self, value: i64) -> Self {
         self.count = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: serde_json::Value) -> &mut Self {
+    pub fn name(mut self, value: serde_json::Value) -> Self {
         self.name = Some(value);
         self
     }

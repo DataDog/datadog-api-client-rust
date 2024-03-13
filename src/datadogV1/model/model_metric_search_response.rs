@@ -19,10 +19,7 @@ impl MetricSearchResponse {
         MetricSearchResponse { results: None }
     }
 
-    pub fn results(
-        &mut self,
-        value: crate::datadogV1::model::MetricSearchResponseResults,
-    ) -> &mut Self {
+    pub fn results(mut self, value: crate::datadogV1::model::MetricSearchResponseResults) -> Self {
         self.results = Some(value);
         self
     }

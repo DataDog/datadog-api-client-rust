@@ -25,15 +25,12 @@ impl NotebooksResponse {
         }
     }
 
-    pub fn data(
-        &mut self,
-        value: Vec<crate::datadogV1::model::NotebooksResponseData>,
-    ) -> &mut Self {
+    pub fn data(mut self, value: Vec<crate::datadogV1::model::NotebooksResponseData>) -> Self {
         self.data = Some(value);
         self
     }
 
-    pub fn meta(&mut self, value: crate::datadogV1::model::NotebooksResponseMeta) -> &mut Self {
+    pub fn meta(mut self, value: crate::datadogV1::model::NotebooksResponseMeta) -> Self {
         self.meta = Some(value);
         self
     }

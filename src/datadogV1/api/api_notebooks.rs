@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -33,52 +35,52 @@ pub struct ListNotebooksOptionalParams {
 
 impl ListNotebooksOptionalParams {
     /// Return notebooks created by the given `author_handle`.
-    pub fn author_handle(&mut self, value: String) -> &mut Self {
+    pub fn author_handle(mut self, value: String) -> Self {
         self.author_handle = Some(value);
         self
     }
     /// Return notebooks not created by the given `author_handle`.
-    pub fn exclude_author_handle(&mut self, value: String) -> &mut Self {
+    pub fn exclude_author_handle(mut self, value: String) -> Self {
         self.exclude_author_handle = Some(value);
         self
     }
     /// The index of the first notebook you want returned.
-    pub fn start(&mut self, value: i64) -> &mut Self {
+    pub fn start(mut self, value: i64) -> Self {
         self.start = Some(value);
         self
     }
     /// The number of notebooks to be returned.
-    pub fn count(&mut self, value: i64) -> &mut Self {
+    pub fn count(mut self, value: i64) -> Self {
         self.count = Some(value);
         self
     }
     /// Sort by field `modified`, `name`, or `created`.
-    pub fn sort_field(&mut self, value: String) -> &mut Self {
+    pub fn sort_field(mut self, value: String) -> Self {
         self.sort_field = Some(value);
         self
     }
     /// Sort by direction `asc` or `desc`.
-    pub fn sort_dir(&mut self, value: String) -> &mut Self {
+    pub fn sort_dir(mut self, value: String) -> Self {
         self.sort_dir = Some(value);
         self
     }
     /// Return only notebooks with `query` string in notebook name or author handle.
-    pub fn query(&mut self, value: String) -> &mut Self {
+    pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }
     /// Value of `false` excludes the `cells` and global `time` for each notebook.
-    pub fn include_cells(&mut self, value: bool) -> &mut Self {
+    pub fn include_cells(mut self, value: bool) -> Self {
         self.include_cells = Some(value);
         self
     }
     /// True value returns only template notebooks. Default is false (returns only non-template notebooks).
-    pub fn is_template(&mut self, value: bool) -> &mut Self {
+    pub fn is_template(mut self, value: bool) -> Self {
         self.is_template = Some(value);
         self
     }
     /// If type is provided, returns only notebooks with that metadata type. Default does not have type filtering.
-    pub fn type_(&mut self, value: String) -> &mut Self {
+    pub fn type_(mut self, value: String) -> Self {
         self.type_ = Some(value);
         self
     }
@@ -414,6 +416,41 @@ impl NotebooksAPI {
                 }
             }
             Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_notebooks_with_pagination(
+        &self,
+        mut params: ListNotebooksOptionalParams,
+    ) -> impl Stream<
+        Item = Result<crate::datadogV1::model::NotebooksResponseData, Error<ListNotebooksError>>,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 100;
+            if params.count.is_none() {
+                params.count = Some(page_size);
+            } else {
+                page_size = params.count.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_notebooks(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                if params.start.is_none() {
+                    params.start = Some(page_size.clone());
+                } else {
+                    params.start = Some(params.start.unwrap() + page_size.clone());
+                }
+            }
         }
     }
 

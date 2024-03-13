@@ -21,10 +21,7 @@ impl DashboardListListResponse {
         }
     }
 
-    pub fn dashboard_lists(
-        &mut self,
-        value: Vec<crate::datadogV1::model::DashboardList>,
-    ) -> &mut Self {
+    pub fn dashboard_lists(mut self, value: Vec<crate::datadogV1::model::DashboardList>) -> Self {
         self.dashboard_lists = Some(value);
         self
     }

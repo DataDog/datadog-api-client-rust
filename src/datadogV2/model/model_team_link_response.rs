@@ -19,7 +19,7 @@ impl TeamLinkResponse {
         TeamLinkResponse { data: None }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::TeamLink) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::TeamLink) -> Self {
         self.data = Some(value);
         self
     }

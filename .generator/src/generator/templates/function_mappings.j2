@@ -1,5 +1,7 @@
 use crate::scenarios::fixtures::DatadogWorld;
 use futures::executor::block_on;
+use futures_util::stream::StreamExt;
+use futures_util::pin_mut;
 use serde_json::Value;
 use std::collections::HashMap;
 
@@ -39,6 +41,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
 {%- for _, operations in apis.items() %}
 {%- for _, _, operation in operations %}
     world.function_mappings.insert("{{version}}.{{ operation['operationId'] }}".into(), test_{{version}}_{{ operation['operationId'] | snake_case }});
+{%- if operation["x-pagination"] %}
+    world.function_mappings.insert("{{version}}.{{ operation['operationId'] }}WithPagination".into(), test_{{version}}_{{ operation['operationId'] | snake_case }}_with_pagination);
+{%- endif %}
 {%- endfor %}
 {%- endfor %}
 {%- endfor %}
@@ -97,6 +102,66 @@ fn test_{{version}}_{{ operation['operationId'] | snake_case }}(world: &mut Data
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
+
+{%- if operation["x-pagination"] %}
+fn test_{{version}}_{{ operation['operationId'] | snake_case }}_with_pagination(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world.api_instances.{{version}}_{{ apiName }}.as_ref().expect("api instance not found");
+    {%- for parameter in operation|parameters|list %}
+    {%- set schema = parameter[1] | parameter_schema %}
+    {%- if parameter[1].required %}
+    {%- if schema | is_primitive and schema.get("format") == "binary" -%}
+    let {{ parameter[0] | variable_name }} = _parameters.get("{{ parameter[0] }}").unwrap().as_str().unwrap().as_bytes().to_vec();
+    {%- else -%}
+    let {{ parameter[0] | variable_name }} = serde_json::from_value(_parameters.get("{{ parameter[0] }}").unwrap().clone()).unwrap();
+    {%- endif -%}
+    {%- else %}
+    let {{ parameter[0] | variable_name }} = _parameters.get("{{ parameter[0] }}").and_then(|param| 
+        {%- if schema | is_primitive and schema.get("format") == "binary" -%}
+        Some(param.as_str().unwrap().as_bytes().to_vec())
+        {%- else -%}
+        Some(serde_json::from_value(param.clone()).unwrap())
+        {%- endif -%}
+    );
+    {%- endif %}
+    {%- endfor %}
+
+    {%- for parameter in optionalParams %}
+    {%- if loop.first %}
+    let mut params = datadog{{ version.upper() }}::api::{{ apiName }}::{{ operation['operationId'] }}OptionalParams::default();
+    {%- endif %}
+    params.{{ parameter[0] | variable_name }} = {{ parameter[0] | variable_name }};
+    {%- if loop.last %}
+    ;
+    {%- endif %}
+    {%- endfor %}
+    let response = api.{{ operation['operationId'] | snake_case}}_with_pagination({% for name, parameter in requiredParams %}{{name|variable_name}}{% if loop.last %}{% if operation|has_optional_parameter %}, {% endif %}{% else %}, {% endif %}{% endfor %}{% if operation|has_optional_parameter %}params{% endif %});
+    let mut result = Vec::new();
+
+    block_on(async {
+        pin_mut!(response);
+
+        while let Some(resp) = response.next().await {
+            match resp {
+                Ok(response) => {
+                    result.push(response);
+                }
+                Err(error) => {
+                    return match error {
+                        Error::ResponseError(e) => {
+                            if let Some(entity) = e.entity {
+                                world.response.object = serde_json::to_value(entity).unwrap();
+                            }
+                        }
+                        _ => panic!("error parsing response: {}", error),
+                    };
+                }
+            }
+        }
+    });
+    world.response.object = serde_json::to_value(result).unwrap();
+    world.response.code = 200;
+}
+{%- endif%}
 {% endfor %}
 {%- endfor %}
 {%- endfor %}

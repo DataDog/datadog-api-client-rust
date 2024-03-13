@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -24,28 +26,28 @@ pub struct ListContainersOptionalParams {
 
 impl ListContainersOptionalParams {
     /// Comma-separated list of tags to filter containers by.
-    pub fn filter_tags(&mut self, value: String) -> &mut Self {
+    pub fn filter_tags(mut self, value: String) -> Self {
         self.filter_tags = Some(value);
         self
     }
     /// Comma-separated list of tags to group containers by.
-    pub fn group_by(&mut self, value: String) -> &mut Self {
+    pub fn group_by(mut self, value: String) -> Self {
         self.group_by = Some(value);
         self
     }
     /// Attribute to sort containers by.
-    pub fn sort(&mut self, value: String) -> &mut Self {
+    pub fn sort(mut self, value: String) -> Self {
         self.sort = Some(value);
         self
     }
     /// Maximum number of results returned.
-    pub fn page_size(&mut self, value: i32) -> &mut Self {
+    pub fn page_size(mut self, value: i32) -> Self {
         self.page_size = Some(value);
         self
     }
     /// String to query the next page of results.
     /// This key is provided with each valid response from the API in `meta.pagination.next_cursor`.
-    pub fn page_cursor(&mut self, value: String) -> &mut Self {
+    pub fn page_cursor(mut self, value: String) -> Self {
         self.page_cursor = Some(value);
         self
     }
@@ -98,6 +100,40 @@ impl ContainersAPI {
                 }
             }
             Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_containers_with_pagination(
+        &self,
+        mut params: ListContainersOptionalParams,
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::ContainerItem, Error<ListContainersError>>>
+           + '_ {
+        try_stream! {
+            let mut page_size: i32 = 1000;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_containers(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                let Some(meta) = resp.meta else { break };
+                let Some(pagination) = meta.pagination else { break };
+                let Some(next_cursor) = pagination.next_cursor else { break };
+
+                params.page_cursor = Some(next_cursor);
+            }
         }
     }
 

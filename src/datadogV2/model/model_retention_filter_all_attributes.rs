@@ -62,60 +62,57 @@ impl RetentionFilterAllAttributes {
         }
     }
 
-    pub fn created_at(&mut self, value: i64) -> &mut Self {
+    pub fn created_at(mut self, value: i64) -> Self {
         self.created_at = Some(value);
         self
     }
 
-    pub fn created_by(&mut self, value: String) -> &mut Self {
+    pub fn created_by(mut self, value: String) -> Self {
         self.created_by = Some(value);
         self
     }
 
-    pub fn editable(&mut self, value: bool) -> &mut Self {
+    pub fn editable(mut self, value: bool) -> Self {
         self.editable = Some(value);
         self
     }
 
-    pub fn enabled(&mut self, value: bool) -> &mut Self {
+    pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }
 
-    pub fn execution_order(&mut self, value: i64) -> &mut Self {
+    pub fn execution_order(mut self, value: i64) -> Self {
         self.execution_order = Some(value);
         self
     }
 
-    pub fn filter(&mut self, value: crate::datadogV2::model::SpansFilter) -> &mut Self {
+    pub fn filter(mut self, value: crate::datadogV2::model::SpansFilter) -> Self {
         self.filter = Some(value);
         self
     }
 
-    pub fn filter_type(
-        &mut self,
-        value: crate::datadogV2::model::RetentionFilterAllType,
-    ) -> &mut Self {
+    pub fn filter_type(mut self, value: crate::datadogV2::model::RetentionFilterAllType) -> Self {
         self.filter_type = Some(value);
         self
     }
 
-    pub fn modified_at(&mut self, value: i64) -> &mut Self {
+    pub fn modified_at(mut self, value: i64) -> Self {
         self.modified_at = Some(value);
         self
     }
 
-    pub fn modified_by(&mut self, value: String) -> &mut Self {
+    pub fn modified_by(mut self, value: String) -> Self {
         self.modified_by = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
-    pub fn rate(&mut self, value: f64) -> &mut Self {
+    pub fn rate(mut self, value: f64) -> Self {
         self.rate = Some(value);
         self
     }

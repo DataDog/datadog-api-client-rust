@@ -29,15 +29,12 @@ impl LogsArchiveDefinition {
         }
     }
 
-    pub fn attributes(
-        &mut self,
-        value: crate::datadogV2::model::LogsArchiveAttributes,
-    ) -> &mut Self {
+    pub fn attributes(mut self, value: crate::datadogV2::model::LogsArchiveAttributes) -> Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn id(&mut self, value: String) -> &mut Self {
+    pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }

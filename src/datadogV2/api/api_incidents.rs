@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use log::warn;
 use reqwest;
 use serde::{Deserialize, Serialize};
@@ -16,10 +18,7 @@ pub struct GetIncidentOptionalParams {
 
 impl GetIncidentOptionalParams {
     /// Specifies which types of related objects should be included in the response.
-    pub fn include(
-        &mut self,
-        value: Vec<crate::datadogV2::model::IncidentRelatedObject>,
-    ) -> &mut Self {
+    pub fn include(mut self, value: Vec<crate::datadogV2::model::IncidentRelatedObject>) -> Self {
         self.include = Some(value);
         self
     }
@@ -39,17 +38,17 @@ pub struct ListIncidentAttachmentsOptionalParams {
 impl ListIncidentAttachmentsOptionalParams {
     /// Specifies which types of related objects are included in the response.
     pub fn include(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::IncidentAttachmentRelatedObject>,
-    ) -> &mut Self {
+    ) -> Self {
         self.include = Some(value);
         self
     }
     /// Specifies which types of attachments are included in the response.
     pub fn filter_attachment_type(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::IncidentAttachmentAttachmentType>,
-    ) -> &mut Self {
+    ) -> Self {
         self.filter_attachment_type = Some(value);
         self
     }
@@ -69,20 +68,17 @@ pub struct ListIncidentsOptionalParams {
 
 impl ListIncidentsOptionalParams {
     /// Specifies which types of related objects should be included in the response.
-    pub fn include(
-        &mut self,
-        value: Vec<crate::datadogV2::model::IncidentRelatedObject>,
-    ) -> &mut Self {
+    pub fn include(mut self, value: Vec<crate::datadogV2::model::IncidentRelatedObject>) -> Self {
         self.include = Some(value);
         self
     }
     /// Size for a given page. The maximum allowed value is 100.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Specific offset to use as the beginning of the returned page.
-    pub fn page_offset(&mut self, value: i64) -> &mut Self {
+    pub fn page_offset(mut self, value: i64) -> Self {
         self.page_offset = Some(value);
         self
     }
@@ -104,22 +100,22 @@ pub struct SearchIncidentsOptionalParams {
 
 impl SearchIncidentsOptionalParams {
     /// Specifies which types of related objects should be included in the response.
-    pub fn include(&mut self, value: crate::datadogV2::model::IncidentRelatedObject) -> &mut Self {
+    pub fn include(mut self, value: crate::datadogV2::model::IncidentRelatedObject) -> Self {
         self.include = Some(value);
         self
     }
     /// Specifies the order of returned incidents.
-    pub fn sort(&mut self, value: crate::datadogV2::model::IncidentSearchSortOrder) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV2::model::IncidentSearchSortOrder) -> Self {
         self.sort = Some(value);
         self
     }
     /// Size for a given page. The maximum allowed value is 100.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Specific offset to use as the beginning of the returned page.
-    pub fn page_offset(&mut self, value: i64) -> &mut Self {
+    pub fn page_offset(mut self, value: i64) -> Self {
         self.page_offset = Some(value);
         self
     }
@@ -135,10 +131,7 @@ pub struct UpdateIncidentOptionalParams {
 
 impl UpdateIncidentOptionalParams {
     /// Specifies which types of related objects should be included in the response.
-    pub fn include(
-        &mut self,
-        value: Vec<crate::datadogV2::model::IncidentRelatedObject>,
-    ) -> &mut Self {
+    pub fn include(mut self, value: Vec<crate::datadogV2::model::IncidentRelatedObject>) -> Self {
         self.include = Some(value);
         self
     }
@@ -155,9 +148,9 @@ pub struct UpdateIncidentAttachmentsOptionalParams {
 impl UpdateIncidentAttachmentsOptionalParams {
     /// Specifies which types of related objects are included in the response.
     pub fn include(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::IncidentAttachmentRelatedObject>,
-    ) -> &mut Self {
+    ) -> Self {
         self.include = Some(value);
         self
     }
@@ -1598,6 +1591,40 @@ impl IncidentsAPI {
         }
     }
 
+    pub fn list_incidents_with_pagination(
+        &self,
+        mut params: ListIncidentsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<crate::datadogV2::model::IncidentResponseData, Error<ListIncidentsError>>,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 10;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_incidents(params.clone()).await?;
+
+                let r = resp.data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                if params.page_offset.is_none() {
+                    params.page_offset = Some(page_size.clone());
+                } else {
+                    params.page_offset = Some(params.page_offset.unwrap() + page_size.clone());
+                }
+            }
+        }
+    }
+
     /// Get all incidents for the user's organization.
     pub async fn list_incidents_with_http_info(
         &self,
@@ -1712,6 +1739,45 @@ impl IncidentsAPI {
                 }
             }
             Err(err) => Err(err),
+        }
+    }
+
+    pub fn search_incidents_with_pagination(
+        &self,
+        query: String,
+        mut params: SearchIncidentsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::IncidentSearchResponseIncidentsData,
+            Error<SearchIncidentsError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 10;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            loop {
+                let resp = self.search_incidents( query.clone(),params.clone()).await?;
+                let Some(attributes) = resp.data.attributes else { break };
+
+                let r = attributes.incidents;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                if params.page_offset.is_none() {
+                    params.page_offset = Some(page_size.clone());
+                } else {
+                    params.page_offset = Some(params.page_offset.unwrap() + page_size.clone());
+                }
+            }
         }
     }
 

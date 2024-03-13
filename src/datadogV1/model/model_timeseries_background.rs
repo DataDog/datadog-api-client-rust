@@ -22,7 +22,7 @@ impl TimeseriesBackground {
         TimeseriesBackground { type_, yaxis: None }
     }
 
-    pub fn yaxis(&mut self, value: crate::datadogV1::model::WidgetAxis) -> &mut Self {
+    pub fn yaxis(mut self, value: crate::datadogV1::model::WidgetAxis) -> Self {
         self.yaxis = Some(value);
         self
     }

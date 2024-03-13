@@ -19,7 +19,7 @@ impl SuccessfulSignalUpdateResponse {
         SuccessfulSignalUpdateResponse { status: None }
     }
 
-    pub fn status(&mut self, value: String) -> &mut Self {
+    pub fn status(mut self, value: String) -> Self {
         self.status = Some(value);
         self
     }

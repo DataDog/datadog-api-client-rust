@@ -52,38 +52,32 @@ impl ListStreamQuery {
         }
     }
 
-    pub fn compute(
-        &mut self,
-        value: Vec<crate::datadogV1::model::ListStreamComputeItems>,
-    ) -> &mut Self {
+    pub fn compute(mut self, value: Vec<crate::datadogV1::model::ListStreamComputeItems>) -> Self {
         self.compute = Some(value);
         self
     }
 
-    pub fn event_size(&mut self, value: crate::datadogV1::model::WidgetEventSize) -> &mut Self {
+    pub fn event_size(mut self, value: crate::datadogV1::model::WidgetEventSize) -> Self {
         self.event_size = Some(value);
         self
     }
 
-    pub fn group_by(
-        &mut self,
-        value: Vec<crate::datadogV1::model::ListStreamGroupByItems>,
-    ) -> &mut Self {
+    pub fn group_by(mut self, value: Vec<crate::datadogV1::model::ListStreamGroupByItems>) -> Self {
         self.group_by = Some(value);
         self
     }
 
-    pub fn indexes(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn indexes(mut self, value: Vec<String>) -> Self {
         self.indexes = Some(value);
         self
     }
 
-    pub fn sort(&mut self, value: crate::datadogV1::model::WidgetFieldSort) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV1::model::WidgetFieldSort) -> Self {
         self.sort = Some(value);
         self
     }
 
-    pub fn storage(&mut self, value: String) -> &mut Self {
+    pub fn storage(mut self, value: String) -> Self {
         self.storage = Some(value);
         self
     }

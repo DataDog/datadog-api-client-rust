@@ -20,9 +20,9 @@ impl DashboardListUpdateItemsResponse {
     }
 
     pub fn dashboards(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::DashboardListItemResponse>,
-    ) -> &mut Self {
+    ) -> Self {
         self.dashboards = Some(value);
         self
     }

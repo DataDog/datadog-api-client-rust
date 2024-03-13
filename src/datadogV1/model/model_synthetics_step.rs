@@ -45,40 +45,37 @@ impl SyntheticsStep {
         }
     }
 
-    pub fn allow_failure(&mut self, value: bool) -> &mut Self {
+    pub fn allow_failure(mut self, value: bool) -> Self {
         self.allow_failure = Some(value);
         self
     }
 
-    pub fn is_critical(&mut self, value: bool) -> &mut Self {
+    pub fn is_critical(mut self, value: bool) -> Self {
         self.is_critical = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
-    pub fn no_screenshot(&mut self, value: bool) -> &mut Self {
+    pub fn no_screenshot(mut self, value: bool) -> Self {
         self.no_screenshot = Some(value);
         self
     }
 
-    pub fn params(
-        &mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> &mut Self {
+    pub fn params(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.params = Some(value);
         self
     }
 
-    pub fn timeout(&mut self, value: i64) -> &mut Self {
+    pub fn timeout(mut self, value: i64) -> Self {
         self.timeout = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: crate::datadogV1::model::SyntheticsStepType) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV1::model::SyntheticsStepType) -> Self {
         self.type_ = Some(value);
         self
     }

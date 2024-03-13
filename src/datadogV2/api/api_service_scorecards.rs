@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use log::warn;
 use reqwest;
 use serde::{Deserialize, Serialize};
@@ -34,52 +36,52 @@ pub struct ListScorecardOutcomesOptionalParams {
 
 impl ListScorecardOutcomesOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Specific offset to use as the beginning of the returned page.
-    pub fn page_offset(&mut self, value: i64) -> &mut Self {
+    pub fn page_offset(mut self, value: i64) -> Self {
         self.page_offset = Some(value);
         self
     }
     /// Include related rule details in the response.
-    pub fn include(&mut self, value: String) -> &mut Self {
+    pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
         self
     }
     /// Return only specified values in the outcome attributes.
-    pub fn fields_outcome(&mut self, value: String) -> &mut Self {
+    pub fn fields_outcome(mut self, value: String) -> Self {
         self.fields_outcome = Some(value);
         self
     }
     /// Return only specified values in the included rule details.
-    pub fn fields_rule(&mut self, value: String) -> &mut Self {
+    pub fn fields_rule(mut self, value: String) -> Self {
         self.fields_rule = Some(value);
         self
     }
     /// Filter the outcomes on a specific service name.
-    pub fn filter_outcome_service_name(&mut self, value: String) -> &mut Self {
+    pub fn filter_outcome_service_name(mut self, value: String) -> Self {
         self.filter_outcome_service_name = Some(value);
         self
     }
     /// Filter the outcomes by a specific state.
-    pub fn filter_outcome_state(&mut self, value: String) -> &mut Self {
+    pub fn filter_outcome_state(mut self, value: String) -> Self {
         self.filter_outcome_state = Some(value);
         self
     }
     /// Filter outcomes on whether a rule is enabled/disabled.
-    pub fn filter_rule_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn filter_rule_enabled(mut self, value: bool) -> Self {
         self.filter_rule_enabled = Some(value);
         self
     }
     /// Filter outcomes based on rule ID.
-    pub fn filter_rule_id(&mut self, value: String) -> &mut Self {
+    pub fn filter_rule_id(mut self, value: String) -> Self {
         self.filter_rule_id = Some(value);
         self
     }
     /// Filter outcomes based on rule name.
-    pub fn filter_rule_name(&mut self, value: String) -> &mut Self {
+    pub fn filter_rule_name(mut self, value: String) -> Self {
         self.filter_rule_name = Some(value);
         self
     }
@@ -113,52 +115,52 @@ pub struct ListScorecardRulesOptionalParams {
 
 impl ListScorecardRulesOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Specific offset to use as the beginning of the returned page.
-    pub fn page_offset(&mut self, value: i64) -> &mut Self {
+    pub fn page_offset(mut self, value: i64) -> Self {
         self.page_offset = Some(value);
         self
     }
     /// Include related scorecard details in the response.
-    pub fn include(&mut self, value: String) -> &mut Self {
+    pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
         self
     }
     /// Filter the rules on a rule ID.
-    pub fn filter_rule_id(&mut self, value: String) -> &mut Self {
+    pub fn filter_rule_id(mut self, value: String) -> Self {
         self.filter_rule_id = Some(value);
         self
     }
     /// Filter for enabled rules only.
-    pub fn filter_rule_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn filter_rule_enabled(mut self, value: bool) -> Self {
         self.filter_rule_enabled = Some(value);
         self
     }
     /// Filter for custom rules only.
-    pub fn filter_rule_custom(&mut self, value: bool) -> &mut Self {
+    pub fn filter_rule_custom(mut self, value: bool) -> Self {
         self.filter_rule_custom = Some(value);
         self
     }
     /// Filter rules on the rule name.
-    pub fn filter_rule_name(&mut self, value: String) -> &mut Self {
+    pub fn filter_rule_name(mut self, value: String) -> Self {
         self.filter_rule_name = Some(value);
         self
     }
     /// Filter rules on the rule description.
-    pub fn filter_rule_description(&mut self, value: String) -> &mut Self {
+    pub fn filter_rule_description(mut self, value: String) -> Self {
         self.filter_rule_description = Some(value);
         self
     }
     /// Return only specific fields in the response for rule attributes.
-    pub fn fields_rule(&mut self, value: String) -> &mut Self {
+    pub fn fields_rule(mut self, value: String) -> Self {
         self.fields_rule = Some(value);
         self
     }
     /// Return only specific fields in the included response for scorecard attributes.
-    pub fn fields_scorecard(&mut self, value: String) -> &mut Self {
+    pub fn fields_scorecard(mut self, value: String) -> Self {
         self.fields_scorecard = Some(value);
         self
     }
@@ -534,6 +536,44 @@ impl ServiceScorecardsAPI {
         }
     }
 
+    pub fn list_scorecard_outcomes_with_pagination(
+        &self,
+        mut params: ListScorecardOutcomesOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::OutcomesResponseDataItem,
+            Error<ListScorecardOutcomesError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 10;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_scorecard_outcomes(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                if params.page_offset.is_none() {
+                    params.page_offset = Some(page_size.clone());
+                } else {
+                    params.page_offset = Some(params.page_offset.unwrap() + page_size.clone());
+                }
+            }
+        }
+    }
+
     /// Fetches all rule outcomes.
     pub async fn list_scorecard_outcomes_with_http_info(
         &self,
@@ -677,6 +717,44 @@ impl ServiceScorecardsAPI {
                 }
             }
             Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_scorecard_rules_with_pagination(
+        &self,
+        mut params: ListScorecardRulesOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::ListRulesResponseDataItem,
+            Error<ListScorecardRulesError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 10;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_scorecard_rules(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                if params.page_offset.is_none() {
+                    params.page_offset = Some(page_size.clone());
+                } else {
+                    params.page_offset = Some(params.page_offset.unwrap() + page_size.clone());
+                }
+            }
         }
     }
 

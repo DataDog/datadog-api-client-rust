@@ -19,10 +19,7 @@ impl ConfluentResourceResponse {
         ConfluentResourceResponse { data: None }
     }
 
-    pub fn data(
-        &mut self,
-        value: crate::datadogV2::model::ConfluentResourceResponseData,
-    ) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::ConfluentResourceResponseData) -> Self {
         self.data = Some(value);
         self
     }

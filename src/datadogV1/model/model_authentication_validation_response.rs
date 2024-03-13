@@ -19,7 +19,7 @@ impl AuthenticationValidationResponse {
         AuthenticationValidationResponse { valid: None }
     }
 
-    pub fn valid(&mut self, value: bool) -> &mut Self {
+    pub fn valid(mut self, value: bool) -> Self {
         self.valid = Some(value);
         self
     }

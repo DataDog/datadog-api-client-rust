@@ -19,7 +19,7 @@ impl SecurityMonitoringSignalResponse {
         SecurityMonitoringSignalResponse { data: None }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::SecurityMonitoringSignal) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::SecurityMonitoringSignal) -> Self {
         self.data = Some(value);
         self
     }

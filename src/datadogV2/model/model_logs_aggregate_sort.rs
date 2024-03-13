@@ -33,25 +33,22 @@ impl LogsAggregateSort {
         }
     }
 
-    pub fn aggregation(
-        &mut self,
-        value: crate::datadogV2::model::LogsAggregationFunction,
-    ) -> &mut Self {
+    pub fn aggregation(mut self, value: crate::datadogV2::model::LogsAggregationFunction) -> Self {
         self.aggregation = Some(value);
         self
     }
 
-    pub fn metric(&mut self, value: String) -> &mut Self {
+    pub fn metric(mut self, value: String) -> Self {
         self.metric = Some(value);
         self
     }
 
-    pub fn order(&mut self, value: crate::datadogV2::model::LogsSortOrder) -> &mut Self {
+    pub fn order(mut self, value: crate::datadogV2::model::LogsSortOrder) -> Self {
         self.order = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: crate::datadogV2::model::LogsAggregateSortType) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::LogsAggregateSortType) -> Self {
         self.type_ = Some(value);
         self
     }

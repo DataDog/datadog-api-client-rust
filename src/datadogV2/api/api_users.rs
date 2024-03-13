@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -30,12 +32,12 @@ pub struct ListUsersOptionalParams {
 
 impl ListUsersOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Specific page number to return.
-    pub fn page_number(&mut self, value: i64) -> &mut Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
@@ -43,24 +45,24 @@ impl ListUsersOptionalParams {
     /// Sort order is descending if the field
     /// is prefixed by a negative sign, for example `sort=-name`. Options: `name`,
     /// `modified_at`, `user_count`.
-    pub fn sort(&mut self, value: String) -> &mut Self {
+    pub fn sort(mut self, value: String) -> Self {
         self.sort = Some(value);
         self
     }
     /// Direction of sort. Options: `asc`, `desc`.
-    pub fn sort_dir(&mut self, value: crate::datadogV2::model::QuerySortOrder) -> &mut Self {
+    pub fn sort_dir(mut self, value: crate::datadogV2::model::QuerySortOrder) -> Self {
         self.sort_dir = Some(value);
         self
     }
     /// Filter all users by the given string. Defaults to no filtering.
-    pub fn filter(&mut self, value: String) -> &mut Self {
+    pub fn filter(mut self, value: String) -> Self {
         self.filter = Some(value);
         self
     }
     /// Filter on status attribute.
     /// Comma separated list, with possible values `Active`, `Pending`, and `Disabled`.
     /// Defaults to no filtering.
-    pub fn filter_status(&mut self, value: String) -> &mut Self {
+    pub fn filter_status(mut self, value: String) -> Self {
         self.filter_status = Some(value);
         self
     }
@@ -686,6 +688,38 @@ impl UsersAPI {
                 }
             }
             Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_users_with_pagination(
+        &self,
+        mut params: ListUsersOptionalParams,
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::User, Error<ListUsersError>>> + '_ {
+        try_stream! {
+            let mut page_size: i64 = 10;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            if params.page_number.is_none() {
+                params.page_number = Some(0);
+            }
+            loop {
+                let resp = self.list_users(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                params.page_number = Some(params.page_number.unwrap() + 1);
+            }
         }
     }
 

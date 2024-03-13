@@ -20,7 +20,7 @@ impl MetricBulkTagConfigResponse {
         MetricBulkTagConfigResponse { data: None }
     }
 
-    pub fn data(&mut self, value: crate::datadogV2::model::MetricBulkTagConfigStatus) -> &mut Self {
+    pub fn data(mut self, value: crate::datadogV2::model::MetricBulkTagConfigStatus) -> Self {
         self.data = Some(value);
         self
     }

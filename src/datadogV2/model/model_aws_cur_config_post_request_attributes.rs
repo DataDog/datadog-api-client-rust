@@ -50,17 +50,17 @@ impl AwsCURConfigPostRequestAttributes {
         }
     }
 
-    pub fn bucket_region(&mut self, value: String) -> &mut Self {
+    pub fn bucket_region(mut self, value: String) -> Self {
         self.bucket_region = Some(value);
         self
     }
 
-    pub fn is_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn is_enabled(mut self, value: bool) -> Self {
         self.is_enabled = Some(value);
         self
     }
 
-    pub fn months(&mut self, value: i32) -> &mut Self {
+    pub fn months(mut self, value: i32) -> Self {
         self.months = Some(value);
         self
     }

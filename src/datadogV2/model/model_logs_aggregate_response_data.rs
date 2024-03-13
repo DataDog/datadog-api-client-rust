@@ -19,10 +19,7 @@ impl LogsAggregateResponseData {
         LogsAggregateResponseData { buckets: None }
     }
 
-    pub fn buckets(
-        &mut self,
-        value: Vec<crate::datadogV2::model::LogsAggregateBucket>,
-    ) -> &mut Self {
+    pub fn buckets(mut self, value: Vec<crate::datadogV2::model::LogsAggregateBucket>) -> Self {
         self.buckets = Some(value);
         self
     }

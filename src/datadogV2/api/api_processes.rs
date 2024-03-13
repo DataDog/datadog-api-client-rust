@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -30,37 +32,37 @@ pub struct ListProcessesOptionalParams {
 
 impl ListProcessesOptionalParams {
     /// String to search processes by.
-    pub fn search(&mut self, value: String) -> &mut Self {
+    pub fn search(mut self, value: String) -> Self {
         self.search = Some(value);
         self
     }
     /// Comma-separated list of tags to filter processes by.
-    pub fn tags(&mut self, value: String) -> &mut Self {
+    pub fn tags(mut self, value: String) -> Self {
         self.tags = Some(value);
         self
     }
     /// Unix timestamp (number of seconds since epoch) of the start of the query window.
     /// If not provided, the start of the query window will be 15 minutes before the `to` timestamp. If neither
     /// `from` nor `to` are provided, the query window will be `[now - 15m, now]`.
-    pub fn from(&mut self, value: i64) -> &mut Self {
+    pub fn from(mut self, value: i64) -> Self {
         self.from = Some(value);
         self
     }
     /// Unix timestamp (number of seconds since epoch) of the end of the query window.
     /// If not provided, the end of the query window will be 15 minutes after the `from` timestamp. If neither
     /// `from` nor `to` are provided, the query window will be `[now - 15m, now]`.
-    pub fn to(&mut self, value: i64) -> &mut Self {
+    pub fn to(mut self, value: i64) -> Self {
         self.to = Some(value);
         self
     }
     /// Maximum number of results returned.
-    pub fn page_limit(&mut self, value: i32) -> &mut Self {
+    pub fn page_limit(mut self, value: i32) -> Self {
         self.page_limit = Some(value);
         self
     }
     /// String to query the next page of results.
     /// This key is provided with each valid response from the API in `meta.page.after`.
-    pub fn page_cursor(&mut self, value: String) -> &mut Self {
+    pub fn page_cursor(mut self, value: String) -> Self {
         self.page_cursor = Some(value);
         self
     }
@@ -113,6 +115,40 @@ impl ProcessesAPI {
                 }
             }
             Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_processes_with_pagination(
+        &self,
+        mut params: ListProcessesOptionalParams,
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::ProcessSummary, Error<ListProcessesError>>>
+           + '_ {
+        try_stream! {
+            let mut page_size: i32 = 1000;
+            if params.page_limit.is_none() {
+                params.page_limit = Some(page_size);
+            } else {
+                page_size = params.page_limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_processes(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                let Some(meta) = resp.meta else { break };
+                let Some(page) = meta.page else { break };
+                let Some(after) = page.after else { break };
+
+                params.page_cursor = Some(after);
+            }
         }
     }
 

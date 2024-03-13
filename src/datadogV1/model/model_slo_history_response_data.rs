@@ -69,58 +69,55 @@ impl SLOHistoryResponseData {
         }
     }
 
-    pub fn from_ts(&mut self, value: i64) -> &mut Self {
+    pub fn from_ts(mut self, value: i64) -> Self {
         self.from_ts = Some(value);
         self
     }
 
-    pub fn group_by(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn group_by(mut self, value: Vec<String>) -> Self {
         self.group_by = Some(value);
         self
     }
 
-    pub fn groups(&mut self, value: Vec<crate::datadogV1::model::SLOHistoryMonitor>) -> &mut Self {
+    pub fn groups(mut self, value: Vec<crate::datadogV1::model::SLOHistoryMonitor>) -> Self {
         self.groups = Some(value);
         self
     }
 
-    pub fn monitors(
-        &mut self,
-        value: Vec<crate::datadogV1::model::SLOHistoryMonitor>,
-    ) -> &mut Self {
+    pub fn monitors(mut self, value: Vec<crate::datadogV1::model::SLOHistoryMonitor>) -> Self {
         self.monitors = Some(value);
         self
     }
 
-    pub fn overall(&mut self, value: crate::datadogV1::model::SLOHistorySLIData) -> &mut Self {
+    pub fn overall(mut self, value: crate::datadogV1::model::SLOHistorySLIData) -> Self {
         self.overall = Some(value);
         self
     }
 
-    pub fn series(&mut self, value: crate::datadogV1::model::SLOHistoryMetrics) -> &mut Self {
+    pub fn series(mut self, value: crate::datadogV1::model::SLOHistoryMetrics) -> Self {
         self.series = Some(value);
         self
     }
 
     pub fn thresholds(
-        &mut self,
+        mut self,
         value: std::collections::BTreeMap<String, crate::datadogV1::model::SLOThreshold>,
-    ) -> &mut Self {
+    ) -> Self {
         self.thresholds = Some(value);
         self
     }
 
-    pub fn to_ts(&mut self, value: i64) -> &mut Self {
+    pub fn to_ts(mut self, value: i64) -> Self {
         self.to_ts = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: crate::datadogV1::model::SLOType) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV1::model::SLOType) -> Self {
         self.type_ = Some(value);
         self
     }
 
-    pub fn type_id(&mut self, value: crate::datadogV1::model::SLOTypeNumeric) -> &mut Self {
+    pub fn type_id(mut self, value: crate::datadogV1::model::SLOTypeNumeric) -> Self {
         self.type_id = Some(value);
         self
     }

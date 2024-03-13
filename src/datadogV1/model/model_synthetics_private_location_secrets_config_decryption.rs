@@ -19,7 +19,7 @@ impl SyntheticsPrivateLocationSecretsConfigDecryption {
         SyntheticsPrivateLocationSecretsConfigDecryption { key: None }
     }
 
-    pub fn key(&mut self, value: String) -> &mut Self {
+    pub fn key(mut self, value: String) -> Self {
         self.key = Some(value);
         self
     }

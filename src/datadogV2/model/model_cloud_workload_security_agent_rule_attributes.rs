@@ -81,88 +81,88 @@ impl CloudWorkloadSecurityAgentRuleAttributes {
         }
     }
 
-    pub fn agent_constraint(&mut self, value: String) -> &mut Self {
+    pub fn agent_constraint(mut self, value: String) -> Self {
         self.agent_constraint = Some(value);
         self
     }
 
-    pub fn category(&mut self, value: String) -> &mut Self {
+    pub fn category(mut self, value: String) -> Self {
         self.category = Some(value);
         self
     }
 
-    pub fn creation_author_uu_id(&mut self, value: String) -> &mut Self {
+    pub fn creation_author_uu_id(mut self, value: String) -> Self {
         self.creation_author_uu_id = Some(value);
         self
     }
 
-    pub fn creation_date(&mut self, value: i64) -> &mut Self {
+    pub fn creation_date(mut self, value: i64) -> Self {
         self.creation_date = Some(value);
         self
     }
 
     pub fn creator(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreatorAttributes,
-    ) -> &mut Self {
+    ) -> Self {
         self.creator = Some(value);
         self
     }
 
-    pub fn default_rule(&mut self, value: bool) -> &mut Self {
+    pub fn default_rule(mut self, value: bool) -> Self {
         self.default_rule = Some(value);
         self
     }
 
-    pub fn description(&mut self, value: String) -> &mut Self {
+    pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
 
-    pub fn enabled(&mut self, value: bool) -> &mut Self {
+    pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }
 
-    pub fn expression(&mut self, value: String) -> &mut Self {
+    pub fn expression(mut self, value: String) -> Self {
         self.expression = Some(value);
         self
     }
 
-    pub fn filters(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn filters(mut self, value: Vec<String>) -> Self {
         self.filters = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
-    pub fn update_author_uu_id(&mut self, value: String) -> &mut Self {
+    pub fn update_author_uu_id(mut self, value: String) -> Self {
         self.update_author_uu_id = Some(value);
         self
     }
 
-    pub fn update_date(&mut self, value: i64) -> &mut Self {
+    pub fn update_date(mut self, value: i64) -> Self {
         self.update_date = Some(value);
         self
     }
 
-    pub fn updated_at(&mut self, value: i64) -> &mut Self {
+    pub fn updated_at(mut self, value: i64) -> Self {
         self.updated_at = Some(value);
         self
     }
 
     pub fn updater(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleUpdaterAttributes,
-    ) -> &mut Self {
+    ) -> Self {
         self.updater = Some(value);
         self
     }
 
-    pub fn version(&mut self, value: i64) -> &mut Self {
+    pub fn version(mut self, value: i64) -> Self {
         self.version = Some(value);
         self
     }

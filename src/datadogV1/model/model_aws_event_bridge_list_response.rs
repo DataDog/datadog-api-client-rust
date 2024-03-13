@@ -26,14 +26,14 @@ impl AWSEventBridgeListResponse {
     }
 
     pub fn accounts(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::AWSEventBridgeAccountConfiguration>,
-    ) -> &mut Self {
+    ) -> Self {
         self.accounts = Some(value);
         self
     }
 
-    pub fn is_installed(&mut self, value: bool) -> &mut Self {
+    pub fn is_installed(mut self, value: bool) -> Self {
         self.is_installed = Some(value);
         self
     }

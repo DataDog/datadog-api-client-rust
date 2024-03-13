@@ -28,9 +28,9 @@ impl IncidentServiceResponse {
     }
 
     pub fn included(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::IncidentServiceIncludedItems>,
-    ) -> &mut Self {
+    ) -> Self {
         self.included = Some(value);
         self
     }

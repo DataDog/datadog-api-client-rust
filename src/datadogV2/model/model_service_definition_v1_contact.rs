@@ -25,12 +25,12 @@ impl ServiceDefinitionV1Contact {
         }
     }
 
-    pub fn email(&mut self, value: String) -> &mut Self {
+    pub fn email(mut self, value: String) -> Self {
         self.email = Some(value);
         self
     }
 
-    pub fn slack(&mut self, value: String) -> &mut Self {
+    pub fn slack(mut self, value: String) -> Self {
         self.slack = Some(value);
         self
     }

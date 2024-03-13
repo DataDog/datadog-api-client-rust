@@ -22,9 +22,9 @@ impl MonitorState {
     }
 
     pub fn groups(
-        &mut self,
+        mut self,
         value: std::collections::BTreeMap<String, crate::datadogV1::model::MonitorStateGroup>,
-    ) -> &mut Self {
+    ) -> Self {
         self.groups = Some(value);
         self
     }

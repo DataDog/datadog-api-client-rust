@@ -29,17 +29,17 @@ impl RoleUpdateAttributes {
         }
     }
 
-    pub fn created_at(&mut self, value: String) -> &mut Self {
+    pub fn created_at(mut self, value: String) -> Self {
         self.created_at = Some(value);
         self
     }
 
-    pub fn modified_at(&mut self, value: String) -> &mut Self {
+    pub fn modified_at(mut self, value: String) -> Self {
         self.modified_at = Some(value);
         self
     }
 
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }

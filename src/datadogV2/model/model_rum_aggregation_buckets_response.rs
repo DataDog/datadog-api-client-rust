@@ -19,7 +19,7 @@ impl RUMAggregationBucketsResponse {
         RUMAggregationBucketsResponse { buckets: None }
     }
 
-    pub fn buckets(&mut self, value: Vec<crate::datadogV2::model::RUMBucketResponse>) -> &mut Self {
+    pub fn buckets(mut self, value: Vec<crate::datadogV2::model::RUMBucketResponse>) -> Self {
         self.buckets = Some(value);
         self
     }

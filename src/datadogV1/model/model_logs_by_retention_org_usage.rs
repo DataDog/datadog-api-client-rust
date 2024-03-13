@@ -19,10 +19,7 @@ impl LogsByRetentionOrgUsage {
         LogsByRetentionOrgUsage { usage: None }
     }
 
-    pub fn usage(
-        &mut self,
-        value: Vec<crate::datadogV1::model::LogsRetentionSumUsage>,
-    ) -> &mut Self {
+    pub fn usage(mut self, value: Vec<crate::datadogV1::model::LogsRetentionSumUsage>) -> Self {
         self.usage = Some(value);
         self
     }

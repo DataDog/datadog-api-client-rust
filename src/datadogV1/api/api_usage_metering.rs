@@ -21,22 +21,22 @@ pub struct GetDailyCustomReportsOptionalParams {
 
 impl GetDailyCustomReportsOptionalParams {
     /// The number of files to return in the response. `[default=60]`.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// The identifier of the first page to return. This parameter is used for the pagination feature `[default=0]`.
-    pub fn page_number(&mut self, value: i64) -> &mut Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
     /// The direction to sort by: `[desc, asc]`.
-    pub fn sort_dir(&mut self, value: crate::datadogV1::model::UsageSortDirection) -> &mut Self {
+    pub fn sort_dir(mut self, value: crate::datadogV1::model::UsageSortDirection) -> Self {
         self.sort_dir = Some(value);
         self
     }
     /// The field to sort by: `[computed_on, size, start_date, end_date]`.
-    pub fn sort(&mut self, value: crate::datadogV1::model::UsageSort) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV1::model::UsageSort) -> Self {
         self.sort = Some(value);
         self
     }
@@ -62,24 +62,24 @@ pub struct GetHourlyUsageAttributionOptionalParams {
 impl GetHourlyUsageAttributionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
     /// List following results with a next_record_id provided in the previous query.
-    pub fn next_record_id(&mut self, value: String) -> &mut Self {
+    pub fn next_record_id(mut self, value: String) -> Self {
         self.next_record_id = Some(value);
         self
     }
     /// Comma separated list of tags used to group usage. If no value is provided the usage will not be broken down by tags.
     ///
     /// To see which tags are available, look for the value of `tag_config_source` in the API response.
-    pub fn tag_breakdown_keys(&mut self, value: String) -> &mut Self {
+    pub fn tag_breakdown_keys(mut self, value: String) -> Self {
         self.tag_breakdown_keys = Some(value);
         self
     }
     /// Include child org usage in the response. Defaults to `true`.
-    pub fn include_descendants(&mut self, value: bool) -> &mut Self {
+    pub fn include_descendants(mut self, value: bool) -> Self {
         self.include_descendants = Some(value);
         self
     }
@@ -97,7 +97,7 @@ pub struct GetIncidentManagementOptionalParams {
 impl GetIncidentManagementOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -115,7 +115,7 @@ pub struct GetIngestedSpansOptionalParams {
 impl GetIngestedSpansOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -137,22 +137,22 @@ pub struct GetMonthlyCustomReportsOptionalParams {
 
 impl GetMonthlyCustomReportsOptionalParams {
     /// The number of files to return in the response `[default=60].`
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// The identifier of the first page to return. This parameter is used for the pagination feature `[default=0]`.
-    pub fn page_number(&mut self, value: i64) -> &mut Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
     /// The direction to sort by: `[desc, asc]`.
-    pub fn sort_dir(&mut self, value: crate::datadogV1::model::UsageSortDirection) -> &mut Self {
+    pub fn sort_dir(mut self, value: crate::datadogV1::model::UsageSortDirection) -> Self {
         self.sort_dir = Some(value);
         self
     }
     /// The field to sort by: `[computed_on, size, start_date, end_date]`.
-    pub fn sort(&mut self, value: crate::datadogV1::model::UsageSort) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV1::model::UsageSort) -> Self {
         self.sort = Some(value);
         self
     }
@@ -180,40 +180,37 @@ pub struct GetMonthlyUsageAttributionOptionalParams {
 
 impl GetMonthlyUsageAttributionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
-    pub fn end_month(&mut self, value: String) -> &mut Self {
+    pub fn end_month(mut self, value: String) -> Self {
         self.end_month = Some(value);
         self
     }
     /// The direction to sort by: `[desc, asc]`.
-    pub fn sort_direction(
-        &mut self,
-        value: crate::datadogV1::model::UsageSortDirection,
-    ) -> &mut Self {
+    pub fn sort_direction(mut self, value: crate::datadogV1::model::UsageSortDirection) -> Self {
         self.sort_direction = Some(value);
         self
     }
     /// The field to sort by.
     pub fn sort_name(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::MonthlyUsageAttributionSupportedMetrics,
-    ) -> &mut Self {
+    ) -> Self {
         self.sort_name = Some(value);
         self
     }
     /// Comma separated list of tag keys used to group usage. If no value is provided the usage will not be broken down by tags.
     ///
     /// To see which tags are available, look for the value of `tag_config_source` in the API response.
-    pub fn tag_breakdown_keys(&mut self, value: String) -> &mut Self {
+    pub fn tag_breakdown_keys(mut self, value: String) -> Self {
         self.tag_breakdown_keys = Some(value);
         self
     }
     /// List following results with a next_record_id provided in the previous query.
-    pub fn next_record_id(&mut self, value: String) -> &mut Self {
+    pub fn next_record_id(mut self, value: String) -> Self {
         self.next_record_id = Some(value);
         self
     }
     /// Include child org usage in the response. Defaults to `true`.
-    pub fn include_descendants(&mut self, value: bool) -> &mut Self {
+    pub fn include_descendants(mut self, value: bool) -> Self {
         self.include_descendants = Some(value);
         self
     }
@@ -231,7 +228,7 @@ pub struct GetUsageAnalyzedLogsOptionalParams {
 impl GetUsageAnalyzedLogsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -257,35 +254,32 @@ pub struct GetUsageAttributionOptionalParams {
 
 impl GetUsageAttributionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
-    pub fn end_month(&mut self, value: String) -> &mut Self {
+    pub fn end_month(mut self, value: String) -> Self {
         self.end_month = Some(value);
         self
     }
     /// The direction to sort by: `[desc, asc]`.
-    pub fn sort_direction(
-        &mut self,
-        value: crate::datadogV1::model::UsageSortDirection,
-    ) -> &mut Self {
+    pub fn sort_direction(mut self, value: crate::datadogV1::model::UsageSortDirection) -> Self {
         self.sort_direction = Some(value);
         self
     }
     /// The field to sort by.
-    pub fn sort_name(&mut self, value: crate::datadogV1::model::UsageAttributionSort) -> &mut Self {
+    pub fn sort_name(mut self, value: crate::datadogV1::model::UsageAttributionSort) -> Self {
         self.sort_name = Some(value);
         self
     }
     /// Include child org usage in the response. Defaults to false.
-    pub fn include_descendants(&mut self, value: bool) -> &mut Self {
+    pub fn include_descendants(mut self, value: bool) -> Self {
         self.include_descendants = Some(value);
         self
     }
     /// Number of records to skip before beginning to return.
-    pub fn offset(&mut self, value: i64) -> &mut Self {
+    pub fn offset(mut self, value: i64) -> Self {
         self.offset = Some(value);
         self
     }
     /// Maximum number of records to be returned.
-    pub fn limit(&mut self, value: i64) -> &mut Self {
+    pub fn limit(mut self, value: i64) -> Self {
         self.limit = Some(value);
         self
     }
@@ -303,7 +297,7 @@ pub struct GetUsageAuditLogsOptionalParams {
 impl GetUsageAuditLogsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -319,7 +313,7 @@ pub struct GetUsageBillableSummaryOptionalParams {
 
 impl GetUsageBillableSummaryOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage starting this month.
-    pub fn month(&mut self, value: String) -> &mut Self {
+    pub fn month(mut self, value: String) -> Self {
         self.month = Some(value);
         self
     }
@@ -337,7 +331,7 @@ pub struct GetUsageCIAppOptionalParams {
 impl GetUsageCIAppOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -355,7 +349,7 @@ pub struct GetUsageCWSOptionalParams {
 impl GetUsageCWSOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -373,7 +367,7 @@ pub struct GetUsageCloudSecurityPostureManagementOptionalParams {
 impl GetUsageCloudSecurityPostureManagementOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -391,7 +385,7 @@ pub struct GetUsageDBMOptionalParams {
 impl GetUsageDBMOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -407,7 +401,7 @@ pub struct GetUsageFargateOptionalParams {
 
 impl GetUsageFargateOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -423,7 +417,7 @@ pub struct GetUsageHostsOptionalParams {
 
 impl GetUsageHostsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -439,7 +433,7 @@ pub struct GetUsageIndexedSpansOptionalParams {
 
 impl GetUsageIndexedSpansOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -457,7 +451,7 @@ pub struct GetUsageInternetOfThingsOptionalParams {
 impl GetUsageInternetOfThingsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -473,7 +467,7 @@ pub struct GetUsageLambdaOptionalParams {
 
 impl GetUsageLambdaOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -489,7 +483,7 @@ pub struct GetUsageLogsOptionalParams {
 
 impl GetUsageLogsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -507,12 +501,12 @@ pub struct GetUsageLogsByIndexOptionalParams {
 
 impl GetUsageLogsByIndexOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
     /// Comma-separated list of log index names.
-    pub fn index_name(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn index_name(mut self, value: Vec<String>) -> Self {
         self.index_name = Some(value);
         self
     }
@@ -530,7 +524,7 @@ pub struct GetUsageLogsByRetentionOptionalParams {
 impl GetUsageLogsByRetentionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -548,7 +542,7 @@ pub struct GetUsageNetworkFlowsOptionalParams {
 impl GetUsageNetworkFlowsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -564,7 +558,7 @@ pub struct GetUsageNetworkHostsOptionalParams {
 
 impl GetUsageNetworkHostsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -582,7 +576,7 @@ pub struct GetUsageOnlineArchiveOptionalParams {
 impl GetUsageOnlineArchiveOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -600,7 +594,7 @@ pub struct GetUsageProfilingOptionalParams {
 impl GetUsageProfilingOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -618,12 +612,12 @@ pub struct GetUsageRumSessionsOptionalParams {
 
 impl GetUsageRumSessionsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
     /// RUM type: `[browser, mobile]`. Defaults to `browser`.
-    pub fn type_(&mut self, value: String) -> &mut Self {
+    pub fn type_(mut self, value: String) -> Self {
         self.type_ = Some(value);
         self
     }
@@ -639,7 +633,7 @@ pub struct GetUsageRumUnitsOptionalParams {
 
 impl GetUsageRumUnitsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -657,7 +651,7 @@ pub struct GetUsageSDSOptionalParams {
 impl GetUsageSDSOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -675,7 +669,7 @@ pub struct GetUsageSNMPOptionalParams {
 impl GetUsageSNMPOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -693,12 +687,12 @@ pub struct GetUsageSummaryOptionalParams {
 
 impl GetUsageSummaryOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
-    pub fn end_month(&mut self, value: String) -> &mut Self {
+    pub fn end_month(mut self, value: String) -> Self {
         self.end_month = Some(value);
         self
     }
     /// Include usage summaries for each sub-org.
-    pub fn include_org_details(&mut self, value: bool) -> &mut Self {
+    pub fn include_org_details(mut self, value: bool) -> Self {
         self.include_org_details = Some(value);
         self
     }
@@ -714,7 +708,7 @@ pub struct GetUsageSyntheticsOptionalParams {
 
 impl GetUsageSyntheticsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -730,7 +724,7 @@ pub struct GetUsageSyntheticsAPIOptionalParams {
 
 impl GetUsageSyntheticsAPIOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -746,7 +740,7 @@ pub struct GetUsageSyntheticsBrowserOptionalParams {
 
 impl GetUsageSyntheticsBrowserOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -762,7 +756,7 @@ pub struct GetUsageTimeseriesOptionalParams {
 
 impl GetUsageTimeseriesOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(&mut self, value: String) -> &mut Self {
+    pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -786,27 +780,27 @@ pub struct GetUsageTopAvgMetricsOptionalParams {
 
 impl GetUsageTopAvgMetricsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: [YYYY-MM] for usage beginning at this hour. (Either month or day should be specified, but not both)
-    pub fn month(&mut self, value: String) -> &mut Self {
+    pub fn month(mut self, value: String) -> Self {
         self.month = Some(value);
         self
     }
     /// Datetime in ISO-8601 format, UTC, precise to day: [YYYY-MM-DD] for usage beginning at this hour. (Either month or day should be specified, but not both)
-    pub fn day(&mut self, value: String) -> &mut Self {
+    pub fn day(mut self, value: String) -> Self {
         self.day = Some(value);
         self
     }
     /// Comma-separated list of metric names.
-    pub fn names(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn names(mut self, value: Vec<String>) -> Self {
         self.names = Some(value);
         self
     }
     /// Maximum number of results to return (between 1 and 5000) - defaults to 500 results if limit not specified.
-    pub fn limit(&mut self, value: i32) -> &mut Self {
+    pub fn limit(mut self, value: i32) -> Self {
         self.limit = Some(value);
         self
     }
     /// List following results with a next_record_id provided in the previous query.
-    pub fn next_record_id(&mut self, value: String) -> &mut Self {
+    pub fn next_record_id(mut self, value: String) -> Self {
         self.next_record_id = Some(value);
         self
     }

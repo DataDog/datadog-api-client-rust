@@ -22,7 +22,7 @@ impl RUMApplicationCreateAttributes {
         RUMApplicationCreateAttributes { name, type_: None }
     }
 
-    pub fn type_(&mut self, value: String) -> &mut Self {
+    pub fn type_(mut self, value: String) -> Self {
         self.type_ = Some(value);
         self
     }

@@ -55,65 +55,62 @@ impl IncidentResponseRelationships {
     }
 
     pub fn attachments(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::RelationshipToIncidentAttachment,
-    ) -> &mut Self {
+    ) -> Self {
         self.attachments = Some(value);
         self
     }
 
     pub fn commander_user(
-        &mut self,
+        mut self,
         value: Option<crate::datadogV2::model::NullableRelationshipToUser>,
-    ) -> &mut Self {
+    ) -> Self {
         self.commander_user = Some(value);
         self
     }
 
-    pub fn created_by_user(
-        &mut self,
-        value: crate::datadogV2::model::RelationshipToUser,
-    ) -> &mut Self {
+    pub fn created_by_user(mut self, value: crate::datadogV2::model::RelationshipToUser) -> Self {
         self.created_by_user = Some(value);
         self
     }
 
     pub fn impacts(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::RelationshipToIncidentImpacts,
-    ) -> &mut Self {
+    ) -> Self {
         self.impacts = Some(value);
         self
     }
 
     pub fn integrations(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::RelationshipToIncidentIntegrationMetadatas,
-    ) -> &mut Self {
+    ) -> Self {
         self.integrations = Some(value);
         self
     }
 
     pub fn last_modified_by_user(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::RelationshipToUser,
-    ) -> &mut Self {
+    ) -> Self {
         self.last_modified_by_user = Some(value);
         self
     }
 
     pub fn responders(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::RelationshipToIncidentResponders,
-    ) -> &mut Self {
+    ) -> Self {
         self.responders = Some(value);
         self
     }
 
     pub fn user_defined_fields(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::RelationshipToIncidentUserDefinedFields,
-    ) -> &mut Self {
+    ) -> Self {
         self.user_defined_fields = Some(value);
         self
     }

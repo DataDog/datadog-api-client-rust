@@ -22,7 +22,7 @@ impl DORADeploymentResponseData {
         DORADeploymentResponseData { id, type_: None }
     }
 
-    pub fn type_(&mut self, value: crate::datadogV2::model::DORADeploymentType) -> &mut Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::DORADeploymentType) -> Self {
         self.type_ = Some(value);
         self
     }

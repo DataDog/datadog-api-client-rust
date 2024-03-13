@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -17,12 +19,12 @@ pub struct GetPublicDashboardInvitationsOptionalParams {
 
 impl GetPublicDashboardInvitationsOptionalParams {
     /// The number of records to return in a single request.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// The page to access (base 0).
-    pub fn page_number(&mut self, value: i64) -> &mut Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
@@ -47,23 +49,23 @@ pub struct ListDashboardsOptionalParams {
 impl ListDashboardsOptionalParams {
     /// When `true`, this query only returns shared custom created
     /// or cloned dashboards.
-    pub fn filter_shared(&mut self, value: bool) -> &mut Self {
+    pub fn filter_shared(mut self, value: bool) -> Self {
         self.filter_shared = Some(value);
         self
     }
     /// When `true`, this query returns only deleted custom-created
     /// or cloned dashboards. This parameter is incompatible with `filter[shared]`.
-    pub fn filter_deleted(&mut self, value: bool) -> &mut Self {
+    pub fn filter_deleted(mut self, value: bool) -> Self {
         self.filter_deleted = Some(value);
         self
     }
     /// The maximum number of dashboards returned in the list.
-    pub fn count(&mut self, value: i64) -> &mut Self {
+    pub fn count(mut self, value: i64) -> Self {
         self.count = Some(value);
         self
     }
     /// The specific offset to use as the beginning of the returned response.
-    pub fn start(&mut self, value: i64) -> &mut Self {
+    pub fn start(mut self, value: i64) -> Self {
         self.start = Some(value);
         self
     }
@@ -1025,6 +1027,44 @@ impl DashboardsAPI {
                 }
             }
             Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_dashboards_with_pagination(
+        &self,
+        mut params: ListDashboardsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV1::model::DashboardSummaryDefinition,
+            Error<ListDashboardsError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 100;
+            if params.count.is_none() {
+                params.count = Some(page_size);
+            } else {
+                page_size = params.count.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_dashboards(params.clone()).await?;
+                let Some(dashboards) = resp.dashboards else { break };
+
+                let r = dashboards;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                if params.start.is_none() {
+                    params.start = Some(page_size.clone());
+                } else {
+                    params.start = Some(params.start.unwrap() + page_size.clone());
+                }
+            }
         }
     }
 

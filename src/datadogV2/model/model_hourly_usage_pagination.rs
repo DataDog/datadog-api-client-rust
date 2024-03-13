@@ -25,7 +25,7 @@ impl HourlyUsagePagination {
         }
     }
 
-    pub fn next_record_id(&mut self, value: Option<String>) -> &mut Self {
+    pub fn next_record_id(mut self, value: Option<String>) -> Self {
         self.next_record_id = Some(value);
         self
     }

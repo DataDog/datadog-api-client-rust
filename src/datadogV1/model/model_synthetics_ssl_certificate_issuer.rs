@@ -41,32 +41,32 @@ impl SyntheticsSSLCertificateIssuer {
         }
     }
 
-    pub fn c(&mut self, value: String) -> &mut Self {
+    pub fn c(mut self, value: String) -> Self {
         self.c = Some(value);
         self
     }
 
-    pub fn cn(&mut self, value: String) -> &mut Self {
+    pub fn cn(mut self, value: String) -> Self {
         self.cn = Some(value);
         self
     }
 
-    pub fn l(&mut self, value: String) -> &mut Self {
+    pub fn l(mut self, value: String) -> Self {
         self.l = Some(value);
         self
     }
 
-    pub fn o(&mut self, value: String) -> &mut Self {
+    pub fn o(mut self, value: String) -> Self {
         self.o = Some(value);
         self
     }
 
-    pub fn ou(&mut self, value: String) -> &mut Self {
+    pub fn ou(mut self, value: String) -> Self {
         self.ou = Some(value);
         self
     }
 
-    pub fn st(&mut self, value: String) -> &mut Self {
+    pub fn st(mut self, value: String) -> Self {
         self.st = Some(value);
         self
     }

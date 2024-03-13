@@ -2,130 +2,70 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum HourlyUsageAttributionUsageType {
-    #[serde(rename = "api_usage")]
     API_USAGE,
-    #[serde(rename = "apm_fargate_usage")]
     APM_FARGATE_USAGE,
-    #[serde(rename = "apm_host_usage")]
     APM_HOST_USAGE,
-    #[serde(rename = "apm_usm_usage")]
     APM_USM_USAGE,
-    #[serde(rename = "appsec_fargate_usage")]
     APPSEC_FARGATE_USAGE,
-    #[serde(rename = "appsec_usage")]
     APPSEC_USAGE,
-    #[serde(rename = "browser_usage")]
     BROWSER_USAGE,
-    #[serde(rename = "ci_pipeline_indexed_spans_usage")]
     CI_PIPELINE_INDEXED_SPANS_USAGE,
-    #[serde(rename = "ci_test_indexed_spans_usage")]
     CI_TEST_INDEXED_SPANS_USAGE,
-    #[serde(rename = "ci_visibility_itr_usage")]
     CI_VISIBILITY_ITR_USAGE,
-    #[serde(rename = "cloud_siem_usage")]
     CLOUD_SIEM_USAGE,
-    #[serde(rename = "container_excl_agent_usage")]
     CONTAINER_EXCL_AGENT_USAGE,
-    #[serde(rename = "container_usage")]
     CONTAINER_USAGE,
-    #[serde(rename = "cspm_containers_usage")]
     CSPM_CONTAINERS_USAGE,
-    #[serde(rename = "cspm_hosts_usage")]
     CSPM_HOSTS_USAGE,
-    #[serde(rename = "custom_event_usage")]
     CUSTOM_EVENT_USAGE,
-    #[serde(rename = "custom_ingested_timeseries_usage")]
     CUSTOM_INGESTED_TIMESERIES_USAGE,
-    #[serde(rename = "custom_timeseries_usage")]
     CUSTOM_TIMESERIES_USAGE,
-    #[serde(rename = "cws_containers_usage")]
     CWS_CONTAINERS_USAGE,
-    #[serde(rename = "cws_hosts_usage")]
     CWS_HOSTS_USAGE,
-    #[serde(rename = "dbm_hosts_usage")]
     DBM_HOSTS_USAGE,
-    #[serde(rename = "dbm_queries_usage")]
     DBM_QUERIES_USAGE,
-    #[serde(rename = "estimated_indexed_logs_usage")]
     ESTIMATED_INDEXED_LOGS_USAGE,
-    #[serde(rename = "estimated_indexed_spans_usage")]
     ESTIMATED_INDEXED_SPANS_USAGE,
-    #[serde(rename = "estimated_ingested_logs_usage")]
     ESTIMATED_INGESTED_LOGS_USAGE,
-    #[serde(rename = "estimated_ingested_spans_usage")]
     ESTIMATED_INGESTED_SPANS_USAGE,
-    #[serde(rename = "estimated_rum_sessions_usage")]
     ESTIMATED_RUM_SESSIONS_USAGE,
-    #[serde(rename = "fargate_usage")]
     FARGATE_USAGE,
-    #[serde(rename = "functions_usage")]
     FUNCTIONS_USAGE,
-    #[serde(rename = "indexed_spans_usage")]
     INDEXED_SPANS_USAGE,
-    #[serde(rename = "infra_host_usage")]
     INFRA_HOST_USAGE,
-    #[serde(rename = "ingested_logs_bytes_usage")]
     INGESTED_LOGS_BYTES_USAGE,
-    #[serde(rename = "ingested_spans_bytes_usage")]
     INGESTED_SPANS_BYTES_USAGE,
-    #[serde(rename = "invocations_usage")]
     INVOCATIONS_USAGE,
-    #[serde(rename = "lambda_traced_invocations_usage")]
     LAMBDA_TRACED_INVOCATIONS_USAGE,
-    #[serde(rename = "logs_indexed_15day_usage")]
     LOGS_INDEXED_15DAY_USAGE,
-    #[serde(rename = "logs_indexed_180day_usage")]
     LOGS_INDEXED_180DAY_USAGE,
-    #[serde(rename = "logs_indexed_30day_usage")]
     LOGS_INDEXED_30DAY_USAGE,
-    #[serde(rename = "logs_indexed_360day_usage")]
     LOGS_INDEXED_360DAY_USAGE,
-    #[serde(rename = "logs_indexed_3day_usage")]
     LOGS_INDEXED_3DAY_USAGE,
-    #[serde(rename = "logs_indexed_45day_usage")]
     LOGS_INDEXED_45DAY_USAGE,
-    #[serde(rename = "logs_indexed_60day_usage")]
     LOGS_INDEXED_60DAY_USAGE,
-    #[serde(rename = "logs_indexed_7day_usage")]
     LOGS_INDEXED_7DAY_USAGE,
-    #[serde(rename = "logs_indexed_90day_usage")]
     LOGS_INDEXED_90DAY_USAGE,
-    #[serde(rename = "logs_indexed_custom_retention_usage")]
     LOGS_INDEXED_CUSTOM_RETENTION_USAGE,
-    #[serde(rename = "mobile_app_testing_usage")]
     MOBILE_APP_TESTING_USAGE,
-    #[serde(rename = "ndm_netflow_usage")]
     NDM_NETFLOW_USAGE,
-    #[serde(rename = "npm_host_usage")]
     NPM_HOST_USAGE,
-    #[serde(rename = "obs_pipeline_bytes_usage")]
     OBS_PIPELINE_BYTES_USAGE,
-    #[serde(rename = "profiled_container_usage")]
     PROFILED_CONTAINER_USAGE,
-    #[serde(rename = "profiled_fargate_usage")]
     PROFILED_FARGATE_USAGE,
-    #[serde(rename = "profiled_host_usage")]
     PROFILED_HOST_USAGE,
-    #[serde(rename = "rum_browser_mobile_sessions_usage")]
     RUM_BROWSER_MOBILE_SESSIONS_USAGE,
-    #[serde(rename = "rum_replay_sessions_usage")]
     RUM_REPLAY_SESSIONS_USAGE,
-    #[serde(rename = "sds_scanned_bytes_usage")]
     SDS_SCANNED_BYTES_USAGE,
-    #[serde(rename = "serverless_apps_usage")]
     SERVERLESS_APPS_USAGE,
-    #[serde(rename = "siem_ingested_bytes_usage")]
     SIEM_INGESTED_BYTES_USAGE,
-    #[serde(rename = "snmp_usage")]
     SNMP_USAGE,
-    #[serde(rename = "universal_service_monitoring_usage")]
     UNIVERSAL_SERVICE_MONITORING_USAGE,
-    #[serde(rename = "vuln_management_hosts_usage")]
     VULN_MANAGEMENT_HOSTS_USAGE,
 }
 
@@ -205,5 +145,93 @@ impl ToString for HourlyUsageAttributionUsageType {
             }
             Self::VULN_MANAGEMENT_HOSTS_USAGE => String::from("vuln_management_hosts_usage"),
         }
+    }
+}
+
+impl Serialize for HourlyUsageAttributionUsageType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for HourlyUsageAttributionUsageType {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "api_usage" => Self::API_USAGE,
+            "apm_fargate_usage" => Self::APM_FARGATE_USAGE,
+            "apm_host_usage" => Self::APM_HOST_USAGE,
+            "apm_usm_usage" => Self::APM_USM_USAGE,
+            "appsec_fargate_usage" => Self::APPSEC_FARGATE_USAGE,
+            "appsec_usage" => Self::APPSEC_USAGE,
+            "browser_usage" => Self::BROWSER_USAGE,
+            "ci_pipeline_indexed_spans_usage" => Self::CI_PIPELINE_INDEXED_SPANS_USAGE,
+            "ci_test_indexed_spans_usage" => Self::CI_TEST_INDEXED_SPANS_USAGE,
+            "ci_visibility_itr_usage" => Self::CI_VISIBILITY_ITR_USAGE,
+            "cloud_siem_usage" => Self::CLOUD_SIEM_USAGE,
+            "container_excl_agent_usage" => Self::CONTAINER_EXCL_AGENT_USAGE,
+            "container_usage" => Self::CONTAINER_USAGE,
+            "cspm_containers_usage" => Self::CSPM_CONTAINERS_USAGE,
+            "cspm_hosts_usage" => Self::CSPM_HOSTS_USAGE,
+            "custom_event_usage" => Self::CUSTOM_EVENT_USAGE,
+            "custom_ingested_timeseries_usage" => Self::CUSTOM_INGESTED_TIMESERIES_USAGE,
+            "custom_timeseries_usage" => Self::CUSTOM_TIMESERIES_USAGE,
+            "cws_containers_usage" => Self::CWS_CONTAINERS_USAGE,
+            "cws_hosts_usage" => Self::CWS_HOSTS_USAGE,
+            "dbm_hosts_usage" => Self::DBM_HOSTS_USAGE,
+            "dbm_queries_usage" => Self::DBM_QUERIES_USAGE,
+            "estimated_indexed_logs_usage" => Self::ESTIMATED_INDEXED_LOGS_USAGE,
+            "estimated_indexed_spans_usage" => Self::ESTIMATED_INDEXED_SPANS_USAGE,
+            "estimated_ingested_logs_usage" => Self::ESTIMATED_INGESTED_LOGS_USAGE,
+            "estimated_ingested_spans_usage" => Self::ESTIMATED_INGESTED_SPANS_USAGE,
+            "estimated_rum_sessions_usage" => Self::ESTIMATED_RUM_SESSIONS_USAGE,
+            "fargate_usage" => Self::FARGATE_USAGE,
+            "functions_usage" => Self::FUNCTIONS_USAGE,
+            "indexed_spans_usage" => Self::INDEXED_SPANS_USAGE,
+            "infra_host_usage" => Self::INFRA_HOST_USAGE,
+            "ingested_logs_bytes_usage" => Self::INGESTED_LOGS_BYTES_USAGE,
+            "ingested_spans_bytes_usage" => Self::INGESTED_SPANS_BYTES_USAGE,
+            "invocations_usage" => Self::INVOCATIONS_USAGE,
+            "lambda_traced_invocations_usage" => Self::LAMBDA_TRACED_INVOCATIONS_USAGE,
+            "logs_indexed_15day_usage" => Self::LOGS_INDEXED_15DAY_USAGE,
+            "logs_indexed_180day_usage" => Self::LOGS_INDEXED_180DAY_USAGE,
+            "logs_indexed_30day_usage" => Self::LOGS_INDEXED_30DAY_USAGE,
+            "logs_indexed_360day_usage" => Self::LOGS_INDEXED_360DAY_USAGE,
+            "logs_indexed_3day_usage" => Self::LOGS_INDEXED_3DAY_USAGE,
+            "logs_indexed_45day_usage" => Self::LOGS_INDEXED_45DAY_USAGE,
+            "logs_indexed_60day_usage" => Self::LOGS_INDEXED_60DAY_USAGE,
+            "logs_indexed_7day_usage" => Self::LOGS_INDEXED_7DAY_USAGE,
+            "logs_indexed_90day_usage" => Self::LOGS_INDEXED_90DAY_USAGE,
+            "logs_indexed_custom_retention_usage" => Self::LOGS_INDEXED_CUSTOM_RETENTION_USAGE,
+            "mobile_app_testing_usage" => Self::MOBILE_APP_TESTING_USAGE,
+            "ndm_netflow_usage" => Self::NDM_NETFLOW_USAGE,
+            "npm_host_usage" => Self::NPM_HOST_USAGE,
+            "obs_pipeline_bytes_usage" => Self::OBS_PIPELINE_BYTES_USAGE,
+            "profiled_container_usage" => Self::PROFILED_CONTAINER_USAGE,
+            "profiled_fargate_usage" => Self::PROFILED_FARGATE_USAGE,
+            "profiled_host_usage" => Self::PROFILED_HOST_USAGE,
+            "rum_browser_mobile_sessions_usage" => Self::RUM_BROWSER_MOBILE_SESSIONS_USAGE,
+            "rum_replay_sessions_usage" => Self::RUM_REPLAY_SESSIONS_USAGE,
+            "sds_scanned_bytes_usage" => Self::SDS_SCANNED_BYTES_USAGE,
+            "serverless_apps_usage" => Self::SERVERLESS_APPS_USAGE,
+            "siem_ingested_bytes_usage" => Self::SIEM_INGESTED_BYTES_USAGE,
+            "snmp_usage" => Self::SNMP_USAGE,
+            "universal_service_monitoring_usage" => Self::UNIVERSAL_SERVICE_MONITORING_USAGE,
+            "vuln_management_hosts_usage" => Self::VULN_MANAGEMENT_HOSTS_USAGE,
+            _ => {
+                return Err(serde::de::Error::custom(format!(
+                    "Invalid value for SyntheticsDeviceID: {}",
+                    s
+                )))
+            }
+        })
     }
 }

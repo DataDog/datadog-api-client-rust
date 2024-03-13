@@ -25,12 +25,12 @@ impl OutcomesBatchResponseMeta {
         }
     }
 
-    pub fn total_received(&mut self, value: i64) -> &mut Self {
+    pub fn total_received(mut self, value: i64) -> Self {
         self.total_received = Some(value);
         self
     }
 
-    pub fn total_updated(&mut self, value: i64) -> &mut Self {
+    pub fn total_updated(mut self, value: i64) -> Self {
         self.total_updated = Some(value);
         self
     }

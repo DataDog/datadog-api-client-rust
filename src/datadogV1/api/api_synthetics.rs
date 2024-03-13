@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -19,17 +21,17 @@ pub struct GetAPITestLatestResultsOptionalParams {
 
 impl GetAPITestLatestResultsOptionalParams {
     /// Timestamp in milliseconds from which to start querying results.
-    pub fn from_ts(&mut self, value: i64) -> &mut Self {
+    pub fn from_ts(mut self, value: i64) -> Self {
         self.from_ts = Some(value);
         self
     }
     /// Timestamp in milliseconds up to which to query results.
-    pub fn to_ts(&mut self, value: i64) -> &mut Self {
+    pub fn to_ts(mut self, value: i64) -> Self {
         self.to_ts = Some(value);
         self
     }
     /// Locations for which to query results.
-    pub fn probe_dc(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn probe_dc(mut self, value: Vec<String>) -> Self {
         self.probe_dc = Some(value);
         self
     }
@@ -49,17 +51,17 @@ pub struct GetBrowserTestLatestResultsOptionalParams {
 
 impl GetBrowserTestLatestResultsOptionalParams {
     /// Timestamp in milliseconds from which to start querying results.
-    pub fn from_ts(&mut self, value: i64) -> &mut Self {
+    pub fn from_ts(mut self, value: i64) -> Self {
         self.from_ts = Some(value);
         self
     }
     /// Timestamp in milliseconds up to which to query results.
-    pub fn to_ts(&mut self, value: i64) -> &mut Self {
+    pub fn to_ts(mut self, value: i64) -> Self {
         self.to_ts = Some(value);
         self
     }
     /// Locations for which to query results.
-    pub fn probe_dc(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn probe_dc(mut self, value: Vec<String>) -> Self {
         self.probe_dc = Some(value);
         self
     }
@@ -77,12 +79,12 @@ pub struct ListTestsOptionalParams {
 
 impl ListTestsOptionalParams {
     /// Used for pagination. The number of tests returned in the page.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Used for pagination. Which page you want to retrieve. Starts at zero.
-    pub fn page_number(&mut self, value: i64) -> &mut Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
@@ -2297,6 +2299,40 @@ impl SyntheticsAPI {
                 }
             }
             Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_tests_with_pagination(
+        &self,
+        mut params: ListTestsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<crate::datadogV1::model::SyntheticsTestDetails, Error<ListTestsError>>,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 100;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            if params.page_number.is_none() {
+                params.page_number = Some(0);
+            }
+            loop {
+                let resp = self.list_tests(params.clone()).await?;
+                let Some(tests) = resp.tests else { break };
+
+                let r = tests;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                params.page_number = Some(params.page_number.unwrap() + 1);
+            }
         }
     }
 

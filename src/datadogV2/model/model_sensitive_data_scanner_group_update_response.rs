@@ -20,9 +20,9 @@ impl SensitiveDataScannerGroupUpdateResponse {
     }
 
     pub fn meta(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly,
-    ) -> &mut Self {
+    ) -> Self {
         self.meta = Some(value);
         self
     }

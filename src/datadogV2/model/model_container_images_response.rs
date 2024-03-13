@@ -29,20 +29,17 @@ impl ContainerImagesResponse {
         }
     }
 
-    pub fn data(&mut self, value: Vec<crate::datadogV2::model::ContainerImageItem>) -> &mut Self {
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::ContainerImageItem>) -> Self {
         self.data = Some(value);
         self
     }
 
-    pub fn links(
-        &mut self,
-        value: crate::datadogV2::model::ContainerImagesResponseLinks,
-    ) -> &mut Self {
+    pub fn links(mut self, value: crate::datadogV2::model::ContainerImagesResponseLinks) -> Self {
         self.links = Some(value);
         self
     }
 
-    pub fn meta(&mut self, value: crate::datadogV2::model::ContainerImageMeta) -> &mut Self {
+    pub fn meta(mut self, value: crate::datadogV2::model::ContainerImageMeta) -> Self {
         self.meta = Some(value);
         self
     }

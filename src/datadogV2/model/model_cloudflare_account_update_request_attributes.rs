@@ -25,7 +25,7 @@ impl CloudflareAccountUpdateRequestAttributes {
         }
     }
 
-    pub fn email(&mut self, value: String) -> &mut Self {
+    pub fn email(mut self, value: String) -> Self {
         self.email = Some(value);
         self
     }

@@ -63,27 +63,27 @@ impl FormulaAndFunctionApmResourceStatsQueryDefinition {
         }
     }
 
-    pub fn group_by(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn group_by(mut self, value: Vec<String>) -> Self {
         self.group_by = Some(value);
         self
     }
 
-    pub fn operation_name(&mut self, value: String) -> &mut Self {
+    pub fn operation_name(mut self, value: String) -> Self {
         self.operation_name = Some(value);
         self
     }
 
-    pub fn primary_tag_name(&mut self, value: String) -> &mut Self {
+    pub fn primary_tag_name(mut self, value: String) -> Self {
         self.primary_tag_name = Some(value);
         self
     }
 
-    pub fn primary_tag_value(&mut self, value: String) -> &mut Self {
+    pub fn primary_tag_value(mut self, value: String) -> Self {
         self.primary_tag_value = Some(value);
         self
     }
 
-    pub fn resource_name(&mut self, value: String) -> &mut Self {
+    pub fn resource_name(mut self, value: String) -> Self {
         self.resource_name = Some(value);
         self
     }

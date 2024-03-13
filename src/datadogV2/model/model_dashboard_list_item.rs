@@ -77,62 +77,62 @@ impl DashboardListItem {
         }
     }
 
-    pub fn author(&mut self, value: crate::datadogV2::model::Creator) -> &mut Self {
+    pub fn author(mut self, value: crate::datadogV2::model::Creator) -> Self {
         self.author = Some(value);
         self
     }
 
-    pub fn created(&mut self, value: String) -> &mut Self {
+    pub fn created(mut self, value: String) -> Self {
         self.created = Some(value);
         self
     }
 
-    pub fn icon(&mut self, value: Option<String>) -> &mut Self {
+    pub fn icon(mut self, value: Option<String>) -> Self {
         self.icon = Some(value);
         self
     }
 
-    pub fn integration_id(&mut self, value: Option<String>) -> &mut Self {
+    pub fn integration_id(mut self, value: Option<String>) -> Self {
         self.integration_id = Some(value);
         self
     }
 
-    pub fn is_favorite(&mut self, value: bool) -> &mut Self {
+    pub fn is_favorite(mut self, value: bool) -> Self {
         self.is_favorite = Some(value);
         self
     }
 
-    pub fn is_read_only(&mut self, value: bool) -> &mut Self {
+    pub fn is_read_only(mut self, value: bool) -> Self {
         self.is_read_only = Some(value);
         self
     }
 
-    pub fn is_shared(&mut self, value: bool) -> &mut Self {
+    pub fn is_shared(mut self, value: bool) -> Self {
         self.is_shared = Some(value);
         self
     }
 
-    pub fn modified(&mut self, value: String) -> &mut Self {
+    pub fn modified(mut self, value: String) -> Self {
         self.modified = Some(value);
         self
     }
 
-    pub fn popularity(&mut self, value: i32) -> &mut Self {
+    pub fn popularity(mut self, value: i32) -> Self {
         self.popularity = Some(value);
         self
     }
 
-    pub fn tags(&mut self, value: Option<Vec<String>>) -> &mut Self {
+    pub fn tags(mut self, value: Option<Vec<String>>) -> Self {
         self.tags = Some(value);
         self
     }
 
-    pub fn title(&mut self, value: String) -> &mut Self {
+    pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
 
-    pub fn url(&mut self, value: String) -> &mut Self {
+    pub fn url(mut self, value: String) -> Self {
         self.url = Some(value);
         self
     }

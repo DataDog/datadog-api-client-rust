@@ -19,7 +19,7 @@ impl AuthNMappingUpdateRelationships {
         AuthNMappingUpdateRelationships { role: None }
     }
 
-    pub fn role(&mut self, value: crate::datadogV2::model::RelationshipToRole) -> &mut Self {
+    pub fn role(mut self, value: crate::datadogV2::model::RelationshipToRole) -> Self {
         self.role = Some(value);
         self
     }

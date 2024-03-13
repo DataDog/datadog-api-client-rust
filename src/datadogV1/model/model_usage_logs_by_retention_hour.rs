@@ -57,32 +57,32 @@ impl UsageLogsByRetentionHour {
         }
     }
 
-    pub fn indexed_events_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn indexed_events_count(mut self, value: Option<i64>) -> Self {
         self.indexed_events_count = Some(value);
         self
     }
 
-    pub fn live_indexed_events_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn live_indexed_events_count(mut self, value: Option<i64>) -> Self {
         self.live_indexed_events_count = Some(value);
         self
     }
 
-    pub fn org_name(&mut self, value: String) -> &mut Self {
+    pub fn org_name(mut self, value: String) -> Self {
         self.org_name = Some(value);
         self
     }
 
-    pub fn public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }
 
-    pub fn rehydrated_indexed_events_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn rehydrated_indexed_events_count(mut self, value: Option<i64>) -> Self {
         self.rehydrated_indexed_events_count = Some(value);
         self
     }
 
-    pub fn retention(&mut self, value: Option<String>) -> &mut Self {
+    pub fn retention(mut self, value: Option<String>) -> Self {
         self.retention = Some(value);
         self
     }

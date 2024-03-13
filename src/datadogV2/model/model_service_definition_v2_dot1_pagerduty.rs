@@ -19,7 +19,7 @@ impl ServiceDefinitionV2Dot1Pagerduty {
         ServiceDefinitionV2Dot1Pagerduty { service_url: None }
     }
 
-    pub fn service_url(&mut self, value: String) -> &mut Self {
+    pub fn service_url(mut self, value: String) -> Self {
         self.service_url = Some(value);
         self
     }

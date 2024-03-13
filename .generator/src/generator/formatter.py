@@ -1,5 +1,6 @@
 """Data formatter."""
 from functools import singledispatch
+import json
 import re
 
 import dateutil.parser
@@ -91,14 +92,14 @@ def escape_reserved_keyword(word):
 
 
 def attribute_name(attribute):
-    return escape_reserved_keyword(camel_case(attribute))
+    return escape_reserved_keyword(snake_case(attribute))
 
 
 def variable_name(attribute):
     return escape_reserved_keyword(snake_case(attribute))
 
 
-def format_value(value, quotes='"', schema=None, version=None):
+def format_value(value, quotes='"', schema=None, version=None, required=None):
     if schema and "enum" in schema:
         index = schema["enum"].index(value)
         enum_varnames = schema["x-enum-varnames"][index]
@@ -106,11 +107,15 @@ def format_value(value, quotes='"', schema=None, version=None):
         return f"crate::datadog{version.upper()}::model::{name}::{enum_varnames}"
 
     if isinstance(value, str):
-        return f"{quotes}{value}{quotes}"
+        value = f"{quotes}{value}{quotes}"
     elif isinstance(value, bool):
-        return "true" if value else "false"
+        value = "true" if value else "false"
     elif value is None:
-        return "nil"
+        value = "nil"
+
+    if required is False:
+        value = f"Some({value})"
+
     return value
 
 
@@ -192,17 +197,15 @@ def attribute_path(attribute):
     return ".".join(attribute_name(a) for a in attribute.split("."))
 
 
-def go_name(name):
+def rust_name(name):
     """Convert key to Rust name.
 
     Example:
 
-    >>> go_name("DASHBOARD_ID")
-    DashboardID
+    >>> rust_name("DASHBOARD_ID")
+    dashboard_id
     """
-    return "".join(
-        part.capitalize() if part not in {"API", "ID", "HTTP", "URL", "DNS"} else part for part in name.split("_")
-    )
+    return name.lower()
 
 
 def reference_to_value(schema, value, print_nullable=True, **kwargs):
@@ -218,34 +221,34 @@ def reference_to_value(schema, value, print_nullable=True, **kwargs):
 
     prefix = ""
     if type_name in PRIMITIVE_TYPES:
-        prefix = "datadog."
+        prefix = ""
     else:
-        prefix = f"datadog{kwargs.get('version', '')}."
+        prefix = f"datadog{kwargs.get('version', '')}::"
 
     if nullable and print_nullable:
-        if value == "nil":
-            formatter = "*{prefix}NewNullable{function_name}({value})"
+        if value == "None":
+            return "None"
         else:
-            formatter = "*{prefix}NewNullable{function_name}({prefix}Ptr{function_name}({value}))"
+            formatter = "Some({value})"
     else:
-        formatter = "datadog.Ptr{function_name}({value})"
+        formatter = "{value}"
 
     if type_name == "integer":
         function_name = {
-            "int": "Int",
-            "int32": "Int32",
-            "int64": "Int64",
-            None: "Int",
+            "int": "i32",
+            "int32": "i32",
+            "int64": "i64",
+            None: "i64",
         }[type_format]
         return formatter.format(prefix=prefix, function_name=function_name, value=value)
 
     if type_name == "number":
         function_name = {
-            "float": "Float32",
-            "double": "Float64",
-            None: "Float32",
+            "float": "f32",
+            "double": "f64",
+            None: "f32",
         }[type_format]
-        return formatter.format(prefix=prefix, function_name=function_name, value=value)
+        return formatter.format(prefix=prefix, function_name=function_name, value=f"{value} as {function_name}")
 
     if type_name == "string":
         function_name = {
@@ -254,17 +257,14 @@ def reference_to_value(schema, value, print_nullable=True, **kwargs):
             "email": "String",
             None: "String",
         }[type_format]
+        if function_name == "Time":
+            return formatter.format(prefix=prefix, function_name=function_name, value=f"{value}")
         return formatter.format(prefix=prefix, function_name=function_name, value=value)
 
     if type_name == "boolean":
-        return formatter.format(prefix=prefix, function_name="Bool", value=value)
+        return formatter.format(prefix=prefix, function_name="bool", value=value)
 
-    if nullable:
-        function_name = schema_name(schema)
-        if function_name is None:
-            raise NotImplementedError(f"nullable {schema} is not supported")
-        return formatter.format(prefix=prefix, function_name=function_name, value=value)
-    return f"&{value}"
+    return f"{value}"
 
 
 def format_parameters(data, spec, replace_values=None, has_body=False, **kwargs):
@@ -290,7 +290,6 @@ def format_parameters(data, spec, replace_values=None, has_body=False, **kwargs)
             value = format_data_with_schema(
                 v["value"],
                 p["schema"],
-                name_prefix=f"datadog{kwargs.get('version', '')}.",
                 replace_values=replace_values,
                 required=True,
                 **kwargs,
@@ -304,27 +303,26 @@ def format_parameters(data, spec, replace_values=None, has_body=False, **kwargs)
     if has_body and body_is_required:
         parameters += "body, "
     if has_optional or body_is_required is False:
-        parameters += f"*datadog{kwargs.get('version', '')}.New{spec['operationId'][0].upper()}{spec['operationId'][1:]}OptionalParameters()"
+        parameters += f"{spec['operationId']}OptionalParams::default()"
         if has_body and not body_is_required:
-            parameters += ".WithBody(body)"
+            parameters += ".body(body)"
 
         for k, v in data.items():
             value = format_data_with_schema(
                 v["value"],
                 parameters_spec[k]["schema"],
-                name_prefix=f"datadog{kwargs.get('version', '')}.",
                 replace_values=replace_values,
                 required=True,
                 **kwargs,
             )
-            parameters += f".With{camel_case(k)}({value})"
+            parameters += f".{variable_name(k)}({value})"
 
         parameters += ", "
 
     return parameters
 
 
-def _format_oneof(schema, data, name, name_prefix, replace_values, required, nullable, **kwargs):
+def _format_oneof(schema, data, name, replace_values, required, nullable, **kwargs):
     matched = 0
     one_of_schema = None
     for sub_schema in schema["oneOf"]:
@@ -333,13 +331,12 @@ def _format_oneof(schema, data, name, name_prefix, replace_values, required, nul
                 continue
             if sub_schema.get("nullable") and data is None:
                 # only one schema can be nullable
-                formatted = "nil"
+                formatted = "None"
             else:
                 sub_schema["nullable"] = False
                 formatted = format_data_with_schema(
                     data,
                     sub_schema,
-                    name_prefix=name_prefix,
                     replace_values=replace_values,
                     **kwargs,
                 )
@@ -358,21 +355,19 @@ def _format_oneof(schema, data, name, name_prefix, replace_values, required, nul
     one_of_schema_name = schema_name(one_of_schema)
     if not one_of_schema_name:
         one_of_schema_name = simple_type(one_of_schema).title()
-    reference = "" if required or nullable else "&"
+
+    if not is_primitive(one_of_schema) and one_of_schema.get("type") != "array":
+        # TODO: revisit possibility of removing all boxes
+        parameters = f"Box::new({parameters})"
     if name:
-        if one_of_schema.get("type") == "array":
-            parameters = f"&{parameters}"
-        return f"{reference}{name_prefix}{name}{{\n{one_of_schema_name}: {parameters}}}"
-    if one_of_schema.get("type") == "array":
-        reference = "&"
-    return f"{{{one_of_schema_name}: {reference}{parameters}}}"
+        return f"{name}::{one_of_schema_name}({parameters})"
+    return f"{parameters}"
 
 
 @singledispatch
 def format_data_with_schema(
     data,
     schema,
-    name_prefix="",
     replace_values=None,
     default_name=None,
     required=False,
@@ -396,34 +391,28 @@ def format_data_with_schema(
     if replace_values and data in replace_values:
         parameters = replace_values[data]
 
-        # Make sure that variables used in given statements are camelCase for Rust linter
+        # Make sure that variables used in given statements are lowercase snake_case for Rust linter
         if parameters in variables:
-            parameters = go_name(parameters)
-
-        simple_type_value = simple_type(schema)
-        if isinstance(data, int) and simple_type_value in {
-            "float",
-            "float32",
-            "float64",
-        }:
-            parameters = f"{simple_type_value}({parameters})"
+            parameters = rust_name(parameters) + ".clone()"
     else:
         if nullable and data is None:
-            parameters = "nil"
+            parameters = "None"
         else:
-
             def format_string(x):
-                if "`" in x:
-                    x = re.sub(r"(`+)", r'` + "\1" + `', x)
-                if x and ('"' in x or "\n" in x):
-                    x = f"`{x}`"
-                    x = re.sub(r" \+ ``$", "", x)
+                if isinstance(x, bool):
+                    raise TypeError(f"{x} is not supported type {schema}")
+                if x and ("`" in x or '"' in x or "\n" in x):
+                    x = f"r#\"{x}\"#.to_string()"
                     return x
-                return f'"{x}"' if x else '""'
+                return f'"{x}".to_string()' if x else '"".to_string()'
 
             def format_datetime(x):
+                # TODO: format date and datetime
                 d = dateutil.parser.isoparse(x)
-                return f"time.Date({d.year}, {d.month}, {d.day}, {d.hour}, {d.minute}, {d.second}, {d.microsecond}, time.UTC)"
+                return f'"{d.isoformat()}".to_string()'
+                # if d.microsecond != 0:
+                #     return f"(Utc.with_ymd_and_hms({d.year}, {d.month}, {d.day}, {d.hour}, {d.minute}, {d.second}).unwrap() + chrono::Duration::microseconds({d.microsecond})).to_string()"
+                # return f"Utc.with_ymd_and_hms({d.year}, {d.month}, {d.day}, {d.hour}, {d.minute}, {d.second}).unwrap().to_string()"
 
             def format_double(x):
                 if isinstance(x, (bool, str)):
@@ -435,11 +424,11 @@ def format_data_with_schema(
                     raise TypeError(f"{x} is not supported type {schema}")
                 return str(x)
 
-            def format_interface(x):
+            def format_value(x):
                 if isinstance(x, (int, float)):
-                    return str(x)
+                    return f"serde_json::Value::from({x})"
                 if isinstance(x, str):
-                    return format_string(x)
+                    return f"serde_json::Value::from(\"{x}\")"
                 raise TypeError(f"{x} is not supported type {schema}")
 
             def format_bool(x):
@@ -448,7 +437,7 @@ def format_data_with_schema(
                 return "true" if x else "false"
 
             def open_file(x):
-                return f"func() *os.File {{ fp, _ := os.Open({format_string(x)}); return fp }}()"
+                return f"std::fs::read(\"{x}\").unwrap()"
 
             formatter = {
                 "int32": str,
@@ -461,7 +450,7 @@ def format_data_with_schema(
                 "string": format_string,
                 "email": format_string,
                 "binary": open_file,
-                None: format_interface,
+                None: format_value,
             }[schema.get("format", schema.get("type"))]
 
             # TODO format date and datetime
@@ -469,30 +458,28 @@ def format_data_with_schema(
 
     if "enum" in schema and name:
         if data is None and nullable:
-            parameters = "nil"
+            parameters = "None"
         else:
             # find schema index and get name from x-enum-varnames
             index = schema["enum"].index(data)
             enum_varnames = schema["x-enum-varnames"][index]
-            parameters = f"{name_prefix}{name.upper()}_{enum_varnames}"
+            parameters = f"{name}::{enum_varnames}"
 
         if not required:
             if nullable:
                 if data is None:
-                    return f"*{name_prefix}NewNullable{name}({parameters})"
-                return f"*{name_prefix}NewNullable{name}({parameters}.Ptr())"
-            parameters = f"{parameters}.Ptr()"
+                    return "None"
+                return f"Some({parameters})"
+            parameters = f"{parameters}"
         return parameters
 
-    if in_list and nullable:
-        schema = schema.copy()
-        schema["nullable"] = False
-
     if (not required or schema.get("nullable")) and schema.get("type") is not None:
-        return reference_to_value(schema, parameters, print_nullable=not in_list, **kwargs)
+        return reference_to_value(schema, parameters, print_nullable=True, **kwargs)
 
     if "oneOf" in schema:
-        return _format_oneof(schema, data, name, name_prefix, replace_values, required, nullable, **kwargs)
+        if default_name and schema_name(schema) is None:
+            return _format_oneof(schema, data, default_name+"Item", replace_values, required, nullable, **kwargs)
+        return _format_oneof(schema, data, schema_name(schema), replace_values, required, nullable, **kwargs)
 
     return parameters
 
@@ -501,7 +488,6 @@ def format_data_with_schema(
 def format_data_with_schema_list(
     data,
     schema,
-    name_prefix="",
     replace_values=None,
     default_name=None,
     required=False,
@@ -514,69 +500,39 @@ def format_data_with_schema_list(
     nullable = schema.get("nullable")
 
     if "oneOf" in schema:
-        return _format_oneof(schema, data, schema_name(schema), name_prefix, replace_values, required, nullable, **kwargs)
+        if default_name and schema_name(schema) is None:
+            return _format_oneof(schema, data, default_name+"Item", replace_values, required, nullable, **kwargs)
+        return _format_oneof(schema, data, schema_name(schema), replace_values, required, nullable, **kwargs)
 
     parameters = ""
-    # collect nested array types until you find a non-array type
-    schema_parts = [(required, "[]")]
     list_schema = schema["items"]
     depth = 1
     while list_schema.get("type") == "array":
-        schema_parts.append((not list_schema.get("nullable", False), "[]"))
         list_schema = list_schema["items"]
         depth += 1
-
-    nested_prefix = list_schema.get("nullable", False) and "*" or ""
-    nested_schema_name = schema_name(list_schema)
-    if "oneOf" in list_schema:
-        if nested_schema_name:
-            nested_schema_name = f"{name_prefix}{nested_schema_name}"
-        elif schema_name(schema['items']):
-            nested_schema_name = f"{name_prefix}{schema_name(schema['items'])}Item"
-        else:
-            nested_schema_name = "interface{}"
-    else:
-        nested_schema_name = f"{name_prefix}{nested_schema_name}" if nested_schema_name else "interface{}"
-
-    nested_type = simple_type(list_schema)
-    schema_parts.append(
-        (
-            not list_schema.get("nullable", False),
-            nested_prefix + (nested_type if nested_type and not list_schema.get("enum") else nested_schema_name),
-        )
-    )
-    nested_simple_type_name = "".join(p[1] for p in schema_parts)
 
     parameters = ""
     for d in data:
         value = format_data_with_schema(
             d,
             schema["items"],
-            name_prefix=name_prefix,
             replace_values=replace_values,
+            default_name=schema_name(schema),
             required=not schema["items"].get("nullable", False),
             in_list=True,
             **kwargs,
         )
-        parameters += f"{value},\n"
+        parameters += f"{value},"
 
-    if in_list:
-        for _ in range(depth):
-            parameters = f"{{\n{parameters}}}"
-        return parameters
-
-    if nullable and is_primitive(list_schema):
-        name_prefix = "datadog.NewNullableList"
-        return f"*{name_prefix}(&{nested_simple_type_name}{{\n{parameters}}})"
-
-    return f"{nested_simple_type_name}{{\n{parameters}}}"
+    if nullable:
+        return f"Some(vec![{parameters}])"
+    return f"vec![{parameters}]"
 
 
 @format_data_with_schema.register(dict)
 def format_data_with_schema_dict(
     data,
     schema,
-    name_prefix="",
     replace_values=None,
     default_name=None,
     required=False,
@@ -586,83 +542,65 @@ def format_data_with_schema_dict(
     if not schema:
         return ""
 
-    reference = "" if required else "&"
     nullable = schema.get("nullable", False)
 
     name = schema_name(schema) or default_name
-
+    required = ""
     parameters = ""
     if "properties" in schema:
         required_properties = set(schema.get("required", []))
         missing = required_properties - set(data.keys())
         if missing:
             raise ValueError(f"missing required properties: {missing}")
-
-        for k, v in data.items():
-            if k not in schema["properties"]:
+        for k, v in schema["properties"].items():
+            if k not in data:
                 continue
             value = format_data_with_schema(
+                data[k],
                 v,
-                schema["properties"][k],
-                name_prefix=name_prefix,
                 replace_values=replace_values,
-                default_name=name + camel_case(k) if name else None,
+                default_name=name if name else None,
                 required=k in required_properties,
                 **kwargs,
             )
-            parameters += f"{camel_case(k)}: {value},\n"
+            if k in required_properties:
+                required += f"{value}, "
+            else:
+                parameters += f".{variable_name(k)}({value})"
 
     if schema.get("additionalProperties"):
-        saved_parameters = ""
-        if schema.get("properties"):
-            saved_parameters = parameters
-            parameters = ""
-        nested_schema = schema["additionalProperties"]
-        nested_schema_name = simple_type(nested_schema)
-        if not nested_schema_name:
-            nested_schema_name = schema_name(nested_schema)
-            if nested_schema_name:
-                nested_schema_name = name_prefix + nested_schema_name
-
         has_properties = schema.get("properties")
-
+        add_parameters = ""
         for k, v in data.items():
             if has_properties and k in schema["properties"]:
                 continue
             value = format_data_with_schema(
                 v,
                 schema["additionalProperties"],
-                name_prefix=name_prefix,
                 replace_values=replace_values,
                 required=True,
                 **kwargs,
             )
-            parameters += f'"{k}": {value},\n'
-
-            # IMPROVE: find a better way to get nested schema name
-            if not nested_schema_name:
-                nested_schema_name = value.split("{")[0]
+            add_parameters += f'("{k}".to_string(), {value}),'
 
         if has_properties:
-            if parameters:
-                parameters = f"{saved_parameters}AdditionalProperties: map[string]{nested_schema_name}{{\n{parameters}}},\n"
-            else:
-                parameters = saved_parameters
+            parameters += f".additional_properties(BTreeMap::from([{add_parameters}]))"
         else:
-            return f"None"#f"map[string]{nested_schema_name}{{\n{parameters}}}"
+            return f"BTreeMap::from([{add_parameters}])"
 
     if "oneOf" in schema:
-        return _format_oneof(schema, data, name, name_prefix, replace_values, required, nullable, **kwargs)
+        return _format_oneof(schema, data, name, replace_values, required, nullable, **kwargs)
 
     if schema.get("type") == "object" and "properties" not in schema:
         if schema.get("additionalProperties") == {}:
-            name_prefix = ""
-            name = "map[string]interface{}"
-            reference = ""
             for k, v in data.items():
-                parameters += f'"{k}": "{v}",\n'
+                if isinstance(v, (int, float)):
+                    parameters += f'("{k}".to_string(), serde_json::Value::from({v})),'
+                if isinstance(v, str):
+                    parameters += f'("{k}".to_string(), serde_json::Value::from(\"{v}\")),'
+            return f"BTreeMap::from([{parameters}])"
         else:
-            return "new(interface{})"
+            return "BTreeMap::new()"
 
     if not name:
         raise ValueError(f"Unnamed schema {schema} for {data}")
@@ -671,8 +609,5 @@ def format_data_with_schema_dict(
         raise ValueError(f"No schema matched for {data}")
 
     if nullable:
-        return f"*{name_prefix}NewNullable{name}(&{name_prefix}{name}{{\n{parameters}}})"
-
-    if in_list:
-        return f"{{\n{parameters}}}"
-    return f"{reference}{name_prefix}{name}{{\n{parameters}}}"
+        return f"Some({name}::new({required}){parameters})"
+    return f"{name}::new({required}){parameters}"

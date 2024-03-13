@@ -19,10 +19,7 @@ impl SLOListResponseMetadata {
         SLOListResponseMetadata { page: None }
     }
 
-    pub fn page(
-        &mut self,
-        value: crate::datadogV1::model::SLOListResponseMetadataPage,
-    ) -> &mut Self {
+    pub fn page(mut self, value: crate::datadogV1::model::SLOListResponseMetadataPage) -> Self {
         self.page = Some(value);
         self
     }

@@ -70,60 +70,60 @@ impl AWSAccount {
         }
     }
 
-    pub fn access_key_id(&mut self, value: String) -> &mut Self {
+    pub fn access_key_id(mut self, value: String) -> Self {
         self.access_key_id = Some(value);
         self
     }
 
-    pub fn account_id(&mut self, value: String) -> &mut Self {
+    pub fn account_id(mut self, value: String) -> Self {
         self.account_id = Some(value);
         self
     }
 
     pub fn account_specific_namespace_rules(
-        &mut self,
+        mut self,
         value: std::collections::BTreeMap<String, bool>,
-    ) -> &mut Self {
+    ) -> Self {
         self.account_specific_namespace_rules = Some(value);
         self
     }
 
-    pub fn cspm_resource_collection_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn cspm_resource_collection_enabled(mut self, value: bool) -> Self {
         self.cspm_resource_collection_enabled = Some(value);
         self
     }
 
-    pub fn excluded_regions(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn excluded_regions(mut self, value: Vec<String>) -> Self {
         self.excluded_regions = Some(value);
         self
     }
 
-    pub fn filter_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn filter_tags(mut self, value: Vec<String>) -> Self {
         self.filter_tags = Some(value);
         self
     }
 
-    pub fn host_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn host_tags(mut self, value: Vec<String>) -> Self {
         self.host_tags = Some(value);
         self
     }
 
-    pub fn metrics_collection_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn metrics_collection_enabled(mut self, value: bool) -> Self {
         self.metrics_collection_enabled = Some(value);
         self
     }
 
-    pub fn resource_collection_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn resource_collection_enabled(mut self, value: bool) -> Self {
         self.resource_collection_enabled = Some(value);
         self
     }
 
-    pub fn role_name(&mut self, value: String) -> &mut Self {
+    pub fn role_name(mut self, value: String) -> Self {
         self.role_name = Some(value);
         self
     }
 
-    pub fn secret_access_key(&mut self, value: String) -> &mut Self {
+    pub fn secret_access_key(mut self, value: String) -> Self {
         self.secret_access_key = Some(value);
         self
     }
