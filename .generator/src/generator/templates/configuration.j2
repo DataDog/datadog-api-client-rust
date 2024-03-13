@@ -110,6 +110,10 @@ impl Configuration {
     pub fn set_auth_key(&mut self, operation_str: &str, api_key: APIKey) {
         self.auth_keys.insert(operation_str.to_string(), api_key);
     }
+
+    pub fn set_proxy_url(&mut self, proxy_url: Option<String>) {
+        self.proxy_url = proxy_url;
+    }
 }
 
 impl Default for Configuration {
