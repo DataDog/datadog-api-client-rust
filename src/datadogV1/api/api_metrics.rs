@@ -148,12 +148,14 @@ pub enum UpdateMetricMetadataError {
 #[derive(Debug, Clone)]
 pub struct MetricsAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for MetricsAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -163,7 +165,24 @@ impl MetricsAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let mut middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Get metadata about a specific metric.
@@ -196,7 +215,7 @@ impl MetricsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.get_metric_metadata";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/metrics/{metric_name}",
@@ -285,7 +304,7 @@ impl MetricsAPI {
         let host = params.host;
         let tag_filter = params.tag_filter;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/metrics",
@@ -379,7 +398,7 @@ impl MetricsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.list_metrics";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/search",
@@ -468,7 +487,7 @@ impl MetricsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.query_metrics";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/query",
@@ -564,7 +583,7 @@ impl MetricsAPI {
         // unbox and build optional parameters
         let content_encoding = params.content_encoding;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/distribution_points",
@@ -681,7 +700,7 @@ impl MetricsAPI {
         // unbox and build optional parameters
         let content_encoding = params.content_encoding;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/series",
@@ -778,7 +797,7 @@ impl MetricsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.update_metric_metadata";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/metrics/{metric_name}",

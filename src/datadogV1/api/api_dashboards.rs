@@ -219,12 +219,14 @@ pub enum UpdatePublicDashboardError {
 #[derive(Debug, Clone)]
 pub struct DashboardsAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for DashboardsAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -234,7 +236,24 @@ impl DashboardsAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let mut middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Create a dashboard using the specified options. When defining queries in your widgets, take note of which queries should have the `as_count()` or `as_rate()` modifiers appended.
@@ -267,7 +286,7 @@ impl DashboardsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.create_dashboard";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard",
@@ -356,7 +375,7 @@ impl DashboardsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.create_public_dashboard";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/public",
@@ -445,7 +464,7 @@ impl DashboardsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.delete_dashboard";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/{dashboard_id}",
@@ -519,7 +538,7 @@ impl DashboardsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.delete_dashboards";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard",
@@ -606,7 +625,7 @@ impl DashboardsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.delete_public_dashboard";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/public/{token}",
@@ -685,7 +704,7 @@ impl DashboardsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.delete_public_dashboard_invitation";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/public/{token}/invitation",
@@ -767,7 +786,7 @@ impl DashboardsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.get_dashboard";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/{dashboard_id}",
@@ -849,7 +868,7 @@ impl DashboardsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.get_public_dashboard";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/public/{token}",
@@ -944,7 +963,7 @@ impl DashboardsAPI {
         let page_size = params.page_size;
         let page_number = params.page_number;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/public/{token}/invitation",
@@ -1088,7 +1107,7 @@ impl DashboardsAPI {
         let count = params.count;
         let start = params.start;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard",
@@ -1177,7 +1196,7 @@ impl DashboardsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.restore_dashboards";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard",
@@ -1269,7 +1288,7 @@ impl DashboardsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.send_public_dashboard_invitation";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/public/{token}/invitation",
@@ -1364,7 +1383,7 @@ impl DashboardsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.update_dashboard";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/{dashboard_id}",
@@ -1459,7 +1478,7 @@ impl DashboardsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.update_public_dashboard";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/public/{token}",

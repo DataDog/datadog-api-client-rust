@@ -363,12 +363,14 @@ pub enum GetUsageObservabilityPipelinesError {
 #[derive(Debug, Clone)]
 pub struct UsageMeteringAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for UsageMeteringAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -378,7 +380,24 @@ impl UsageMeteringAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let mut middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Get active billing dimensions for cost attribution. Cost data for a given month becomes available no later than the 17th of the following month.
@@ -420,7 +439,7 @@ impl UsageMeteringAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost_by_tag/active_billing_dimensions",
@@ -518,7 +537,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_month = params.end_month;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/usage/cost_by_org",
@@ -619,7 +638,7 @@ impl UsageMeteringAPI {
         let start_date = params.start_date;
         let end_date = params.end_date;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/usage/estimated_cost",
@@ -735,7 +754,7 @@ impl UsageMeteringAPI {
         let view = params.view;
         let end_month = params.end_month;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/usage/historical_cost",
@@ -847,7 +866,7 @@ impl UsageMeteringAPI {
         let page_limit = params.page_limit;
         let page_next_record_id = params.page_next_record_id;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/usage/hourly_usage",
@@ -1019,7 +1038,7 @@ impl UsageMeteringAPI {
         let next_record_id = params.next_record_id;
         let include_descendants = params.include_descendants;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost_by_tag/monthly_cost_attribution",
@@ -1134,7 +1153,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let view = params.view;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/usage/projected_cost",
@@ -1236,7 +1255,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/usage/application_security",
@@ -1340,7 +1359,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/usage/lambda_traced_invocations",
@@ -1444,7 +1463,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/usage/observability_pipelines",

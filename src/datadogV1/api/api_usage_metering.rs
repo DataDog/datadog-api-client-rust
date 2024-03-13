@@ -1185,12 +1185,14 @@ pub enum GetUsageTopAvgMetricsError {
 #[derive(Debug, Clone)]
 pub struct UsageMeteringAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for UsageMeteringAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -1200,7 +1202,24 @@ impl UsageMeteringAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let mut middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Get daily custom reports.
@@ -1246,7 +1265,7 @@ impl UsageMeteringAPI {
         let sort_dir = params.sort_dir;
         let sort = params.sort;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/daily_custom_reports",
@@ -1391,7 +1410,7 @@ impl UsageMeteringAPI {
         let tag_breakdown_keys = params.tag_breakdown_keys;
         let include_descendants = params.include_descendants;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/hourly-attribution",
@@ -1507,7 +1526,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/incident-management",
@@ -1608,7 +1627,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/ingested-spans",
@@ -1711,7 +1730,7 @@ impl UsageMeteringAPI {
         let sort_dir = params.sort_dir;
         let sort = params.sort;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/monthly_custom_reports",
@@ -1858,7 +1877,7 @@ impl UsageMeteringAPI {
         let next_record_id = params.next_record_id;
         let include_descendants = params.include_descendants;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/monthly-attribution",
@@ -1979,7 +1998,7 @@ impl UsageMeteringAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.get_specified_daily_custom_reports";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/daily_custom_reports/{report_id}",
@@ -2074,7 +2093,7 @@ impl UsageMeteringAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.get_specified_monthly_custom_reports";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/monthly_custom_reports/{report_id}",
@@ -2170,7 +2189,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/analyzed_logs",
@@ -2280,7 +2299,7 @@ impl UsageMeteringAPI {
         let offset = params.offset;
         let limit = params.limit;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/attribution",
@@ -2402,7 +2421,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/audit_logs",
@@ -2498,7 +2517,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let month = params.month;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/billable-summary",
@@ -2594,7 +2613,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/ci-app",
@@ -2689,7 +2708,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/cws",
@@ -2790,7 +2809,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/cspm",
@@ -2886,7 +2905,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/dbm",
@@ -2984,7 +3003,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/fargate",
@@ -3081,7 +3100,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/hosts",
@@ -3182,7 +3201,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/indexed-spans",
@@ -3283,7 +3302,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/iot",
@@ -3379,7 +3398,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/aws_lambda",
@@ -3474,7 +3493,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/logs",
@@ -3572,7 +3591,7 @@ impl UsageMeteringAPI {
         let end_hr = params.end_hr;
         let index_name = params.index_name;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/logs_by_index",
@@ -3686,7 +3705,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/logs-by-retention",
@@ -3787,7 +3806,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/network_flows",
@@ -3888,7 +3907,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/network_hosts",
@@ -3991,7 +4010,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/online-archive",
@@ -4092,7 +4111,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/profiling",
@@ -4194,7 +4213,7 @@ impl UsageMeteringAPI {
         let end_hr = params.end_hr;
         let type_ = params.type_;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/rum_sessions",
@@ -4298,7 +4317,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/rum",
@@ -4393,7 +4412,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/sds",
@@ -4486,7 +4505,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/snmp",
@@ -4583,7 +4602,7 @@ impl UsageMeteringAPI {
         let end_month = params.end_month;
         let include_org_details = params.include_org_details;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/summary",
@@ -4688,7 +4707,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/synthetics",
@@ -4791,7 +4810,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/synthetics_api",
@@ -4894,7 +4913,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/synthetics_browser",
@@ -4995,7 +5014,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/timeseries",
@@ -5095,7 +5114,7 @@ impl UsageMeteringAPI {
         let limit = params.limit;
         let next_record_id = params.next_record_id;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/top_avg_metrics",

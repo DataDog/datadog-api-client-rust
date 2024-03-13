@@ -28,7 +28,7 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
     {%- set structName = name.replace(" ", "")+"API" %}
         "{{name.replace(" ", "")}}" => {
         {%- for version in versions %}
-            world.api_instances.{{version}}_{{fieldName}} = Some(datadog{{ version.upper() }}::api::{{fieldName}}::{{structName}}::with_client_and_config(world.config.clone(),world.client.clone(),));
+            world.api_instances.{{version}}_{{fieldName}} = Some(datadog{{ version.upper() }}::api::{{fieldName}}::{{structName}}::with_client_and_config(world.config.clone(),world.config.get_client().clone(),));
         {%- endfor %}
         },
     {%- endfor %}

@@ -47,7 +47,6 @@ struct UndoOperation {
 pub struct DatadogWorld {
     pub api_version: i32,
     pub config: Configuration,
-    pub client: reqwest_middleware::ClientWithMiddleware,
     pub fixtures: Value,
     pub function_mappings: HashMap<String, TestCall>,
     pub operation_id: String,
@@ -118,12 +117,11 @@ pub async fn before_scenario(
 
     let mut reqwest_client_builder = reqwest::Client::builder();
     if let Some(proxy_url) = &world.config.proxy_url {
-        let proxy = reqwest::Proxy::all(proxy_url)
-            .expect("Failed to parse proxy URL");
+        let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
         reqwest_client_builder = reqwest_client_builder.proxy(proxy);
     }
-    
-    let mut vcr_client_builder = ClientBuilder::new(reqwest_client_builder);
+
+    let mut vcr_client_builder = ClientBuilder::new(reqwest_client_builder.build().unwrap());
     vcr_client_builder = match env::var("RECORD").unwrap_or("false".to_string()).as_str() {
         "none" => {
             prefix.push_str("-Rust");
@@ -177,7 +175,7 @@ pub async fn before_scenario(
         }
     };
 
-    world.client = vcr_client_builder.build();
+    world.config.client(vcr_client_builder.build());
 
     let escaped_name = NON_ALNUM_RE
         .replace_all(scenario.name.as_str(), "_")

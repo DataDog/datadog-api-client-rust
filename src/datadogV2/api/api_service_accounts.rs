@@ -125,12 +125,14 @@ pub enum UpdateServiceAccountApplicationKeyError {
 #[derive(Debug, Clone)]
 pub struct ServiceAccountsAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for ServiceAccountsAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -140,7 +142,24 @@ impl ServiceAccountsAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let mut middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Create a service account for your organization.
@@ -173,7 +192,7 @@ impl ServiceAccountsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_service_account";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts",
@@ -270,7 +289,7 @@ impl ServiceAccountsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_service_account_application_key";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys",
@@ -356,7 +375,7 @@ impl ServiceAccountsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_service_account_application_key";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys/{app_key_id}",
@@ -443,7 +462,7 @@ impl ServiceAccountsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_service_account_application_key";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys/{app_key_id}",
@@ -545,7 +564,7 @@ impl ServiceAccountsAPI {
         let filter_created_at_start = params.filter_created_at_start;
         let filter_created_at_end = params.filter_created_at_end;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys",
@@ -669,7 +688,7 @@ impl ServiceAccountsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_service_account_application_key";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys/{app_key_id}",

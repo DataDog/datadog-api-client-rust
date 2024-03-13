@@ -66,12 +66,14 @@ pub enum UpdateLogsIndexOrderError {
 #[derive(Debug, Clone)]
 pub struct LogsIndexesAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for LogsIndexesAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -81,7 +83,24 @@ impl LogsIndexesAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let mut middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Creates a new index. Returns the Index object passed in the request body when the request is successful.
@@ -112,7 +131,7 @@ impl LogsIndexesAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.create_logs_index";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/indexes",
@@ -198,7 +217,7 @@ impl LogsIndexesAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.get_logs_index";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/indexes/{name}",
@@ -278,7 +297,7 @@ impl LogsIndexesAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.get_logs_index_order";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/index-order",
@@ -361,7 +380,7 @@ impl LogsIndexesAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.list_log_indexes";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/indexes",
@@ -453,7 +472,7 @@ impl LogsIndexesAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.update_logs_index";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/indexes/{name}",
@@ -545,7 +564,7 @@ impl LogsIndexesAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.update_logs_index_order";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/index-order",

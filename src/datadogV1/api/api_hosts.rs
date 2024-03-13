@@ -129,12 +129,14 @@ pub enum UnmuteHostError {
 #[derive(Debug, Clone)]
 pub struct HostsAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for HostsAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -144,7 +146,24 @@ impl HostsAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let mut middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// This endpoint returns the total number of active and up hosts in your Datadog account.
@@ -180,7 +199,7 @@ impl HostsAPI {
         // unbox and build optional parameters
         let from = params.from;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/hosts/totals",
@@ -281,7 +300,7 @@ impl HostsAPI {
         let include_muted_hosts_data = params.include_muted_hosts_data;
         let include_hosts_metadata = params.include_hosts_metadata;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/hosts",
@@ -396,7 +415,7 @@ impl HostsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.mute_host";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/host/{host_name}/mute",
@@ -484,7 +503,7 @@ impl HostsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.unmute_host";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/host/{host_name}/unmute",

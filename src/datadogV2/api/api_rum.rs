@@ -138,12 +138,14 @@ pub enum UpdateRUMApplicationError {
 #[derive(Debug, Clone)]
 pub struct RUMAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for RUMAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -153,7 +155,24 @@ impl RUMAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let mut middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// The API endpoint to aggregate RUM events into buckets of computed metrics and timeseries.
@@ -189,7 +208,7 @@ impl RUMAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.aggregate_rum_events";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/analytics/aggregate",
@@ -281,7 +300,7 @@ impl RUMAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_rum_application";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/applications",
@@ -361,7 +380,7 @@ impl RUMAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_rum_application";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/applications/{id}",
@@ -440,7 +459,7 @@ impl RUMAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_rum_application";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/applications/{id}",
@@ -524,7 +543,7 @@ impl RUMAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_rum_applications";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/applications",
@@ -660,7 +679,7 @@ impl RUMAPI {
         let page_cursor = params.page_cursor;
         let page_limit = params.page_limit;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/events",
@@ -815,7 +834,7 @@ impl RUMAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.search_rum_events";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/events/search",
@@ -908,7 +927,7 @@ impl RUMAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_rum_application";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/applications/{id}",

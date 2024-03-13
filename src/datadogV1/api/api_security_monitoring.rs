@@ -41,12 +41,14 @@ pub enum EditSecurityMonitoringSignalStateError {
 #[derive(Debug, Clone)]
 pub struct SecurityMonitoringAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for SecurityMonitoringAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -56,7 +58,24 @@ impl SecurityMonitoringAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let mut middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Add a security signal to an incident. This makes it possible to search for signals by incident within the signal explorer and to view the signals on the incident timeline.
@@ -97,7 +116,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.add_security_monitoring_signal_to_incident";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/security_analytics/signals/{signal_id}/add_to_incident",
@@ -197,7 +216,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.edit_security_monitoring_signal_assignee";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/security_analytics/signals/{signal_id}/assignee",
@@ -297,7 +316,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.edit_security_monitoring_signal_state";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/security_analytics/signals/{signal_id}/state",

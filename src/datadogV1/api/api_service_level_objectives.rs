@@ -265,12 +265,14 @@ pub enum UpdateSLOError {
 #[derive(Debug, Clone)]
 pub struct ServiceLevelObjectivesAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for ServiceLevelObjectivesAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -280,7 +282,24 @@ impl ServiceLevelObjectivesAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let mut middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Check if an SLO can be safely deleted. For example,
@@ -316,7 +335,7 @@ impl ServiceLevelObjectivesAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.check_can_delete_slo";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/can_delete",
@@ -400,7 +419,7 @@ impl ServiceLevelObjectivesAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.create_slo";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo",
@@ -497,7 +516,7 @@ impl ServiceLevelObjectivesAPI {
         // unbox and build optional parameters
         let force = params.force;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/{slo_id}",
@@ -594,7 +613,7 @@ impl ServiceLevelObjectivesAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.delete_slo_timeframe_in_bulk";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/bulk_delete",
@@ -687,7 +706,7 @@ impl ServiceLevelObjectivesAPI {
         // unbox and build optional parameters
         let with_configured_alert_ids = params.with_configured_alert_ids;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/{slo_id}",
@@ -775,7 +794,7 @@ impl ServiceLevelObjectivesAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.get_slo_corrections";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/{slo_id}/corrections",
@@ -887,7 +906,7 @@ impl ServiceLevelObjectivesAPI {
         let target = params.target;
         let apply_correction = params.apply_correction;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/{slo_id}/history",
@@ -1024,7 +1043,7 @@ impl ServiceLevelObjectivesAPI {
         let limit = params.limit;
         let offset = params.offset;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo",
@@ -1133,7 +1152,7 @@ impl ServiceLevelObjectivesAPI {
         let page_number = params.page_number;
         let include_facets = params.include_facets;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/search",
@@ -1232,7 +1251,7 @@ impl ServiceLevelObjectivesAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.update_slo";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/{slo_id}",

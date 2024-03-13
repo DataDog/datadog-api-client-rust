@@ -277,12 +277,14 @@ pub enum UpdateTeamPermissionSettingError {
 #[derive(Debug, Clone)]
 pub struct TeamsAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for TeamsAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -292,7 +294,24 @@ impl TeamsAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let mut middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Create a new team.
@@ -325,7 +344,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_team";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team",
@@ -415,7 +434,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_team_link";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links",
@@ -511,7 +530,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_team_membership";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/memberships",
@@ -588,7 +607,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_team";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}",
@@ -656,7 +675,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_team_link";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links/{link_id}",
@@ -729,7 +748,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_team_membership";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/memberships/{user_id}",
@@ -805,7 +824,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_team";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}",
@@ -887,7 +906,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_team_link";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links/{link_id}",
@@ -969,7 +988,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_team_links";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links",
@@ -1063,7 +1082,7 @@ impl TeamsAPI {
         let sort = params.sort;
         let filter_keyword = params.filter_keyword;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/memberships",
@@ -1170,7 +1189,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_team_permission_settings";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/permission-settings",
@@ -1255,7 +1274,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_user_memberships";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/users/{user_uuid}/memberships",
@@ -1380,7 +1399,7 @@ impl TeamsAPI {
         let filter_me = params.filter_me;
         let fields_team = params.fields_team;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team",
@@ -1506,7 +1525,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_team";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}",
@@ -1602,7 +1621,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_team_link";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links/{link_id}",
@@ -1701,7 +1720,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_team_membership";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/memberships/{user_id}",
@@ -1803,7 +1822,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_team_permission_setting";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/permission-settings/{action}",

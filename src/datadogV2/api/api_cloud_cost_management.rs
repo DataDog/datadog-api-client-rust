@@ -104,12 +104,14 @@ pub enum UpdateCostAzureUCConfigsError {
 #[derive(Debug, Clone)]
 pub struct CloudCostManagementAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for CloudCostManagementAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -119,7 +121,24 @@ impl CloudCostManagementAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let mut middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Create a Cloud Cost Management account for an AWS CUR config.
@@ -153,7 +172,7 @@ impl CloudCostManagementAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_cost_awscur_config";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/aws_cur_config",
@@ -247,7 +266,7 @@ impl CloudCostManagementAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_cost_azure_uc_configs";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/azure_uc_config",
@@ -330,7 +349,7 @@ impl CloudCostManagementAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_cost_awscur_config";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/aws_cur_config/{cloud_account_id}",
@@ -400,7 +419,7 @@ impl CloudCostManagementAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_cost_azure_uc_config";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/azure_uc_config/{cloud_account_id}",
@@ -477,7 +496,7 @@ impl CloudCostManagementAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_cloud_cost_activity";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/enabled",
@@ -567,7 +586,7 @@ impl CloudCostManagementAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.list_aws_related_accounts";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/aws_related_accounts",
@@ -655,7 +674,7 @@ impl CloudCostManagementAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.list_cost_awscur_configs";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/aws_cur_config",
@@ -738,7 +757,7 @@ impl CloudCostManagementAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.list_cost_azure_uc_configs";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/azure_uc_config",
@@ -828,7 +847,7 @@ impl CloudCostManagementAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_cost_awscur_config";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/aws_cur_config/{cloud_account_id}",
@@ -928,7 +947,7 @@ impl CloudCostManagementAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_cost_azure_uc_configs";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/azure_uc_config/{cloud_account_id}",

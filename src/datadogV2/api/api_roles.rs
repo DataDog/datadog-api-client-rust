@@ -234,12 +234,14 @@ pub enum UpdateRoleError {
 #[derive(Debug, Clone)]
 pub struct RolesAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for RolesAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -249,7 +251,24 @@ impl RolesAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let mut middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Adds a permission to a role.
@@ -287,7 +306,7 @@ impl RolesAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.add_permission_to_role";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}/permissions",
@@ -379,7 +398,7 @@ impl RolesAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.add_user_to_role";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}/users",
@@ -468,7 +487,7 @@ impl RolesAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.clone_role";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}/clone",
@@ -555,7 +574,7 @@ impl RolesAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_role";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles",
@@ -631,7 +650,7 @@ impl RolesAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_role";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}",
@@ -705,7 +724,7 @@ impl RolesAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_role";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}",
@@ -785,7 +804,7 @@ impl RolesAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.list_permissions";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/permissions",
@@ -869,7 +888,7 @@ impl RolesAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.list_role_permissions";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}/permissions",
@@ -960,7 +979,7 @@ impl RolesAPI {
         let sort = params.sort;
         let filter = params.filter;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}/users",
@@ -1065,7 +1084,7 @@ impl RolesAPI {
         let filter = params.filter;
         let filter_id = params.filter_id;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles",
@@ -1173,7 +1192,7 @@ impl RolesAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.remove_permission_from_role";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}/permissions",
@@ -1270,7 +1289,7 @@ impl RolesAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.remove_user_from_role";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}/users",
@@ -1360,7 +1379,7 @@ impl RolesAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_role";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}",
