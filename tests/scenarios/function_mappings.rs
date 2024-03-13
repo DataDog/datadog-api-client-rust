@@ -193,8 +193,8 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         }
         "AzureIntegration" => {
             world.api_instances.v1_api_azure_integration = Some(
-                datadogV1::api::api_azure_integration::AzureIntegrationAPI::with_config(
-                    world.config.clone(),
+                datadogV1::api::api_azure_integration::AzureIntegrationAPI::with_client_and_config(
+                    world.config.clone(),world.client.clone(),
                 ),
             );
         }

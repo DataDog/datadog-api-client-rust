@@ -44,13 +44,13 @@ pub struct APIKey {
 #[derive(Debug, Clone)]
 pub struct Configuration {
     pub(crate) user_agent: String,
-    pub(crate) client: reqwest_middleware::ClientWithMiddleware,
     pub(crate) unstable_operations: HashMap<String, bool>,
     pub(crate) auth_keys: HashMap<String, APIKey>,
     pub server_index: usize,
     pub server_variables: HashMap<String, String>,
     pub server_operation_index: HashMap<String, usize>,
     pub server_operation_variables: HashMap<String, HashMap<String, String>>,
+    pub proxy_url: Option<String>,
 }
 
 impl Configuration {
@@ -58,8 +58,8 @@ impl Configuration {
         Self::default()
     }
 
-    pub fn client(&mut self, client: reqwest_middleware::ClientWithMiddleware) {
-        self.client = client;
+    pub fn set_proxy_url(&mut self, proxy_url: Option<String>) {
+        self.proxy_url = proxy_url;
     }
 
     pub fn get_operation_host(&self, operation_str: &str) -> String {
@@ -191,13 +191,13 @@ impl Default for Configuration {
 
         Self {
             user_agent,
-            client: http_client.build(),
             unstable_operations,
             auth_keys,
             server_index: 0,
             server_variables: HashMap::new(),
             server_operation_index: HashMap::new(),
             server_operation_variables: HashMap::new(),
+            proxy_url: None,
         }
     }
 }

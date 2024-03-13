@@ -47,6 +47,7 @@ struct UndoOperation {
 pub struct DatadogWorld {
     pub api_version: i32,
     pub config: Configuration,
+    pub client: reqwest_middleware::ClientWithMiddleware,
     pub fixtures: Value,
     pub function_mappings: HashMap<String, TestCall>,
     pub operation_id: String,
@@ -100,11 +101,33 @@ pub async fn before_scenario(
 
     let mut frozen_time = chrono::Utc::now().signed_duration_since(DateTime::UNIX_EPOCH);
 
-    let vcr_client_builder = ClientBuilder::new(reqwest::Client::new());
-    let client = match env::var("RECORD").unwrap_or("false".to_string()).as_str() {
+    world.config.set_auth_key(
+        "apiKeyAuth",
+        APIKey {
+            key: "00000000000000000000000000000000".to_string(),
+            prefix: "".to_owned(),
+        },
+    );
+    world.config.set_auth_key(
+        "appKeyAuth",
+        APIKey {
+            key: "0000000000000000000000000000000000000000".to_string(),
+            prefix: "".to_owned(),
+        },
+    );
+
+    let mut reqwest_client_builder = reqwest::Client::builder();
+    if let Some(proxy_url) = &world.config.proxy_url {
+        let proxy = reqwest::Proxy::all(proxy_url)
+            .expect("Failed to parse proxy URL");
+        reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+    }
+    
+    let mut vcr_client_builder = ClientBuilder::new(reqwest_client_builder);
+    vcr_client_builder = match env::var("RECORD").unwrap_or("false".to_string()).as_str() {
         "none" => {
             prefix.push_str("-Rust");
-            vcr_client_builder.build()
+            vcr_client_builder
         }
         "true" => {
             let _ = remove_file(cassette.clone());
@@ -128,7 +151,7 @@ pub async fn before_scenario(
                 .with_modify_response(|res| {
                     res.headers.remove_entry("content-security-policy");
                 });
-            vcr_client_builder.with(middleware).build()
+            vcr_client_builder.with(middleware)
         }
         _ => {
             frozen_time = DateTime::parse_from_rfc3339(
@@ -150,24 +173,11 @@ pub async fn before_scenario(
                     res.headers.remove_entry("content-security-policy");
                 })
                 .with_request_matcher(|vcr_req, req| req_eq(vcr_req, req));
-            vcr_client_builder.with(middleware).build()
+            vcr_client_builder.with(middleware)
         }
     };
-    world.config.client(client);
-    world.config.set_auth_key(
-        "apiKeyAuth",
-        APIKey {
-            key: "00000000000000000000000000000000".to_string(),
-            prefix: "".to_owned(),
-        },
-    );
-    world.config.set_auth_key(
-        "appKeyAuth",
-        APIKey {
-            key: "0000000000000000000000000000000000000000".to_string(),
-            prefix: "".to_owned(),
-        },
-    );
+
+    world.client = vcr_client_builder.build();
 
     let escaped_name = NON_ALNUM_RE
         .replace_all(scenario.name.as_str(), "_")
